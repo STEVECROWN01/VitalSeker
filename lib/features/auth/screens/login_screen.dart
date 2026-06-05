@@ -29,6 +29,32 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
+  void _showError(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.white, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(fontFamily: 'Inter', fontSize: 13),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: AppColors.lightError,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 4),
+      ),
+    );
+  }
+
   Future<void> _signIn() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -41,11 +67,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       );
       if (mounted) context.go(AppConfig.dashboard);
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString()), backgroundColor: AppColors.lightError),
-        );
-      }
+      _showError(AuthService.getFriendlyError(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -58,11 +80,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       await authService.signInWithGoogle();
       if (mounted) context.go(AppConfig.dashboard);
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString()), backgroundColor: AppColors.lightError),
-        );
-      }
+      _showError(AuthService.getFriendlyError(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -75,13 +93,47 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       await authService.signInWithApple();
       if (mounted) context.go(AppConfig.dashboard);
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString()), backgroundColor: AppColors.lightError),
-        );
-      }
+      _showError(AuthService.getFriendlyError(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _resetPassword() async {
+    final email = _emailController.text.trim();
+    if (email.isEmpty || !email.contains('@')) {
+      _showError('Please enter your email address first.');
+      return;
+    }
+
+    try {
+      final authService = ref.read(authServiceProvider);
+      await authService.resetPassword(email);
+      if (mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.check_circle_outline, color: Colors.white, size: 20),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'Password reset link sent to $email',
+                    style: const TextStyle(fontFamily: 'Inter', fontSize: 13),
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: AppColors.lightSuccess,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            margin: const EdgeInsets.all(16),
+          ),
+        );
+      }
+    } catch (e) {
+      _showError(AuthService.getFriendlyError(e));
     }
   }
 
@@ -142,6 +194,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       labelText: 'Email',
                       prefixIcon: Icon(Icons.email_outlined),
@@ -157,6 +210,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   TextFormField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (_) => _signIn(),
                     decoration: InputDecoration(
                       labelText: 'Password',
                       prefixIcon: const Icon(Icons.lock_outline),
@@ -176,9 +231,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {
-                        // TODO: Navigate to forgot password
-                      },
+                      onPressed: _resetPassword,
                       child: Text(
                         'Forgot Password?',
                         style: TextStyle(
@@ -264,6 +317,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),

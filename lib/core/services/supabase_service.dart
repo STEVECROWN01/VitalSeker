@@ -8,21 +8,40 @@ class SupabaseService {
   SupabaseService._internal();
 
   late final SupabaseClient _client;
+  bool _initialized = false;
 
-  SupabaseClient get client => _client;
+  SupabaseClient get client {
+    if (!_initialized) {
+      throw StateError('SupabaseService not initialized. Call initialize() first.');
+    }
+    return _client;
+  }
+
+  bool get isInitialized => _initialized;
 
   Future<void> initialize() async {
+    if (_initialized) return;
+
+    // Always use the hardcoded SupabaseConfig values as the primary source
+    // The .env file can override these if present
+    final url = dotenv.env['SUPABASE_URL']?.isNotEmpty == true
+        ? dotenv.env['SUPABASE_URL']!
+        : SupabaseConfig.url;
+    final anonKey = dotenv.env['SUPABASE_ANON_KEY']?.isNotEmpty == true
+        ? dotenv.env['SUPABASE_ANON_KEY']!
+        : SupabaseConfig.anonKey;
+
     await Supabase.initialize(
-      url: dotenv.env['SUPABASE_URL'] ?? SupabaseConfig.url,
-      anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? SupabaseConfig.anonKey,
+      url: url,
+      anonKey: anonKey,
       debug: false,
     );
     _client = Supabase.instance.client;
+    _initialized = true;
   }
 
   GoTrueClient get auth => _client.auth;
 
-  // Shorthand methods
   PostgrestQueryBuilder fromTable(String table) => _client.from(table);
 
   Future<Map<String, dynamic>> invokeEdgeFunction(

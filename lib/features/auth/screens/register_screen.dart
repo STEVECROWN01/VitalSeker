@@ -20,8 +20,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   bool _isLoading = false;
   bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
   bool _acceptTerms = false;
 
   @override
@@ -29,33 +31,118 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void _showError(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.white, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(fontFamily: 'Inter', fontSize: 13),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: AppColors.lightError,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 4),
+      ),
+    );
+  }
+
+  void _showSuccess(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.check_circle_outline, color: Colors.white, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(fontFamily: 'Inter', fontSize: 13),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: AppColors.lightSuccess,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+      ),
+    );
   }
 
   Future<void> _signUp() async {
     if (!_formKey.currentState!.validate()) return;
     if (!_acceptTerms) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please accept the terms and conditions')),
-      );
+      _showError('Please accept the Terms of Service and Privacy Policy to continue.');
       return;
     }
 
     setState(() => _isLoading = true);
     try {
       final authService = ref.read(authServiceProvider);
-      await authService.signUp(
+      final response = await authService.signUp(
         email: _emailController.text.trim(),
         password: _passwordController.text,
         fullName: _nameController.text.trim(),
       );
+
+      if (mounted) {
+        // Check if email confirmation is required
+        final user = response.user;
+        if (user != null && user.confirmationSentAt != null) {
+          _showSuccess('Account created! Please check your email to verify your account.');
+          // Navigate to login after a short delay
+          await Future.delayed(const Duration(seconds: 2));
+          if (mounted) context.go(AppConfig.login);
+        } else {
+          // Auto-confirmed, go to dashboard
+          context.go(AppConfig.dashboard);
+        }
+      }
+    } catch (e) {
+      _showError(AuthService.getFriendlyError(e));
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    setState(() => _isLoading = true);
+    try {
+      final authService = ref.read(authServiceProvider);
+      await authService.signInWithGoogle();
       if (mounted) context.go(AppConfig.dashboard);
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString()), backgroundColor: AppColors.lightError),
-        );
-      }
+      _showError(AuthService.getFriendlyError(e));
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _signInWithApple() async {
+    setState(() => _isLoading = true);
+    try {
+      final authService = ref.read(authServiceProvider);
+      await authService.signInWithApple();
+      if (mounted) context.go(AppConfig.dashboard);
+    } catch (e) {
+      _showError(AuthService.getFriendlyError(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -77,7 +164,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 16),
                   // Back button
                   Align(
                     alignment: Alignment.centerLeft,
@@ -89,7 +176,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 8),
                   Text(
                     'Create Account',
                     style: TextStyle(
@@ -108,16 +195,82 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       color: isDark ? AppColors.grey400 : AppColors.grey500,
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 28),
+
+                  // === Social Sign-Up First (primary CTA) ===
+                  // Google Sign Up
+                  OutlinedButton.icon(
+                    onPressed: _signInWithGoogle,
+                    icon: Icon(Icons.g_mobiledata_rounded, size: 24, color: isDark ? Colors.white : AppColors.lightOnBackground),
+                    label: Text(
+                      'Continue with Google',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: isDark ? AppColors.grey700 : AppColors.grey200),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      minimumSize: const Size(double.infinity, 52),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // Apple Sign Up
+                  OutlinedButton.icon(
+                    onPressed: _signInWithApple,
+                    icon: Icon(Icons.apple, size: 24, color: isDark ? Colors.white : AppColors.lightOnBackground),
+                    label: Text(
+                      'Continue with Apple',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: isDark ? AppColors.grey700 : AppColors.grey200),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      minimumSize: const Size(double.infinity, 52),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Divider
+                  Row(
+                    children: [
+                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'or sign up with email',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 12,
+                            color: isDark ? AppColors.grey500 : AppColors.grey400,
+                          ),
+                        ),
+                      ),
+                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
                   // Full Name
                   TextFormField(
                     controller: _nameController,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       labelText: 'Full Name',
                       prefixIcon: Icon(Icons.person_outline),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) return 'Name is required';
+                      if (value.trim().length < 2) return 'Name must be at least 2 characters';
                       return null;
                     },
                   ),
@@ -126,13 +279,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       labelText: 'Email',
                       prefixIcon: Icon(Icons.email_outlined),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) return 'Email is required';
-                      if (!value.contains('@')) return 'Enter a valid email';
+                      if (!value.contains('@') || !value.contains('.')) return 'Enter a valid email address';
                       return null;
                     },
                   ),
@@ -141,8 +295,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       labelText: 'Password',
+                      hintText: 'At least 6 characters',
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
@@ -151,45 +307,75 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) return 'Password is required';
-                      if (value.length < 6) return 'Password must be 6+ characters';
+                      if (value.length < 6) return 'Password must be at least 6 characters';
+                      if (!value.contains(RegExp(r'[A-Z]'))) return 'Include at least one uppercase letter';
+                      if (!value.contains(RegExp(r'[0-9]'))) return 'Include at least one number';
                       return null;
                     },
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
+                  // Confirm Password
+                  TextFormField(
+                    controller: _confirmPasswordController,
+                    obscureText: _obscureConfirmPassword,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (_) => _signUp(),
+                    decoration: InputDecoration(
+                      labelText: 'Confirm Password',
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      suffixIcon: IconButton(
+                        icon: Icon(_obscureConfirmPassword ? Icons.visibility_off : Icons.visibility),
+                        onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return 'Please confirm your password';
+                      if (value != _passwordController.text) return 'Passwords do not match';
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
                   // Terms checkbox
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Checkbox(
-                        value: _acceptTerms,
-                        onChanged: (value) => setState(() => _acceptTerms = value ?? false),
-                        activeColor: AppColors.lightPrimary,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Checkbox(
+                          value: _acceptTerms,
+                          onChanged: (value) => setState(() => _acceptTerms = value ?? false),
+                          activeColor: AppColors.lightPrimary,
+                        ),
                       ),
                       Expanded(
-                        child: Text.rich(
-                          TextSpan(
-                            text: 'I agree to the ',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 13,
-                              color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        child: GestureDetector(
+                          onTap: () => setState(() => _acceptTerms = !_acceptTerms),
+                          child: Text.rich(
+                            TextSpan(
+                              text: 'I agree to the ',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 13,
+                                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'Terms of Service',
+                                  style: TextStyle(
+                                    color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const TextSpan(text: ' and '),
+                                TextSpan(
+                                  text: 'Privacy Policy',
+                                  style: TextStyle(
+                                    color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
-                            children: [
-                              TextSpan(
-                                text: 'Terms of Service',
-                                style: TextStyle(
-                                  color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const TextSpan(text: ' and '),
-                              TextSpan(
-                                text: 'Privacy Policy',
-                                style: TextStyle(
-                                  color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                       ),
@@ -205,7 +391,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     ),
                     child: const Text('Create Account'),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
                   // Login link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -231,6 +417,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),
