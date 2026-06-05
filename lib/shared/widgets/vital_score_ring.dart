@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+import '../../shared/theme/app_colors.dart';
+
+class VitalScoreRing extends StatelessWidget {
+  final int score;
+  final double size;
+  final bool showLabel;
+
+  const VitalScoreRing({
+    super.key,
+    required this.score,
+    this.size = 120,
+    this.showLabel = true,
+  });
+
+  Color get _scoreColor {
+    if (score >= 80) return AppColors.urgencyLow;
+    if (score >= 60) return AppColors.lightPrimary;
+    if (score >= 40) return AppColors.urgencyMedium;
+    if (score >= 20) return AppColors.urgencyHigh;
+    return AppColors.urgencyEmergency;
+  }
+
+  String get _scoreLabel {
+    if (score >= 80) return 'Excellent';
+    if (score >= 60) return 'Good';
+    if (score >= 40) return 'Fair';
+    if (score >= 20) return 'Poor';
+    return 'Critical';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    return SizedBox(
+      width: size,
+      height: size,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            width: size,
+            height: size,
+            child: CircularProgressIndicator(
+              value: score / 100,
+              strokeWidth: size * 0.08,
+              backgroundColor: isDark ? const Color(0xFF1E2230) : AppColors.grey100,
+              valueColor: AlwaysStoppedAnimation<Color>(_scoreColor),
+              strokeCap: StrokeCap.round,
+            ),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '$score',
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: size * 0.28,
+                  fontWeight: FontWeight.w700,
+                  color: _scoreColor,
+                ),
+              ),
+              if (showLabel)
+                Text(
+                  _scoreLabel,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: size * 0.09,
+                    fontWeight: FontWeight.w500,
+                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
