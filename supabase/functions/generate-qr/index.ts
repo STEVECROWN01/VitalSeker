@@ -34,7 +34,7 @@ serve(async (req: Request) => {
 
     const key = await crypto.subtle.importKey(
       'raw',
-      encoder.encode(Deno.env.get('SUPABASE_SERVICE_KEY')?.substring(0, 32) || 'vitalseker-qr-key-32bytes!!'),
+      encoder.encode(Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')?.substring(0, 32) || 'vitalseker-qr-key-32bytes!!'),
       { name: 'AES-GCM' },
       false,
       ['encrypt']
