@@ -23,6 +23,6 @@ class AppConfig {
   static const String exportScreen = '/home/export';
   static const String sos = '/home/sos';
   static const String profile = '/home/profile';
-  static const String about = '/home/about';
-  static const String subscription = '/home/subscription';
+  static const String about = '/home/profile/about';
+  static const String subscription = '/home/profile/subscription';
 }

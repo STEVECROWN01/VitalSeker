@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
+import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/services/database_service.dart';
 import '../../../shared/theme/app_colors.dart';
 
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+  bool _isNavigating = false;
 
   final List<OnboardingPage> _pages = [
     OnboardingPage(
@@ -48,8 +53,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
-  void _goToLogin() {
-    context.go(AppConfig.login);
+  Future<void> _finishOnboarding() async {
+    if (_isNavigating) return;
+    setState(() => _isNavigating = true);
+
+    try {
+      // Mark onboarding as completed in the database for logged-in users
+      final user = ref.read(currentUserProvider);
+      if (user != null) {
+        try {
+          final db = DatabaseService();
+          await db.completeOnboarding(user.id);
+          // Refresh the profile provider to reflect onboarding status
+          ref.invalidate(userProfileProvider);
+        } catch (e) {
+          // Don't block navigation if DB update fails
+          debugPrint('Failed to mark onboarding complete: $e');
+        }
+      }
+
+      if (!mounted) return;
+
+      // Navigate based on auth state
+      final isAuthenticated = ref.read(isAuthenticatedProvider);
+      if (isAuthenticated) {
+        context.go(AppConfig.dashboard);
+      } else {
+        context.go(AppConfig.login);
+      }
+    } finally {
+      if (mounted) setState(() => _isNavigating = false);
+    }
   }
 
   @override
@@ -64,7 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Align(
               alignment: Alignment.topRight,
               child: TextButton(
-                onPressed: _goToLogin,
+                onPressed: _finishOnboarding,
                 child: Text(
                   'Skip',
                   style: TextStyle(
@@ -169,9 +203,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: _isNavigating ? null : () {
                     if (_currentPage == _pages.length - 1) {
-                      _goToLogin();
+                      _finishOnboarding();
                     } else {
                       _pageController.nextPage(
                         duration: const Duration(milliseconds: 400),
@@ -185,15 +219,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: Text(
-                    _currentPage == _pages.length - 1 ? 'Get Started' : 'Next',
-                    style: const TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: _isNavigating
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(
+                          _currentPage == _pages.length - 1 ? 'Get Started' : 'Next',
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
             ),

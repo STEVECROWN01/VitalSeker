@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:crypto/crypto.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'supabase_service.dart';
@@ -15,6 +16,18 @@ class AuthService {
 
   User? get currentUser => _client.auth.currentUser;
   bool get isAuthenticated => currentUser != null;
+
+  /// Get the Google Web Client ID for OAuth
+  /// This should be configured in your Google Cloud Console / Firebase project
+  /// and set as GOOGLE_WEB_CLIENT_ID in .env or Supabase dashboard
+  String? get _googleWebClientId {
+    // Check .env first, then fall back to a placeholder
+    final envClientId = dotenv.env['GOOGLE_WEB_CLIENT_ID'];
+    if (envClientId != null && envClientId.isNotEmpty) return envClientId;
+
+    // If no client ID is configured, return null (Google Sign-In won't work without it)
+    return null;
+  }
 
   /// Get a user-friendly error message from an exception
   static String getFriendlyError(dynamic error) {
@@ -45,10 +58,16 @@ class AuthService {
 
     // Google Sign-In errors
     if (errorString.contains('sign_in_failed') || errorString.contains('PlatformException')) {
-      return 'Google Sign-In is not configured for this device yet. Please use email/password sign-in for now.';
+      return 'Google Sign-In failed. Please make sure Google Play Services is updated and try again.';
     }
     if (errorString.contains('Google sign in cancelled')) {
       return 'Google Sign-In was cancelled.';
+    }
+    if (errorString.contains('Google Sign-In requires a Web Client ID')) {
+      return 'Google Sign-In is not fully configured yet. Please use email/password sign-in for now, or contact support.';
+    }
+    if (errorString.contains('network_error') || errorString.contains('NetworkError')) {
+      return 'Network error during Google Sign-In. Please check your internet connection.';
     }
 
     // Apple Sign-In errors
@@ -104,7 +123,18 @@ class AuthService {
   // Google Sign In
   Future<AuthResponse> signInWithGoogle() async {
     try {
+      final clientId = _googleWebClientId;
+
+      if (clientId == null || clientId.isEmpty) {
+        throw Exception(
+          'Google Sign-In requires a Web Client ID to be configured. '
+          'Please add your Google Web Client ID to the .env file as GOOGLE_WEB_CLIENT_ID, '
+          'or use email/password sign-in for now.'
+        );
+      }
+
       final googleSignIn = GoogleSignIn(
+        serverClientId: clientId,
         scopes: ['email', 'profile'],
       );
 
@@ -116,8 +146,11 @@ class AuthService {
       final idToken = googleAuth.idToken;
 
       if (idToken == null) {
-        throw Exception('Google Sign-In requires a Web Client ID to be configured. '
-            'Please use email/password to sign in for now.');
+        throw Exception(
+          'Google Sign-In requires a Web Client ID to be configured. '
+          'Please add your Google Web Client ID to the .env file as GOOGLE_WEB_CLIENT_ID, '
+          'or use email/password sign-in for now.'
+        );
       }
 
       final response = await _client.auth.signInWithIdToken(
@@ -126,9 +159,18 @@ class AuthService {
         accessToken: accessToken,
       );
       return response;
-    } on PlatformException {
-      throw Exception('Google Sign-In is not yet configured for this app. '
-          'Please use email/password sign-in instead.');
+    } on PlatformException catch (e) {
+      debugPrint('[AuthService] Google Sign-In PlatformException: ${e.code} - ${e.message}');
+      if (e.code == 'sign_in_failed') {
+        throw Exception(
+          'Google Sign-In failed. Make sure Google Play Services is updated. '
+          'You can also use email/password sign-in.'
+        );
+      }
+      throw Exception(
+        'Google Sign-In is not yet configured for this app. '
+        'Please use email/password sign-in instead.'
+      );
     }
   }
 

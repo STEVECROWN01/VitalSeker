@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/app_config.dart';
 import '../providers/auth_provider.dart';
+import '../providers/user_profile_provider.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../features/splash/screens/splash_screen.dart';
 import '../../features/onboarding/screens/onboarding_screen.dart';
@@ -40,16 +41,22 @@ GoRouter createRouter(Ref ref) {
       final isLogin = state.matchedLocation == AppConfig.login;
       final isRegister = state.matchedLocation == AppConfig.register;
 
+      // Allow splash to load (it handles its own navigation)
       if (isSplash) return null;
 
+      // Not authenticated: only allow login, register, onboarding
       if (!isAuth) {
-        if (isLogin || isRegister) return null;
-        return AppConfig.login;
+        if (isLogin || isRegister || isOnboarding) return null;
+        return AppConfig.onboarding;
       }
 
+      // Authenticated: redirect away from auth screens
       if (isAuth && (isLogin || isRegister)) {
         return AppConfig.dashboard;
       }
+
+      // Authenticated on onboarding: allow (user may be completing onboarding)
+      if (isOnboarding) return null;
 
       return null;
     },

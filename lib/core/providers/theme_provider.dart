@@ -4,7 +4,12 @@ import '../services/database_service.dart';
 import 'auth_provider.dart';
 
 final themeModeProvider = StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
-  return ThemeModeNotifier(ref);
+  final notifier = ThemeModeNotifier(ref);
+  // Load theme when auth state changes
+  ref.listen(authStateProvider, (_, __) {
+    notifier.loadTheme();
+  });
+  return notifier;
 });
 
 class ThemeModeNotifier extends StateNotifier<ThemeMode> {

@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'core/config/supabase_config.dart';
 import 'core/services/supabase_service.dart';
 import 'core/router/app_router.dart';
+import 'core/providers/theme_provider.dart';
 import 'shared/theme/app_theme.dart';
 
 void main() async {
@@ -44,13 +44,14 @@ class VitalSekerApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
+    final themeMode = ref.watch(themeModeProvider);
 
     return MaterialApp.router(
       title: 'VitalSeker',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       routerConfig: router,
       builder: (context, child) {
         return MediaQuery(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -134,7 +135,12 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                     const SizedBox(width: 12),
                     OutlinedButton.icon(
                       onPressed: () {
-                        // TODO: Share QR
+                        if (_qrToken != null) {
+                          Share.share(
+                            'My VitalSeker Health Passport QR Token: $_qrToken\n\nScan this at vitalseker.app to view my health information.',
+                            subject: 'VitalSeker Health Passport',
+                          );
+                        }
                       },
                       icon: const Icon(Icons.share),
                       label: const Text('Share'),

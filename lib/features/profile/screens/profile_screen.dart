@@ -239,13 +239,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     leading: const Icon(Icons.workspace_premium_outlined),
                     title: const Text('Subscription', style: TextStyle(fontFamily: 'Inter')),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () => context.push('${AppConfig.profile}/subscription'),
+                    onTap: () => context.push(AppConfig.subscription),
                   ),
                   ListTile(
                     leading: const Icon(Icons.info_outline),
                     title: const Text('About VitalSeker', style: TextStyle(fontFamily: 'Inter')),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () => context.push('${AppConfig.profile}/about'),
+                    onTap: () => context.push(AppConfig.about),
                   ),
                   ListTile(
                     leading: const Icon(Icons.logout, color: AppColors.urgencyEmergency),

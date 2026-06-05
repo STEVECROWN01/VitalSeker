@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
+import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  bool _hasNavigated = false;
+
   @override
   void initState() {
     super.initState();
@@ -19,15 +24,34 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _navigateNext() async {
+    // Wait for splash animation
     await Future.delayed(const Duration(seconds: 3));
-    if (!mounted) return;
-    context.go(AppConfig.onboarding);
+    if (!mounted || _hasNavigated) return;
+
+    final isAuthenticated = ref.read(isAuthenticatedProvider);
+
+    if (isAuthenticated) {
+      // User is logged in - check if onboarding was completed
+      final isOnboardingDone = ref.read(isOnboardingCompletedProvider);
+      if (isOnboardingDone) {
+        _hasNavigated = true;
+        context.go(AppConfig.dashboard);
+      } else {
+        // Authenticated but onboarding not done - go to onboarding
+        _hasNavigated = true;
+        context.go(AppConfig.onboarding);
+      }
+    } else {
+      // Not authenticated - go to onboarding first, then login
+      _hasNavigated = true;
+      context.go(AppConfig.onboarding);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
