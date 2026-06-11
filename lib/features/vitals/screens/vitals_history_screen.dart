@@ -419,7 +419,7 @@ class _StatisticsRow extends StatelessWidget {
           label: 'Min',
           value: _formatValue(min),
           unit: vitalType.unit,
-          color: AppColors.lightInfo,
+          color: isDark ? AppColors.darkInfo : AppColors.lightInfo,
           isDark: isDark,
         ),
         const SizedBox(width: 8),
@@ -713,7 +713,7 @@ class _DataRow extends StatelessWidget {
       case 'manual':
         return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
       case 'device':
-        return AppColors.lightInfo;
+        return isDark ? AppColors.darkInfo : AppColors.lightInfo;
       case 'import':
         return isDark ? AppColors.darkSecondary : AppColors.lightSecondary;
       default:

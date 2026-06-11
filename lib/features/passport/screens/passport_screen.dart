@@ -161,7 +161,7 @@ class PassportScreen extends ConsumerWidget {
                 if (passport.insuranceProvider != null)
                   _InfoCard(
                     icon: Icons.shield,
-                    iconColor: AppColors.lightInfo,
+                    iconColor: isDark ? AppColors.darkInfo : AppColors.lightInfo,
                     title: 'Insurance',
                     value: '${passport.insuranceProvider}${passport.insurancePolicyNumber != null ? ' - ${passport.insurancePolicyNumber}' : ''}',
                   ),

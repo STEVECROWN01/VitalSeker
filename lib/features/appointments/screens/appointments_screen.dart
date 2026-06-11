@@ -37,7 +37,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.lightError),
+          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
         );
       }
     }
@@ -57,7 +57,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.lightError),
+          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
         );
       }
     }
@@ -95,7 +95,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.lightError),
+            SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
           );
         }
       }

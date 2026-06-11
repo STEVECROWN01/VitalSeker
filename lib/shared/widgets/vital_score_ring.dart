@@ -13,9 +13,9 @@ class VitalScoreRing extends StatelessWidget {
     this.showLabel = true,
   });
 
-  Color get _scoreColor {
+  Color _scoreColor(bool isDark) {
     if (score >= 80) return AppColors.urgencyLow;
-    if (score >= 60) return AppColors.lightPrimary;
+    if (score >= 60) return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
     if (score >= 40) return AppColors.urgencyMedium;
     if (score >= 20) return AppColors.urgencyHigh;
     return AppColors.urgencyEmergency;
@@ -32,6 +32,7 @@ class VitalScoreRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final color = _scoreColor(isDark);
     
     return SizedBox(
       width: size,
@@ -46,7 +47,7 @@ class VitalScoreRing extends StatelessWidget {
               value: score / 100,
               strokeWidth: size * 0.08,
               backgroundColor: isDark ? const Color(0xFF1E2230) : AppColors.grey100,
-              valueColor: AlwaysStoppedAnimation<Color>(_scoreColor),
+              valueColor: AlwaysStoppedAnimation<Color>(color),
               strokeCap: StrokeCap.round,
             ),
           ),
@@ -59,7 +60,7 @@ class VitalScoreRing extends StatelessWidget {
                   fontFamily: 'ClashDisplay',
                   fontSize: size * 0.28,
                   fontWeight: FontWeight.w700,
-                  color: _scoreColor,
+                  color: color,
                 ),
               ),
               if (showLabel)

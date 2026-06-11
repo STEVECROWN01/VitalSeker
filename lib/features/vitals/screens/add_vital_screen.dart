@@ -84,6 +84,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
   Future<void> _saveVital() async {
     if (!_isValid) return;
     setState(() => _isSaving = true);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     try {
       if (_isBloodPressure) {
@@ -107,7 +108,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('${_selectedType.displayName} saved successfully'),
-            backgroundColor: AppColors.lightSuccess,
+            backgroundColor: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
@@ -119,7 +120,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Failed to save: $e'),
-            backgroundColor: AppColors.urgencyEmergency,
+            backgroundColor: AppColors.error(isDark),
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),

@@ -125,7 +125,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.lightError),
+          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
         );
       }
     } finally {

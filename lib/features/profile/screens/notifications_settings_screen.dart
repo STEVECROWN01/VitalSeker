@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
-import '../../../core/services/database_service.dart';
+import '../../../core/providers/database_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 
 class NotificationsSettingsScreen extends ConsumerStatefulWidget {
@@ -42,7 +42,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
     final user = ref.read(currentUserProvider);
     if (user == null) return;
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.updateUserProfile(user.id, {
         'notification_prefs': {
           'triage_reminders': _triageReminders,
@@ -104,10 +104,10 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.lightInfo.withValues(alpha: 0.12),
+                        color: (isDark ? AppColors.darkInfo : AppColors.lightInfo).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.medication_outlined, color: AppColors.lightInfo, size: 20),
+                      child: Icon(Icons.medication_outlined, color: isDark ? AppColors.darkInfo : AppColors.lightInfo, size: 20),
                     ),
                     title: const Text('Medication Reminders', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
@@ -142,10 +142,10 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.lightWarning.withValues(alpha: 0.12),
+                        color: (isDark ? AppColors.darkWarning : AppColors.lightWarning).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.monitor_heart_outlined, color: AppColors.lightWarning, size: 20),
+                      child: Icon(Icons.monitor_heart_outlined, color: isDark ? AppColors.darkWarning : AppColors.lightWarning, size: 20),
                     ),
                     title: const Text('Vitals Logging Reminders', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
@@ -171,10 +171,10 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.lightSuccess.withValues(alpha: 0.12),
+                        color: (isDark ? AppColors.darkSuccess : AppColors.lightSuccess).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.lightbulb_outline, color: AppColors.lightSuccess, size: 20),
+                      child: Icon(Icons.lightbulb_outline, color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess, size: 20),
                     ),
                     title: const Text('Health Tips', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
@@ -214,9 +214,9 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.lightInfo.withValues(alpha: 0.08),
+                color: (isDark ? AppColors.darkInfo : AppColors.lightInfo).withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.lightInfo.withValues(alpha: 0.2)),
+                border: Border.all(color: (isDark ? AppColors.darkInfo : AppColors.lightInfo).withValues(alpha: 0.2)),
               ),
               child: Row(
                 children: [

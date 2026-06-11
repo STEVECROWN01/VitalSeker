@@ -129,7 +129,7 @@ class InsightsScreen extends ConsumerWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                               decoration: BoxDecoration(
-                                color: _trendColor(trend.direction!).withValues(alpha: 0.12),
+                                color: _trendColor(trend.direction!, isDark).withValues(alpha: 0.12),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Row(
@@ -138,7 +138,7 @@ class InsightsScreen extends ConsumerWidget {
                                   Icon(
                                     _trendIcon(trend.direction!),
                                     size: 14,
-                                    color: _trendColor(trend.direction!),
+                                    color: _trendColor(trend.direction!, isDark),
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
@@ -147,7 +147,7 @@ class InsightsScreen extends ConsumerWidget {
                                       fontFamily: 'DMSans',
                                       fontSize: 10,
                                       fontWeight: FontWeight.w700,
-                                      color: _trendColor(trend.direction!),
+                                      color: _trendColor(trend.direction!, isDark),
                                     ),
                                   ),
                                 ],
@@ -237,7 +237,7 @@ class InsightsScreen extends ConsumerWidget {
     );
   }
 
-  Color _trendColor(String direction) {
+  Color _trendColor(String direction, bool isDark) {
     switch (direction) {
       case 'improving': return AppColors.urgencyLow;
       case 'stable': return isDark ? AppColors.darkInfo : AppColors.lightInfo;

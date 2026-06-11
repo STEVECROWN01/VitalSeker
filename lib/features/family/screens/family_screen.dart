@@ -65,7 +65,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.lightError),
+        SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
       );
     } finally {
       if (mounted) setState(() => _isAdding = false);

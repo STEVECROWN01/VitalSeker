@@ -133,11 +133,11 @@ class TriageResultScreen extends StatelessWidget {
 
             // Follow-up Questions
             if (followUpQuestions.isNotEmpty) ...[
-              _SectionTitle(title: 'Follow-up Questions', icon: Icons.help_outline, color: AppColors.lightInfo),
+              _SectionTitle(title: 'Follow-up Questions', icon: Icons.help_outline, color: isDark ? AppColors.darkInfo : AppColors.lightInfo),
               const SizedBox(height: 8),
               ...followUpQuestions.map((q) => Card(
                 child: ListTile(
-                  leading: const Icon(Icons.chat_bubble_outline, color: AppColors.lightInfo, size: 20),
+                  leading: Icon(Icons.chat_bubble_outline, color: isDark ? AppColors.darkInfo : AppColors.lightInfo, size: 20),
                   title: Text(q, style: const TextStyle(fontFamily: 'Inter', fontSize: 14)),
                 ),
               )),

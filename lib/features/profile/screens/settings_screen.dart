@@ -55,6 +55,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final newPasswordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
     bool isChanging = false;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     showDialog(
       context: context,
@@ -120,14 +121,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Password updated successfully'),
-                        backgroundColor: AppColors.lightSuccess,
+                        backgroundColor: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
                       ),
                     );
                   }
                 } catch (e) {
                   if (mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.lightError),
+                      SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(isDark)),
                     );
                   }
                   setDialogState(() => isChanging = false);

@@ -514,8 +514,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               label: Text(condition, style: const TextStyle(fontFamily: 'Inter', fontSize: 13)),
                               deleteIcon: const Icon(Icons.close, size: 16),
                               onDeleted: () => _removeCondition(condition),
-                              backgroundColor: AppColors.lightWarning.withValues(alpha: 0.08),
-                              side: BorderSide(color: AppColors.lightWarning.withValues(alpha: 0.3)),
+                              backgroundColor: (isDark ? AppColors.darkWarning : AppColors.lightWarning).withValues(alpha: 0.08),
+                              side: BorderSide(color: (isDark ? AppColors.darkWarning : AppColors.lightWarning).withValues(alpha: 0.3)),
                             )).toList(),
                           ),
                           if (_chronicConditions.isEmpty)

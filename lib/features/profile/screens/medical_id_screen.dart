@@ -170,7 +170,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                 // Chronic Conditions Section
                 _InfoSection(
                   icon: Icons.health_and_safety_outlined,
-                  iconColor: AppColors.lightWarning,
+                  iconColor: isDark ? AppColors.darkWarning : AppColors.lightWarning,
                   title: 'Chronic Conditions',
                   items: profile?.chronicConditions.isEmpty ?? true
                       ? ['None reported']
@@ -186,7 +186,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                     final medNames = medsAsync.map((m) => m.displayDosage).toList();
                     return _InfoSection(
                       icon: Icons.medication_outlined,
-                      iconColor: AppColors.lightInfo,
+                      iconColor: isDark ? AppColors.darkInfo : AppColors.lightInfo,
                       title: 'Medications',
                       items: medNames.isEmpty ? ['No active medications'] : medNames,
                       isDark: isDark,

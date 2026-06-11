@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
-import '../../../core/services/database_service.dart';
+import '../../../core/providers/database_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 
 enum RecordType { all, labResults, prescriptions, imaging, other }
@@ -36,7 +36,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
     final user = ref.read(currentUserProvider);
     if (user == null) return;
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       final records = await db.getMedicalRecords(user.id);
       if (mounted) {
         setState(() {
@@ -93,13 +93,13 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     switch (type) {
       case 'labResults':
-        return AppColors.lightInfo;
+        return isDark ? AppColors.darkInfo : AppColors.lightInfo;
       case 'prescriptions':
         return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
       case 'imaging':
         return isDark ? AppColors.darkSecondary : AppColors.lightSecondary;
       default:
-        return AppColors.lightWarning;
+        return isDark ? AppColors.darkWarning : AppColors.lightWarning;
     }
   }
 
@@ -178,7 +178,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                 if (user == null) return;
 
                 try {
-                  final db = DatabaseService();
+                  final db = ref.read(databaseServiceProvider);
                   await db.insertMedicalRecord({
                     'user_id': user.id,
                     'title': titleController.text.trim(),

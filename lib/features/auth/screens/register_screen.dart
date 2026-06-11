@@ -47,6 +47,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   void _showError(String message) {
     if (!mounted) return;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -62,7 +63,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
           ],
         ),
-        backgroundColor: AppColors.lightError,
+        backgroundColor: AppColors.error(isDark),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),
@@ -73,6 +74,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   void _showSuccess(String message) {
     if (!mounted) return;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -88,7 +90,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
           ],
         ),
-        backgroundColor: AppColors.lightSuccess,
+        backgroundColor: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),

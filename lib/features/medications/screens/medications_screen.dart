@@ -43,7 +43,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.lightError),
+          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
         );
       }
     }
@@ -62,7 +62,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.lightError),
+            style: ElevatedButton.styleFrom(backgroundColor: isDark ? AppColors.darkError : AppColors.lightError),
             child: const Text('Delete'),
           ),
         ],
@@ -80,7 +80,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.lightError),
+            SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
           );
         }
       }
@@ -122,7 +122,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
             const Divider(),
             if (medication.status == MedicationStatus.active)
               ListTile(
-                leading: const Icon(Icons.check_circle_outline, color: AppColors.lightSuccess),
+                leading: Icon(Icons.check_circle_outline, color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess),
                 title: const Text('Mark Complete', style: TextStyle(fontFamily: 'Inter')),
                 onTap: () {
                   Navigator.pop(ctx);
@@ -130,8 +130,8 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                 },
               ),
             ListTile(
-              leading: const Icon(Icons.delete_outline, color: AppColors.lightError),
-              title: const Text('Delete', style: TextStyle(fontFamily: 'Inter', color: AppColors.lightError)),
+              leading: Icon(Icons.delete_outline, color: isDark ? AppColors.darkError : AppColors.lightError),
+              title: Text('Delete', style: TextStyle(fontFamily: 'Inter', color: isDark ? AppColors.darkError : AppColors.lightError)),
               onTap: () {
                 Navigator.pop(ctx);
                 _deleteMedication(medication);
@@ -332,7 +332,7 @@ class _MedicationCard extends StatelessWidget {
       case MedicationStatus.active:
         return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
       case MedicationStatus.completed:
-        return AppColors.lightSuccess;
+        return isDark ? AppColors.darkSuccess : AppColors.lightSuccess;
       case MedicationStatus.discontinued:
         return AppColors.grey400;
     }
@@ -465,10 +465,10 @@ class _MedicationCard extends StatelessWidget {
                       backgroundColor: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
                       valueColor: AlwaysStoppedAnimation<Color>(
                         adherence >= 80
-                            ? AppColors.lightSuccess
+                            ? (isDark ? AppColors.darkSuccess : AppColors.lightSuccess)
                             : adherence >= 50
-                                ? AppColors.lightWarning
-                                : AppColors.lightError,
+                                ? (isDark ? AppColors.darkWarning : AppColors.lightWarning)
+                                : (isDark ? AppColors.darkError : AppColors.lightError),
                       ),
                       minHeight: 6,
                     ),

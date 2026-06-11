@@ -116,7 +116,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Export failed: $e'), backgroundColor: AppColors.lightError),
+          SnackBar(content: Text('Export failed: $e'), backgroundColor: AppColors.error(isDark)),
         );
       }
     } finally {

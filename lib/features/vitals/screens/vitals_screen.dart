@@ -416,6 +416,7 @@ class _TrendBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     IconData icon;
     Color badgeColor;
     String label;
@@ -428,7 +429,7 @@ class _TrendBadge extends StatelessWidget {
         break;
       case 'down':
         icon = Icons.trending_down;
-        badgeColor = AppColors.lightInfo;
+        badgeColor = isDark ? AppColors.darkInfo : AppColors.lightInfo;
         label = 'DOWN';
         break;
       default:
