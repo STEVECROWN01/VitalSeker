@@ -182,7 +182,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     height: 8,
                     decoration: BoxDecoration(
                       color: _currentPage == index
-                          ? AppColors.lightPrimary
+                          ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
                           : (isDark ? AppColors.grey700 : AppColors.grey200),
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -208,7 +208,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.lightPrimary,
+                    backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

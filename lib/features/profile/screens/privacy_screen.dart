@@ -24,10 +24,10 @@ class PrivacyScreen extends StatelessWidget {
                     width: 56,
                     height: 56,
                     decoration: BoxDecoration(
-                      color: AppColors.lightPrimary.withValues(alpha: 0.12),
+                      color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: const Icon(Icons.shield_outlined, color: AppColors.lightPrimary, size: 28),
+                    child: Icon(Icons.shield_outlined, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 28),
                   ),
                   const SizedBox(height: 12),
                   const Text(

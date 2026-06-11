@@ -57,7 +57,7 @@ class PassportScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.lightPrimary.withValues(alpha: 0.3),
+                        color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -143,7 +143,7 @@ class PassportScreen extends ConsumerWidget {
                 if (passport.medications.isNotEmpty)
                   _InfoCard(
                     icon: Icons.medication,
-                    iconColor: AppColors.lightSecondary,
+                    iconColor: isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
                     title: 'Medications',
                     value: passport.medications.join(', '),
                   ),
@@ -152,7 +152,7 @@ class PassportScreen extends ConsumerWidget {
                 if (passport.chronicConditions.isNotEmpty)
                   _InfoCard(
                     icon: Icons.health_and_safety,
-                    iconColor: AppColors.lightPrimary,
+                    iconColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     title: 'Chronic Conditions',
                     value: passport.chronicConditions.join(', '),
                   ),

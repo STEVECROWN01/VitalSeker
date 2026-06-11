@@ -355,7 +355,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
                           borderSide: BorderSide(
-                            color: AppColors.lightPrimary.withValues(alpha: 0.3),
+                            color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.3),
                           ),
                         ),
                       ),
@@ -456,7 +456,7 @@ class _ChatBubble extends StatelessWidget {
                       horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
                     color: isUser
-                        ? AppColors.lightPrimary
+                        ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
                         : (isDark ? const Color(0xFF1E2230) : AppColors.grey50),
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(18),
@@ -498,7 +498,7 @@ class _ChatBubble extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: isUser
                                   ? Colors.white.withValues(alpha: 0.2)
-                                  : AppColors.lightPrimary,
+                                  : (isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                               foregroundColor: isUser
                                   ? Colors.white
                                   : Colors.white,
@@ -540,10 +540,10 @@ class _ChatBubble extends StatelessWidget {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: AppColors.lightPrimary.withValues(alpha: 0.15),
+                color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(Icons.person, color: AppColors.lightPrimary, size: 16),
+              child: Icon(Icons.person, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 16),
             ),
           ],
         ],
@@ -637,7 +637,7 @@ class _TypingIndicatorState extends State<_TypingIndicator>
                           width: 8,
                           height: 8,
                           decoration: BoxDecoration(
-                            color: AppColors.lightPrimary
+                            color: (widget.isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
                                 .withValues(alpha: 0.6 + (scale - 0.5) * 0.4),
                             shape: BoxShape.circle,
                           ),

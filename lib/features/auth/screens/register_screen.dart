@@ -108,7 +108,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: AppColors.lightPrimary,
+                  primary: Theme.of(context).brightness == Brightness.dark ? AppColors.darkPrimary : AppColors.lightPrimary,
                 ),
           ),
           child: child!,
@@ -319,7 +319,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         width: 3,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: AppColors.lightPrimary,
+                          color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -437,7 +437,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         child: Checkbox(
                           value: _acceptTerms,
                           onChanged: (value) => setState(() => _acceptTerms = value ?? false),
-                          activeColor: AppColors.lightPrimary,
+                          activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                         ),
                       ),
                       Expanded(

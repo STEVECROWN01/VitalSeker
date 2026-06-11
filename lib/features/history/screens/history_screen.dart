@@ -19,7 +19,7 @@ class HistoryScreen extends ConsumerWidget {
           ref.invalidate(symptomLogsProvider);
           await ref.read(symptomLogsProvider.future);
         },
-        color: AppColors.lightPrimary,
+        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
         child: logsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, _) => Center(

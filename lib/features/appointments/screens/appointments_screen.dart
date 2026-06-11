@@ -64,6 +64,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
   }
 
   Future<void> _deleteAppointment(Appointment appointment) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -76,7 +77,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.lightError),
+            style: ElevatedButton.styleFrom(backgroundColor: isDark ? AppColors.darkError : AppColors.lightError),
             child: const Text('Delete'),
           ),
         ],
@@ -136,7 +137,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
             const Divider(),
             if (appointment.status == AppointmentStatus.upcoming) ...[
               ListTile(
-                leading: const Icon(Icons.check_circle_outline, color: AppColors.lightSuccess),
+                leading: Icon(Icons.check_circle_outline, color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess),
                 title: const Text('Mark Complete', style: TextStyle(fontFamily: 'Inter')),
                 onTap: () {
                   Navigator.pop(ctx);
@@ -144,7 +145,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.cancel_outlined, color: AppColors.lightWarning),
+                leading: Icon(Icons.cancel_outlined, color: isDark ? AppColors.darkWarning : AppColors.lightWarning),
                 title: const Text('Cancel Appointment', style: TextStyle(fontFamily: 'Inter')),
                 onTap: () {
                   Navigator.pop(ctx);
@@ -153,8 +154,8 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
               ),
             ],
             ListTile(
-              leading: const Icon(Icons.delete_outline, color: AppColors.lightError),
-              title: const Text('Delete', style: TextStyle(fontFamily: 'Inter', color: AppColors.lightError)),
+              leading: Icon(Icons.delete_outline, color: isDark ? AppColors.darkError : AppColors.lightError),
+              title: Text('Delete', style: TextStyle(fontFamily: 'Inter', color: isDark ? AppColors.darkError : AppColors.lightError)),
               onTap: () {
                 Navigator.pop(ctx);
                 _deleteAppointment(appointment);
@@ -178,7 +179,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppConfig.addAppointment),
-        backgroundColor: AppColors.lightPrimary,
+        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
         child: const Icon(Icons.add, color: Colors.white),
       ),
       body: appointmentsAsync.when(
@@ -209,7 +210,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                               ? null
                               : AppointmentStatus.upcoming),
                       isDark: isDark,
-                      color: AppColors.lightPrimary,
+                      color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     ),
                     const SizedBox(width: 8),
                     _StatusFilterChip(
@@ -220,7 +221,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                               ? null
                               : AppointmentStatus.completed),
                       isDark: isDark,
-                      color: AppColors.lightSuccess,
+                      color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
                     ),
                     const SizedBox(width: 8),
                     _StatusFilterChip(
@@ -291,7 +292,7 @@ class _StatusFilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chipColor = color ?? AppColors.lightPrimary;
+    final chipColor = color ?? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary);
     return GestureDetector(
       onTap: onSelected,
       child: Container(
@@ -335,9 +336,9 @@ class _AppointmentCard extends StatelessWidget {
   Color _statusColor() {
     switch (appointment.status) {
       case AppointmentStatus.upcoming:
-        return AppColors.lightPrimary;
+        return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
       case AppointmentStatus.completed:
-        return AppColors.lightSuccess;
+        return isDark ? AppColors.darkSuccess : AppColors.lightSuccess;
       case AppointmentStatus.cancelled:
         return AppColors.grey400;
     }
@@ -397,7 +398,7 @@ class _AppointmentCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: AppColors.lightSecondary.withValues(alpha: 0.12),
+                            color: (isDark ? AppColors.darkSecondary : AppColors.lightSecondary).withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
@@ -406,7 +407,7 @@ class _AppointmentCard extends StatelessWidget {
                               fontFamily: 'DMSans',
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.lightSecondary,
+                              color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
                             ),
                           ),
                         ),

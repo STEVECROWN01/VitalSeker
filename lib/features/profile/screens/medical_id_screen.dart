@@ -199,7 +199,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                 if (profile?.emergencyContacts.isNotEmpty ?? false)
                   _InfoSection(
                     icon: Icons.contact_phone_outlined,
-                    iconColor: AppColors.lightPrimary,
+                    iconColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     title: 'Emergency Contact',
                     items: profile!.emergencyContacts.map((c) =>
                       '${c.name}${c.relationship != null ? ' (${c.relationship})' : ''} - ${c.phone}'
@@ -209,7 +209,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                 else
                   _InfoSection(
                     icon: Icons.contact_phone_outlined,
-                    iconColor: AppColors.lightPrimary,
+                    iconColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     title: 'Emergency Contact',
                     items: const ['No emergency contact set'],
                     isDark: isDark,
@@ -228,7 +228,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                           Icon(
                             Icons.qr_code_2,
                             size: 120,
-                            color: AppColors.lightPrimary,
+                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                           ),
                           const SizedBox(height: 8),
                           Text(

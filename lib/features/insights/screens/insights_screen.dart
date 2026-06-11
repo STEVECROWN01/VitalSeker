@@ -29,10 +29,10 @@ class InsightsScreen extends ConsumerWidget {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: AppColors.lightSecondary.withValues(alpha: 0.12),
+                        color: (isDark ? AppColors.darkSecondary : AppColors.lightSecondary).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(24),
                       ),
-                      child: const Icon(Icons.insights, color: AppColors.lightSecondary, size: 40),
+                      child: Icon(Icons.insights, color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary, size: 40),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -175,7 +175,7 @@ class InsightsScreen extends ConsumerWidget {
                           _StatChip(
                             label: 'Symptoms',
                             value: '${trend.symptomFrequency}',
-                            color: AppColors.lightSecondary,
+                            color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
                           ),
                           const SizedBox(width: 8),
                           _StatChip(
@@ -210,7 +210,7 @@ class InsightsScreen extends ConsumerWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(Icons.check_circle, size: 16, color: AppColors.lightPrimary),
+                              Icon(Icons.check_circle, size: 16, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
@@ -240,7 +240,7 @@ class InsightsScreen extends ConsumerWidget {
   Color _trendColor(String direction) {
     switch (direction) {
       case 'improving': return AppColors.urgencyLow;
-      case 'stable': return AppColors.lightInfo;
+      case 'stable': return isDark ? AppColors.darkInfo : AppColors.lightInfo;
       case 'declining': return AppColors.urgencyHigh;
       default: return AppColors.grey400;
     }

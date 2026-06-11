@@ -54,7 +54,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                       borderRadius: BorderRadius.circular(24),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.lightPrimary.withValues(alpha: 0.3),
+                          color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.3),
                           blurRadius: 24,
                           offset: const Offset(0, 8),
                         ),
@@ -313,7 +313,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                   Row(
                     children: [
                       Icon(Icons.lightbulb_outline,
-                          color: AppColors.lightInfo, size: 20),
+                          color: isDark ? AppColors.darkInfo : AppColors.lightInfo, size: 20),
                       const SizedBox(width: 8),
                       Text(
                         'Recommended Actions',
@@ -396,19 +396,19 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         'icon': Icons.monitor_heart_outlined,
         'title': 'Log Your Vitals',
         'description': 'Track your blood pressure, heart rate, and other key metrics.',
-        'color': AppColors.lightPrimary,
+        'color': isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
       },
       {
         'icon': Icons.psychology_outlined,
         'title': 'Run a Symptom Check',
         'description': 'Use AI triage to assess any symptoms you\'re experiencing.',
-        'color': AppColors.lightSecondary,
+        'color': isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
       },
       {
         'icon': Icons.nightlight_outlined,
         'title': 'Improve Sleep Quality',
         'description': 'Quality sleep is essential for recovery and immune function.',
-        'color': AppColors.lightInfo,
+        'color': isDark ? AppColors.darkInfo : AppColors.lightInfo,
       },
       {
         'icon': Icons.fitness_center_outlined,

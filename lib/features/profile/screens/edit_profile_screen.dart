@@ -227,14 +227,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            backgroundColor: AppColors.lightPrimary.withValues(alpha: 0.12),
+                            backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                             child: Text(
                               (_nameController.text.isNotEmpty ? _nameController.text : 'U')[0].toUpperCase(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontFamily: 'ClashDisplay',
                                 fontSize: 36,
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.lightPrimary,
+                                color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                               ),
                             ),
                           ),
@@ -244,7 +244,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(
-                                color: AppColors.lightPrimary,
+                                color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: isDark ? AppColors.darkSurface : Colors.white,
@@ -445,7 +445,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 ),
                               ),
                               IconButton(
-                                icon: const Icon(Icons.add, color: AppColors.lightPrimary),
+                                icon: Icon(Icons.add, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                                 onPressed: _addAllergy,
                               ),
                             ],
@@ -458,8 +458,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               label: Text(allergy, style: const TextStyle(fontFamily: 'Inter', fontSize: 13)),
                               deleteIcon: const Icon(Icons.close, size: 16),
                               onDeleted: () => _removeAllergy(allergy),
-                              backgroundColor: AppColors.lightPrimary.withValues(alpha: 0.08),
-                              side: BorderSide(color: AppColors.lightPrimary.withValues(alpha: 0.3)),
+                              backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.08),
+                              side: BorderSide(color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.3)),
                               labelStyle: TextStyle(color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                             )).toList(),
                           ),
@@ -501,7 +501,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 ),
                               ),
                               IconButton(
-                                icon: const Icon(Icons.add, color: AppColors.lightPrimary),
+                                icon: Icon(Icons.add, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                                 onPressed: _addCondition,
                               ),
                             ],
@@ -539,7 +539,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     child: ElevatedButton(
                       onPressed: _isSaving ? null : _saveProfile,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.lightPrimary,
+                        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),

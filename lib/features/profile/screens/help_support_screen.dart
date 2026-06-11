@@ -119,7 +119,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                       child: ElevatedButton(
                         onPressed: _isSubmitting ? null : _submitSupport,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.lightPrimary,
+                          backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
@@ -154,15 +154,15 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.lightPrimary.withValues(alpha: 0.12),
+                    color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(Icons.email_outlined, color: AppColors.lightPrimary, size: 20),
+                  child: Icon(Icons.email_outlined, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 20),
                 ),
                 title: const Text('Email Us', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
-                subtitle: const Text(
+                subtitle: Text(
                   'support@vitalseker.com',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: AppColors.lightPrimary),
+                  style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                 ),
                 trailing: const Icon(Icons.open_in_new, size: 16),
                 onTap: () async {
@@ -228,7 +228,7 @@ class _FaqItem extends StatelessWidget {
         dividerColor: Colors.transparent,
       ),
       child: ExpansionTile(
-        iconColor: AppColors.lightPrimary,
+        iconColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
         collapsedIconColor: isDark ? AppColors.grey400 : AppColors.grey500,
         tilePadding: const EdgeInsets.symmetric(horizontal: 16),
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),

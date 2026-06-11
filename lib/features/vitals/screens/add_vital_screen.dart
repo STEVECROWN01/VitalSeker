@@ -331,7 +331,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.calendar_today, size: 18, color: AppColors.lightPrimary),
+                          Icon(Icons.calendar_today, size: 18, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                           const SizedBox(width: 10),
                           Text(
                             '${_selectedDateTime.day.toString().padLeft(2, '0')}/${_selectedDateTime.month.toString().padLeft(2, '0')}/${_selectedDateTime.year}',
@@ -361,7 +361,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.access_time, size: 18, color: AppColors.lightPrimary),
+                          Icon(Icons.access_time, size: 18, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                           const SizedBox(width: 10),
                           Text(
                             '${_selectedDateTime.hour.toString().padLeft(2, '0')}:${_selectedDateTime.minute.toString().padLeft(2, '0')}',
@@ -415,9 +415,9 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
               child: ElevatedButton(
                 onPressed: _isValid && !_isSaving ? _saveVital : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.lightPrimary,
+                  backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                   foregroundColor: Colors.white,
-                  disabledBackgroundColor: AppColors.lightPrimary.withValues(alpha: 0.4),
+                  disabledBackgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.4),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 ),
                 child: _isSaving

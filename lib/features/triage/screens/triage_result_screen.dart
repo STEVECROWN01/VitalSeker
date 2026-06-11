@@ -93,16 +93,16 @@ class TriageResultScreen extends StatelessWidget {
 
             // Recommendations
             if (recommendations.isNotEmpty) ...[
-              _SectionTitle(title: 'Recommendations', icon: Icons.lightbulb_outline, color: AppColors.lightPrimary),
+              _SectionTitle(title: 'Recommendations', icon: Icons.lightbulb_outline, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
               const SizedBox(height: 8),
               ...recommendations.asMap().entries.map((entry) => Card(
                 child: ListTile(
                   leading: CircleAvatar(
                     radius: 14,
-                    backgroundColor: AppColors.lightPrimary.withValues(alpha: 0.12),
+                    backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                     child: Text(
                       '${entry.key + 1}',
-                      style: const TextStyle(fontFamily: 'JetBrainsMono', fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.lightPrimary),
+                      style: TextStyle(fontFamily: 'JetBrainsMono', fontSize: 12, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                     ),
                   ),
                   title: Text(entry.value, style: const TextStyle(fontFamily: 'Inter', fontSize: 14)),
@@ -113,7 +113,7 @@ class TriageResultScreen extends StatelessWidget {
 
             // Possible Conditions
             if (possibleConditions.isNotEmpty) ...[
-              _SectionTitle(title: 'Possible Conditions', icon: Icons.medical_information_outlined, color: AppColors.lightSecondary),
+              _SectionTitle(title: 'Possible Conditions', icon: Icons.medical_information_outlined, color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary),
               const SizedBox(height: 8),
               ...possibleConditions.map((condition) {
                 final c = condition as Map<String, dynamic>;

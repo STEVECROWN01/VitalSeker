@@ -411,7 +411,7 @@ class _StatisticsRow extends StatelessWidget {
           label: 'Average',
           value: _formatValue(avg),
           unit: vitalType.unit,
-          color: AppColors.lightPrimary,
+          color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
           isDark: isDark,
         ),
         const SizedBox(width: 8),
@@ -711,11 +711,11 @@ class _DataRow extends StatelessWidget {
   Color get _sourceColor {
     switch (vital.source) {
       case 'manual':
-        return AppColors.lightPrimary;
+        return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
       case 'device':
         return AppColors.lightInfo;
       case 'import':
-        return AppColors.lightSecondary;
+        return isDark ? AppColors.darkSecondary : AppColors.lightSecondary;
       default:
         return AppColors.grey400;
     }

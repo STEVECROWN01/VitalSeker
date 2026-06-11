@@ -192,7 +192,7 @@ class _SectionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icon, size: 18, color: AppColors.lightPrimary),
+              Icon(icon, size: 18, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
               const SizedBox(width: 8),
               Text(
                 title,
@@ -239,10 +239,10 @@ class _FeatureItem extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: AppColors.lightPrimary.withValues(alpha: 0.12),
+              color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(icon, color: AppColors.lightPrimary, size: 18),
+            child: Icon(icon, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 18),
           ),
           const SizedBox(width: 12),
           Expanded(

@@ -85,10 +85,10 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.lightPrimary.withValues(alpha: 0.12),
+                        color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.healing_outlined, color: AppColors.lightPrimary, size: 20),
+                      child: Icon(Icons.healing_outlined, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 20),
                     ),
                     title: const Text('Triage Reminders', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
@@ -96,7 +96,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
                     ),
                     value: _triageReminders,
-                    activeColor: AppColors.lightPrimary,
+                    activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     onChanged: (v) => _onChanged(() => _triageReminders = v, 'triage_reminders', v),
                   ),
                   SwitchListTile(
@@ -115,7 +115,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
                     ),
                     value: _medicationReminders,
-                    activeColor: AppColors.lightPrimary,
+                    activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     onChanged: (v) => _onChanged(() => _medicationReminders = v, 'medication_reminders', v),
                   ),
                   SwitchListTile(
@@ -123,10 +123,10 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.lightSecondary.withValues(alpha: 0.12),
+                        color: (isDark ? AppColors.darkSecondary : AppColors.lightSecondary).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.calendar_today_outlined, color: AppColors.lightSecondary, size: 20),
+                      child: Icon(Icons.calendar_today_outlined, color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary, size: 20),
                     ),
                     title: const Text('Appointment Reminders', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
@@ -134,7 +134,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
                     ),
                     value: _appointmentReminders,
-                    activeColor: AppColors.lightPrimary,
+                    activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     onChanged: (v) => _onChanged(() => _appointmentReminders = v, 'appointment_reminders', v),
                   ),
                   SwitchListTile(
@@ -153,7 +153,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
                     ),
                     value: _vitalsLoggingReminders,
-                    activeColor: AppColors.lightPrimary,
+                    activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     onChanged: (v) => _onChanged(() => _vitalsLoggingReminders = v, 'vitals_logging_reminders', v),
                   ),
                 ],
@@ -182,7 +182,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
                     ),
                     value: _healthTips,
-                    activeColor: AppColors.lightPrimary,
+                    activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     onChanged: (v) => _onChanged(() => _healthTips = v, 'health_tips', v),
                   ),
                   SwitchListTile(
@@ -190,10 +190,10 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.lightPrimary.withValues(alpha: 0.12),
+                        color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.summarize_outlined, color: AppColors.lightPrimary, size: 20),
+                      child: Icon(Icons.summarize_outlined, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 20),
                     ),
                     title: const Text('Weekly Report', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
@@ -201,7 +201,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
                     ),
                     value: _weeklyReport,
-                    activeColor: AppColors.lightPrimary,
+                    activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     onChanged: (v) => _onChanged(() => _weeklyReport = v, 'weekly_report', v),
                   ),
                 ],

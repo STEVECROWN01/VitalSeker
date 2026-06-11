@@ -74,14 +74,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     children: [
                       CircleAvatar(
                         radius: 50,
-                        backgroundColor: AppColors.lightPrimary.withValues(alpha: 0.12),
+                        backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                         child: Text(
                           (profile?.fullName ?? 'U')[0].toUpperCase(),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: 'ClashDisplay',
                             fontSize: 36,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.lightPrimary,
+                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                           ),
                         ),
                       ),

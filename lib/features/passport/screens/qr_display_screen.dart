@@ -72,7 +72,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.lightPrimary.withValues(alpha: 0.15),
+                        color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.15),
                         blurRadius: 30,
                         offset: const Offset(0, 10),
                       ),
@@ -83,7 +83,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.favorite_rounded, color: AppColors.lightPrimary, size: 20),
+                          Icon(Icons.favorite_rounded, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 20),
                           const SizedBox(width: 6),
                           Text(
                             'VitalSeker Health Passport',
@@ -102,9 +102,9 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                         version: QrVersions.auto,
                         size: 250,
                         backgroundColor: Colors.white,
-                        eyeStyle: const QrEyeStyle(
+                        eyeStyle: QrEyeStyle(
                           eyeShape: QrEyeShape.circle,
-                          color: AppColors.lightPrimary,
+                          color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                         ),
                         dataModuleStyle: const QrDataModuleStyle(
                           dataModuleShape: QrDataModuleShape.circle,

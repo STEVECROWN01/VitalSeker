@@ -90,13 +90,14 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
   }
 
   Color _typeColor(String? type) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     switch (type) {
       case 'labResults':
         return AppColors.lightInfo;
       case 'prescriptions':
-        return AppColors.lightPrimary;
+        return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
       case 'imaging':
-        return AppColors.lightSecondary;
+        return isDark ? AppColors.darkSecondary : AppColors.lightSecondary;
       default:
         return AppColors.lightWarning;
     }
@@ -201,7 +202,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                   }
                 }
               },
-              style: ElevatedButton.styleFrom(backgroundColor: AppColors.lightPrimary),
+              style: ElevatedButton.styleFrom(backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
               child: const Text('Add', style: TextStyle(color: Colors.white)),
             ),
           ],
@@ -283,7 +284,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                 selected: isSelected,
                                 onSelected: (_) => setState(() => _selectedFilter = type),
                                 backgroundColor: isDark ? AppColors.darkSurface : AppColors.grey50,
-                                selectedColor: AppColors.lightPrimary,
+                                selectedColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                                 checkmarkColor: Colors.white,
                               ),
                             );
@@ -402,7 +403,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddRecordDialog,
-        backgroundColor: AppColors.lightPrimary,
+        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

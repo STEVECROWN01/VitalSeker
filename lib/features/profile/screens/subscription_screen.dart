@@ -168,7 +168,7 @@ class _PlanCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: isRecommended
-            ? Border.all(color: AppColors.lightPrimary, width: 2)
+            ? Border.all(color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, width: 2)
             : null,
       ),
       child: Card(
@@ -199,7 +199,7 @@ class _PlanCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: AppColors.lightPrimary,
+                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: const Text(
@@ -245,7 +245,7 @@ class _PlanCard extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Row(
                   children: [
-                    const Icon(Icons.check_circle, size: 16, color: AppColors.lightPrimary),
+                    Icon(Icons.check_circle, size: 16, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                     const SizedBox(width: 8),
                     Text(
                       f,
@@ -270,7 +270,7 @@ class _PlanCard extends StatelessWidget {
                         onPressed: onTap,
                         style: isRecommended
                             ? ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.lightPrimary,
+                                backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                               )
                             : null,
                         child: Text(planName == 'Free' ? 'Downgrade' : 'Upgrade to $planName'),

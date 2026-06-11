@@ -319,7 +319,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                   children: [
                     Icon(
                       Icons.notifications_outlined,
-                      color: AppColors.lightPrimary,
+                      color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                       size: 22,
                     ),
                     const SizedBox(width: 12),
@@ -337,7 +337,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                     Switch(
                       value: _reminderEnabled,
                       onChanged: (v) => setState(() => _reminderEnabled = v),
-                      activeColor: AppColors.lightPrimary,
+                      activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     ),
                   ],
                 ),
@@ -351,7 +351,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 child: ElevatedButton(
                   onPressed: _isSaving ? null : _saveAppointment,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.lightPrimary,
+                    backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                     elevation: 2,

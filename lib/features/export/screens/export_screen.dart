@@ -190,7 +190,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                 ),
                 value: _includeHistory,
                 onChanged: (value) => setState(() => _includeHistory = value),
-                activeColor: AppColors.lightPrimary,
+                activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
               ),
             ),
             const SizedBox(height: 32),

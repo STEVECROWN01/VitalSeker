@@ -782,12 +782,12 @@ class _EmergencyContactCard extends StatelessWidget {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: AppColors.lightPrimary
+                color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
                     .withValues(alpha: isDark ? 0.15 : 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(Icons.person,
-                  color: AppColors.lightPrimary, size: 22),
+              child: Icon(Icons.person,
+                  color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 22),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -859,10 +859,10 @@ class _EmergencyContactCard extends StatelessWidget {
             IconButton(
               onPressed: onText,
               icon: Icon(Icons.message,
-                  color: AppColors.lightInfo, size: 22),
+                  color: isDark ? AppColors.darkInfo : AppColors.lightInfo, size: 22),
               style: IconButton.styleFrom(
                 backgroundColor:
-                    AppColors.lightInfo.withValues(alpha: isDark ? 0.12 : 0.08),
+                    (isDark ? AppColors.darkInfo : AppColors.lightInfo).withValues(alpha: isDark ? 0.12 : 0.08),
                 minimumSize: const Size(40, 40),
               ),
             ),

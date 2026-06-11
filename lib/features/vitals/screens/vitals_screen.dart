@@ -31,7 +31,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
       appBar: AppBar(title: const Text('Vitals')),
       body: RefreshIndicator(
         onRefresh: _handleRefresh,
-        color: AppColors.lightPrimary,
+        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
         child: vitalsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, _) => Center(
@@ -75,12 +75,12 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                           width: 80,
                           height: 80,
                           decoration: BoxDecoration(
-                            color: AppColors.lightPrimary.withValues(alpha: 0.12),
+                            color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(24),
                           ),
                           child: Icon(
                             Icons.monitor_heart_outlined,
-                            color: AppColors.lightPrimary,
+                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                             size: 40,
                           ),
                         ),
@@ -114,7 +114,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                             style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.lightPrimary,
+                            backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -184,7 +184,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
       floatingActionButton: FloatingActionButton(
         heroTag: 'add_vital_fab',
         onPressed: () => context.push(AppConfig.addVital),
-        backgroundColor: AppColors.lightPrimary,
+        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
@@ -213,7 +213,7 @@ class _SegmentButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             color: isSelected
-                ? AppColors.lightPrimary
+                ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
           ),

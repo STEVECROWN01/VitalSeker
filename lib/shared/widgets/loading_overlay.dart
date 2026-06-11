@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 class LoadingOverlay extends StatelessWidget {
   final bool isLoading;
@@ -14,6 +15,8 @@ class LoadingOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Stack(
       children: [
         child,
@@ -22,19 +25,21 @@ class LoadingOverlay extends StatelessWidget {
             color: Colors.black.withValues(alpha: 0.5),
             child: Center(
               child: Card(
+                color: AppColors.cardBackground(isDark),
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const CircularProgressIndicator(),
+                      const CircularProgressIndicator(color: AppColors.lightPrimary),
                       if (message != null) ...[
                         const SizedBox(height: 16),
                         Text(
                           message!,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
+                            color: AppColors.textPrimary(isDark),
                           ),
                           textAlign: TextAlign.center,
                         ),

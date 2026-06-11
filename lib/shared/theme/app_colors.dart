@@ -56,4 +56,39 @@ class AppColors {
   static const Color urgencyMedium = Color(0xFFFF9800);
   static const Color urgencyHigh = Color(0xFFFF5722);
   static const Color urgencyEmergency = Color(0xFFE53935);
+
+  // ── Dark-mode-aware semantic helpers ──
+  // These replace the common pattern of `isDark ? darkXxx : lightXxx`
+
+  static Color surface(bool isDark) => isDark ? darkSurface : lightSurface;
+  static Color background(bool isDark) => isDark ? darkBackground : lightBackground;
+  static Color onBackground(bool isDark) => isDark ? darkOnBackground : lightOnBackground;
+  static Color onSurface(bool isDark) => isDark ? darkOnSurface : lightOnSurface;
+  static Color primary(bool isDark) => isDark ? darkPrimary : lightPrimary;
+  static Color secondary(bool isDark) => isDark ? darkSecondary : lightSecondary;
+  static Color error(bool isDark) => isDark ? darkError : lightError;
+
+  // Card / input fill colors
+  static Color cardBackground(bool isDark) => isDark ? darkSurface : lightSurface;
+  static Color inputFill(bool isDark) => isDark ? const Color(0xFF1E2230) : grey50;
+  static Color subtleBackground(bool isDark) => isDark ? const Color(0xFF1E2230) : grey50;
+  static Color border(bool isDark) => isDark ? const Color(0xFF2A2F3E) : grey200;
+  static Color borderLight(bool isDark) => isDark ? const Color(0xFF1E2230) : grey100;
+  static Color divider(bool isDark) => isDark ? const Color(0xFF1E2230) : grey100;
+
+  // Text colors
+  static Color textPrimary(bool isDark) => isDark ? darkOnBackground : lightOnBackground;
+  static Color textSecondary(bool isDark) => isDark ? grey400 : grey500;
+  static Color textHint(bool isDark) => isDark ? grey500 : grey400;
+  static Color textTertiary(bool isDark) => isDark ? grey600 : grey300;
+
+  // Shadow
+  static BoxShadow shadow(bool isDark) => isDark
+      ? BoxShadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))
+      : BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 12, offset: const Offset(0, 4));
+}
+
+/// Extension on [BuildContext] for quick dark-mode-aware color access
+extension AppColorsX on BuildContext {
+  bool get isDark => Theme.of(this).brightness == Brightness.dark;
 }

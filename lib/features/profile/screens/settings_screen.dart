@@ -235,7 +235,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           ...['English', 'French', 'Spanish', 'Arabic', 'Swahili'].map((lang) => ListTile(
                             title: Text(lang, style: const TextStyle(fontFamily: 'Inter')),
                             trailing: _selectedLanguage == lang
-                                ? const Icon(Icons.check, color: AppColors.lightPrimary)
+                                ? Icon(Icons.check, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
                                 : null,
                             onTap: () {
                               setState(() => _selectedLanguage = lang);

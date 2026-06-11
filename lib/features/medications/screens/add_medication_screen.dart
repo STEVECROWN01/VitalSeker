@@ -264,7 +264,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                   Switch(
                     value: _hasEndDate,
                     onChanged: (v) => setState(() => _hasEndDate = v),
-                    activeColor: AppColors.lightPrimary,
+                    activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                   ),
                   Text(
                     'Set end date',
@@ -392,7 +392,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                   children: [
                     Icon(
                       Icons.notifications_outlined,
-                      color: AppColors.lightPrimary,
+                      color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                       size: 22,
                     ),
                     const SizedBox(width: 12),
@@ -410,7 +410,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                     Switch(
                       value: _remindersEnabled,
                       onChanged: (v) => setState(() => _remindersEnabled = v),
-                      activeColor: AppColors.lightPrimary,
+                      activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     ),
                   ],
                 ),
@@ -424,7 +424,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                 child: ElevatedButton(
                   onPressed: _isSaving ? null : _saveMedication,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.lightPrimary,
+                    backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                     elevation: 2,

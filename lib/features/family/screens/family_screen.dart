@@ -121,10 +121,10 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: AppColors.lightPrimary.withValues(alpha: 0.12),
+                color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(Icons.person_add, color: AppColors.lightPrimary, size: 20),
+              child: Icon(Icons.person_add, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 20),
             ),
             const SizedBox(width: 12),
             const Text('Add Family Member'),
@@ -197,7 +197,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
       appBar: AppBar(title: const Text('Family Profiles')),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddDialog,
-        backgroundColor: AppColors.lightPrimary,
+        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
         child: const Icon(Icons.person_add, color: Colors.white),
       ),
       body: profilesAsync.when(
@@ -280,14 +280,14 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                 child: ListTile(
                   leading: CircleAvatar(
                     radius: 24,
-                    backgroundColor: AppColors.lightPrimary.withValues(alpha: 0.12),
+                    backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                     child: Text(
                       profile.fullName.isNotEmpty ? profile.fullName[0].toUpperCase() : '?',
                       style: const TextStyle(
                         fontFamily: 'ClashDisplay',
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.lightPrimary,
+                        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                       ),
                     ),
                   ),

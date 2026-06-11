@@ -216,14 +216,14 @@ class DashboardScreen extends ConsumerWidget {
                       _QuickActionCard(
                         icon: Icons.monitor_heart,
                         label: 'Log Vitals',
-                        color: AppColors.lightPrimary,
+                        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                         onTap: () => context.push(AppConfig.addVital),
                       ),
                       const SizedBox(width: 12),
                       _QuickActionCard(
                         icon: Icons.healing,
                         label: 'Start Triage',
-                        color: AppColors.lightSecondary,
+                        color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
                         onTap: () => context.push(AppConfig.triage),
                       ),
                       const SizedBox(width: 12),
@@ -345,10 +345,10 @@ class DashboardScreen extends ConsumerWidget {
                           width: 44,
                           height: 44,
                           decoration: BoxDecoration(
-                            color: AppColors.lightPrimary.withValues(alpha: 0.15),
+                            color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Icon(Icons.tips_and_updates, color: AppColors.lightPrimary, size: 24),
+                          child: Icon(Icons.tips_and_updates, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 24),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
@@ -481,8 +481,8 @@ class DashboardScreen extends ConsumerWidget {
                                 ElevatedButton(
                                   onPressed: () => context.push(AppConfig.subscription),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    foregroundColor: AppColors.lightPrimary,
+                                    backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
+                                    foregroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                                   ),
                                   child: const Text('Upgrade', style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600)),
                                 ),
@@ -534,7 +534,7 @@ class _VitalScoreCard extends StatelessWidget {
 
     return Card(
       elevation: 4,
-      shadowColor: AppColors.lightPrimary.withValues(alpha: 0.2),
+      shadowColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.2),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Row(
@@ -568,13 +568,13 @@ class _VitalScoreCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppColors.lightPrimary.withValues(alpha: 0.12),
+                        color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.workspace_premium, size: 14, color: AppColors.lightPrimary),
+                          Icon(Icons.workspace_premium, size: 14, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
                           SizedBox(width: 4),
                           Text(
                             'PRO',
@@ -582,7 +582,7 @@ class _VitalScoreCard extends StatelessWidget {
                               fontFamily: 'DMSans',
                               fontSize: 11,
                               fontWeight: FontWeight.w700,
-                              color: AppColors.lightPrimary,
+                              color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                             ),
                           ),
                         ],

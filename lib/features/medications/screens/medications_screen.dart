@@ -155,7 +155,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppConfig.addMedication),
-        backgroundColor: AppColors.lightPrimary,
+        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
         child: const Icon(Icons.add, color: Colors.white),
       ),
       body: medicationsAsync.when(
@@ -285,14 +285,14 @@ class _FilterChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: selected
-              ? AppColors.lightPrimary
+              ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
               : isDark
                   ? const Color(0xFF1E2230)
                   : AppColors.grey50,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: selected
-                ? AppColors.lightPrimary
+                ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
                 : isDark
                     ? const Color(0xFF2A2F3E)
                     : AppColors.grey100,
@@ -330,7 +330,7 @@ class _MedicationCard extends StatelessWidget {
   Color _statusColor() {
     switch (medication.status) {
       case MedicationStatus.active:
-        return AppColors.lightPrimary;
+        return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
       case MedicationStatus.completed:
         return AppColors.lightSuccess;
       case MedicationStatus.discontinued:
