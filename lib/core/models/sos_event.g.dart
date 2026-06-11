@@ -12,10 +12,10 @@ SosEvent _$SosEventFromJson(Map<String, dynamic> json) => SosEvent(
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
       locationAddress: json['location_address'] as String?,
-      contactsNotified: (json['contacts_notified'] as List<dynamic>)
-          .map(
+      contactsNotified: (json['contacts_notified'] as List<dynamic>?)
+          ?.map(
               (e) => ContactNotification.fromJson(e as Map<String, dynamic>))
-          .toList(),
+          .toList() ?? [],
       smsSent: json['sms_sent'] as bool? ?? false,
       resolved: json['resolved'] as bool? ?? false,
       resolvedAt: json['resolved_at'] == null

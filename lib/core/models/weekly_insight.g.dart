@@ -15,7 +15,7 @@ WeeklyInsight _$WeeklyInsightFromJson(Map<String, dynamic> json) =>
       summary: json['summary'] as String,
       trendAnalysis:
           TrendAnalysis.fromJson(json['trend_analysis'] as Map<String, dynamic>),
-      recommendations: (json['recommendations'] as List<dynamic>).cast<String>(),
+      recommendations: (json['recommendations'] as List<dynamic>?)?.cast<String>() ?? [],
       vitalScoreChange: json['vital_score_change'] as int? ?? 0,
       generatedAt: DateTime.parse(json['generated_at'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -40,7 +40,7 @@ TrendAnalysis _$TrendAnalysisFromJson(Map<String, dynamic> json) =>
       symptomFrequency: json['symptom_frequency'] as int,
       avgSeverity: (json['avg_severity'] as num).toDouble(),
       direction: json['direction'] as String?,
-      keyFindings: (json['key_findings'] as List<dynamic>?)?.cast<String>(),
+      keyFindings: (json['key_findings'] as List<dynamic>?)?.cast<String>() ?? [],
     );
 
 Map<String, dynamic> _$TrendAnalysisToJson(TrendAnalysis instance) =>

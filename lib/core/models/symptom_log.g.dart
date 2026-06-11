@@ -9,10 +9,10 @@ part of 'symptom_log.dart';
 SymptomLog _$SymptomLogFromJson(Map<String, dynamic> json) => SymptomLog(
       id: json['id'] as String,
       userId: json['user_id'] as String,
-      symptoms: (json['symptoms'] as List<dynamic>).cast<String>(),
+      symptoms: (json['symptoms'] as List<dynamic>?)?.cast<String>() ?? [],
       severity: json['severity'] as int,
       duration: json['duration'] as String?,
-      bodyRegions: (json['body_regions'] as List<dynamic>).cast<String>(),
+      bodyRegions: (json['body_regions'] as List<dynamic>?)?.cast<String>() ?? [],
       triageResult: json['triage_result'] == null
           ? null
           : TriageResult.fromJson(json['triage_result'] as Map<String, dynamic>),
@@ -40,14 +40,14 @@ Map<String, dynamic> _$SymptomLogToJson(SymptomLog instance) =>
 TriageResult _$TriageResultFromJson(Map<String, dynamic> json) => TriageResult(
       urgencyLevel: json['urgency_level'] as String,
       urgencyScore: json['urgency_score'] as int,
-      possibleConditions: (json['possible_conditions'] as List<dynamic>)
-          .map((e) => PossibleCondition.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      recommendations: (json['recommendations'] as List<dynamic>).cast<String>(),
-      redFlags: (json['red_flags'] as List<dynamic>).cast<String>(),
+      possibleConditions: (json['possible_conditions'] as List<dynamic>?)
+          ?.map((e) => PossibleCondition.fromJson(e as Map<String, dynamic>))
+          .toList() ?? [],
+      recommendations: (json['recommendations'] as List<dynamic>?)?.cast<String>() ?? [],
+      redFlags: (json['red_flags'] as List<dynamic>?)?.cast<String>() ?? [],
       seekCare: json['seek_care'] as String,
       followUpQuestions:
-          (json['follow_up_questions'] as List<dynamic>).cast<String>(),
+          (json['follow_up_questions'] as List<dynamic>?)?.cast<String>() ?? [],
       disclaimer: json['disclaimer'] as String,
     );
 

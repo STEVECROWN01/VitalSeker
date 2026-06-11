@@ -32,7 +32,13 @@ serve(async (req: Request) => {
 
     const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY')
     if (!anthropicApiKey) {
-      return new Response(JSON.stringify({ error: 'AI service not configured' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
+      console.error('ANTHROPIC_API_KEY is not set in edge function environment')
+      return new Response(
+        JSON.stringify({ 
+          error: 'AI service not configured. Please set the ANTHROPIC_API_KEY secret in your Supabase project: go to Edge Functions > vitalseker-triage > Settings > Secrets and add ANTHROPIC_API_KEY with your Anthropic API key.' 
+        }), 
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
     }
 
     const prompt = `You are VitalSeker AI, a medical triage assistant. Analyze the following symptoms and provide a structured triage assessment.

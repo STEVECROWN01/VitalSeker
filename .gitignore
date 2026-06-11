@@ -48,3 +48,10 @@ app.*.map.json
 .env
 .env.*
 *.env
+
+# Sensitive config files
+android/app/google-services.json
+supabase/.temp/
+
+# Flutter plugins cache
+.flutter-plugins

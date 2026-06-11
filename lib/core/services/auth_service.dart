@@ -17,16 +17,17 @@ class AuthService {
   User? get currentUser => _client.auth.currentUser;
   bool get isAuthenticated => currentUser != null;
 
+  /// Hardcoded fallback Client ID — ensures Google Sign-In always works
+  /// even if .env is missing or not loaded properly
+  static const String _fallbackGoogleWebClientId =
+      '659448117328-evkg728qtc9n2t8bpqitb7d648jn49u5.apps.googleusercontent.com';
+
   /// Get the Google Web Client ID for OAuth
-  /// This should be configured in your Google Cloud Console / Firebase project
-  /// and set as GOOGLE_WEB_CLIENT_ID in .env or Supabase dashboard
-  String? get _googleWebClientId {
-    // Check .env first, then fall back to a placeholder
+  /// Priority: .env → hardcoded fallback
+  String get _googleWebClientId {
     final envClientId = dotenv.env['GOOGLE_WEB_CLIENT_ID'];
     if (envClientId != null && envClientId.isNotEmpty) return envClientId;
-
-    // If no client ID is configured, return null (Google Sign-In won't work without it)
-    return null;
+    return _fallbackGoogleWebClientId;
   }
 
   /// Get a user-friendly error message from an exception
@@ -77,6 +78,9 @@ class AuthService {
     if (errorString.contains('notAvailable')) {
       return 'Apple Sign-In is only available on iOS and macOS devices.';
     }
+    if (errorString.contains('not yet fully configured on the server')) {
+      return 'Apple Sign-In is not yet fully configured on the server. Please use email/password or Google Sign-In for now.';
+    }
 
     // Generic fallback
     if (errorString.contains('statusCode: 401')) {
@@ -125,14 +129,6 @@ class AuthService {
     try {
       final clientId = _googleWebClientId;
 
-      if (clientId == null || clientId.isEmpty) {
-        throw Exception(
-          'Google Sign-In requires a Web Client ID to be configured. '
-          'Please add your Google Web Client ID to the .env file as GOOGLE_WEB_CLIENT_ID, '
-          'or use email/password sign-in for now.'
-        );
-      }
-
       final googleSignIn = GoogleSignIn(
         serverClientId: clientId,
         scopes: ['email', 'profile'],
@@ -147,8 +143,8 @@ class AuthService {
 
       if (idToken == null) {
         throw Exception(
-          'Google Sign-In requires a Web Client ID to be configured. '
-          'Please add your Google Web Client ID to the .env file as GOOGLE_WEB_CLIENT_ID, '
+          'Google Sign-In failed to retrieve ID token. '
+          'Please make sure your Google Cloud Console has the correct OAuth Web Client configured, '
           'or use email/password sign-in for now.'
         );
       }
@@ -198,8 +194,15 @@ class AuthService {
       );
       return response;
     } catch (e) {
-      if (e.toString().contains('not available') || e.toString().contains('notAvailable')) {
+      final errorStr = e.toString();
+      if (errorStr.contains('not available') || errorStr.contains('notAvailable')) {
         throw Exception('Apple Sign-In is only available on Apple devices. Please use email/password instead.');
+      }
+      if (errorStr.contains('Unsupported provider') || errorStr.contains('missing OAuth client ID')) {
+        throw Exception(
+          'Apple Sign-In is not yet fully configured on the server. '
+          'Please use email/password or Google Sign-In for now.'
+        );
       }
       rethrow;
     }

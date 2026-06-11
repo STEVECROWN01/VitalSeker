@@ -24,11 +24,12 @@ class DashboardScreen extends ConsumerWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // App Bar with gradient
+          // App Bar with gradient and user info
           SliverAppBar(
-            expandedHeight: 200,
+            expandedHeight: 220,
             floating: false,
             pinned: true,
+            backgroundColor: isDark ? const Color(0xFF0A2E22) : const Color(0xFF0B7A5B),
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: BoxDecoration(
@@ -50,34 +51,73 @@ class DashboardScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Header row with greeting and avatar/notification
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Hello,',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    color: Colors.white.withValues(alpha: 0.8),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Hello,',
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 14,
+                                      color: Colors.white.withValues(alpha: 0.8),
+                                    ),
                                   ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    profileAsync.maybeWhen(
+                                      data: (p) => p?.fullName ?? 'User',
+                                      orElse: () => 'User',
+                                    ),
+                                    style: const TextStyle(
+                                      fontFamily: 'ClashDisplay',
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            // User avatar
+                            Container(
+                              width: 44,
+                              height: 44,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(
+                                  color: Colors.white.withValues(alpha: 0.3),
+                                  width: 1.5,
                                 ),
-                                Text(
+                              ),
+                              child: Center(
+                                child: Text(
                                   profileAsync.maybeWhen(
-                                    data: (p) => p?.fullName?.split(' ').first ?? 'User',
-                                    orElse: () => 'User',
+                                    data: (p) {
+                                      final name = p?.fullName ?? 'U';
+                                      return name.isNotEmpty ? name[0].toUpperCase() : 'U';
+                                    },
+                                    orElse: () => 'U',
                                   ),
                                   style: const TextStyle(
                                     fontFamily: 'ClashDisplay',
-                                    fontSize: 24,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white,
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
+                            const SizedBox(width: 10),
+                            // Notification bell
                             Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
@@ -88,6 +128,49 @@ class DashboardScreen extends ConsumerWidget {
                             ),
                           ],
                         ).animate().fadeIn(duration: 400.ms),
+                        const SizedBox(height: 16),
+                        // Subtitle / health summary
+                        profileAsync.maybeWhen(
+                          data: (p) {
+                            final bloodType = p?.bloodType;
+                            final allergies = p?.allergies ?? [];
+                            if (bloodType != null || allergies.isNotEmpty) {
+                              return Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  children: [
+                                    if (bloodType != null) ...[
+                                      Icon(Icons.bloodtype, color: Colors.white.withValues(alpha: 0.8), size: 16),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        bloodType,
+                                        style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: Colors.white.withValues(alpha: 0.9), fontWeight: FontWeight.w600),
+                                      ),
+                                      if (allergies.isNotEmpty) const SizedBox(width: 12),
+                                    ],
+                                    if (allergies.isNotEmpty) ...[
+                                      Icon(Icons.warning_amber, color: Colors.orange.shade300, size: 16),
+                                      const SizedBox(width: 4),
+                                      Expanded(
+                                        child: Text(
+                                          '${allergies.length} allerg${allergies.length == 1 ? 'y' : 'ies'}',
+                                          style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: Colors.white.withValues(alpha: 0.9)),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              );
+                            }
+                            return const SizedBox.shrink();
+                          },
+                          orElse: () => const SizedBox.shrink(),
+                        ),
                       ],
                     ),
                   ),
@@ -96,187 +179,184 @@ class DashboardScreen extends ConsumerWidget {
             ),
           ),
 
-          // Content
+          // Content with proper spacing below the app bar
           SliverToBoxAdapter(
-            child: Transform.translate(
-              offset: const Offset(0, -40),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    // Vital Score Card
-                    _VitalScoreCard(
-                      vitalScore: passportAsync.maybeWhen(
-                        data: (p) => p?.vitalScore ?? 0,
-                        orElse: () => 0,
-                      ),
-                      isPro: subAsync.maybeWhen(
-                        data: (s) => s?.isPro ?? false,
-                        orElse: () => false,
-                      ),
-                    ).animate().slideY(duration: 500.ms, begin: 0.2),
-                    const SizedBox(height: 20),
-
-                    // Quick Actions
-                    Text(
-                      'Quick Actions',
-                      style: TextStyle(
-                        fontFamily: 'ClashDisplay',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
-                      ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: Column(
+                children: [
+                  // Vital Score Card
+                  _VitalScoreCard(
+                    vitalScore: passportAsync.maybeWhen(
+                      data: (p) => p?.vitalScore ?? 0,
+                      orElse: () => 0,
                     ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        _QuickActionCard(
-                          icon: Icons.healing,
-                          label: 'Triage',
-                          color: AppColors.lightSecondary,
-                          onTap: () => context.push(AppConfig.triage),
-                        ),
-                        const SizedBox(width: 12),
-                        _QuickActionCard(
-                          icon: Icons.badge,
-                          label: 'Passport',
-                          color: AppColors.lightPrimary,
-                          onTap: () => context.push(AppConfig.passport),
-                        ),
-                        const SizedBox(width: 12),
-                        _QuickActionCard(
-                          icon: Icons.insights,
-                          label: 'Insights',
-                          color: AppColors.urgencyMedium,
-                          onTap: () => context.push(AppConfig.insights),
-                        ),
-                        const SizedBox(width: 12),
-                        _QuickActionCard(
-                          icon: Icons.family_restroom,
-                          label: 'Family',
-                          color: AppColors.urgencyLow,
-                          onTap: () => context.push(AppConfig.family),
-                        ),
-                      ],
-                    ).animate().fadeIn(duration: 400.ms, delay: 200.ms),
-                    const SizedBox(height: 28),
-
-                    // Recent Activity
-                    Text(
-                      'Recent Activity',
-                      style: TextStyle(
-                        fontFamily: 'ClashDisplay',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
-                      ),
+                    isPro: subAsync.maybeWhen(
+                      data: (s) => s?.isPro ?? false,
+                      orElse: () => false,
                     ),
-                    const SizedBox(height: 12),
-                    logsAsync.maybeWhen(
-                      data: (logs) {
-                        if (logs.isEmpty) {
-                          return _EmptyStateCard(
-                            icon: Icons.history,
-                            message: 'No symptom logs yet',
-                            subtitle: 'Start your first triage to see activity here',
-                          );
-                        }
-                        return Column(
-                          children: logs.take(5).map((log) {
-                            return Card(
-                              margin: const EdgeInsets.only(bottom: 8),
-                              child: ListTile(
-                                leading: Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: _severityColor(log.severity).withValues(alpha: 0.12),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Icon(Icons.healing, color: _severityColor(log.severity), size: 20),
-                                ),
-                                title: Text(
-                                  log.symptoms.take(2).join(', '),
-                                  style: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
-                                ),
-                                subtitle: Text(
-                                  'Severity: ${log.severity}/10',
-                                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
-                                ),
-                                trailing: Text(
-                                  _formatDate(log.loggedAt),
-                                  style: TextStyle(fontFamily: 'Inter', fontSize: 11, color: isDark ? AppColors.grey500 : AppColors.grey400),
-                                ),
-                              ),
-                            );
-                          }).toList(),
+                  ).animate().slideY(duration: 500.ms, begin: 0.2),
+                  const SizedBox(height: 20),
+
+                  // Quick Actions
+                  Text(
+                    'Quick Actions',
+                    style: TextStyle(
+                      fontFamily: 'ClashDisplay',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      _QuickActionCard(
+                        icon: Icons.healing,
+                        label: 'Triage',
+                        color: AppColors.lightSecondary,
+                        onTap: () => context.push(AppConfig.triage),
+                      ),
+                      const SizedBox(width: 12),
+                      _QuickActionCard(
+                        icon: Icons.badge,
+                        label: 'Passport',
+                        color: AppColors.lightPrimary,
+                        onTap: () => context.push(AppConfig.passport),
+                      ),
+                      const SizedBox(width: 12),
+                      _QuickActionCard(
+                        icon: Icons.insights,
+                        label: 'Insights',
+                        color: AppColors.urgencyMedium,
+                        onTap: () => context.push(AppConfig.insights),
+                      ),
+                      const SizedBox(width: 12),
+                      _QuickActionCard(
+                        icon: Icons.family_restroom,
+                        label: 'Family',
+                        color: AppColors.urgencyLow,
+                        onTap: () => context.push(AppConfig.family),
+                      ),
+                    ],
+                  ).animate().fadeIn(duration: 400.ms, delay: 200.ms),
+                  const SizedBox(height: 28),
+
+                  // Recent Activity
+                  Text(
+                    'Recent Activity',
+                    style: TextStyle(
+                      fontFamily: 'ClashDisplay',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  logsAsync.maybeWhen(
+                    data: (logs) {
+                      if (logs.isEmpty) {
+                        return _EmptyStateCard(
+                          icon: Icons.history,
+                          message: 'No symptom logs yet',
+                          subtitle: 'Start your first triage to see activity here',
                         );
-                      },
-                      loading: () => const Center(child: CircularProgressIndicator()),
-                      error: (_, __) => _EmptyStateCard(icon: Icons.error, message: 'Failed to load logs', subtitle: ''),
-                      orElse: () => const SizedBox.shrink(),
-                    ),
-                    const SizedBox(height: 20),
-
-                    // Subscription Banner
-                    subAsync.maybeWhen(
-                      data: (sub) {
-                        if (sub?.isPro != true) {
+                      }
+                      return Column(
+                        children: logs.take(5).map((log) {
                           return Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: AppColors.brandGradient,
-                                borderRadius: BorderRadius.circular(16),
+                            margin: const EdgeInsets.only(bottom: 8),
+                            child: ListTile(
+                              leading: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: _severityColor(log.severity).withValues(alpha: 0.12),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Icon(Icons.healing, color: _severityColor(log.severity), size: 20),
                               ),
-                              padding: const EdgeInsets.all(20),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          'Upgrade to Pro',
-                                          style: TextStyle(
-                                            fontFamily: 'ClashDisplay',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          '\$6.99/mo - Weekly insights, unlimited triage',
-                                          style: TextStyle(
-                                            fontFamily: 'Inter',
-                                            fontSize: 12,
-                                            color: Colors.white.withValues(alpha: 0.8),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () => context.push(AppConfig.subscription),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                      foregroundColor: AppColors.lightPrimary,
-                                    ),
-                                    child: const Text('Upgrade', style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600)),
-                                  ),
-                                ],
+                              title: Text(
+                                log.symptoms.take(2).join(', '),
+                                style: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                              ),
+                              subtitle: Text(
+                                'Severity: ${log.severity}/10',
+                                style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                              ),
+                              trailing: Text(
+                                _formatDate(log.loggedAt),
+                                style: TextStyle(fontFamily: 'Inter', fontSize: 11, color: isDark ? AppColors.grey500 : AppColors.grey400),
                               ),
                             ),
-                          ).animate().slideY(duration: 500.ms, begin: 0.1, delay: 300.ms);
-                        }
-                        return const SizedBox.shrink();
-                      },
-                      orElse: () => const SizedBox.shrink(),
-                    ),
-                    const SizedBox(height: 100), // Bottom nav space
-                  ],
-                ),
+                          );
+                        }).toList(),
+                      );
+                    },
+                    loading: () => const Center(child: CircularProgressIndicator()),
+                    error: (_, __) => _EmptyStateCard(icon: Icons.error, message: 'Failed to load logs', subtitle: ''),
+                    orElse: () => const SizedBox.shrink(),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Subscription Banner
+                  subAsync.maybeWhen(
+                    data: (sub) {
+                      if (sub?.isPro != true) {
+                        return Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: AppColors.brandGradient,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            padding: const EdgeInsets.all(20),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Upgrade to Pro',
+                                        style: TextStyle(
+                                          fontFamily: 'ClashDisplay',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        '\$6.99/mo - Weekly insights, unlimited triage',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: 12,
+                                          color: Colors.white.withValues(alpha: 0.8),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () => context.push(AppConfig.subscription),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: AppColors.lightPrimary,
+                                  ),
+                                  child: const Text('Upgrade', style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ).animate().slideY(duration: 500.ms, begin: 0.1, delay: 300.ms);
+                      }
+                      return const SizedBox.shrink();
+                    },
+                    orElse: () => const SizedBox.shrink(),
+                  ),
+                  const SizedBox(height: 100), // Bottom nav space
+                ],
               ),
             ),
           ),

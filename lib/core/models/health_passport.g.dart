@@ -16,13 +16,13 @@ HealthPassport _$HealthPassportFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['last_assessment_date'] as String),
       bloodType: json['blood_type'] as String?,
-      allergies: (json['allergies'] as List<dynamic>).cast<String>(),
-      medications: (json['medications'] as List<dynamic>).cast<String>(),
+      allergies: (json['allergies'] as List<dynamic>?)?.cast<String>() ?? [],
+      medications: (json['medications'] as List<dynamic>?)?.cast<String>() ?? [],
       chronicConditions:
-          (json['chronic_conditions'] as List<dynamic>).cast<String>(),
-      emergencyContacts: (json['emergency_contacts'] as List<dynamic>)
-          .map((e) => EmergencyContact.fromJson(e as Map<String, dynamic>))
-          .toList(),
+          (json['chronic_conditions'] as List<dynamic>?)?.cast<String>() ?? [],
+      emergencyContacts: (json['emergency_contacts'] as List<dynamic>?)
+          ?.map((e) => EmergencyContact.fromJson(e as Map<String, dynamic>))
+          .toList() ?? [],
       insuranceProvider: json['insurance_provider'] as String?,
       insurancePolicyNumber: json['insurance_policy_number'] as String?,
       isActive: json['is_active'] as bool? ?? true,

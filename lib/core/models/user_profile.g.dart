@@ -16,12 +16,13 @@ UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
           ? null
           : DateTime.parse(json['date_of_birth'] as String),
       bloodType: json['blood_type'] as String?,
-      allergies: (json['allergies'] as List<dynamic>).cast<String>(),
+      allergies: (json['allergies'] as List<dynamic>?)?.cast<String>() ?? [],
       chronicConditions:
-          (json['chronic_conditions'] as List<dynamic>).cast<String>(),
-      emergencyContacts: (json['emergency_contacts'] as List<dynamic>)
-          .map((e) => EmergencyContact.fromJson(e as Map<String, dynamic>))
-          .toList(),
+          (json['chronic_conditions'] as List<dynamic>?)?.cast<String>() ?? [],
+      emergencyContacts: (json['emergency_contacts'] as List<dynamic>?)
+              ?.map((e) => EmergencyContact.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       preferredLanguage: json['preferred_language'] as String? ?? 'en',
       themePreference: json['theme_preference'] as String? ?? 'system',
       onboardingCompleted: json['onboarding_completed'] as bool? ?? false,

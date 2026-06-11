@@ -104,8 +104,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
       if (mounted) {
         // Check if email confirmation is required
+        // When mailer_autoconfirm is off, the session is null until email is verified
+        final session = response.session;
         final user = response.user;
-        if (user != null && user.confirmationSentAt != null) {
+        final needsConfirmation = session == null ||
+            (user != null && user.confirmationSentAt != null);
+
+        if (needsConfirmation) {
           _showSuccess('Account created! Please check your email to verify your account.');
           // Navigate to login after a short delay
           await Future.delayed(const Duration(seconds: 2));
@@ -196,69 +201,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     ),
                   ),
                   const SizedBox(height: 28),
-
-                  // === Social Sign-Up First (primary CTA) ===
-                  // Google Sign Up
-                  OutlinedButton.icon(
-                    onPressed: _signInWithGoogle,
-                    icon: Icon(Icons.g_mobiledata_rounded, size: 24, color: isDark ? Colors.white : AppColors.lightOnBackground),
-                    label: Text(
-                      'Continue with Google',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
-                      ),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: isDark ? AppColors.grey700 : AppColors.grey200),
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      minimumSize: const Size(double.infinity, 52),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  // Apple Sign Up
-                  OutlinedButton.icon(
-                    onPressed: _signInWithApple,
-                    icon: Icon(Icons.apple, size: 24, color: isDark ? Colors.white : AppColors.lightOnBackground),
-                    label: Text(
-                      'Continue with Apple',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
-                      ),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: isDark ? AppColors.grey700 : AppColors.grey200),
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      minimumSize: const Size(double.infinity, 52),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  // Divider
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                          'or sign up with email',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 12,
-                            color: isDark ? AppColors.grey500 : AppColors.grey400,
-                          ),
-                        ),
-                      ),
-                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
 
                   // Full Name
                   TextFormField(
@@ -382,7 +324,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  // Sign Up button
+                  // Create Account button
                   ElevatedButton(
                     onPressed: _signUp,
                     style: ElevatedButton.styleFrom(
@@ -390,6 +332,67 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     ),
                     child: const Text('Create Account'),
+                  ),
+                  const SizedBox(height: 24),
+                  // Divider
+                  Row(
+                    children: [
+                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'or continue with',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 12,
+                            color: isDark ? AppColors.grey500 : AppColors.grey400,
+                          ),
+                        ),
+                      ),
+                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  // Google Sign Up
+                  OutlinedButton.icon(
+                    onPressed: _signInWithGoogle,
+                    icon: Icon(Icons.g_mobiledata_rounded, size: 24, color: isDark ? Colors.white : AppColors.lightOnBackground),
+                    label: Text(
+                      'Continue with Google',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: isDark ? AppColors.grey700 : AppColors.grey200),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      minimumSize: const Size(double.infinity, 52),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // Apple Sign Up
+                  OutlinedButton.icon(
+                    onPressed: _signInWithApple,
+                    icon: Icon(Icons.apple, size: 24, color: isDark ? Colors.white : AppColors.lightOnBackground),
+                    label: Text(
+                      'Continue with Apple',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: isDark ? AppColors.grey700 : AppColors.grey200),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      minimumSize: const Size(double.infinity, 52),
+                    ),
                   ),
                   const SizedBox(height: 24),
                   // Login link
