@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../../core/config/app_config.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -207,27 +209,32 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                   ),
                 const SizedBox(height: 20),
 
-                // QR Code Placeholder
+                // QR Code - Navigate to full QR display
                 Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.qr_code_2,
-                          size: 120,
-                          color: isDark ? AppColors.grey400 : AppColors.grey300,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Scan to view Medical ID',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 13,
-                            color: isDark ? AppColors.grey400 : AppColors.grey500,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () => context.push(AppConfig.qrDisplay),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.qr_code_2,
+                            size: 120,
+                            color: AppColors.lightPrimary,
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          Text(
+                            'Tap to view QR Code',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: isDark ? AppColors.grey400 : AppColors.grey500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -237,11 +244,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Share functionality coming soon!')),
-                      );
-                    },
+                    onPressed: () => context.push(AppConfig.qrDisplay),
                     icon: const Icon(Icons.share_outlined),
                     label: const Text(
                       'Share Medical ID',

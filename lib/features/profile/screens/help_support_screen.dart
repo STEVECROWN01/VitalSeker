@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/config/app_config.dart';
 import '../../../shared/theme/app_colors.dart';
 
@@ -164,10 +165,17 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                   style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: AppColors.lightPrimary),
                 ),
                 trailing: const Icon(Icons.open_in_new, size: 16),
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Email client would open here')),
-                  );
+                onTap: () async {
+                  final uri = Uri.parse('mailto:support@vitalseker.com?subject=${Uri.encodeComponent('VitalSeker Support Request')}');
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri);
+                  } else {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Could not open email client')),
+                      );
+                    }
+                  }
                 },
               ),
             ),

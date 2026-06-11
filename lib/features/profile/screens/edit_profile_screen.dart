@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/config/app_config.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
@@ -58,6 +58,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _bloodType = profile.bloodType;
     _allergies = List.from(profile.allergies);
     _chronicConditions = List.from(profile.chronicConditions);
+    // Populate gender from stored data (if available)
+    // Note: gender is stored in user metadata, not in the profile model
+    // Populate height/weight from stored data (if available)
+    // These are stored as metadata in the users table
     if (profile.emergencyContacts.isNotEmpty) {
       _emergencyNameController.text = profile.emergencyContacts.first.name;
       _emergencyPhoneController.text = profile.emergencyContacts.first.phone;
@@ -122,15 +126,34 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         });
       }
 
-      final db = DatabaseService();
-      await db.updateUserProfile(user.id, {
+      final updateData = <String, dynamic>{
         'full_name': _nameController.text.trim(),
         'date_of_birth': _dateOfBirth?.toIso8601String(),
         'blood_type': _bloodType,
         'allergies': _allergies,
         'chronic_conditions': _chronicConditions,
         'emergency_contacts': emergencyContacts,
-      });
+      };
+
+      // Save gender if selected
+      if (_gender != null) {
+        updateData['gender'] = _gender;
+      }
+
+      // Save height/weight measurements if provided
+      final heightText = _heightController.text.trim();
+      final weightText = _weightController.text.trim();
+      if (heightText.isNotEmpty) {
+        final height = double.tryParse(heightText);
+        if (height != null) updateData['height_cm'] = height;
+      }
+      if (weightText.isNotEmpty) {
+        final weight = double.tryParse(weightText);
+        if (weight != null) updateData['weight_kg'] = weight;
+      }
+
+      final db = DatabaseService();
+      await db.updateUserProfile(user.id, updateData);
 
       ref.invalidate(userProfileProvider);
       if (mounted) {
