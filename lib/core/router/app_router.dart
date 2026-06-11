@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/app_config.dart';
+import '../models/vital.dart';
 import '../providers/auth_provider.dart';
 import '../providers/user_profile_provider.dart';
 import '../../shared/theme/app_colors.dart';
@@ -10,6 +11,7 @@ import '../../features/onboarding/screens/onboarding_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
+import '../../features/health/screens/health_screen.dart';
 import '../../features/triage/screens/triage_screen.dart';
 import '../../features/triage/screens/triage_result_screen.dart';
 import '../../features/passport/screens/passport_screen.dart';
@@ -19,9 +21,23 @@ import '../../features/insights/screens/insights_screen.dart';
 import '../../features/family/screens/family_screen.dart';
 import '../../features/export/screens/export_screen.dart';
 import '../../features/sos/screens/sos_screen.dart';
+import '../../features/vitals/screens/vitals_screen.dart';
+import '../../features/vitals/screens/add_vital_screen.dart';
+import '../../features/vitals/screens/vitals_history_screen.dart';
+import '../../features/medications/screens/medications_screen.dart';
+import '../../features/medications/screens/add_medication_screen.dart';
+import '../../features/appointments/screens/appointments_screen.dart';
+import '../../features/appointments/screens/add_appointment_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/profile/screens/about_screen.dart';
 import '../../features/profile/screens/subscription_screen.dart';
+import '../../features/profile/screens/edit_profile_screen.dart';
+import '../../features/profile/screens/medical_records_screen.dart';
+import '../../features/profile/screens/settings_screen.dart';
+import '../../features/profile/screens/notifications_settings_screen.dart';
+import '../../features/profile/screens/help_support_screen.dart';
+import '../../features/profile/screens/privacy_screen.dart';
+import '../../features/profile/screens/medical_id_screen.dart';
 import '../../shared/widgets/app_bottom_nav.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -82,10 +98,9 @@ GoRouter createRouter(Ref ref) {
         builder: (context, state, child) {
           int currentIndex = 0;
           final location = state.matchedLocation;
-          if (location.startsWith(AppConfig.triage)) currentIndex = 1;
-          else if (location.startsWith(AppConfig.passport)) currentIndex = 2;
-          else if (location.startsWith(AppConfig.history)) currentIndex = 3;
-          else if (location.startsWith(AppConfig.profile)) currentIndex = 4;
+          if (location.startsWith(AppConfig.vitals)) currentIndex = 1;
+          else if (location.startsWith(AppConfig.triage)) currentIndex = 2;
+          else if (location.startsWith(AppConfig.profile)) currentIndex = 3;
           else currentIndex = 0;
 
           return ScaffoldWithNavBar(
@@ -97,6 +112,33 @@ GoRouter createRouter(Ref ref) {
           GoRoute(
             path: AppConfig.dashboard,
             builder: (context, state) => const DashboardScreen(),
+          ),
+          GoRoute(
+            path: AppConfig.vitals,
+            builder: (context, state) => const VitalsScreen(),
+            routes: [
+              GoRoute(
+                path: 'add',
+                parentNavigatorKey: _rootNavigatorKey,
+                builder: (context, state) => const AddVitalScreen(),
+              ),
+              GoRoute(
+                path: 'history',
+                parentNavigatorKey: _rootNavigatorKey,
+                builder: (context, state) {
+                  final typeName = state.uri.queryParameters['type'];
+                  final initialType = typeName != null
+                      ? VitalType.values.where((v) => v.name == typeName).firstOrNull
+                      : null;
+                  return VitalsHistoryScreen(initialType: initialType);
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: AppConfig.health,
+            parentNavigatorKey: _shellNavigatorKey,
+            builder: (context, state) => const HealthScreen(),
           ),
           GoRoute(
             path: AppConfig.triage,
@@ -136,6 +178,36 @@ GoRouter createRouter(Ref ref) {
                 path: 'subscription',
                 builder: (context, state) => const SubscriptionScreen(),
               ),
+              GoRoute(
+                path: 'edit',
+                builder: (context, state) => const EditProfileScreen(),
+              ),
+              GoRoute(
+                path: 'medical-records',
+                builder: (context, state) => const MedicalRecordsScreen(),
+              ),
+              GoRoute(
+                path: 'settings',
+                builder: (context, state) => const SettingsScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'notifications',
+                    builder: (context, state) => const NotificationsSettingsScreen(),
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'help',
+                builder: (context, state) => const HelpSupportScreen(),
+              ),
+              GoRoute(
+                path: 'privacy',
+                builder: (context, state) => const PrivacyScreen(),
+              ),
+              GoRoute(
+                path: 'medical-id',
+                builder: (context, state) => const MedicalIdScreen(),
+              ),
             ],
           ),
         ],
@@ -160,6 +232,26 @@ GoRouter createRouter(Ref ref) {
         path: AppConfig.sos,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const SosScreen(),
+      ),
+      GoRoute(
+        path: AppConfig.medications,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const MedicationsScreen(),
+      ),
+      GoRoute(
+        path: AppConfig.addMedication,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const AddMedicationScreen(),
+      ),
+      GoRoute(
+        path: AppConfig.appointments,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const AppointmentsScreen(),
+      ),
+      GoRoute(
+        path: AppConfig.addAppointment,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const AddAppointmentScreen(),
       ),
     ],
   );

@@ -16,41 +16,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
-  final _nameController = TextEditingController();
-  final _phoneController = TextEditingController();
-  bool _isEditing = false;
-  bool _isSaving = false;
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _phoneController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _saveProfile() async {
-    setState(() => _isSaving = true);
-    try {
-      final user = ref.read(currentUserProvider);
-      if (user == null) return;
-      final db = DatabaseService();
-      await db.updateUserProfile(user.id, {
-        'full_name': _nameController.text.trim(),
-        'phone': _phoneController.text.trim(),
-      });
-      ref.invalidate(userProfileProvider);
-      setState(() => _isEditing = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile updated!')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed: $e')),
-      );
-    } finally {
-      setState(() => _isSaving = false);
-    }
-  }
+  bool _isSigningOut = false;
 
   Future<void> _signOut() async {
     final confirmed = await showDialog<bool>(
@@ -70,6 +36,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
 
     if (confirmed == true && mounted) {
+      setState(() => _isSigningOut = true);
       try {
         final authService = ref.read(authServiceProvider);
         await authService.signOut();
@@ -80,6 +47,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             SnackBar(content: Text('Sign out failed: $e')),
           );
         }
+      } finally {
+        if (mounted) setState(() => _isSigningOut = false);
       }
     }
   }
@@ -88,27 +57,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final profileAsync = ref.watch(userProfileProvider);
-    final themeMode = ref.watch(themeModeProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        actions: [
-          IconButton(
-            icon: Icon(_isEditing ? Icons.check : Icons.edit),
-            onPressed: () {
-              if (_isEditing) {
-                _saveProfile();
-              } else {
-                final profile = ref.read(userProfileProvider).valueOrNull;
-                _nameController.text = profile?.fullName ?? '';
-                _phoneController.text = profile?.phone ?? '';
-                setState(() => _isEditing = true);
-              }
-            },
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text('Profile')),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
@@ -117,7 +68,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Column(
               children: [
-                // Avatar
+                // Avatar and user info
                 Center(
                   child: Column(
                     children: [
@@ -155,104 +106,121 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 32),
-
-                // Edit fields
-                if (_isEditing) ...[
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Full Name',
-                      prefixIcon: Icon(Icons.person_outline),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _phoneController,
-                    keyboardType: TextInputType.phone,
-                    decoration: const InputDecoration(
-                      labelText: 'Phone',
-                      prefixIcon: Icon(Icons.phone_outlined),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  if (_isSaving)
-                    const Center(child: CircularProgressIndicator()),
-                ],
-
-                // Settings
                 const SizedBox(height: 16),
-                _SettingsSection(title: 'Appearance', children: [
-                  ListTile(
-                    leading: const Icon(Icons.dark_mode_outlined),
-                    title: const Text('Theme', style: TextStyle(fontFamily: 'Inter')),
-                    subtitle: Text(
-                      themeMode == ThemeMode.dark ? 'Dark' : themeMode == ThemeMode.light ? 'Light' : 'System',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
-                    ),
-                    trailing: SegmentedButton<ThemeMode>(
-                      segments: const [
-                        ButtonSegment(value: ThemeMode.light, icon: Icon(Icons.light_mode, size: 18)),
-                        ButtonSegment(value: ThemeMode.system, icon: Icon(Icons.brightness_auto, size: 18)),
-                        ButtonSegment(value: ThemeMode.dark, icon: Icon(Icons.dark_mode, size: 18)),
-                      ],
-                      selected: {themeMode},
-                      onSelectionChanged: (modes) {
-                        ref.read(themeModeProvider.notifier).setTheme(modes.first);
-                      },
-                    ),
-                  ),
-                ]),
 
-                _SettingsSection(title: 'Health', children: [
-                  ListTile(
-                    leading: const Icon(Icons.bloodtype_outlined),
-                    title: const Text('Blood Type', style: TextStyle(fontFamily: 'Inter')),
-                    subtitle: Text(
-                      profile?.bloodType ?? 'Not set',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                // Stats row
+                Row(
+                  children: [
+                    _StatCard(
+                      label: 'Vitals Logged',
+                      value: '--',
+                      isDark: isDark,
                     ),
-                    trailing: const Icon(Icons.chevron_right),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.warning_amber_outlined),
-                    title: const Text('Allergies', style: TextStyle(fontFamily: 'Inter')),
-                    subtitle: Text(
-                      profile?.allergies.isEmpty ?? true ? 'None' : profile!.allergies.join(', '),
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                    const SizedBox(width: 12),
+                    _StatCard(
+                      label: 'Triage Sessions',
+                      value: '--',
+                      isDark: isDark,
                     ),
-                    trailing: const Icon(Icons.chevron_right),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.contact_phone_outlined),
-                    title: const Text('Emergency Contacts', style: TextStyle(fontFamily: 'Inter')),
-                    subtitle: Text(
-                      '${profile?.emergencyContacts.length ?? 0} contacts',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                    const SizedBox(width: 12),
+                    _StatCard(
+                      label: 'Days Active',
+                      value: '--',
+                      isDark: isDark,
                     ),
-                    trailing: const Icon(Icons.chevron_right),
-                  ),
-                ]),
+                  ],
+                ),
+                const SizedBox(height: 24),
 
-                _SettingsSection(title: 'Account', children: [
-                  ListTile(
-                    leading: const Icon(Icons.workspace_premium_outlined),
-                    title: const Text('Subscription', style: TextStyle(fontFamily: 'Inter')),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () => context.push(AppConfig.subscription),
+                // Menu items
+                _MenuSection(title: 'Profile', children: [
+                  _MenuItem(
+                    icon: Icons.edit_outlined,
+                    label: 'Edit Profile',
+                    onTap: () => context.push(AppConfig.editProfile),
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.info_outline),
-                    title: const Text('About VitalSeker', style: TextStyle(fontFamily: 'Inter')),
-                    trailing: const Icon(Icons.chevron_right),
+                  _MenuItem(
+                    icon: Icons.folder_outlined,
+                    label: 'Medical Records',
+                    onTap: () => context.push(AppConfig.medicalRecords),
+                  ),
+                  _MenuItem(
+                    icon: Icons.badge_outlined,
+                    label: 'Medical ID',
+                    onTap: () => context.push(AppConfig.medicalId),
+                  ),
+                ], isDark: isDark),
+
+                _MenuSection(title: 'Health', children: [
+                  _MenuItem(
+                    icon: Icons.medication_outlined,
+                    label: 'Medications',
+                    onTap: () => context.push(AppConfig.medications),
+                  ),
+                  _MenuItem(
+                    icon: Icons.calendar_today_outlined,
+                    label: 'Appointments',
+                    onTap: () => context.push(AppConfig.appointments),
+                  ),
+                  _MenuItem(
+                    icon: Icons.translate,
+                    label: 'Medical Translation',
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Coming soon')),
+                      );
+                    },
+                  ),
+                ], isDark: isDark),
+
+                _MenuSection(title: 'Support', children: [
+                  _MenuItem(
+                    icon: Icons.settings_outlined,
+                    label: 'Settings',
+                    onTap: () => context.push(AppConfig.settings),
+                  ),
+                  _MenuItem(
+                    icon: Icons.help_outline,
+                    label: 'Help & Support',
+                    onTap: () => context.push(AppConfig.helpSupport),
+                  ),
+                  _MenuItem(
+                    icon: Icons.info_outline,
+                    label: 'About VitalSeker',
                     onTap: () => context.push(AppConfig.about),
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.logout, color: AppColors.urgencyEmergency),
-                    title: const Text('Sign Out', style: TextStyle(fontFamily: 'Inter', color: AppColors.urgencyEmergency)),
-                    onTap: _signOut,
+                  _MenuItem(
+                    icon: Icons.privacy_tip_outlined,
+                    label: 'Privacy Policy',
+                    onTap: () => context.push(AppConfig.privacyPolicy),
                   ),
-                ]),
+                ], isDark: isDark),
+
+                const SizedBox(height: 16),
+
+                // Sign out button
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: OutlinedButton.icon(
+                    onPressed: _isSigningOut ? null : _signOut,
+                    icon: _isSigningOut
+                        ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                        : const Icon(Icons.logout, color: AppColors.urgencyEmergency),
+                    label: Text(
+                      _isSigningOut ? 'Signing out...' : 'Sign Out',
+                      style: const TextStyle(
+                        fontFamily: 'Outfit',
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.urgencyEmergency,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: AppColors.urgencyEmergency),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 80),
               ],
             ),
@@ -263,15 +231,60 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 }
 
-class _SettingsSection extends StatelessWidget {
-  final String title;
-  final List<Widget> children;
+class _StatCard extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool isDark;
 
-  const _SettingsSection({required this.title, required this.children});
+  const _StatCard({required this.label, required this.value, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1E2230) : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100),
+        ),
+        child: Column(
+          children: [
+            Text(
+              value,
+              style: TextStyle(
+                fontFamily: 'JetBrainsMono',
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: isDark ? Colors.white : AppColors.lightOnBackground,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 10,
+                color: isDark ? AppColors.grey500 : AppColors.grey400,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MenuSection extends StatelessWidget {
+  final String title;
+  final List<Widget> children;
+  final bool isDark;
+
+  const _MenuSection({required this.title, required this.children, required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -292,6 +305,24 @@ class _SettingsSection extends StatelessWidget {
           child: Column(children: children),
         ),
       ],
+    );
+  }
+}
+
+class _MenuItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _MenuItem({required this.icon, required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon, size: 22),
+      title: Text(label, style: const TextStyle(fontFamily: 'Inter', fontSize: 14)),
+      trailing: const Icon(Icons.chevron_right, size: 20),
+      onTap: onTap,
     );
   }
 }

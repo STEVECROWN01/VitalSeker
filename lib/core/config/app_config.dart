@@ -13,6 +13,7 @@ class AppConfig {
   static const String register = '/register';
   static const String home = '/home';
   static const String dashboard = '/home/dashboard';
+  static const String health = '/home/health';
   static const String triage = '/home/triage';
   static const String triageResult = '/home/triage/result';
   static const String passport = '/home/passport';
@@ -25,4 +26,18 @@ class AppConfig {
   static const String profile = '/home/profile';
   static const String about = '/home/profile/about';
   static const String subscription = '/home/profile/subscription';
+  static const String editProfile = '/home/profile/edit';
+  static const String medicalRecords = '/home/profile/medical-records';
+  static const String settings = '/home/profile/settings';
+  static const String notificationsSettings = '/home/profile/settings/notifications';
+  static const String helpSupport = '/home/profile/help';
+  static const String privacyPolicy = '/home/profile/privacy';
+  static const String medicalId = '/home/profile/medical-id';
+  static const String medications = '/home/medications';
+  static const String addMedication = '/home/medications/add';
+  static const String appointments = '/home/appointments';
+  static const String addAppointment = '/home/appointments/add';
+  static const String vitals = '/home/vitals';
+  static const String addVital = '/home/vitals/add';
+  static const String vitalsHistory = '/home/vitals/history';
 }

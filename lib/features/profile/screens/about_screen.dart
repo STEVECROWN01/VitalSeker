@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../shared/theme/app_colors.dart';
 
@@ -139,14 +140,14 @@ class AboutScreen extends StatelessWidget {
               children: [
                 ListTile(
                   title: const Text('Privacy Policy', style: TextStyle(fontFamily: 'Inter')),
-                  trailing: const Icon(Icons.open_in_new, size: 16),
-                  onTap: () {},
+                  trailing: const Icon(Icons.chevron_right, size: 16),
+                  onTap: () => context.push(AppConfig.privacyPolicy),
                   contentPadding: EdgeInsets.zero,
                 ),
                 ListTile(
                   title: const Text('Terms of Service', style: TextStyle(fontFamily: 'Inter')),
-                  trailing: const Icon(Icons.open_in_new, size: 16),
-                  onTap: () {},
+                  trailing: const Icon(Icons.chevron_right, size: 16),
+                  onTap: () => context.push(AppConfig.privacyPolicy),
                   contentPadding: EdgeInsets.zero,
                 ),
               ],

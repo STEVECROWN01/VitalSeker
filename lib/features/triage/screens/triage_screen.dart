@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
-import '../../../shared/widgets/loading_overlay.dart';
 
 class TriageScreen extends ConsumerStatefulWidget {
   const TriageScreen({super.key});
@@ -14,329 +13,215 @@ class TriageScreen extends ConsumerStatefulWidget {
   ConsumerState<TriageScreen> createState() => _TriageScreenState();
 }
 
+class _ChatMessage {
+  final String text;
+  final bool isUser;
+  final DateTime timestamp;
+  final Map<String, dynamic>? triageResult;
+  final bool isTyping;
+
+  _ChatMessage({
+    required this.text,
+    required this.isUser,
+    required this.timestamp,
+    this.triageResult,
+    this.isTyping = false,
+  });
+}
+
 class _TriageScreenState extends ConsumerState<TriageScreen> {
-  final _symptomController = TextEditingController();
-  final _notesController = TextEditingController();
-  final _durationController = TextEditingController();
-  int _severity = 5;
-  List<String> _selectedSymptoms = [];
-  List<String> _selectedBodyRegions = [];
-  bool _isLoading = false;
+  final _messageController = TextEditingController();
+  final _scrollController = ScrollController();
+  final List<_ChatMessage> _messages = [];
+  bool _isProcessing = false;
+  Map<String, dynamic>? _lastTriageResult;
 
-  final List<String> _commonSymptoms = [
-    'Headache', 'Fever', 'Cough', 'Fatigue', 'Nausea',
-    'Dizziness', 'Chest Pain', 'Shortness of Breath', 'Sore Throat',
-    'Body Aches', 'Loss of Taste', 'Loss of Smell', 'Runny Nose',
-    'Stomach Pain', 'Back Pain', 'Joint Pain', 'Rash',
-  ];
-
-  final List<String> _bodyRegions = [
-    'Head', 'Neck', 'Chest', 'Abdomen', 'Back',
-    'Left Arm', 'Right Arm', 'Left Leg', 'Right Leg',
-    'Throat', 'Eyes', 'Ears', 'Skin',
-  ];
+  @override
+  void initState() {
+    super.initState();
+    // Add initial AI greeting after first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _addAiMessage('Hello! I\'m VitalSeker AI. How are you feeling today? Describe your symptoms and I\'ll help assess your condition.');
+    });
+  }
 
   @override
   void dispose() {
-    _symptomController.dispose();
-    _notesController.dispose();
-    _durationController.dispose();
+    _messageController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
-  void _toggleSymptom(String symptom) {
+  void _addAiMessage(String text, {Map<String, dynamic>? triageResult}) {
     setState(() {
-      if (_selectedSymptoms.contains(symptom)) {
-        _selectedSymptoms.remove(symptom);
-      } else {
-        _selectedSymptoms.add(symptom);
-      }
+      _messages.add(_ChatMessage(
+        text: text,
+        isUser: false,
+        timestamp: DateTime.now(),
+        triageResult: triageResult,
+      ));
     });
+    _scrollToBottom();
   }
 
-  void _toggleBodyRegion(String region) {
+  void _addUserMessage(String text) {
     setState(() {
-      if (_selectedBodyRegions.contains(region)) {
-        _selectedBodyRegions.remove(region);
-      } else {
-        _selectedBodyRegions.add(region);
-      }
+      _messages.add(_ChatMessage(
+        text: text,
+        isUser: true,
+        timestamp: DateTime.now(),
+      ));
     });
+    _scrollToBottom();
   }
 
-  Future<void> _runTriage() async {
-    if (_selectedSymptoms.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select at least one symptom')),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-    try {
-      final edgeService = EdgeFunctionService();
-      final result = await edgeService.runTriage(
-        symptoms: _selectedSymptoms,
-        severity: _severity,
-        duration: _durationController.text.isNotEmpty ? _durationController.text : null,
-        bodyRegions: _selectedBodyRegions.isNotEmpty ? _selectedBodyRegions : null,
-        notes: _notesController.text.isNotEmpty ? _notesController.text : null,
-      );
-      if (mounted) {
-        context.push(AppConfig.triageResult, extra: result);
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Triage failed: $e'), backgroundColor: AppColors.lightError),
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent + 80,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
         );
       }
+    });
+  }
+
+  Future<void> _sendMessage() async {
+    final text = _messageController.text.trim();
+    if (text.isEmpty || _isProcessing) return;
+
+    _messageController.clear();
+    _addUserMessage(text);
+
+    setState(() => _isProcessing = true);
+
+    // Show typing indicator
+    setState(() {
+      _messages.add(_ChatMessage(
+        text: '',
+        isUser: false,
+        timestamp: DateTime.now(),
+        isTyping: true,
+      ));
+    });
+    _scrollToBottom();
+
+    try {
+      final edgeService = EdgeFunctionService();
+      // Parse symptoms from user message
+      final symptoms = _parseSymptoms(text);
+      final severity = _inferSeverity(text);
+
+      final result = await edgeService.runTriage(
+        symptoms: symptoms,
+        severity: severity,
+        notes: text,
+      );
+
+      _lastTriageResult = result;
+
+      // Remove typing indicator
+      setState(() {
+        _messages.removeWhere((m) => m.isTyping);
+      });
+
+      // Build AI response from triage result
+      final triage = result['triage'] as Map<String, dynamic>? ?? result;
+      final urgencyLevel = triage['urgency_level'] as String? ?? 'medium';
+      final urgencyScore = triage['urgency_score'] as int? ?? 50;
+      final seekCare = triage['seek_care'] as String? ?? '';
+      final recommendations = (triage['recommendations'] as List<dynamic>? ?? []).cast<String>();
+      final redFlags = (triage['red_flags'] as List<dynamic>? ?? []).cast<String>();
+
+      final responseBuffer = StringBuffer();
+      responseBuffer.writeln('Based on your symptoms, here\'s my assessment:');
+      responseBuffer.writeln();
+      responseBuffer.writeln('Urgency: ${urgencyLevel.toUpperCase()} ($urgencyScore/100)');
+
+      if (seekCare.isNotEmpty) {
+        responseBuffer.writeln('Care recommendation: ${_seekCareLabel(seekCare)}');
+      }
+
+      if (redFlags.isNotEmpty) {
+        responseBuffer.writeln();
+        responseBuffer.writeln('⚠️ Red flags:');
+        for (final flag in redFlags.take(3)) {
+          responseBuffer.writeln('• $flag');
+        }
+      }
+
+      if (recommendations.isNotEmpty) {
+        responseBuffer.writeln();
+        responseBuffer.writeln('Recommendations:');
+        for (final rec in recommendations.take(3)) {
+          responseBuffer.writeln('• $rec');
+        }
+      }
+
+      responseBuffer.writeln();
+      responseBuffer.writeln('Tap "View Detailed Results" below for the full analysis.');
+
+      _addAiMessage(
+        responseBuffer.toString(),
+        triageResult: result,
+      );
+    } catch (e) {
+      // Remove typing indicator
+      setState(() {
+        _messages.removeWhere((m) => m.isTyping);
+      });
+
+      _addAiMessage(
+        'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $e',
+      );
     } finally {
-      if (mounted) setState(() => _isLoading = false);
+      if (mounted) setState(() => _isProcessing = false);
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+  List<String> _parseSymptoms(String text) {
+    final commonSymptoms = [
+      'headache', 'fever', 'cough', 'fatigue', 'nausea',
+      'dizziness', 'chest pain', 'shortness of breath', 'sore throat',
+      'body aches', 'loss of taste', 'loss of smell', 'runny nose',
+      'stomach pain', 'back pain', 'joint pain', 'rash',
+      'vomiting', 'diarrhea', 'chills', 'sweating', 'bleeding',
+    ];
 
-    return LoadingOverlay(
-      isLoading: _isLoading,
-      message: 'Analyzing symptoms with AI...',
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Symptom Triage')),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // AI Assistant Header
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: AppColors.brandGradient,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: const Icon(Icons.psychology, color: Colors.white, size: 28),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'VitalSeker AI',
-                            style: TextStyle(
-                              fontFamily: 'ClashDisplay',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            'Describe your symptoms for instant triage',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 12,
-                              color: Colors.white.withValues(alpha: 0.8),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ).animate().fadeIn(duration: 400.ms),
-              const SizedBox(height: 24),
+    final lower = text.toLowerCase();
+    final found = <String>[];
+    for (final s in commonSymptoms) {
+      if (lower.contains(s)) {
+        found.add(s.split(' ').map((w) => w[0].toUpperCase() + w.substring(1)).join(' '));
+      }
+    }
 
-              // Symptoms Selection
-              Text(
-                'Select Symptoms',
-                style: TextStyle(
-                  fontFamily: 'ClashDisplay',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: _commonSymptoms.map((symptom) {
-                  final isSelected = _selectedSymptoms.contains(symptom);
-                  return GestureDetector(
-                    onTap: () => _toggleSymptom(symptom),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.lightPrimary.withValues(alpha: 0.15)
-                            : (isDark ? const Color(0xFF1E2230) : AppColors.grey50),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: isSelected
-                              ? AppColors.lightPrimary
-                              : (isDark ? const Color(0xFF2A2F3E) : AppColors.grey200),
-                        ),
-                      ),
-                      child: Text(
-                        symptom,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 13,
-                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                          color: isSelected
-                              ? AppColors.lightPrimary
-                              : (isDark ? AppColors.grey400 : AppColors.grey600),
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 24),
+    // If no known symptoms matched, use the whole message as a custom symptom
+    if (found.isEmpty && text.length > 2) {
+      found.add(text.length > 50 ? '${text.substring(0, 50)}...' : text);
+    }
 
-              // Custom Symptom Input
-              TextFormField(
-                controller: _symptomController,
-                decoration: InputDecoration(
-                  labelText: 'Add custom symptom',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.add_circle_outline),
-                    onPressed: () {
-                      final text = _symptomController.text.trim();
-                      if (text.isNotEmpty && !_selectedSymptoms.contains(text)) {
-                        setState(() {
-                          _selectedSymptoms.add(text);
-                          _symptomController.clear();
-                        });
-                      }
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
+    return found.isNotEmpty ? found : ['General discomfort'];
+  }
 
-              // Severity Slider
-              Text(
-                'Severity Level',
-                style: TextStyle(
-                  fontFamily: 'ClashDisplay',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Text('1', style: TextStyle(fontFamily: 'JetBrainsMono', fontSize: 12, color: isDark ? AppColors.grey500 : AppColors.grey400)),
-                  Expanded(
-                    child: Slider(
-                      value: _severity.toDouble(),
-                      min: 1,
-                      max: 10,
-                      divisions: 9,
-                      activeColor: _severityColor(_severity),
-                      label: '$_severity',
-                      onChanged: (value) => setState(() => _severity = value.round()),
-                    ),
-                  ),
-                  Text('10', style: TextStyle(fontFamily: 'JetBrainsMono', fontSize: 12, color: isDark ? AppColors.grey500 : AppColors.grey400)),
-                ],
-              ),
-              Center(
-                child: Text(
-                  '$_severity / 10 - ${_severityLabel(_severity)}',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: _severityColor(_severity),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
+  int _inferSeverity(String text) {
+    final lower = text.toLowerCase();
+    if (lower.contains('severe') || lower.contains('extreme') || lower.contains('unbearable')) return 9;
+    if (lower.contains('very bad') || lower.contains('intense') || lower.contains('awful')) return 8;
+    if (lower.contains('bad') || lower.contains('painful') || lower.contains('worse')) return 7;
+    if (lower.contains('moderate') || lower.contains('uncomfortable')) return 5;
+    if (lower.contains('mild') || lower.contains('slight') || lower.contains('minor')) return 3;
+    return 5;
+  }
 
-              // Body Regions
-              Text(
-                'Affected Body Regions',
-                style: TextStyle(
-                  fontFamily: 'ClashDisplay',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: _bodyRegions.map((region) {
-                  final isSelected = _selectedBodyRegions.contains(region);
-                  return FilterChip(
-                    label: Text(region),
-                    selected: isSelected,
-                    onSelected: (_) => _toggleBodyRegion(region),
-                    selectedColor: AppColors.lightPrimary.withValues(alpha: 0.15),
-                    checkmarkColor: AppColors.lightPrimary,
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 24),
-
-              // Duration
-              TextFormField(
-                controller: _durationController,
-                decoration: const InputDecoration(
-                  labelText: 'Duration (e.g., 3 days, 2 weeks)',
-                  prefixIcon: Icon(Icons.schedule),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Additional Notes
-              TextFormField(
-                controller: _notesController,
-                maxLines: 3,
-                decoration: const InputDecoration(
-                  labelText: 'Additional Notes',
-                  prefixIcon: Icon(Icons.note_alt_outlined),
-                  alignLabelWithHint: true,
-                ),
-              ),
-              const SizedBox(height: 32),
-
-              // Analyze Button
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton.icon(
-                  onPressed: _selectedSymptoms.isEmpty ? null : _runTriage,
-                  icon: const Icon(Icons.psychology),
-                  label: const Text('Analyze with AI'),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 80),
-            ],
-          ),
-        ),
-      ),
-    );
+  void _startNewChat() {
+    setState(() {
+      _messages.clear();
+      _lastTriageResult = null;
+      _isProcessing = false;
+    });
+    _addAiMessage('Hello! I\'m VitalSeker AI. How are you feeling today? Describe your symptoms and I\'ll help assess your condition.');
   }
 
   Color _severityColor(int severity) {
@@ -352,5 +237,420 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
     if (severity <= 6) return 'Significant';
     if (severity <= 8) return 'Severe';
     return 'Extreme';
+  }
+
+  String _seekCareLabel(String care) {
+    switch (care) {
+      case 'self-care': return 'Self-Care Recommended';
+      case 'schedule-appointment': return 'Schedule an Appointment';
+      case 'urgent-care': return 'Visit Urgent Care';
+      case 'emergency': return 'Seek Emergency Care';
+      default: return 'Consult a Healthcare Provider';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                gradient: AppColors.brandGradient,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.psychology, color: Colors.white, size: 18),
+            ),
+            const SizedBox(width: 10),
+            const Text('AI Triage'),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add_comment_outlined),
+            tooltip: 'New Chat',
+            onPressed: _startNewChat,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // Chat messages
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return _ChatBubble(
+                  message: message,
+                  isDark: isDark,
+                  onViewResults: message.triageResult != null
+                      ? () => context.push(
+                            AppConfig.triageResult,
+                            extra: message.triageResult,
+                          )
+                      : null,
+                );
+              },
+            ),
+          ),
+
+          // Bottom input bar
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+              border: Border(
+                top: BorderSide(
+                  color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey200,
+                ),
+              ),
+              boxShadow: isDark
+                  ? null
+                  : [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.04),
+                        blurRadius: 8,
+                        offset: const Offset(0, -2),
+                      ),
+                    ],
+            ),
+            child: SafeArea(
+              top: false,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _messageController,
+                      textInputAction: TextInputAction.send,
+                      onSubmitted: (_) => _sendMessage(),
+                      enabled: !_isProcessing,
+                      decoration: InputDecoration(
+                        hintText: 'Describe your symptoms...',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          color: isDark ? AppColors.grey500 : AppColors.grey400,
+                        ),
+                        filled: true,
+                        fillColor: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                          borderSide: BorderSide(
+                            color: AppColors.lightPrimary.withValues(alpha: 0.3),
+                          ),
+                        ),
+                      ),
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 14,
+                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      ),
+                      maxLines: 4,
+                      minLines: 1,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: _isProcessing
+                          ? null
+                          : AppColors.brandGradient,
+                      color: _isProcessing
+                          ? (isDark ? AppColors.grey700 : AppColors.grey300)
+                          : null,
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      onPressed: _isProcessing ? null : _sendMessage,
+                      icon: _isProcessing
+                          ? SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                              ),
+                            )
+                          : const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ChatBubble extends StatelessWidget {
+  final _ChatMessage message;
+  final bool isDark;
+  final VoidCallback? onViewResults;
+
+  const _ChatBubble({
+    required this.message,
+    required this.isDark,
+    this.onViewResults,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Typing indicator
+    if (message.isTyping) {
+      return _TypingIndicator(isDark: isDark);
+    }
+
+    final isUser = message.isUser;
+
+    return Padding(
+      padding: EdgeInsets.only(
+        left: isUser ? 48 : 0,
+        right: isUser ? 0 : 48,
+        bottom: 12,
+      ),
+      child: Row(
+        mainAxisAlignment:
+            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (!isUser) ...[
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                gradient: AppColors.brandGradient,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.psychology, color: Colors.white, size: 16),
+            ),
+            const SizedBox(width: 8),
+          ],
+          Flexible(
+            child: Column(
+              crossAxisAlignment:
+                  isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: isUser
+                        ? AppColors.lightPrimary
+                        : (isDark ? const Color(0xFF1E2230) : AppColors.grey50),
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(18),
+                      topRight: const Radius.circular(18),
+                      bottomLeft: Radius.circular(isUser ? 18 : 4),
+                      bottomRight: Radius.circular(isUser ? 4 : 18),
+                    ),
+                    border: isUser
+                        ? null
+                        : Border.all(
+                            color: isDark
+                                ? const Color(0xFF2A2F3E)
+                                : AppColors.grey200,
+                          ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SelectableText(
+                        message.text,
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          height: 1.5,
+                          color: isUser
+                              ? Colors.white
+                              : (isDark ? AppColors.darkOnBackground : AppColors.lightOnBackground),
+                        ),
+                      ),
+                      // View detailed results button
+                      if (message.triageResult != null && onViewResults != null) ...[
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            onPressed: onViewResults,
+                            icon: const Icon(Icons.open_in_new_rounded, size: 16),
+                            label: const Text('View Detailed Results'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isUser
+                                  ? Colors.white.withValues(alpha: 0.2)
+                                  : AppColors.lightPrimary,
+                              foregroundColor: isUser
+                                  ? Colors.white
+                                  : Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 10),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              textStyle: const TextStyle(
+                                fontFamily: 'Outfit',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Text(
+                    _formatTime(message.timestamp),
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 10,
+                      color: isDark ? AppColors.grey600 : AppColors.grey400,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (isUser) ...[
+            const SizedBox(width: 8),
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: AppColors.lightPrimary.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.person, color: AppColors.lightPrimary, size: 16),
+            ),
+          ],
+        ],
+      ),
+    ).animate().fadeIn(duration: 200.ms).slideY(begin: 0.05, end: 0);
+  }
+
+  String _formatTime(DateTime dt) {
+    final hour = dt.hour.toString().padLeft(2, '0');
+    final minute = dt.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+}
+
+class _TypingIndicator extends StatefulWidget {
+  final bool isDark;
+  const _TypingIndicator({required this.isDark});
+
+  @override
+  State<_TypingIndicator> createState() => _TypingIndicatorState();
+}
+
+class _TypingIndicatorState extends State<_TypingIndicator>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              gradient: AppColors.brandGradient,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Icon(Icons.psychology, color: Colors.white, size: 16),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              color: widget.isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(18),
+                topRight: Radius.circular(18),
+                bottomLeft: Radius.circular(4),
+                bottomRight: Radius.circular(18),
+              ),
+              border: Border.all(
+                color: widget.isDark
+                    ? const Color(0xFF2A2F3E)
+                    : AppColors.grey200,
+              ),
+            ),
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(3, (index) {
+                    final progress = (_controller.value * 3 - index) % 1.0;
+                    final scale = progress < 0.5
+                        ? 0.5 + progress
+                        : 1.5 - progress;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2),
+                      child: Transform.scale(
+                        scale: scale.clamp(0.5, 1.2),
+                        child: Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: AppColors.lightPrimary
+                                .withValues(alpha: 0.6 + (scale - 0.5) * 0.4),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -7,6 +7,8 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
+import '../../../core/providers/vitals_provider.dart';
+import '../../../core/models/vital.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/vital_score_ring.dart';
 
@@ -212,34 +214,172 @@ class DashboardScreen extends ConsumerWidget {
                   Row(
                     children: [
                       _QuickActionCard(
+                        icon: Icons.monitor_heart,
+                        label: 'Log Vitals',
+                        color: AppColors.lightPrimary,
+                        onTap: () => context.push(AppConfig.addVital),
+                      ),
+                      const SizedBox(width: 12),
+                      _QuickActionCard(
                         icon: Icons.healing,
-                        label: 'Triage',
+                        label: 'Start Triage',
                         color: AppColors.lightSecondary,
                         onTap: () => context.push(AppConfig.triage),
                       ),
                       const SizedBox(width: 12),
                       _QuickActionCard(
-                        icon: Icons.badge,
-                        label: 'Passport',
-                        color: AppColors.lightPrimary,
-                        onTap: () => context.push(AppConfig.passport),
+                        icon: Icons.emergency,
+                        label: 'Emergency',
+                        color: AppColors.urgencyEmergency,
+                        onTap: () => context.push(AppConfig.sos),
                       ),
                       const SizedBox(width: 12),
                       _QuickActionCard(
-                        icon: Icons.insights,
-                        label: 'Insights',
+                        icon: Icons.medication,
+                        label: 'Medications',
                         color: AppColors.urgencyMedium,
-                        onTap: () => context.push(AppConfig.insights),
-                      ),
-                      const SizedBox(width: 12),
-                      _QuickActionCard(
-                        icon: Icons.family_restroom,
-                        label: 'Family',
-                        color: AppColors.urgencyLow,
-                        onTap: () => context.push(AppConfig.family),
+                        onTap: () => context.push(AppConfig.medications),
                       ),
                     ],
                   ).animate().fadeIn(duration: 400.ms, delay: 200.ms),
+                  const SizedBox(height: 28),
+
+                  // Recent Vitals
+                  Consumer(builder: (context, ref, _) {
+                    final vitalsAsync = ref.watch(vitalsProvider);
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Recent Vitals',
+                              style: TextStyle(
+                                fontFamily: 'ClashDisplay',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: isDark ? Colors.white : AppColors.lightOnBackground,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => context.push(AppConfig.vitals),
+                              child: Text(
+                                'View All',
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  fontWeight: FontWeight.w600,
+                                  color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          height: 110,
+                          child: vitalsAsync.maybeWhen(
+                            data: (vitals) {
+                              if (vitals.isEmpty) {
+                                return _EmptyStateCard(
+                                  icon: Icons.monitor_heart,
+                                  message: 'No vitals logged yet',
+                                  subtitle: 'Tap "Log Vitals" to start tracking',
+                                );
+                              }
+                              // Show latest value for each vital type
+                              final latestByType = <VitalType, Vital>{};
+                              for (final v in vitals) {
+                                if (!latestByType.containsKey(v.type) ||
+                                    v.recordedAt.isAfter(latestByType[v.type]!.recordedAt)) {
+                                  latestByType[v.type] = v;
+                                }
+                              }
+                              final displayTypes = [
+                                VitalType.heartRate,
+                                VitalType.bloodPressure,
+                                VitalType.spO2,
+                                VitalType.temperature,
+                              ];
+                              return ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: displayTypes.length,
+                                separatorBuilder: (_, __) => const SizedBox(width: 12),
+                                itemBuilder: (context, index) {
+                                  final type = displayTypes[index];
+                                  final vital = latestByType[type];
+                                  return _VitalSummaryCard(
+                                    vitalType: type,
+                                    vital: vital,
+                                  );
+                                },
+                              );
+                            },
+                            orElse: () => const Center(child: CircularProgressIndicator()),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                  const SizedBox(height: 28),
+
+                  // AI Health Tip
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: isDark
+                            ? [const Color(0xFF0A2E22), const Color(0xFF151925)]
+                            : [const Color(0xFFE0F2F1), const Color(0xFFE8E5FF)],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 44,
+                          height: 44,
+                          decoration: BoxDecoration(
+                            color: AppColors.lightPrimary.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(Icons.tips_and_updates, color: AppColors.lightPrimary, size: 24),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'AI Health Tip',
+                                style: TextStyle(
+                                  fontFamily: 'ClashDisplay',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                'Stay hydrated! Drinking 8 glasses of water daily helps maintain healthy blood pressure and improves circulation.',
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 12,
+                                  color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                  height: 1.4,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ).animate().fadeIn(duration: 400.ms, delay: 300.ms),
                   const SizedBox(height: 28),
 
                   // Recent Activity
@@ -559,6 +699,76 @@ class _EmptyStateCard extends StatelessWidget {
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _VitalSummaryCard extends StatelessWidget {
+  final VitalType vitalType;
+  final Vital? vital;
+
+  const _VitalSummaryCard({
+    required this.vitalType,
+    this.vital,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      width: 140,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1E2230) : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: vitalType.color.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(vitalType.icon, color: vitalType.color, size: 16),
+              ),
+              const Spacer(),
+              if (vital != null)
+                Icon(
+                  Icons.trending_up,
+                  size: 14,
+                  color: AppColors.urgencyLow,
+                ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            vital != null ? vital!.displayValue : '--',
+            style: TextStyle(
+              fontFamily: 'JetBrainsMono',
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: isDark ? Colors.white : AppColors.lightOnBackground,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            vitalType.displayName,
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 11,
+              color: isDark ? AppColors.grey500 : AppColors.grey400,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

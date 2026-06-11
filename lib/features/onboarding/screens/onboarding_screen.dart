@@ -22,28 +22,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   final List<OnboardingPage> _pages = [
     OnboardingPage(
-      icon: Icons.favorite_rounded,
-      title: 'Your Health Passport',
-      description: 'Carry a complete, encrypted health profile wherever you go. Share vital information instantly with any healthcare provider through a secure QR code.',
+      icon: Icons.monitor_heart_rounded,
+      title: 'Track Your Vitals',
+      description: 'Monitor heart rate, blood pressure, SpO2, temperature, and more. Get a comprehensive view of your health with smart tracking and trend analysis.',
       gradient: [Color(0xFF0B7A5B), Color(0xFF0B9E70)],
     ),
     OnboardingPage(
       icon: Icons.psychology_rounded,
-      title: 'AI Symptom Triage',
+      title: 'AI-Powered Triage',
       description: 'Describe your symptoms and get instant AI-powered triage recommendations. Know when to self-care, schedule an appointment, or seek emergency help.',
       gradient: [Color(0xFF6C63FF), Color(0xFF8B83FF)],
     ),
     OnboardingPage(
-      icon: Icons.family_restroom_rounded,
-      title: 'Family Health Hub',
-      description: 'Manage health profiles for your entire family. Track symptoms, store medical information, and ensure everyone gets the care they need.',
+      icon: Icons.notifications_active_rounded,
+      title: 'Stay Informed',
+      description: 'Get personalized health tips, medication reminders, and weekly AI insights. Never miss an appointment or forget to log your vitals again.',
       gradient: [Color(0xFFFF6B6B), Color(0xFFFFB347)],
-    ),
-    OnboardingPage(
-      icon: Icons.health_and_safety_rounded,
-      title: 'Emergency SOS',
-      description: 'One-tap emergency alerts with automatic GPS location sharing. Instantly notify your emergency contacts via SMS when every second counts.',
-      gradient: [Color(0xFFE53935), Color(0xFFFF5722)],
     ),
   ];
 

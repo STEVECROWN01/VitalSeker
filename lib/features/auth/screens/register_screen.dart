@@ -26,6 +26,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   bool _obscureConfirmPassword = true;
   bool _acceptTerms = false;
 
+  // New optional fields
+  DateTime? _dateOfBirth;
+  String? _gender;
+  String? _bloodType;
+
+  static const List<String> _genderOptions = ['Male', 'Female', 'Other'];
+  static const List<String> _bloodTypeOptions = [
+    'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'
+  ];
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -84,6 +94,30 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         margin: const EdgeInsets.all(16),
       ),
     );
+  }
+
+  Future<void> _pickDateOfBirth() async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _dateOfBirth ?? DateTime(now.year - 25),
+      firstDate: DateTime(1900),
+      lastDate: now,
+      helpText: 'Select Date of Birth',
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                  primary: AppColors.lightPrimary,
+                ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() => _dateOfBirth = picked);
+    }
   }
 
   Future<void> _signUp() async {
@@ -260,7 +294,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     controller: _confirmPasswordController,
                     obscureText: _obscureConfirmPassword,
-                    textInputAction: TextInputAction.done,
+                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (_) => _signUp(),
                     decoration: InputDecoration(
                       labelText: 'Confirm Password',
@@ -277,6 +311,123 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
+
+                  // ── Optional Fields Section ──
+                  Row(
+                    children: [
+                      Container(
+                        width: 3,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: AppColors.lightPrimary,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Optional Details',
+                        style: TextStyle(
+                          fontFamily: 'ClashDisplay',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Container(
+                          height: 1,
+                          color: isDark ? AppColors.grey700 : AppColors.grey200,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Date of Birth
+                  GestureDetector(
+                    onTap: _pickDateOfBirth,
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Date of Birth',
+                          prefixIcon: const Icon(Icons.cake_outlined),
+                          suffixIcon: Icon(
+                            Icons.calendar_today_outlined,
+                            size: 18,
+                            color: isDark ? AppColors.grey400 : AppColors.grey500,
+                          ),
+                          hintText: 'Select your date of birth',
+                        ),
+                        controller: TextEditingController(
+                          text: _dateOfBirth != null
+                              ? '${_dateOfBirth!.day.toString().padLeft(2, '0')}/${_dateOfBirth!.month.toString().padLeft(2, '0')}/${_dateOfBirth!.year}'
+                              : '',
+                        ),
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          color: _dateOfBirth != null
+                              ? (isDark ? Colors.white : AppColors.lightOnBackground)
+                              : (isDark ? AppColors.grey500 : AppColors.grey400),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Gender Dropdown
+                  DropdownButtonFormField<String>(
+                    value: _gender,
+                    decoration: const InputDecoration(
+                      labelText: 'Gender',
+                      prefixIcon: Icon(Icons.wc_outlined),
+                      hintText: 'Select gender',
+                    ),
+                    items: _genderOptions.map((gender) {
+                      return DropdownMenuItem<String>(
+                        value: gender,
+                        child: Text(
+                          gender,
+                          style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) => setState(() => _gender = value),
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 16,
+                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Blood Type Dropdown
+                  DropdownButtonFormField<String>(
+                    value: _bloodType,
+                    decoration: const InputDecoration(
+                      labelText: 'Blood Type',
+                      prefixIcon: Icon(Icons.bloodtype_outlined),
+                      hintText: 'Select blood type',
+                    ),
+                    items: _bloodTypeOptions.map((type) {
+                      return DropdownMenuItem<String>(
+                        value: type,
+                        child: Text(
+                          type,
+                          style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) => setState(() => _bloodType = value),
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 16,
+                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
                   // Terms checkbox
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,

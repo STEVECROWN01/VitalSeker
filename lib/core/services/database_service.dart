@@ -215,4 +215,97 @@ class DatabaseService {
         .single();
     return SosEvent.fromJson(response);
   }
+
+  // ==================== VITALS ====================
+  Future<List<Map<String, dynamic>>> getVitals(String userId, {int limit = 100, int offset = 0}) async {
+    final response = await _client
+        .from('vitals')
+        .select()
+        .eq('user_id', userId)
+        .order('recorded_at', ascending: false)
+        .range(offset, offset + limit - 1);
+    return response.toList();
+  }
+
+  Future<void> insertVital(Map<String, dynamic> data) async {
+    data.remove('id');
+    data['created_at'] = DateTime.now().toIso8601String();
+    await _client.from('vitals').insert(data);
+  }
+
+  Future<void> deleteVital(String vitalId) async {
+    await _client.from('vitals').delete().eq('id', vitalId);
+  }
+
+  // ==================== MEDICATIONS ====================
+  Future<List<Map<String, dynamic>>> getMedications(String userId) async {
+    final response = await _client
+        .from('medications')
+        .select()
+        .eq('user_id', userId)
+        .order('created_at', ascending: false);
+    return response.toList();
+  }
+
+  Future<void> insertMedication(Map<String, dynamic> data) async {
+    data.remove('id');
+    data['created_at'] = DateTime.now().toIso8601String();
+    data['updated_at'] = DateTime.now().toIso8601String();
+    await _client.from('medications').insert(data);
+  }
+
+  Future<void> updateMedication(String medicationId, Map<String, dynamic> data) async {
+    data['updated_at'] = DateTime.now().toIso8601String();
+    await _client.from('medications').update(data).eq('id', medicationId);
+  }
+
+  Future<void> deleteMedication(String medicationId) async {
+    await _client.from('medications').delete().eq('id', medicationId);
+  }
+
+  // ==================== APPOINTMENTS ====================
+  Future<List<Map<String, dynamic>>> getAppointments(String userId) async {
+    final response = await _client
+        .from('appointments')
+        .select()
+        .eq('user_id', userId)
+        .order('date_time', ascending: true);
+    return response.toList();
+  }
+
+  Future<void> insertAppointment(Map<String, dynamic> data) async {
+    data.remove('id');
+    data['created_at'] = DateTime.now().toIso8601String();
+    data['updated_at'] = DateTime.now().toIso8601String();
+    await _client.from('appointments').insert(data);
+  }
+
+  Future<void> updateAppointment(String appointmentId, Map<String, dynamic> data) async {
+    data['updated_at'] = DateTime.now().toIso8601String();
+    await _client.from('appointments').update(data).eq('id', appointmentId);
+  }
+
+  Future<void> deleteAppointment(String appointmentId) async {
+    await _client.from('appointments').delete().eq('id', appointmentId);
+  }
+
+  // ==================== MEDICAL RECORDS ====================
+  Future<List<Map<String, dynamic>>> getMedicalRecords(String userId) async {
+    final response = await _client
+        .from('medical_records')
+        .select()
+        .eq('user_id', userId)
+        .order('date', ascending: false);
+    return response.toList();
+  }
+
+  Future<void> insertMedicalRecord(Map<String, dynamic> data) async {
+    data.remove('id');
+    data['created_at'] = DateTime.now().toIso8601String();
+    await _client.from('medical_records').insert(data);
+  }
+
+  Future<void> deleteMedicalRecord(String recordId) async {
+    await _client.from('medical_records').delete().eq('id', recordId);
+  }
 }
