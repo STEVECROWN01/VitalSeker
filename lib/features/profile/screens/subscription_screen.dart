@@ -130,7 +130,7 @@ class SubscriptionScreen extends ConsumerWidget {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,
-                  color: isDark ? AppColors.grey500 : AppColors.grey400,
+                  color: AppColors.textHint(isDark),
                 ),
               ),
             ),
@@ -168,7 +168,7 @@ class _PlanCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: isRecommended
-            ? Border.all(color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, width: 2)
+            ? Border.all(color: AppColors.primary(isDark), width: 2)
             : null,
       ),
       child: Card(
@@ -191,7 +191,7 @@ class _PlanCard extends StatelessWidget {
                           fontFamily: 'ClashDisplay',
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                       if (isRecommended) ...[
@@ -199,7 +199,7 @@ class _PlanCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                            color: AppColors.primary(isDark),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: const Text(
@@ -224,7 +224,7 @@ class _PlanCard extends StatelessWidget {
                             fontFamily: 'ClashDisplay',
                             fontSize: 24,
                             fontWeight: FontWeight.w700,
-                            color: isDark ? Colors.white : AppColors.lightOnBackground,
+                            color: AppColors.textPrimary(isDark),
                           ),
                         ),
                         TextSpan(
@@ -232,7 +232,7 @@ class _PlanCard extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
-                            color: isDark ? AppColors.grey400 : AppColors.grey500,
+                            color: AppColors.textSecondary(isDark),
                           ),
                         ),
                       ],
@@ -245,7 +245,7 @@ class _PlanCard extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Row(
                   children: [
-                    Icon(Icons.check_circle, size: 16, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                    Icon(Icons.check_circle, size: 16, color: AppColors.primary(isDark)),
                     const SizedBox(width: 8),
                     Text(
                       f,
@@ -270,7 +270,7 @@ class _PlanCard extends StatelessWidget {
                         onPressed: onTap,
                         style: isRecommended
                             ? ElevatedButton.styleFrom(
-                                backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                backgroundColor: AppColors.primary(isDark),
                               )
                             : null,
                         child: Text(planName == 'Free' ? 'Downgrade' : 'Upgrade to $planName'),

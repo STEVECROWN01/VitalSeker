@@ -11,13 +11,13 @@ class UrgencyBadge extends StatelessWidget {
     this.fontSize,
   });
 
-  Color get _color {
+  Color _color(bool isDark) {
     switch (urgencyLevel.toLowerCase()) {
       case 'low': return AppColors.urgencyLow;
       case 'medium': return AppColors.urgencyMedium;
       case 'high': return AppColors.urgencyHigh;
       case 'emergency': return AppColors.urgencyEmergency;
-      default: return AppColors.grey400;
+      default: return isDark ? AppColors.grey300 : AppColors.grey400;
     }
   }
 
@@ -33,17 +33,18 @@ class UrgencyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: _color.withValues(alpha: 0.15),
+        color: _color(isDark).withValues(alpha: isDark ? 0.25 : 0.15),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _color.withValues(alpha: 0.3)),
+        border: Border.all(color: _color(isDark).withValues(alpha: isDark ? 0.5 : 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(_icon, size: 16, color: _color),
+          Icon(_icon, size: 16, color: _color(isDark)),
           const SizedBox(width: 6),
           Text(
             urgencyLevel.toUpperCase(),
@@ -51,7 +52,7 @@ class UrgencyBadge extends StatelessWidget {
               fontFamily: 'DMSans',
               fontSize: fontSize ?? 11,
               fontWeight: FontWeight.w700,
-              color: _color,
+              color: _color(isDark),
               letterSpacing: 0.5,
             ),
           ),

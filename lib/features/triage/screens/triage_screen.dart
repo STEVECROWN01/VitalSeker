@@ -307,10 +307,10 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
-              color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+              color: AppColors.surface(isDark),
               border: Border(
                 top: BorderSide(
-                  color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey200,
+                  color: AppColors.border(isDark),
                 ),
               ),
               boxShadow: isDark
@@ -338,10 +338,10 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
                         hintStyle: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
-                          color: isDark ? AppColors.grey500 : AppColors.grey400,
+                          color: AppColors.textHint(isDark),
                         ),
                         filled: true,
-                        fillColor: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                        fillColor: AppColors.inputFill(isDark),
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 12),
                         border: OutlineInputBorder(
@@ -355,14 +355,14 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
                           borderSide: BorderSide(
-                            color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.3),
+                            color: (AppColors.primary(isDark)).withValues(alpha: 0.3),
                           ),
                         ),
                       ),
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                       maxLines: 4,
                       minLines: 1,
@@ -387,7 +387,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
                               height: 18,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                color: AppColors.textSecondary(isDark),
                               ),
                             )
                           : const Icon(Icons.send_rounded, color: Colors.white, size: 20),
@@ -456,8 +456,8 @@ class _ChatBubble extends StatelessWidget {
                       horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
                     color: isUser
-                        ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
-                        : (isDark ? const Color(0xFF1E2230) : AppColors.grey50),
+                        ? (AppColors.primary(isDark))
+                        : (AppColors.subtleBackground(isDark)),
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(18),
                       topRight: const Radius.circular(18),
@@ -467,9 +467,7 @@ class _ChatBubble extends StatelessWidget {
                     border: isUser
                         ? null
                         : Border.all(
-                            color: isDark
-                                ? const Color(0xFF2A2F3E)
-                                : AppColors.grey200,
+                            color: AppColors.border(isDark),
                           ),
                   ),
                   child: Column(
@@ -483,7 +481,7 @@ class _ChatBubble extends StatelessWidget {
                           height: 1.5,
                           color: isUser
                               ? Colors.white
-                              : (isDark ? AppColors.darkOnBackground : AppColors.lightOnBackground),
+                              : (AppColors.onBackground(isDark)),
                         ),
                       ),
                       // View detailed results button
@@ -498,7 +496,7 @@ class _ChatBubble extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: isUser
                                   ? Colors.white.withValues(alpha: 0.2)
-                                  : (isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                                  : (AppColors.primary(isDark)),
                               foregroundColor: isUser
                                   ? Colors.white
                                   : Colors.white,
@@ -527,7 +525,7 @@ class _ChatBubble extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 10,
-                      color: isDark ? AppColors.grey600 : AppColors.grey400,
+                      color: AppColors.textTertiary(isDark),
                     ),
                   ),
                 ),
@@ -540,10 +538,10 @@ class _ChatBubble extends StatelessWidget {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.15),
+                color: (AppColors.primary(isDark)).withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(Icons.person, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 16),
+              child: Icon(Icons.person, color: AppColors.primary(isDark), size: 16),
             ),
           ],
         ],
@@ -606,7 +604,7 @@ class _TypingIndicatorState extends State<_TypingIndicator>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
-              color: widget.isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+              color: AppColors.subtleBackground(widget.isDark),
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(18),
                 topRight: Radius.circular(18),
@@ -614,9 +612,7 @@ class _TypingIndicatorState extends State<_TypingIndicator>
                 bottomRight: Radius.circular(18),
               ),
               border: Border.all(
-                color: widget.isDark
-                    ? const Color(0xFF2A2F3E)
-                    : AppColors.grey200,
+                color: AppColors.border(widget.isDark),
               ),
             ),
             child: AnimatedBuilder(
@@ -637,7 +633,7 @@ class _TypingIndicatorState extends State<_TypingIndicator>
                           width: 8,
                           height: 8,
                           decoration: BoxDecoration(
-                            color: (widget.isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
+                            color: (AppColors.primary(widget.isDark))
                                 .withValues(alpha: 0.6 + (scale - 0.5) * 0.4),
                             shape: BoxShape.circle,
                           ),

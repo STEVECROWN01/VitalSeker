@@ -68,11 +68,11 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF151925) : Colors.white,
+                    color: AppColors.surface(isDark),
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.15),
+                        color: AppColors.primary(isDark).withValues(alpha: 0.15),
                         blurRadius: 30,
                         offset: const Offset(0, 10),
                       ),
@@ -83,7 +83,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.favorite_rounded, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 20),
+                          Icon(Icons.favorite_rounded, color: AppColors.primary(isDark), size: 20),
                           const SizedBox(width: 6),
                           Text(
                             'VitalSeker Health Passport',
@@ -91,7 +91,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                               fontFamily: 'ClashDisplay',
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: isDark ? Colors.white : AppColors.lightOnBackground,
+                              color: AppColors.textPrimary(isDark),
                             ),
                           ),
                         ],
@@ -104,11 +104,11 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                         backgroundColor: Colors.white,
                         eyeStyle: QrEyeStyle(
                           eyeShape: QrEyeShape.circle,
-                          color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                          color: AppColors.primary(isDark),
                         ),
-                        dataModuleStyle: const QrDataModuleStyle(
+                        dataModuleStyle: QrDataModuleStyle(
                           dataModuleShape: QrDataModuleShape.circle,
-                          color: Color(0xFF1A1A2E),
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -117,7 +117,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 13,
-                          color: isDark ? AppColors.grey400 : AppColors.grey500,
+                          color: AppColors.textSecondary(isDark),
                         ),
                       ),
                     ],
@@ -148,7 +148,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                   ],
                 ),
               ] else ...[
-                Icon(Icons.qr_code_2, size: 80, color: isDark ? AppColors.grey600 : AppColors.grey300),
+                Icon(Icons.qr_code_2, size: 80, color: AppColors.textTertiary(isDark)),
                 const SizedBox(height: 16),
                 Text(
                   'No QR Code Generated',
@@ -156,7 +156,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                     fontFamily: 'ClashDisplay',
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                 ),
                 const SizedBox(height: 16),

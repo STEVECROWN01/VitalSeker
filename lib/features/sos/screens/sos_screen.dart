@@ -202,7 +202,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 16,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -267,7 +267,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                     ),
                   ),
                 ] else ...[
@@ -319,7 +319,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
-                        color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        color: AppColors.textSecondary(isDark),
                       ),
                     ),
                   ],
@@ -344,7 +344,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 Row(
                   children: [
                     Icon(Icons.phone_in_talk,
-                        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                        color: AppColors.primary(isDark),
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
@@ -353,7 +353,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                   ],
@@ -396,12 +396,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     icon: const Icon(Icons.location_on_outlined, size: 20),
                     label: const Text('Share My Location'),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor:
-                          isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                      foregroundColor: AppColors.primary(isDark),
                       side: BorderSide(
-                        color: isDark
-                            ? AppColors.darkPrimary
-                            : AppColors.lightPrimary,
+                        color: AppColors.primary(isDark),
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
@@ -420,7 +417,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 Row(
                   children: [
                     Icon(Icons.contacts,
-                        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                        color: AppColors.primary(isDark),
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
@@ -429,7 +426,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                   ],
@@ -442,30 +439,24 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       return Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: isDark ? AppColors.darkSurface : AppColors.grey50,
+                          color: AppColors.subtleBackground(isDark),
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: isDark
-                                ? const Color(0xFF2A2F3E)
-                                : AppColors.grey200,
+                            color: AppColors.border(isDark),
                           ),
                         ),
                         child: Column(
                           children: [
                             Icon(Icons.person_add_outlined,
                                 size: 32,
-                                color: isDark
-                                    ? AppColors.grey500
-                                    : AppColors.grey400),
+                                color: AppColors.textHint(isDark)),
                             const SizedBox(height: 8),
                             Text(
                               'No emergency contacts configured',
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
-                                color: isDark
-                                    ? AppColors.grey400
-                                    : AppColors.grey500,
+                                color: AppColors.textSecondary(isDark),
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -474,9 +465,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 12,
-                                color: isDark
-                                    ? AppColors.grey500
-                                    : AppColors.grey400,
+                                color: AppColors.textHint(isDark),
                               ),
                             ),
                           ],
@@ -507,7 +496,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 Row(
                   children: [
                     Icon(Icons.local_hospital_outlined,
-                        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                        color: AppColors.primary(isDark),
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
@@ -516,7 +505,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                   ],
@@ -525,19 +514,17 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: isDark ? AppColors.darkSurface : AppColors.grey50,
+                    color: AppColors.subtleBackground(isDark),
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                      color: isDark
-                          ? const Color(0xFF2A2F3E)
-                          : AppColors.grey200,
+                      color: AppColors.border(isDark),
                     ),
                   ),
                   child: Column(
                     children: [
                       Icon(Icons.map_outlined,
                           size: 40,
-                          color: isDark ? AppColors.grey500 : AppColors.grey400),
+                          color: AppColors.textHint(isDark)),
                       const SizedBox(height: 12),
                       Text(
                         'Coming Soon',
@@ -545,7 +532,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                           fontFamily: 'ClashDisplay',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? AppColors.grey400 : AppColors.grey500,
+                          color: AppColors.textSecondary(isDark),
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -554,7 +541,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 12,
-                          color: isDark ? AppColors.grey500 : AppColors.grey400,
+                          color: AppColors.textHint(isDark),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -568,7 +555,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 Row(
                   children: [
                     Icon(Icons.medical_information_outlined,
-                        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                        color: AppColors.primary(isDark),
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
@@ -577,7 +564,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                   ],
@@ -590,12 +577,10 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     return Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+                        color: AppColors.surface(isDark),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: isDark
-                              ? const Color(0xFF2A2F3E)
-                              : AppColors.grey200,
+                          color: AppColors.border(isDark),
                         ),
                       ),
                       child: Column(
@@ -634,9 +619,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 13,
-                                  color: isDark
-                                      ? AppColors.grey400
-                                      : AppColors.grey500,
+                                  color: AppColors.textSecondary(isDark),
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -674,7 +657,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
-                            color: isDark ? AppColors.grey400 : AppColors.grey500,
+                            color: AppColors.textSecondary(isDark),
                             height: 1.5,
                           ),
                         ),
@@ -739,7 +722,7 @@ class _QuickDialButton extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 11,
-                  color: isDark ? AppColors.grey400 : AppColors.grey500,
+                  color: AppColors.textSecondary(isDark),
                 ),
               ),
             ],
@@ -770,10 +753,10 @@ class _EmergencyContactCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+          color: AppColors.surface(isDark),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey200,
+            color: AppColors.border(isDark),
           ),
         ),
         child: Row(
@@ -782,12 +765,12 @@ class _EmergencyContactCard extends StatelessWidget {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
+                color: AppColors.primary(isDark)
                     .withValues(alpha: isDark ? 0.15 : 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(Icons.person,
-                  color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 22),
+                  color: AppColors.primary(isDark), size: 22),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -800,9 +783,7 @@ class _EmergencyContactCard extends StatelessWidget {
                       fontFamily: 'Inter',
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: isDark
-                          ? Colors.white
-                          : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -814,18 +795,14 @@ class _EmergencyContactCard extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
-                            color: isDark
-                                ? AppColors.grey400
-                                : AppColors.grey500,
+                            color: AppColors.textSecondary(isDark),
                           ),
                         ),
                         const SizedBox(width: 8),
                         Text(
                           '·',
                           style: TextStyle(
-                            color: isDark
-                                ? AppColors.grey500
-                                : AppColors.grey400,
+                            color: AppColors.textHint(isDark),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -835,9 +812,7 @@ class _EmergencyContactCard extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'JetBrainsMono',
                           fontSize: 12,
-                          color: isDark
-                              ? AppColors.grey400
-                              : AppColors.grey500,
+                          color: AppColors.textSecondary(isDark),
                         ),
                       ),
                     ],
@@ -859,10 +834,10 @@ class _EmergencyContactCard extends StatelessWidget {
             IconButton(
               onPressed: onText,
               icon: Icon(Icons.message,
-                  color: isDark ? AppColors.darkInfo : AppColors.lightInfo, size: 22),
+                  color: AppColors.info(isDark), size: 22),
               style: IconButton.styleFrom(
                 backgroundColor:
-                    (isDark ? AppColors.darkInfo : AppColors.lightInfo).withValues(alpha: isDark ? 0.12 : 0.08),
+                    AppColors.info(isDark).withValues(alpha: isDark ? 0.12 : 0.08),
                 minimumSize: const Size(40, 40),
               ),
             ),
@@ -902,7 +877,7 @@ class _MedicalIdRow extends StatelessWidget {
               fontFamily: 'DMSans',
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: isDark ? AppColors.grey400 : AppColors.grey500,
+              color: AppColors.textSecondary(isDark),
               letterSpacing: 0.5,
             ),
           ),
@@ -914,7 +889,7 @@ class _MedicalIdRow extends StatelessWidget {
                 fontFamily: 'Inter',
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: isDark ? Colors.white : AppColors.lightOnBackground,
+                color: AppColors.textPrimary(isDark),
               ),
               textAlign: TextAlign.end,
               maxLines: 2,

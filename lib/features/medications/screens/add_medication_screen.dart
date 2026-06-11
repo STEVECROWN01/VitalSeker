@@ -168,7 +168,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 15,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                  color: AppColors.textPrimary(isDark),
                 ),
                 validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
               ),
@@ -192,7 +192,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 15,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                       validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                     ),
@@ -210,7 +210,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 15,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                       items: _units.map((u) => DropdownMenuItem(value: u, child: Text(u))).toList(),
                       onChanged: (v) => setState(() => _unit = v ?? 'mg'),
@@ -232,7 +232,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 15,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                  color: AppColors.textPrimary(isDark),
                 ),
                 items: MedicationFrequency.values
                     .map((f) => DropdownMenuItem(
@@ -264,7 +264,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                   Switch(
                     value: _hasEndDate,
                     onChanged: (v) => setState(() => _hasEndDate = v),
-                    activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    activeColor: AppColors.primary(isDark),
                   ),
                   Text(
                     'Set end date',
@@ -295,7 +295,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                     fontFamily: 'DMSans',
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
-                    color: isDark ? AppColors.grey500 : AppColors.grey400,
+                    color: AppColors.textHint(isDark),
                     letterSpacing: 1,
                   ),
                 ),
@@ -309,10 +309,10 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                         decoration: BoxDecoration(
-                          color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                          color: AppColors.inputFill(isDark),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+                            color: AppColors.borderLight(isDark),
                           ),
                         ),
                         child: Row(
@@ -320,7 +320,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                             Icon(
                               Icons.access_time,
                               size: 18,
-                              color: isDark ? AppColors.grey400 : AppColors.grey500,
+                              color: AppColors.textSecondary(isDark),
                             ),
                             const SizedBox(width: 12),
                             Text(
@@ -338,14 +338,14 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                                 fontFamily: 'DMSans',
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: isDark ? Colors.white : AppColors.lightOnBackground,
+                                color: AppColors.textPrimary(isDark),
                               ),
                             ),
                             const SizedBox(width: 4),
                             Icon(
                               Icons.chevron_right,
                               size: 18,
-                              color: isDark ? AppColors.grey500 : AppColors.grey400,
+                              color: AppColors.textHint(isDark),
                             ),
                           ],
                         ),
@@ -373,7 +373,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 15,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                  color: AppColors.textPrimary(isDark),
                 ),
               ),
               const SizedBox(height: 16),
@@ -382,17 +382,17 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                  color: AppColors.subtleBackground(isDark),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+                    color: AppColors.borderLight(isDark),
                   ),
                 ),
                 child: Row(
                   children: [
                     Icon(
                       Icons.notifications_outlined,
-                      color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                      color: AppColors.primary(isDark),
                       size: 22,
                     ),
                     const SizedBox(width: 12),
@@ -403,14 +403,14 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                           fontFamily: 'Inter',
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                     ),
                     Switch(
                       value: _remindersEnabled,
                       onChanged: (v) => setState(() => _remindersEnabled = v),
-                      activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                      activeColor: AppColors.primary(isDark),
                     ),
                   ],
                 ),
@@ -424,7 +424,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                 child: ElevatedButton(
                   onPressed: _isSaving ? null : _saveMedication,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    backgroundColor: AppColors.primary(isDark),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                     elevation: 2,
@@ -474,10 +474,10 @@ class _DateField extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+          color: AppColors.inputFill(isDark),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+            color: AppColors.borderLight(isDark),
           ),
         ),
         child: Row(
@@ -485,7 +485,7 @@ class _DateField extends StatelessWidget {
             Icon(
               Icons.calendar_today_outlined,
               size: 18,
-              color: isDark ? AppColors.grey400 : AppColors.grey500,
+              color: AppColors.textSecondary(isDark),
             ),
             const SizedBox(width: 12),
             Text(
@@ -503,14 +503,14 @@ class _DateField extends StatelessWidget {
                 fontFamily: 'DMSans',
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: isDark ? Colors.white : AppColors.lightOnBackground,
+                color: AppColors.textPrimary(isDark),
               ),
             ),
             const SizedBox(width: 4),
             Icon(
               Icons.chevron_right,
               size: 18,
-              color: isDark ? AppColors.grey500 : AppColors.grey400,
+              color: AppColors.textHint(isDark),
             ),
           ],
         ),

@@ -128,7 +128,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 15,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                  color: AppColors.textPrimary(isDark),
                 ),
                 validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
               ),
@@ -146,14 +146,14 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 15,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                  color: AppColors.textPrimary(isDark),
                 ),
                 hint: Text(
                   'Select specialty',
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 15,
-                    color: isDark ? AppColors.grey500 : AppColors.grey400,
+                    color: AppColors.textHint(isDark),
                   ),
                 ),
                 items: _specialties
@@ -172,10 +172,10 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                    color: AppColors.inputFill(isDark),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+                      color: AppColors.borderLight(isDark),
                     ),
                   ),
                   child: Row(
@@ -183,7 +183,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                       Icon(
                         Icons.calendar_today_outlined,
                         size: 18,
-                        color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        color: AppColors.textSecondary(isDark),
                       ),
                       const SizedBox(width: 12),
                       Text(
@@ -201,14 +201,14 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                           fontFamily: 'DMSans',
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                       const SizedBox(width: 4),
                       Icon(
                         Icons.chevron_right,
                         size: 18,
-                        color: isDark ? AppColors.grey500 : AppColors.grey400,
+                        color: AppColors.textHint(isDark),
                       ),
                     ],
                   ),
@@ -222,10 +222,10 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                    color: AppColors.inputFill(isDark),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+                      color: AppColors.borderLight(isDark),
                     ),
                   ),
                   child: Row(
@@ -233,7 +233,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                       Icon(
                         Icons.access_time,
                         size: 18,
-                        color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        color: AppColors.textSecondary(isDark),
                       ),
                       const SizedBox(width: 12),
                       Text(
@@ -251,14 +251,14 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                           fontFamily: 'DMSans',
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                       const SizedBox(width: 4),
                       Icon(
                         Icons.chevron_right,
                         size: 18,
-                        color: isDark ? AppColors.grey500 : AppColors.grey400,
+                        color: AppColors.textHint(isDark),
                       ),
                     ],
                   ),
@@ -278,7 +278,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 15,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                  color: AppColors.textPrimary(isDark),
                 ),
               ),
               const SizedBox(height: 16),
@@ -300,7 +300,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 15,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                  color: AppColors.textPrimary(isDark),
                 ),
               ),
               const SizedBox(height: 16),
@@ -309,17 +309,17 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                  color: AppColors.subtleBackground(isDark),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+                    color: AppColors.borderLight(isDark),
                   ),
                 ),
                 child: Row(
                   children: [
                     Icon(
                       Icons.notifications_outlined,
-                      color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                      color: AppColors.primary(isDark),
                       size: 22,
                     ),
                     const SizedBox(width: 12),
@@ -330,14 +330,14 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                           fontFamily: 'Inter',
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                     ),
                     Switch(
                       value: _reminderEnabled,
                       onChanged: (v) => setState(() => _reminderEnabled = v),
-                      activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                      activeColor: AppColors.primary(isDark),
                     ),
                   ],
                 ),
@@ -351,7 +351,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 child: ElevatedButton(
                   onPressed: _isSaving ? null : _saveAppointment,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    backgroundColor: AppColors.primary(isDark),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                     elevation: 2,

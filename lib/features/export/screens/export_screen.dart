@@ -116,7 +116,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Export failed: $e'), backgroundColor: AppColors.error(isDark)),
+          SnackBar(content: Text('Export failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
         );
       }
     } finally {
@@ -173,7 +173,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                 fontFamily: 'ClashDisplay',
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: isDark ? Colors.white : AppColors.lightOnBackground,
+                color: AppColors.textPrimary(isDark),
               ),
             ),
             const SizedBox(height: 12),
@@ -185,12 +185,12 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                 ),
                 value: _includeHistory,
                 onChanged: (value) => setState(() => _includeHistory = value),
-                activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                activeColor: AppColors.primary(isDark),
               ),
             ),
             const SizedBox(height: 32),
@@ -220,7 +220,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 12,
-                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                color: AppColors.textHint(isDark),
               ),
               textAlign: TextAlign.center,
             ),

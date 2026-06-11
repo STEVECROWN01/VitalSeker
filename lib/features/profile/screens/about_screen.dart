@@ -44,7 +44,7 @@ class AboutScreen extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -53,7 +53,7 @@ class AboutScreen extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'JetBrainsMono',
                       fontSize: 12,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                     ),
                   ),
                 ],
@@ -164,7 +164,7 @@ class AboutScreen extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,
-                  color: isDark ? AppColors.grey500 : AppColors.grey400,
+                  color: AppColors.textHint(isDark),
                 ),
               ),
             ),
@@ -192,7 +192,7 @@ class _SectionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icon, size: 18, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+              Icon(icon, size: 18, color: AppColors.primary(isDark)),
               const SizedBox(width: 8),
               Text(
                 title,
@@ -200,7 +200,7 @@ class _SectionCard extends StatelessWidget {
                   fontFamily: 'ClashDisplay',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                  color: AppColors.textPrimary(isDark),
                 ),
               ),
             ],
@@ -239,10 +239,10 @@ class _FeatureItem extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+              color: (AppColors.primary(isDark)).withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(icon, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 18),
+            child: Icon(icon, color: AppColors.primary(isDark), size: 18),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -262,7 +262,7 @@ class _FeatureItem extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                 ),
               ],

@@ -74,14 +74,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     children: [
                       CircleAvatar(
                         radius: 50,
-                        backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+                        backgroundColor: (AppColors.primary(isDark)).withValues(alpha: 0.12),
                         child: Text(
                           (profile?.fullName ?? 'U')[0].toUpperCase(),
                           style: TextStyle(
                             fontFamily: 'ClashDisplay',
                             fontSize: 36,
                             fontWeight: FontWeight.w700,
-                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                            color: AppColors.primary(isDark),
                           ),
                         ),
                       ),
@@ -92,7 +92,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           fontFamily: 'ClashDisplay',
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                       Text(
@@ -100,7 +100,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
-                          color: isDark ? AppColors.grey400 : AppColors.grey500,
+                          color: AppColors.textSecondary(isDark),
                         ),
                       ),
                     ],
@@ -244,9 +244,9 @@ class _StatCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1E2230) : Colors.white,
+          color: AppColors.subtleBackground(isDark),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100),
+          border: Border.all(color: AppColors.borderLight(isDark)),
         ),
         child: Column(
           children: [
@@ -256,7 +256,7 @@ class _StatCard extends StatelessWidget {
                 fontFamily: 'JetBrainsMono',
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
-                color: isDark ? Colors.white : AppColors.lightOnBackground,
+                color: AppColors.textPrimary(isDark),
               ),
             ),
             const SizedBox(height: 4),
@@ -265,7 +265,7 @@ class _StatCard extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 10,
-                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                color: AppColors.textHint(isDark),
               ),
               textAlign: TextAlign.center,
             ),
@@ -296,7 +296,7 @@ class _MenuSection extends StatelessWidget {
               fontFamily: 'DMSans',
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: isDark ? AppColors.grey500 : AppColors.grey400,
+              color: AppColors.textHint(isDark),
               letterSpacing: 1,
             ),
           ),

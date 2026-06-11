@@ -97,7 +97,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   'Skip',
                   style: TextStyle(
                     fontFamily: 'Outfit',
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                 ),
               ),
@@ -147,7 +147,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             fontFamily: 'ClashDisplay',
                             fontSize: 28,
                             fontWeight: FontWeight.w700,
-                            color: isDark ? Colors.white : AppColors.lightOnBackground,
+                            color: AppColors.textPrimary(isDark),
                           ),
                           textAlign: TextAlign.center,
                         ).animate().fadeIn(duration: 400.ms, delay: 100.ms),
@@ -158,7 +158,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             fontFamily: 'Inter',
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
-                            color: isDark ? AppColors.grey400 : AppColors.grey500,
+                            color: AppColors.textSecondary(isDark),
                             height: 1.6,
                           ),
                           textAlign: TextAlign.center,
@@ -182,8 +182,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     height: 8,
                     decoration: BoxDecoration(
                       color: _currentPage == index
-                          ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
-                          : (isDark ? AppColors.grey700 : AppColors.grey200),
+                          ? AppColors.primary(isDark)
+                          : AppColors.divider(isDark),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   );
@@ -208,7 +208,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    backgroundColor: AppColors.primary(isDark),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -242,7 +242,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 11,
-                  color: isDark ? AppColors.grey600 : AppColors.grey400,
+                  color: AppColors.textTertiary(isDark),
                 ),
               ),
             ),

@@ -67,6 +67,9 @@ class AppColors {
   static Color primary(bool isDark) => isDark ? darkPrimary : lightPrimary;
   static Color secondary(bool isDark) => isDark ? darkSecondary : lightSecondary;
   static Color error(bool isDark) => isDark ? darkError : lightError;
+  static Color success(bool isDark) => isDark ? darkSuccess : lightSuccess;
+  static Color warning(bool isDark) => isDark ? darkWarning : lightWarning;
+  static Color info(bool isDark) => isDark ? darkInfo : lightInfo;
 
   // Card / input fill colors
   static Color cardBackground(bool isDark) => isDark ? darkSurface : lightSurface;

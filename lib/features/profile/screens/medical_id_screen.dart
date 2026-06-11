@@ -108,7 +108,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.surface(isDark),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Row(
@@ -126,12 +126,12 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                                 ),
                               ),
                               const SizedBox(width: 8),
-                              const Text(
+                              Text(
                                 'Blood Type',
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 12,
-                                  color: AppColors.grey500,
+                                  color: AppColors.textSecondary(isDark),
                                 ),
                               ),
                             ],
@@ -199,7 +199,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                 if (profile?.emergencyContacts.isNotEmpty ?? false)
                   _InfoSection(
                     icon: Icons.contact_phone_outlined,
-                    iconColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    iconColor: AppColors.primary(isDark),
                     title: 'Emergency Contact',
                     items: profile!.emergencyContacts.map((c) =>
                       '${c.name}${c.relationship != null ? ' (${c.relationship})' : ''} - ${c.phone}'
@@ -209,7 +209,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                 else
                   _InfoSection(
                     icon: Icons.contact_phone_outlined,
-                    iconColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    iconColor: AppColors.primary(isDark),
                     title: 'Emergency Contact',
                     items: const ['No emergency contact set'],
                     isDark: isDark,
@@ -228,7 +228,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                           Icon(
                             Icons.qr_code_2,
                             size: 120,
-                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                            color: AppColors.primary(isDark),
                           ),
                           const SizedBox(height: 8),
                           Text(
@@ -237,7 +237,7 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                               fontFamily: 'Inter',
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
-                              color: isDark ? AppColors.grey400 : AppColors.grey500,
+                              color: AppColors.textSecondary(isDark),
                             ),
                           ),
                         ],
@@ -320,7 +320,7 @@ class _InfoSection extends StatelessWidget {
                     fontFamily: 'ClashDisplay',
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    color: AppColors.textPrimary(isDark),
                   ),
                 ),
               ],

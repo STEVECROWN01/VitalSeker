@@ -155,7 +155,7 @@ class DashboardScreen extends ConsumerWidget {
                                       if (allergies.isNotEmpty) const SizedBox(width: 12),
                                     ],
                                     if (allergies.isNotEmpty) ...[
-                                      Icon(Icons.warning_amber, color: Colors.orange.shade300, size: 16),
+                                      Icon(Icons.warning_amber, color: isDark ? AppColors.darkWarning : AppColors.lightWarning, size: 16),
                                       const SizedBox(width: 4),
                                       Expanded(
                                         child: Text(
@@ -207,7 +207,7 @@ class DashboardScreen extends ConsumerWidget {
                       fontFamily: 'ClashDisplay',
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -216,14 +216,14 @@ class DashboardScreen extends ConsumerWidget {
                       _QuickActionCard(
                         icon: Icons.monitor_heart,
                         label: 'Log Vitals',
-                        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                        color: AppColors.primary(isDark),
                         onTap: () => context.push(AppConfig.addVital),
                       ),
                       const SizedBox(width: 12),
                       _QuickActionCard(
                         icon: Icons.healing,
                         label: 'Start Triage',
-                        color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
+                        color: AppColors.secondary(isDark),
                         onTap: () => context.push(AppConfig.triage),
                       ),
                       const SizedBox(width: 12),
@@ -259,7 +259,7 @@ class DashboardScreen extends ConsumerWidget {
                                 fontFamily: 'ClashDisplay',
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: isDark ? Colors.white : AppColors.lightOnBackground,
+                                color: AppColors.textPrimary(isDark),
                               ),
                             ),
                             TextButton(
@@ -269,7 +269,7 @@ class DashboardScreen extends ConsumerWidget {
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
                                   fontWeight: FontWeight.w600,
-                                  color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                  color: AppColors.primary(isDark),
                                 ),
                               ),
                             ),
@@ -336,7 +336,7 @@ class DashboardScreen extends ConsumerWidget {
                       ),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+                        color: AppColors.borderLight(isDark),
                       ),
                     ),
                     child: Row(
@@ -345,10 +345,10 @@ class DashboardScreen extends ConsumerWidget {
                           width: 44,
                           height: 44,
                           decoration: BoxDecoration(
-                            color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.15),
+                            color: AppColors.primary(isDark).withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Icon(Icons.tips_and_updates, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 24),
+                          child: Icon(Icons.tips_and_updates, color: AppColors.primary(isDark), size: 24),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
@@ -361,7 +361,7 @@ class DashboardScreen extends ConsumerWidget {
                                   fontFamily: 'ClashDisplay',
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
-                                  color: isDark ? Colors.white : AppColors.lightOnBackground,
+                                  color: AppColors.textPrimary(isDark),
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -370,7 +370,7 @@ class DashboardScreen extends ConsumerWidget {
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 12,
-                                  color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                  color: AppColors.textSecondary(isDark),
                                   height: 1.4,
                                 ),
                               ),
@@ -389,7 +389,7 @@ class DashboardScreen extends ConsumerWidget {
                       fontFamily: 'ClashDisplay',
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -422,11 +422,11 @@ class DashboardScreen extends ConsumerWidget {
                               ),
                               subtitle: Text(
                                 'Severity: ${log.severity}/10',
-                                style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                                style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                               ),
                               trailing: Text(
                                 _formatDate(log.loggedAt),
-                                style: TextStyle(fontFamily: 'Inter', fontSize: 11, color: isDark ? AppColors.grey500 : AppColors.grey400),
+                                style: TextStyle(fontFamily: 'Inter', fontSize: 11, color: AppColors.textHint(isDark)),
                               ),
                             ),
                           );
@@ -482,7 +482,7 @@ class DashboardScreen extends ConsumerWidget {
                                   onPressed: () => context.push(AppConfig.subscription),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
-                                    foregroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                    foregroundColor: AppColors.primary(isDark),
                                   ),
                                   child: const Text('Upgrade', style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600)),
                                 ),
@@ -534,7 +534,7 @@ class _VitalScoreCard extends StatelessWidget {
 
     return Card(
       elevation: 4,
-      shadowColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.2),
+      shadowColor: AppColors.primary(isDark).withValues(alpha: 0.2),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Row(
@@ -551,7 +551,7 @@ class _VitalScoreCard extends StatelessWidget {
                       fontFamily: 'ClashDisplay',
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -560,7 +560,7 @@ class _VitalScoreCard extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 13,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -568,13 +568,13 @@ class _VitalScoreCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+                        color: AppColors.primary(isDark).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.workspace_premium, size: 14, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                          Icon(Icons.workspace_premium, size: 14, color: AppColors.primary(isDark)),
                           SizedBox(width: 4),
                           Text(
                             'PRO',
@@ -582,7 +582,7 @@ class _VitalScoreCard extends StatelessWidget {
                               fontFamily: 'DMSans',
                               fontSize: 11,
                               fontWeight: FontWeight.w700,
-                              color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                              color: AppColors.primary(isDark),
                             ),
                           ),
                         ],
@@ -621,9 +621,9 @@ class _QuickActionCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E2230) : Colors.white,
+            color: AppColors.cardBackground(isDark),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100),
+            border: Border.all(color: AppColors.borderLight(isDark)),
           ),
           child: Column(
             children: [
@@ -674,7 +674,7 @@ class _EmptyStateCard extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Icon(icon, size: 48, color: isDark ? AppColors.grey600 : AppColors.grey300),
+            Icon(icon, size: 48, color: AppColors.textTertiary(isDark)),
             const SizedBox(height: 12),
             Text(
               message,
@@ -682,7 +682,7 @@ class _EmptyStateCard extends StatelessWidget {
                 fontFamily: 'Outfit',
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                color: AppColors.textSecondary(isDark),
               ),
             ),
             if (subtitle.isNotEmpty) ...[
@@ -692,7 +692,7 @@ class _EmptyStateCard extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 13,
-                  color: isDark ? AppColors.grey600 : AppColors.grey400,
+                  color: AppColors.textTertiary(isDark),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -721,9 +721,9 @@ class _VitalSummaryCard extends StatelessWidget {
       width: 140,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E2230) : Colors.white,
+        color: AppColors.cardBackground(isDark),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100),
+        border: Border.all(color: AppColors.borderLight(isDark)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -755,7 +755,7 @@ class _VitalSummaryCard extends StatelessWidget {
               fontFamily: 'JetBrainsMono',
               fontSize: 20,
               fontWeight: FontWeight.w700,
-              color: isDark ? Colors.white : AppColors.lightOnBackground,
+              color: AppColors.textPrimary(isDark),
             ),
           ),
           const SizedBox(height: 2),
@@ -764,7 +764,7 @@ class _VitalSummaryCard extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Inter',
               fontSize: 11,
-              color: isDark ? AppColors.grey500 : AppColors.grey400,
+              color: AppColors.textHint(isDark),
             ),
             overflow: TextOverflow.ellipsis,
           ),

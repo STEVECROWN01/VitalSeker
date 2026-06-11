@@ -119,7 +119,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                       child: ElevatedButton(
                         onPressed: _isSubmitting ? null : _submitSupport,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                          backgroundColor: AppColors.primary(isDark),
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
@@ -154,15 +154,15 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+                    color: (AppColors.primary(isDark)).withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(Icons.email_outlined, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 20),
+                  child: Icon(Icons.email_outlined, color: AppColors.primary(isDark), size: 20),
                 ),
                 title: const Text('Email Us', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                 subtitle: Text(
                   'support@vitalseker.com',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                  style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: AppColors.primary(isDark)),
                 ),
                 trailing: const Icon(Icons.open_in_new, size: 16),
                 onTap: () async {
@@ -191,7 +191,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                       fontFamily: 'ClashDisplay',
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -200,7 +200,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 12,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                     ),
                   ),
                 ],
@@ -228,16 +228,17 @@ class _FaqItem extends StatelessWidget {
         dividerColor: Colors.transparent,
       ),
       child: ExpansionTile(
-        iconColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
-        collapsedIconColor: isDark ? AppColors.grey400 : AppColors.grey500,
+        iconColor: AppColors.primary(isDark),
+        collapsedIconColor: AppColors.textSecondary(isDark),
         tilePadding: const EdgeInsets.symmetric(horizontal: 16),
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         title: Text(
           question,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 14,
             fontWeight: FontWeight.w500,
+            color: AppColors.textPrimary(isDark),
           ),
         ),
         children: [
@@ -272,7 +273,7 @@ class _SectionLabel extends StatelessWidget {
           fontFamily: 'DMSans',
           fontSize: 11,
           fontWeight: FontWeight.w700,
-          color: isDark ? AppColors.grey500 : AppColors.grey400,
+          color: AppColors.textHint(isDark),
           letterSpacing: 1,
         ),
       ),

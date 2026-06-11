@@ -49,10 +49,10 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                color: AppColors.inputFill(isDark),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey200,
+                  color: AppColors.border(isDark),
                 ),
               ),
               child: DropdownButtonHideUnderline(
@@ -61,13 +61,13 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                   isExpanded: true,
                   icon: Icon(
                     Icons.keyboard_arrow_down,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                   style: TextStyle(
                     fontFamily: 'ClashDisplay',
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    color: AppColors.textPrimary(isDark),
                   ),
                   items: VitalType.values.map((type) {
                     return DropdownMenuItem<VitalType>(
@@ -83,7 +83,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 12,
-                              color: isDark ? AppColors.grey500 : AppColors.grey400,
+                              color: AppColors.textHint(isDark),
                             ),
                           ),
                         ],
@@ -115,16 +115,12 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? _selectedType.color.withValues(alpha: 0.15)
-                            : isDark
-                                ? const Color(0xFF1E2230)
-                                : AppColors.grey50,
+                            : AppColors.subtleBackground(isDark),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: isSelected
                               ? _selectedType.color
-                              : isDark
-                                  ? const Color(0xFF2A2F3E)
-                                  : AppColors.grey200,
+                              : AppColors.border(isDark),
                           width: isSelected ? 1.5 : 1,
                         ),
                       ),
@@ -136,9 +132,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                           color: isSelected
                               ? _selectedType.color
-                              : isDark
-                                  ? AppColors.grey400
-                                  : AppColors.grey500,
+                              : AppColors.textSecondary(isDark),
                         ),
                       ),
                     ),
@@ -210,7 +204,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
               fontFamily: 'ClashDisplay',
               fontSize: 20,
               fontWeight: FontWeight.w700,
-              color: isDark ? Colors.white : AppColors.lightOnBackground,
+              color: AppColors.textPrimary(isDark),
             ),
           ),
           const SizedBox(height: 8),
@@ -219,7 +213,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
             style: TextStyle(
               fontFamily: 'Inter',
               fontSize: 14,
-              color: isDark ? AppColors.grey400 : AppColors.grey500,
+              color: AppColors.textSecondary(isDark),
               height: 1.6,
             ),
             textAlign: TextAlign.center,
@@ -249,10 +243,10 @@ class _VitalChart extends StatelessWidget {
       height: 200,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E2230) : Colors.white,
+        color: AppColors.cardBackground(isDark),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+          color: AppColors.borderLight(isDark),
         ),
       ),
       child: CustomPaint(
@@ -288,7 +282,7 @@ class _LineChartPainter extends CustomPainter {
           style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 13,
-            color: isDark ? AppColors.grey500 : AppColors.grey400,
+            color: AppColors.textHint(isDark),
           ),
         ),
         textDirection: TextDirection.ltr,
@@ -366,7 +360,7 @@ class _LineChartPainter extends CustomPainter {
     // Dots
     final dotPaint = Paint()..color = color;
     final dotBorderPaint = Paint()
-      ..color = isDark ? const Color(0xFF1E2230) : Colors.white
+      ..color = AppColors.cardBackground(isDark)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
@@ -411,7 +405,7 @@ class _StatisticsRow extends StatelessWidget {
           label: 'Average',
           value: _formatValue(avg),
           unit: vitalType.unit,
-          color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+          color: AppColors.primary(isDark),
           isDark: isDark,
         ),
         const SizedBox(width: 8),
@@ -518,10 +512,10 @@ class _VitalsDataTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E2230) : Colors.white,
+        color: AppColors.cardBackground(isDark),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+          color: AppColors.borderLight(isDark),
         ),
       ),
       child: Column(
@@ -535,7 +529,7 @@ class _VitalsDataTable extends StatelessWidget {
                 fontFamily: 'DMSans',
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                color: AppColors.textHint(isDark),
                 letterSpacing: 1,
               ),
             ),
@@ -556,7 +550,7 @@ class _VitalsDataTable extends StatelessWidget {
                       fontFamily: 'DMSans',
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -569,7 +563,7 @@ class _VitalsDataTable extends StatelessWidget {
                       fontFamily: 'DMSans',
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -582,7 +576,7 @@ class _VitalsDataTable extends StatelessWidget {
                       fontFamily: 'DMSans',
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                       letterSpacing: 0.5,
                     ),
                     textAlign: TextAlign.right,
@@ -596,7 +590,7 @@ class _VitalsDataTable extends StatelessWidget {
                       fontFamily: 'DMSans',
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                       letterSpacing: 0.5,
                     ),
                     textAlign: TextAlign.right,
@@ -620,7 +614,7 @@ class _VitalsDataTable extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
-                    color: isDark ? AppColors.grey500 : AppColors.grey400,
+                    color: AppColors.textHint(isDark),
                   ),
                 ),
               ),
@@ -666,7 +660,7 @@ class _DataRow extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'JetBrainsMono',
                 fontSize: 12,
-                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                color: AppColors.textSecondary(isDark),
               ),
             ),
           ),
@@ -711,11 +705,11 @@ class _DataRow extends StatelessWidget {
   Color get _sourceColor {
     switch (vital.source) {
       case 'manual':
-        return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
+        return AppColors.primary(isDark);
       case 'device':
         return isDark ? AppColors.darkInfo : AppColors.lightInfo;
       case 'import':
-        return isDark ? AppColors.darkSecondary : AppColors.lightSecondary;
+        return AppColors.secondary(isDark);
       default:
         return AppColors.grey400;
     }

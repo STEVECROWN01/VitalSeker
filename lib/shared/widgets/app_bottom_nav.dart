@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/config/app_config.dart';
+import '../../shared/theme/app_colors.dart';
 
 class AppBottomNav extends StatelessWidget {
   final int currentIndex;
@@ -29,7 +30,7 @@ class AppBottomNav extends StatelessWidget {
             break;
         }
       },
-      backgroundColor: isDark ? const Color(0xFF151925) : Colors.white,
+      backgroundColor: AppColors.surface(isDark),
       indicatorColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.12),
       destinations: [
         NavigationDestination(

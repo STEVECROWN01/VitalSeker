@@ -31,7 +31,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
       appBar: AppBar(title: const Text('Vitals')),
       body: RefreshIndicator(
         onRefresh: _handleRefresh,
-        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+        color: AppColors.primary(isDark),
         child: vitalsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, _) => Center(
@@ -46,7 +46,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                     fontFamily: 'ClashDisplay',
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    color: AppColors.textPrimary(isDark),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -55,7 +55,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 13,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -75,12 +75,12 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                           width: 80,
                           height: 80,
                           decoration: BoxDecoration(
-                            color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+                            color: (AppColors.primary(isDark)).withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(24),
                           ),
                           child: Icon(
                             Icons.monitor_heart_outlined,
-                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                            color: AppColors.primary(isDark),
                             size: 40,
                           ),
                         ),
@@ -91,7 +91,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                             fontFamily: 'ClashDisplay',
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
-                            color: isDark ? Colors.white : AppColors.lightOnBackground,
+                            color: AppColors.textPrimary(isDark),
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -100,7 +100,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
-                            color: isDark ? AppColors.grey400 : AppColors.grey500,
+                            color: AppColors.textSecondary(isDark),
                             height: 1.6,
                           ),
                           textAlign: TextAlign.center,
@@ -114,7 +114,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                             style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                            backgroundColor: AppColors.primary(isDark),
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -135,7 +135,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                      color: AppColors.subtleBackground(isDark),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -184,7 +184,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
       floatingActionButton: FloatingActionButton(
         heroTag: 'add_vital_fab',
         onPressed: () => context.push(AppConfig.addVital),
-        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+        backgroundColor: AppColors.primary(isDark),
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
@@ -213,7 +213,7 @@ class _SegmentButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             color: isSelected
-                ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
+                ? (AppColors.primary(isDark))
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
           ),
@@ -225,9 +225,7 @@ class _SegmentButton extends StatelessWidget {
               fontWeight: FontWeight.w600,
               color: isSelected
                   ? Colors.white
-                  : isDark
-                      ? AppColors.grey400
-                      : AppColors.grey500,
+                  : AppColors.textSecondary(isDark),
             ),
             textAlign: TextAlign.center,
           ),
@@ -276,10 +274,10 @@ class _VitalTypeCard extends ConsumerWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E2230) : Colors.white,
+            color: AppColors.cardBackground(isDark),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+              color: AppColors.borderLight(isDark),
             ),
           ),
           child: Row(
@@ -307,7 +305,7 @@ class _VitalTypeCard extends ConsumerWidget {
                         fontFamily: 'ClashDisplay',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -317,7 +315,7 @@ class _VitalTypeCard extends ConsumerWidget {
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 12,
-                          color: isDark ? AppColors.grey500 : AppColors.grey400,
+                          color: AppColors.textHint(isDark),
                         ),
                       )
                     else
@@ -326,7 +324,7 @@ class _VitalTypeCard extends ConsumerWidget {
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 12,
-                          color: isDark ? AppColors.grey600 : AppColors.grey400,
+                          color: AppColors.textTertiary(isDark),
                         ),
                       ),
                   ],
@@ -357,7 +355,7 @@ class _VitalTypeCard extends ConsumerWidget {
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
-                            color: isDark ? AppColors.grey500 : AppColors.grey400,
+                            color: AppColors.textHint(isDark),
                           ),
                         ),
                       ],
@@ -378,7 +376,7 @@ class _VitalTypeCard extends ConsumerWidget {
                     style: TextStyle(
                       fontFamily: 'JetBrainsMono',
                       fontSize: 16,
-                      color: isDark ? AppColors.grey600 : AppColors.grey300,
+                      color: AppColors.textTertiary(isDark),
                     ),
                   ),
                 ),
@@ -388,7 +386,7 @@ class _VitalTypeCard extends ConsumerWidget {
               Icon(
                 Icons.chevron_right,
                 size: 20,
-                color: isDark ? AppColors.grey600 : AppColors.grey300,
+                color: AppColors.textTertiary(isDark),
               ),
             ],
           ),

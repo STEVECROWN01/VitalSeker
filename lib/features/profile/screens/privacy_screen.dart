@@ -24,10 +24,10 @@ class PrivacyScreen extends StatelessWidget {
                     width: 56,
                     height: 56,
                     decoration: BoxDecoration(
-                      color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+                      color: (AppColors.primary(isDark)).withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: Icon(Icons.shield_outlined, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 28),
+                    child: Icon(Icons.shield_outlined, color: AppColors.primary(isDark), size: 28),
                   ),
                   const SizedBox(height: 12),
                   const Text(
@@ -43,7 +43,7 @@ class PrivacyScreen extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 13,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                   ),
                 ],
@@ -140,7 +140,7 @@ class PrivacyScreen extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 12,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -179,7 +179,7 @@ class _SectionHeading extends StatelessWidget {
           fontFamily: 'ClashDisplay',
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: isDark ? Colors.white : AppColors.lightOnBackground,
+          color: AppColors.textPrimary(isDark),
         ),
       ),
     );

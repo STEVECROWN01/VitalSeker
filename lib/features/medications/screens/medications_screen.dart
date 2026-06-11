@@ -50,6 +50,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
   }
 
   Future<void> _deleteMedication(Medication medication) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -91,7 +92,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     showModalBottomSheet(
       context: context,
-      backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
+      backgroundColor: AppColors.surface(isDark),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -110,7 +111,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -155,7 +156,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppConfig.addMedication),
-        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+        backgroundColor: AppColors.primary(isDark),
         child: const Icon(Icons.add, color: Colors.white),
       ),
       body: medicationsAsync.when(
@@ -176,11 +177,11 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                     hintStyle: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                     ),
-                    prefixIcon: Icon(Icons.search, color: isDark ? AppColors.grey500 : AppColors.grey400),
+                    prefixIcon: Icon(Icons.search, color: AppColors.textHint(isDark)),
                     filled: true,
-                    fillColor: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                    fillColor: AppColors.inputFill(isDark),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
@@ -190,7 +191,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    color: AppColors.textPrimary(isDark),
                   ),
                 ),
               ),
@@ -239,7 +240,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
-                                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                color: AppColors.textSecondary(isDark),
                               ),
                             ),
                           )
@@ -285,17 +286,13 @@ class _FilterChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: selected
-              ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
-              : isDark
-                  ? const Color(0xFF1E2230)
-                  : AppColors.grey50,
+              ? AppColors.primary(isDark)
+              : AppColors.subtleBackground(isDark),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: selected
-                ? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
-                : isDark
-                    ? const Color(0xFF2A2F3E)
-                    : AppColors.grey100,
+                ? AppColors.primary(isDark)
+                : AppColors.borderLight(isDark),
           ),
         ),
         child: Text(
@@ -330,11 +327,11 @@ class _MedicationCard extends StatelessWidget {
   Color _statusColor() {
     switch (medication.status) {
       case MedicationStatus.active:
-        return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
+        return AppColors.primary(isDark);
       case MedicationStatus.completed:
         return isDark ? AppColors.darkSuccess : AppColors.lightSuccess;
       case MedicationStatus.discontinued:
-        return AppColors.grey400;
+        return isDark ? AppColors.grey500 : AppColors.grey400;
     }
   }
 
@@ -384,7 +381,7 @@ class _MedicationCard extends StatelessWidget {
                           fontFamily: 'ClashDisplay',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -395,7 +392,7 @@ class _MedicationCard extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 13,
-                          color: isDark ? AppColors.grey400 : AppColors.grey500,
+                          color: AppColors.textSecondary(isDark),
                         ),
                       ),
                     ],
@@ -424,7 +421,7 @@ class _MedicationCard extends StatelessWidget {
                     padding: const EdgeInsets.all(4),
                     child: Icon(
                       Icons.more_vert,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                       size: 20,
                     ),
                   ),
@@ -439,7 +436,7 @@ class _MedicationCard extends StatelessWidget {
                 Icon(
                   Icons.schedule,
                   size: 14,
-                  color: isDark ? AppColors.grey500 : AppColors.grey400,
+                  color: AppColors.textHint(isDark),
                 ),
                 const SizedBox(width: 4),
                 Text(
@@ -447,7 +444,7 @@ class _MedicationCard extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                 ),
               ],
@@ -462,7 +459,7 @@ class _MedicationCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                     child: LinearProgressIndicator(
                       value: adherence / 100,
-                      backgroundColor: isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+                      backgroundColor: AppColors.borderLight(isDark),
                       valueColor: AlwaysStoppedAnimation<Color>(
                         adherence >= 80
                             ? (isDark ? AppColors.darkSuccess : AppColors.lightSuccess)
@@ -481,7 +478,7 @@ class _MedicationCard extends StatelessWidget {
                     fontFamily: 'DMSans',
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                 ),
               ],
@@ -508,7 +505,7 @@ class _EmptyState extends StatelessWidget {
             Icon(
               Icons.medication_outlined,
               size: 80,
-              color: isDark ? AppColors.grey600 : AppColors.grey300,
+              color: AppColors.textTertiary(isDark),
             ),
             const SizedBox(height: 16),
             Text(
@@ -517,7 +514,7 @@ class _EmptyState extends StatelessWidget {
                 fontFamily: 'ClashDisplay',
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                color: AppColors.textSecondary(isDark),
               ),
             ),
             const SizedBox(height: 8),
@@ -526,7 +523,7 @@ class _EmptyState extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 14,
-                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                color: AppColors.textHint(isDark),
               ),
               textAlign: TextAlign.center,
             ),

@@ -46,7 +46,7 @@ class VitalScoreRing extends StatelessWidget {
             child: CircularProgressIndicator(
               value: score / 100,
               strokeWidth: size * 0.08,
-              backgroundColor: isDark ? const Color(0xFF1E2230) : AppColors.grey100,
+              backgroundColor: AppColors.subtleBackground(isDark),
               valueColor: AlwaysStoppedAnimation<Color>(color),
               strokeCap: StrokeCap.round,
             ),
@@ -70,7 +70,7 @@ class VitalScoreRing extends StatelessWidget {
                     fontFamily: 'Inter',
                     fontSize: size * 0.09,
                     fontWeight: FontWeight.w500,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                 ),
             ],

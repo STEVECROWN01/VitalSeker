@@ -119,9 +119,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   if (mounted) {
                     Navigator.pop(ctx);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Password updated successfully'),
-                        backgroundColor: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
+                      SnackBar(
+                        content: const Text('Password updated successfully'),
+                        backgroundColor: AppColors.success(isDark),
                       ),
                     );
                   }
@@ -192,7 +192,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 title: const Text('Theme', style: TextStyle(fontFamily: 'Inter')),
                 subtitle: Text(
                   themeMode == ThemeMode.dark ? 'Dark' : themeMode == ThemeMode.light ? 'Light' : 'System',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                 ),
                 trailing: SegmentedButton<ThemeMode>(
                   segments: const [
@@ -211,7 +211,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 title: const Text('Language', style: TextStyle(fontFamily: 'Inter')),
                 subtitle: Text(
                   _selectedLanguage,
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                 ),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
@@ -229,14 +229,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 fontFamily: 'ClashDisplay',
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: isDark ? Colors.white : AppColors.lightOnBackground,
+                                color: AppColors.textPrimary(isDark),
                               ),
                             ),
                           ),
                           ...['English', 'French', 'Spanish', 'Arabic', 'Swahili'].map((lang) => ListTile(
                             title: Text(lang, style: const TextStyle(fontFamily: 'Inter')),
                             trailing: _selectedLanguage == lang
-                                ? Icon(Icons.check, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary)
+                                ? Icon(Icons.check, color: AppColors.primary(isDark))
                                 : null,
                             onTap: () {
                               setState(() => _selectedLanguage = lang);
@@ -258,7 +258,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 title: const Text('Notification Settings', style: TextStyle(fontFamily: 'Inter')),
                 subtitle: Text(
                   'Manage reminder preferences',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                 ),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => context.push(AppConfig.notificationsSettings),
@@ -272,7 +272,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 title: const Text('Export Data', style: TextStyle(fontFamily: 'Inter')),
                 subtitle: Text(
                   'Download your health data',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                 ),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => context.push(AppConfig.exportScreen),
@@ -285,7 +285,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
                 subtitle: Text(
                   'Permanently remove your data',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                 ),
                 trailing: const Icon(Icons.chevron_right, color: AppColors.urgencyEmergency),
                 onTap: _showDeleteAccountDialog,
@@ -302,9 +302,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     data: (p) => p?.email ?? 'N/A',
                     orElse: () => 'Loading...',
                   ),
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                 ),
-                trailing: Icon(Icons.lock_outline, size: 16, color: isDark ? AppColors.grey500 : AppColors.grey400),
+                trailing: Icon(Icons.lock_outline, size: 16, color: AppColors.textHint(isDark)),
               ),
               ListTile(
                 leading: const Icon(Icons.lock_outline),
@@ -326,7 +326,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 title: const Text('Version', style: TextStyle(fontFamily: 'Inter')),
                 subtitle: Text(
                   AppConfig.version,
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                  style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                 ),
               ),
               ListTile(
@@ -371,7 +371,7 @@ class _SettingsSection extends StatelessWidget {
               fontFamily: 'DMSans',
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: isDark ? AppColors.grey500 : AppColors.grey400,
+              color: AppColors.textHint(isDark),
               letterSpacing: 1,
             ),
           ),

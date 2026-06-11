@@ -106,7 +106,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     showModalBottomSheet(
       context: context,
-      backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
+      backgroundColor: AppColors.surface(isDark),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -125,7 +125,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -179,7 +179,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppConfig.addAppointment),
-        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+        backgroundColor: AppColors.primary(isDark),
         child: const Icon(Icons.add, color: Colors.white),
       ),
       body: appointmentsAsync.when(
@@ -210,7 +210,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                               ? null
                               : AppointmentStatus.upcoming),
                       isDark: isDark,
-                      color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                      color: AppColors.primary(isDark),
                     ),
                     const SizedBox(width: 8),
                     _StatusFilterChip(
@@ -232,7 +232,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                               ? null
                               : AppointmentStatus.cancelled),
                       isDark: isDark,
-                      color: AppColors.grey400,
+                      color: isDark ? AppColors.grey500 : AppColors.grey400,
                     ),
                   ],
                 ),
@@ -250,7 +250,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
-                                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                color: AppColors.textSecondary(isDark),
                               ),
                             ),
                           )
@@ -292,16 +292,16 @@ class _StatusFilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chipColor = color ?? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary);
+    final chipColor = color ?? AppColors.primary(isDark);
     return GestureDetector(
       onTap: onSelected,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: selected ? chipColor : isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+          color: selected ? chipColor : AppColors.subtleBackground(isDark),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: selected ? chipColor : isDark ? const Color(0xFF2A2F3E) : AppColors.grey100,
+            color: selected ? chipColor : AppColors.borderLight(isDark),
           ),
         ),
         child: Text(
@@ -336,11 +336,11 @@ class _AppointmentCard extends StatelessWidget {
   Color _statusColor() {
     switch (appointment.status) {
       case AppointmentStatus.upcoming:
-        return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
+        return AppColors.primary(isDark);
       case AppointmentStatus.completed:
         return isDark ? AppColors.darkSuccess : AppColors.lightSuccess;
       case AppointmentStatus.cancelled:
-        return AppColors.grey400;
+        return isDark ? AppColors.grey500 : AppColors.grey400;
     }
   }
 
@@ -388,7 +388,7 @@ class _AppointmentCard extends StatelessWidget {
                           fontFamily: 'ClashDisplay',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -398,16 +398,16 @@ class _AppointmentCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: (isDark ? AppColors.darkSecondary : AppColors.lightSecondary).withValues(alpha: 0.12),
+                            color: AppColors.secondary(isDark).withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
                             appointment.specialty!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: 'DMSans',
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
-                              color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
+                              color: AppColors.secondary(isDark),
                             ),
                           ),
                         ),
@@ -445,7 +445,7 @@ class _AppointmentCard extends StatelessWidget {
                     padding: const EdgeInsets.all(4),
                     child: Icon(
                       Icons.more_vert,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                       size: 20,
                     ),
                   ),
@@ -460,7 +460,7 @@ class _AppointmentCard extends StatelessWidget {
                 Icon(
                   Icons.event_outlined,
                   size: 14,
-                  color: isDark ? AppColors.grey500 : AppColors.grey400,
+                  color: AppColors.textHint(isDark),
                 ),
                 const SizedBox(width: 4),
                 Text(
@@ -468,14 +468,14 @@ class _AppointmentCard extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Icon(
                   Icons.access_time,
                   size: 14,
-                  color: isDark ? AppColors.grey500 : AppColors.grey400,
+                  color: AppColors.textHint(isDark),
                 ),
                 const SizedBox(width: 4),
                 Text(
@@ -483,7 +483,7 @@ class _AppointmentCard extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                 ),
               ],
@@ -497,7 +497,7 @@ class _AppointmentCard extends StatelessWidget {
                   Icon(
                     Icons.location_on_outlined,
                     size: 14,
-                    color: isDark ? AppColors.grey500 : AppColors.grey400,
+                    color: AppColors.textHint(isDark),
                   ),
                   const SizedBox(width: 4),
                   Expanded(
@@ -506,7 +506,7 @@ class _AppointmentCard extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 12,
-                        color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        color: AppColors.textSecondary(isDark),
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -537,7 +537,7 @@ class _EmptyState extends StatelessWidget {
             Icon(
               Icons.calendar_today_outlined,
               size: 80,
-              color: isDark ? AppColors.grey600 : AppColors.grey300,
+              color: AppColors.textTertiary(isDark),
             ),
             const SizedBox(height: 16),
             Text(
@@ -546,7 +546,7 @@ class _EmptyState extends StatelessWidget {
                 fontFamily: 'ClashDisplay',
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                color: AppColors.textSecondary(isDark),
               ),
             ),
             const SizedBox(height: 8),
@@ -555,7 +555,7 @@ class _EmptyState extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 14,
-                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                color: AppColors.textHint(isDark),
               ),
               textAlign: TextAlign.center,
             ),

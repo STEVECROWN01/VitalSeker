@@ -22,7 +22,7 @@ class LoadingOverlay extends StatelessWidget {
         child,
         if (isLoading)
           Container(
-            color: Colors.black.withValues(alpha: 0.5),
+            color: Colors.black.withValues(alpha: isDark ? 0.7 : 0.5),
             child: Center(
               child: Card(
                 color: AppColors.cardBackground(isDark),
@@ -31,7 +31,7 @@ class LoadingOverlay extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      CircularProgressIndicator(color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                      CircularProgressIndicator(color: AppColors.primary(isDark)),
                       if (message != null) ...[
                         const SizedBox(height: 16),
                         Text(

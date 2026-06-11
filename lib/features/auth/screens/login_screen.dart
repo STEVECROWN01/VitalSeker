@@ -127,7 +127,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
               ],
             ),
-            backgroundColor: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
+            backgroundColor: AppColors.success(isDark),
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             margin: const EdgeInsets.all(16),
@@ -176,7 +176,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         fontFamily: 'ClashDisplay',
                         fontSize: 28,
                         fontWeight: FontWeight.w700,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ).animate().fadeIn(duration: 400.ms, delay: 100.ms),
                   ),
@@ -187,7 +187,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
-                        color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        color: AppColors.textSecondary(isDark),
                       ),
                     ).animate().fadeIn(duration: 400.ms, delay: 200.ms),
                   ),
@@ -239,7 +239,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 13,
-                          color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                          color: AppColors.primary(isDark),
                         ),
                       ),
                     ),
@@ -258,7 +258,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   // Divider
                   Row(
                     children: [
-                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
+                      Expanded(child: Divider(color: AppColors.divider(isDark))),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
@@ -266,11 +266,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
-                            color: isDark ? AppColors.grey500 : AppColors.grey400,
+                            color: AppColors.textHint(isDark),
                           ),
                         ),
                       ),
-                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
+                      Expanded(child: Divider(color: AppColors.divider(isDark))),
                     ],
                   ),
                   const SizedBox(height: 24),
@@ -303,7 +303,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
-                          color: isDark ? AppColors.grey400 : AppColors.grey500,
+                          color: AppColors.textSecondary(isDark),
                         ),
                       ),
                       TextButton(
@@ -313,7 +313,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             fontWeight: FontWeight.w600,
-                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                            color: AppColors.primary(isDark),
                           ),
                         ),
                       ),
@@ -350,8 +350,8 @@ class _SocialButton extends StatelessWidget {
       icon: Icon(icon, size: 24),
       label: Text(label),
       style: OutlinedButton.styleFrom(
-        foregroundColor: isDark ? Colors.white : AppColors.lightOnBackground,
-        side: BorderSide(color: isDark ? AppColors.grey700 : AppColors.grey200),
+        foregroundColor: AppColors.textPrimary(isDark),
+        side: BorderSide(color: AppColors.border(isDark)),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),

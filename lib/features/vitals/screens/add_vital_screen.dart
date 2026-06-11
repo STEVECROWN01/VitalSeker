@@ -149,7 +149,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                 fontFamily: 'DMSans',
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                color: AppColors.textHint(isDark),
                 letterSpacing: 1,
               ),
             ),
@@ -178,23 +178,19 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? type.color.withValues(alpha: 0.15)
-                            : isDark
-                                ? const Color(0xFF1E2230)
-                                : AppColors.grey50,
+                            : AppColors.subtleBackground(isDark),
                         borderRadius: BorderRadius.circular(22),
                         border: Border.all(
                           color: isSelected
                               ? type.color
-                              : isDark
-                                  ? const Color(0xFF2A2F3E)
-                                  : AppColors.grey200,
+                              : AppColors.border(isDark),
                           width: isSelected ? 1.5 : 1,
                         ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(type.icon, size: 16, color: isSelected ? type.color : (isDark ? AppColors.grey500 : AppColors.grey400)),
+                          Icon(type.icon, size: 16, color: isSelected ? type.color : (AppColors.textHint(isDark))),
                           const SizedBox(width: 6),
                           Text(
                             type.displayName,
@@ -225,7 +221,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                 fontFamily: 'DMSans',
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                color: AppColors.textHint(isDark),
                 letterSpacing: 1,
               ),
             ),
@@ -247,7 +243,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                         suffixStyle: TextStyle(
                           fontFamily: 'JetBrainsMono',
                           fontSize: 12,
-                          color: isDark ? AppColors.grey500 : AppColors.grey400,
+                          color: AppColors.textHint(isDark),
                         ),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
@@ -268,7 +264,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                         suffixStyle: TextStyle(
                           fontFamily: 'JetBrainsMono',
                           fontSize: 12,
-                          color: isDark ? AppColors.grey500 : AppColors.grey400,
+                          color: AppColors.textHint(isDark),
                         ),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
@@ -295,7 +291,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                   suffixStyle: TextStyle(
                     fontFamily: 'JetBrainsMono',
                     fontSize: 12,
-                    color: isDark ? AppColors.grey500 : AppColors.grey400,
+                    color: AppColors.textHint(isDark),
                   ),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 ),
@@ -311,7 +307,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                 fontFamily: 'DMSans',
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                color: AppColors.textHint(isDark),
                 letterSpacing: 1,
               ),
             ),
@@ -324,15 +320,15 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                        color: AppColors.inputFill(isDark),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey200,
+                          color: AppColors.border(isDark),
                         ),
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.calendar_today, size: 18, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                          Icon(Icons.calendar_today, size: 18, color: AppColors.primary(isDark)),
                           const SizedBox(width: 10),
                           Text(
                             '${_selectedDateTime.day.toString().padLeft(2, '0')}/${_selectedDateTime.month.toString().padLeft(2, '0')}/${_selectedDateTime.year}',
@@ -354,15 +350,15 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1E2230) : AppColors.grey50,
+                        color: AppColors.inputFill(isDark),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey200,
+                          color: AppColors.border(isDark),
                         ),
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.access_time, size: 18, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                          Icon(Icons.access_time, size: 18, color: AppColors.primary(isDark)),
                           const SizedBox(width: 10),
                           Text(
                             '${_selectedDateTime.hour.toString().padLeft(2, '0')}:${_selectedDateTime.minute.toString().padLeft(2, '0')}',
@@ -388,7 +384,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                 fontFamily: 'DMSans',
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                color: AppColors.textHint(isDark),
                 letterSpacing: 1,
               ),
             ),
@@ -401,7 +397,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                 hintStyle: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 14,
-                  color: isDark ? AppColors.grey600 : AppColors.grey400,
+                  color: AppColors.textTertiary(isDark),
                 ),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
               ),
@@ -416,9 +412,9 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
               child: ElevatedButton(
                 onPressed: _isValid && !_isSaving ? _saveVital : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                  backgroundColor: AppColors.primary(isDark),
                   foregroundColor: Colors.white,
-                  disabledBackgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.4),
+                  disabledBackgroundColor: (AppColors.primary(isDark)).withValues(alpha: 0.4),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 ),
                 child: _isSaving

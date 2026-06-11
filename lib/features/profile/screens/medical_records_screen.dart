@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
-import '../../../core/providers/database_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 
 enum RecordType { all, labResults, prescriptions, imaging, other }
@@ -95,7 +95,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
       case 'labResults':
         return isDark ? AppColors.darkInfo : AppColors.lightInfo;
       case 'prescriptions':
-        return isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
+        return AppColors.primary(isDark);
       case 'imaging':
         return isDark ? AppColors.darkSecondary : AppColors.lightSecondary;
       default:
@@ -114,6 +114,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
   }
 
   void _showAddRecordDialog() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final titleController = TextEditingController();
     final descController = TextEditingController();
     String selectedType = 'labResults';
@@ -202,7 +203,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                   }
                 }
               },
-              style: ElevatedButton.styleFrom(backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+              style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary(isDark)),
               child: const Text('Add', style: TextStyle(color: Colors.white)),
             ),
           ],
@@ -235,7 +236,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                           hintText: 'Search records...',
                           hintStyle: TextStyle(
                             fontFamily: 'Inter',
-                            color: isDark ? AppColors.grey500 : AppColors.grey400,
+                            color: AppColors.textHint(isDark),
                           ),
                           prefixIcon: const Icon(Icons.search),
                           suffixIcon: _searchController.text.isNotEmpty
@@ -248,7 +249,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                 )
                               : null,
                           filled: true,
-                          fillColor: isDark ? AppColors.darkSurface : AppColors.grey50,
+                          fillColor: AppColors.inputFill(isDark),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none,
@@ -283,8 +284,8 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                 ),
                                 selected: isSelected,
                                 onSelected: (_) => setState(() => _selectedFilter = type),
-                                backgroundColor: isDark ? AppColors.darkSurface : AppColors.grey50,
-                                selectedColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                backgroundColor: AppColors.subtleBackground(isDark),
+                                selectedColor: AppColors.primary(isDark),
                                 checkmarkColor: Colors.white,
                               ),
                             );
@@ -314,7 +315,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                 fontFamily: 'ClashDisplay',
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                color: AppColors.textSecondary(isDark),
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -323,7 +324,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
-                                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                                color: AppColors.textHint(isDark),
                               ),
                             ),
                           ],
@@ -369,7 +370,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                         style: TextStyle(
                                           fontFamily: 'Inter',
                                           fontSize: 13,
-                                          color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                          color: AppColors.textSecondary(isDark),
                                         ),
                                       ),
                                       const SizedBox(height: 4),
@@ -378,13 +379,13 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                         style: TextStyle(
                                           fontFamily: 'Inter',
                                           fontSize: 12,
-                                          color: isDark ? AppColors.grey500 : AppColors.grey400,
+                                          color: AppColors.textHint(isDark),
                                         ),
                                       ),
                                     ],
                                   ),
                                   trailing: record['has_attachment'] == true
-                                      ? Icon(Icons.attach_file, size: 18, color: isDark ? AppColors.grey400 : AppColors.grey500)
+                                      ? Icon(Icons.attach_file, size: 18, color: AppColors.textSecondary(isDark))
                                       : null,
                                   isThreeLine: true,
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -403,7 +404,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddRecordDialog,
-        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+        backgroundColor: AppColors.primary(isDark),
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

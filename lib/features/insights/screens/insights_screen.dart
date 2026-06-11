@@ -29,10 +29,10 @@ class InsightsScreen extends ConsumerWidget {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: (isDark ? AppColors.darkSecondary : AppColors.lightSecondary).withValues(alpha: 0.12),
+                        color: AppColors.secondary(isDark).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(24),
                       ),
-                      child: Icon(Icons.insights, color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary, size: 40),
+                      child: Icon(Icons.insights, color: AppColors.secondary(isDark), size: 40),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -41,7 +41,7 @@ class InsightsScreen extends ConsumerWidget {
                         fontFamily: 'ClashDisplay',
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -50,7 +50,7 @@ class InsightsScreen extends ConsumerWidget {
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
-                        color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        color: AppColors.textSecondary(isDark),
                         height: 1.6,
                       ),
                       textAlign: TextAlign.center,
@@ -122,7 +122,7 @@ class InsightsScreen extends ConsumerWidget {
                               fontFamily: 'ClashDisplay',
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: isDark ? Colors.white : AppColors.lightOnBackground,
+                              color: AppColors.textPrimary(isDark),
                             ),
                           ),
                           if (trend.direction != null)
@@ -175,19 +175,22 @@ class InsightsScreen extends ConsumerWidget {
                           _StatChip(
                             label: 'Symptoms',
                             value: '${trend.symptomFrequency}',
-                            color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
+                            color: AppColors.secondary(isDark),
+                            isDark: isDark,
                           ),
                           const SizedBox(width: 8),
                           _StatChip(
                             label: 'Avg Severity',
                             value: trend.avgSeverity.toStringAsFixed(1),
                             color: _severityColor(trend.avgSeverity.round()),
+                            isDark: isDark,
                           ),
                           const SizedBox(width: 8),
                           _StatChip(
                             label: 'Score Change',
                             value: '${insight.vitalScoreChange > 0 ? '+' : ''}${insight.vitalScoreChange}',
                             color: insight.vitalScoreChange >= 0 ? AppColors.urgencyLow : AppColors.urgencyEmergency,
+                            isDark: isDark,
                           ),
                         ],
                       ),
@@ -210,7 +213,7 @@ class InsightsScreen extends ConsumerWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(Icons.check_circle, size: 16, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                              Icon(Icons.check_circle, size: 16, color: AppColors.primary(isDark)),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
@@ -275,8 +278,9 @@ class _StatChip extends StatelessWidget {
   final String label;
   final String value;
   final Color color;
+  final bool isDark;
 
-  const _StatChip({required this.label, required this.value, required this.color});
+  const _StatChip({required this.label, required this.value, required this.color, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -284,7 +288,7 @@ class _StatChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.08),
+          color: color.withValues(alpha: isDark ? 0.15 : 0.08),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
@@ -303,7 +307,7 @@ class _StatChip extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 10,
-                color: color.withValues(alpha: 0.7),
+                color: color.withValues(alpha: isDark ? 0.85 : 0.7),
               ),
             ),
           ],

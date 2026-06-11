@@ -46,7 +46,7 @@ extension VitalTypeX on VitalType {
       case VitalType.temperature: return Icons.thermostat;
       case VitalType.weight: return Icons.monitor_weight;
       case VitalType.bloodGlucose: return Icons.water_drop;
-      case VitalType.respiratoryRate: return Icons.lungs;
+      case VitalType.respiratoryRate: return Icons.air;
     }
   }
 

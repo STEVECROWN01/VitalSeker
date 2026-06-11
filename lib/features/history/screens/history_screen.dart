@@ -19,7 +19,7 @@ class HistoryScreen extends ConsumerWidget {
           ref.invalidate(symptomLogsProvider);
           await ref.read(symptomLogsProvider.future);
         },
-        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+        color: AppColors.primary(isDark),
         child: logsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, _) => Center(
@@ -36,7 +36,7 @@ class HistoryScreen extends ConsumerWidget {
                       fontFamily: 'ClashDisplay',
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -45,7 +45,7 @@ class HistoryScreen extends ConsumerWidget {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 13,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -64,7 +64,7 @@ class HistoryScreen extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.history, size: 80, color: isDark ? AppColors.grey600 : AppColors.grey300),
+                  Icon(Icons.history, size: 80, color: AppColors.textTertiary(isDark)),
                   const SizedBox(height: 16),
                   Text(
                     'No History Yet',
@@ -72,7 +72,7 @@ class HistoryScreen extends ConsumerWidget {
                       fontFamily: 'ClashDisplay',
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -81,7 +81,7 @@ class HistoryScreen extends ConsumerWidget {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                     ),
                   ),
                 ],
@@ -136,7 +136,7 @@ class HistoryScreen extends ConsumerWidget {
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
-                            color: isDark ? AppColors.grey400 : AppColors.grey500,
+                            color: AppColors.textSecondary(isDark),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -145,7 +145,7 @@ class HistoryScreen extends ConsumerWidget {
                           style: TextStyle(
                             fontFamily: 'JetBrainsMono',
                             fontSize: 11,
-                            color: isDark ? AppColors.grey500 : AppColors.grey400,
+                            color: AppColors.textHint(isDark),
                           ),
                         ),
                       ],
@@ -162,7 +162,7 @@ class HistoryScreen extends ConsumerWidget {
                           // All symptoms
                           Text(
                             'All Symptoms',
-                            style: TextStyle(fontFamily: 'Outfit', fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? AppColors.grey300 : AppColors.grey700),
+                            style: TextStyle(fontFamily: 'Outfit', fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondary(isDark)),
                           ),
                           const SizedBox(height: 4),
                           Wrap(
@@ -178,14 +178,14 @@ class HistoryScreen extends ConsumerWidget {
                             const SizedBox(height: 12),
                             Text(
                               'Body Regions: ${log.bodyRegions.join(', ')}',
-                              style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                              style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: AppColors.textSecondary(isDark)),
                             ),
                           ],
                           if (log.duration != null) ...[
                             const SizedBox(height: 8),
                             Text(
                               'Duration: ${log.duration}',
-                              style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: isDark ? AppColors.grey400 : AppColors.grey500),
+                              style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: AppColors.textSecondary(isDark)),
                             ),
                           ],
                           if (triageResult != null) ...[
@@ -196,7 +196,7 @@ class HistoryScreen extends ConsumerWidget {
                                 fontFamily: 'Inter',
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                color: _urgencyColor(triageResult.urgencyLevel),
+                                color: _urgencyColor(triageResult.urgencyLevel, isDark),
                               ),
                             ),
                             if (triageResult.recommendations.isNotEmpty) ...[
@@ -207,7 +207,7 @@ class HistoryScreen extends ConsumerWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Text('  • ', style: TextStyle(fontWeight: FontWeight.bold)),
-                                    Expanded(child: Text(r, style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey600))),
+                                    Expanded(child: Text(r, style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)))),
                                   ],
                                 ),
                               )),
@@ -217,7 +217,7 @@ class HistoryScreen extends ConsumerWidget {
                             const SizedBox(height: 8),
                             Text(
                               'Notes: ${log.notes}',
-                              style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey500 : AppColors.grey400, fontStyle: FontStyle.italic),
+                              style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textHint(isDark), fontStyle: FontStyle.italic),
                             ),
                           ],
                         ],
@@ -241,13 +241,13 @@ class HistoryScreen extends ConsumerWidget {
     return AppColors.urgencyEmergency;
   }
 
-  Color _urgencyColor(String level) {
+  Color _urgencyColor(String level, bool isDark) {
     switch (level) {
       case 'low': return AppColors.urgencyLow;
       case 'medium': return AppColors.urgencyMedium;
       case 'high': return AppColors.urgencyHigh;
       case 'emergency': return AppColors.urgencyEmergency;
-      default: return AppColors.grey400;
+      default: return AppColors.textSecondary(isDark);
     }
   }
 

@@ -54,7 +54,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                       borderRadius: BorderRadius.circular(24),
                       boxShadow: [
                         BoxShadow(
-                          color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.3),
+                          color: AppColors.primary(isDark).withValues(alpha: 0.3),
                           blurRadius: 24,
                           offset: const Offset(0, 8),
                         ),
@@ -113,7 +113,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                           fontFamily: 'ClashDisplay',
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                     ],
@@ -157,7 +157,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 14,
-                                  color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                  color: AppColors.textSecondary(isDark),
                                 ),
                               ),
                             ],
@@ -223,7 +223,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                   Row(
                     children: [
                       Icon(Icons.psychology_outlined,
-                          color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                          color: AppColors.primary(isDark),
                           size: 20),
                       const SizedBox(width: 8),
                       Text(
@@ -232,7 +232,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                           fontFamily: 'ClashDisplay',
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                     ],
@@ -244,24 +244,24 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                         return Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: isDark ? AppColors.darkSurface : AppColors.grey50,
+                            color: AppColors.subtleBackground(isDark),
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey200,
+                              color: AppColors.border(isDark),
                             ),
                           ),
                           child: Column(
                             children: [
                               Icon(Icons.chat_bubble_outline,
                                   size: 32,
-                                  color: isDark ? AppColors.grey500 : AppColors.grey400),
+                                  color: AppColors.textHint(isDark)),
                               const SizedBox(height: 12),
                               Text(
                                 'No triage results yet',
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 14,
-                                  color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                  color: AppColors.textSecondary(isDark),
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -270,9 +270,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                                 icon: const Icon(Icons.add, size: 18),
                                 label: const Text('Start Triage'),
                                 style: TextButton.styleFrom(
-                                  foregroundColor: isDark
-                                      ? AppColors.darkPrimary
-                                      : AppColors.lightPrimary,
+                                  foregroundColor: AppColors.primary(isDark),
                                 ),
                               ),
                             ],
@@ -321,7 +319,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                           fontFamily: 'ClashDisplay',
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                     ],
@@ -347,9 +345,9 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                   icon: const Icon(Icons.insights_outlined),
                   label: const Text('View Weekly Insights'),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    foregroundColor: AppColors.primary(isDark),
                     side: BorderSide(
-                      color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                      color: AppColors.primary(isDark),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -396,13 +394,13 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         'icon': Icons.monitor_heart_outlined,
         'title': 'Log Your Vitals',
         'description': 'Track your blood pressure, heart rate, and other key metrics.',
-        'color': isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+        'color': AppColors.primary(isDark),
       },
       {
         'icon': Icons.psychology_outlined,
         'title': 'Run a Symptom Check',
         'description': 'Use AI triage to assess any symptoms you\'re experiencing.',
-        'color': isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
+        'color': AppColors.secondary(isDark),
       },
       {
         'icon': Icons.nightlight_outlined,
@@ -451,7 +449,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                         fontFamily: 'ClashDisplay',
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -460,7 +458,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 12,
-                        color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        color: AppColors.textSecondary(isDark),
                         height: 1.4,
                       ),
                     ),
@@ -468,7 +466,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                 ),
               ),
               Icon(Icons.chevron_right,
-                  color: isDark ? AppColors.grey500 : AppColors.grey400, size: 20),
+                  color: AppColors.textHint(isDark), size: 20),
             ],
           ),
         ),
@@ -493,10 +491,10 @@ class _TriageResultCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+          color: AppColors.surface(isDark),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: isDark ? const Color(0xFF2A2F3E) : AppColors.grey200,
+            color: AppColors.border(isDark),
           ),
           boxShadow: isDark
               ? null
@@ -534,7 +532,7 @@ class _TriageResultCard extends StatelessWidget {
                       fontFamily: 'Inter',
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -545,7 +543,7 @@ class _TriageResultCard extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 12,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                     ),
                   ),
                 ],

@@ -227,14 +227,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+                            backgroundColor: (AppColors.primary(isDark)).withValues(alpha: 0.12),
                             child: Text(
                               (_nameController.text.isNotEmpty ? _nameController.text : 'U')[0].toUpperCase(),
                               style: TextStyle(
                                 fontFamily: 'ClashDisplay',
                                 fontSize: 36,
                                 fontWeight: FontWeight.w700,
-                                color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                color: AppColors.primary(isDark),
                               ),
                             ),
                           ),
@@ -244,10 +244,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(
-                                color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                color: AppColors.primary(isDark),
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: isDark ? AppColors.darkSurface : Colors.white,
+                                  color: AppColors.surface(isDark),
                                   width: 2,
                                 ),
                               ),
@@ -287,7 +287,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             ),
                             style: TextStyle(
                               fontFamily: 'Inter',
-                              color: isDark ? AppColors.grey400 : AppColors.grey500,
+                              color: AppColors.textSecondary(isDark),
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -303,7 +303,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 fontFamily: 'Inter',
                                 color: _dateOfBirth != null
                                     ? null
-                                    : (isDark ? AppColors.grey400 : AppColors.grey500),
+                                    : (AppColors.textSecondary(isDark)),
                               ),
                             ),
                             trailing: const Icon(Icons.chevron_right),
@@ -445,7 +445,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(Icons.add, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                                icon: Icon(Icons.add, color: AppColors.primary(isDark)),
                                 onPressed: _addAllergy,
                               ),
                             ],
@@ -458,9 +458,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               label: Text(allergy, style: const TextStyle(fontFamily: 'Inter', fontSize: 13)),
                               deleteIcon: const Icon(Icons.close, size: 16),
                               onDeleted: () => _removeAllergy(allergy),
-                              backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.08),
-                              side: BorderSide(color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.3)),
-                              labelStyle: TextStyle(color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                              backgroundColor: (AppColors.primary(isDark)).withValues(alpha: 0.08),
+                              side: BorderSide(color: (AppColors.primary(isDark)).withValues(alpha: 0.3)),
+                              labelStyle: TextStyle(color: AppColors.primary(isDark)),
                             )).toList(),
                           ),
                           if (_allergies.isEmpty)
@@ -469,7 +469,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 13,
-                                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                                color: AppColors.textHint(isDark),
                               ),
                             ),
                         ],
@@ -501,7 +501,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(Icons.add, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                                icon: Icon(Icons.add, color: AppColors.primary(isDark)),
                                 onPressed: _addCondition,
                               ),
                             ],
@@ -524,7 +524,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 13,
-                                color: isDark ? AppColors.grey500 : AppColors.grey400,
+                                color: AppColors.textHint(isDark),
                               ),
                             ),
                         ],
@@ -539,7 +539,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     child: ElevatedButton(
                       onPressed: _isSaving ? null : _saveProfile,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                        backgroundColor: AppColors.primary(isDark),
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
@@ -587,7 +587,7 @@ class _SectionLabel extends StatelessWidget {
           fontFamily: 'DMSans',
           fontSize: 11,
           fontWeight: FontWeight.w700,
-          color: isDark ? AppColors.grey500 : AppColors.grey400,
+          color: AppColors.textHint(isDark),
           letterSpacing: 1,
         ),
       ),

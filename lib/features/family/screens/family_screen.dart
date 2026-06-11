@@ -121,10 +121,10 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+                color: (AppColors.primary(isDark)).withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(Icons.person_add, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary, size: 20),
+              child: Icon(Icons.person_add, color: AppColors.primary(isDark), size: 20),
             ),
             const SizedBox(width: 12),
             const Text('Add Family Member'),
@@ -167,7 +167,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 16,
-                color: isDark ? Colors.white : AppColors.lightOnBackground,
+                color: AppColors.textPrimary(isDark),
               ),
             ),
           ],
@@ -197,7 +197,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
       appBar: AppBar(title: const Text('Family Profiles')),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddDialog,
-        backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+        backgroundColor: AppColors.primary(isDark),
         child: const Icon(Icons.person_add, color: Colors.white),
       ),
       body: profilesAsync.when(
@@ -216,7 +216,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                     fontFamily: 'ClashDisplay',
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    color: AppColors.textPrimary(isDark),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -225,7 +225,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 13,
-                    color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    color: AppColors.textSecondary(isDark),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -252,7 +252,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                       fontFamily: 'ClashDisplay',
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -261,7 +261,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      color: AppColors.textHint(isDark),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -280,14 +280,14 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                 child: ListTile(
                   leading: CircleAvatar(
                     radius: 24,
-                    backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+                    backgroundColor: (AppColors.primary(isDark)).withValues(alpha: 0.12),
                     child: Text(
                       profile.fullName.isNotEmpty ? profile.fullName[0].toUpperCase() : '?',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'ClashDisplay',
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                        color: AppColors.primary(isDark),
                       ),
                     ),
                   ),
@@ -304,7 +304,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 13,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                   ),
                   trailing: Row(

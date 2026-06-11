@@ -85,7 +85,7 @@ class TriageResultScreen extends StatelessWidget {
                 color: AppColors.urgencyEmergency.withValues(alpha: isDark ? 0.1 : 0.05),
                 child: ListTile(
                   leading: const Icon(Icons.error_outline, color: AppColors.urgencyEmergency),
-                  title: Text(flag, style: const TextStyle(fontFamily: 'Inter', fontSize: 14)),
+                  title: Text(flag, style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: AppColors.textPrimary(isDark))),
                 ),
               )),
               const SizedBox(height: 24),
@@ -93,19 +93,19 @@ class TriageResultScreen extends StatelessWidget {
 
             // Recommendations
             if (recommendations.isNotEmpty) ...[
-              _SectionTitle(title: 'Recommendations', icon: Icons.lightbulb_outline, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+              _SectionTitle(title: 'Recommendations', icon: Icons.lightbulb_outline, color: AppColors.primary(isDark)),
               const SizedBox(height: 8),
               ...recommendations.asMap().entries.map((entry) => Card(
                 child: ListTile(
                   leading: CircleAvatar(
                     radius: 14,
-                    backgroundColor: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.12),
+                    backgroundColor: (AppColors.primary(isDark)).withValues(alpha: 0.12),
                     child: Text(
                       '${entry.key + 1}',
-                      style: TextStyle(fontFamily: 'JetBrainsMono', fontSize: 12, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
+                      style: TextStyle(fontFamily: 'JetBrainsMono', fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary(isDark)),
                     ),
                   ),
-                  title: Text(entry.value, style: const TextStyle(fontFamily: 'Inter', fontSize: 14)),
+                  title: Text(entry.value, style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: AppColors.textPrimary(isDark))),
                 ),
               )),
               const SizedBox(height: 24),
@@ -113,7 +113,7 @@ class TriageResultScreen extends StatelessWidget {
 
             // Possible Conditions
             if (possibleConditions.isNotEmpty) ...[
-              _SectionTitle(title: 'Possible Conditions', icon: Icons.medical_information_outlined, color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary),
+              _SectionTitle(title: 'Possible Conditions', icon: Icons.medical_information_outlined, color: AppColors.secondary(isDark)),
               const SizedBox(height: 8),
               ...possibleConditions.map((condition) {
                 final c = condition as Map<String, dynamic>;
@@ -123,8 +123,8 @@ class TriageResultScreen extends StatelessWidget {
                       c['probability'] == 'high' ? Icons.circle : (c['probability'] == 'medium' ? Icons.remove_circle_outline : Icons.circle_outlined),
                       color: c['probability'] == 'high' ? AppColors.urgencyHigh : (c['probability'] == 'medium' ? AppColors.urgencyMedium : AppColors.urgencyLow),
                     ),
-                    title: Text(c['name'] ?? '', style: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500)),
-                    subtitle: Text(c['description'] ?? '', style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: isDark ? AppColors.grey400 : AppColors.grey500)),
+                    title: Text(c['name'] ?? '', style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textPrimary(isDark))),
+                    subtitle: Text(c['description'] ?? '', style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark))),
                   ),
                 );
               }),
@@ -138,7 +138,7 @@ class TriageResultScreen extends StatelessWidget {
               ...followUpQuestions.map((q) => Card(
                 child: ListTile(
                   leading: Icon(Icons.chat_bubble_outline, color: isDark ? AppColors.darkInfo : AppColors.lightInfo, size: 20),
-                  title: Text(q, style: const TextStyle(fontFamily: 'Inter', fontSize: 14)),
+                  title: Text(q, style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: AppColors.textPrimary(isDark))),
                 ),
               )),
               const SizedBox(height: 24),
@@ -162,7 +162,7 @@ class TriageResultScreen extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 12,
-                        color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        color: AppColors.textSecondary(isDark),
                         height: 1.5,
                       ),
                     ),

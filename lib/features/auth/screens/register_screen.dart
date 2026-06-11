@@ -90,7 +90,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
           ],
         ),
-        backgroundColor: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
+        backgroundColor: AppColors.success(isDark),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),
@@ -110,7 +110,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: Theme.of(context).brightness == Brightness.dark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                  primary: AppColors.primary(Theme.of(context).brightness == Brightness.dark),
                 ),
           ),
           child: child!,
@@ -213,7 +213,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       onPressed: () => context.pop(),
                       icon: Icon(
                         Icons.arrow_back_ios_new,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                   ),
@@ -224,7 +224,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       fontFamily: 'ClashDisplay',
                       fontSize: 28,
                       fontWeight: FontWeight.w700,
-                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -233,7 +233,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
-                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                      color: AppColors.textSecondary(isDark),
                     ),
                   ),
                   const SizedBox(height: 28),
@@ -321,7 +321,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         width: 3,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                          color: AppColors.primary(isDark),
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -332,14 +332,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           fontFamily: 'ClashDisplay',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : AppColors.lightOnBackground,
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Container(
                           height: 1,
-                          color: isDark ? AppColors.grey700 : AppColors.grey200,
+                          color: AppColors.divider(isDark),
                         ),
                       ),
                     ],
@@ -357,7 +357,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           suffixIcon: Icon(
                             Icons.calendar_today_outlined,
                             size: 18,
-                            color: isDark ? AppColors.grey400 : AppColors.grey500,
+                            color: AppColors.textSecondary(isDark),
                           ),
                           hintText: 'Select your date of birth',
                         ),
@@ -370,8 +370,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           fontFamily: 'Inter',
                           fontSize: 16,
                           color: _dateOfBirth != null
-                              ? (isDark ? Colors.white : AppColors.lightOnBackground)
-                              : (isDark ? AppColors.grey500 : AppColors.grey400),
+                              ? AppColors.textPrimary(isDark)
+                              : AppColors.textHint(isDark),
                         ),
                       ),
                     ),
@@ -399,7 +399,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 16,
-                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -425,7 +425,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 16,
-                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -439,7 +439,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         child: Checkbox(
                           value: _acceptTerms,
                           onChanged: (value) => setState(() => _acceptTerms = value ?? false),
-                          activeColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                          activeColor: AppColors.primary(isDark),
                         ),
                       ),
                       Expanded(
@@ -451,13 +451,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 13,
-                                color: isDark ? AppColors.grey400 : AppColors.grey500,
+                                color: AppColors.textSecondary(isDark),
                               ),
                               children: [
                                 TextSpan(
                                   text: 'Terms of Service',
                                   style: TextStyle(
-                                    color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                    color: AppColors.primary(isDark),
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -465,7 +465,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 TextSpan(
                                   text: 'Privacy Policy',
                                   style: TextStyle(
-                                    color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                                    color: AppColors.primary(isDark),
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -490,7 +490,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   // Divider
                   Row(
                     children: [
-                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
+                      Expanded(child: Divider(color: AppColors.divider(isDark))),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
@@ -498,29 +498,29 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
-                            color: isDark ? AppColors.grey500 : AppColors.grey400,
+                            color: AppColors.textHint(isDark),
                           ),
                         ),
                       ),
-                      Expanded(child: Divider(color: isDark ? AppColors.grey700 : AppColors.grey200)),
+                      Expanded(child: Divider(color: AppColors.divider(isDark))),
                     ],
                   ),
                   const SizedBox(height: 20),
                   // Google Sign Up
                   OutlinedButton.icon(
                     onPressed: _signInWithGoogle,
-                    icon: Icon(Icons.g_mobiledata_rounded, size: 24, color: isDark ? Colors.white : AppColors.lightOnBackground),
+                    icon: Icon(Icons.g_mobiledata_rounded, size: 24, color: AppColors.textPrimary(isDark)),
                     label: Text(
                       'Continue with Google',
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: isDark ? AppColors.grey700 : AppColors.grey200),
+                      side: BorderSide(color: AppColors.border(isDark)),
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       minimumSize: const Size(double.infinity, 52),
@@ -530,18 +530,18 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   // Apple Sign Up
                   OutlinedButton.icon(
                     onPressed: _signInWithApple,
-                    icon: Icon(Icons.apple, size: 24, color: isDark ? Colors.white : AppColors.lightOnBackground),
+                    icon: Icon(Icons.apple, size: 24, color: AppColors.textPrimary(isDark)),
                     label: Text(
                       'Continue with Apple',
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                       ),
                     ),
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: isDark ? AppColors.grey700 : AppColors.grey200),
+                      side: BorderSide(color: AppColors.border(isDark)),
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       minimumSize: const Size(double.infinity, 52),
@@ -557,7 +557,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
-                          color: isDark ? AppColors.grey400 : AppColors.grey500,
+                          color: AppColors.textSecondary(isDark),
                         ),
                       ),
                       TextButton(
@@ -567,7 +567,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             fontWeight: FontWeight.w600,
-                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                            color: AppColors.primary(isDark),
                           ),
                         ),
                       ),

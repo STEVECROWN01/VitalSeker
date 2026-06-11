@@ -28,7 +28,7 @@ class PassportScreen extends ConsumerWidget {
       ),
       body: passportAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text('Error: $e', style: TextStyle(color: AppColors.textPrimary(isDark)))),
         data: (passport) {
           if (passport == null) {
             return _buildNoPassport(context, isDark);
@@ -57,7 +57,7 @@ class PassportScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.3),
+                        color: AppColors.primary(isDark).withValues(alpha: 0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -143,7 +143,7 @@ class PassportScreen extends ConsumerWidget {
                 if (passport.medications.isNotEmpty)
                   _InfoCard(
                     icon: Icons.medication,
-                    iconColor: isDark ? AppColors.darkSecondary : AppColors.lightSecondary,
+                    iconColor: AppColors.secondary(isDark),
                     title: 'Medications',
                     value: passport.medications.join(', '),
                   ),
@@ -152,7 +152,7 @@ class PassportScreen extends ConsumerWidget {
                 if (passport.chronicConditions.isNotEmpty)
                   _InfoCard(
                     icon: Icons.health_and_safety,
-                    iconColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    iconColor: AppColors.primary(isDark),
                     title: 'Chronic Conditions',
                     value: passport.chronicConditions.join(', '),
                   ),
@@ -161,7 +161,7 @@ class PassportScreen extends ConsumerWidget {
                 if (passport.insuranceProvider != null)
                   _InfoCard(
                     icon: Icons.shield,
-                    iconColor: isDark ? AppColors.darkInfo : AppColors.lightInfo,
+                    iconColor: AppColors.info(isDark),
                     title: 'Insurance',
                     value: '${passport.insuranceProvider}${passport.insurancePolicyNumber != null ? ' - ${passport.insurancePolicyNumber}' : ''}',
                   ),
@@ -174,7 +174,7 @@ class PassportScreen extends ConsumerWidget {
                       fontFamily: 'ClashDisplay',
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                      color: AppColors.textPrimary(isDark),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -182,7 +182,7 @@ class PassportScreen extends ConsumerWidget {
                     child: ListTile(
                       leading: const Icon(Icons.phone_in_talk, color: AppColors.urgencyEmergency),
                       title: Text(contact.name, style: const TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
-                      subtitle: Text(contact.phone, style: TextStyle(fontFamily: 'JetBrainsMono', fontSize: 13, color: isDark ? AppColors.grey400 : AppColors.grey500)),
+                      subtitle: Text(contact.phone, style: TextStyle(fontFamily: 'JetBrainsMono', fontSize: 13, color: AppColors.textSecondary(isDark))),
                       trailing: contact.relationship != null
                           ? Chip(label: Text(contact.relationship!, style: const TextStyle(fontSize: 11)))
                           : null,
@@ -225,7 +225,7 @@ class PassportScreen extends ConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.badge_outlined, size: 80, color: isDark ? AppColors.grey600 : AppColors.grey300),
+          Icon(Icons.badge_outlined, size: 80, color: AppColors.textTertiary(isDark)),
           const SizedBox(height: 16),
           Text(
             'No Health Passport Yet',
@@ -233,7 +233,7 @@ class PassportScreen extends ConsumerWidget {
               fontFamily: 'ClashDisplay',
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: isDark ? AppColors.grey400 : AppColors.grey500,
+              color: AppColors.textSecondary(isDark),
             ),
           ),
           const SizedBox(height: 8),
@@ -242,7 +242,7 @@ class PassportScreen extends ConsumerWidget {
             style: TextStyle(
               fontFamily: 'Inter',
               fontSize: 14,
-              color: isDark ? AppColors.grey500 : AppColors.grey400,
+              color: AppColors.textHint(isDark),
             ),
             textAlign: TextAlign.center,
           ),
@@ -290,7 +290,7 @@ class _InfoCard extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 12,
-            color: isDark ? AppColors.grey400 : AppColors.grey500,
+            color: AppColors.textSecondary(isDark),
           ),
         ),
         subtitle: Text(
@@ -299,7 +299,7 @@ class _InfoCard extends StatelessWidget {
             fontFamily: 'Inter',
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: isDark ? Colors.white : AppColors.lightOnBackground,
+            color: AppColors.textPrimary(isDark),
           ),
         ),
       ),

@@ -83,7 +83,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         borderRadius: BorderRadius.circular(28),
                         boxShadow: [
                           BoxShadow(
-                            color: (isDark ? AppColors.darkPrimary : AppColors.lightPrimary).withValues(alpha: 0.3),
+                            color: AppColors.primary(isDark).withValues(alpha: 0.3),
                             blurRadius: 30,
                             offset: const Offset(0, 10),
                           ),
@@ -106,7 +106,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         fontFamily: 'ClashDisplay',
                         fontSize: 36,
                         fontWeight: FontWeight.w700,
-                        color: isDark ? Colors.white : AppColors.lightOnBackground,
+                        color: AppColors.textPrimary(isDark),
                         letterSpacing: -1,
                       ),
                     ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
@@ -117,7 +117,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         fontFamily: 'Outfit',
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        color: isDark ? AppColors.grey400 : AppColors.grey500,
+                        color: AppColors.textSecondary(isDark),
                       ),
                     ).animate().fadeIn(duration: 600.ms, delay: 400.ms),
                   ],
@@ -131,7 +131,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 child: CircularProgressIndicator(
                   strokeWidth: 3,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    AppColors.primary(isDark),
                   ),
                 ),
               ).animate().fadeIn(duration: 400.ms, delay: 600.ms),
@@ -143,7 +143,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   fontFamily: 'Inter',
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: isDark ? AppColors.grey600 : AppColors.grey400,
+                  color: AppColors.textTertiary(isDark),
                   letterSpacing: 0.5,
                 ),
               ).animate().fadeIn(duration: 400.ms, delay: 800.ms),
