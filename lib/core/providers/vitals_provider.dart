@@ -10,13 +10,9 @@ class VitalsNotifier extends AsyncNotifier<List<Vital>> {
   Future<List<Vital>> build() async {
     final user = ref.watch(currentUserProvider);
     if (user == null) return [];
-    try {
-      final db = DatabaseService();
-      final data = await db.getVitals(user.id);
-      return data.map((e) => Vital.fromJson(e)).toList();
-    } catch (e) {
-      return [];
-    }
+    final db = DatabaseService();
+    final data = await db.getVitals(user.id);
+    return data.map((e) => Vital.fromJson(e)).toList();
   }
 
   Future<void> addVital(VitalType type, double value, {double? valueSecondary, String? notes, DateTime? recordedAt}) async {

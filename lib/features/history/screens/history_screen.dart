@@ -14,9 +14,50 @@ class HistoryScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Symptom History')),
-      body: logsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(symptomLogsProvider);
+          await ref.read(symptomLogsProvider.future);
+        },
+        color: AppColors.lightPrimary,
+        child: logsAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, _) => Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, size: 64, color: AppColors.urgencyEmergency),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Failed to load history',
+                    style: TextStyle(
+                      fontFamily: 'ClashDisplay',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.white : AppColors.lightOnBackground,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '$e',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 13,
+                      color: isDark ? AppColors.grey400 : AppColors.grey500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () => ref.invalidate(symptomLogsProvider),
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            ),
+          ),
         data: (logs) {
           if (logs.isEmpty) {
             return Center(
@@ -188,6 +229,7 @@ class HistoryScreen extends ConsumerWidget {
             },
           );
         },
+      ),
       ),
     );
   }

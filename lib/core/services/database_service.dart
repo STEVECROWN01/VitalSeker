@@ -9,7 +9,12 @@ import '../models/weekly_insight.dart';
 import '../models/sos_event.dart';
 
 class DatabaseService {
-  final SupabaseClient _client = SupabaseService().client;
+  SupabaseClient? _cachedClient;
+
+  SupabaseClient get _client {
+    _cachedClient ??= SupabaseService().client;
+    return _cachedClient!;
+  }
 
   // ==================== USERS ====================
   Future<UserProfile?> getUserProfile(String userId) async {

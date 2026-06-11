@@ -10,13 +10,9 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
   Future<List<Appointment>> build() async {
     final user = ref.watch(currentUserProvider);
     if (user == null) return [];
-    try {
-      final db = DatabaseService();
-      final data = await db.getAppointments(user.id);
-      return data.map((e) => Appointment.fromJson(e)).toList();
-    } catch (e) {
-      return [];
-    }
+    final db = DatabaseService();
+    final data = await db.getAppointments(user.id);
+    return data.map((e) => Appointment.fromJson(e)).toList();
   }
 
   Future<void> addAppointment({

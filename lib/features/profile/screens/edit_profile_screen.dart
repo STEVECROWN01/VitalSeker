@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
-import '../../../core/services/database_service.dart';
 import '../../../shared/theme/app_colors.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
@@ -152,7 +151,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         if (weight != null) updateData['weight_kg'] = weight;
       }
 
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.updateUserProfile(user.id, updateData);
 
       ref.invalidate(userProfileProvider);

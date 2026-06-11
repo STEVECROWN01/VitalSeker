@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/config/app_config.dart';
 import '../../../core/providers/insights_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 
@@ -69,8 +70,8 @@ class InsightsScreen extends ConsumerWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Pro Plan - \$6.99/mo',
+                              Text(
+                                'Pro Plan - \$${AppConfig.proPriceMonthly}/mo',
                                 style: TextStyle(
                                   fontFamily: 'ClashDisplay',
                                   fontSize: 16,

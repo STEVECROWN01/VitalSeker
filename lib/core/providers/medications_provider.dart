@@ -10,13 +10,9 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
   Future<List<Medication>> build() async {
     final user = ref.watch(currentUserProvider);
     if (user == null) return [];
-    try {
-      final db = DatabaseService();
-      final data = await db.getMedications(user.id);
-      return data.map((e) => Medication.fromJson(e)).toList();
-    } catch (e) {
-      return [];
-    }
+    final db = DatabaseService();
+    final data = await db.getMedications(user.id);
+    return data.map((e) => Medication.fromJson(e)).toList();
   }
 
   Future<void> addMedication({

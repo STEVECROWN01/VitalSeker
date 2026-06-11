@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/app_config.dart';
 import '../models/vital.dart';
 import '../providers/auth_provider.dart';
-import '../providers/user_profile_provider.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../features/splash/screens/splash_screen.dart';
 import '../../features/onboarding/screens/onboarding_screen.dart';

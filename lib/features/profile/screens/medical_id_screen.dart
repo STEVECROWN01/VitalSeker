@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/providers/medications_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 
 class MedicalIdScreen extends ConsumerStatefulWidget {
@@ -179,12 +180,18 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                 const SizedBox(height: 12),
 
                 // Medications Section
-                _InfoSection(
-                  icon: Icons.medication_outlined,
-                  iconColor: AppColors.lightInfo,
-                  title: 'Medications',
-                  items: const ['See health passport for details'],
-                  isDark: isDark,
+                Builder(
+                  builder: (context) {
+                    final medsAsync = ref.watch(activeMedicationsProvider);
+                    final medNames = medsAsync.map((m) => m.displayDosage).toList();
+                    return _InfoSection(
+                      icon: Icons.medication_outlined,
+                      iconColor: AppColors.lightInfo,
+                      title: 'Medications',
+                      items: medNames.isEmpty ? ['No active medications'] : medNames,
+                      isDark: isDark,
+                    );
+                  },
                 ),
                 const SizedBox(height: 12),
 
