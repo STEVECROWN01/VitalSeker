@@ -20,13 +20,13 @@ subprojects {
     afterEvaluate {
         project.extensions.findByType<com.android.build.gradle.LibraryExtension>()?.let {
             it.compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_17
-                targetCompatibility = JavaVersion.VERSION_17
+                sourceCompatibility = JavaVersion.VERSION_21
+                targetCompatibility = JavaVersion.VERSION_21
             }
         }
         project.tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
             kotlinOptions {
-                jvmTarget = "17"
+                jvmTarget = "21"
             }
         }
     }
