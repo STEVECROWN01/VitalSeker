@@ -2,6 +2,13 @@
     <!-- Internet permission required for Supabase, Google Sign-In, and API calls -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- Camera permission for avatar upload (Edit Profile screen). image_picker
+         handles the photo picker on Android 13+ without a runtime permission,
+         but the camera action still requires CAMERA on all API levels. -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- Geolocation permission for the SOS screen share-location feature. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:label="VitalSeker"
         android:name="${applicationName}"

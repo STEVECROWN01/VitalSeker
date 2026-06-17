@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
@@ -28,6 +30,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   DateTime? _dateOfBirth;
   String? _gender;
   String? _bloodType;
+  String? _avatarUrl;
+  bool _isUploadingAvatar = false;
   List<String> _allergies = [];
   List<String> _chronicConditions = [];
   bool _isSaving = false;
@@ -58,6 +62,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _dateOfBirth = profile.dateOfBirth;
     _bloodType = profile.bloodType;
     _gender = profile.gender;
+    _avatarUrl = profile.avatarUrl;
     _allergies = List.from(profile.allergies);
     _chronicConditions = List.from(profile.chronicConditions);
     // Load height/weight back from the profile so the round-trip works.
@@ -73,6 +78,75 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       _emergencyNameController.text = profile.emergencyContacts.first.name;
       _emergencyPhoneController.text = profile.emergencyContacts.first.phone;
       _emergencyRelationshipController.text = profile.emergencyContacts.first.relationship ?? '';
+    }
+  }
+
+  Future<void> _pickAvatar() async {
+    final user = ref.read(currentUserProvider);
+    if (user == null) return;
+
+    // Source-chooser: gallery or camera.
+    final source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('Choose from Gallery'),
+              onTap: () => Navigator.pop(ctx, ImageSource.gallery),
+            ),
+            ListTile(
+              leading: const Icon(Icons.camera_alt_outlined),
+              title: const Text('Take a Photo'),
+              onTap: () => Navigator.pop(ctx, ImageSource.camera),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (source == null) return;
+
+    setState(() => _isUploadingAvatar = true);
+    try {
+      final picker = ImagePicker();
+      final xfile = await picker.pickImage(
+        source: source,
+        maxWidth: 512,
+        maxHeight: 512,
+        imageQuality: 85,
+      );
+      if (xfile == null) return; // user cancelled
+
+      final bytes = await xfile.readAsBytes();
+      // Default to JPEG; image_picker returns JPEG for camera by default.
+      final contentType = xfile.mimeType ?? 'image/jpeg';
+
+      final db = ref.read(databaseServiceProvider);
+      final publicUrl = await db.uploadAvatar(
+        userId: user.id,
+        bytes: bytes,
+        contentType: contentType,
+      );
+
+      // Persist the URL on the user profile immediately so other screens
+      // (profile, dashboard) see it without requiring a full Save Changes tap.
+      await db.updateUserProfile(user.id, {'avatar_url': publicUrl});
+      ref.invalidate(userProfileProvider);
+
+      if (mounted) {
+        setState(() {
+          _avatarUrl = publicUrl;
+          _isUploadingAvatar = false;
+        });
+        AppSnackBar.success(context, 'Avatar updated!');
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isUploadingAvatar = false);
+        AppSnackBar.errorFromException(context, 'Failed to upload avatar. Please try again.', e);
+      }
     }
   }
 
@@ -239,25 +313,26 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   // Avatar
                   Center(
                     child: GestureDetector(
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Avatar upload coming soon!')),
-                        );
-                      },
+                      onTap: _isUploadingAvatar ? null : _pickAvatar,
                       child: Stack(
                         children: [
                           CircleAvatar(
                             radius: 50,
                             backgroundColor: (AppColors.primary(isDark)).withValues(alpha: 0.12),
-                            child: Text(
-                              (_nameController.text.isNotEmpty ? _nameController.text : 'U')[0].toUpperCase(),
-                              style: TextStyle(
-                                fontFamily: 'ClashDisplay',
-                                fontSize: 36,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.primary(isDark),
-                              ),
-                            ),
+                            backgroundImage: _avatarUrl != null && _avatarUrl!.isNotEmpty
+                                ? NetworkImage(_avatarUrl!)
+                                : null,
+                            child: (_avatarUrl == null || _avatarUrl!.isEmpty)
+                                ? Text(
+                                    (_nameController.text.isNotEmpty ? _nameController.text : 'U')[0].toUpperCase(),
+                                    style: TextStyle(
+                                      fontFamily: 'ClashDisplay',
+                                      fontSize: 36,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.primary(isDark),
+                                    ),
+                                  )
+                                : null,
                           ),
                           Positioned(
                             bottom: 0,
@@ -272,7 +347,13 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                   width: 2,
                                 ),
                               ),
-                              child: const Icon(Icons.camera_alt, size: 16, color: Colors.white),
+                              child: _isUploadingAvatar
+                                  ? const SizedBox(
+                                      width: 16,
+                                      height: 16,
+                                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                                    )
+                                  : const Icon(Icons.camera_alt, size: 16, color: Colors.white),
                             ),
                           ),
                         ],

@@ -6,6 +6,7 @@ import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/services/auth_service.dart';
+import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 
@@ -138,30 +139,120 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   void _showDeleteAccountDialog() {
+    final email = ref.read(userProfileProvider).valueOrNull?.email ??
+        ref.read(currentUserProvider)?.email ??
+        '';
+    final confirmController = TextEditingController();
+    bool isDeleting = false;
+
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Account', style: TextStyle(fontFamily: 'ClashDisplay')),
-        content: const Text(
-          'This action is irreversible. All your data will be permanently deleted. Are you sure?',
-          style: TextStyle(fontFamily: 'Inter'),
+      barrierDismissible: !isDeleting,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: Row(
+            children: [
+              Icon(Icons.warning_amber_rounded, color: AppColors.urgencyEmergency),
+              const SizedBox(width: 8),
+              const Text('Delete Account', style: TextStyle(fontFamily: 'ClashDisplay')),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'This action is irreversible. All your data — vitals, medications, appointments, symptom logs, family profiles, and health passport — will be permanently deleted.',
+                style: TextStyle(fontFamily: 'Inter', fontSize: 13),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Type your email to confirm:',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textSecondary(Theme.of(context).brightness == Brightness.dark),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                email,
+                style: TextStyle(
+                  fontFamily: 'JetBrainsMono',
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primary(Theme.of(context).brightness == Brightness.dark),
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: confirmController,
+                keyboardType: TextInputType.emailAddress,
+                autocorrect: false,
+                enabled: !isDeleting,
+                decoration: const InputDecoration(
+                  hintText: 'your.email@example.com',
+                  isDense: true,
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: isDeleting ? null : () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: isDeleting
+                  ? null
+                  : () async {
+                      final typed = confirmController.text.trim().toLowerCase();
+                      if (typed.isEmpty || typed != email.toLowerCase()) {
+                        AppSnackBar.error(context, 'Email does not match.');
+                        return;
+                      }
+                      setDialogState(() => isDeleting = true);
+                      try {
+                        final edgeService = EdgeFunctionService();
+                        await edgeService.deleteAccount(confirmEmail: typed);
+                        // Account deleted — the auth.user row is gone, so sign
+                        // out locally to clear the stale session and route to login.
+                        try {
+                          await ref.read(authServiceProvider).signOut();
+                        } catch (_) {
+                          // signOut may throw if the session was already invalidated; ignore.
+                        }
+                        if (!mounted) return;
+                        Navigator.pop(ctx);
+                        AppSnackBar.success(context, 'Account deleted. Sorry to see you go.');
+                        // Clear all cached profile state.
+                        ref.invalidate(userProfileProvider);
+                        if (mounted) context.go(AppConfig.login);
+                      } catch (e) {
+                        if (!mounted) return;
+                        setDialogState(() => isDeleting = false);
+                        AppSnackBar.errorFromException(
+                          context,
+                          'Failed to delete account. Please try again or contact support.',
+                          e,
+                        );
+                      }
+                    },
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.urgencyEmergency,
+              ),
+              child: isDeleting
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    )
+                  : const Text('Delete Permanently'),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Account deletion coming soon')),
-              );
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.urgencyEmergency),
-            child: const Text('Delete', style: TextStyle(color: Colors.white)),
-          ),
-        ],
       ),
     );
   }
@@ -326,7 +417,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 leading: const Icon(Icons.description_outlined),
                 title: const Text('Terms of Service', style: TextStyle(fontFamily: 'Inter')),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => context.push(AppConfig.privacyPolicy),
+                onTap: () => context.push(AppConfig.termsOfService),
               ),
               ListTile(
                 leading: const Icon(Icons.privacy_tip_outlined),

@@ -37,6 +37,7 @@ import '../../features/profile/screens/settings_screen.dart';
 import '../../features/profile/screens/notifications_settings_screen.dart';
 import '../../features/profile/screens/help_support_screen.dart';
 import '../../features/profile/screens/privacy_screen.dart';
+import '../../features/profile/screens/terms_of_service_screen.dart';
 import '../../features/profile/screens/medical_id_screen.dart';
 import '../../shared/widgets/app_bottom_nav.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
@@ -222,6 +223,10 @@ GoRouter createRouter(Ref ref) {
               GoRoute(
                 path: 'privacy',
                 builder: (context, state) => const PrivacyScreen(),
+              ),
+              GoRoute(
+                path: 'terms',
+                builder: (context, state) => const TermsOfServiceScreen(),
               ),
               GoRoute(
                 path: 'medical-id',

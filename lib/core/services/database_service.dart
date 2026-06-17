@@ -313,4 +313,43 @@ class DatabaseService {
   Future<void> deleteMedicalRecord(String recordId) async {
     await _client.from('medical_records').delete().eq('id', recordId);
   }
+
+  /// Update an existing medical record. Previously medical_records had no
+  /// UPDATE method — once created, records were immutable from the client.
+  Future<void> updateMedicalRecord(String recordId, Map<String, dynamic> data) async {
+    await _client.from('medical_records').update(data).eq('id', recordId);
+  }
+
+  // ==================== AVATAR STORAGE ====================
+  /// Uploads an avatar image to the `avatars` storage bucket and returns the
+  /// public URL. The path is `avatars/{userId}/avatar.jpg` — overwriting any
+  /// previous avatar for the same user (so we don't accumulate stale files).
+  ///
+  /// The migration 005_avatars_bucket.sql bucket policy enforces that each
+  /// user can only write to a path prefixed with their own user id.
+  Future<String> uploadAvatar({
+    required String userId,
+    required List<int> bytes,
+    required String contentType,
+  }) async {
+    final path = '$userId/avatar.jpg';
+    await _client.storage.from('avatars').uploadBinary(
+          path,
+          bytes,
+          contentType: contentType,
+          upsert: true,
+        );
+    return _client.storage.from('avatars').getPublicUrl(path);
+  }
+
+  /// Remove the avatar file for the given user. Best-effort — does not throw
+  /// if the file does not exist.
+  Future<void> deleteAvatar(String userId) async {
+    final path = '$userId/avatar.jpg';
+    try {
+      await _client.storage.from('avatars').remove([path]);
+    } catch (_) {
+      // File may not exist; ignore.
+    }
+  }
 }

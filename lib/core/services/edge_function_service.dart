@@ -84,4 +84,24 @@ class EdgeFunctionService {
     }
     return response.data as Map<String, dynamic>;
   }
+
+  /// Delete Account - Permanently delete the signed-in user and all their data.
+  ///
+  /// Calls the `delete-account` edge function which uses the service-role
+  /// key to call auth.admin.deleteUser(). The cascading FK on `users.id`
+  /// wipes all the user's rows in public.* tables automatically.
+  ///
+  /// `confirmEmail` must match the signed-in user's email — adds a friction
+  /// layer against accidental deletion.
+  Future<void> deleteAccount({required String confirmEmail}) async {
+    final response = await _client.functions.invoke(
+      'delete-account',
+      body: {'confirm_email': confirmEmail},
+    );
+    if (response.status != 200) {
+      final data = response.data;
+      final message = data is Map ? data['error'] : 'Account deletion failed';
+      throw Exception(message ?? 'Account deletion failed');
+    }
+  }
 }

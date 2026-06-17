@@ -147,11 +147,7 @@ class AboutScreen extends StatelessWidget {
                 ListTile(
                   title: const Text('Terms of Service', style: TextStyle(fontFamily: 'Inter')),
                   trailing: const Icon(Icons.chevron_right, size: 16),
-                  onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Terms of Service page coming soon!')),
-                    );
-                  },
+                  onTap: () => context.push(AppConfig.termsOfService),
                   contentPadding: EdgeInsets.zero,
                 ),
               ],

@@ -32,6 +32,7 @@ class AppConfig {
   static const String notificationsSettings = '/home/profile/settings/notifications';
   static const String helpSupport = '/home/profile/help';
   static const String privacyPolicy = '/home/profile/privacy';
+  static const String termsOfService = '/home/profile/terms';
   static const String medicalId = '/home/profile/medical-id';
   static const String medications = '/home/medications';
   static const String addMedication = '/home/medications/add';
