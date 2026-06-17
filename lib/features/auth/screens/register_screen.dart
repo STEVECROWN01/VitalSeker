@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/auth_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/loading_overlay.dart';
@@ -21,6 +22,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  // Persistent controller for the DOB field — previously a new controller was
+  // created on every build (controller: TextEditingController(text: ...))
+  // which leaked the previous one and broke focus/state.
+  final _dobController = TextEditingController();
   bool _isLoading = false;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
@@ -37,11 +42,20 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _dobController.addListener(() {
+      // Keep controller text in sync with _dateOfBirth when it changes externally.
+    });
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _dobController.dispose();
     super.dispose();
   }
 
@@ -118,7 +132,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       },
     );
     if (picked != null) {
-      setState(() => _dateOfBirth = picked);
+      setState(() {
+        _dateOfBirth = picked;
+        _dobController.text =
+            '${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}';
+      });
     }
   }
 
@@ -140,7 +158,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
       if (mounted) {
         // Check if email confirmation is required
-        // When mailer_autoconfirm is off, the session is null until email is verified
         final session = response.session;
         final user = response.user;
         final needsConfirmation = session == null ||
@@ -148,11 +165,32 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
         if (needsConfirmation) {
           _showSuccess('Account created! Please check your email to verify your account.');
-          // Navigate to login after a short delay
           await Future.delayed(const Duration(seconds: 2));
           if (mounted) context.go(AppConfig.login);
         } else {
-          // Auto-confirmed, go to dashboard
+          // Auto-confirmed: persist optional profile fields (DOB/gender/blood type).
+          // The auth.users row was just created and the handle_new_user trigger
+          // provisions a public.users row, so we can update it now.
+          if (user != null) {
+            final updateData = <String, dynamic>{};
+            if (_dateOfBirth != null) {
+              updateData['date_of_birth'] =
+                  _dateOfBirth!.toIso8601String().split('T')[0];
+            }
+            if (_gender != null) updateData['gender'] = _gender;
+            if (_bloodType != null) updateData['blood_type'] = _bloodType;
+            if (updateData.isNotEmpty) {
+              try {
+                final db = ref.read(databaseServiceProvider);
+                await db.updateUserProfile(user.id, updateData);
+                // Refresh cached profile so onboarding/dashboard see the new values.
+                ref.invalidate(userProfileProvider);
+              } catch (e) {
+                // Non-fatal: profile can be edited later. Log for debugging.
+                debugPrint('Failed to persist optional profile fields: $e');
+              }
+            }
+          }
           context.go(AppConfig.dashboard);
         }
       }
@@ -351,6 +389,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     onTap: _pickDateOfBirth,
                     child: AbsorbPointer(
                       child: TextFormField(
+                        controller: _dobController,
                         decoration: InputDecoration(
                           labelText: 'Date of Birth',
                           prefixIcon: const Icon(Icons.cake_outlined),
@@ -360,11 +399,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             color: AppColors.textSecondary(isDark),
                           ),
                           hintText: 'Select your date of birth',
-                        ),
-                        controller: TextEditingController(
-                          text: _dateOfBirth != null
-                              ? '${_dateOfBirth!.day.toString().padLeft(2, '0')}/${_dateOfBirth!.month.toString().padLeft(2, '0')}/${_dateOfBirth!.year}'
-                              : '',
                         ),
                         style: TextStyle(
                           fontFamily: 'Inter',

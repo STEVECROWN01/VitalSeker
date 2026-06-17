@@ -28,6 +28,12 @@ class _SosScreenState extends ConsumerState<SosScreen>
   late final AnimationController _pulseController;
   late final Animation<double> _pulseAnimation;
 
+  // Hold-to-trigger SOS state. The UI hint says "Hold for 3 seconds" so we
+  // honour that with a real 3-second hold timer + a progress ring.
+  static const Duration _sosHoldDuration = Duration(seconds: 3);
+  late final AnimationController _holdController;
+  bool _isHolding = false;
+
   @override
   void initState() {
     super.initState();
@@ -39,12 +45,73 @@ class _SosScreenState extends ConsumerState<SosScreen>
     _pulseAnimation = Tween<double>(begin: 1.0, end: 1.08).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
+
+    _holdController = AnimationController(
+      vsync: this,
+      duration: _sosHoldDuration,
+    );
+
+    _holdController.addStatusListener((status) {
+      if (status == AnimationStatus.completed && _isHolding) {
+        _isHolding = false;
+        _confirmAndTriggerSos();
+      }
+    });
   }
 
   @override
   void dispose() {
     _pulseController.dispose();
+    _holdController.dispose();
     super.dispose();
+  }
+
+  void _startHold() {
+    if (_isSending || _sosActive) return;
+    setState(() => _isHolding = true);
+    HapticFeedback.selectionClick();
+    _holdController.forward(from: 0.0);
+  }
+
+  void _cancelHold() {
+    if (!_isHolding) return;
+    setState(() => _isHolding = false);
+    _holdController.stop();
+    _holdController.reset();
+  }
+
+  Future<void> _confirmAndTriggerSos() async {
+    // Confirmation dialog — prevents accidental triggers from a completed
+    // 3-second hold (e.g. phone in pocket).
+    final confirmed = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Send Emergency SOS?'),
+        content: const Text(
+          'This will send an SMS with your live location to all of your emergency contacts.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.urgencyEmergency,
+            ),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Send SOS'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await _triggerSos();
+    } else {
+      // Reset hold state if user backed out.
+      _holdController.reset();
+    }
   }
 
   Future<Position?> _getCurrentLocation() async {
@@ -208,53 +275,81 @@ class _SosScreenState extends ConsumerState<SosScreen>
                   ),
                   const SizedBox(height: 32),
                   GestureDetector(
-                    onLongPress: _triggerSos,
+                    onLongPressStart: (_) => _startHold(),
+                    onLongPressEnd: (_) => _cancelHold(),
+                    onLongPressCancel: _cancelHold,
                     child: ScaleTransition(
                       scale: _pulseAnimation,
-                      child: Container(
+                      child: SizedBox(
                         width: 200,
                         height: 200,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [Color(0xFFE53935), Color(0xFFFF5722)],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.urgencyEmergency
-                                  .withValues(alpha: 0.4),
-                              blurRadius: 40,
-                              spreadRadius: 10,
-                            ),
-                          ],
-                        ),
-                        child: _isSending
-                            ? const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 4,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // Hold-progress ring (visible only while holding).
+                            if (_isHolding)
+                              SizedBox(
+                                width: 220,
+                                height: 220,
+                                child: AnimatedBuilder(
+                                  animation: _holdController,
+                                  builder: (_, __) => CircularProgressIndicator(
+                                    value: _holdController.value,
+                                    strokeWidth: 6,
+                                    color: AppColors.urgencyEmergency,
+                                    backgroundColor:
+                                        AppColors.urgencyEmergency
+                                            .withValues(alpha: 0.15),
+                                  ),
                                 ),
-                              )
-                            : const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.emergency,
-                                      color: Colors.white, size: 64),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    'SOS',
-                                    style: TextStyle(
-                                      fontFamily: 'ClashDisplay',
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                      letterSpacing: 4,
-                                    ),
+                              ),
+                            Container(
+                              width: 200,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [Color(0xFFE53935), Color(0xFFFF5722)],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.urgencyEmergency
+                                        .withValues(alpha: 0.4),
+                                    blurRadius: 40,
+                                    spreadRadius: 10,
                                   ),
                                 ],
                               ),
+                              child: _isSending
+                                  ? const Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 4,
+                                      ),
+                                    )
+                                  : const Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.emergency,
+                                            color: Colors.white, size: 64),
+                                        SizedBox(height: 8),
+                                        Text(
+                                          'SOS',
+                                          style: TextStyle(
+                                            fontFamily: 'ClashDisplay',
+                                            fontSize: 36,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.white,
+                                            letterSpacing: 4,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ).animate(onPlay: (c) => c.repeat(reverse: true)).shimmer(
@@ -263,11 +358,15 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       ),
                   const SizedBox(height: 16),
                   Text(
-                    'Hold for 3 seconds',
+                    _isHolding ? 'Keep holding...' : 'Hold for 3 seconds',
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
-                      color: AppColors.textHint(isDark),
+                      fontWeight:
+                          _isHolding ? FontWeight.w600 : FontWeight.w400,
+                      color: _isHolding
+                          ? AppColors.urgencyEmergency
+                          : AppColors.textHint(isDark),
                     ),
                   ),
                 ] else ...[
