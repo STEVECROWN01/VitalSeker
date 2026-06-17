@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/insights_provider.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -16,7 +17,32 @@ class InsightsScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('Weekly Insights')),
       body: insightsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.cloud_off, size: 64, color: AppColors.textTertiary(isDark)),
+                const SizedBox(height: 16),
+                Text(
+                  'Could not load insights',
+                  style: TextStyle(
+                    fontFamily: 'ClashDisplay',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary(isDark),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () => ref.invalidate(weeklyInsightsProvider),
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          ),
+        ),
         data: (insights) {
           if (insights.isEmpty) {
             return Center(
@@ -56,40 +82,70 @@ class InsightsScreen extends ConsumerWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        gradient: AppColors.brandGradient,
-                        borderRadius: BorderRadius.circular(16),
+                    // Tappable Pro upgrade banner — previously the banner was
+                    // purely visual with no onPressed, so users couldn't actually
+                    // upgrade from this screen.
+                    GestureDetector(
+                      onTap: () => context.push(AppConfig.subscription),
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          gradient: AppColors.brandGradient,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.secondary(isDark).withValues(alpha: 0.3),
+                              blurRadius: 16,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.workspace_premium, color: Colors.white, size: 24),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Pro Plan - \$${AppConfig.proPriceMonthly}/mo',
+                                    style: TextStyle(
+                                      fontFamily: 'ClashDisplay',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Weekly insights, unlimited triage',
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 12,
+                                      color: Colors.white.withValues(alpha: 0.85),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Icon(Icons.arrow_forward, color: Colors.white, size: 20),
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.workspace_premium, color: Colors.white, size: 24),
-                          const SizedBox(width: 12),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Pro Plan - \$${AppConfig.proPriceMonthly}/mo',
-                                style: TextStyle(
-                                  fontFamily: 'ClashDisplay',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                'Weekly insights, unlimited triage',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 12,
-                                  color: Colors.white.withValues(alpha: 0.8),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                    ),
+                    const SizedBox(height: 12),
+                    TextButton(
+                      onPressed: () => context.push(AppConfig.subscription),
+                      child: Text(
+                        'View all plans',
+                        style: TextStyle(
+                          fontFamily: 'Outfit',
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primary(isDark),
+                        ),
                       ),
                     ),
                   ],
@@ -116,13 +172,15 @@ class InsightsScreen extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            _formatDateRange(insight.weekStart, insight.weekEnd),
-                            style: TextStyle(
-                              fontFamily: 'ClashDisplay',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textPrimary(isDark),
+                          Expanded(
+                            child: Text(
+                              _formatDateRange(insight.weekStart, insight.weekEnd),
+                              style: TextStyle(
+                                fontFamily: 'ClashDisplay',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textPrimary(isDark),
+                              ),
                             ),
                           ),
                           if (trend.direction != null)
@@ -241,7 +299,7 @@ class InsightsScreen extends ConsumerWidget {
   }
 
   Color _trendColor(String direction, bool isDark) {
-    switch (direction) {
+    switch (direction.toLowerCase()) {
       case 'improving': return AppColors.urgencyLow;
       case 'stable': return isDark ? AppColors.darkInfo : AppColors.lightInfo;
       case 'declining': return AppColors.urgencyHigh;
@@ -250,7 +308,7 @@ class InsightsScreen extends ConsumerWidget {
   }
 
   IconData _trendIcon(String direction) {
-    switch (direction) {
+    switch (direction.toLowerCase()) {
       case 'improving': return Icons.trending_up;
       case 'stable': return Icons.trending_flat;
       case 'declining': return Icons.trending_down;

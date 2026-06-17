@@ -31,6 +31,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   List<String> _allergies = [];
   List<String> _chronicConditions = [];
   bool _isSaving = false;
+  // Guards one-time field population so we don't clobber user edits on rebuild.
+  bool _populated = false;
 
   static const _bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
   static const _genders = ['Male', 'Female', 'Other'];
@@ -55,12 +57,18 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _emailController.text = profile.email;
     _dateOfBirth = profile.dateOfBirth;
     _bloodType = profile.bloodType;
+    _gender = profile.gender;
     _allergies = List.from(profile.allergies);
     _chronicConditions = List.from(profile.chronicConditions);
-    // Populate gender from stored data (if available)
-    // Note: gender is stored in user metadata, not in the profile model
-    // Populate height/weight from stored data (if available)
-    // These are stored as metadata in the users table
+    // Load height/weight back from the profile so the round-trip works.
+    // Previously these fields were saved but never loaded, so re-editing
+    // showed empty fields even when values were stored.
+    if (profile.heightCm != null) {
+      _heightController.text = profile.heightCm!.toStringAsFixed(0);
+    }
+    if (profile.weightKg != null) {
+      _weightController.text = profile.weightKg!.toStringAsFixed(1);
+    }
     if (profile.emergencyContacts.isNotEmpty) {
       _emergencyNameController.text = profile.emergencyContacts.first.name;
       _emergencyPhoneController.text = profile.emergencyContacts.first.phone;
@@ -127,28 +135,37 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
       final updateData = <String, dynamic>{
         'full_name': _nameController.text.trim(),
-        'date_of_birth': _dateOfBirth?.toIso8601String(),
+        // Send date as YYYY-MM-DD (DATE column type) instead of full ISO
+        // timestamp, to avoid TZ surprises.
+        'date_of_birth': _dateOfBirth?.toIso8601String().split('T')[0],
         'blood_type': _bloodType,
         'allergies': _allergies,
         'chronic_conditions': _chronicConditions,
         'emergency_contacts': emergencyContacts,
       };
 
-      // Save gender if selected
-      if (_gender != null) {
-        updateData['gender'] = _gender;
-      }
+      // Save gender — explicitly allow null so the user can clear the value.
+      updateData['gender'] = _gender;
 
-      // Save height/weight measurements if provided
+      // Save height/weight measurements. Explicitly allow null so the user
+      // can clear the value by deleting the field contents.
       final heightText = _heightController.text.trim();
       final weightText = _weightController.text.trim();
       if (heightText.isNotEmpty) {
         final height = double.tryParse(heightText);
-        if (height != null) updateData['height_cm'] = height;
+        if (height != null && height > 0 && height < 300) {
+          updateData['height_cm'] = height;
+        }
+      } else {
+        updateData['height_cm'] = null;
       }
       if (weightText.isNotEmpty) {
         final weight = double.tryParse(weightText);
-        if (weight != null) updateData['weight_kg'] = weight;
+        if (weight != null && weight > 0 && weight < 500) {
+          updateData['weight_kg'] = weight;
+        }
+      } else {
+        updateData['weight_kg'] = null;
       }
 
       final db = ref.read(databaseServiceProvider);
@@ -164,9 +181,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update: $e')),
+          const SnackBar(content: Text('Failed to update profile. Please try again.')),
         );
       }
+      debugPrint('Profile update error: $e');
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
@@ -200,13 +218,16 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (profile) {
-          // Populate fields once
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (_nameController.text.isEmpty && profile != null) {
+          // Populate fields once on first data arrival. Use a dedicated flag
+          // instead of checking _nameController.text.isEmpty, because the
+          // user may legitimately clear the name field while editing.
+          if (!_populated && profile != null) {
+            _populated = true;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
               _populateFields(profile);
               setState(() {});
-            }
-          });
+            });
+          }
 
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
