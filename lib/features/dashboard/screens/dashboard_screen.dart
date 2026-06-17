@@ -8,15 +8,122 @@ import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
+import '../../../core/services/edge_function_service.dart';
 import '../../../core/models/vital.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/vital_score_ring.dart';
 
-class DashboardScreen extends ConsumerWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  String? _aiTip;
+  bool _isLoadingTip = false;
+  DateTime? _tipFetchedAt;
+
+  @override
+  void initState() {
+    super.initState();
+    // Defer to first frame so providers have a chance to resolve.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadAiTip());
+  }
+
+  /// Fetch a real AI-generated health tip via the triage edge function.
+  ///
+  /// The triage function already wraps Anthropic Claude with our system prompt,
+  /// so we reuse it with a "general health tip" framing instead of paying for
+  /// a separate function. The result is cached for the lifetime of the
+  /// dashboard widget — refreshing requires pull-to-refresh on the dashboard
+  /// (or restarting the app).
+  ///
+  /// Falls back to a curated set of static tips on any error.
+  Future<void> _loadAiTip() async {
+    if (_isLoadingTip) return;
+    // Don't refetch if we already have a tip from the last 6 hours.
+    if (_aiTip != null && _tipFetchedAt != null &&
+        DateTime.now().difference(_tipFetchedAt!) < const Duration(hours: 6)) {
+      return;
+    }
+
+    setState(() => _isLoadingTip = true);
+    try {
+      final profile = ref.read(userProfileProvider).valueOrNull;
+      final passport = ref.read(healthPassportProvider).valueOrNull;
+      final vitalsAsync = ref.read(vitalsProvider).valueOrNull;
+
+      // Build a brief context string for the AI to base its tip on.
+      final contextParts = <String>[];
+      if (profile?.bloodType != null) contextParts.add('blood type: ${profile!.bloodType}');
+      if (profile?.allergies.isNotEmpty == true) {
+        contextParts.add('allergies: ${profile!.allergies.join(', ')}');
+      }
+      if (profile?.chronicConditions.isNotEmpty == true) {
+        contextParts.add('conditions: ${profile!.chronicConditions.join(', ')}');
+      }
+      if (passport != null) contextParts.add('vital score: ${passport.vitalScore}/100');
+      if (vitalsAsync != null && vitalsAsync.isNotEmpty) {
+        final latest = vitalsAsync.first;
+        contextParts.add('latest vital: ${latest.type.name}=${latest.value}');
+      }
+      final context = contextParts.isEmpty
+          ? 'No specific health data available yet.'
+          : contextParts.join('; ');
+
+      final edgeService = EdgeFunctionService();
+      final result = await edgeService.runTriage(
+        symptoms: ['general wellness check'],
+        severity: 1,
+        notes: 'Please provide ONE short (1-2 sentence) actionable health tip '
+            'tailored to this user. Context: $context. Reply with the tip '
+            'directly in the recommendations field — do not perform triage.',
+      );
+
+      final triage = result['triage'] as Map<String, dynamic>?;
+      final recommendations = triage?['recommendations'] as List?;
+      if (recommendations != null && recommendations.isNotEmpty) {
+        final tip = recommendations.first.toString();
+        if (tip.isNotEmpty) {
+          setState(() {
+            _aiTip = tip;
+            _tipFetchedAt = DateTime.now();
+            _isLoadingTip = false;
+          });
+          return;
+        }
+      }
+      // Fallback if AI didn't return a usable tip.
+      setState(() {
+        _aiTip = _fallbackTip();
+        _tipFetchedAt = DateTime.now();
+        _isLoadingTip = false;
+      });
+    } catch (_) {
+      // Network / edge function error — use a fallback tip.
+      setState(() {
+        _aiTip = _fallbackTip();
+        _tipFetchedAt = DateTime.now();
+        _isLoadingTip = false;
+      });
+    }
+  }
+
+  static String _fallbackTip() {
+    const tips = [
+      'Stay hydrated! Drinking 8 glasses of water daily helps maintain healthy blood pressure and improves circulation.',
+      'Aim for 7-9 hours of sleep per night to support immune function and recovery.',
+      'Even 15 minutes of brisk walking daily can improve cardiovascular health over time.',
+      'Practice deep breathing for 5 minutes a day to help manage stress and reduce blood pressure.',
+      'Keep a consistent meal schedule to help stabilize blood sugar levels.',
+    ];
+    return tips[DateTime.now().millisecond % tips.length];
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final profileAsync = ref.watch(userProfileProvider);
     final passportAsync = ref.watch(healthPassportProvider);
@@ -88,45 +195,62 @@ class DashboardScreen extends ConsumerWidget {
                               ),
                             ),
                             const SizedBox(width: 12),
-                            // User avatar
-                            Container(
-                              width: 44,
-                              height: 44,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.3),
-                                  width: 1.5,
+                            // User avatar — tap to open profile
+                            GestureDetector(
+                              onTap: () => context.push(AppConfig.profile),
+                              child: Container(
+                                width: 44,
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.2),
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(
+                                    color: Colors.white.withValues(alpha: 0.3),
+                                    width: 1.5,
+                                  ),
+                                  image: profileAsync.maybeWhen(
+                                    data: (p) => p?.avatarUrl != null && p!.avatarUrl!.isNotEmpty
+                                        ? DecorationImage(
+                                            image: NetworkImage(p.avatarUrl!),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : null,
+                                    orElse: () => null,
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  profileAsync.maybeWhen(
-                                    data: (p) {
-                                      final name = p?.fullName ?? 'U';
-                                      return name.isNotEmpty ? name[0].toUpperCase() : 'U';
-                                    },
-                                    orElse: () => 'U',
-                                  ),
-                                  style: const TextStyle(
-                                    fontFamily: 'ClashDisplay',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                  ),
+                                child: profileAsync.maybeWhen(
+                                  data: (p) {
+                                    final hasAvatar = p?.avatarUrl != null && p!.avatarUrl!.isNotEmpty;
+                                    if (hasAvatar) return const SizedBox.shrink();
+                                    final name = p?.fullName ?? 'U';
+                                    return Center(
+                                      child: Text(
+                                        name.isNotEmpty ? name[0].toUpperCase() : 'U',
+                                        style: const TextStyle(
+                                          fontFamily: 'ClashDisplay',
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  orElse: () => const SizedBox.shrink(),
                                 ),
                               ),
                             ),
                             const SizedBox(width: 10),
-                            // Notification bell
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(12),
+                            // Notification bell — tap to open notification settings
+                            GestureDetector(
+                              onTap: () => context.push(AppConfig.notificationsSettings),
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Icon(Icons.notifications_outlined, color: Colors.white),
                               ),
-                              child: const Icon(Icons.notifications_outlined, color: Colors.white),
                             ),
                           ],
                         ).animate().fadeIn(duration: 400.ms),
@@ -324,60 +448,78 @@ class DashboardScreen extends ConsumerWidget {
                   const SizedBox(height: 28),
 
                   // AI Health Tip
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: isDark
-                            ? [const Color(0xFF0A2E22), const Color(0xFF151925)]
-                            : [const Color(0xFFE0F2F1), const Color(0xFFE8E5FF)],
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: AppColors.borderLight(isDark),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 44,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary(isDark).withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(Icons.tips_and_updates, color: AppColors.primary(isDark), size: 24),
+                  GestureDetector(
+                    onTap: _isLoadingTip ? null : _loadAiTip,
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: isDark
+                              ? [const Color(0xFF0A2E22), const Color(0xFF151925)]
+                              : [const Color(0xFFE0F2F1), const Color(0xFFE8E5FF)],
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'AI Health Tip',
-                                style: TextStyle(
-                                  fontFamily: 'ClashDisplay',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary(isDark),
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Stay hydrated! Drinking 8 glasses of water daily helps maintain healthy blood pressure and improves circulation.',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 12,
-                                  color: AppColors.textSecondary(isDark),
-                                  height: 1.4,
-                                ),
-                              ),
-                            ],
-                          ),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: AppColors.borderLight(isDark),
                         ),
-                      ],
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 44,
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary(isDark).withValues(alpha: 0.15),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: _isLoadingTip
+                                ? const Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: CircularProgressIndicator(strokeWidth: 2),
+                                  )
+                                : Icon(Icons.tips_and_updates, color: AppColors.primary(isDark), size: 24),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'AI Health Tip',
+                                      style: TextStyle(
+                                        fontFamily: 'ClashDisplay',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.textPrimary(isDark),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Icon(
+                                      Icons.refresh,
+                                      size: 12,
+                                      color: AppColors.textHint(isDark),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  _aiTip ?? 'Loading your personalized tip...',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 12,
+                                    color: AppColors.textSecondary(isDark),
+                                    height: 1.4,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ).animate().fadeIn(duration: 400.ms, delay: 300.ms),
                   const SizedBox(height: 28),
