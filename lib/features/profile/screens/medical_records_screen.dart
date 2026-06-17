@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
-import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 enum RecordType { all, labResults, prescriptions, imaging, other }
 
@@ -47,9 +47,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to load records: $e')),
-        );
+        AppSnackBar.errorFromException(context, 'Failed to load records. Please try again.', e);
       }
     }
   }
@@ -196,11 +194,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                     );
                   }
                 } catch (e) {
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed: $e')),
-                    );
-                  }
+                  if (mounted) AppSnackBar.errorFromException(context, 'Failed to add record. Please try again.', e);
                 }
               },
               style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary(isDark)),

@@ -5,6 +5,7 @@ import '../../../core/config/app_config.dart';
 import '../../../core/models/medication.dart';
 import '../../../core/providers/medications_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class MedicationsScreen extends ConsumerStatefulWidget {
   const MedicationsScreen({super.key});
@@ -35,17 +36,9 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
             medication.id,
             MedicationStatus.completed,
           );
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Medication marked as completed')),
-        );
-      }
+      if (mounted) AppSnackBar.success(context, 'Medication marked as completed');
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
-        );
-      }
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to update medication.', e);
     }
   }
 
@@ -73,17 +66,9 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
     if (confirmed == true) {
       try {
         await ref.read(medicationsProvider.notifier).deleteMedication(medication.id);
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Medication deleted')),
-          );
-        }
+        if (mounted) AppSnackBar.success(context, 'Medication deleted');
       } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
-          );
-        }
+        if (mounted) AppSnackBar.errorFromException(context, 'Failed to delete medication.', e);
       }
     }
   }

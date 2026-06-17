@@ -7,6 +7,7 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/services/auth_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -41,11 +42,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         await authService.signOut();
         if (mounted) context.go(AppConfig.login);
       } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Sign out failed: $e')),
-          );
-        }
+        if (mounted) AppSnackBar.errorFromException(context, 'Failed to sign out. Please try again.', e);
       }
     }
   }
@@ -126,11 +123,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     );
                   }
                 } catch (e) {
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(isDark)),
-                    );
-                  }
+                  if (mounted) AppSnackBar.errorFromException(context, 'Failed to update password. Please try again.', e);
                   setDialogState(() => isChanging = false);
                 }
               },

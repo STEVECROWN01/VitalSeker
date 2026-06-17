@@ -9,6 +9,7 @@ import '../../../core/config/app_config.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class ExportScreen extends ConsumerStatefulWidget {
   const ExportScreen({super.key});
@@ -114,11 +115,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
         );
       }
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Export failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
-        );
-      }
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to export PDF. Please try again.', e);
     } finally {
       if (mounted) setState(() => _isExporting = false);
     }

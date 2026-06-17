@@ -4,9 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
-import '../../../core/providers/theme_provider.dart';
-import '../../../core/services/database_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -42,11 +41,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         await authService.signOut();
         if (mounted) context.go(AppConfig.login);
       } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Sign out failed: $e')),
-          );
-        }
+        if (mounted) AppSnackBar.errorFromException(context, 'Failed to sign out. Please try again.', e);
       } finally {
         if (mounted) setState(() => _isSigningOut = false);
       }

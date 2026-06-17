@@ -9,6 +9,7 @@ import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class SosScreen extends ConsumerStatefulWidget {
   const SosScreen({super.key});
@@ -168,8 +169,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
       HapticFeedback.mediumImpact();
     } catch (e) {
       setState(() {
-        _sosMessage = 'Failed to send alert: $e';
+        _sosMessage = 'Failed to send alert. Please try again or call emergency services directly.';
       });
+      debugPrint('SOS trigger error: $e');
       HapticFeedback.heavyImpact();
     } finally {
       setState(() => _isSending = false);
@@ -225,11 +227,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
         );
       }
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to get location: $e')),
-        );
-      }
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to get location. Please check location permissions.', e);
     }
   }
 

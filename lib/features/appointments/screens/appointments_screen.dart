@@ -5,6 +5,7 @@ import '../../../core/config/app_config.dart';
 import '../../../core/models/appointment.dart';
 import '../../../core/providers/appointments_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class AppointmentsScreen extends ConsumerStatefulWidget {
   const AppointmentsScreen({super.key});
@@ -29,17 +30,9 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
             appointment.id,
             AppointmentStatus.completed,
           );
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Appointment marked as completed')),
-        );
-      }
+      if (mounted) AppSnackBar.success(context, 'Appointment marked as completed');
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
-        );
-      }
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to update appointment.', e);
     }
   }
 
@@ -49,17 +42,9 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
             appointment.id,
             AppointmentStatus.cancelled,
           );
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Appointment cancelled')),
-        );
-      }
+      if (mounted) AppSnackBar.success(context, 'Appointment cancelled');
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
-        );
-      }
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to cancel appointment.', e);
     }
   }
 
@@ -87,17 +72,9 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     if (confirmed == true) {
       try {
         await ref.read(appointmentsProvider.notifier).deleteAppointment(appointment.id);
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Appointment deleted')),
-          );
-        }
+        if (mounted) AppSnackBar.success(context, 'Appointment deleted');
       } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
-          );
-        }
+        if (mounted) AppSnackBar.errorFromException(context, 'Failed to delete appointment.', e);
       }
     }
   }

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/models/vital.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class AddVitalScreen extends ConsumerStatefulWidget {
   const AddVitalScreen({super.key});
@@ -105,27 +106,11 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
       }
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${_selectedType.displayName} saved successfully'),
-            backgroundColor: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-        );
+        AppSnackBar.success(context, '${_selectedType.displayName} saved successfully');
         context.pop();
       }
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to save: $e'),
-            backgroundColor: AppColors.error(isDark),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-        );
-      }
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to save vital. Please try again.', e);
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }

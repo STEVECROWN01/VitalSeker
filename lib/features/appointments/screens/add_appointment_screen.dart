@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/providers/appointments_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class AddAppointmentScreen extends ConsumerStatefulWidget {
   const AddAppointmentScreen({super.key});
@@ -77,17 +78,11 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
           );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Appointment scheduled successfully!')),
-        );
+        AppSnackBar.success(context, 'Appointment scheduled successfully!');
         context.pop();
       }
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
-        );
-      }
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to schedule appointment. Please try again.', e);
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }

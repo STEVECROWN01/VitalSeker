@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class QrDisplayScreen extends ConsumerStatefulWidget {
   const QrDisplayScreen({super.key});
@@ -40,11 +41,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       setState(() => _qrToken = result['qr_token'] as String?);
       ref.invalidate(healthPassportProvider);
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to generate QR: $e')),
-        );
-      }
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to generate QR code. Please try again.', e);
     } finally {
       if (mounted) setState(() => _isGenerating = false);
     }
