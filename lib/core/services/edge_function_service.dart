@@ -4,23 +4,33 @@ import 'supabase_service.dart';
 class EdgeFunctionService {
   final SupabaseClient _client = SupabaseService().client;
 
-  /// AI Triage - Analyze symptoms using Claude AI
+  /// AI Triage - Analyze symptoms using Claude AI.
+  ///
+  /// Pass [conversationHistory] to enable follow-up questions. Each entry
+  /// should be `{role: 'user' | 'assistant', content: String}` from prior
+  /// turns. The caller should cap this at ~5 turns to bound token usage;
+  /// the edge function has a hard backstop at 10.
   Future<Map<String, dynamic>> runTriage({
     required List<String> symptoms,
     required int severity,
     String? duration,
     List<String>? bodyRegions,
     String? notes,
+    List<Map<String, String>>? conversationHistory,
   }) async {
+    final body = <String, dynamic>{
+      'symptoms': symptoms,
+      'severity': severity,
+      'duration': duration,
+      'body_regions': bodyRegions,
+      'notes': notes,
+    };
+    if (conversationHistory != null && conversationHistory.isNotEmpty) {
+      body['conversation_history'] = conversationHistory;
+    }
     final response = await _client.functions.invoke(
       'vitalseker-triage',
-      body: {
-        'symptoms': symptoms,
-        'severity': severity,
-        'duration': duration,
-        'body_regions': bodyRegions,
-        'notes': notes,
-      },
+      body: body,
     );
 
     if (response.status != 200) {

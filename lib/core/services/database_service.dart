@@ -352,4 +352,40 @@ class DatabaseService {
       // File may not exist; ignore.
     }
   }
+
+  // ==================== SUPPORT TICKETS ====================
+  /// Insert a new support ticket. RLS enforces user_id = auth.uid().
+  /// Returns the created ticket row.
+  Future<Map<String, dynamic>> insertSupportTicket({
+    required String userId,
+    required String subject,
+    required String message,
+    String priority = 'normal',
+  }) async {
+    final response = await _client
+        .from('support_tickets')
+        .insert({
+          'user_id': userId,
+          'subject': subject,
+          'message': message,
+          'priority': priority,
+        })
+        .select()
+        .single();
+    return response;
+  }
+
+  /// Fetch the user's support tickets (most recent first).
+  Future<List<Map<String, dynamic>>> getSupportTickets(
+    String userId, {
+    int limit = 20,
+  }) async {
+    final response = await _client
+        .from('support_tickets')
+        .select()
+        .eq('user_id', userId)
+        .order('created_at', ascending: false)
+        .limit(limit);
+    return response.toList();
+  }
 }

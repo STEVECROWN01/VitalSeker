@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>VitalSeker</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>vitalseker</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+
+	<!-- ================================================================== -->
+	<!-- Permission usage descriptions                                      -->
+	<!-- ================================================================== -->
+	<!-- iOS requires a plain-text explanation for every protected resource
+	     the app accesses. Without these keys, the OS kills the app at the
+	     first API call that needs the permission. -->
+
+	<!-- Camera: used by the avatar upload feature in Edit Profile. -->
+	<key>NSCameraUsageDescription</key>
+	<string>VitalSeker uses the camera so you can take a profile photo for your health passport.</string>
+
+	<!-- Photo Library: used by the avatar upload feature (gallery picker). -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>VitalSeker needs access to your photo library so you can choose a profile picture for your health passport.</string>
+
+	<!-- Add the limited-library flag so iOS 14+ uses the picker UI that
+	     doesn't request full photo library access. -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>VitalSeker can save exported health documents to your photo library.</string>
+
+	<!-- Location When In Use: used by the SOS screen to attach GPS
+	     coordinates to emergency SMS alerts. We don't request Always
+	     because the app doesn't need background location. -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>VitalSeker uses your location only when you trigger an SOS alert so emergency contacts receive your live coordinates.</string>
+
+	<!-- Optional: Location Always (kept commented out — we don't need it).
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>VitalSeker uses your location only when you trigger an SOS alert.</string>
+	-->
+
+	<!-- URL schemes the app is allowed to open (tel:, sms:, mailto:, maps).
+	     iOS 9+ requires this list or canOpenUrl always returns false. -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+		<string>sms</string>
+		<string>mailto</string>
+		<string>maps</string>
+		<string>comgooglemaps</string>
+	</array>
+</dict>
+</plist>

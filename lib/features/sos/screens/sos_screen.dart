@@ -211,23 +211,53 @@ class _SosScreenState extends ConsumerState<SosScreen>
     try {
       final position = await _getCurrentLocation();
       if (position == null) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Could not get current location')),
-          );
-        }
+        if (mounted) AppSnackBar.error(context, 'Could not get current location. Please check location permissions.');
         return;
       }
       final locationText =
           'My emergency location: https://maps.google.com/?q=${position.latitude},${position.longitude}';
       await Clipboard.setData(ClipboardData(text: locationText));
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Location link copied to clipboard!')),
-        );
-      }
+      if (mounted) AppSnackBar.success(context, 'Location link copied to clipboard!');
     } catch (e) {
       if (mounted) AppSnackBar.errorFromException(context, 'Failed to get location. Please check location permissions.', e);
+    }
+  }
+
+  /// Open the native maps app with a "hospitals near me" search centered on
+  /// the user's GPS location. On iOS this opens Apple Maps; on Android it
+  /// opens Google Maps. No API key required.
+  ///
+  /// Falls back to a generic "hospitals near me" search (no coordinates) if
+  /// location permission is denied — the maps app will use its own location.
+  Future<void> _findNearbyHospitals() async {
+    HapticFeedback.selectionClick();
+    Position? position;
+    try {
+      position = await _getCurrentLocation();
+    } catch (_) {
+      // GPS unavailable — fall through to generic search.
+    }
+
+    // Use the geo: URI scheme which both iOS and Android handle by opening
+    // the default maps app. The `q=hospital` parameter triggers a nearby
+    // search. When we have coordinates, center the search there.
+    final Uri uri = position != null
+        ? Uri.parse('geo:${position.latitude},${position.longitude}?q=hospital')
+        : Uri.parse('geo:0,0?q=hospital');
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      return;
+    }
+    // Fallback to the https://maps.google.com URL which opens in a browser
+    // or the Google Maps web app.
+    final fallback = position != null
+        ? Uri.parse('https://www.google.com/maps/search/hospital/@${position.latitude},${position.longitude},15z')
+        : Uri.parse('https://www.google.com/maps/search/hospital');
+    if (await canLaunchUrl(fallback)) {
+      await launchUrl(fallback, mode: LaunchMode.externalApplication);
+    } else if (mounted) {
+      AppSnackBar.error(context, 'Could not open maps app. Please search "hospital near me" manually.');
     }
   }
 
@@ -608,42 +638,14 @@ class _SosScreenState extends ConsumerState<SosScreen>
                   ],
                 ),
                 const SizedBox(height: 12),
-                Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: AppColors.subtleBackground(isDark),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: AppColors.border(isDark),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Icon(Icons.map_outlined,
-                          size: 40,
-                          color: AppColors.textHint(isDark)),
-                      const SizedBox(height: 12),
-                      Text(
-                        'Coming Soon',
-                        style: TextStyle(
-                          fontFamily: 'ClashDisplay',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textSecondary(isDark),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Hospital finder will be available in a future update',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 12,
-                          color: AppColors.textHint(isDark),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
+                // Hospital finder — opens the native maps app with a
+                // "hospitals near me" search centered on the user's GPS
+                // location. Works on iOS (Apple Maps) and Android (Google
+                // Maps) without requiring an API key. Falls back to a
+                // generic search if location is unavailable.
+                _HospitalFinderCard(
+                  isDark: isDark,
+                  onFindHospitals: _findNearbyHospitals,
                 ),
 
                 const SizedBox(height: 28),
@@ -994,6 +996,91 @@ class _MedicalIdRow extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Tappable card that launches the native maps app to search for nearby
+/// hospitals. Replaces the previous "Coming Soon" placeholder.
+class _HospitalFinderCard extends StatelessWidget {
+  final bool isDark;
+  final Future<void> Function() onFindHospitals;
+
+  const _HospitalFinderCard({
+    required this.isDark,
+    required this.onFindHospitals,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onFindHospitals,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: isDark
+                ? [const Color(0xFF1E2230), const Color(0xFF151925)]
+                : [const Color(0xFFE8E5FF), const Color(0xFFE0F2F1)],
+          ),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: AppColors.primary(isDark).withValues(alpha: 0.3),
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.primary(isDark).withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.local_hospital_rounded,
+                color: AppColors.primary(isDark),
+                size: 26,
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Find Hospitals Near Me',
+                    style: TextStyle(
+                      fontFamily: 'ClashDisplay',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary(isDark),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Opens your maps app with emergency hospitals nearby',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 12,
+                      color: AppColors.textSecondary(isDark),
+                      height: 1.4,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Icon(
+              Icons.arrow_forward_rounded,
+              color: AppColors.primary(isDark),
+              size: 22,
+            ),
+          ],
+        ),
       ),
     );
   }

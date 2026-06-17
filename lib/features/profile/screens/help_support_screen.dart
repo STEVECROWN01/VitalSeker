@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/config/app_config.dart';
+import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
-class HelpSupportScreen extends StatefulWidget {
+class HelpSupportScreen extends ConsumerStatefulWidget {
   const HelpSupportScreen({super.key});
 
   @override
-  State<HelpSupportScreen> createState() => _HelpSupportScreenState();
+  ConsumerState<HelpSupportScreen> createState() => _HelpSupportScreenState();
 }
 
-class _HelpSupportScreenState extends State<HelpSupportScreen> {
+class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
   bool _isSubmitting = false;
@@ -22,24 +26,83 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
     super.dispose();
   }
 
+  /// Infer a priority hint from keywords in the subject + message so urgent
+  /// requests can bubble to the top of the support queue. This is purely a
+  /// heuristic — the support team can override it.
+  String _inferPriority(String subject, String message) {
+    final combined = '${subject.toLowerCase()} ${message.toLowerCase()}';
+    if (combined.contains('emergency') ||
+        combined.contains('urgent') ||
+        combined.contains('cannot access') ||
+        combined.contains('data loss')) {
+      return 'urgent';
+    }
+    if (combined.contains('bug') ||
+        combined.contains('crash') ||
+        combined.contains('broken') ||
+        combined.contains('not working')) {
+      return 'high';
+    }
+    if (combined.contains('question') ||
+        combined.contains('how do i') ||
+        combined.contains('help')) {
+      return 'normal';
+    }
+    return 'low';
+  }
+
   Future<void> _submitSupport() async {
-    if (_subjectController.text.trim().isEmpty || _messageController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields')),
-      );
+    final subject = _subjectController.text.trim();
+    final message = _messageController.text.trim();
+    if (subject.isEmpty || message.isEmpty) {
+      AppSnackBar.error(context, 'Please fill in both subject and message.');
+      return;
+    }
+    if (subject.length < 5) {
+      AppSnackBar.error(context, 'Subject must be at least 5 characters.');
+      return;
+    }
+    if (message.length < 10) {
+      AppSnackBar.error(context, 'Message must be at least 10 characters.');
+      return;
+    }
+
+    final user = ref.read(currentUserProvider);
+    if (user == null) {
+      AppSnackBar.error(context, 'You must be signed in to submit a support request.');
       return;
     }
 
     setState(() => _isSubmitting = true);
-    // Simulate API call
-    await Future.delayed(const Duration(seconds: 1));
-    if (mounted) {
-      setState(() => _isSubmitting = false);
-      _subjectController.clear();
-      _messageController.clear();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Support request sent! We\'ll respond within 24 hours.')),
+    try {
+      final db = ref.read(databaseServiceProvider);
+      final priority = _inferPriority(subject, message);
+      await db.insertSupportTicket(
+        userId: user.id,
+        subject: subject,
+        message: message,
+        priority: priority,
       );
+      if (mounted) {
+        _subjectController.clear();
+        _messageController.clear();
+        AppSnackBar.success(
+          context,
+          priority == 'urgent'
+              ? 'Urgent request received! Our team will prioritize this.'
+              : 'Support request sent! We\'ll respond within 24 hours.',
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        AppSnackBar.errorFromException(
+          context,
+          'Failed to submit support request. Please try again or email support@vitalseker.com.',
+          e,
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isSubmitting = false);
     }
   }
 
@@ -93,6 +156,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                   children: [
                     TextField(
                       controller: _subjectController,
+                      textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
                         labelText: 'Subject',
                         prefixIcon: Icon(Icons.subject_outlined),
@@ -103,6 +167,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     TextField(
                       controller: _messageController,
                       maxLines: 5,
+                      textInputAction: TextInputAction.newline,
                       decoration: const InputDecoration(
                         labelText: 'Message',
                         alignLabelWithHint: true,
@@ -112,6 +177,25 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         ),
                       ),
                       style: const TextStyle(fontFamily: 'Inter'),
+                    ),
+                    const SizedBox(height: 8),
+                    // Hint that the form actually persists.
+                    Row(
+                      children: [
+                        Icon(Icons.lock_outline, size: 12, color: AppColors.textHint(isDark)),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            'Your request is saved to your account and visible to our support team. We respond within 24 hours.',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 11,
+                              color: AppColors.textHint(isDark),
+                              height: 1.4,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     SizedBox(
@@ -171,9 +255,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     await launchUrl(uri);
                   } else {
                     if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Could not open email client')),
-                      );
+                      AppSnackBar.info(context, 'Could not open email client. Please email support@vitalseker.com manually.');
                     }
                   }
                 },

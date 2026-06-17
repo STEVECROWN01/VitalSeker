@@ -36,6 +36,12 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
   bool _isProcessing = false;
   Map<String, dynamic>? _lastTriageResult;
 
+  /// Rolling window of past turns sent to the edge function on each new
+  /// message so Claude has conversation context. Capped at the last 5 turns
+  /// (10 messages max) to bound token usage.
+  static const int _maxHistoryTurns = 5;
+  final List<Map<String, String>> _conversationHistory = [];
+
   @override
   void initState() {
     super.initState();
@@ -61,6 +67,14 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
         triageResult: triageResult,
       ));
     });
+    // Only track turns that have meaningful text (skip empty / typing bubbles)
+    // AND that contain a triage result — those are the "real" AI responses
+    // worth remembering for context. Pure conversational AI text (greeting,
+    // error) is also tracked so follow-up questions make sense.
+    if (text.isNotEmpty) {
+      _conversationHistory.add({'role': 'assistant', 'content': text});
+      _trimHistory();
+    }
     _scrollToBottom();
   }
 
@@ -72,7 +86,18 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
         timestamp: DateTime.now(),
       ));
     });
+    if (text.isNotEmpty) {
+      _conversationHistory.add({'role': 'user', 'content': text});
+      _trimHistory();
+    }
     _scrollToBottom();
+  }
+
+  void _trimHistory() {
+    // Keep the last _maxHistoryTurns turns (1 turn = 1 user + 1 assistant msg).
+    while (_conversationHistory.length > _maxHistoryTurns * 2) {
+      _conversationHistory.removeAt(0);
+    }
   }
 
   void _scrollToBottom() {
@@ -113,10 +138,16 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
       final symptoms = _parseSymptoms(text);
       final severity = _inferSeverity(text);
 
+      // Pass the conversation history (last 5 turns) so follow-up questions
+      // like "is that why I've been dizzy?" actually work as a conversation.
+      // Send a defensive copy so the edge function can't mutate our list.
+      final historyToSend = List<Map<String, String>>.from(_conversationHistory);
+
       final result = await edgeService.runTriage(
         symptoms: symptoms,
         severity: severity,
         notes: text,
+        conversationHistory: historyToSend,
       );
 
       _lastTriageResult = result;
@@ -218,6 +249,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
   void _startNewChat() {
     setState(() {
       _messages.clear();
+      _conversationHistory.clear();
       _lastTriageResult = null;
       _isProcessing = false;
     });
