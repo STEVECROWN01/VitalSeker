@@ -6,13 +6,31 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+/**
+ * Export Health Summary (returns JSON; client renders the actual PDF)
+ *
+ * Security:
+ *   - POST-only.
+ *   - Scoped queries: passport is filtered by both id AND user_id.
+ *   - Falls back gracefully when passport_id is empty / invalid.
+ */
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
+  if (req.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Allow': 'POST' },
+    })
+  }
+
   try {
-    const authHeader = req.headers.get('Authorization')!
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
+    }
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
@@ -24,32 +42,50 @@ serve(async (req: Request) => {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
     }
 
-    const { passport_id, include_history } = await req.json()
+    const body = await req.json().catch(() => ({}))
+    const passportId = typeof body?.passport_id === 'string' ? body.passport_id : ''
+    const includeHistory = Boolean(body?.include_history)
 
     // Fetch user profile
     const { data: userProfile } = await supabaseClient
       .from('users')
       .select('*')
       .eq('id', user.id)
-      .single()
+      .maybeSingle()
 
-    // Fetch health passport
-    const { data: passport } = await supabaseClient
-      .from('health_passports')
-      .select('*')
-      .eq('id', passport_id || '')
-      .eq('user_id', user.id)
-      .single()
+    // Fetch health passport (scoped by both id AND user_id; falls back gracefully)
+    let passport = null
+    if (passportId) {
+      const { data, error } = await supabaseClient
+        .from('health_passports')
+        .select('*')
+        .eq('id', passportId)
+        .eq('user_id', user.id)
+        .maybeSingle()
+      if (error) console.error('Passport fetch error:', error)
+      passport = data
+    } else {
+      // No passport_id provided — fetch the user's active passport, if any.
+      const { data, error } = await supabaseClient
+        .from('health_passports')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('is_active', true)
+        .maybeSingle()
+      if (error) console.error('Active passport fetch error:', error)
+      passport = data
+    }
 
     // Fetch symptom history if requested
-    let symptomHistory: any[] = []
-    if (include_history) {
-      const { data: logs } = await supabaseClient
+    let symptomHistory: Array<Record<string, unknown>> = []
+    if (includeHistory) {
+      const { data: logs, error: logsError } = await supabaseClient
         .from('symptom_logs')
         .select('*')
         .eq('user_id', user.id)
         .order('logged_at', { ascending: false })
         .limit(30)
+      if (logsError) console.error('Symptom logs fetch error:', logsError)
       symptomHistory = logs || []
     }
 

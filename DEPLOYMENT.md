@@ -1,5 +1,12 @@
 # VitalSeker Deployment Guide
 
+> ⚠️ **SECURITY NOTICE**: This file previously contained a hardcoded
+> `SUPABASE_SERVICE_KEY` (a service-role JWT with full admin privileges).
+> That key has been **rotated and revoked**. If you find an old copy of this
+> file in git history, treat the key as compromised — it must NOT be reused.
+> Never commit secrets to the repository. Use `supabase secrets set` from
+> your local machine instead.
+
 ## Edge Functions Deployment
 
 The 5 Edge Functions need to be deployed to Supabase. Since the CLI requires a personal access token, follow these steps:
@@ -26,13 +33,13 @@ supabase link --project-ref umncqfyzphvxtosddyae
 # AI Triage Function (requires ANTHROPIC_API_KEY)
 supabase functions deploy vitalseker-triage
 
-# QR Code Generation Function
+# QR Code Generation Function (requires QR_ENCRYPTION_KEY)
 supabase functions deploy generate-qr
 
 # PDF Export Function
 supabase functions deploy export-pdf
 
-# Weekly Insights Function (requires ANTHROPIC_API_KEY)
+# Weekly Insights Function (requires ANTHROPIC_API_KEY + CRON_SECRET)
 supabase functions deploy weekly-insights
 
 # SOS Alert Function (requires TWILIO credentials)
@@ -40,16 +47,37 @@ supabase functions deploy sos-alert
 ```
 
 ### Step 5: Set Environment Secrets
+
+> ⚠️ Generate strong random values for `CRON_SECRET` and `QR_ENCRYPTION_KEY`.
+> Do NOT reuse the service-role key as an encryption key.
+
 ```bash
+# AI / SMS secrets
 supabase secrets set ANTHROPIC_API_KEY=your_anthropic_api_key
 supabase secrets set TWILIO_ACCOUNT_SID=your_twilio_account_sid
 supabase secrets set TWILIO_AUTH_TOKEN=your_twilio_auth_token
 supabase secrets set TWILIO_PHONE_NUMBER=your_twilio_phone_number
-supabase secrets set SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtbmNxZnl6cGh2eHRvc2RkeWFlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0ODgyOTI5NSwiZXhwIjoyMDY0NDA1Mjk1fQ.cVkKxPP_7Nb1c8qfRvmV-0e6iHYrVYgWXz7A3T8U0vs
+
+# Service role key — required by the weekly-insights cron job.
+# This is the ONLY secret with admin privileges; rotate immediately if leaked.
+supabase secrets set SUPABASE_SERVICE_KEY=your_service_role_jwt
+
+# Cron secret — required header (x-cron-secret) for the weekly-insights
+# function. Generate a strong random string:
+#   openssl rand -base64 32
+supabase secrets set CRON_SECRET=your_generated_cron_secret
+
+# QR token encryption key — dedicated AES-256 key (NOT the service key).
+# Generate a strong 32-byte random value:
+#   openssl rand -base64 32
+supabase secrets set QR_ENCRYPTION_KEY=your_generated_qr_key
 ```
 
 ### Step 6: Configure CRON for Weekly Insights
-In the Supabase Dashboard → Database → Cron Jobs, add:
+In the Supabase Dashboard → Database → Cron Jobs, add a schedule that invokes
+the weekly-insights function **with the `x-cron-secret` header** so the
+function's auth gate passes:
+
 ```sql
 SELECT cron.schedule(
   'weekly-insights-cron',
@@ -58,8 +86,8 @@ SELECT cron.schedule(
   SELECT net.http_post(
     url := 'https://umncqfyzphvxtosddyae.supabase.co/functions/v1/weekly-insights',
     headers := jsonb_build_object(
-      'Authorization', 'Bearer ' || current_setting('request.jwt.claims')::json->>'role',
-      'Content-Type', 'application/json'
+      'Content-Type', 'application/json',
+      'x-cron-secret', '<paste your CRON_SECRET value here>'
     ),
     body := '{}'::jsonb
   );
@@ -67,11 +95,29 @@ SELECT cron.schedule(
 );
 ```
 
+> Replace `<paste your CRON_SECRET value here>` with the same string you set
+> via `supabase secrets set CRON_SECRET=...`. Without this header the function
+> returns `401 Unauthorized`.
+
+### Step 7: Apply the security-hardening migration
+```bash
+supabase db push
+# or, manually via the SQL editor:
+#   apply supabase/migrations/004_security_hardening.sql
+```
+This migration:
+- Adds `UNIQUE (user_id)` on `health_passports` (fixes silent upsert failures).
+- Replaces the open `WITH CHECK (true)` policies on `weekly_insights` with
+  service-role-only INSERT/UPDATE (closes the cross-user write hole).
+- Adds missing DELETE policies on `weekly_insights` and `subscriptions`.
+- Adds `updated_at` auto-touch triggers on `users`, `health_passports`,
+  `medications`, `appointments`, `subscriptions`.
+
 ## Auth Configuration
 
 ### Enable Auth Providers (Supabase Dashboard → Authentication → Providers)
 1. **Email/Password**: Enabled by default
-2. **Google OAuth**: 
+2. **Google OAuth**:
    - Go to Google Cloud Console → Create OAuth 2.0 Client
    - Add redirect URL: `https://umncqfyzphvxtosddyae.supabase.co/auth/v1/callback`
    - Enter Client ID and Secret in Supabase
@@ -88,10 +134,12 @@ flutter pub get
 ```
 
 ### 2. Create .env File
-The `.env` file is already configured with your Supabase credentials:
+Create a `.env` file at the project root (gitignored) with your Supabase
+**anon** key (NOT the service-role key):
+
 ```
 SUPABASE_URL=https://umncqfyzphvxtosddyae.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+SUPABASE_ANON_KEY=your_anon_key_here
 ```
 
 ### 3. Add Fonts
