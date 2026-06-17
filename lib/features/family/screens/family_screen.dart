@@ -15,7 +15,11 @@ class FamilyScreen extends ConsumerStatefulWidget {
 class _FamilyScreenState extends ConsumerState<FamilyScreen> {
   final _nameController = TextEditingController();
   final _relationshipController = TextEditingController();
-  final _bloodTypeController = TextEditingController();
+  // Use a plain nullable String for the dropdown value. Previously the code
+  // used _bloodTypeController.text as the DropdownButtonFormField value, but
+  // updating the controller's text doesn't trigger a rebuild, so the dropdown
+  // visually stayed on its old value until something else caused a rebuild.
+  String? _selectedBloodType;
   bool _isAdding = false;
 
   static const List<String> _bloodTypeOptions = [
@@ -26,8 +30,13 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
   void dispose() {
     _nameController.dispose();
     _relationshipController.dispose();
-    _bloodTypeController.dispose();
     super.dispose();
+  }
+
+  void _resetForm() {
+    _nameController.clear();
+    _relationshipController.clear();
+    _selectedBloodType = null;
   }
 
   Future<void> _addFamilyMember() async {
@@ -41,20 +50,24 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
     setState(() => _isAdding = true);
     try {
       final user = ref.read(currentUserProvider);
-      if (user == null) return;
+      if (user == null) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('You must be signed in to add a family member')),
+        );
+        return;
+      }
 
       final db = ref.read(databaseServiceProvider);
       await db.createFamilyProfile({
         'owner_id': user.id,
         'full_name': _nameController.text.trim(),
         'relationship': _relationshipController.text.trim(),
-        'blood_type': _bloodTypeController.text.trim().isNotEmpty ? _bloodTypeController.text.trim() : null,
+        'blood_type': _selectedBloodType,
       });
 
       ref.invalidate(familyProfilesProvider);
-      _nameController.clear();
-      _relationshipController.clear();
-      _bloodTypeController.clear();
+      _resetForm();
 
       if (!mounted) return;
       Navigator.pop(context);
@@ -65,8 +78,12 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed: $e'), backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark)),
+        SnackBar(
+          content: const Text('Failed to add family member. Please try again.'),
+          backgroundColor: AppColors.error(Theme.of(context).brightness == Brightness.dark),
+        ),
       );
+      debugPrint('Family add error: $e');
     } finally {
       if (mounted) setState(() => _isAdding = false);
     }
@@ -105,85 +122,93 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed: $e')),
+        const SnackBar(content: Text('Failed to remove family member. Please try again.')),
       );
+      debugPrint('Family delete error: $e');
     }
   }
 
   void _showAddDialog() {
+    // Reset form state each time the dialog opens so stale values from a
+    // previous open don't persist.
+    _resetForm();
     final isDark = Theme.of(context).brightness == Brightness.dark;
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Row(
-          children: [
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: (AppColors.primary(isDark)).withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(10),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: Row(
+            children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: (AppColors.primary(isDark)).withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(Icons.person_add, color: AppColors.primary(isDark), size: 20),
               ),
-              child: Icon(Icons.person_add, color: AppColors.primary(isDark), size: 20),
+              const SizedBox(width: 12),
+              const Text('Add Family Member'),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _nameController,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  labelText: 'Full Name',
+                  prefixIcon: Icon(Icons.person_outline),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _relationshipController,
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  labelText: 'Relationship (e.g., Spouse, Child)',
+                  prefixIcon: Icon(Icons.family_restroom),
+                ),
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: _selectedBloodType,
+                decoration: const InputDecoration(
+                  labelText: 'Blood Type (optional)',
+                  prefixIcon: Icon(Icons.bloodtype_outlined),
+                ),
+                items: _bloodTypeOptions.map((type) {
+                  return DropdownMenuItem<String>(
+                    value: type,
+                    child: Text(type, style: const TextStyle(fontFamily: 'Inter', fontSize: 16)),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setDialogState(() => _selectedBloodType = value);
+                },
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 16,
+                  color: AppColors.textPrimary(isDark),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
             ),
-            const SizedBox(width: 12),
-            const Text('Add Family Member'),
+            ElevatedButton(
+              onPressed: _isAdding ? null : _addFamilyMember,
+              child: _isAdding
+                  ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                  : const Text('Add'),
+            ),
           ],
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Full Name',
-                prefixIcon: Icon(Icons.person_outline),
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _relationshipController,
-              decoration: const InputDecoration(
-                labelText: 'Relationship (e.g., Spouse, Child)',
-                prefixIcon: Icon(Icons.family_restroom),
-              ),
-            ),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              value: _bloodTypeController.text.isEmpty ? null : _bloodTypeController.text,
-              decoration: const InputDecoration(
-                labelText: 'Blood Type (optional)',
-                prefixIcon: Icon(Icons.bloodtype_outlined),
-              ),
-              items: _bloodTypeOptions.map((type) {
-                return DropdownMenuItem<String>(
-                  value: type,
-                  child: Text(type, style: const TextStyle(fontFamily: 'Inter', fontSize: 16)),
-                );
-              }).toList(),
-              onChanged: (value) {
-                _bloodTypeController.text = value ?? '';
-              },
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 16,
-                color: AppColors.textPrimary(isDark),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: _isAdding ? null : _addFamilyMember,
-            child: _isAdding
-                ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                : const Text('Add'),
-          ),
-        ],
       ),
     );
   }
