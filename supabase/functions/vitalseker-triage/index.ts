@@ -106,12 +106,13 @@ serve(async (req: Request) => {
           .map(m => ({ role: m.role, content: m.content.slice(0, 1500) }))
       : []
 
-    const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY')
-    if (!anthropicApiKey) {
-      console.error('ANTHROPIC_API_KEY is not set in edge function environment')
+    const glmApiKey = Deno.env.get('GLM_GATEWAY_SECRET')
+    const glmApiUrl = Deno.env.get('GLM_GATEWAY_URL')
+    if (!glmApiKey || !glmApiUrl) {
+      console.error('GLM_GATEWAY_SECRET or GLM_GATEWAY_URL is not set in edge function environment')
       return new Response(
         JSON.stringify({
-          error: 'AI service not configured. Please set the ANTHROPIC_API_KEY secret in your Supabase project: go to Edge Functions > vitalseker-triage > Settings > Secrets and add ANTHROPIC_API_KEY with your Anthropic API key.'
+          error: 'AI service not configured. Please set the GLM_GATEWAY_SECRET and GLM_GATEWAY_URL secrets in your Supabase project (Edge Functions > Secrets).'
         }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
@@ -162,10 +163,16 @@ Respond ONLY with valid JSON in this exact format:
   "disclaimer": "This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice."
 }`
 
-    // Build the multi-turn messages array. Anthropic expects alternating
-    // user/assistant turns. The conversation_history gives Claude context
-    // for follow-up questions like "is that why I've been dizzy?".
-    const messages: Array<{ role: 'user' | 'assistant'; content: string }> = []
+    // Build the multi-turn messages array. GLM (OpenAI-compatible) expects
+    // alternating user/assistant turns. The conversation_history gives the
+    // model context for follow-up questions.
+    const messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string }> = []
+
+    // System message sets the persona for GLM.
+    messages.push({
+      role: 'system',
+      content: 'You are VitalSeker AI, a medical triage assistant. You analyze symptoms and return structured JSON assessments. Always respond with valid JSON only — no markdown, no preamble, no explanation outside the JSON.'
+    })
 
     for (const m of safeHistory) {
       messages.push({ role: m.role, content: m.content })
@@ -174,28 +181,27 @@ Respond ONLY with valid JSON in this exact format:
     // Append the current turn as a fresh user message.
     messages.push({ role: 'user', content: currentTurnPrompt })
 
-    const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
+    const glmResponse = await fetch(`${glmApiUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': anthropicApiKey,
-        'anthropic-version': '2023-06-01',
+        'Authorization': `Bearer ${glmApiKey}`,
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'glm-4-plus',
         max_tokens: 1024,
         messages,
       }),
     })
 
-    if (!anthropicResponse.ok) {
-      const errText = await anthropicResponse.text()
-      console.error('Anthropic API error:', errText)
+    if (!glmResponse.ok) {
+      const errText = await glmResponse.text()
+      console.error('GLM API error:', errText)
       return new Response(JSON.stringify({ error: 'AI service error' }), { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
     }
 
-    const anthropicData = await anthropicResponse.json()
-    const content = anthropicData.content?.[0]?.text || '{}'
+    const glmData = await glmResponse.json()
+    const content = glmData.choices?.[0]?.message?.content || '{}'
 
     let triageResult: Record<string, unknown>
     try {

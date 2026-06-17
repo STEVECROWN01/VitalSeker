@@ -51,7 +51,8 @@ serve(async (req: Request) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY')
+    const glmApiKey = Deno.env.get('GLM_GATEWAY_SECRET')
+    const glmApiUrl = Deno.env.get('GLM_GATEWAY_URL')
 
     // Get all Pro users
     const { data: proUsers, error: usersError } = await supabaseAdmin
@@ -99,7 +100,7 @@ serve(async (req: Request) => {
       const avgSeverity = logs.reduce((sum, l) => sum + (l.severity || 0), 0) / logs.length
       trendAnalysis.avg_severity = Math.round(avgSeverity * 10) / 10
 
-      if (anthropicApiKey) {
+      if (glmApiKey && glmApiUrl) {
         try {
           // Sanitize log data before sending to AI — strip user IDs, wrap in XML tags
           // to reduce prompt-injection surface. Logs are user-authored symptom text.
@@ -126,23 +127,25 @@ Respond ONLY with valid JSON:
   "recommendations": ["actionable recommendation 1", "recommendation 2", "recommendation 3"]
 }`
 
-          const aiResponse = await fetch('https://api.anthropic.com/v1/messages', {
+          const aiResponse = await fetch(`${glmApiUrl}/chat/completions`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'x-api-key': anthropicApiKey,
-              'anthropic-version': '2023-06-01',
+              'Authorization': `Bearer ${glmApiKey}`,
             },
             body: JSON.stringify({
-              model: 'claude-sonnet-4-20250514',
+              model: 'glm-4-plus',
               max_tokens: 512,
-              messages: [{ role: 'user', content: aiPrompt }],
+              messages: [
+                { role: 'system', content: 'You are a health analytics assistant. Respond with valid JSON only.' },
+                { role: 'user', content: aiPrompt }
+              ],
             }),
           })
 
           if (aiResponse.ok) {
             const aiData = await aiResponse.json()
-            const content = aiData.content?.[0]?.text || '{}'
+            const content = aiData.choices?.[0]?.message?.content || '{}'
             // Use non-greedy match to grab the first JSON object — avoids
             // accidentally swallowing trailing prose after the JSON block.
             const jsonMatch = content.match(/\{[\s\S]*?\}(?=\s*$|\s*[^,}\s])/)
