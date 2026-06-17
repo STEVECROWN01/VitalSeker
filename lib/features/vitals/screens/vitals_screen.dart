@@ -172,6 +172,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                         vitalType: type,
                         isDark: isDark,
                         vitals: vitals,
+                        selectedSegment: _selectedSegment,
                       );
                     },
                   ),
@@ -239,11 +240,16 @@ class _VitalTypeCard extends ConsumerWidget {
   final VitalType vitalType;
   final bool isDark;
   final List<Vital> vitals;
+  /// 0 = Day (24h), 1 = Week (7d), 2 = Month (30d). Used to filter the
+  /// trend computation window so the segment control on the parent screen
+  /// actually affects what the user sees.
+  final int selectedSegment;
 
   const _VitalTypeCard({
     required this.vitalType,
     required this.isDark,
     required this.vitals,
+    required this.selectedSegment,
   });
 
   @override
@@ -251,10 +257,20 @@ class _VitalTypeCard extends ConsumerWidget {
     final latestVital = ref.watch(latestVitalProvider(vitalType));
     final typeVitals = ref.watch(vitalsByTypeProvider(vitalType));
 
-    // Determine trend
+    // Apply the segment window to the trend computation. The latest value
+    // shown is still the most recent reading regardless of window; the trend
+    // arrow reflects only readings inside the selected window.
+    final windowDuration = selectedSegment == 0
+        ? const Duration(days: 1)
+        : selectedSegment == 1
+            ? const Duration(days: 7)
+            : const Duration(days: 30);
+    final windowStart = DateTime.now().subtract(windowDuration);
+    final windowedVitals = typeVitals.where((v) => v.recordedAt.isAfter(windowStart)).toList();
+
     String trend = 'stable';
-    if (typeVitals.length >= 2) {
-      final sorted = List<Vital>.from(typeVitals)
+    if (windowedVitals.length >= 2) {
+      final sorted = List<Vital>.from(windowedVitals)
         ..sort((a, b) => b.recordedAt.compareTo(a.recordedAt));
       final latest = sorted.first.value;
       final previous = sorted[1].value;

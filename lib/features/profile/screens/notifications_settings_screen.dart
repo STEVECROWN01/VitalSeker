@@ -12,60 +12,106 @@ class NotificationsSettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSettingsScreen> {
-  bool _triageReminders = true;
-  bool _medicationReminders = true;
-  bool _appointmentReminders = true;
-  bool _vitalsLoggingReminders = true;
-  bool _healthTips = true;
-  bool _weeklyReport = true;
-  bool _isLoaded = false;
+  bool? _triageReminders;
+  bool? _medicationReminders;
+  bool? _appointmentReminders;
+  bool? _vitalsLoggingReminders;
+  bool? _healthTips;
+  bool? _weeklyReport;
 
-  String _triageSchedule = 'Daily at 9:00 AM';
-  String _medicationSchedule = 'Per prescription schedule';
-  String _appointmentSchedule = '1 day before';
-  String _vitalsSchedule = 'Daily at 8:00 AM';
-  String _healthTipsSchedule = '3 times per week';
-  String _weeklyReportSchedule = 'Every Monday at 10:00 AM';
+  final String _triageSchedule = 'Daily at 9:00 AM';
+  final String _medicationSchedule = 'Per prescription schedule';
+  final String _appointmentSchedule = '1 day before';
+  final String _vitalsSchedule = 'Daily at 8:00 AM';
+  final String _healthTipsSchedule = '3 times per week';
+  final String _weeklyReportSchedule = 'Every Monday at 10:00 AM';
 
-  void _loadSettings() {
-    if (_isLoaded) return;
-    final profile = ref.read(userProfileProvider).valueOrNull;
-    if (profile != null) {
-      // Notification preferences are stored in the user's metadata
-      // For now we use defaults; in production this would come from the profile
-      _isLoaded = true;
-    }
+  @override
+  void initState() {
+    super.initState();
+    // Load asynchronously after first frame so the provider has had a chance
+    // to resolve. We use listenSelf-style via post-frame callback.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadSettings());
   }
 
-  Future<void> _saveSetting(String key, bool value) async {
+  void _loadSettings() {
+    final profile = ref.read(userProfileProvider).valueOrNull;
+    if (profile == null) return;
+    final prefs = profile.notificationPrefs;
+    // Only set if currently null (avoid clobbering in-flight user toggles).
+    _triageReminders ??= prefs?.triageReminders ?? true;
+    _medicationReminders ??= prefs?.medicationReminders ?? true;
+    _appointmentReminders ??= prefs?.appointmentReminders ?? true;
+    _vitalsLoggingReminders ??= prefs?.vitalsLoggingReminders ?? true;
+    _healthTips ??= prefs?.healthTips ?? true;
+    _weeklyReport ??= prefs?.weeklyReport ?? true;
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _onChanged(bool Function(NotificationPrefs) getter,
+      NotificationPrefs Function(NotificationPrefs, bool) updater, bool value) async {
+    // Optimistic UI update.
+    setState(() {
+      // Use the updater to compute new prefs and stash into the matching field.
+      final current = NotificationPrefs(
+        triageReminders: _triageReminders ?? true,
+        medicationReminders: _medicationReminders ?? true,
+        appointmentReminders: _appointmentReminders ?? true,
+        vitalsLoggingReminders: _vitalsLoggingReminders ?? true,
+        healthTips: _healthTips ?? true,
+        weeklyReport: _weeklyReport ?? true,
+      );
+      final next = updater(current, value);
+      _triageReminders = next.triageReminders;
+      _medicationReminders = next.medicationReminders;
+      _appointmentReminders = next.appointmentReminders;
+      _vitalsLoggingReminders = next.vitalsLoggingReminders;
+      _healthTips = next.healthTips;
+      _weeklyReport = next.weeklyReport;
+    });
+
     final user = ref.read(currentUserProvider);
     if (user == null) return;
     try {
       final db = ref.read(databaseServiceProvider);
       await db.updateUserProfile(user.id, {
         'notification_prefs': {
-          'triage_reminders': _triageReminders,
-          'medication_reminders': _medicationReminders,
-          'appointment_reminders': _appointmentReminders,
-          'vitals_logging_reminders': _vitalsLoggingReminders,
-          'health_tips': _healthTips,
-          'weekly_report': _weeklyReport,
+          'triage_reminders': _triageReminders ?? true,
+          'medication_reminders': _medicationReminders ?? true,
+          'appointment_reminders': _appointmentReminders ?? true,
+          'vitals_logging_reminders': _vitalsLoggingReminders ?? true,
+          'health_tips': _healthTips ?? true,
+          'weekly_report': _weeklyReport ?? true,
         },
       });
-    } catch (_) {
-      // Silently fail - settings still work in current session
+      // Refresh the cached profile so other screens see the new value.
+      ref.invalidate(userProfileProvider);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to save notification setting'),
+            backgroundColor: AppColors.urgencyEmergency,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
     }
-  }
-
-  void _onChanged(void Function() setter, String key, bool value) {
-    setState(setter);
-    _saveSetting(key, value);
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    _loadSettings();
+    // Read profile reactively so we re-load if it changes upstream.
+    ref.watch(userProfileProvider);
+
+    // If prefs haven't been loaded yet, fall back to true while loading.
+    final triage = _triageReminders ?? true;
+    final meds = _medicationReminders ?? true;
+    final appts = _appointmentReminders ?? true;
+    final vitals = _vitalsLoggingReminders ?? true;
+    final tips = _healthTips ?? true;
+    final weekly = _weeklyReport ?? true;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Notification Settings')),
@@ -94,9 +140,13 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       _triageSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                     ),
-                    value: _triageReminders,
+                    value: triage,
                     activeColor: AppColors.primary(isDark),
-                    onChanged: (v) => _onChanged(() => _triageReminders = v, 'triage_reminders', v),
+                    onChanged: (v) => _onChanged(
+                      (p) => p.triageReminders,
+                      (p, val) => p.copyWith(triageReminders: val),
+                      v,
+                    ),
                   ),
                   SwitchListTile(
                     secondary: Container(
@@ -113,9 +163,13 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       _medicationSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                     ),
-                    value: _medicationReminders,
+                    value: meds,
                     activeColor: AppColors.primary(isDark),
-                    onChanged: (v) => _onChanged(() => _medicationReminders = v, 'medication_reminders', v),
+                    onChanged: (v) => _onChanged(
+                      (p) => p.medicationReminders,
+                      (p, val) => p.copyWith(medicationReminders: val),
+                      v,
+                    ),
                   ),
                   SwitchListTile(
                     secondary: Container(
@@ -132,9 +186,13 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       _appointmentSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                     ),
-                    value: _appointmentReminders,
+                    value: appts,
                     activeColor: AppColors.primary(isDark),
-                    onChanged: (v) => _onChanged(() => _appointmentReminders = v, 'appointment_reminders', v),
+                    onChanged: (v) => _onChanged(
+                      (p) => p.appointmentReminders,
+                      (p, val) => p.copyWith(appointmentReminders: val),
+                      v,
+                    ),
                   ),
                   SwitchListTile(
                     secondary: Container(
@@ -151,9 +209,13 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       _vitalsSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                     ),
-                    value: _vitalsLoggingReminders,
+                    value: vitals,
                     activeColor: AppColors.primary(isDark),
-                    onChanged: (v) => _onChanged(() => _vitalsLoggingReminders = v, 'vitals_logging_reminders', v),
+                    onChanged: (v) => _onChanged(
+                      (p) => p.vitalsLoggingReminders,
+                      (p, val) => p.copyWith(vitalsLoggingReminders: val),
+                      v,
+                    ),
                   ),
                 ],
               ),
@@ -180,9 +242,13 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       _healthTipsSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                     ),
-                    value: _healthTips,
+                    value: tips,
                     activeColor: AppColors.primary(isDark),
-                    onChanged: (v) => _onChanged(() => _healthTips = v, 'health_tips', v),
+                    onChanged: (v) => _onChanged(
+                      (p) => p.healthTips,
+                      (p, val) => p.copyWith(healthTips: val),
+                      v,
+                    ),
                   ),
                   SwitchListTile(
                     secondary: Container(
@@ -199,9 +265,13 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       _weeklyReportSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
                     ),
-                    value: _weeklyReport,
+                    value: weekly,
                     activeColor: AppColors.primary(isDark),
-                    onChanged: (v) => _onChanged(() => _weeklyReport = v, 'weekly_report', v),
+                    onChanged: (v) => _onChanged(
+                      (p) => p.weeklyReport,
+                      (p, val) => p.copyWith(weeklyReport: val),
+                      v,
+                    ),
                   ),
                 ],
               ),

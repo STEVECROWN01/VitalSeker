@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/app_config.dart';
 import '../models/vital.dart';
 import '../providers/auth_provider.dart';
+import '../providers/user_profile_provider.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../features/splash/screens/splash_screen.dart';
 import '../../features/onboarding/screens/onboarding_screen.dart';
@@ -38,19 +39,28 @@ import '../../features/profile/screens/help_support_screen.dart';
 import '../../features/profile/screens/privacy_screen.dart';
 import '../../features/profile/screens/medical_id_screen.dart';
 import '../../shared/widgets/app_bottom_nav.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 GoRouter createRouter(Ref ref) {
-  final isAuthenticated = ref.watch(isAuthenticatedProvider);
+  // Read auth + onboarding state *inside* the redirect callback so the
+  // latest values are always used. The previous implementation captured
+  // `isAuthenticated` once at construction time, which meant sign-in/out
+  // transitions did not refresh routes until the next manual navigation.
+  //
+  // We still rely on `routerProvider` rebuilding when `authStateProvider`
+  // emits a new value (Riverpod will rebuild on dependency change), but
+  // reading inside `redirect` makes the gate robust against stale closures.
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: AppConfig.splash,
-    debugLogDiagnostics: true,
+    debugLogDiagnostics: kDebugMode,
     redirect: (context, state) {
-      final isAuth = isAuthenticated;
+      final isAuth = ref.read(isAuthenticatedProvider);
+      final onboardingDone = ref.read(isOnboardingCompletedProvider);
       final isSplash = state.matchedLocation == AppConfig.splash;
       final isOnboarding = state.matchedLocation == AppConfig.onboarding;
       final isLogin = state.matchedLocation == AppConfig.login;
@@ -66,12 +76,22 @@ GoRouter createRouter(Ref ref) {
       }
 
       // Authenticated: redirect away from auth screens
-      if (isAuth && (isLogin || isRegister)) {
+      if (isLogin || isRegister) {
+        // If onboarding not done, send there first; otherwise dashboard.
+        return onboardingDone ? AppConfig.dashboard : AppConfig.onboarding;
+      }
+
+      // Authenticated + onboarding complete + trying to view onboarding:
+      // skip it and go to dashboard.
+      if (isOnboarding && onboardingDone) {
         return AppConfig.dashboard;
       }
 
-      // Authenticated on onboarding: allow (user may be completing onboarding)
-      if (isOnboarding) return null;
+      // Authenticated but onboarding not complete: force onboarding (unless
+      // already there).
+      if (!onboardingDone && !isOnboarding) {
+        return AppConfig.onboarding;
+      }
 
       return null;
     },
@@ -256,7 +276,20 @@ GoRouter createRouter(Ref ref) {
   );
 }
 
-final routerProvider = Provider<GoRouter>((ref) => createRouter(ref));
+/// Refresh the router whenever the auth state changes. This ensures that
+/// sign-in / sign-out transitions trigger a re-evaluation of the `redirect`
+/// callback (which reads the latest auth + onboarding state).
+final routerProvider = Provider<GoRouter>((ref) {
+  final router = createRouter(ref);
+  ref.listen<AsyncValue>(authStateProvider, (_, __) {
+    router.refresh();
+  });
+  // Also refresh when the user profile changes (e.g. onboarding flag flips).
+  ref.listen<AsyncValue>(userProfileProvider, (_, __) {
+    router.refresh();
+  });
+  return router;
+});
 
 class ScaffoldWithNavBar extends StatelessWidget {
   final int currentIndex;

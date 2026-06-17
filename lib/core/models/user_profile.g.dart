@@ -26,6 +26,13 @@ UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
       preferredLanguage: json['preferred_language'] as String? ?? 'en',
       themePreference: json['theme_preference'] as String? ?? 'system',
       onboardingCompleted: json['onboarding_completed'] as bool? ?? false,
+      gender: json['gender'] as String?,
+      heightCm: (json['height_cm'] as num?)?.toDouble(),
+      weightKg: (json['weight_kg'] as num?)?.toDouble(),
+      notificationPrefs: json['notification_prefs'] == null
+          ? null
+          : NotificationPrefs.fromJson(
+              json['notification_prefs'] as Map<String, dynamic>),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );
@@ -45,6 +52,10 @@ Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
       'preferred_language': instance.preferredLanguage,
       'theme_preference': instance.themePreference,
       'onboarding_completed': instance.onboardingCompleted,
+      'gender': instance.gender,
+      'height_cm': instance.heightCm,
+      'weight_kg': instance.weightKg,
+      'notification_prefs': instance.notificationPrefs?.toJson(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
     };
@@ -61,4 +72,24 @@ Map<String, dynamic> _$EmergencyContactToJson(EmergencyContact instance) =>
       'name': instance.name,
       'phone': instance.phone,
       'relationship': instance.relationship,
+    };
+
+NotificationPrefs _$NotificationPrefsFromJson(Map<String, dynamic> json) =>
+    NotificationPrefs(
+      triageReminders: json['triage_reminders'] as bool? ?? true,
+      medicationReminders: json['medication_reminders'] as bool? ?? true,
+      appointmentReminders: json['appointment_reminders'] as bool? ?? true,
+      vitalsLoggingReminders: json['vitals_logging_reminders'] as bool? ?? true,
+      healthTips: json['health_tips'] as bool? ?? true,
+      weeklyReport: json['weekly_report'] as bool? ?? true,
+    );
+
+Map<String, dynamic> _$NotificationPrefsToJson(NotificationPrefs instance) =>
+    <String, dynamic>{
+      'triage_reminders': instance.triageReminders,
+      'medication_reminders': instance.medicationReminders,
+      'appointment_reminders': instance.appointmentReminders,
+      'vitals_logging_reminders': instance.vitalsLoggingReminders,
+      'health_tips': instance.healthTips,
+      'weekly_report': instance.weeklyReport,
     };
