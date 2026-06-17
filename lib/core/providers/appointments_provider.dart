@@ -57,6 +57,25 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     }
   }
 
+  /// Reschedule an upcoming appointment to a new date/time. Also resets the
+  /// status to 'upcoming' if it was 'cancelled' so the user can revive an
+  /// appointment they had previously cancelled.
+  Future<void> rescheduleAppointment({
+    required String appointmentId,
+    required DateTime newDateTime,
+  }) async {
+    try {
+      final db = DatabaseService();
+      await db.updateAppointment(appointmentId, {
+        'date_time': newDateTime.toIso8601String(),
+        'status': AppointmentStatus.upcoming.name,
+      });
+      ref.invalidateSelf();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> deleteAppointment(String appointmentId) async {
     try {
       final db = DatabaseService();

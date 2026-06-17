@@ -63,6 +63,36 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
     }
   }
 
+  /// Update editable fields of an existing medication: dosage, unit, frequency,
+  /// dose times, notes, end date, and reminders toggle. Name and start date
+  /// are not editable post-create (changing them is conceptually a new med).
+  Future<void> updateMedicationDetails({
+    required String medicationId,
+    required String dosage,
+    required String unit,
+    required MedicationFrequency frequency,
+    required List<String> times,
+    DateTime? endDate,
+    String? notes,
+    required bool remindersEnabled,
+  }) async {
+    try {
+      final db = DatabaseService();
+      await db.updateMedication(medicationId, {
+        'dosage': dosage,
+        'unit': unit,
+        'frequency': frequency.name,
+        'times': times,
+        'end_date': endDate?.toIso8601String().split('T')[0],
+        'notes': notes,
+        'reminders_enabled': remindersEnabled,
+      });
+      ref.invalidateSelf();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> deleteMedication(String medicationId) async {
     try {
       final db = DatabaseService();

@@ -112,16 +112,29 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
   }
 
   void _showAddRecordDialog() {
+    _showRecordDialog(record: null);
+  }
+
+  void _showEditRecordDialog(Map<String, dynamic> record) {
+    _showRecordDialog(record: record);
+  }
+
+  void _showRecordDialog({Map<String, dynamic>? record}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final titleController = TextEditingController();
-    final descController = TextEditingController();
-    String selectedType = 'labResults';
+    final isEditing = record != null;
+    final titleController = TextEditingController(text: record?['title'] as String? ?? '');
+    final descController = TextEditingController(text: record?['description'] as String? ?? '');
+    String selectedType = record?['type'] as String? ?? 'labResults';
+    DateTime selectedDate = record?['date'] != null
+        ? (DateTime.tryParse(record!['date'] as String) ?? DateTime.now())
+        : DateTime.now();
+    bool isSaving = false;
 
     showDialog(
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('Add Medical Record', style: TextStyle(fontFamily: 'ClashDisplay')),
+          title: Text(isEditing ? 'Edit Record' : 'Add Medical Record', style: const TextStyle(fontFamily: 'ClashDisplay')),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -153,6 +166,28 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
+                // Date picker row
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.calendar_today_outlined),
+                  title: Text(
+                    '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                    style: const TextStyle(fontFamily: 'Inter'),
+                  ),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: selectedDate,
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    );
+                    if (picked != null) {
+                      setDialogState(() => selectedDate = picked);
+                    }
+                  },
+                ),
+                const SizedBox(height: 16),
                 TextField(
                   controller: descController,
                   maxLines: 3,
@@ -167,38 +202,119 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(ctx),
+              onPressed: isSaving ? null : () => Navigator.pop(ctx),
               child: const Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: () async {
-                if (titleController.text.trim().isEmpty) return;
-                final user = ref.read(currentUserProvider);
-                if (user == null) return;
+              onPressed: isSaving
+                  ? null
+                  : () async {
+                      if (titleController.text.trim().isEmpty) return;
+                      final user = ref.read(currentUserProvider);
+                      if (user == null) return;
 
-                try {
-                  final db = ref.read(databaseServiceProvider);
-                  await db.insertMedicalRecord({
-                    'user_id': user.id,
-                    'title': titleController.text.trim(),
-                    'type': selectedType,
-                    'description': descController.text.trim(),
-                    'date': DateTime.now().toIso8601String(),
-                    'has_attachment': false,
-                  });
-                  if (mounted) {
-                    Navigator.pop(ctx);
-                    _loadRecords();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Record added!')),
-                    );
-                  }
-                } catch (e) {
-                  if (mounted) AppSnackBar.errorFromException(context, 'Failed to add record. Please try again.', e);
-                }
-              },
+                      setDialogState(() => isSaving = true);
+                      try {
+                        final db = ref.read(databaseServiceProvider);
+                        final payload = {
+                          'title': titleController.text.trim(),
+                          'type': selectedType,
+                          'description': descController.text.trim(),
+                          'date': selectedDate.toIso8601String().split('T')[0],
+                        };
+                        if (isEditing && record != null) {
+                          await db.updateMedicalRecord(record['id'] as String, payload);
+                        } else {
+                          payload['user_id'] = user.id;
+                          payload['has_attachment'] = false;
+                          await db.insertMedicalRecord(payload);
+                        }
+                        if (mounted) {
+                          Navigator.pop(ctx);
+                          _loadRecords();
+                          AppSnackBar.success(
+                            context,
+                            isEditing ? 'Record updated!' : 'Record added!',
+                          );
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          setDialogState(() => isSaving = false);
+                          AppSnackBar.errorFromException(
+                            context,
+                            isEditing ? 'Failed to update record.' : 'Failed to add record.',
+                            e,
+                          );
+                        }
+                      }
+                    },
               style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary(isDark)),
-              child: const Text('Add', style: TextStyle(color: Colors.white)),
+              child: isSaving
+                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                  : Text(isEditing ? 'Save' : 'Add', style: const TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _deleteRecord(Map<String, dynamic> record) async {
+    final title = record['title'] as String? ?? 'this record';
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Delete Record'),
+        content: Text('Are you sure you want to delete "$title"? This cannot be undone.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: FilledButton.styleFrom(backgroundColor: AppColors.urgencyEmergency),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    try {
+      final db = ref.read(databaseServiceProvider);
+      await db.deleteMedicalRecord(record['id'] as String);
+      _loadRecords();
+      if (mounted) AppSnackBar.success(context, 'Record deleted.');
+    } catch (e) {
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to delete record.', e);
+    }
+  }
+
+  void _showRecordMenu(Map<String, dynamic> record) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.surface(isDark),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.edit_outlined, color: AppColors.primary(isDark)),
+              title: const Text('Edit Record'),
+              onTap: () {
+                Navigator.pop(ctx);
+                _showEditRecordDialog(record);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete_outline, color: AppColors.urgencyEmergency),
+              title: const Text('Delete Record', style: TextStyle(color: AppColors.urgencyEmergency)),
+              onTap: () {
+                Navigator.pop(ctx);
+                _deleteRecord(record);
+              },
             ),
           ],
         ),
@@ -378,11 +494,21 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                       ),
                                     ],
                                   ),
-                                  trailing: record['has_attachment'] == true
-                                      ? Icon(Icons.attach_file, size: 18, color: AppColors.textSecondary(isDark))
-                                      : null,
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      if (record['has_attachment'] == true)
+                                        Icon(Icons.attach_file, size: 18, color: AppColors.textSecondary(isDark)),
+                                      IconButton(
+                                        icon: const Icon(Icons.more_vert, size: 18),
+                                        onPressed: () => _showRecordMenu(record),
+                                        tooltip: 'More options',
+                                      ),
+                                    ],
+                                  ),
                                   isThreeLine: true,
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                                  onTap: () => _showEditRecordDialog(record),
                                 ),
                               ),
                             );

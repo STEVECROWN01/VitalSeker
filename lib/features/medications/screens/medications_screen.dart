@@ -30,6 +30,128 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
     return filtered;
   }
 
+  Future<void> _discontinue(Medication medication) async {
+    try {
+      await ref.read(medicationsProvider.notifier).updateMedicationStatus(
+            medication.id,
+            MedicationStatus.discontinued,
+          );
+      if (mounted) AppSnackBar.success(context, 'Medication discontinued');
+    } catch (e) {
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to discontinue medication.', e);
+    }
+  }
+
+  void _showEditMedicationDialog(Medication medication) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final dosageController = TextEditingController(text: medication.dosage);
+    final notesController = TextEditingController(text: medication.notes ?? '');
+    String unit = medication.unit;
+    MedicationFrequency frequency = medication.frequency;
+    bool reminders = medication.remindersEnabled;
+    bool isSaving = false;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: Text('Edit ${medication.name}', style: const TextStyle(fontFamily: 'ClashDisplay')),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: dosageController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Dosage',
+                    prefixIcon: Icon(Icons.science_outlined),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                DropdownButtonFormField<String>(
+                  value: unit,
+                  decoration: const InputDecoration(labelText: 'Unit'),
+                  items: const ['mg', 'mcg', 'mL', 'g', 'IU', 'drops', 'puffs', 'tablets', 'capsules']
+                      .map((u) => DropdownMenuItem(value: u, child: Text(u)))
+                      .toList(),
+                  onChanged: (v) => setDialogState(() => unit = v ?? unit),
+                ),
+                const SizedBox(height: 12),
+                DropdownButtonFormField<MedicationFrequency>(
+                  value: frequency,
+                  decoration: const InputDecoration(labelText: 'Frequency'),
+                  items: MedicationFrequency.values
+                      .map((f) => DropdownMenuItem(
+                            value: f,
+                            child: Text(_frequencyLabel(f)),
+                          ))
+                      .toList(),
+                  onChanged: (v) => setDialogState(() => frequency = v ?? frequency),
+                ),
+                const SizedBox(height: 12),
+                SwitchListTile(
+                  title: const Text('Reminders'),
+                  value: reminders,
+                  onChanged: (v) => setDialogState(() => reminders = v),
+                  contentPadding: EdgeInsets.zero,
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: notesController,
+                  maxLines: 2,
+                  decoration: const InputDecoration(
+                    labelText: 'Notes',
+                    alignLabelWithHint: true,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: isSaving ? null : () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: isSaving
+                  ? null
+                  : () async {
+                      if (dosageController.text.trim().isEmpty) return;
+                      setDialogState(() => isSaving = true);
+                      try {
+                        await ref.read(medicationsProvider.notifier).updateMedicationDetails(
+                              medicationId: medication.id,
+                              dosage: dosageController.text.trim(),
+                              unit: unit,
+                              frequency: frequency,
+                              times: medication.times,
+                              endDate: medication.endDate,
+                              notes: notesController.text.trim().isEmpty ? null : notesController.text.trim(),
+                              remindersEnabled: reminders,
+                            );
+                        if (mounted) {
+                          Navigator.pop(ctx);
+                          AppSnackBar.success(context, 'Medication updated!');
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          setDialogState(() => isSaving = false);
+                          AppSnackBar.errorFromException(context, 'Failed to update medication.', e);
+                        }
+                      }
+                    },
+              style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary(isDark)),
+              child: isSaving
+                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                  : const Text('Save', style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _markComplete(Medication medication) async {
     try {
       await ref.read(medicationsProvider.notifier).updateMedicationStatus(
@@ -39,6 +161,27 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
       if (mounted) AppSnackBar.success(context, 'Medication marked as completed');
     } catch (e) {
       if (mounted) AppSnackBar.errorFromException(context, 'Failed to update medication.', e);
+    }
+  }
+
+  static String _frequencyLabel(MedicationFrequency f) {
+    switch (f) {
+      case MedicationFrequency.onceDaily:
+        return 'Once Daily';
+      case MedicationFrequency.twiceDaily:
+        return 'Twice Daily';
+      case MedicationFrequency.threeTimesDaily:
+        return 'Three Times Daily';
+      case MedicationFrequency.fourTimesDaily:
+        return 'Four Times Daily';
+      case MedicationFrequency.everyOtherDay:
+        return 'Every Other Day';
+      case MedicationFrequency.weekly:
+        return 'Weekly';
+      case MedicationFrequency.asNeeded:
+        return 'As Needed';
+      case MedicationFrequency.custom:
+        return 'Custom';
     }
   }
 
@@ -106,7 +249,15 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
               ),
             ),
             const Divider(),
-            if (medication.status == MedicationStatus.active)
+            if (medication.status == MedicationStatus.active) ...[
+              ListTile(
+                leading: Icon(Icons.edit_outlined, color: AppColors.primary(isDark)),
+                title: const Text('Edit Details', style: TextStyle(fontFamily: 'Inter')),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _showEditMedicationDialog(medication);
+                },
+              ),
               ListTile(
                 leading: Icon(Icons.check_circle_outline, color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess),
                 title: const Text('Mark Complete', style: TextStyle(fontFamily: 'Inter')),
@@ -115,6 +266,15 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                   _markComplete(medication);
                 },
               ),
+              ListTile(
+                leading: Icon(Icons.block, color: isDark ? AppColors.darkWarning : AppColors.lightWarning),
+                title: const Text('Discontinue', style: TextStyle(fontFamily: 'Inter')),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _discontinue(medication);
+                },
+              ),
+            ],
             ListTile(
               leading: Icon(Icons.delete_outline, color: isDark ? AppColors.darkError : AppColors.lightError),
               title: Text('Delete', style: TextStyle(fontFamily: 'Inter', color: isDark ? AppColors.darkError : AppColors.lightError)),

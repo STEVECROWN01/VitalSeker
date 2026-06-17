@@ -48,6 +48,51 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     }
   }
 
+  Future<void> _rescheduleAppointment(Appointment appointment) async {
+    // Pick a new date.
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: appointment.dateTime.isAfter(DateTime.now())
+          ? appointment.dateTime
+          : DateTime.now().add(const Duration(days: 1)),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2030),
+      helpText: 'Select new date',
+    );
+    if (newDate == null || !mounted) return;
+
+    // Pick a new time.
+    final newTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(appointment.dateTime),
+      helpText: 'Select new time',
+    );
+    if (newTime == null || !mounted) return;
+
+    final newDateTime = DateTime(
+      newDate.year,
+      newDate.month,
+      newDate.day,
+      newTime.hour,
+      newTime.minute,
+    );
+
+    try {
+      await ref.read(appointmentsProvider.notifier).rescheduleAppointment(
+            appointmentId: appointment.id,
+            newDateTime: newDateTime,
+          );
+      if (mounted) {
+        AppSnackBar.success(
+          context,
+          'Rescheduled to ${newDate.day}/${newDate.month}/${newDate.year} at ${newTime.format(context)}',
+        );
+      }
+    } catch (e) {
+      if (mounted) AppSnackBar.errorFromException(context, 'Failed to reschedule appointment.', e);
+    }
+  }
+
   Future<void> _deleteAppointment(Appointment appointment) async {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final confirmed = await showDialog<bool>(
@@ -119,6 +164,14 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                 onTap: () {
                   Navigator.pop(ctx);
                   _markComplete(appointment);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.event_repeat, color: AppColors.primary(isDark)),
+                title: const Text('Reschedule', style: TextStyle(fontFamily: 'Inter')),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _rescheduleAppointment(appointment);
                 },
               ),
               ListTile(
