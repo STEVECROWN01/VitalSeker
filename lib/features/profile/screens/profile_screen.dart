@@ -3,8 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/family_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
+import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -52,169 +56,378 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final profileAsync = ref.watch(userProfileProvider);
+    final isPro = ref.watch(isProUserProvider);
+    final familyAsync = ref.watch(familyProfilesProvider);
+    final familyCount = familyAsync.maybeWhen(data: (list) => list.length, orElse: () => 0);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
+      appBar: AppBar(
+        title: Text(
+          'Profile',
+          style: AppTextStyles.heading3.copyWith(color: AppColors.primary(isDark)),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            tooltip: 'Notifications',
+            onPressed: () => context.push(AppConfig.notificationsSettings),
+          ),
+        ],
+      ),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (profile) {
+          final name = profile?.fullName ?? 'User';
+          final email = profile?.email ?? '';
+          final initials = (name.isNotEmpty ? name : 'U')
+              .trim()
+              .split(RegExp(r'\s+'))
+              .map((w) => w[0].toUpperCase())
+              .take(2)
+              .join();
+
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Column(
               children: [
-                // Avatar and user info
+                // ── Hero ──
                 Center(
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundColor: (AppColors.primary(isDark)).withValues(alpha: 0.12),
-                        child: Text(
-                          (profile?.fullName ?? 'U')[0].toUpperCase(),
-                          style: TextStyle(
-                            fontFamily: 'ClashDisplay',
-                            fontSize: 36,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.primary(isDark),
+                      Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 52,
+                            backgroundColor: AppColors.primaryContainer(isDark),
+                            child: Text(
+                              initials,
+                              style: TextStyle(
+                                fontFamily: 'ClashDisplay',
+                                fontSize: 36,
+                                fontWeight: FontWeight.w800,
+                                color: isDark
+                                    ? AppColors.lightPrimaryContainer
+                                    : Colors.white,
+                              ),
+                            ),
                           ),
-                        ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: () => context.push(AppConfig.editProfile),
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                  color: AppColors.secondary(isDark),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: AppColors.surface(isDark),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: const Icon(Icons.edit, size: 16, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        profile?.fullName ?? 'User',
-                        style: TextStyle(
-                          fontFamily: 'ClashDisplay',
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
+                        name,
+                        style: AppTextStyles.heading3.copyWith(
                           color: AppColors.textPrimary(isDark),
                         ),
                       ),
+                      const SizedBox(height: 4),
                       Text(
-                        profile?.email ?? '',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
+                        email,
+                        style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textSecondary(isDark),
                         ),
                       ),
+                      if (isPro) ...[
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: AppColors.secondaryContainer(isDark),
+                            borderRadius: BorderRadius.circular(9999),
+                            border: Border.all(
+                              color: AppColors.secondary(isDark).withValues(alpha: 0.1),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.star_rounded,
+                                  size: 16,
+                                  color: isDark
+                                      ? AppColors.darkOnSurface
+                                      : const Color(0xFF326F59)),
+                              const SizedBox(width: 6),
+                              Text(
+                                'VitalSeker Pro',
+                                style: AppTextStyles.labelMedium.copyWith(
+                                  color: isDark
+                                      ? AppColors.darkOnSurface
+                                      : const Color(0xFF326F59),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ] else ...[
+                        const SizedBox(height: 12),
+                        GestureDetector(
+                          onTap: () => context.push(AppConfig.subscription),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryContainer(isDark).withValues(alpha: 0.4),
+                              borderRadius: BorderRadius.circular(9999),
+                              border: Border.all(
+                                color: AppColors.primary(isDark).withValues(alpha: 0.2),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.star_outline,
+                                    size: 16, color: AppColors.primary(isDark)),
+                                const SizedBox(width: 6),
+                                Text(
+                                  'Upgrade to Pro',
+                                  style: AppTextStyles.labelMedium.copyWith(
+                                    color: AppColors.primary(isDark),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
 
-                // Stats row
+                // ── Stats row ──
                 Row(
                   children: [
-                    _StatCard(
-                      label: 'Vitals Logged',
-                      value: '--',
-                      isDark: isDark,
-                    ),
+                    _StatCard(label: 'Vitals Logged', value: '--', isDark: isDark),
                     const SizedBox(width: 12),
-                    _StatCard(
-                      label: 'Triage Sessions',
-                      value: '--',
-                      isDark: isDark,
-                    ),
+                    _StatCard(label: 'Triage Sessions', value: '--', isDark: isDark),
                     const SizedBox(width: 12),
-                    _StatCard(
-                      label: 'Days Active',
-                      value: '--',
-                      isDark: isDark,
-                    ),
+                    _StatCard(label: 'Days Active', value: '--', isDark: isDark),
                   ],
                 ),
                 const SizedBox(height: 24),
 
-                // Menu items
-                _MenuSection(title: 'Profile', children: [
-                  _MenuItem(
-                    icon: Icons.edit_outlined,
-                    label: 'Edit Profile',
-                    onTap: () => context.push(AppConfig.editProfile),
-                  ),
-                  _MenuItem(
-                    icon: Icons.folder_outlined,
-                    label: 'Medical Records',
-                    onTap: () => context.push(AppConfig.medicalRecords),
-                  ),
-                  _MenuItem(
-                    icon: Icons.badge_outlined,
-                    label: 'Medical ID',
-                    onTap: () => context.push(AppConfig.medicalId),
-                  ),
-                ], isDark: isDark),
+                // ── Appearance ──
+                _MenuSection(
+                  title: 'Appearance',
+                  isDark: isDark,
+                  children: [
+                    _MenuItem(
+                      icon: Icons.dark_mode_outlined,
+                      iconBg: _tint(AppColors.primary(isDark), isDark),
+                      iconFg: AppColors.primary(isDark),
+                      label: 'Dark Mode',
+                      subtitle: _themeSubtitle(ref.read(themeModeProvider)),
+                      trailing: Switch(
+                        value: Theme.of(context).brightness == Brightness.dark,
+                        onChanged: (v) => ref
+                            .read(themeModeProvider.notifier)
+                            .setTheme(v ? ThemeMode.dark : ThemeMode.light),
+                        activeTrackColor: AppColors.primary(isDark),
+                        thumbColor: WidgetStateProperty.all(Colors.white),
+                      ),
+                      onTap: () => ref
+                          .read(themeModeProvider.notifier)
+                          .setTheme(isDark ? ThemeMode.light : ThemeMode.dark),
+                    ),
+                  ],
+                ),
 
-                _MenuSection(title: 'Health', children: [
-                  _MenuItem(
-                    icon: Icons.medication_outlined,
-                    label: 'Medications',
-                    onTap: () => context.push(AppConfig.medications),
-                  ),
-                  _MenuItem(
-                    icon: Icons.calendar_today_outlined,
-                    label: 'Appointments',
-                    onTap: () => context.push(AppConfig.appointments),
-                  ),
-                  _MenuItem(
-                    icon: Icons.translate,
-                    label: 'Medical Translation',
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Coming soon')),
-                      );
-                    },
-                  ),
-                ], isDark: isDark),
+                // ── Account ──
+                _MenuSection(
+                  title: 'Account',
+                  isDark: isDark,
+                  children: [
+                    _MenuItem(
+                      icon: Icons.badge_outlined,
+                      iconBg: _tint(AppColors.secondary(isDark), isDark),
+                      iconFg: AppColors.secondary(isDark),
+                      label: 'Health Passport',
+                      subtitle: 'Manage medical credentials',
+                      onTap: () => context.push(AppConfig.passport),
+                    ),
+                    _MenuItem(
+                      icon: Icons.family_restroom,
+                      iconBg: _tint(const Color(0xFF5B6F6A), isDark),
+                      iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
+                      label: 'Family Profiles',
+                      subtitle: '$familyCount connected member${familyCount == 1 ? '' : 's'}',
+                      onTap: () => context.push(AppConfig.family),
+                    ),
+                    _MenuItem(
+                      icon: Icons.translate,
+                      iconBg: _tint(AppColors.primaryContainer(isDark), isDark),
+                      iconFg: isDark
+                          ? AppColors.darkOnSurface
+                          : AppColors.primary(isDark),
+                      label: 'Language',
+                      subtitle: 'English (US)',
+                      onTap: () => context.push(AppConfig.settings),
+                    ),
+                    _MenuItem(
+                      icon: Icons.notifications_active_outlined,
+                      iconBg: _tint(AppColors.primary(isDark), isDark),
+                      iconFg: AppColors.primary(isDark),
+                      label: 'Notifications',
+                      subtitle: 'Alerts & smart reminders',
+                      onTap: () => context.push(AppConfig.notificationsSettings),
+                    ),
+                    _MenuItem(
+                      icon: Icons.folder_outlined,
+                      iconBg: _tint(AppColors.secondary(isDark), isDark),
+                      iconFg: AppColors.secondary(isDark),
+                      label: 'Medical Records',
+                      subtitle: 'Documents & imaging',
+                      onTap: () => context.push(AppConfig.medicalRecords),
+                    ),
+                    _MenuItem(
+                      icon: Icons.badge_outlined,
+                      iconBg: _tint(const Color(0xFF5B6F6A), isDark),
+                      iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
+                      label: 'Medical ID',
+                      subtitle: 'Emergency medical card',
+                      onTap: () => context.push(AppConfig.medicalId),
+                    ),
+                  ],
+                ),
 
-                _MenuSection(title: 'Support', children: [
-                  _MenuItem(
-                    icon: Icons.settings_outlined,
-                    label: 'Settings',
-                    onTap: () => context.push(AppConfig.settings),
-                  ),
-                  _MenuItem(
-                    icon: Icons.help_outline,
-                    label: 'Help & Support',
-                    onTap: () => context.push(AppConfig.helpSupport),
-                  ),
-                  _MenuItem(
-                    icon: Icons.info_outline,
-                    label: 'About VitalSeker',
-                    onTap: () => context.push(AppConfig.about),
-                  ),
-                  _MenuItem(
-                    icon: Icons.privacy_tip_outlined,
-                    label: 'Privacy Policy',
-                    onTap: () => context.push(AppConfig.privacyPolicy),
-                  ),
-                ], isDark: isDark),
+                // ── Privacy & Data ──
+                _MenuSection(
+                  title: 'Privacy & Data',
+                  isDark: isDark,
+                  children: [
+                    _MenuItem(
+                      icon: Icons.shield_outlined,
+                      iconBg: _tint(AppColors.error(isDark), isDark),
+                      iconFg: AppColors.error(isDark),
+                      label: 'Security & Storage',
+                      subtitle: 'AES-256 encryption active',
+                      onTap: () => context.push(AppConfig.privacyPolicy),
+                    ),
+                    _MenuItem(
+                      icon: Icons.download_outlined,
+                      iconBg: _tint(AppColors.primary(isDark), isDark),
+                      iconFg: AppColors.primary(isDark),
+                      label: 'Export Data',
+                      subtitle: 'Download your health data',
+                      onTap: () => context.push(AppConfig.exportScreen),
+                    ),
+                  ],
+                ),
+
+                // ── Support ──
+                _MenuSection(
+                  title: 'Support',
+                  isDark: isDark,
+                  children: [
+                    _MenuItem(
+                      icon: Icons.help_outline,
+                      iconBg: _tint(AppColors.secondary(isDark), isDark),
+                      iconFg: AppColors.secondary(isDark),
+                      label: 'Help Center',
+                      subtitle: 'FAQs & documentation',
+                      onTap: () => context.push(AppConfig.helpSupport),
+                    ),
+                    _MenuItem(
+                      icon: Icons.support_agent,
+                      iconBg: _tint(const Color(0xFF5B6F6A), isDark),
+                      iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
+                      label: 'Contact Concierge',
+                      subtitle: 'Priority Pro support',
+                      onTap: () => context.push(AppConfig.helpSupport),
+                    ),
+                  ],
+                ),
+
+                // ── About ──
+                _MenuSection(
+                  title: 'About',
+                  isDark: isDark,
+                  children: [
+                    _MenuItem(
+                      icon: Icons.info_outline,
+                      iconBg: _tint(AppColors.primary(isDark), isDark),
+                      iconFg: AppColors.primary(isDark),
+                      label: 'About VitalSeker',
+                      subtitle: 'Version ${AppConfig.version}',
+                      onTap: () => context.push(AppConfig.about),
+                    ),
+                    _MenuItem(
+                      icon: Icons.description_outlined,
+                      iconBg: _tint(const Color(0xFF5B6F6A), isDark),
+                      iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
+                      label: 'Terms of Service',
+                      onTap: () => context.push(AppConfig.termsOfService),
+                    ),
+                    _MenuItem(
+                      icon: Icons.privacy_tip_outlined,
+                      iconBg: _tint(AppColors.secondary(isDark), isDark),
+                      iconFg: AppColors.secondary(isDark),
+                      label: 'Privacy Policy',
+                      onTap: () => context.push(AppConfig.privacyPolicy),
+                    ),
+                  ],
+                ),
 
                 const SizedBox(height: 16),
 
-                // Sign out button
+                // ── Sign out ──
                 SizedBox(
                   width: double.infinity,
                   height: 52,
                   child: OutlinedButton.icon(
                     onPressed: _isSigningOut ? null : _signOut,
                     icon: _isSigningOut
-                        ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(strokeWidth: 2))
                         : const Icon(Icons.logout, color: AppColors.urgencyEmergency),
                     label: Text(
                       _isSigningOut ? 'Signing out...' : 'Sign Out',
-                      style: const TextStyle(
-                        fontFamily: 'Outfit',
-                        fontWeight: FontWeight.w600,
+                      style: AppTextStyles.button.copyWith(
                         color: AppColors.urgencyEmergency,
                       ),
                     ),
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: AppColors.urgencyEmergency),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      side: BorderSide(
+                        color: AppColors.urgencyEmergency.withValues(alpha: 0.4),
+                        width: 2,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(9999),
+                      ),
                     ),
                   ),
+                ),
+
+                // ── Footer ──
+                const SizedBox(height: 24),
+                Text(
+                  'Crafted under Keter Marketing design guidance.',
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
+                  ),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 80),
               ],
@@ -223,6 +436,33 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         },
       ),
     );
+  }
+
+  String _themeSubtitle(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.dark:
+        return 'Dark';
+      case ThemeMode.light:
+        return 'Light';
+      default:
+        return 'System default';
+    }
+  }
+
+  /// Build a soft tinted background square (40×40, radius 10) for menu icons.
+  Color _tint(Color base, bool isDark) {
+    if (isDark) {
+      return base.withValues(alpha: 0.18);
+    }
+    // For light surfaces, primary/secondary green can be too saturated at full
+    // strength — soften the background while keeping the icon vibrant.
+    if (base == AppColors.primary(isDark) || base == AppColors.secondary(isDark)) {
+      return base.withValues(alpha: 0.12);
+    }
+    if (base == AppColors.error(isDark)) {
+      return const Color(0xFFFFDAD6); // matches design error-container
+    }
+    return base.withValues(alpha: 0.25);
   }
 }
 
@@ -247,8 +487,7 @@ class _StatCard extends StatelessWidget {
           children: [
             Text(
               value,
-              style: TextStyle(
-                fontFamily: 'JetBrainsMono',
+              style: AppTextStyles.monoRegular.copyWith(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary(isDark),
@@ -257,10 +496,9 @@ class _StatCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               label,
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 10,
+              style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textHint(isDark),
+                letterSpacing: 0.5,
               ),
               textAlign: TextAlign.center,
             ),
@@ -287,37 +525,123 @@ class _MenuSection extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(4, 16, 4, 8),
           child: Text(
             title.toUpperCase(),
-            style: TextStyle(
-              fontFamily: 'DMSans',
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textHint(isDark),
-              letterSpacing: 1,
+            style: AppTextStyles.labelSmall.copyWith(
+              color: AppColors.primary(isDark).withValues(alpha: 0.85),
+              letterSpacing: 1.2,
             ),
           ),
         ),
-        Card(
-          child: Column(children: children),
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.cardBackground(isDark),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isDark
+                  ? AppColors.darkOutlineVariant
+                  : Colors.black.withValues(alpha: 0.05),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.04),
+                blurRadius: 12,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Column(children: _withDividers(children, isDark)),
         ),
       ],
     );
+  }
+
+  List<Widget> _withDividers(List<Widget> items, bool isDark) {
+    if (items.length <= 1) return items;
+    final result = <Widget>[];
+    for (var i = 0; i < items.length; i++) {
+      result.add(items[i]);
+      if (i < items.length - 1) {
+        result.add(Divider(
+          height: 1,
+          thickness: 1,
+          indent: 72,
+          color: isDark
+              ? AppColors.darkOutlineVariant
+              : Colors.black.withValues(alpha: 0.05),
+        ));
+      }
+    }
+    return result;
   }
 }
 
 class _MenuItem extends StatelessWidget {
   final IconData icon;
+  final Color iconBg;
+  final Color iconFg;
   final String label;
-  final VoidCallback onTap;
+  final String? subtitle;
+  final Widget? trailing;
+  final VoidCallback? onTap;
 
-  const _MenuItem({required this.icon, required this.label, required this.onTap});
+  const _MenuItem({
+    required this.icon,
+    required this.iconBg,
+    required this.iconFg,
+    required this.label,
+    this.subtitle,
+    this.trailing,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, size: 22),
-      title: Text(label, style: const TextStyle(fontFamily: 'Inter', fontSize: 14)),
-      trailing: const Icon(Icons.chevron_right, size: 20),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final chevron = trailing ??
+        Icon(Icons.chevron_right, size: 20, color: AppColors.outlineVariant(isDark));
+
+    return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: iconBg,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, color: iconFg, size: 20),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: AppTextStyles.subheading2.copyWith(
+                      color: AppColors.textPrimary(isDark),
+                    ),
+                  ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle!,
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.textSecondary(isDark),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            chevron,
+          ],
+        ),
+      ),
     );
   }
 }

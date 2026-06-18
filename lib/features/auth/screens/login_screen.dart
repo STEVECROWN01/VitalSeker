@@ -6,6 +6,7 @@ import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/services/auth_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/loading_overlay.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -156,14 +157,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 48),
-                  // Logo
+                  // Logo — green-only brand gradient (ForestDark → VitalGreen).
                   Center(
                     child: Container(
                       width: 72,
                       height: 72,
                       decoration: BoxDecoration(
-                        gradient: AppColors.brandGradient,
+                        gradient: AppColors.brandGradientFor(isDark),
                         borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primary(isDark).withValues(alpha: 0.3),
+                            blurRadius: 20,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
                       ),
                       child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 36),
                     ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
@@ -172,10 +180,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Center(
                     child: Text(
                       'Welcome Back',
-                      style: TextStyle(
-                        fontFamily: 'ClashDisplay',
+                      style: AppTextStyles.heading2.copyWith(
                         fontSize: 28,
-                        fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary(isDark),
                       ),
                     ).animate().fadeIn(duration: 400.ms, delay: 100.ms),
@@ -184,9 +190,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Center(
                     child: Text(
                       'Sign in to your VitalSeker account',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary(isDark),
                       ),
                     ).animate().fadeIn(duration: 400.ms, delay: 200.ms),
@@ -236,10 +240,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       onPressed: _resetPassword,
                       child: Text(
                         'Forgot Password?',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 13,
+                        style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.primary(isDark),
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -250,9 +253,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     onPressed: _signIn,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 56),
+                      backgroundColor: AppColors.primary(isDark),
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     ),
-                    child: const Text('Sign In'),
+                    child: Text('Sign In', style: AppTextStyles.button.copyWith(fontSize: 16)),
                   ).animate().fadeIn(duration: 400.ms, delay: 400.ms),
                   const SizedBox(height: 24),
                   // Divider
@@ -263,9 +268,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
                           'or continue with',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 12,
+                          style: AppTextStyles.labelMedium.copyWith(
                             color: AppColors.textHint(isDark),
                           ),
                         ),
@@ -300,9 +303,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     children: [
                       Text(
                         "Don't have an account? ",
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
+                        style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textSecondary(isDark),
                         ),
                       ),
@@ -310,14 +311,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         onPressed: () => context.go(AppConfig.register),
                         child: Text(
                           'Sign Up',
-                          style: TextStyle(
-                            fontFamily: 'Outfit',
-                            fontWeight: FontWeight.w600,
+                          style: AppTextStyles.subheading2.copyWith(
                             color: AppColors.primary(isDark),
                           ),
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 16),
+                  // Footer credit
+                  Center(
+                    child: Text(
+                      'Crafted under Keter Marketing design guidance.',
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   const SizedBox(height: 24),
                 ],
