@@ -138,7 +138,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               const SizedBox(height: 32),
               // Keter Marketing credit
               Text(
-                'Powered by ${AppConfig.producer}',
+                'Crafted under ${AppConfig.producer} design guidance.',
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,

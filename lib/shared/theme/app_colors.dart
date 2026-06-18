@@ -1,35 +1,70 @@
 import 'package:flutter/material.dart';
 
+/// VitalSeker Color System
+///
+/// Aligned with vitalseker_tokens_v1.0.json from the Google Stitch design.
+/// The palette is green-only (no purple) — the brand identity is "VitalGreen"
+/// (ForestDark + Electric Mint) on "Deep Forest" / "Clean Mint" surfaces.
 class AppColors {
-  // Light theme
+  // ── Light theme ──
+  // Primary (VitalGreen)
   static const Color lightPrimary = Color(0xFF0B7A5B);
-  static const Color lightPrimaryDark = Color(0xFF096549);
+  static const Color lightPrimaryDark = Color(0xFF054D39); // ForestDark
   static const Color lightPrimaryLight = Color(0xFF0B9E70);
-  static const Color lightBackground = Color(0xFFF8FAFB);
+  static const Color lightPrimaryContainer = Color(0xFFE9FEF6); // Clean Mint
+
+  // Secondary (ForestDark green — NOT purple)
+  static const Color lightSecondary = Color(0xFF054D39);
+  static const Color lightSecondaryContainer = Color(0xFFD1FADF);
+
+  // Surfaces
+  static const Color lightBackground = Color(0xFFF9F9FC); // off-white per tokens
   static const Color lightSurface = Color(0xFFFFFFFF);
-  static const Color lightOnBackground = Color(0xFF1A1A2E);
-  static const Color lightOnSurface = Color(0xFF1A1A2E);
-  static const Color lightSecondary = Color(0xFF6C63FF);
-  static const Color lightError = Color(0xFFE53935);
+  static const Color lightSurfaceContainer = Color(0xFFEEF1F0);
+  static const Color lightOnBackground = Color(0xFF050F0B); // green-black
+  static const Color lightOnSurface = Color(0xFF050F0B);
+  static const Color lightOnSurfaceVariant = Color(0xFF404944);
+
+  // Functional
+  static const Color lightError = Color(0xFFBA1A1A);
   static const Color lightWarning = Color(0xFFFF9800);
   static const Color lightSuccess = Color(0xFF4CAF50);
   static const Color lightInfo = Color(0xFF2196F3);
-  
-  // Dark theme
+
+  // Outline
+  static const Color lightOutline = Color(0xFF707973);
+  static const Color lightOutlineVariant = Color(0xFFBDC9C2);
+
+  // ── Dark theme ──
+  // Primary (Electric Mint)
   static const Color darkPrimary = Color(0xFF0B9E70);
-  static const Color darkPrimaryDark = Color(0xFF097A56);
-  static const Color darkPrimaryLight = Color(0xFF0DC48A);
-  static const Color darkBackground = Color(0xFF0A0E17);
-  static const Color darkSurface = Color(0xFF151925);
-  static const Color darkOnBackground = Color(0xFFE8ECF1);
-  static const Color darkOnSurface = Color(0xFFE8ECF1);
-  static const Color darkSecondary = Color(0xFF8B83FF);
-  static const Color darkError = Color(0xFFFF5252);
+  static const Color darkPrimaryDark = Color(0xFF0B7A5B);
+  static const Color darkPrimaryLight = Color(0xFF1DB886); // Electric Mint
+  static const Color darkPrimaryContainer = Color(0xFF050F0B); // Deep Forest
+
+  // Secondary (Electric Mint — NOT purple)
+  static const Color darkSecondary = Color(0xFF1DB886);
+  static const Color darkSecondaryContainer = Color(0xFF0B7A5B);
+
+  // Surfaces
+  static const Color darkBackground = Color(0xFF050F0B); // Deep Forest
+  static const Color darkSurface = Color(0xFF0C1A16); // Obsidian Pine
+  static const Color darkSurfaceContainer = Color(0xFF0C1A16);
+  static const Color darkOnBackground = Color(0xFFE1E3E0);
+  static const Color darkOnSurface = Color(0xFFE1E3E0);
+  static const Color darkOnSurfaceVariant = Color(0xFFBFC9C2);
+
+  // Functional
+  static const Color darkError = Color(0xFFFFB4AB);
   static const Color darkWarning = Color(0xFFFFB74D);
   static const Color darkSuccess = Color(0xFF69F0AE);
   static const Color darkInfo = Color(0xFF64B5F6);
-  
-  // Shared
+
+  // Outline
+  static const Color darkOutline = Color(0xFF8A938C);
+  static const Color darkOutlineVariant = Color(0xFF22342F);
+
+  // ── Shared ──
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
   static const Color grey50 = Color(0xFFF5F5F5);
@@ -42,24 +77,41 @@ class AppColors {
   static const Color grey700 = Color(0xFF303030);
   static const Color grey800 = Color(0xFF212121);
   static const Color grey900 = Color(0xFF1A1A1A);
-  
-  // Brand gradient
+
+  // ── Brand gradient ──
+  // Design spec: light = [#054D39, #0B7A5B], dark = [#0B9E70, #1DB886]
+  // GREEN-ONLY — no purple.
+  // Const versions for backward compatibility (light is the default).
   static const LinearGradient brandGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF0B7A5B), Color(0xFF0B9E70), Color(0xFF6C63FF)],
-    stops: [0.0, 0.5, 1.0],
+    colors: [Color(0xFF054D39), Color(0xFF0B7A5B)],
   );
-  
-  // Urgency colors
+
+  static const LinearGradient brandGradientDark = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF0B9E70), Color(0xFF1DB886)],
+  );
+
+  /// Dark-mode-aware brand gradient.
+  static LinearGradient brandGradientFor(bool isDark) =>
+      isDark ? brandGradientDark : brandGradient;
+
+  // SOS gradient (red)
+  static const LinearGradient sosGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFFBA1A1A), Color(0xFF93000A)],
+  );
+
+  // ── Urgency colors ──
   static const Color urgencyLow = Color(0xFF4CAF50);
   static const Color urgencyMedium = Color(0xFFFF9800);
   static const Color urgencyHigh = Color(0xFFFF5722);
-  static const Color urgencyEmergency = Color(0xFFE53935);
+  static const Color urgencyEmergency = Color(0xFFBA1A1A);
 
   // ── Dark-mode-aware semantic helpers ──
-  // These replace the common pattern of `isDark ? darkXxx : lightXxx`
-
   static Color surface(bool isDark) => isDark ? darkSurface : lightSurface;
   static Color background(bool isDark) => isDark ? darkBackground : lightBackground;
   static Color onBackground(bool isDark) => isDark ? darkOnBackground : lightOnBackground;
@@ -70,25 +122,29 @@ class AppColors {
   static Color success(bool isDark) => isDark ? darkSuccess : lightSuccess;
   static Color warning(bool isDark) => isDark ? darkWarning : lightWarning;
   static Color info(bool isDark) => isDark ? darkInfo : lightInfo;
+  static Color primaryContainer(bool isDark) => isDark ? darkPrimaryContainer : lightPrimaryContainer;
+  static Color secondaryContainer(bool isDark) => isDark ? darkSecondaryContainer : lightSecondaryContainer;
+  static Color outline(bool isDark) => isDark ? darkOutline : lightOutline;
+  static Color outlineVariant(bool isDark) => isDark ? darkOutlineVariant : lightOutlineVariant;
 
   // Card / input fill colors
   static Color cardBackground(bool isDark) => isDark ? darkSurface : lightSurface;
-  static Color inputFill(bool isDark) => isDark ? const Color(0xFF1E2230) : grey50;
-  static Color subtleBackground(bool isDark) => isDark ? const Color(0xFF1E2230) : grey50;
-  static Color border(bool isDark) => isDark ? const Color(0xFF2A2F3E) : grey200;
-  static Color borderLight(bool isDark) => isDark ? const Color(0xFF1E2230) : grey100;
-  static Color divider(bool isDark) => isDark ? const Color(0xFF1E2230) : grey100;
+  static Color inputFill(bool isDark) => isDark ? const Color(0xFF0C1A16) : lightSurfaceContainer;
+  static Color subtleBackground(bool isDark) => isDark ? const Color(0xFF0C1A16) : lightSurfaceContainer;
+  static Color border(bool isDark) => isDark ? darkOutlineVariant : lightOutlineVariant;
+  static Color borderLight(bool isDark) => isDark ? darkOutlineVariant : lightOutlineVariant;
+  static Color divider(bool isDark) => isDark ? darkOutlineVariant : lightOutlineVariant;
 
   // Text colors
   static Color textPrimary(bool isDark) => isDark ? darkOnBackground : lightOnBackground;
-  static Color textSecondary(bool isDark) => isDark ? grey400 : grey500;
-  static Color textHint(bool isDark) => isDark ? grey500 : grey400;
-  static Color textTertiary(bool isDark) => isDark ? grey600 : grey300;
+  static Color textSecondary(bool isDark) => isDark ? darkOnSurfaceVariant : lightOnSurfaceVariant;
+  static Color textHint(bool isDark) => isDark ? const Color(0xFF8A938C) : const Color(0xFF707973);
+  static Color textTertiary(bool isDark) => isDark ? darkOutline : lightOutline;
 
   // Shadow
   static BoxShadow shadow(bool isDark) => isDark
       ? BoxShadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))
-      : BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 12, offset: const Offset(0, 4));
+      : BoxShadow(color: lightPrimary.withValues(alpha: 0.06), blurRadius: 40, offset: const Offset(0, 4));
 }
 
 /// Extension on [BuildContext] for quick dark-mode-aware color access

@@ -156,7 +156,7 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                'Made with care by ${AppConfig.producer}',
+                'Crafted under ${AppConfig.producer} design guidance.',
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,

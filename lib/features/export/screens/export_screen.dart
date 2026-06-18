@@ -53,7 +53,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                   style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
                 ),
                 pw.Text(
-                  'Powered by ${AppConfig.producer}',
+                  'Crafted under ${AppConfig.producer} design guidance.',
                   style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey500),
                 ),
               ],
@@ -96,7 +96,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
               style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey600),
             ),
             pw.Paragraph(
-              text: pdfData['footer']?['producer'] ?? 'Powered by ${AppConfig.producer}',
+              text: pdfData['footer']?['producer'] ?? 'Crafted under ${AppConfig.producer} design guidance.',
               style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey500),
             ),
           ],

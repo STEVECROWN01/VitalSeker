@@ -1,6 +1,6 @@
 class AppConfig {
   static const String appName = 'VitalSeker';
-  static const String appTagline = 'AI Health Companion';
+  static const String appTagline = 'Your AI Health Companion';
   static const String producer = 'Keter Marketing';
   static const String version = '1.0.0';
   static const double proPriceMonthly = 6.99;

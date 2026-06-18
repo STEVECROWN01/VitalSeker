@@ -238,7 +238,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Text(
-                'Powered by ${AppConfig.producer}',
+                'Crafted under ${AppConfig.producer} design guidance.',
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 11,

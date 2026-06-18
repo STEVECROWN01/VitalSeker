@@ -118,10 +118,12 @@ GoRouter createRouter(Ref ref) {
         builder: (context, state, child) {
           int currentIndex = 0;
           final location = state.matchedLocation;
-          if (location.startsWith(AppConfig.vitals)) currentIndex = 1;
+          // 5-tab bottom nav: Home(0) / History(1) / Triage(2) / Insights(3) / Passport(4)
+          if (location.startsWith(AppConfig.history)) currentIndex = 1;
           else if (location.startsWith(AppConfig.triage)) currentIndex = 2;
-          else if (location.startsWith(AppConfig.profile)) currentIndex = 3;
-          else currentIndex = 0;
+          else if (location.startsWith(AppConfig.insights)) currentIndex = 3;
+          else if (location.startsWith(AppConfig.passport)) currentIndex = 4;
+          else currentIndex = 0; // Home (dashboard, health, vitals, profile, etc.)
 
           return ScaffoldWithNavBar(
             currentIndex: currentIndex,
@@ -187,6 +189,11 @@ GoRouter createRouter(Ref ref) {
             builder: (context, state) => const HistoryScreen(),
           ),
           GoRoute(
+            path: AppConfig.insights,
+            parentNavigatorKey: _shellNavigatorKey,
+            builder: (context, state) => const InsightsScreen(),
+          ),
+          GoRoute(
             path: AppConfig.profile,
             builder: (context, state) => const ProfileScreen(),
             routes: [
@@ -237,11 +244,6 @@ GoRouter createRouter(Ref ref) {
         ],
       ),
       // Standalone routes (no bottom nav)
-      GoRoute(
-        path: AppConfig.insights,
-        parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => const InsightsScreen(),
-      ),
       GoRoute(
         path: AppConfig.family,
         parentNavigatorKey: _rootNavigatorKey,

@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'app_text_styles.dart';
 
+/// VitalSeker Theme
+///
+/// Aligned with vitalseker_tokens_v1.0.json from the Google Stitch design.
+///
+/// Key design rules:
+///   - Radius: lg=28, md=20, sm=12 (per tokens)
+///   - Cards: 20px radius, 0 elevation, tonal surface
+///   - Buttons: 12px radius (sm), pill (999px) for primary CTAs
+///   - Inputs: 12px radius, surface fill, primary border on focus
+///   - Shadows: ambient (40px blur, 5% opacity, primary-tinted) — sparingly
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
@@ -9,21 +19,21 @@ class AppTheme {
     colorScheme: const ColorScheme.light(
       primary: AppColors.lightPrimary,
       onPrimary: AppColors.white,
-      primaryContainer: Color(0xFFE0F2F1),
+      primaryContainer: AppColors.lightPrimaryContainer, // #E9FEF6 Clean Mint
       onPrimaryContainer: AppColors.lightPrimaryDark,
-      secondary: AppColors.lightSecondary,
+      secondary: AppColors.lightSecondary, // #054D39 ForestDark green
       onSecondary: AppColors.white,
-      secondaryContainer: Color(0xFFE8E5FF),
-      onSecondaryContainer: Color(0xFF4A42CC),
+      secondaryContainer: AppColors.lightSecondaryContainer, // #D1FADF
+      onSecondaryContainer: AppColors.lightSecondary,
       surface: AppColors.lightSurface,
       onSurface: AppColors.lightOnSurface,
       surfaceContainerHighest: AppColors.lightBackground,
-      error: AppColors.lightError,
+      error: AppColors.lightError, // #BA1A1A
       onError: AppColors.white,
-      outline: AppColors.grey200,
-      outlineVariant: AppColors.grey100,
+      outline: AppColors.lightOutline, // #707973
+      outlineVariant: AppColors.lightOutlineVariant, // #BDC9C2
     ),
-    scaffoldBackgroundColor: AppColors.lightBackground,
+    scaffoldBackgroundColor: AppColors.lightBackground, // #F9F9FC
     textTheme: const TextTheme(
       headlineLarge: AppTextStyles.heading1,
       headlineMedium: AppTextStyles.heading2,
@@ -41,7 +51,7 @@ class AppTheme {
     cardTheme: CardThemeData(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20), // radius-md per design (was 16)
       ),
       color: AppColors.lightSurface,
       surfaceTintColor: Colors.transparent,
@@ -53,7 +63,7 @@ class AppTheme {
         textStyle: AppTextStyles.button,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12), // radius-sm per design
         ),
         elevation: 0,
       ),
@@ -71,15 +81,15 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.grey50,
+      fillColor: AppColors.lightSurfaceContainer, // #EEF1F0
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12), // radius-sm
         borderSide: BorderSide.none,
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
+        borderSide: BorderSide(color: AppColors.lightOutlineVariant, width: 1),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -89,7 +99,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(color: AppColors.lightError),
       ),
-      hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.grey400),
+      hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.lightOutline),
     ),
     appBarTheme: const AppBarTheme(
       elevation: 0,
@@ -99,14 +109,14 @@ class AppTheme {
       titleTextStyle: TextStyle(
         fontFamily: 'ClashDisplay',
         fontSize: 20,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w800, // ExtraBold per design
         color: AppColors.lightOnSurface,
       ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: AppColors.lightSurface,
       selectedItemColor: AppColors.lightPrimary,
-      unselectedItemColor: AppColors.grey400,
+      unselectedItemColor: AppColors.lightOutline,
       type: BottomNavigationBarType.fixed,
       elevation: 8,
     ),
@@ -119,16 +129,16 @@ class AppTheme {
       ),
     ),
     chipTheme: ChipThemeData(
-      backgroundColor: AppColors.grey50,
-      selectedColor: const Color(0xFFE0F2F1),
+      backgroundColor: AppColors.lightSurfaceContainer,
+      selectedColor: AppColors.lightPrimaryContainer,
       labelStyle: AppTextStyles.labelMedium,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12), // radius-sm (was 8)
       ),
       side: BorderSide.none,
     ),
     dividerTheme: const DividerThemeData(
-      color: AppColors.grey100,
+      color: AppColors.lightOutlineVariant,
       thickness: 1,
       space: 1,
     ),
@@ -144,23 +154,23 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: const ColorScheme.dark(
-      primary: AppColors.darkPrimary,
+      primary: AppColors.darkPrimary, // #0B9E70
       onPrimary: AppColors.white,
-      primaryContainer: Color(0xFF0A2E22),
+      primaryContainer: AppColors.darkPrimaryContainer, // #050F0B Deep Forest
       onPrimaryContainer: AppColors.darkPrimaryLight,
-      secondary: AppColors.darkSecondary,
+      secondary: AppColors.darkSecondary, // #1DB886 Electric Mint
       onSecondary: AppColors.white,
-      secondaryContainer: Color(0xFF1E1A3E),
-      onSecondaryContainer: AppColors.darkSecondary,
-      surface: AppColors.darkSurface,
-      onSurface: AppColors.darkOnSurface,
+      secondaryContainer: AppColors.darkSecondaryContainer, // #0B7A5B
+      onSecondaryContainer: AppColors.white,
+      surface: AppColors.darkSurface, // #0C1A16 Obsidian Pine
+      onSurface: AppColors.darkOnSurface, // #E1E3E0
       surfaceContainerHighest: AppColors.darkBackground,
-      error: AppColors.darkError,
-      onError: AppColors.white,
-      outline: Color(0xFF2A2F3E),
-      outlineVariant: Color(0xFF1E2230),
+      error: AppColors.darkError, // #FFB4AB
+      onError: AppColors.black,
+      outline: AppColors.darkOutline, // #8A938C
+      outlineVariant: AppColors.darkOutlineVariant, // #22342F
     ),
-    scaffoldBackgroundColor: AppColors.darkBackground,
+    scaffoldBackgroundColor: AppColors.darkBackground, // #050F0B Deep Forest
     textTheme: const TextTheme(
       headlineLarge: AppTextStyles.heading1,
       headlineMedium: AppTextStyles.heading2,
@@ -178,9 +188,9 @@ class AppTheme {
     cardTheme: CardThemeData(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20), // radius-md (was 16)
       ),
-      color: AppColors.darkSurface,
+      color: AppColors.darkSurface, // #0C1A16
       surfaceTintColor: Colors.transparent,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -208,7 +218,7 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: const Color(0xFF1E2230),
+      fillColor: AppColors.darkSurface, // #0C1A16
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -216,7 +226,7 @@ class AppTheme {
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
+        borderSide: BorderSide(color: AppColors.darkOutlineVariant, width: 1),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -226,7 +236,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(color: AppColors.darkError),
       ),
-      hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.grey600),
+      hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.darkOutline),
     ),
     appBarTheme: const AppBarTheme(
       elevation: 0,
@@ -236,14 +246,14 @@ class AppTheme {
       titleTextStyle: TextStyle(
         fontFamily: 'ClashDisplay',
         fontSize: 20,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w800, // ExtraBold per design
         color: AppColors.darkOnSurface,
       ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: AppColors.darkSurface,
       selectedItemColor: AppColors.darkPrimary,
-      unselectedItemColor: AppColors.grey600,
+      unselectedItemColor: AppColors.darkOutline,
       type: BottomNavigationBarType.fixed,
       elevation: 8,
     ),
@@ -256,16 +266,16 @@ class AppTheme {
       ),
     ),
     chipTheme: ChipThemeData(
-      backgroundColor: const Color(0xFF1E2230),
-      selectedColor: const Color(0xFF0A2E22),
+      backgroundColor: AppColors.darkSurface,
+      selectedColor: AppColors.darkSecondaryContainer,
       labelStyle: AppTextStyles.labelMedium,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12), // radius-sm (was 8)
       ),
       side: BorderSide.none,
     ),
     dividerTheme: const DividerThemeData(
-      color: Color(0xFF1E2230),
+      color: AppColors.darkOutlineVariant, // #22342F
       thickness: 1,
       space: 1,
     ),
