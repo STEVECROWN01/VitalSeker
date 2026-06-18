@@ -45,6 +45,42 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
+/// Standard forward navigation transition for screens rendered inside the
+/// main ShellRoute (i.e. anything that lives under the bottom-nav scaffold).
+///
+/// Animation contract (per `vitalseker_animation_spec_sheet_text.md`):
+///   - Slide-in from the right: Offset(1.0, 0.0) → Offset(0.0, 0.0)
+///   - Duration: 350ms (forward + reverse)
+///   - Curve: `Curves.easeInOutCubic` (closest Flutter built-in to the
+///     design-spec cubic-bezier(0.4, 0, 0.2, 1))
+///
+/// Routes that are NOT inside the ShellRoute (splash, login, register,
+/// onboarding, and the standalone full-screen routes like SOS / family /
+/// export / medications / appointments) deliberately keep their default
+/// transitions.
+CustomTransitionPage slideTransitionPage({
+  required Widget child,
+  required GoRouterState state,
+}) {
+  return CustomTransitionPage(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 350),
+    reverseTransitionDuration: const Duration(milliseconds: 350),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(1.0, 0.0),
+          end: Offset.zero,
+        ).animate(
+          CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic),
+        ),
+        child: child,
+      );
+    },
+  );
+}
+
 GoRouter createRouter(Ref ref) {
   // Read auth + onboarding state *inside* the redirect callback so the
   // latest values are always used. The previous implementation captured
@@ -97,6 +133,9 @@ GoRouter createRouter(Ref ref) {
       return null;
     },
     routes: [
+      // ── Pre-auth / standalone entry routes ─────────────────────────────
+      // These keep their default transitions (splash, onboarding, login,
+      // register each orchestrate their own animated intros).
       GoRoute(
         path: AppConfig.splash,
         builder: (context, state) => const SplashScreen(),
@@ -113,6 +152,10 @@ GoRouter createRouter(Ref ref) {
         path: AppConfig.register,
         builder: (context, state) => const RegisterScreen(),
       ),
+
+      // ── Main app shell (bottom-nav scaffold) ───────────────────────────
+      // All routes inside this ShellRoute use the shared `slideTransitionPage`
+      // helper for a consistent 350ms slide-in-from-right forward transition.
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
@@ -133,26 +176,34 @@ GoRouter createRouter(Ref ref) {
         routes: [
           GoRoute(
             path: AppConfig.dashboard,
-            builder: (context, state) => const DashboardScreen(),
+            pageBuilder: (context, state) =>
+                slideTransitionPage(child: const DashboardScreen(), state: state),
           ),
           GoRoute(
             path: AppConfig.vitals,
-            builder: (context, state) => const VitalsScreen(),
+            pageBuilder: (context, state) =>
+                slideTransitionPage(child: const VitalsScreen(), state: state),
             routes: [
               GoRoute(
                 path: 'add',
                 parentNavigatorKey: _rootNavigatorKey,
-                builder: (context, state) => const AddVitalScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const AddVitalScreen(), state: state),
               ),
               GoRoute(
                 path: 'history',
                 parentNavigatorKey: _rootNavigatorKey,
-                builder: (context, state) {
+                pageBuilder: (context, state) {
                   final typeName = state.uri.queryParameters['type'];
                   final initialType = typeName != null
-                      ? VitalType.values.where((v) => v.name == typeName).firstOrNull
+                      ? VitalType.values
+                          .where((v) => v.name == typeName)
+                          .firstOrNull
                       : null;
-                  return VitalsHistoryScreen(initialType: initialType);
+                  return slideTransitionPage(
+                    child: VitalsHistoryScreen(initialType: initialType),
+                    state: state,
+                  );
                 },
               ),
             ],
@@ -160,90 +211,115 @@ GoRouter createRouter(Ref ref) {
           GoRoute(
             path: AppConfig.health,
             parentNavigatorKey: _shellNavigatorKey,
-            builder: (context, state) => const HealthScreen(),
+            pageBuilder: (context, state) =>
+                slideTransitionPage(child: const HealthScreen(), state: state),
           ),
           GoRoute(
             path: AppConfig.triage,
-            builder: (context, state) => const TriageScreen(),
+            pageBuilder: (context, state) =>
+                slideTransitionPage(child: const TriageScreen(), state: state),
             routes: [
               GoRoute(
                 path: 'result',
-                builder: (context, state) => TriageResultScreen(
-                  triageData: state.extra as Map<String, dynamic>? ?? {},
+                pageBuilder: (context, state) => slideTransitionPage(
+                  child: TriageResultScreen(
+                    triageData: state.extra as Map<String, dynamic>? ?? {},
+                  ),
+                  state: state,
                 ),
               ),
             ],
           ),
           GoRoute(
             path: AppConfig.passport,
-            builder: (context, state) => const PassportScreen(),
+            pageBuilder: (context, state) =>
+                slideTransitionPage(child: const PassportScreen(), state: state),
             routes: [
               GoRoute(
                 path: 'qr',
-                builder: (context, state) => const QrDisplayScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const QrDisplayScreen(), state: state),
               ),
             ],
           ),
           GoRoute(
             path: AppConfig.history,
-            builder: (context, state) => const HistoryScreen(),
+            pageBuilder: (context, state) =>
+                slideTransitionPage(child: const HistoryScreen(), state: state),
           ),
           GoRoute(
             path: AppConfig.insights,
             parentNavigatorKey: _shellNavigatorKey,
-            builder: (context, state) => const InsightsScreen(),
+            pageBuilder: (context, state) =>
+                slideTransitionPage(child: const InsightsScreen(), state: state),
           ),
           GoRoute(
             path: AppConfig.profile,
-            builder: (context, state) => const ProfileScreen(),
+            pageBuilder: (context, state) =>
+                slideTransitionPage(child: const ProfileScreen(), state: state),
             routes: [
               GoRoute(
                 path: 'about',
-                builder: (context, state) => const AboutScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const AboutScreen(), state: state),
               ),
               GoRoute(
                 path: 'subscription',
-                builder: (context, state) => const SubscriptionScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const SubscriptionScreen(), state: state),
               ),
               GoRoute(
                 path: 'edit',
-                builder: (context, state) => const EditProfileScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const EditProfileScreen(), state: state),
               ),
               GoRoute(
                 path: 'medical-records',
-                builder: (context, state) => const MedicalRecordsScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const MedicalRecordsScreen(), state: state),
               ),
               GoRoute(
                 path: 'settings',
-                builder: (context, state) => const SettingsScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const SettingsScreen(), state: state),
                 routes: [
                   GoRoute(
                     path: 'notifications',
-                    builder: (context, state) => const NotificationsSettingsScreen(),
+                    pageBuilder: (context, state) => slideTransitionPage(
+                        child: const NotificationsSettingsScreen(),
+                        state: state),
                   ),
                 ],
               ),
               GoRoute(
                 path: 'help',
-                builder: (context, state) => const HelpSupportScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const HelpSupportScreen(), state: state),
               ),
               GoRoute(
                 path: 'privacy',
-                builder: (context, state) => const PrivacyScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const PrivacyScreen(), state: state),
               ),
               GoRoute(
                 path: 'terms',
-                builder: (context, state) => const TermsOfServiceScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const TermsOfServiceScreen(), state: state),
               ),
               GoRoute(
                 path: 'medical-id',
-                builder: (context, state) => const MedicalIdScreen(),
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const MedicalIdScreen(), state: state),
               ),
             ],
           ),
         ],
       ),
-      // Standalone routes (no bottom nav)
+
+      // ── Standalone routes (no bottom nav, default transitions) ─────────
+      // These intentionally do NOT use slideTransitionPage — they are
+      // modal-style full-screen surfaces (SOS, family, export, add-flows)
+      // that benefit from the platform default rather than a forward push.
       GoRoute(
         path: AppConfig.family,
         parentNavigatorKey: _rootNavigatorKey,

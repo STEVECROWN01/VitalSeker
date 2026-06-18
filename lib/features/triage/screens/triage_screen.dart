@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import 'ai_thinking_screen.dart';
 
 class TriageScreen extends ConsumerStatefulWidget {
   const TriageScreen({super.key});
@@ -285,152 +286,167 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                gradient: AppColors.brandGradient,
-                borderRadius: BorderRadius.circular(10),
+    // Wrap the Scaffold in a Stack so we can layer the full-screen
+    // AiThinkingScreen on top while `_isProcessing` is true. The existing
+    // `_TypingIndicator` chat bubble still renders underneath (preserved
+    // per spec) — the overlay simply sits on top of it.
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    gradient: AppColors.brandGradient,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(Icons.psychology, color: Colors.white, size: 18),
+                ),
+                const SizedBox(width: 10),
+                const Text('AI Triage'),
+              ],
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.add_comment_outlined),
+                tooltip: 'New Chat',
+                onPressed: _startNewChat,
               ),
-              child: const Icon(Icons.psychology, color: Colors.white, size: 18),
-            ),
-            const SizedBox(width: 10),
-            const Text('AI Triage'),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_comment_outlined),
-            tooltip: 'New Chat',
-            onPressed: _startNewChat,
+            ],
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // Chat messages
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                final message = _messages[index];
-                return _ChatBubble(
-                  message: message,
-                  isDark: isDark,
-                  onViewResults: message.triageResult != null
-                      ? () => context.push(
-                            AppConfig.triageResult,
-                            extra: message.triageResult,
-                          )
-                      : null,
-                );
-              },
-            ),
-          ),
-
-          // Bottom input bar
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            decoration: BoxDecoration(
-              color: AppColors.surface(isDark),
-              border: Border(
-                top: BorderSide(
-                  color: AppColors.border(isDark),
+          body: Column(
+            children: [
+              // Chat messages
+              Expanded(
+                child: ListView.builder(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  itemCount: _messages.length,
+                  itemBuilder: (context, index) {
+                    final message = _messages[index];
+                    return _ChatBubble(
+                      message: message,
+                      isDark: isDark,
+                      onViewResults: message.triageResult != null
+                          ? () => context.push(
+                                AppConfig.triageResult,
+                                extra: message.triageResult,
+                              )
+                          : null,
+                    );
+                  },
                 ),
               ),
-              boxShadow: isDark
-                  ? null
-                  : [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.04),
-                        blurRadius: 8,
-                        offset: const Offset(0, -2),
+
+              // Bottom input bar
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                decoration: BoxDecoration(
+                  color: AppColors.surface(isDark),
+                  border: Border(
+                    top: BorderSide(
+                      color: AppColors.border(isDark),
+                    ),
+                  ),
+                  boxShadow: isDark
+                      ? null
+                      : [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.04),
+                            blurRadius: 8,
+                            offset: const Offset(0, -2),
+                          ),
+                        ],
+                ),
+                child: SafeArea(
+                  top: false,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _messageController,
+                          textInputAction: TextInputAction.send,
+                          onSubmitted: (_) => _sendMessage(),
+                          enabled: !_isProcessing,
+                          decoration: InputDecoration(
+                            hintText: 'Describe your symptoms...',
+                            hintStyle: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              color: AppColors.textHint(isDark),
+                            ),
+                            filled: true,
+                            fillColor: AppColors.inputFill(isDark),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 12),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide.none,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide(
+                                color: (AppColors.primary(isDark)).withValues(alpha: 0.3),
+                              ),
+                            ),
+                          ),
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            color: AppColors.textPrimary(isDark),
+                          ),
+                          maxLines: 4,
+                          minLines: 1,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: _isProcessing
+                              ? null
+                              : AppColors.brandGradient,
+                          color: _isProcessing
+                              ? (isDark ? AppColors.grey700 : AppColors.grey300)
+                              : null,
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          onPressed: _isProcessing ? null : _sendMessage,
+                          icon: _isProcessing
+                              ? SizedBox(
+                                  width: 18,
+                                  height: 18,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: AppColors.textSecondary(isDark),
+                                  ),
+                                )
+                              : const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+                        ),
                       ),
                     ],
-            ),
-            child: SafeArea(
-              top: false,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _messageController,
-                      textInputAction: TextInputAction.send,
-                      onSubmitted: (_) => _sendMessage(),
-                      enabled: !_isProcessing,
-                      decoration: InputDecoration(
-                        hintText: 'Describe your symptoms...',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
-                          color: AppColors.textHint(isDark),
-                        ),
-                        filled: true,
-                        fillColor: AppColors.inputFill(isDark),
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide.none,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide(
-                            color: (AppColors.primary(isDark)).withValues(alpha: 0.3),
-                          ),
-                        ),
-                      ),
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        color: AppColors.textPrimary(isDark),
-                      ),
-                      maxLines: 4,
-                      minLines: 1,
-                    ),
                   ),
-                  const SizedBox(width: 8),
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: _isProcessing
-                          ? null
-                          : AppColors.brandGradient,
-                      color: _isProcessing
-                          ? (isDark ? AppColors.grey700 : AppColors.grey300)
-                          : null,
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      onPressed: _isProcessing ? null : _sendMessage,
-                      icon: _isProcessing
-                          ? SizedBox(
-                              width: 18,
-                              height: 18,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: AppColors.textSecondary(isDark),
-                              ),
-                            )
-                          : const Icon(Icons.send_rounded, color: Colors.white, size: 20),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+
+        // Full-screen AI thinking overlay — additional layer on top of the
+        // chat. Dismissed automatically when `_isProcessing` flips to false.
+        if (_isProcessing)
+          const Positioned.fill(
+            child: AiThinkingScreen(),
+          ),
+      ],
     );
   }
 }

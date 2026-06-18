@@ -114,4 +114,27 @@ class EdgeFunctionService {
       throw Exception(message ?? 'Account deletion failed');
     }
   }
+
+  /// Medical Translation — translate a medical term or phrase into the target
+  /// language via the `translate` edge function.
+  ///
+  /// `targetLang` should be a human-readable language name (e.g. "French",
+  /// "Spanish", "Arabic"). The edge function is responsible for mapping that
+  /// to the appropriate translator locale.
+  ///
+  /// Returns the translated string. Throws on non-200 responses or empty
+  /// translation payloads.
+  Future<String> translate({required String text, required String targetLang}) async {
+    final response = await _client.functions.invoke(
+      'translate',
+      body: {'text': text, 'target_lang': targetLang},
+    );
+    if (response.status != 200) {
+      throw Exception('Translation failed: ${response.data}');
+    }
+    final data = response.data as Map<String, dynamic>;
+    return data['translation'] as String? ??
+        data['translated_text'] as String? ??
+        '';
+  }
 }

@@ -1,7 +1,11 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/health_passport_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/urgency_badge.dart';
@@ -24,18 +28,19 @@ import '../../../shared/widgets/urgency_badge.dart';
 ///      Conditions, Follow-up Questions, Disclaimer.
 ///   7. Action buttons row: "Save to Passport" (outlined) + "Share Result"
 ///      (filled).
-class TriageResultScreen extends StatefulWidget {
+class TriageResultScreen extends ConsumerStatefulWidget {
   final Map<String, dynamic> triageData;
 
   const TriageResultScreen({super.key, required this.triageData});
 
   @override
-  State<TriageResultScreen> createState() => _TriageResultScreenState();
+  ConsumerState<TriageResultScreen> createState() => _TriageResultScreenState();
 }
 
-class _TriageResultScreenState extends State<TriageResultScreen>
+class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _rotationController;
+  bool _isSaving = false;
 
   @override
   void initState() {
@@ -336,12 +341,15 @@ class _TriageResultScreenState extends State<TriageResultScreen>
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: () => AppSnackBar.success(
-                      context,
-                      'Triage result saved to your Health Passport.',
-                    ),
-                    icon: const Icon(Icons.bookmark_add_outlined, size: 18),
-                    label: const Text('Save to Passport'),
+                    onPressed: _isSaving ? null : _saveToPassport,
+                    icon: _isSaving
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.bookmark_add_outlined, size: 18),
+                    label: Text(_isSaving ? 'Saving...' : 'Save to Passport'),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
@@ -380,6 +388,76 @@ class _TriageResultScreenState extends State<TriageResultScreen>
   }
 
   // ── Helpers ──
+
+  /// Persist the current triage result to the user's health passport.
+  ///
+  /// Updates `last_assessment_date` to now and nudges `vital_score` based on
+  /// the triage urgency score (0–100, higher = more urgent). Higher urgency
+  /// lowers the vital score; lower urgency slightly raises it.
+  Future<void> _saveToPassport() async {
+    final user = ref.read(currentUserProvider);
+    if (user == null) {
+      if (mounted) {
+        AppSnackBar.error(
+            context, 'You must be signed in to save to your passport.');
+      }
+      return;
+    }
+
+    setState(() => _isSaving = true);
+    try {
+      // Prefer the cached passport; fall back to awaiting the future if it
+      // hasn't resolved yet.
+      final passportAsync = ref.read(healthPassportProvider);
+      final passport = passportAsync.valueOrNull ??
+          await ref.read(healthPassportProvider.future);
+
+      if (passport == null) {
+        if (mounted) {
+          AppSnackBar.error(
+              context, 'No health passport found. Please create one first.');
+        }
+        return;
+      }
+
+      final triage = widget.triageData['triage'] as Map<String, dynamic>? ??
+          widget.triageData;
+      final urgencyScore = (triage['urgency_score'] as int?) ?? 50;
+      // urgency_score: 0–100, higher = more urgent.
+      // vital_score:   0–100, higher = better health.
+      // delta is clamped to [−15, +10] so a single triage session never swings
+      // the score by more than 15 points.
+      final delta = ((50 - urgencyScore) / 5).round().clamp(-15, 10);
+      final newVitalScore = (passport.vitalScore + delta).clamp(0, 100);
+
+      await ref.read(databaseServiceProvider).updateHealthPassport(
+            passport.id,
+            {
+              'last_assessment_date': DateTime.now().toIso8601String(),
+              'vital_score': newVitalScore,
+            },
+          );
+
+      // Refresh the cached passport so downstream UI (vital score ring, etc.)
+      // reflects the new values immediately.
+      ref.invalidate(healthPassportProvider);
+
+      if (mounted) {
+        AppSnackBar.success(
+            context, 'Triage result saved to your health passport!');
+      }
+    } catch (e) {
+      if (mounted) {
+        AppSnackBar.errorFromException(
+          context,
+          'Failed to save triage result. Please try again.',
+          e,
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
+  }
 
   Color _urgencyColor(String level) {
     switch (level.toLowerCase()) {

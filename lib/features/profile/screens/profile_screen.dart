@@ -5,8 +5,10 @@ import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/family_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
+import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
@@ -215,15 +217,33 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 const SizedBox(height: 24),
 
                 // ── Stats row ──
-                Row(
-                  children: [
-                    _StatCard(label: 'Vitals Logged', value: '--', isDark: isDark),
-                    const SizedBox(width: 12),
-                    _StatCard(label: 'Triage Sessions', value: '--', isDark: isDark),
-                    const SizedBox(width: 12),
-                    _StatCard(label: 'Days Active', value: '--', isDark: isDark),
-                  ],
-                ),
+                Builder(builder: (context) {
+                  final vitalsCount =
+                      ref.watch(vitalsProvider).valueOrNull?.length ?? 0;
+                  final triageCount =
+                      ref.watch(symptomLogsProvider).valueOrNull?.length ?? 0;
+                  final daysActive = profile != null
+                      ? DateTime.now().difference(profile.createdAt).inDays
+                      : 0;
+                  return Row(
+                    children: [
+                      _StatCard(
+                          label: 'Vitals Logged',
+                          value: '$vitalsCount',
+                          isDark: isDark),
+                      const SizedBox(width: 12),
+                      _StatCard(
+                          label: 'Triage Sessions',
+                          value: '$triageCount',
+                          isDark: isDark),
+                      const SizedBox(width: 12),
+                      _StatCard(
+                          label: 'Days Active',
+                          value: '$daysActive',
+                          isDark: isDark),
+                    ],
+                  );
+                }),
                 const SizedBox(height: 24),
 
                 // ── Appearance ──
@@ -298,6 +318,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       label: 'Medical Records',
                       subtitle: 'Documents & imaging',
                       onTap: () => context.push(AppConfig.medicalRecords),
+                    ),
+                    _MenuItem(
+                      icon: Icons.translate,
+                      iconBg: _tint(AppColors.primaryContainer(isDark), isDark),
+                      iconFg: isDark
+                          ? AppColors.darkOnSurface
+                          : AppColors.primary(isDark),
+                      label: 'Medical Translation',
+                      subtitle: 'Translate medical terms',
+                      onTap: () => context.push(AppConfig.translation),
                     ),
                     _MenuItem(
                       icon: Icons.badge_outlined,

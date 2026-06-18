@@ -34,6 +34,7 @@ class AppConfig {
   static const String privacyPolicy = '/home/profile/privacy';
   static const String termsOfService = '/home/profile/terms';
   static const String medicalId = '/home/profile/medical-id';
+  static const String translation = '/home/profile/translation';
   static const String medications = '/home/medications';
   static const String addMedication = '/home/medications/add';
   static const String appointments = '/home/appointments';
