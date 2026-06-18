@@ -3,16 +3,41 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
-import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/models/symptom_log.dart';
+import '../../../core/models/user_profile.dart';
 import '../../../core/providers/health_passport_provider.dart';
-import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
+import '../../../core/providers/symptom_log_provider.dart';
+import '../../../core/providers/theme_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../core/services/edge_function_service.dart';
-import '../../../core/models/vital.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/vital_score_ring.dart';
 
+/// VitalSeker dashboard — redesigned to match the Google Stitch UI audit.
+///
+/// Layout (top → bottom):
+///   1. Compact ~72px app bar (white/translucent) — avatar + greeting +
+///      theme-toggle pill + notifications bell.
+///   2. Health Score hero card (brandGradient) — prominent "84"/100 number,
+///      "Good condition ✨" badge, 7-bar MON–SUN mini chart, "Tap for weekly
+///      insights" CTA, and the existing [VitalScoreRing] wrapped inside.
+///   3. Quick Actions bento grid — large "Check Symptoms Now" (col-span-2,
+///      secondary-container) + "Health Passport" + "My History".
+///   4. Full-width Emergency SOS button (red gradient, uppercase tracking).
+///   5. Recent Checks — up to 3 items with circular icons + colored severity
+///      dots (primary-container / yellow-500 / error).
+///   6. Footer — "Crafted under Keter Marketing design guidance."
+///
+/// The widget stays a [ConsumerStatefulWidget] so the AI-health-tip fetcher
+/// (previously surfaced as a card on the dashboard) keeps its state
+/// management. The tip itself is no longer rendered here — the card was
+/// removed per the design audit — but `_loadAiTip`/`_aiTip`/`_tipFetchedAt`
+/// remain so a future surface (e.g. the insights screen) can read the cached
+/// tip without a refetch. The data providers
+/// (userProfileProvider, healthPassportProvider, symptomLogsProvider,
+/// subscriptionProvider, vitalsProvider) are all still watched/read.
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
@@ -21,6 +46,12 @@ class DashboardScreen extends ConsumerStatefulWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  // ── AI health-tip state (preserved for state-management continuity) ──
+  //
+  // The tip is no longer rendered on the redesigned dashboard (the AI Health
+  // Tip card was removed per the design audit). The fetcher + cache remain
+  // so future surfaces can read `_aiTip` without paying for a second edge
+  // function call.
   String? _aiTip;
   bool _isLoadingTip = false;
   DateTime? _tipFetchedAt;
@@ -57,14 +88,18 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
       // Build a brief context string for the AI to base its tip on.
       final contextParts = <String>[];
-      if (profile?.bloodType != null) contextParts.add('blood type: ${profile!.bloodType}');
+      if (profile?.bloodType != null) {
+        contextParts.add('blood type: ${profile!.bloodType}');
+      }
       if (profile?.allergies.isNotEmpty == true) {
         contextParts.add('allergies: ${profile!.allergies.join(', ')}');
       }
       if (profile?.chronicConditions.isNotEmpty == true) {
         contextParts.add('conditions: ${profile!.chronicConditions.join(', ')}');
       }
-      if (passport != null) contextParts.add('vital score: ${passport.vitalScore}/100');
+      if (passport != null) {
+        contextParts.add('vital score: ${passport.vitalScore}/100');
+      }
       if (vitalsAsync != null && vitalsAsync.isNotEmpty) {
         final latest = vitalsAsync.first;
         contextParts.add('latest vital: ${latest.type.name}=${latest.value}');
@@ -122,522 +157,205 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return tips[DateTime.now().millisecond % tips.length];
   }
 
+  /// Time-of-day-aware greeting ("Good morning/afternoon/evening/night").
+  String _greeting() {
+    final h = DateTime.now().hour;
+    if (h < 12) return 'Good morning';
+    if (h < 17) return 'Good afternoon';
+    if (h < 22) return 'Good evening';
+    return 'Good night';
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final profileAsync = ref.watch(userProfileProvider);
     final passportAsync = ref.watch(healthPassportProvider);
     final logsAsync = ref.watch(symptomLogsProvider);
-    final subAsync = ref.watch(subscriptionProvider);
+    // Watched for state-management continuity — the subscription banner was
+    // removed from the redesigned UI per the design audit, but the provider
+    // stays warm so a future surface (e.g. paywall) can read it instantly.
+    ref.watch(subscriptionProvider);
+
+    final vitalScore = passportAsync.maybeWhen(
+      data: (p) => p?.vitalScore ?? 0,
+      orElse: () => 0,
+    );
+    final firstName = profileAsync.maybeWhen(
+      data: (p) {
+        final full = p?.fullName;
+        if (full == null || full.isEmpty) return 'User';
+        final parts = full.split(RegExp(r'\s+'));
+        return parts.isNotEmpty && parts.first.isNotEmpty
+            ? parts.first
+            : 'User';
+      },
+      orElse: () => 'User',
+    );
 
     return Scaffold(
+      backgroundColor: AppColors.background(isDark),
       body: CustomScrollView(
         slivers: [
-          // App Bar with gradient and user info
+          // ── 1. Compact ~72px app bar (white/translucent) ──
           SliverAppBar(
-            expandedHeight: 220,
-            floating: false,
+            toolbarHeight: 72,
             pinned: true,
-            backgroundColor: isDark ? const Color(0xFF0A2E22) : const Color(0xFF0B7A5B),
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                decoration: BoxDecoration(
-                  gradient: isDark
-                      ? const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xFF0A2E22), Color(0xFF0A0E17)],
-                        )
-                      : const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xFF0B7A5B), Color(0xFF0B9E70)],
+            backgroundColor: AppColors.surface(isDark).withValues(alpha: 0.96),
+            surfaceTintColor: Colors.transparent,
+            elevation: 0,
+            titleSpacing: 20,
+            title: Row(
+              children: [
+                _Avatar(profileAsync: profileAsync),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '${_greeting()},',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 12,
+                          color: AppColors.textSecondary(isDark),
+                          height: 1.2,
                         ),
+                      ),
+                      Text(
+                        '$firstName 👋',
+                        style: TextStyle(
+                          fontFamily: 'ClashDisplay',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary(isDark),
+                          height: 1.2,
+                          letterSpacing: -0.01,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ],
+                  ),
                 ),
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Header row with greeting and avatar/notification
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Hello,',
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 14,
-                                      color: Colors.white.withValues(alpha: 0.8),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    profileAsync.maybeWhen(
-                                      data: (p) => p?.fullName ?? 'User',
-                                      orElse: () => 'User',
-                                    ),
-                                    style: const TextStyle(
-                                      fontFamily: 'ClashDisplay',
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            // User avatar — tap to open profile
-                            GestureDetector(
-                              onTap: () => context.push(AppConfig.profile),
-                              child: Container(
-                                width: 44,
-                                height: 44,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.2),
-                                  borderRadius: BorderRadius.circular(14),
-                                  border: Border.all(
-                                    color: Colors.white.withValues(alpha: 0.3),
-                                    width: 1.5,
-                                  ),
-                                  image: profileAsync.maybeWhen(
-                                    data: (p) => p?.avatarUrl != null && p!.avatarUrl!.isNotEmpty
-                                        ? DecorationImage(
-                                            image: NetworkImage(p.avatarUrl!),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : null,
-                                    orElse: () => null,
-                                  ),
-                                ),
-                                child: profileAsync.maybeWhen(
-                                  data: (p) {
-                                    final hasAvatar = p?.avatarUrl != null && p!.avatarUrl!.isNotEmpty;
-                                    if (hasAvatar) return const SizedBox.shrink();
-                                    final name = p?.fullName ?? 'U';
-                                    return Center(
-                                      child: Text(
-                                        name.isNotEmpty ? name[0].toUpperCase() : 'U',
-                                        style: const TextStyle(
-                                          fontFamily: 'ClashDisplay',
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  orElse: () => const SizedBox.shrink(),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            // Notification bell — tap to open notification settings
-                            GestureDetector(
-                              onTap: () => context.push(AppConfig.notificationsSettings),
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.15),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: const Icon(Icons.notifications_outlined, color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ).animate().fadeIn(duration: 400.ms),
-                        const SizedBox(height: 16),
-                        // Subtitle / health summary
-                        profileAsync.maybeWhen(
-                          data: (p) {
-                            final bloodType = p?.bloodType;
-                            final allergies = p?.allergies ?? [];
-                            if (bloodType != null || allergies.isNotEmpty) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  children: [
-                                    if (bloodType != null) ...[
-                                      Icon(Icons.bloodtype, color: Colors.white.withValues(alpha: 0.8), size: 16),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        bloodType,
-                                        style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: Colors.white.withValues(alpha: 0.9), fontWeight: FontWeight.w600),
-                                      ),
-                                      if (allergies.isNotEmpty) const SizedBox(width: 12),
-                                    ],
-                                    if (allergies.isNotEmpty) ...[
-                                      Icon(Icons.warning_amber, color: isDark ? AppColors.darkWarning : AppColors.lightWarning, size: 16),
-                                      const SizedBox(width: 4),
-                                      Expanded(
-                                        child: Text(
-                                          '${allergies.length} allerg${allergies.length == 1 ? 'y' : 'ies'}',
-                                          style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: Colors.white.withValues(alpha: 0.9)),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ],
-                                ),
-                              );
-                            }
-                            return const SizedBox.shrink();
-                          },
-                          orElse: () => const SizedBox.shrink(),
-                        ),
-                      ],
+                _ThemeTogglePill(
+                  isDark: isDark,
+                  onTap: () {
+                    ref.read(themeModeProvider.notifier).setTheme(
+                          isDark ? ThemeMode.light : ThemeMode.dark,
+                        );
+                  },
+                ),
+                const SizedBox(width: 8),
+                GestureDetector(
+                  onTap: () => context.push(AppConfig.notificationsSettings),
+                  child: Container(
+                    width: 38,
+                    height: 38,
+                    decoration: BoxDecoration(
+                      color: AppColors.subtleBackground(isDark),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.borderLight(isDark)),
+                    ),
+                    child: Icon(
+                      Icons.notifications_outlined,
+                      color: AppColors.textPrimary(isDark),
+                      size: 20,
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
 
-          // Content with proper spacing below the app bar
+          // ── 2–6. Main scrollable content ──
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Vital Score Card
-                  _VitalScoreCard(
-                    vitalScore: passportAsync.maybeWhen(
-                      data: (p) => p?.vitalScore ?? 0,
-                      orElse: () => 0,
-                    ),
-                    isPro: subAsync.maybeWhen(
-                      data: (s) => s?.isPro ?? false,
-                      orElse: () => false,
-                    ),
-                  ).animate().slideY(duration: 500.ms, begin: 0.2),
-                  const SizedBox(height: 20),
+                  // 2. Health Score hero card
+                  _HealthScoreHeroCard(score: vitalScore)
+                      .animate()
+                      .slideY(duration: 500.ms, begin: 0.15)
+                      .fadeIn(duration: 400.ms),
+                  const SizedBox(height: 24),
 
-                  // Quick Actions
-                  Text(
-                    'Quick Actions',
-                    style: TextStyle(
-                      fontFamily: 'ClashDisplay',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary(isDark),
-                    ),
-                  ),
+                  // 3. Quick Actions (bento grid)
+                  _SectionHeader(title: 'Quick Actions'),
                   const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      _QuickActionCard(
-                        icon: Icons.monitor_heart,
-                        label: 'Log Vitals',
-                        color: AppColors.primary(isDark),
-                        onTap: () => context.push(AppConfig.addVital),
-                      ),
-                      const SizedBox(width: 12),
-                      _QuickActionCard(
-                        icon: Icons.healing,
-                        label: 'Start Triage',
-                        color: AppColors.secondary(isDark),
-                        onTap: () => context.push(AppConfig.triage),
-                      ),
-                      const SizedBox(width: 12),
-                      _QuickActionCard(
-                        icon: Icons.emergency,
-                        label: 'Emergency',
-                        color: AppColors.urgencyEmergency,
-                        onTap: () => context.push(AppConfig.sos),
-                      ),
-                      const SizedBox(width: 12),
-                      _QuickActionCard(
-                        icon: Icons.medication,
-                        label: 'Medications',
-                        color: AppColors.urgencyMedium,
-                        onTap: () => context.push(AppConfig.medications),
-                      ),
-                    ],
-                  ).animate().fadeIn(duration: 400.ms, delay: 200.ms),
+                  _BentoQuickActions(isDark: isDark)
+                      .animate()
+                      .fadeIn(duration: 400.ms, delay: 100.ms),
+                  const SizedBox(height: 24),
+
+                  // 4. Emergency SOS
+                  _EmergencySosButton(
+                    isDark: isDark,
+                    onTap: () => context.push(AppConfig.sos),
+                  )
+                      .animate()
+                      .fadeIn(duration: 400.ms, delay: 200.ms),
                   const SizedBox(height: 28),
 
-                  // Recent Vitals
-                  Consumer(builder: (context, ref, _) {
-                    final vitalsAsync = ref.watch(vitalsProvider);
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Recent Vitals',
-                              style: TextStyle(
-                                fontFamily: 'ClashDisplay',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textPrimary(isDark),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () => context.push(AppConfig.vitals),
-                              child: Text(
-                                'View All',
-                                style: TextStyle(
-                                  fontFamily: 'Outfit',
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.primary(isDark),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        SizedBox(
-                          height: 110,
-                          child: vitalsAsync.maybeWhen(
-                            data: (vitals) {
-                              if (vitals.isEmpty) {
-                                return _EmptyStateCard(
-                                  icon: Icons.monitor_heart,
-                                  message: 'No vitals logged yet',
-                                  subtitle: 'Tap "Log Vitals" to start tracking',
-                                );
-                              }
-                              // Show latest value for each vital type
-                              final latestByType = <VitalType, Vital>{};
-                              for (final v in vitals) {
-                                if (!latestByType.containsKey(v.type) ||
-                                    v.recordedAt.isAfter(latestByType[v.type]!.recordedAt)) {
-                                  latestByType[v.type] = v;
-                                }
-                              }
-                              final displayTypes = [
-                                VitalType.heartRate,
-                                VitalType.bloodPressure,
-                                VitalType.spO2,
-                                VitalType.temperature,
-                              ];
-                              return ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: displayTypes.length,
-                                separatorBuilder: (_, __) => const SizedBox(width: 12),
-                                itemBuilder: (context, index) {
-                                  final type = displayTypes[index];
-                                  final vital = latestByType[type];
-                                  return _VitalSummaryCard(
-                                    vitalType: type,
-                                    vital: vital,
-                                  );
-                                },
-                              );
-                            },
-                            orElse: () => const Center(child: CircularProgressIndicator()),
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-                  const SizedBox(height: 28),
-
-                  // AI Health Tip
-                  GestureDetector(
-                    onTap: _isLoadingTip ? null : _loadAiTip,
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: isDark
-                              ? [const Color(0xFF0A2E22), const Color(0xFF151925)]
-                              : [const Color(0xFFE0F2F1), const Color(0xFFE8E5FF)],
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: AppColors.borderLight(isDark),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 44,
-                            height: 44,
-                            decoration: BoxDecoration(
-                              color: AppColors.primary(isDark).withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: _isLoadingTip
-                                ? const Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: CircularProgressIndicator(strokeWidth: 2),
-                                  )
-                                : Icon(Icons.tips_and_updates, color: AppColors.primary(isDark), size: 24),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      'AI Health Tip',
-                                      style: TextStyle(
-                                        fontFamily: 'ClashDisplay',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.textPrimary(isDark),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 6),
-                                    Icon(
-                                      Icons.refresh,
-                                      size: 12,
-                                      color: AppColors.textHint(isDark),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  _aiTip ?? 'Loading your personalized tip...',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 12,
-                                    color: AppColors.textSecondary(isDark),
-                                    height: 1.4,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ).animate().fadeIn(duration: 400.ms, delay: 300.ms),
-                  const SizedBox(height: 28),
-
-                  // Recent Activity
-                  Text(
-                    'Recent Activity',
-                    style: TextStyle(
-                      fontFamily: 'ClashDisplay',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary(isDark),
-                    ),
+                  // 5. Recent Checks
+                  _SectionHeader(
+                    title: 'Recent Checks',
+                    actionText: 'View All',
+                    onAction: () => context.push(AppConfig.history),
                   ),
                   const SizedBox(height: 12),
                   logsAsync.maybeWhen(
                     data: (logs) {
                       if (logs.isEmpty) {
-                        return _EmptyStateCard(
+                        return const _EmptyStateCard(
                           icon: Icons.history,
                           message: 'No symptom logs yet',
-                          subtitle: 'Start your first triage to see activity here',
+                          subtitle:
+                              'Start your first triage to see activity here',
                         );
                       }
                       return Column(
-                        children: logs.take(5).map((log) {
-                          return Card(
-                            margin: const EdgeInsets.only(bottom: 8),
-                            child: ListTile(
-                              leading: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: _severityColor(log.severity).withValues(alpha: 0.12),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Icon(Icons.healing, color: _severityColor(log.severity), size: 20),
-                              ),
-                              title: Text(
-                                log.symptoms.take(2).join(', '),
-                                style: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
-                              ),
-                              subtitle: Text(
-                                'Severity: ${log.severity}/10',
-                                style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
-                              ),
-                              trailing: Text(
-                                _formatDate(log.loggedAt),
-                                style: TextStyle(fontFamily: 'Inter', fontSize: 11, color: AppColors.textHint(isDark)),
-                              ),
-                            ),
+                        children: logs.take(3).map((log) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: _RecentCheckItem(log: log),
                           );
                         }).toList(),
                       );
                     },
-                    loading: () => const Center(child: CircularProgressIndicator()),
-                    error: (_, __) => _EmptyStateCard(icon: Icons.error, message: 'Failed to load logs', subtitle: ''),
+                    loading: () => const Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                    error: (_, __) => const _EmptyStateCard(
+                      icon: Icons.error_outline,
+                      message: 'Failed to load recent checks',
+                      subtitle: 'Pull down to retry',
+                    ),
                     orElse: () => const SizedBox.shrink(),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 28),
 
-                  // Subscription Banner
-                  subAsync.maybeWhen(
-                    data: (sub) {
-                      if (sub?.isPro != true) {
-                        return Card(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: AppColors.brandGradient,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            padding: const EdgeInsets.all(20),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Upgrade to Pro',
-                                        style: TextStyle(
-                                          fontFamily: 'ClashDisplay',
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        '\$6.99/mo - Weekly insights, unlimited triage',
-                                        style: TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: 12,
-                                          color: Colors.white.withValues(alpha: 0.8),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () => context.push(AppConfig.subscription),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
-                                    foregroundColor: AppColors.primary(isDark),
-                                  ),
-                                  child: const Text('Upgrade', style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ).animate().slideY(duration: 500.ms, begin: 0.1, delay: 300.ms);
-                      }
-                      return const SizedBox.shrink();
-                    },
-                    orElse: () => const SizedBox.shrink(),
+                  // 6. Footer
+                  Center(
+                    child: Text(
+                      'Crafted under Keter Marketing design guidance.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 11,
+                        color: AppColors.textTertiary(isDark),
+                        height: 1.5,
+                        letterSpacing: 0.1,
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 100), // Bottom nav space
+                  const SizedBox(height: 100), // Bottom-nav clearance
                 ],
               ),
             ),
@@ -646,91 +364,103 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       ),
     );
   }
-
-  Color _severityColor(int severity) {
-    if (severity <= 3) return AppColors.urgencyLow;
-    if (severity <= 6) return AppColors.urgencyMedium;
-    if (severity <= 8) return AppColors.urgencyHigh;
-    return AppColors.urgencyEmergency;
-  }
-
-  String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final diff = now.difference(date);
-    if (diff.inDays == 0) return 'Today';
-    if (diff.inDays == 1) return 'Yesterday';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
-    return '${date.day}/${date.month}';
-  }
 }
 
-class _VitalScoreCard extends StatelessWidget {
-  final int vitalScore;
-  final bool isPro;
+// ═══════════════════════════════════════════════════════════════════════════
+// App-bar pieces
+// ═══════════════════════════════════════════════════════════════════════════
 
-  const _VitalScoreCard({required this.vitalScore, required this.isPro});
+/// 40px circular avatar — tappable to open the profile screen.
+class _Avatar extends StatelessWidget {
+  final AsyncValue<UserProfile?> profileAsync;
+  const _Avatar({required this.profileAsync});
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDark;
+    return GestureDetector(
+      onTap: () => context.push(AppConfig.profile),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.primaryContainer(isDark),
+          border: Border.all(
+            color: AppColors.borderLight(isDark),
+            width: 1.5,
+          ),
+          image: profileAsync.maybeWhen(
+            data: (p) => p?.avatarUrl != null && p!.avatarUrl!.isNotEmpty
+                ? DecorationImage(
+                    image: NetworkImage(p.avatarUrl!),
+                    fit: BoxFit.cover,
+                  )
+                : null,
+            orElse: () => null,
+          ),
+        ),
+        child: profileAsync.maybeWhen(
+          data: (p) {
+            final hasAvatar =
+                p?.avatarUrl != null && p!.avatarUrl!.isNotEmpty;
+            if (hasAvatar) return const SizedBox.shrink();
+            final name = p?.fullName ?? 'U';
+            return Center(
+              child: Text(
+                name.isNotEmpty ? name[0].toUpperCase() : 'U',
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primary(isDark),
+                ),
+              ),
+            );
+          },
+          orElse: () => const SizedBox.shrink(),
+        ),
+      ),
+    );
+  }
+}
 
-    return Card(
-      elevation: 4,
-      shadowColor: AppColors.primary(isDark).withValues(alpha: 0.2),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
+/// Pill-shaped theme toggle — tapping flips light ↔ dark via [themeModeProvider].
+class _ThemeTogglePill extends StatelessWidget {
+  final bool isDark;
+  final VoidCallback onTap;
+  const _ThemeTogglePill({required this.isDark, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: BoxDecoration(
+          color: AppColors.subtleBackground(isDark),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.borderLight(isDark)),
+        ),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            VitalScoreRing(score: vitalScore, size: 100),
-            const SizedBox(width: 24),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Vital Score',
-                    style: TextStyle(
-                      fontFamily: 'ClashDisplay',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary(isDark),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Your overall health indicator',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 13,
-                      color: AppColors.textSecondary(isDark),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  if (isPro)
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary(isDark).withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.workspace_premium, size: 14, color: AppColors.primary(isDark)),
-                          SizedBox(width: 4),
-                          Text(
-                            'PRO',
-                            style: TextStyle(
-                              fontFamily: 'DMSans',
-                              fontSize: 11,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.primary(isDark),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
+            Icon(
+              isDark
+                  ? Icons.light_mode_outlined
+                  : Icons.dark_mode_outlined,
+              size: 14,
+              color: AppColors.textSecondary(isDark),
+            ),
+            const SizedBox(width: 4),
+            Text(
+              isDark ? 'Light' : 'Dark',
+              style: TextStyle(
+                fontFamily: 'DMSans',
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textSecondary(isDark),
+                letterSpacing: 0.4,
               ),
             ),
           ],
@@ -740,68 +470,671 @@ class _VitalScoreCard extends StatelessWidget {
   }
 }
 
-class _QuickActionCard extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final Color color;
-  final VoidCallback onTap;
+// ═══════════════════════════════════════════════════════════════════════════
+// Section header
+// ═══════════════════════════════════════════════════════════════════════════
 
-  const _QuickActionCard({
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  final String? actionText;
+  final VoidCallback? onAction;
+  const _SectionHeader({required this.title, this.actionText, this.onAction});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = context.isDark;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontFamily: 'ClashDisplay',
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary(isDark),
+            height: 1.2,
+            letterSpacing: -0.01,
+          ),
+        ),
+        if (actionText != null && onAction != null)
+          TextButton(
+            onPressed: onAction,
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: const Size(0, 0),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Text(
+              actionText!,
+              style: TextStyle(
+                fontFamily: 'Outfit',
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: AppColors.primary(isDark),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 2. Health Score hero card (gradient bg, prominent "84", weekly mini chart,
+//    CTA, and the existing VitalScoreRing wrapped inside).
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _HealthScoreHeroCard extends StatelessWidget {
+  final int score;
+  const _HealthScoreHeroCard({required this.score});
+
+  String _conditionLabel() {
+    if (score >= 80) return 'Good condition';
+    if (score >= 60) return 'Fair condition';
+    if (score >= 40) return 'Needs attention';
+    if (score >= 20) return 'Poor condition';
+    return 'Critical';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = context.isDark;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: AppColors.brandGradientFor(isDark),
+        borderRadius: BorderRadius.circular(28),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary(isDark).withValues(alpha: 0.28),
+            blurRadius: 24,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Top row: label + condition badge
+          Row(
+            children: [
+              Text(
+                'HEALTH SCORE',
+                style: TextStyle(
+                  fontFamily: 'DMSans',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.2,
+                  color: Colors.white.withValues(alpha: 0.85),
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.18),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.32),
+                    width: 1,
+                  ),
+                ),
+                child: Text(
+                  '${_conditionLabel()} ✨',
+                  style: const TextStyle(
+                    fontFamily: 'DMSans',
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    letterSpacing: 0.3,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          // Score row: prominent "84" + "/100" (left) and the VitalScoreRing
+          // wrapped inside the hero card (right, decorative arc).
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          '$score',
+                          style: const TextStyle(
+                            fontFamily: 'ClashDisplay',
+                            fontSize: 56,
+                            fontWeight: FontWeight.w800, // ExtraBold
+                            color: Colors.white,
+                            height: 1.0,
+                            letterSpacing: -1.5,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '/100',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white.withValues(alpha: 0.75),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Your overall health indicator',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 12,
+                        color: Colors.white.withValues(alpha: 0.7),
+                        height: 1.4,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              // VitalScoreRing wrapped in a translucent white circle so the
+              // ring's track + arc stay legible against the green gradient.
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.22),
+                  shape: BoxShape.circle,
+                ),
+                child: VitalScoreRing(
+                  score: score,
+                  size: 80,
+                  showLabel: false,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 22),
+          // 7-bar weekly mini chart (MON–SUN)
+          _WeeklyMiniChart(score: score),
+          const SizedBox(height: 16),
+          // CTA
+          GestureDetector(
+            onTap: () => context.push(AppConfig.insights),
+            behavior: HitTestBehavior.opaque,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Tap for weekly insights',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white.withValues(alpha: 0.95),
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Icon(
+                  Icons.arrow_forward,
+                  size: 16,
+                  color: Colors.white.withValues(alpha: 0.95),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// 7-bar mini chart (MON–SUN) derived deterministically from the vital score.
+/// Today's bar is highlighted in solid white; other bars are white @ 35%.
+class _WeeklyMiniChart extends StatelessWidget {
+  final int score;
+  const _WeeklyMiniChart({required this.score});
+
+  static const _days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  // Deterministic MON–SUN offsets around the current score.
+  static const _variations = [-6, 3, 7, -3, 9, 4, 0];
+
+  @override
+  Widget build(BuildContext context) {
+    // DateTime.weekday: 1=Mon … 7=Sun → 0-based for our array.
+    final today = (DateTime.now().weekday - 1) % 7;
+    final values = List<double>.generate(
+      7,
+      (i) => (score + _variations[i]).clamp(0, 100).toDouble(),
+    );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: List.generate(7, (i) {
+        final isToday = i == today;
+        // Bar height: min 8px (for score 0) → max 40px (for score 100).
+        final barHeight = 8 + (values[i] / 100) * 32;
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 40,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  width: 22,
+                  height: barHeight,
+                  decoration: BoxDecoration(
+                    color: isToday
+                        ? Colors.white
+                        : Colors.white.withValues(alpha: 0.35),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              _days[i],
+              style: TextStyle(
+                fontFamily: 'DMSans',
+                fontSize: 10,
+                fontWeight: isToday ? FontWeight.w700 : FontWeight.w500,
+                color: isToday
+                    ? Colors.white
+                    : Colors.white.withValues(alpha: 0.6),
+              ),
+            ),
+          ],
+        );
+      }),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 3. Quick Actions — 2-col bento grid
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _BentoQuickActions extends StatelessWidget {
+  final bool isDark;
+  const _BentoQuickActions({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Row 1: large "Check Symptoms Now" — col-span-2, secondary-container bg
+        _LargeBentoCard(
+          isDark: isDark,
+          icon: Icons.healing,
+          title: 'Check Symptoms Now',
+          subtitle: 'AI-powered triage in 60 seconds',
+          onTap: () => context.push(AppConfig.triage),
+        ),
+        const SizedBox(height: 12),
+        // Row 2: two smaller cards side-by-side
+        Row(
+          children: [
+            Expanded(
+              child: _SmallBentoCard(
+                isDark: isDark,
+                icon: Icons.shield_outlined,
+                title: 'Health Passport',
+                subtitle: 'QR & medical info',
+                onTap: () => context.push(AppConfig.passport),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _SmallBentoCard(
+                isDark: isDark,
+                icon: Icons.history,
+                title: 'My History',
+                subtitle: 'Past checks & vitals',
+                onTap: () => context.push(AppConfig.history),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+/// Large full-width bento card — secondary-container background.
+class _LargeBentoCard extends StatelessWidget {
+  final bool isDark;
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+  const _LargeBentoCard({
+    required this.isDark,
     required this.icon,
-    required this.label,
-    required this.color,
+    required this.title,
+    required this.subtitle,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    // secondary-container: light = Clean Mint #D1FADF, dark = #0B7A5B
+    final bg = AppColors.secondaryContainer(isDark);
+    final titleColor = isDark ? Colors.white : AppColors.lightSecondary;
+    final subtitleColor = isDark
+        ? Colors.white.withValues(alpha: 0.75)
+        : AppColors.lightSecondary.withValues(alpha: 0.7);
+    final iconBg = isDark
+        ? Colors.white.withValues(alpha: 0.15)
+        : AppColors.lightSecondary.withValues(alpha: 0.12);
+    final iconColor = isDark ? Colors.white : AppColors.lightSecondary;
 
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-          decoration: BoxDecoration(
-            color: AppColors.cardBackground(isDark),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.borderLight(isDark)),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.08)
+                : AppColors.lightSecondary.withValues(alpha: 0.15),
           ),
-          child: Column(
-            children: [
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: color, size: 22),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: iconBg,
+                borderRadius: BorderRadius.circular(14),
               ),
-              const SizedBox(height: 8),
-              Text(
-                label,
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                  color: isDark ? AppColors.grey400 : AppColors.grey600,
-                ),
-                textAlign: TextAlign.center,
+              child: Icon(icon, color: iconColor, size: 24),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                      color: titleColor,
+                      height: 1.2,
+                      letterSpacing: -0.01,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 12,
+                      color: subtitleColor,
+                      height: 1.4,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            const SizedBox(width: 12),
+            Icon(Icons.arrow_forward, color: iconColor, size: 22),
+          ],
         ),
       ),
     );
   }
 }
 
+/// Smaller bento card — half-width, surface bg, primary-tinted icon.
+class _SmallBentoCard extends StatelessWidget {
+  final bool isDark;
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+  const _SmallBentoCard({
+    required this.isDark,
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final primary = AppColors.primary(isDark);
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.cardBackground(isDark),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: AppColors.borderLight(isDark)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: primary.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: primary, size: 20),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: TextStyle(
+                fontFamily: 'Outfit',
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary(isDark),
+                height: 1.2,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              subtitle,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 11,
+                color: AppColors.textSecondary(isDark),
+                height: 1.4,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 4. Emergency SOS button — full-width, red gradient, uppercase tracking.
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _EmergencySosButton extends StatelessWidget {
+  final bool isDark;
+  final VoidCallback onTap;
+  const _EmergencySosButton({required this.isDark, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
+        decoration: BoxDecoration(
+          gradient: AppColors.sosGradient, // #BA1A1A → #93000A
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.error(isDark).withValues(alpha: 0.32),
+              blurRadius: 18,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.emergency,
+              color: Colors.white,
+              size: 22,
+            ),
+            SizedBox(width: 10),
+            Text(
+              'EMERGENCY SOS',
+              style: TextStyle(
+                fontFamily: 'DMSans',
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 2.4, // tracking-widest
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 5. Recent Checks — 3 items with circular icons + colored severity dots.
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _RecentCheckItem extends StatelessWidget {
+  final SymptomLog log;
+  const _RecentCheckItem({required this.log});
+
+  /// Maps the audit palette (primary-container / yellow-500 / error) to the
+  /// log's 0–10 severity.
+  Color _severityColor(bool isDark) {
+    if (log.severity <= 3) return AppColors.primaryContainer(isDark);
+    if (log.severity <= 7) return const Color(0xFFFFC107); // yellow-500 / amber
+    return AppColors.error(isDark);
+  }
+
+  String _formatDate(DateTime date) {
+    final now = DateTime.now();
+    final diff = now.difference(date);
+    if (diff.inHours < 1) return 'Just now';
+    if (diff.inHours < 24) return '${diff.inHours}h ago';
+    if (diff.inDays == 0) return 'Today';
+    if (diff.inDays == 1) return 'Yesterday';
+    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    return '${date.day}/${date.month}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = context.isDark;
+    final color = _severityColor(isDark);
+    final title = log.symptoms.take(2).join(', ');
+    final displayTitle = title.isEmpty ? 'Symptom check' : title;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+      decoration: BoxDecoration(
+        color: AppColors.cardBackground(isDark),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.borderLight(isDark)),
+      ),
+      child: Row(
+        children: [
+          // Circular icon with severity-tinted backdrop
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.healing, color: color, size: 22),
+          ),
+          const SizedBox(width: 14),
+          // Symptom name + meta
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  displayTitle,
+                  style: TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary(isDark),
+                    height: 1.3,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'Severity ${log.severity}/10 · ${_formatDate(log.loggedAt)}',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 11,
+                    color: AppColors.textSecondary(isDark),
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          // Severity dot
+          Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Empty-state card (for when the user has no recent checks yet).
+// ═══════════════════════════════════════════════════════════════════════════
+
 class _EmptyStateCard extends StatelessWidget {
   final IconData icon;
   final String message;
   final String subtitle;
-
   const _EmptyStateCard({
     required this.icon,
     required this.message,
@@ -810,106 +1143,42 @@ class _EmptyStateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            Icon(icon, size: 48, color: AppColors.textTertiary(isDark)),
-            const SizedBox(height: 12),
-            Text(
-              message,
-              style: TextStyle(
-                fontFamily: 'Outfit',
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textSecondary(isDark),
-              ),
-            ),
-            if (subtitle.isNotEmpty) ...[
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 13,
-                  color: AppColors.textTertiary(isDark),
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _VitalSummaryCard extends StatelessWidget {
-  final VitalType vitalType;
-  final Vital? vital;
-
-  const _VitalSummaryCard({
-    required this.vitalType,
-    this.vital,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
+    final isDark = context.isDark;
     return Container(
-      width: 140,
-      padding: const EdgeInsets.all(16),
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: AppColors.cardBackground(isDark),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.borderLight(isDark)),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: vitalType.color.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(vitalType.icon, color: vitalType.color, size: 16),
-              ),
-              const Spacer(),
-              if (vital != null)
-                Icon(
-                  Icons.trending_up,
-                  size: 14,
-                  color: AppColors.urgencyLow,
-                ),
-            ],
-          ),
+          Icon(icon, size: 40, color: AppColors.textTertiary(isDark)),
           const SizedBox(height: 12),
           Text(
-            vital != null ? vital!.displayValue : '--',
+            message,
             style: TextStyle(
-              fontFamily: 'JetBrainsMono',
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary(isDark),
+              fontFamily: 'Outfit',
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textSecondary(isDark),
             ),
+            textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 2),
-          Text(
-            vitalType.displayName,
-            style: TextStyle(
-              fontFamily: 'Inter',
-              fontSize: 11,
-              color: AppColors.textHint(isDark),
+          if (subtitle.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 12,
+                color: AppColors.textTertiary(isDark),
+                height: 1.4,
+              ),
+              textAlign: TextAlign.center,
             ),
-            overflow: TextOverflow.ellipsis,
-          ),
+          ],
         ],
       ),
     );

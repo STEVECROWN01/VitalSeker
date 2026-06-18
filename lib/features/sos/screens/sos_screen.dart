@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -24,10 +26,37 @@ class _SosScreenState extends ConsumerState<SosScreen>
   bool _sosActive = false;
   String? _sosMessage;
   Map<String, dynamic>? _sosResult;
+  // Live GPS coordinates obtained during the SOS trigger — shown in the
+  // active state contact card so the user can see what was shared.
+  String? _locationText;
 
-  // Pulse animation
+  /// True while the alert is being sent OR after it has been sent (before the
+  /// user resolves it). Drives the full-screen red gradient + active UI.
+  bool get _isActiveState => _isSending || _sosActive;
+
+  // Pulse animation — subtle breathing of the SOS button.
   late final AnimationController _pulseController;
   late final Animation<double> _pulseAnimation;
+
+  // SOS ripple — 3 concentric expanding rings per the animation spec:
+  // 2s loop, scale 1.0→1.8, opacity 0.6→0, curve cubic-bezier(0, 0, 0.2, 1)
+  // (approximated with Curves.easeOutCubic). Rings are staggered by 0.66s
+  // so they emanate continuously from the button centre.
+  static const int _kRippleCount = 3;
+  static const Duration _rippleDuration = Duration(milliseconds: 2000);
+  static const List<Duration> _rippleDelays = [
+    Duration.zero,
+    Duration(milliseconds: 666),
+    Duration(milliseconds: 1333),
+  ];
+  final List<AnimationController> _rippleControllers = [];
+  final List<Animation<double>> _rippleScales = [];
+  final List<Animation<double>> _rippleOpacities = [];
+
+  // Countdown for the "Sending in N…" headline during the sending state.
+  Timer? _countdownTimer;
+  int _countdownSeconds = _kCountdownFrom;
+  static const int _kCountdownFrom = 5;
 
   // Hold-to-trigger SOS state. The UI hint says "Hold for 3 seconds" so we
   // honour that with a real 3-second hold timer + a progress ring.
@@ -47,6 +76,33 @@ class _SosScreenState extends ConsumerState<SosScreen>
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
+    // Build the 3 staggered ripple controllers. Each ring scales 1.0→1.8 and
+    // fades 0.6→0 over 2s; staggered starts (0s, 0.66s, 1.33s) produce a
+    // continuous emanating ripple around the SOS button.
+    for (int i = 0; i < _kRippleCount; i++) {
+      final controller = AnimationController(
+        vsync: this,
+        duration: _rippleDuration,
+      );
+      final curved = CurvedAnimation(
+        parent: controller,
+        curve: Curves.easeOutCubic,
+      );
+      _rippleControllers.add(controller);
+      _rippleScales.add(
+        Tween<double>(begin: 1.0, end: 1.8).animate(curved),
+      );
+      _rippleOpacities.add(
+        Tween<double>(begin: 0.6, end: 0.0).animate(curved),
+      );
+    }
+    // Stagger the start of each ring so they emanate continuously.
+    for (int i = 0; i < _kRippleCount; i++) {
+      Future.delayed(_rippleDelays[i], () {
+        if (mounted) _rippleControllers[i].repeat();
+      });
+    }
+
     _holdController = AnimationController(
       vsync: this,
       duration: _sosHoldDuration,
@@ -63,7 +119,11 @@ class _SosScreenState extends ConsumerState<SosScreen>
   @override
   void dispose() {
     _pulseController.dispose();
+    for (final c in _rippleControllers) {
+      c.dispose();
+    }
     _holdController.dispose();
+    _countdownTimer?.cancel();
     super.dispose();
   }
 
@@ -142,7 +202,10 @@ class _SosScreenState extends ConsumerState<SosScreen>
     setState(() {
       _isSending = true;
       _sosMessage = 'Sending emergency alert...';
+      _locationText = null;
     });
+
+    _startCountdown();
 
     try {
       Position? position;
@@ -150,13 +213,18 @@ class _SosScreenState extends ConsumerState<SosScreen>
         position = await _getCurrentLocation();
       } catch (_) {}
 
+      final locationText = position != null
+          ? '${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)}'
+          : null;
+      if (locationText != null) {
+        setState(() => _locationText = locationText);
+      }
+
       final edgeService = EdgeFunctionService();
       final result = await edgeService.sendSosAlert(
         latitude: position?.latitude,
         longitude: position?.longitude,
-        locationAddress: position != null
-            ? '${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)}'
-            : null,
+        locationAddress: locationText,
       );
 
       setState(() {
@@ -174,15 +242,42 @@ class _SosScreenState extends ConsumerState<SosScreen>
       debugPrint('SOS trigger error: $e');
       HapticFeedback.heavyImpact();
     } finally {
+      _countdownTimer?.cancel();
       setState(() => _isSending = false);
     }
   }
 
+  /// Start the 5-second "Sending in N…" countdown shown while the alert is
+  /// being dispatched. The countdown is purely visual — the actual send
+  /// completes asynchronously via [EdgeFunctionService.sendSosAlert].
+  void _startCountdown() {
+    _countdownTimer?.cancel();
+    setState(() => _countdownSeconds = _kCountdownFrom);
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      setState(() {
+        if (_countdownSeconds > 1) {
+          _countdownSeconds--;
+        } else {
+          // Hold at 1 — the actual send completes asynchronously.
+          timer.cancel();
+        }
+      });
+    });
+  }
+
   void _resolveSos() {
+    _countdownTimer?.cancel();
     setState(() {
       _sosActive = false;
+      _isSending = false;
       _sosMessage = null;
       _sosResult = null;
+      _locationText = null;
+      _countdownSeconds = _kCountdownFrom;
     });
     HapticFeedback.lightImpact();
   }
@@ -269,19 +364,18 @@ class _SosScreenState extends ConsumerState<SosScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Emergency SOS'),
-        backgroundColor: _sosActive ? AppColors.urgencyEmergency : null,
-        foregroundColor: _sosActive ? Colors.white : null,
+        backgroundColor: _isActiveState ? const Color(0xFFB8321D) : null,
+        foregroundColor: _isActiveState ? Colors.white : null,
       ),
       body: Container(
-        decoration: _sosActive
-            ? BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.urgencyEmergency.withValues(alpha: 0.1),
-                    Colors.transparent,
-                  ],
+        // Full-screen red radial gradient (#E53935 → #B8321D) when an SOS
+        // alert is sending or active — matches the Google Stitch mockup.
+        decoration: _isActiveState
+            ? const BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.center,
+                  radius: 1.4,
+                  colors: [Color(0xFFE53935), Color(0xFFB8321D)],
                 ),
               )
             : null,
@@ -291,7 +385,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
             child: Column(
               children: [
                 // ── SOS Button ──
-                if (!_sosActive) ...[
+                if (!_isActiveState) ...[
                   Text(
                     'Press and hold to send\nemergency alert',
                     style: TextStyle(
@@ -302,88 +396,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
-                  GestureDetector(
-                    onLongPressStart: (_) => _startHold(),
-                    onLongPressEnd: (_) => _cancelHold(),
-                    onLongPressCancel: _cancelHold,
-                    child: ScaleTransition(
-                      scale: _pulseAnimation,
-                      child: SizedBox(
-                        width: 200,
-                        height: 200,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // Hold-progress ring (visible only while holding).
-                            if (_isHolding)
-                              SizedBox(
-                                width: 220,
-                                height: 220,
-                                child: AnimatedBuilder(
-                                  animation: _holdController,
-                                  builder: (_, __) => CircularProgressIndicator(
-                                    value: _holdController.value,
-                                    strokeWidth: 6,
-                                    color: AppColors.urgencyEmergency,
-                                    backgroundColor:
-                                        AppColors.urgencyEmergency
-                                            .withValues(alpha: 0.15),
-                                  ),
-                                ),
-                              ),
-                            Container(
-                              width: 200,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [Color(0xFFE53935), Color(0xFFFF5722)],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.urgencyEmergency
-                                        .withValues(alpha: 0.4),
-                                    blurRadius: 40,
-                                    spreadRadius: 10,
-                                  ),
-                                ],
-                              ),
-                              child: _isSending
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 4,
-                                      ),
-                                    )
-                                  : const Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.emergency,
-                                            color: Colors.white, size: 64),
-                                        SizedBox(height: 8),
-                                        Text(
-                                          'SOS',
-                                          style: TextStyle(
-                                            fontFamily: 'ClashDisplay',
-                                            fontSize: 36,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.white,
-                                            letterSpacing: 4,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ).animate(onPlay: (c) => c.repeat(reverse: true)).shimmer(
-                        duration: 2000.ms,
-                        color: Colors.white.withValues(alpha: 0.1),
-                      ),
+                  _buildIdleSosButton(),
                   const SizedBox(height: 16),
                   Text(
                     _isHolding ? 'Keep holding...' : 'Hold for 3 seconds',
@@ -398,71 +411,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     ),
                   ),
                 ] else ...[
-                  // SOS Active state
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color:
-                          AppColors.urgencyEmergency.withValues(alpha: 0.1),
-                      border: Border.all(
-                          color: AppColors.urgencyEmergency, width: 4),
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.emergency,
-                            color: AppColors.urgencyEmergency, size: 64),
-                        SizedBox(height: 8),
-                        Text(
-                          'SOS\nACTIVE',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'ClashDisplay',
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.urgencyEmergency,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    _sosMessage ?? 'Emergency alert sent!',
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.urgencyEmergency,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  if (_sosResult?['sms_sent'] == true) ...[
-                    const SizedBox(height: 8),
-                    Text(
-                      '${(_sosResult?['contacts_notified'] as List?)?.where((c) => c['status'] == 'sent').length ?? 0} contact(s) notified via SMS',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        color: AppColors.textSecondary(isDark),
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 24),
-                  ElevatedButton.icon(
-                    onPressed: _resolveSos,
-                    icon: const Icon(Icons.check_circle),
-                    label: const Text('I\'m Safe - Resolve'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.urgencyLow,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(double.infinity, 56),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                    ),
-                  ),
+                  _buildActiveState(),
                 ],
 
                 const SizedBox(height: 32),
@@ -471,7 +420,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 Row(
                   children: [
                     Icon(Icons.phone_in_talk,
-                        color: AppColors.primary(isDark),
+                        color: _isActiveState
+                            ? Colors.white
+                            : AppColors.primary(isDark),
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
@@ -480,7 +431,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary(isDark),
+                        color: _isActiveState
+                            ? Colors.white
+                            : AppColors.textPrimary(isDark),
                       ),
                     ),
                   ],
@@ -523,9 +476,13 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     icon: const Icon(Icons.location_on_outlined, size: 20),
                     label: const Text('Share My Location'),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primary(isDark),
+                      foregroundColor: _isActiveState
+                          ? Colors.white
+                          : AppColors.primary(isDark),
                       side: BorderSide(
-                        color: AppColors.primary(isDark),
+                        color: _isActiveState
+                            ? Colors.white
+                            : AppColors.primary(isDark),
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
@@ -544,7 +501,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 Row(
                   children: [
                     Icon(Icons.contacts,
-                        color: AppColors.primary(isDark),
+                        color: _isActiveState
+                            ? Colors.white
+                            : AppColors.primary(isDark),
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
@@ -553,7 +512,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary(isDark),
+                        color: _isActiveState
+                            ? Colors.white
+                            : AppColors.textPrimary(isDark),
                       ),
                     ),
                   ],
@@ -623,7 +584,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 Row(
                   children: [
                     Icon(Icons.local_hospital_outlined,
-                        color: AppColors.primary(isDark),
+                        color: _isActiveState
+                            ? Colors.white
+                            : AppColors.primary(isDark),
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
@@ -632,7 +595,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary(isDark),
+                        color: _isActiveState
+                            ? Colors.white
+                            : AppColors.textPrimary(isDark),
                       ),
                     ),
                   ],
@@ -654,7 +619,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 Row(
                   children: [
                     Icon(Icons.medical_information_outlined,
-                        color: AppColors.primary(isDark),
+                        color: _isActiveState
+                            ? Colors.white
+                            : AppColors.primary(isDark),
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
@@ -663,7 +630,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary(isDark),
+                        color: _isActiveState
+                            ? Colors.white
+                            : AppColors.textPrimary(isDark),
                       ),
                     ),
                   ],
@@ -771,6 +740,240 @@ class _SosScreenState extends ConsumerState<SosScreen>
           ),
         ),
       ),
+    );
+  }
+
+  // ─────────────────────────────────────────────────────────────────────
+  // SOS button (idle state) — 3 concentric ripple rings stacked behind the
+  // actual button. Rings are staggered ScaleTransition + FadeTransition
+  // widgets driven by [_rippleControllers].
+  // ─────────────────────────────────────────────────────────────────────
+  Widget _buildIdleSosButton() {
+    return SizedBox(
+      width: 360,
+      height: 360,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // 3 concentric ripple rings (spec: 2s loop, scale 1.0→1.8,
+          // opacity 0.6→0, curve cubic-bezier(0, 0, 0.2, 1)). Staggered
+          // starts (0s, 0.66s, 1.33s) produce a continuous emanating ripple.
+          for (int i = 0; i < _kRippleCount; i++)
+            FadeTransition(
+              opacity: _rippleOpacities[i],
+              child: ScaleTransition(
+                scale: _rippleScales[i],
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.urgencyEmergency,
+                      width: 3,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+          // Hold-progress ring (visible only while holding).
+          if (_isHolding)
+            SizedBox(
+              width: 220,
+              height: 220,
+              child: AnimatedBuilder(
+                animation: _holdController,
+                builder: (_, __) => CircularProgressIndicator(
+                  value: _holdController.value,
+                  strokeWidth: 6,
+                  color: AppColors.urgencyEmergency,
+                  backgroundColor:
+                      AppColors.urgencyEmergency.withValues(alpha: 0.15),
+                ),
+              ),
+            ),
+
+          // The SOS button itself with a subtle breathing pulse. Renders on
+          // top of the ripple rings.
+          ScaleTransition(
+            scale: _pulseAnimation,
+            child: GestureDetector(
+              onLongPressStart: (_) => _startHold(),
+              onLongPressEnd: (_) => _cancelHold(),
+              onLongPressCancel: _cancelHold,
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFFE53935), Color(0xFFFF5722)],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.urgencyEmergency
+                          .withValues(alpha: 0.4),
+                      blurRadius: 40,
+                      spreadRadius: 10,
+                    ),
+                  ],
+                ),
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.emergency, color: Colors.white, size: 64),
+                    SizedBox(height: 8),
+                    Text(
+                      'SOS',
+                      style: TextStyle(
+                        fontFamily: 'ClashDisplay',
+                        fontSize: 36,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        letterSpacing: 4,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ).animate(onPlay: (c) => c.repeat(reverse: true)).shimmer(
+                duration: 2000.ms,
+                color: Colors.white.withValues(alpha: 0.1),
+              ),
+        ],
+      ),
+    );
+  }
+
+  // ─────────────────────────────────────────────────────────────────────
+  // Active / sending state — full-screen red radial gradient (applied on
+  // the body Container) + "Sending Emergency Alert" headline + countdown +
+  // contact card with live location.
+  // ─────────────────────────────────────────────────────────────────────
+  Widget _buildActiveState() {
+    final smsSent = _sosResult?['sms_sent'] == true;
+    final contactsNotified = (_sosResult?['contacts_notified'] as List?) ?? [];
+    final sentCount =
+        contactsNotified.where((c) => c['status'] == 'sent').length;
+
+    return Column(
+      children: [
+        const SizedBox(height: 8),
+        // Pulsing indicator circle.
+        ScaleTransition(
+          scale: _pulseAnimation,
+          child: Container(
+            width: 180,
+            height: 180,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withValues(alpha: 0.15),
+              border: Border.all(color: Colors.white, width: 3),
+            ),
+            child: _isSending
+                ? const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 44,
+                        height: 44,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 4,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'SENDING',
+                        style: TextStyle(
+                          fontFamily: 'ClashDisplay',
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          letterSpacing: 3,
+                        ),
+                      ),
+                    ],
+                  )
+                : const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.check_circle,
+                          color: Colors.white, size: 60),
+                      SizedBox(height: 6),
+                      Text(
+                        'SOS ACTIVE',
+                        style: TextStyle(
+                          fontFamily: 'ClashDisplay',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          letterSpacing: 3,
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
+        ),
+        const SizedBox(height: 32),
+        Text(
+          _isSending ? 'Sending Emergency Alert' : 'Emergency Alert Sent',
+          style: const TextStyle(
+            fontFamily: 'ClashDisplay',
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 12),
+        if (_isSending)
+          Text(
+            'Sending in $_countdownSeconds…',
+            style: const TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 16,
+              color: Colors.white70,
+            ),
+          )
+        else if (_sosMessage != null)
+          Text(
+            _sosMessage!,
+            style: const TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 16,
+              color: Colors.white70,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        const SizedBox(height: 24),
+        // Contact / location card.
+        _ActiveContactCard(
+          isSending: _isSending,
+          smsSent: smsSent,
+          sentCount: sentCount,
+          locationText: _locationText,
+        ),
+        const SizedBox(height: 24),
+        if (!_isSending)
+          ElevatedButton.icon(
+            onPressed: _resolveSos,
+            icon: const Icon(Icons.check_circle),
+            label: const Text("I'm Safe - Resolve"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: const Color(0xFFB8321D),
+              minimumSize: const Size(double.infinity, 56),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
@@ -1081,6 +1284,117 @@ class _HospitalFinderCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Card shown in the active / sending SOS state — displays the live location
+/// being shared with emergency contacts and (after the send completes) the
+/// number of contacts notified via SMS. Renders on the red radial gradient
+/// background, so all text is white.
+class _ActiveContactCard extends StatelessWidget {
+  final bool isSending;
+  final bool smsSent;
+  final int sentCount;
+  final String? locationText;
+
+  const _ActiveContactCard({
+    required this.isSending,
+    required this.smsSent,
+    required this.sentCount,
+    required this.locationText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        children: [
+          // Live location row.
+          Row(
+            children: [
+              const Icon(Icons.location_on, color: Colors.white, size: 22),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Live Location',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 12,
+                        color: Colors.white.withValues(alpha: 0.85),
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      locationText ??
+                          (isSending
+                              ? 'Acquiring GPS coordinates…'
+                              : 'Location unavailable'),
+                      style: const TextStyle(
+                        fontFamily: 'JetBrainsMono',
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          // Contacts notified row (only after the send completes).
+          if (!isSending && smsSent) ...[
+            const SizedBox(height: 14),
+            const Divider(color: Colors.white24, height: 1),
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                const Icon(Icons.phone_in_talk,
+                    color: Colors.white, size: 22),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Contacts Notified',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 12,
+                          color: Colors.white.withValues(alpha: 0.85),
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '$sentCount contact${sentCount == 1 ? '' : 's'} reached via SMS',
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
       ),
     );
   }
