@@ -3,8 +3,11 @@ class SupabaseConfig {
     'SUPABASE_URL',
     defaultValue: 'https://umncqfyzphvxtosddyae.supabase.co',
   );
+  // Publishable API key (replaces the legacy anon key after the 2026-06-18
+  // JWT rotation + legacy API key disablement). Safe to ship in the client
+  // app — RLS is the gate, not the key.
   static const String anonKey = String.fromEnvironment(
     'SUPABASE_ANON_KEY',
-    defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtbmNxZnl6cGh2eHRvc2RkeWFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMjI3ODYsImV4cCI6MjA5NTc5ODc4Nn0.OFFMBp7ZNkYaKxl4au0kTe5iq6l0cGeC49A1ksJzNLQ',
+    defaultValue: 'sb_publishable_2w75vf7pUF_wlxUQive7aA_-SgHPvoR',
   );
 }
