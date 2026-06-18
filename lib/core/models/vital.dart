@@ -53,7 +53,7 @@ extension VitalTypeX on VitalType {
   Color get color {
     switch (this) {
       case VitalType.heartRate: return const Color(0xFFE53935);
-      case VitalType.bloodPressure: return const Color(0xFF6C63FF);
+      case VitalType.bloodPressure: return const Color(0xFF0B7A5B);
       case VitalType.spO2: return const Color(0xFF2196F3);
       case VitalType.temperature: return const Color(0xFFFF9800);
       case VitalType.weight: return const Color(0xFF4CAF50);

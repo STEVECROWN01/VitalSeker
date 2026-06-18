@@ -42,8 +42,8 @@ class AppBottomNav extends StatelessWidget {
       },
       backgroundColor: AppColors.surface(isDark),
       indicatorColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.12),
-      labelTextStyle: WidgetStateProperty.resolveWith((states) {
-        final isSelected = states.contains(WidgetState.selected);
+      labelTextStyle: MaterialStateProperty.resolveWith((states) {
+        final isSelected = states.contains(MaterialState.selected);
         return AppTextStyles.labelSmall.copyWith(
           color: isSelected
               ? AppColors.primary(isDark)
