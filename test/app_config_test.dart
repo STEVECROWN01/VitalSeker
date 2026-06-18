@@ -5,7 +5,7 @@ void main() {
   group('AppConfig', () {
     test('exposes app metadata', () {
       expect(AppConfig.appName, 'VitalSeker');
-      expect(AppConfig.appTagline, 'AI Health Companion');
+      expect(AppConfig.appTagline, 'Your AI Health Companion');
       expect(AppConfig.producer, 'Keter Marketing');
       expect(AppConfig.version, '1.0.0');
     });
@@ -52,7 +52,7 @@ void main() {
         AppConfig.vitalsHistory,
       };
       // All route constants are distinct — no accidental duplicate path typos.
-      expect(routes.length, 33);
+      expect(routes.length, 35);
       // All start with /.
       for (final r in routes) {
         expect(r.startsWith('/'), isTrue);
