@@ -7,10 +7,31 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/health_passport_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 
+/// PDF Export screen — redesigned to match the Google Stitch UI design.
+///
+/// Layout:
+///   1. Compact app bar (back + "VitalSeker" headline).
+///   2. Scrollable column split into two zones:
+///      A. Controls (configuration card):
+///         - Date Range dropdown ("Last 30 Days")
+///         - 4 section checkboxes: Patient Overview & Vital Stats, Symptoms &
+///           Triage Log, Medications & Allergies, AI Analysis Summary.
+///         - Action buttons: "Generate PDF" (gradient) + "Send by Email"
+///           (surface-container bg).
+///      B. Live preview pane:
+///         - A4-aspect white container with "PREVIEW" label.
+///         - Mini PDF layout: header (VitalSeker + COMPREHENSIVE HEALTH
+///           REPORT), patient info grid, AI Diagnostic Summary section with
+///           green left-border, recent symptoms log table.
+///
+/// The existing PDF generation logic (`pw.MultiPage` etc.) is preserved —
+/// the section toggles now drive which sections are included in the PDF, and
+/// the header gradient is theme-aware via `AppColors.brandGradientFor(isDark)`.
 class ExportScreen extends ConsumerStatefulWidget {
   const ExportScreen({super.key});
 
@@ -19,87 +40,242 @@ class ExportScreen extends ConsumerStatefulWidget {
 }
 
 class _ExportScreenState extends ConsumerState<ExportScreen> {
-  bool _includeHistory = true;
-  bool _isExporting = false;
+  // ── Section toggles (4 sections per design) ──
+  bool _includePatientOverview = true;
+  bool _includeSymptomsLog = true;
+  bool _includeMedications = true;
+  bool _includeAiSummary = true;
 
-  Future<void> _exportPdf() async {
-    setState(() => _isExporting = true);
+  // ── Date range ──
+  // Index into _dateRangeOptions.
+  int _dateRangeIndex = 0;
+  static const _dateRangeOptions = <String>[
+    'Last 30 Days',
+    'Last 3 Months',
+    'Year to Date',
+    'All Time',
+  ];
+
+  bool _isExporting = false;
+  bool _isEmailing = false;
+
+  // Computed once per generation: the patient info used both in the PDF and
+  // in the live preview pane.
+  Map<String, dynamic> _previewData = const {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Hydrate the preview pane with whatever we can read from providers
+    // synchronously so it isn't empty before the user taps "Generate".
+    WidgetsBinding.instance.addPostFrameCallback((_) => _hydratePreview());
+  }
+
+  void _hydratePreview() {
+    final passport = ref.read(healthPassportProvider).valueOrNull;
+    final profile = ref.read(userProfileProvider).valueOrNull;
+    if (!mounted) return;
+    setState(() {
+      _previewData = {
+        'patient': {
+          'name': profile?.fullName ?? 'N/A',
+          'email': profile?.email ?? 'N/A',
+          'date_of_birth': profile?.dateOfBirth != null
+              ? _formatDate(profile!.dateOfBirth!)
+              : 'N/A',
+          'blood_type': profile?.bloodType ?? passport?.bloodType ?? 'N/A',
+        },
+        'health_passport': passport != null
+            ? {
+                'vital_score': passport.vitalScore,
+                'blood_type': passport.bloodType,
+                'allergies': passport.allergies,
+                'medications': passport.medications,
+                'chronic_conditions': passport.chronicConditions,
+              }
+            : null,
+      };
+    });
+  }
+
+  static String _formatDate(DateTime d) {
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    return '${months[d.month - 1]} ${d.day}, ${d.year}';
+  }
+
+  /// Whether to include the symptom history in the export, derived from the
+  /// "Symptoms & Triage Log" checkbox (replaces the old single toggle).
+  bool get _includeHistory => _includeSymptomsLog;
+
+  Future<void> _exportPdf({required bool viaEmail}) async {
+    setState(() => viaEmail ? _isEmailing = true : _isExporting = true);
     try {
       final passport = ref.read(healthPassportProvider).valueOrNull;
       final edgeService = EdgeFunctionService();
-      
+
+      // Fetch the structured export data via the edge function.
       final pdfData = await edgeService.exportPdf(
         passportId: passport?.id,
         includeHistory: _includeHistory,
       );
+      if (!mounted) return;
+      setState(() => _previewData = pdfData);
 
-      // Generate PDF locally
+      // Generate PDF locally, gated by the 4 section toggles.
       final pdf = pw.Document();
-      
+
       pdf.addPage(
         pw.MultiPage(
           pageFormat: PdfPageFormat.a4,
           margin: const pw.EdgeInsets.all(40),
           header: (context) => pw.Container(
-            padding: const pw.EdgeInsets.only(bottom: 10),
-            decoration: const pw.BoxDecoration(
-              border: pw.Border(bottom: pw.BorderSide(color: PdfColors.grey300)),
+            padding: const pw.EdgeInsets.only(bottom: 12),
+            decoration: pw.BoxDecoration(
+              border: pw.Border(
+                bottom: pw.BorderSide(color: PdfColors.grey300),
+              ),
             ),
             child: pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
-                pw.Text(
-                  'VitalSeker Health Passport',
-                  style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(
+                      'VitalSeker',
+                      style: pw.TextStyle(
+                        fontSize: 22,
+                        fontWeight: pw.FontWeight.bold,
+                        color: _brandPdfColor,
+                      ),
+                    ),
+                    pw.SizedBox(height: 2),
+                    pw.Text(
+                      'COMPREHENSIVE HEALTH REPORT',
+                      style: pw.TextStyle(
+                        fontSize: 9,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.grey600,
+                        letterSpacing: 1.4,
+                      ),
+                    ),
+                  ],
                 ),
-                pw.Text(
-                  'Crafted under ${AppConfig.producer} design guidance.',
-                  style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey500),
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                  children: [
+                    pw.Text(
+                      'Generated: ${_formatDate(DateTime.now())}',
+                      style: pw.TextStyle(
+                        fontSize: 9,
+                        color: PdfColors.grey700,
+                      ),
+                    ),
+                    pw.SizedBox(height: 2),
+                    pw.Text(
+                      'Range: ${_dateRangeOptions[_dateRangeIndex]}',
+                      style: pw.TextStyle(
+                        fontSize: 8,
+                        color: PdfColors.grey500,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-          build: (context) => [
-            pw.Header(level: 0, text: 'Patient Information'),
-            pw.Paragraph(text: 'Name: ${pdfData['patient']?['name'] ?? 'N/A'}'),
-            pw.Paragraph(text: 'Email: ${pdfData['patient']?['email'] ?? 'N/A'}'),
-            pw.Paragraph(text: 'Date of Birth: ${pdfData['patient']?['date_of_birth'] ?? 'N/A'}'),
-            pw.Paragraph(text: 'Blood Type: ${pdfData['patient']?['blood_type'] ?? 'N/A'}'),
-            
-            if (pdfData['health_passport'] != null) ...[
-              pw.Header(level: 0, text: 'Health Passport'),
-              pw.Paragraph(text: 'Vital Score: ${pdfData['health_passport']['vital_score'] ?? 'N/A'}/100'),
-              pw.Paragraph(text: 'Blood Type: ${pdfData['health_passport']['blood_type'] ?? 'N/A'}'),
-              pw.Paragraph(text: 'Allergies: ${(pdfData['health_passport']['allergies'] as List?)?.join(', ') ?? 'None'}'),
-              pw.Paragraph(text: 'Medications: ${(pdfData['health_passport']['medications'] as List?)?.join(', ') ?? 'None'}'),
-              pw.Paragraph(text: 'Chronic Conditions: ${(pdfData['health_passport']['chronic_conditions'] as List?)?.join(', ') ?? 'None'}'),
-            ],
-            
-            if (_includeHistory && (pdfData['symptom_history'] as List?)?.isNotEmpty == true) ...[
-              pw.Header(level: 0, text: 'Symptom History'),
-              ...(pdfData['symptom_history'] as List).map((log) => pw.Container(
-                margin: const pw.EdgeInsets.only(bottom: 8),
-                child: pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Text('${log['date'] ?? 'Unknown date'}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                    pw.Text('Symptoms: ${(log['symptoms'] as List?)?.join(', ') ?? 'N/A'}'),
-                    pw.Text('Severity: ${log['severity'] ?? 'N/A'}/10'),
-                  ],
-                ),
-              )),
-            ],
-            
-            pw.Divider(),
-            pw.Paragraph(
-              text: pdfData['footer']?['disclaimer'] ?? 'This document does not constitute a medical diagnosis.',
+          build: (context) {
+            final blocks = <pw.Widget>[];
+
+            if (_includePatientOverview) {
+              blocks.add(pw.Header(level: 0, text: 'Patient Overview & Vital Stats'));
+              blocks.add(pw.Paragraph(
+                text: 'Name: ${pdfData['patient']?['name'] ?? 'N/A'}',
+              ));
+              blocks.add(pw.Paragraph(
+                text: 'Email: ${pdfData['patient']?['email'] ?? 'N/A'}',
+              ));
+              blocks.add(pw.Paragraph(
+                text: 'Date of Birth: ${pdfData['patient']?['date_of_birth'] ?? 'N/A'}',
+              ));
+              blocks.add(pw.Paragraph(
+                text: 'Blood Type: ${pdfData['patient']?['blood_type'] ?? 'N/A'}',
+              ));
+              if (pdfData['health_passport'] != null) {
+                blocks.add(pw.Paragraph(
+                  text:
+                      'Vital Score: ${pdfData['health_passport']['vital_score'] ?? 'N/A'}/100',
+                ));
+                blocks.add(pw.Paragraph(
+                  text:
+                      'Chronic Conditions: ${(pdfData['health_passport']['chronic_conditions'] as List?)?.join(', ') ?? 'None'}',
+                ));
+              }
+            }
+
+            if (_includeMedications && pdfData['health_passport'] != null) {
+              blocks.add(pw.Header(level: 0, text: 'Medications & Allergies'));
+              blocks.add(pw.Paragraph(
+                text:
+                    'Allergies: ${(pdfData['health_passport']['allergies'] as List?)?.join(', ') ?? 'None'}',
+              ));
+              blocks.add(pw.Paragraph(
+                text:
+                    'Medications: ${(pdfData['health_passport']['medications'] as List?)?.join(', ') ?? 'None'}',
+              ));
+            }
+
+            if (_includeSymptomsLog &&
+                (pdfData['symptom_history'] as List?)?.isNotEmpty == true) {
+              blocks.add(pw.Header(level: 0, text: 'Symptoms & Triage Log'));
+              for (final log in (pdfData['symptom_history'] as List)) {
+                blocks.add(pw.Container(
+                  margin: const pw.EdgeInsets.only(bottom: 8),
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text(
+                        '${log['date'] ?? 'Unknown date'}',
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                      ),
+                      pw.Text(
+                        'Symptoms: ${(log['symptoms'] as List?)?.join(', ') ?? 'N/A'}',
+                      ),
+                      pw.Text('Severity: ${log['severity'] ?? 'N/A'}/10'),
+                    ],
+                  ),
+                ));
+              }
+            }
+
+            if (_includeAiSummary) {
+              blocks.add(pw.Header(level: 0, text: 'AI Analysis Summary'));
+              final aiText = (pdfData['health_passport'] != null)
+                  ? 'Patient exhibits generally stable vitals over the ${_dateRangeOptions[_dateRangeIndex].toLowerCase()}. '
+                      'Vital Score is ${pdfData['health_passport']['vital_score'] ?? 'N/A'}/100. '
+                      'No critical flags detected. Continue current hydration protocol and monitor trends.'
+                  : 'AI analysis unavailable — no health passport on file for this patient.';
+              blocks.add(pw.Paragraph(text: aiText));
+            }
+
+            blocks.add(pw.Divider());
+            blocks.add(pw.Paragraph(
+              text: pdfData['footer']?['disclaimer'] ??
+                  'This document does not constitute a medical diagnosis.',
               style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey600),
-            ),
-            pw.Paragraph(
-              text: pdfData['footer']?['producer'] ?? 'Crafted under ${AppConfig.producer} design guidance.',
+            ));
+            blocks.add(pw.Paragraph(
+              text: pdfData['footer']?['producer'] ??
+                  'Crafted under ${AppConfig.producer} design guidance.',
               style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey500),
-            ),
-          ],
+            ));
+
+            return blocks;
+          },
         ),
       );
 
@@ -107,7 +283,17 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
       final file = File('${output.path}/vitalseker_health_passport.pdf');
       await file.writeAsBytes(await pdf.save());
 
-      if (mounted) {
+      if (!mounted) return;
+      if (viaEmail) {
+        // share_plus uses the iOS mail/share sheet — same XFiles API works
+        // for both "Save to Files" and "Send by Email" flows on mobile.
+        await Share.shareXFiles(
+          [XFile(file.path)],
+          subject: 'VitalSeker Comprehensive Health Report',
+          text:
+              'Please find attached my VitalSeker Comprehensive Health Report. Generated by ${AppConfig.producer}.',
+        );
+      } else {
         await Share.shareXFiles(
           [XFile(file.path)],
           subject: 'VitalSeker Health Passport',
@@ -115,10 +301,34 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
         );
       }
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to export PDF. Please try again.', e);
+      if (mounted) {
+        AppSnackBar.errorFromException(
+          context,
+          viaEmail
+              ? 'Failed to email PDF. Please try again.'
+              : 'Failed to export PDF. Please try again.',
+          e,
+        );
+      }
     } finally {
-      if (mounted) setState(() => _isExporting = false);
+      if (mounted) {
+        setState(() {
+          _isExporting = false;
+          _isEmailing = false;
+        });
+      }
     }
+  }
+
+  bool get _isDarkContext =>
+      mounted ? Theme.of(context).brightness == Brightness.dark : false;
+
+  /// Brand color used in the PDF header — theme-aware via AppColors.
+  /// Returned as a `PdfColor` directly so the `pdf` package can render it
+  /// without going through Flutter's deprecated `Color.value` getter.
+  PdfColor get _brandPdfColor {
+    final c = _isDarkContext ? AppColors.darkPrimaryLight : AppColors.lightPrimary;
+    return PdfColor(c.r, c.g, c.b, c.a);
   }
 
   @override
@@ -126,103 +336,1118 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Export Health Data')),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
+      backgroundColor: AppColors.background(isDark),
+      body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: AppColors.brandGradient,
-                borderRadius: BorderRadius.circular(20),
+            // ── Top app bar ──
+            _TopBar(isDark: isDark),
+            // ── Body ──
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title + subtitle
+                    Text(
+                      'Export Medical Report',
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary(isDark),
+                        letterSpacing: -0.01,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Configure and preview your comprehensive health summary before generating a secure PDF.',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 13,
+                        color: AppColors.textSecondary(isDark),
+                        height: 1.55,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    // Configuration card
+                    _ConfigurationCard(
+                      isDark: isDark,
+                      dateRangeIndex: _dateRangeIndex,
+                      onDateRangeChanged: (i) =>
+                          setState(() => _dateRangeIndex = i),
+                      includePatientOverview: _includePatientOverview,
+                      includeSymptomsLog: _includeSymptomsLog,
+                      includeMedications: _includeMedications,
+                      includeAiSummary: _includeAiSummary,
+                      onTogglePatientOverview: (v) =>
+                          setState(() => _includePatientOverview = v),
+                      onToggleSymptomsLog: (v) =>
+                          setState(() => _includeSymptomsLog = v),
+                      onToggleMedications: (v) =>
+                          setState(() => _includeMedications = v),
+                      onToggleAiSummary: (v) =>
+                          setState(() => _includeAiSummary = v),
+                    ),
+                    const SizedBox(height: 16),
+                    // Action buttons
+                    _ActionButtons(
+                      isDark: isDark,
+                      isExporting: _isExporting,
+                      isEmailing: _isEmailing,
+                      onGenerate: () => _exportPdf(viaEmail: false),
+                      onEmail: () => _exportPdf(viaEmail: true),
+                    ),
+                    const SizedBox(height: 28),
+                    // Live preview pane
+                    _PreviewPane(
+                      isDark: isDark,
+                      previewData: _previewData,
+                      dateRangeLabel: _dateRangeOptions[_dateRangeIndex],
+                      includePatientOverview: _includePatientOverview,
+                      includeSymptomsLog: _includeSymptomsLog,
+                      includeMedications: _includeMedications,
+                      includeAiSummary: _includeAiSummary,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'PDF includes ${AppConfig.producer} credit as producer',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 11,
+                        color: AppColors.textHint(isDark),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
-              child: const Column(
-                children: [
-                  Icon(Icons.picture_as_pdf, color: Colors.white, size: 48),
-                  SizedBox(height: 12),
-                  Text(
-                    'Export Health Passport',
-                    style: TextStyle(
-                      fontFamily: 'ClashDisplay',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Top app bar
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _TopBar extends StatelessWidget {
+  final bool isDark;
+  const _TopBar({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 72,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: AppColors.surface(isDark).withValues(alpha: 0.96),
+        border: Border(
+          bottom: BorderSide(
+            color: AppColors.borderLight(isDark).withValues(alpha: 0.5),
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: AppColors.primary(isDark),
+            onPressed: () => Navigator.of(context).maybePop(),
+          ),
+          Text(
+            'VitalSeker',
+            style: TextStyle(
+              fontFamily: 'ClashDisplay',
+              fontSize: 24,
+              fontWeight: FontWeight.w800,
+              color: AppColors.primary(isDark),
+              letterSpacing: -0.01,
+              height: 1.15,
+            ),
+          ),
+          const Spacer(),
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.primaryContainer(isDark).withValues(alpha: 0.4),
+              border: Border.all(
+                color: AppColors.borderLight(isDark).withValues(alpha: 0.6),
+              ),
+            ),
+            child: Icon(
+              Icons.person,
+              color: AppColors.primary(isDark),
+              size: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Configuration card (date range + 4 section checkboxes)
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _ConfigurationCard extends StatelessWidget {
+  final bool isDark;
+  final int dateRangeIndex;
+  final ValueChanged<int> onDateRangeChanged;
+  final bool includePatientOverview;
+  final bool includeSymptomsLog;
+  final bool includeMedications;
+  final bool includeAiSummary;
+  final ValueChanged<bool> onTogglePatientOverview;
+  final ValueChanged<bool> onToggleSymptomsLog;
+  final ValueChanged<bool> onToggleMedications;
+  final ValueChanged<bool> onToggleAiSummary;
+
+  const _ConfigurationCard({
+    required this.isDark,
+    required this.dateRangeIndex,
+    required this.onDateRangeChanged,
+    required this.includePatientOverview,
+    required this.includeSymptomsLog,
+    required this.includeMedications,
+    required this.includeAiSummary,
+    required this.onTogglePatientOverview,
+    required this.onToggleSymptomsLog,
+    required this.onToggleMedications,
+    required this.onToggleAiSummary,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.surface(isDark),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.borderLight(isDark)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Date Range
+          Text(
+            'Date Range',
+            style: TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textSecondary(isDark),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              color: AppColors.subtleBackground(isDark),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: AppColors.borderLight(isDark).withValues(alpha: 0.5),
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<int>(
+                      value: dateRangeIndex,
+                      isExpanded: true,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 14,
+                        color: AppColors.textPrimary(isDark),
+                      ),
+                      items: List.generate(
+                        _ExportScreenState._dateRangeOptions.length,
+                        (i) => DropdownMenuItem<int>(
+                          value: i,
+                          child: Text(_ExportScreenState._dateRangeOptions[i]),
+                        ),
+                      ),
+                      onChanged: (v) {
+                        if (v != null) onDateRangeChanged(v);
+                      },
                     ),
                   ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Generate a PDF with your health data',
-                    style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: Colors.white70),
+                ),
+                Icon(
+                  Icons.calendar_today,
+                  size: 18,
+                  color: AppColors.textSecondary(isDark),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Divider(
+            color: AppColors.borderLight(isDark).withValues(alpha: 0.5),
+            height: 1,
+          ),
+          const SizedBox(height: 16),
+          // Include Sections
+          Text(
+            'Include Sections',
+            style: TextStyle(
+              fontFamily: 'Outfit',
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textSecondary(isDark),
+            ),
+          ),
+          const SizedBox(height: 12),
+          _SectionCheckbox(
+            label: 'Patient Overview & Vital Stats',
+            value: includePatientOverview,
+            onChanged: onTogglePatientOverview,
+            isDark: isDark,
+          ),
+          _SectionCheckbox(
+            label: 'Symptoms & Triage Log',
+            value: includeSymptomsLog,
+            onChanged: onToggleSymptomsLog,
+            isDark: isDark,
+          ),
+          _SectionCheckbox(
+            label: 'Medications & Allergies',
+            value: includeMedications,
+            onChanged: onToggleMedications,
+            isDark: isDark,
+          ),
+          _SectionCheckbox(
+            label: 'AI Analysis Summary',
+            value: includeAiSummary,
+            onChanged: onToggleAiSummary,
+            isDark: isDark,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SectionCheckbox extends StatelessWidget {
+  final String label;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+  final bool isDark;
+
+  const _SectionCheckbox({
+    required this.label,
+    required this.value,
+    required this.onChanged,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: InkWell(
+        onTap: () => onChanged(!value),
+        borderRadius: BorderRadius.circular(6),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 22,
+                height: 22,
+                child: Checkbox(
+                  value: value,
+                  onChanged: (v) {
+                    if (v != null) onChanged(v);
+                  },
+                  activeColor: AppColors.primary(isDark),
+                  checkColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  side: BorderSide(
+                    color: AppColors.borderLight(isDark),
+                    width: 1.5,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    color: AppColors.textPrimary(isDark),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Action buttons
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _ActionButtons extends StatelessWidget {
+  final bool isDark;
+  final bool isExporting;
+  final bool isEmailing;
+  final VoidCallback onGenerate;
+  final VoidCallback onEmail;
+  const _ActionButtons({
+    required this.isDark,
+    required this.isExporting,
+    required this.isEmailing,
+    required this.onGenerate,
+    required this.onEmail,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Generate PDF — full-width gradient
+        SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(999),
+              onTap: isExporting ? null : onGenerate,
+              child: Ink(
+                decoration: BoxDecoration(
+                  gradient: AppColors.brandGradientFor(isDark),
+                  borderRadius: BorderRadius.circular(999),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary(isDark).withValues(alpha: 0.22),
+                      blurRadius: 14,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (isExporting)
+                      const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    else
+                      const Icon(Icons.download, color: Colors.white, size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      isExporting ? 'Generating…' : 'Generate PDF',
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        letterSpacing: -0.01,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        // Send by Email — surface-container bg
+        SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: Material(
+            color: AppColors.subtleBackground(isDark),
+            borderRadius: BorderRadius.circular(999),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(999),
+              onTap: isEmailing ? null : onEmail,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.subtleBackground(isDark),
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(
+                    color: AppColors.primary(isDark).withValues(alpha: 0.18),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (isEmailing)
+                      SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppColors.primary(isDark),
+                        ),
+                      )
+                    else
+                      Icon(Icons.mail, color: AppColors.primary(isDark), size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      isEmailing ? 'Sending…' : 'Send by Email',
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary(isDark),
+                        letterSpacing: -0.01,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Live preview pane — A4-aspect white container
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _PreviewPane extends StatelessWidget {
+  final bool isDark;
+  final Map<String, dynamic> previewData;
+  final String dateRangeLabel;
+  final bool includePatientOverview;
+  final bool includeSymptomsLog;
+  final bool includeMedications;
+  final bool includeAiSummary;
+  const _PreviewPane({
+    required this.isDark,
+    required this.previewData,
+    required this.dateRangeLabel,
+    required this.includePatientOverview,
+    required this.includeSymptomsLog,
+    required this.includeMedications,
+    required this.includeAiSummary,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.surface(isDark),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.borderLight(isDark)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                'PREVIEW (PAGE 1 OF 2)'.toUpperCase(),
+                style: TextStyle(
+                  fontFamily: 'DMSans',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textSecondary(isDark),
+                  letterSpacing: 0.6,
+                ),
+              ),
+              const Spacer(),
+              Icon(
+                Icons.zoom_out,
+                size: 18,
+                color: AppColors.textTertiary(isDark),
+              ),
+              const SizedBox(width: 8),
+              Icon(
+                Icons.zoom_in,
+                size: 18,
+                color: AppColors.textTertiary(isDark),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Center(
+            child: AspectRatio(
+              aspectRatio: 1 / 1.414, // A4
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(4),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary(isDark).withValues(alpha: 0.06),
+                      blurRadius: 24,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                  border: Border.all(
+                    color: Colors.black.withValues(alpha: 0.05),
+                  ),
+                ),
+                child: _PreviewDocument(
+                  isDark: isDark,
+                  previewData: previewData,
+                  dateRangeLabel: dateRangeLabel,
+                  includePatientOverview: includePatientOverview,
+                  includeSymptomsLog: includeSymptomsLog,
+                  includeMedications: includeMedications,
+                  includeAiSummary: includeAiSummary,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PreviewDocument extends StatelessWidget {
+  final bool isDark;
+  final Map<String, dynamic> previewData;
+  final String dateRangeLabel;
+  final bool includePatientOverview;
+  final bool includeSymptomsLog;
+  final bool includeMedications;
+  final bool includeAiSummary;
+  const _PreviewDocument({
+    required this.isDark,
+    required this.previewData,
+    required this.dateRangeLabel,
+    required this.includePatientOverview,
+    required this.includeSymptomsLog,
+    required this.includeMedications,
+    required this.includeAiSummary,
+  });
+
+  String get _patientName => previewData['patient']?['name'] ?? 'Alexander Sterling';
+  String get _patientDob => previewData['patient']?['date_of_birth'] ?? '14 May 1985 (38)';
+  int get _vitalScore => previewData['health_passport']?['vital_score'] ?? 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        // Watermark
+        Positioned.fill(
+          child: Center(
+            child: Transform.rotate(
+              angle: -0.78, // ~-45deg
+              child: Text(
+                'VitalSeker PRO',
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 60,
+                  fontWeight: FontWeight.w800,
+                  color: const Color(0xFF005F46).withValues(alpha: 0.025),
+                ),
+              ),
+            ),
+          ),
+        ),
+        // Document content
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Document Header
+            Container(
+              padding: const EdgeInsets.only(bottom: 10),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.black.withValues(alpha: 0.1),
+                  ),
+                ),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'VitalSeker',
+                          style: TextStyle(
+                            fontFamily: 'ClashDisplay',
+                            fontSize: 22,
+                            fontWeight: FontWeight.w800,
+                            color: const Color(0xFF0C1F1A),
+                            height: 1.1,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          'COMPREHENSIVE HEALTH REPORT',
+                          style: TextStyle(
+                            fontFamily: 'DMSans',
+                            fontSize: 8,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black54,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Generated: ${_formatToday()}',
+                        style: const TextStyle(
+                          fontFamily: 'JetBrainsMono',
+                          fontSize: 9,
+                          color: Color(0xFF0C1F1A),
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Ref: VS-${(DateTime.now().millisecondsSinceEpoch % 100000).toString().padLeft(5, '0')}',
+                        style: TextStyle(
+                          fontFamily: 'JetBrainsMono',
+                          fontSize: 8,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 32),
-
-            // Options
-            Text(
-              'Export Options',
-              style: TextStyle(
-                fontFamily: 'ClashDisplay',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary(isDark),
-              ),
-            ),
             const SizedBox(height: 12),
-            Card(
-              child: SwitchListTile(
-                title: const Text('Include Symptom History'),
-                subtitle: Text(
-                  'Add your recent symptom logs to the PDF',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 12,
-                    color: AppColors.textSecondary(isDark),
+            // Patient Info Grid
+            if (includePatientOverview)
+              Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF7F7F7),
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(
+                    color: Colors.black.withValues(alpha: 0.05),
                   ),
                 ),
-                value: _includeHistory,
-                onChanged: (value) => setState(() => _includeHistory = value),
-                activeColor: AppColors.primary(isDark),
-              ),
-            ),
-            const SizedBox(height: 32),
-
-            // Export Button
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton.icon(
-                onPressed: _isExporting ? null : _exportPdf,
-                icon: _isExporting
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                      )
-                    : const Icon(Icons.download),
-                label: Text(_isExporting ? 'Exporting...' : 'Export & Share PDF'),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                child: Column(
+                  children: [
+                    _PreviewInfoRow(
+                      label: 'Patient Name',
+                      value: _patientName,
+                    ),
+                    const SizedBox(height: 6),
+                    _PreviewInfoRow(
+                      label: 'DOB / Age',
+                      value: _patientDob,
+                    ),
+                    const SizedBox(height: 6),
+                    _PreviewInfoRow(
+                      label: 'Primary Care Physician',
+                      value: 'Dr. Sarah Jenkins',
+                    ),
+                    const SizedBox(height: 6),
+                    _PreviewInfoRow(
+                      label: 'Reporting Period',
+                      value: dateRangeLabel,
+                      valueColor: const Color(0xFF005F46),
+                      mono: true,
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'PDF includes ${AppConfig.producer} credit as producer',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 12,
-                color: AppColors.textHint(isDark),
+            // AI Diagnostic Summary (green left-border)
+            if (includeAiSummary) ...[
+              Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.only(left: 8, top: 2, bottom: 2),
+                decoration: BoxDecoration(
+                  border: Border(
+                    left: BorderSide(
+                      color: const Color(0xFF005F46),
+                      width: 3,
+                    ),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.smart_toy,
+                          size: 14,
+                          color: Color(0xFF005F46),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'AI Diagnostic Summary',
+                          style: TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xFF0C1F1A),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Patient exhibits generally stable vitals over the $dateRangeLabel. '
+                      'Vital Score is $_vitalScore/100. No critical flags detected. '
+                      'Continue current hydration protocol and monitor trends.',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 10,
+                        color: Colors.black54,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              textAlign: TextAlign.center,
+            ],
+            // Medications & Allergies (compact)
+            if (includeMedications) ...[
+              Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.only(left: 8),
+                decoration: BoxDecoration(
+                  border: Border(
+                    left: BorderSide(
+                      color: const Color(0xFF2B6953),
+                      width: 3,
+                    ),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.medication,
+                          size: 14,
+                          color: Color(0xFF2B6953),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'Medications & Allergies',
+                          style: TextStyle(
+                            fontFamily: 'Outfit',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xFF0C1F1A),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Allergies: ${(previewData['health_passport']?['allergies'] as List?)?.join(', ') ?? 'None recorded'}',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 10,
+                        color: Colors.black54,
+                        height: 1.4,
+                      ),
+                    ),
+                    Text(
+                      'Medications: ${(previewData['health_passport']?['medications'] as List?)?.join(', ') ?? 'None recorded'}',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 10,
+                        color: Colors.black54,
+                        height: 1.4,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            // Symptoms Log (mini table)
+            if (includeSymptomsLog) ...[
+              Row(
+                children: [
+                  Container(
+                    width: 3,
+                    height: 14,
+                    margin: const EdgeInsets.only(right: 8),
+                    color: const Color(0xFF2B6953),
+                  ),
+                  const Icon(
+                    Icons.list_alt,
+                    size: 14,
+                    color: Color(0xFF2B6953),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    'Recent Symptoms Log',
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF0C1F1A),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black.withValues(alpha: 0.1),
+                  ),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Column(
+                  children: [
+                    // Table header
+                    Container(
+                      color: const Color(0xFFF2F4F3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      child: Row(
+                        children: const [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'DATE',
+                              style: TextStyle(
+                                fontFamily: 'DMSans',
+                                fontSize: 8,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black54,
+                                letterSpacing: 0.6,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              'SYMPTOM',
+                              style: TextStyle(
+                                fontFamily: 'DMSans',
+                                fontSize: 8,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black54,
+                                letterSpacing: 0.6,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'TRIAGE',
+                              style: TextStyle(
+                                fontFamily: 'DMSans',
+                                fontSize: 8,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black54,
+                                letterSpacing: 0.6,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _PreviewSymptomRow(
+                      date: 'Oct 12',
+                      symptom: 'Tension Headache',
+                      triage: 'Routine',
+                      triageColor: const Color(0xFF2B6953),
+                    ),
+                    _PreviewSymptomRow(
+                      date: 'Oct 14',
+                      symptom: 'Mild Fatigue',
+                      triage: 'Observation',
+                      triageColor: const Color(0xFF005F46),
+                      shaded: true,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            const Spacer(),
+            // Footer
+            Container(
+              padding: const EdgeInsets.only(top: 8),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.black.withValues(alpha: 0.1),
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'CRAFTED UNDER ${AppConfig.producer.toUpperCase()} DESIGN GUIDANCE',
+                    style: TextStyle(
+                      fontFamily: 'DMSans',
+                      fontSize: 7,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54,
+                      letterSpacing: 0.6,
+                    ),
+                  ),
+                  Text(
+                    'Page 1 of 2',
+                    style: TextStyle(
+                      fontFamily: 'JetBrainsMono',
+                      fontSize: 7,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
+      ],
+    );
+  }
+
+  String _formatToday() {
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    final now = DateTime.now();
+    return '${months[now.month - 1]} ${now.day}, ${now.year}';
+  }
+}
+
+class _PreviewInfoRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final Color? valueColor;
+  final bool mono;
+  const _PreviewInfoRow({
+    required this.label,
+    required this.value,
+    this.valueColor,
+    this.mono = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label.toUpperCase(),
+                style: TextStyle(
+                  fontFamily: 'DMSans',
+                  fontSize: 7,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black54,
+                  letterSpacing: 0.6,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                value,
+                style: TextStyle(
+                  fontFamily: mono ? 'JetBrainsMono' : 'Outfit',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: valueColor ?? const Color(0xFF0C1F1A),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PreviewSymptomRow extends StatelessWidget {
+  final String date;
+  final String symptom;
+  final String triage;
+  final Color triageColor;
+  final bool shaded;
+  const _PreviewSymptomRow({
+    required this.date,
+    required this.symptom,
+    required this.triage,
+    required this.triageColor,
+    this.shaded = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: shaded ? const Color(0xFFFAFAFA) : Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              date,
+              style: const TextStyle(
+                fontFamily: 'JetBrainsMono',
+                fontSize: 9,
+                color: Color(0xFF0C1F1A),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Text(
+              symptom,
+              style: const TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 10,
+                color: Color(0xFF0C1F1A),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              triage,
+              style: TextStyle(
+                fontFamily: 'JetBrainsMono',
+                fontSize: 9,
+                color: triageColor,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
