@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'supabase_service.dart';
 import '../models/user_profile.dart';
@@ -333,11 +334,12 @@ class DatabaseService {
     required String contentType,
   }) async {
     final path = '$userId/avatar.jpg';
-    await _client.storage.from('avatars').uploadBinary(
+    // Use upload() with FileOptions instead of uploadBinary() —
+    // uploadBinary doesn't accept contentType in older supabase_flutter versions.
+    await _client.storage.from('avatars').upload(
           path,
-          bytes,
-          contentType: contentType,
-          upsert: true,
+          Uint8List.fromList(bytes),
+          fileOptions: FileOptions(contentType: contentType, upsert: true),
         );
     return _client.storage.from('avatars').getPublicUrl(path);
   }

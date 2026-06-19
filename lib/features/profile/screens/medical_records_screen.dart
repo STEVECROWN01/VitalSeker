@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 
@@ -216,7 +217,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                       setDialogState(() => isSaving = true);
                       try {
                         final db = ref.read(databaseServiceProvider);
-                        final payload = {
+                        final payload = <String, dynamic>{
                           'title': titleController.text.trim(),
                           'type': selectedType,
                           'description': descController.text.trim(),

@@ -93,6 +93,31 @@ class AppSnackBar {
   /// Use this in catch blocks where you have no specific friendly message.
   static void errorFromException(BuildContext context, String friendlyMessage, Object error) {
     debugPrint('[AppSnackBar] $friendlyMessage — raw: $error');
-    error(context, friendlyMessage);
+    // Inline the error snackbar to avoid calling error() which would
+    // cause infinite recursion since error() is defined above.
+    if (!context.mounted) return;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.white, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                friendlyMessage,
+                style: const TextStyle(fontFamily: 'Inter', fontSize: 13),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: AppColors.error(isDark),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 4),
+      ),
+    );
   }
 }
