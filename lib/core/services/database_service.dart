@@ -334,9 +334,7 @@ class DatabaseService {
     required String contentType,
   }) async {
     final path = '$userId/avatar.jpg';
-    // Use upload() with FileOptions instead of uploadBinary() —
-    // uploadBinary doesn't accept contentType in older supabase_flutter versions.
-    await _client.storage.from('avatars').upload(
+    await _client.storage.from('avatars').uploadBinary(
           path,
           Uint8List.fromList(bytes),
           fileOptions: FileOptions(contentType: contentType, upsert: true),
