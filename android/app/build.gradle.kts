@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.ketermarketing.vitalseker"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.ketermarketing.vitalseker"
