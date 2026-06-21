@@ -242,7 +242,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Text(
-                'Crafted under ${AppConfig.producer} design guidance.',
+                'Powered by ${AppConfig.producer}',
                 style: AppTextStyles.labelSmall.copyWith(
                   color: AppColors.textTertiary(isDark),
                 ),

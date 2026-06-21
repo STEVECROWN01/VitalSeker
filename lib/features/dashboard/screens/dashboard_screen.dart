@@ -28,7 +28,7 @@ import '../../../shared/widgets/vital_score_ring.dart';
 ///   4. Full-width Emergency SOS button (red gradient, uppercase tracking).
 ///   5. Recent Checks — up to 3 items with circular icons + colored severity
 ///      dots (primary-container / yellow-500 / error).
-///   6. Footer — "Crafted under Keter Marketing design guidance."
+///   6. Footer — "Powered by Keter Marketing"
 ///
 /// The widget stays a [ConsumerStatefulWidget] so the AI-health-tip fetcher
 /// (previously surfaced as a card on the dashboard) keeps its state
@@ -344,7 +344,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   // 6. Footer
                   Center(
                     child: Text(
-                      'Crafted under Keter Marketing design guidance.',
+                      'Powered by Keter Marketing',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Inter',

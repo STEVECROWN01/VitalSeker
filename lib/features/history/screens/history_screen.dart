@@ -276,7 +276,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                         _ExportReportButton(isDark: isDark),
                         const SizedBox(height: 16),
                         Text(
-                          'Crafted under Keter Marketing design guidance.',
+                          'Powered by Keter Marketing',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Inter',

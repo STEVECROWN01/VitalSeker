@@ -295,7 +295,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
             const SizedBox(height: 8),
             Center(
               child: Text(
-                'Crafted under ${AppConfig.producer} design guidance.',
+                'Powered by ${AppConfig.producer}',
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,

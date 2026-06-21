@@ -29,7 +29,7 @@ import '../../../shared/widgets/app_snack_bar.dart';
 ///      - DOWNLOAD captures the QR widget via [RepaintBoundary] and shares the
 ///        PNG via [Share.shareXFiles].
 ///      - SHARE shares the QR token + URL as text via [Share.share].
-///   6. "Crafted under Keter Marketing design guidance." footer.
+///   6. "Powered by Keter Marketing" footer.
 class QrDisplayScreen extends ConsumerStatefulWidget {
   const QrDisplayScreen({super.key});
 
@@ -358,7 +358,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
               const SizedBox(height: 32),
               // ── 6. Footer ──
               Text(
-                'Crafted under Keter Marketing design guidance.',
+                'Powered by Keter Marketing',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Inter',

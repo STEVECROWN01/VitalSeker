@@ -189,7 +189,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
               const SizedBox(height: 32),
               // Keter Marketing credit — design spec wording + DM Sans label-bold uppercase
               Text(
-                'Crafted under ${AppConfig.producer} design guidance.',
+                'Powered by ${AppConfig.producer}',
                 style: TextStyle(
                   fontFamily: 'DMSans',
                   fontSize: 10,

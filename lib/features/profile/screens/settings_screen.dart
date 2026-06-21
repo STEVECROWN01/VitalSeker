@@ -505,7 +505,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             // ── Footer ──
             const SizedBox(height: 24),
             Text(
-              'Crafted under Keter Marketing design guidance.',
+              'Powered by Keter Marketing',
               style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
               ),

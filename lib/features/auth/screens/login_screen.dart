@@ -322,7 +322,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   // Footer credit
                   Center(
                     child: Text(
-                      'Crafted under Keter Marketing design guidance.',
+                      'Powered by Keter Marketing',
                       style: AppTextStyles.labelSmall.copyWith(
                         color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
                       ),

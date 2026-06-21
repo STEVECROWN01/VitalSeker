@@ -270,7 +270,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
             ));
             blocks.add(pw.Paragraph(
               text: pdfData['footer']?['producer'] ??
-                  'Crafted under ${AppConfig.producer} design guidance.',
+                  'Powered by ${AppConfig.producer}',
               style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey500),
             ));
 
