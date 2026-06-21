@@ -1105,7 +1105,14 @@ class _ProUpsellSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Dark "inverse-surface" card with decorative rings.
-    final darkSurface = AppColors.darkOnSurface; // inverse-surface analogue
+    //
+    // NB: `AppColors.darkOnSurface` (#E1E3E0) is a LIGHT color (it's the
+    // *on-surface* text color used in dark mode), so using it as a card
+    // background produced a light card with `Colors.white` text on top —
+    // unreadable in both light and dark mode. We use `darkBackground`
+    // (#050F0B, Deep Forest) instead, which is genuinely dark in both
+    // modes and matches the original design intent ("dark inverse-surface").
+    final darkSurface = AppColors.darkBackground;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24),

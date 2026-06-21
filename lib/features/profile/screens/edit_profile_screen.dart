@@ -8,6 +8,9 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 
+/// Action chosen in the avatar source-chooser bottom sheet.
+enum _AvatarAction { gallery, camera, remove }
+
 class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
 
@@ -85,8 +88,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final user = ref.read(currentUserProvider);
     if (user == null) return;
 
-    // Source-chooser: gallery or camera.
-    final source = await showModalBottomSheet<ImageSource>(
+    final hasAvatar = _avatarUrl != null && _avatarUrl!.isNotEmpty;
+
+    // Source-chooser: gallery, camera, or remove (only when an avatar
+    // already exists). Returns one of [_AvatarAction] or null if dismissed.
+    final action = await showModalBottomSheet<_AvatarAction>(
       context: context,
       builder: (ctx) => SafeArea(
         child: Column(
@@ -95,18 +101,39 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             ListTile(
               leading: const Icon(Icons.photo_library_outlined),
               title: const Text('Choose from Gallery'),
-              onTap: () => Navigator.pop(ctx, ImageSource.gallery),
+              onTap: () => Navigator.pop(ctx, _AvatarAction.gallery),
             ),
             ListTile(
               leading: const Icon(Icons.camera_alt_outlined),
               title: const Text('Take a Photo'),
-              onTap: () => Navigator.pop(ctx, ImageSource.camera),
+              onTap: () => Navigator.pop(ctx, _AvatarAction.camera),
             ),
+            if (hasAvatar)
+              ListTile(
+                leading: Icon(
+                  Icons.delete_outline,
+                  color: AppColors.urgencyEmergency,
+                ),
+                title: Text(
+                  'Remove Photo',
+                  style: TextStyle(color: AppColors.urgencyEmergency),
+                ),
+                onTap: () => Navigator.pop(ctx, _AvatarAction.remove),
+              ),
           ],
         ),
       ),
     );
-    if (source == null) return;
+    if (action == null) return;
+
+    if (action == _AvatarAction.remove) {
+      await _removeAvatar();
+      return;
+    }
+
+    final source = action == _AvatarAction.gallery
+        ? ImageSource.gallery
+        : ImageSource.camera;
 
     setState(() => _isUploadingAvatar = true);
     try {
@@ -146,6 +173,40 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       if (mounted) {
         setState(() => _isUploadingAvatar = false);
         AppSnackBar.errorFromException(context, 'Failed to upload avatar. Please try again.', e);
+      }
+    }
+  }
+
+  /// Remove the user's avatar — both the storage object (best-effort) and
+  /// the `avatar_url` field on the user row. The user row is the source of
+  /// truth for whether an avatar is set, so even if the storage delete fails
+  /// we still clear `avatar_url` so the UI falls back to the initials.
+  Future<void> _removeAvatar() async {
+    final user = ref.read(currentUserProvider);
+    if (user == null) return;
+
+    setState(() => _isUploadingAvatar = true);
+    try {
+      final db = ref.read(databaseServiceProvider);
+      await db.deleteAvatar(user.id);
+      await db.updateUserProfile(user.id, {'avatar_url': null});
+      ref.invalidate(userProfileProvider);
+
+      if (mounted) {
+        setState(() {
+          _avatarUrl = null;
+          _isUploadingAvatar = false;
+        });
+        AppSnackBar.success(context, 'Avatar removed.');
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isUploadingAvatar = false);
+        AppSnackBar.errorFromException(
+          context,
+          'Failed to remove avatar. Please try again.',
+          e,
+        );
       }
     }
   }

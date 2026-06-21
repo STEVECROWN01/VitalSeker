@@ -99,20 +99,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     children: [
                       Stack(
                         children: [
-                          CircleAvatar(
-                            radius: 52,
-                            backgroundColor: AppColors.primaryContainer(isDark),
-                            child: Text(
-                              initials,
-                              style: TextStyle(
-                                fontFamily: 'ClashDisplay',
-                                fontSize: 36,
-                                fontWeight: FontWeight.w800,
-                                color: isDark
-                                    ? AppColors.lightPrimaryContainer
-                                    : Colors.white,
-                              ),
-                            ),
+                          _ProfileAvatar(
+                            avatarUrl: profile?.avatarUrl,
+                            initials: initials,
+                            isDark: isDark,
+                            onTap: () => context.push(AppConfig.editProfile),
                           ),
                           Positioned(
                             bottom: 0,
@@ -670,6 +661,83 @@ class _MenuItem extends StatelessWidget {
             ),
             chevron,
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Profile header avatar — renders the uploaded profile picture when
+/// `avatarUrl` is set, falling back to a colored circle with the user's
+/// initials. The initials color is theme-aware so it stays readable on the
+/// `primaryContainer` background in both light and dark mode (previously the
+/// light-mode avatar used `Colors.white` on a light-mint container, which was
+/// unreadable).
+///
+/// Uses [Image.network] with explicit loading + error builders so a slow or
+/// failing network image degrades gracefully to the initials placeholder
+/// instead of showing a blank circle.
+class _ProfileAvatar extends StatelessWidget {
+  final String? avatarUrl;
+  final String initials;
+  final bool isDark;
+  final VoidCallback? onTap;
+
+  const _ProfileAvatar({
+    required this.avatarUrl,
+    required this.initials,
+    required this.isDark,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final hasAvatar = avatarUrl != null && avatarUrl!.isNotEmpty;
+
+    final initialsWidget = Center(
+      child: Text(
+        initials,
+        style: TextStyle(
+          fontFamily: 'ClashDisplay',
+          fontSize: 36,
+          fontWeight: FontWeight.w800,
+          // In dark mode the container is Deep Forest (#050F0B) — light mint
+          // text reads well. In light mode the container is Clean Mint
+          // (#E9FEF6) — we use the dark primary green so the initials stay
+          // legible instead of the previous `Colors.white` which was
+          // unreadable on the light-mint surface.
+          color: isDark
+              ? AppColors.lightPrimaryContainer
+              : AppColors.primary(isDark),
+        ),
+      ),
+    );
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 104, // radius 52 → diameter 104
+        height: 104,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.primaryContainer(isDark),
+        ),
+        child: ClipOval(
+          child: hasAvatar
+              ? Image.network(
+                  avatarUrl!,
+                  fit: BoxFit.cover,
+                  width: 104,
+                  height: 104,
+                  gaplessPlayback: true,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return initialsWidget;
+                  },
+                  errorBuilder: (context, error, stackTrace) =>
+                      initialsWidget,
+                )
+              : initialsWidget,
         ),
       ),
     );

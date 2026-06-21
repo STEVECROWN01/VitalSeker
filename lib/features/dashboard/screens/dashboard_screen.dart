@@ -371,6 +371,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 // ═══════════════════════════════════════════════════════════════════════════
 
 /// 40px circular avatar — tappable to open the profile screen.
+///
+/// Renders the uploaded profile picture when `avatarUrl` is set, falling
+/// back to a colored circle with the user's initial. Uses [Image.network]
+/// with explicit loading + error builders so a slow / failing network image
+/// degrades gracefully to the initials placeholder instead of showing a
+/// blank circle (the previous `BoxDecoration.image` approach had no error
+/// fallback, which is why uploaded avatars sometimes appeared missing).
 class _Avatar extends StatelessWidget {
   final AsyncValue<UserProfile?> profileAsync;
   const _Avatar({required this.profileAsync});
@@ -378,6 +385,24 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDark;
+    final profile = profileAsync.valueOrNull;
+    final avatarUrl = profile?.avatarUrl;
+    final hasAvatar = avatarUrl != null && avatarUrl.isNotEmpty;
+    final name = profile?.fullName ?? 'U';
+    final initial = name.isNotEmpty ? name[0].toUpperCase() : 'U';
+
+    final initialsWidget = Center(
+      child: Text(
+        initial,
+        style: TextStyle(
+          fontFamily: 'ClashDisplay',
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: AppColors.primary(isDark),
+        ),
+      ),
+    );
+
     return GestureDetector(
       onTap: () => context.push(AppConfig.profile),
       child: Container(
@@ -390,35 +415,23 @@ class _Avatar extends StatelessWidget {
             color: AppColors.borderLight(isDark),
             width: 1.5,
           ),
-          image: profileAsync.maybeWhen(
-            data: (p) => p?.avatarUrl != null && p!.avatarUrl!.isNotEmpty
-                ? DecorationImage(
-                    image: NetworkImage(p.avatarUrl!),
-                    fit: BoxFit.cover,
-                  )
-                : null,
-            orElse: () => null,
-          ),
         ),
-        child: profileAsync.maybeWhen(
-          data: (p) {
-            final hasAvatar =
-                p?.avatarUrl != null && p!.avatarUrl!.isNotEmpty;
-            if (hasAvatar) return const SizedBox.shrink();
-            final name = p?.fullName ?? 'U';
-            return Center(
-              child: Text(
-                name.isNotEmpty ? name[0].toUpperCase() : 'U',
-                style: TextStyle(
-                  fontFamily: 'ClashDisplay',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primary(isDark),
-                ),
-              ),
-            );
-          },
-          orElse: () => const SizedBox.shrink(),
+        child: ClipOval(
+          child: hasAvatar
+              ? Image.network(
+                  avatarUrl,
+                  fit: BoxFit.cover,
+                  width: 40,
+                  height: 40,
+                  gaplessPlayback: true,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return initialsWidget;
+                  },
+                  errorBuilder: (context, error, stackTrace) =>
+                      initialsWidget,
+                )
+              : initialsWidget,
         ),
       ),
     );
