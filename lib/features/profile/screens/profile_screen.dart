@@ -285,14 +285,44 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       onTap: () => context.push(AppConfig.family),
                     ),
                     _MenuItem(
-                      icon: Icons.translate,
+                      icon: Icons.language,
                       iconBg: _tint(AppColors.primaryContainer(isDark), isDark),
                       iconFg: isDark
                           ? AppColors.darkOnSurface
                           : AppColors.primary(isDark),
                       label: 'Language',
                       subtitle: 'English (US)',
-                      onTap: () => context.push(AppConfig.settings),
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (ctx) => SafeArea(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Text(
+                                    'Select Language',
+                                    style: TextStyle(
+                                      fontFamily: 'ClashDisplay',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.textPrimary(isDark),
+                                    ),
+                                  ),
+                                ),
+                                ...['English', 'French', 'Spanish', 'Arabic', 'Swahili'].map((lang) => ListTile(
+                                  title: Text(lang, style: const TextStyle(fontFamily: 'Inter')),
+                                  trailing: 'English' == lang
+                                      ? Icon(Icons.check, color: AppColors.primary(isDark))
+                                      : null,
+                                  onTap: () => Navigator.pop(ctx),
+                                )),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     _MenuItem(
                       icon: Icons.notifications_active_outlined,
@@ -368,6 +398,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   title: 'Support',
                   isDark: isDark,
                   children: [
+                    _MenuItem(
+                      icon: Icons.settings_outlined,
+                      iconBg: _tint(AppColors.primary(isDark), isDark),
+                      iconFg: AppColors.primary(isDark),
+                      label: 'Settings',
+                      subtitle: 'Theme, password, account',
+                      onTap: () => context.push(AppConfig.settings),
+                    ),
                     _MenuItem(
                       icon: Icons.help_outline,
                       iconBg: _tint(AppColors.secondary(isDark), isDark),
