@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -60,6 +61,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: Container(
@@ -138,7 +140,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     const SizedBox(height: 24),
                     // Brand name — ClashDisplay ExtraBold w800 per design
                     Text(
-                      AppConfig.appName,
+                      l10n.appName,
                       style: TextStyle(
                         fontFamily: 'ClashDisplay',
                         fontSize: 32,
@@ -150,7 +152,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     const SizedBox(height: 8),
                     // Tagline — per design tokens
                     Text(
-                      AppConfig.appTagline, // "Your AI Health Companion"
+                      l10n.tagline, // "Your AI Health Companion"
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
@@ -189,7 +191,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
               const SizedBox(height: 32),
               // Keter Marketing credit — design spec wording + DM Sans label-bold uppercase
               Text(
-                'Powered by ${AppConfig.producer}',
+                l10n.poweredByProducer(AppConfig.producer),
                 style: TextStyle(
                   fontFamily: 'DMSans',
                   fontSize: 10,

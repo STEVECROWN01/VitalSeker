@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -45,11 +46,12 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final logsAsync = ref.watch(symptomLogsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Symptom History')),
+      appBar: AppBar(title: Text(l10n.symptomHistory)),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(symptomLogsProvider);
@@ -79,7 +81,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                           size: 64, color: AppColors.urgencyEmergency),
                       const SizedBox(height: 16),
                       Text(
-                        'Failed to load history',
+                        l10n.failedLoadHistory,
                         style: TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 18,
@@ -90,7 +92,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                       const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () => ref.invalidate(symptomLogsProvider),
-                        child: const Text('Retry'),
+                        child: Text(l10n.retry),
                       ),
                     ],
                   ),
@@ -112,7 +114,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                             size: 80, color: AppColors.textTertiary(isDark)),
                         const SizedBox(height: 16),
                         Text(
-                          'No History Yet',
+                          l10n.noHistoryYet,
                           style: TextStyle(
                             fontFamily: 'ClashDisplay',
                             fontSize: 20,
@@ -122,7 +124,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Your symptom logs will appear here',
+                          l10n.symptomLogsAppearHere,
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -144,9 +146,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                           ),
                           onPressed: () => context.push(AppConfig.triage),
                           icon: const Icon(Icons.healing, size: 20),
-                          label: const Text(
-                            'Start Your First Triage',
-                            style: TextStyle(
+                          label: Text(
+                            l10n.startFirstTriage,
+                            style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
@@ -186,7 +188,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'History',
+                              l10n.history,
                               style: TextStyle(
                                 fontFamily: 'ClashDisplay',
                                 fontSize: 28,
@@ -205,7 +207,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                '$thisMonthCount THIS MONTH',
+                                l10n.thisMonthCount(thisMonthCount),
                                 style: TextStyle(
                                   fontFamily: 'DMSans',
                                   fontSize: 11,
@@ -250,7 +252,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                               color: AppColors.textTertiary(isDark)),
                           const SizedBox(height: 12),
                           Text(
-                            'No logs match your filters',
+                            l10n.noLogsMatchFilters,
                             style: TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 14,
@@ -260,7 +262,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Try a different search or filter.',
+                            l10n.tryDifferentSearch,
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 12,
@@ -300,7 +302,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                         _ExportReportButton(isDark: isDark),
                         const SizedBox(height: 16),
                         Text(
-                          'Powered by Keter Marketing',
+                          l10n.poweredBy,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Inter',
@@ -378,6 +380,7 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SizedBox(
       height: 52,
       child: TextField(
@@ -389,7 +392,7 @@ class _SearchBar extends StatelessWidget {
           color: AppColors.textPrimary(isDark),
         ),
         decoration: InputDecoration(
-          hintText: 'Search logs...',
+          hintText: l10n.searchLogs,
           hintStyle: TextStyle(
             fontFamily: 'Inter',
             fontSize: 14,
@@ -452,33 +455,34 @@ class _FilterChipsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Wrap(
       spacing: 8,
       runSpacing: 8,
       children: [
         _FilterChip(
-          label: 'All',
+          label: l10n.all,
           dotColor: AppColors.textTertiary(isDark),
           selected: activeFilter == _Filter.all,
           isDark: isDark,
           onTap: () => onSelected(_Filter.all),
         ),
         _FilterChip(
-          label: 'Green',
+          label: l10n.filterGreen,
           dotColor: AppColors.urgencyLow,
           selected: activeFilter == _Filter.green,
           isDark: isDark,
           onTap: () => onSelected(_Filter.green),
         ),
         _FilterChip(
-          label: 'Yellow',
+          label: l10n.filterYellow,
           dotColor: AppColors.urgencyMedium,
           selected: activeFilter == _Filter.yellow,
           isDark: isDark,
           onTap: () => onSelected(_Filter.yellow),
         ),
         _FilterChip(
-          label: 'Red',
+          label: l10n.filterRed,
           dotColor: AppColors.urgencyHigh,
           selected: activeFilter == _Filter.red,
           isDark: isDark,
@@ -619,6 +623,7 @@ class _TimelineItem extends StatelessWidget {
   }
 
   Widget _buildCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -681,7 +686,7 @@ class _TimelineItem extends StatelessWidget {
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 4),
           child: Text(
-            'Severity: ${log.severity}/10',
+            l10n.severityCaption(log.severity),
             style: TextStyle(
               fontFamily: 'Inter',
               fontSize: 12,
@@ -699,7 +704,7 @@ class _TimelineItem extends StatelessWidget {
                 const SizedBox(height: 8),
                 // All symptoms
                 Text(
-                  'All Symptoms',
+                  l10n.allSymptoms,
                   style: TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 13,
@@ -723,7 +728,7 @@ class _TimelineItem extends StatelessWidget {
                 if (log.bodyRegions.isNotEmpty) ...[
                   const SizedBox(height: 12),
                   Text(
-                    'Body Regions: ${log.bodyRegions.join(', ')}',
+                    l10n.bodyRegionsCaption(log.bodyRegions.join(', ')),
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 13,
@@ -734,7 +739,7 @@ class _TimelineItem extends StatelessWidget {
                 if (log.duration != null) ...[
                   const SizedBox(height: 8),
                   Text(
-                    'Duration: ${log.duration}',
+                    l10n.durationCaption(log.duration!),
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 13,
@@ -745,7 +750,7 @@ class _TimelineItem extends StatelessWidget {
                 if (triageResult != null) ...[
                   const SizedBox(height: 12),
                   Text(
-                    'AI Recommendation: ${triageResult!.seekCare.replaceAll('-', ' ').toUpperCase()}',
+                    l10n.aiRecommendationCaption(triageResult!.seekCare.replaceAll('-', ' ').toUpperCase()),
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 13,
@@ -787,14 +792,14 @@ class _TimelineItem extends StatelessWidget {
                         );
                       },
                       icon: const Icon(Icons.read_more, size: 18),
-                      label: const Text('View Full Triage Result'),
+                      label: Text(l10n.viewFullTriageResult),
                     ),
                   ),
                 ],
                 if (log.notes != null && log.notes!.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Text(
-                    'Notes: ${log.notes}',
+                    l10n.notesCaption(log.notes!),
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 12,
@@ -898,6 +903,7 @@ class _ExportReportButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // bg-inverse-surface: dark on light theme, light on dark theme.
     // text: opposite (white on dark button, dark on light button).
     final bg = AppColors.onBackground(isDark);
@@ -920,7 +926,7 @@ class _ExportReportButton extends StatelessWidget {
                 Icon(Icons.picture_as_pdf_outlined, size: 18, color: fg),
                 const SizedBox(width: 8),
                 Text(
-                  'Export 30-day Report (Pro)',
+                  l10n.export30DayReport,
                   style: TextStyle(
                     fontFamily: 'DMSans',
                     fontSize: 14,

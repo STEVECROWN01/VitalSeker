@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -166,17 +167,18 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
 
   /// Format the remaining passport validity as "Xh Ym". Returns null when no
   /// expiry is set so the pill can be hidden.
-  String? _formatExpiry(DateTime? expiresAt) {
+  String? _formatExpiry(DateTime? expiresAt, AppLocalizations l10n) {
     if (expiresAt == null) return null;
     final remaining = expiresAt.difference(DateTime.now());
-    if (remaining.isNegative) return 'Expired';
+    if (remaining.isNegative) return l10n.expired;
     final hours = remaining.inHours;
     final minutes = remaining.inMinutes.remainder(60);
-    return 'Valid for ${hours}h ${minutes.toString().padLeft(2, '0')}m';
+    return l10n.validFor(hours, minutes);
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final passportAsync = ref.watch(healthPassportProvider);
     final profileAsync = ref.watch(userProfileProvider);
@@ -186,10 +188,10 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
     final patientName = (profile?.fullName?.isNotEmpty ?? false)
         ? profile!.fullName!
         : 'VitalSeker User';
-    final expiryLabel = _formatExpiry(passport?.expiresAt);
+    final expiryLabel = _formatExpiry(passport?.expiresAt, l10n);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Health Passport QR')),
+      appBar: AppBar(title: Text(l10n.healthPassportQr)),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -199,7 +201,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
             children: [
               // ── 1. "HEALTH PASSPORT" eyebrow label ──
               Text(
-                'HEALTH PASSPORT',
+                l10n.healthPassport.toUpperCase(),
                 style: TextStyle(
                   fontFamily: 'DMSans',
                   fontSize: 12,
@@ -328,7 +330,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                 const SizedBox(height: 20),
                 // ── 4. Instruction text ──
                 Text(
-                  'Point this at any QR reader to securely share your vitals.',
+                  l10n.pointQrReader,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Inter',
@@ -340,7 +342,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                 const SizedBox(height: 28),
                 // ── 5. DOWNLOAD + SHARE pill buttons (52px tall) ──
                 _PillActionButton(
-                  label: 'DOWNLOAD',
+                  label: l10n.download,
                   icon: Icons.download_outlined,
                   isDark: isDark,
                   isLoading: _isDownloading,
@@ -349,7 +351,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                 ),
                 const SizedBox(height: 12),
                 _PillActionButton(
-                  label: 'SHARE',
+                  label: l10n.share,
                   icon: Icons.share_outlined,
                   isDark: isDark,
                   primary: false,
@@ -360,7 +362,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                     size: 80, color: AppColors.textTertiary(isDark)),
                 const SizedBox(height: 16),
                 Text(
-                  'No QR Code Generated',
+                  l10n.noQrCodeGenerated,
                   style: TextStyle(
                     fontFamily: 'ClashDisplay',
                     fontSize: 20,
@@ -371,13 +373,13 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: _generateQr,
-                  child: const Text('Generate QR Code'),
+                  child: Text(l10n.generateQrCode),
                 ),
               ],
               const SizedBox(height: 32),
               // ── 6. Footer ──
               Text(
-                'Powered by Keter Marketing',
+                l10n.poweredBy,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Inter',

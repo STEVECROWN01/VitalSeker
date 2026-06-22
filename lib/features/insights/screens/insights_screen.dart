@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -36,6 +37,7 @@ class InsightsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final insightsAsync = ref.watch(weeklyInsightsProvider);
     final passportAsync = ref.watch(healthPassportProvider);
@@ -127,7 +129,7 @@ class InsightsScreen extends ConsumerWidget {
                       // Preserved so users with multiple weeks of data can
                       // drill into the structured trend/summary/stats.
                       Text(
-                        'Weekly Breakdown',
+                        l10n.weeklyBreakdown,
                         style: TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 18,
@@ -200,6 +202,7 @@ class _InsightsAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SliverAppBar(
       toolbarHeight: 72,
       pinned: true,
@@ -230,7 +233,7 @@ class _InsightsAppBar extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Weekly Insights',
+                l10n.weeklyInsights,
                 style: TextStyle(
                   fontFamily: 'DMSans',
                   fontSize: 12,
@@ -287,6 +290,7 @@ class _AiSummaryHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isUp = scoreChange >= 0;
     final trendColor = isUp ? AppColors.success(isDark) : AppColors.error(isDark);
     return Container(
@@ -343,7 +347,7 @@ class _AiSummaryHeroCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'Pro Analysis',
+                          l10n.proAnalysis,
                           style: TextStyle(
                             fontFamily: 'DMSans',
                             fontSize: 11,
@@ -366,7 +370,7 @@ class _AiSummaryHeroCard extends StatelessWidget {
               const SizedBox(height: 16),
               // Title
               Text(
-                'Your health this week',
+                l10n.yourHealthThisWeek,
                 style: TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 24,
@@ -414,7 +418,9 @@ class _AiSummaryHeroCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '${isUp ? '+' : ''}$scoreChange pts',
+                            isUp
+                                ? '+${l10n.scoreChangePts(scoreChange)}'
+                                : l10n.scoreChangePts(scoreChange),
                             style: TextStyle(
                               fontFamily: 'JetBrainsMono',
                               fontSize: 13,
@@ -479,11 +485,12 @@ class _TrendAnalysisSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Trend Analysis',
+          l10n.trendAnalysis,
           style: TextStyle(
             fontFamily: 'Outfit',
             fontSize: 18,
@@ -507,7 +514,7 @@ class _TrendAnalysisSection extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'SYMPTOM FREQUENCY (4W)'.toUpperCase(),
+                    l10n.symptomFrequency4w,
                     style: TextStyle(
                       fontFamily: 'DMSans',
                       fontSize: 11,
@@ -547,6 +554,7 @@ class _SymptomLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       children: [
         // Y-axis labels
@@ -555,7 +563,7 @@ class _SymptomLineChart extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: ['High', 'Avg', 'Low'].map((label) {
+            children: [l10n.chartHigh, l10n.chartAvg, l10n.chartLow].map((label) {
               return Text(
                 label,
                 style: TextStyle(
@@ -727,32 +735,30 @@ class _PersonalizedFocusSection extends StatelessWidget {
     required this.recommendations,
   });
 
-  static const _tipCatalog = <_TipDef>[
+  static List<_TipDef> _tipCatalog(AppLocalizations l10n) => <_TipDef>[
     _TipDef(
       icon: Icons.bedtime,
-      title: 'Extend deep sleep',
-      body:
-          'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.',
+      title: l10n.tipSleepTitle,
+      body: l10n.tipSleepBody,
     ),
     _TipDef(
       icon: Icons.water_drop,
-      title: 'Front-load hydration',
-      body:
-          'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.',
+      title: l10n.tipHydrationTitle,
+      body: l10n.tipHydrationBody,
     ),
     _TipDef(
       icon: Icons.directions_run,
-      title: 'Pacing activity',
-      body:
-          'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.',
+      title: l10n.tipActivityTitle,
+      body: l10n.tipActivityBody,
     ),
   ];
 
-  List<_TipDef> _buildTips() {
+  List<_TipDef> _buildTips(AppLocalizations l10n) {
+    final catalog = _tipCatalog(l10n);
     // Use real recommendations when we have them, falling back to the catalog.
     if (recommendations.length >= 3) {
       return List.generate(3, (i) {
-        final t = _tipCatalog[i % _tipCatalog.length];
+        final t = catalog[i % catalog.length];
         return _TipDef(
           icon: t.icon,
           title: _titleFromRecommendation(recommendations[i]) ?? t.title,
@@ -763,14 +769,14 @@ class _PersonalizedFocusSection extends StatelessWidget {
     // Pad recommendations into the catalog slots.
     return List.generate(3, (i) {
       if (i < recommendations.length) {
-        final t = _tipCatalog[i];
+        final t = catalog[i];
         return _TipDef(
           icon: t.icon,
           title: _titleFromRecommendation(recommendations[i]) ?? t.title,
           body: recommendations[i],
         );
       }
-      return _tipCatalog[i];
+      return catalog[i];
     });
   }
 
@@ -782,12 +788,13 @@ class _PersonalizedFocusSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tips = _buildTips();
+    final l10n = AppLocalizations.of(context)!;
+    final tips = _buildTips(l10n);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Personalized Focus',
+          l10n.personalizedFocus,
           style: TextStyle(
             fontFamily: 'Outfit',
             fontSize: 18,
@@ -914,6 +921,7 @@ class _GenerateInsightsCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SizedBox(
       width: double.infinity,
       child: Material(
@@ -927,9 +935,9 @@ class _GenerateInsightsCta extends StatelessWidget {
             // has been registered.
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: const Text(
-                  'Refreshing your AI insights…',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 13),
+                content: Text(
+                  l10n.refreshingAiInsights,
+                  style: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                 ),
                 backgroundColor: AppColors.primary(isDark),
                 behavior: SnackBarBehavior.floating,
@@ -966,7 +974,7 @@ class _GenerateInsightsCta extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Generate New Insights',
+                    l10n.generateNewInsights,
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 16,
@@ -1036,6 +1044,7 @@ class _InsightDataCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final trend = insight.trendAnalysis;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -1107,21 +1116,21 @@ class _InsightDataCard extends StatelessWidget {
           Row(
             children: [
               _StatChip(
-                label: 'Symptoms',
+                label: l10n.symptoms,
                 value: '${trend.symptomFrequency}',
                 color: AppColors.secondary(isDark),
                 isDark: isDark,
               ),
               const SizedBox(width: 8),
               _StatChip(
-                label: 'Avg Severity',
+                label: l10n.avgSeverity,
                 value: trend.avgSeverity.toStringAsFixed(1),
                 color: _severityColor(trend.avgSeverity.round()),
                 isDark: isDark,
               ),
               const SizedBox(width: 8),
               _StatChip(
-                label: 'Score Change',
+                label: l10n.scoreChange,
                 value:
                     '${insight.vitalScoreChange > 0 ? '+' : ''}${insight.vitalScoreChange}',
                 color: insight.vitalScoreChange >= 0
@@ -1134,7 +1143,7 @@ class _InsightDataCard extends StatelessWidget {
           if (insight.recommendations.isNotEmpty) ...[
             const SizedBox(height: 16),
             Text(
-              'Recommendations',
+              l10n.recommendations,
               style: TextStyle(
                 fontFamily: 'Outfit',
                 fontSize: 13,
@@ -1245,11 +1254,12 @@ class _ProEmptyStateState extends State<_ProEmptyState> {
     try {
       await widget.onGenerate();
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text(
-              'Refreshing your AI insights…',
-              style: TextStyle(fontFamily: 'Inter', fontSize: 13),
+            content: Text(
+              l10n.refreshingAiInsights,
+              style: const TextStyle(fontFamily: 'Inter', fontSize: 13),
             ),
             backgroundColor: AppColors.primary(widget.isDark),
             behavior: SnackBarBehavior.floating,
@@ -1268,6 +1278,7 @@ class _ProEmptyStateState extends State<_ProEmptyState> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
@@ -1309,15 +1320,14 @@ class _ProEmptyStateState extends State<_ProEmptyState> {
             ),
             const SizedBox(height: 16),
             Text(
-              'No Insights Yet',
+              l10n.noInsightsYet,
               style: AppTextStyles.heading3.copyWith(
                 color: AppColors.textPrimary(widget.isDark),
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              'No insights generated yet. Check back on Monday for your '
-              'weekly AI health summary, or tap below to generate one now.',
+              l10n.checkBackMondayOrGenerate,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary(widget.isDark),
               ),
@@ -1350,7 +1360,7 @@ class _ProEmptyStateState extends State<_ProEmptyState> {
                       )
                     : const Icon(Icons.auto_awesome, size: 20),
                 label: Text(
-                  _generating ? 'Generating…' : 'Generate Now',
+                  _generating ? l10n.generating : l10n.generateNow,
                   style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 15,
@@ -1376,6 +1386,7 @@ class _ProUpsellEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
@@ -1413,15 +1424,14 @@ class _ProUpsellEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Weekly Insights',
+              l10n.weeklyInsights,
               style: AppTextStyles.heading3.copyWith(
                 color: AppColors.textPrimary(isDark),
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              'Upgrade to Pro to unlock AI-powered weekly health insights. '
-              'Get personalized recommendations and trend analysis every Monday.',
+              l10n.upgradeProInsightsFull,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary(isDark),
               ),
@@ -1453,11 +1463,11 @@ class _ProUpsellEmptyState extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Pro Plan - \$${AppConfig.proPriceMonthly}/mo',
+                            l10n.proPlanMonthly(AppConfig.proPriceMonthly),
                             style: AppTextStyles.subheading1.copyWith(color: Colors.white),
                           ),
                           Text(
-                            'Weekly insights, unlimited triage',
+                            l10n.weeklyInsightsUnlimitedTriage,
                             style: AppTextStyles.bodySmall.copyWith(
                               color: Colors.white.withValues(alpha: 0.85),
                             ),
@@ -1475,7 +1485,7 @@ class _ProUpsellEmptyState extends StatelessWidget {
             TextButton(
               onPressed: () => context.push(AppConfig.subscription),
               child: Text(
-                'View all plans',
+                l10n.viewAllPlans,
                 style: TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 13,
@@ -1502,6 +1512,7 @@ class _ErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SafeArea(
       child: Center(
         child: Padding(
@@ -1512,7 +1523,7 @@ class _ErrorState extends StatelessWidget {
               Icon(Icons.cloud_off, size: 64, color: AppColors.textTertiary(isDark)),
               const SizedBox(height: 16),
               Text(
-                'Could not load insights',
+                l10n.couldNotLoadInsights,
                 style: AppTextStyles.subheading1.copyWith(
                   color: AppColors.textPrimary(isDark),
                 ),
@@ -1520,7 +1531,7 @@ class _ErrorState extends StatelessWidget {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: onRetry,
-                child: const Text('Retry'),
+                child: Text(l10n.retry),
               ),
             ],
           ),

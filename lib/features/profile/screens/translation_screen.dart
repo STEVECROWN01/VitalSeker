@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -52,10 +53,11 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
   }
 
   Future<void> _translate() async {
+    final l10n = AppLocalizations.of(context)!;
     final text = _textController.text.trim();
     if (text.isEmpty) {
       AppSnackBar.error(
-          context, 'Please enter a medical term or phrase to translate.');
+          context, l10n.pleaseEnterTermToTranslate);
       return;
     }
 
@@ -77,14 +79,14 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
       });
       if (result.isEmpty) {
         AppSnackBar.error(
-            context, 'No translation was returned. Please try a different term.');
+            context, l10n.noTranslationReturned);
       }
     } catch (e) {
       if (!mounted) return;
       setState(() => _isLoading = false);
       AppSnackBar.errorFromException(
         context,
-        'Translation failed. Please try again.',
+        l10n.translationFailed,
         e,
       );
     }
@@ -93,11 +95,12 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Medical Translation',
+          l10n.medicalTranslation,
           style: AppTextStyles.heading3.copyWith(color: AppColors.primary(isDark)),
         ),
       ),
@@ -107,9 +110,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Translate medical terms and phrases into your preferred language. '
-              'Useful for travel, consultations, and discussing care with '
-              'non-English-speaking providers.',
+              l10n.medicalTranslationIntro,
               style: AppTextStyles.bodyLarge.copyWith(
                 color: AppColors.textSecondary(isDark),
               ),
@@ -123,8 +124,8 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
               maxLines: 4,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                labelText: 'Medical term or phrase',
-                hintText: 'e.g. "hypertension", "take twice daily with food"',
+                labelText: l10n.medicalTermOrPhrase,
+                hintText: l10n.medicalTermHint,
                 alignLabelWithHint: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -142,7 +143,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
             DropdownButtonFormField<String>(
               value: _targetLang,
               decoration: InputDecoration(
-                labelText: 'Target language',
+                labelText: l10n.targetLanguage,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -185,7 +186,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                       )
                     : const Icon(Icons.translate, size: 20),
                 label: Text(
-                  _isLoading ? 'Translating...' : 'Translate',
+                  _isLoading ? l10n.translating : l10n.translate,
                   style: AppTextStyles.button.copyWith(color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -218,7 +219,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                             color: AppColors.primary(isDark), size: 18),
                         const SizedBox(width: 8),
                         Text(
-                          'Translation ($_targetLang)',
+                          l10n.translationTargetLanguage(_targetLang),
                           style: AppTextStyles.labelMedium.copyWith(
                             color: AppColors.primary(isDark),
                           ),
@@ -251,7 +252,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Your translation will appear here.',
+                        l10n.translationWillAppear,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textSecondary(isDark),
                         ),

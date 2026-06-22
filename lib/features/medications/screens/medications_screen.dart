@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -31,18 +32,20 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
   }
 
   Future<void> _discontinue(Medication medication) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       await ref.read(medicationsProvider.notifier).updateMedicationStatus(
             medication.id,
             MedicationStatus.discontinued,
           );
-      if (mounted) AppSnackBar.success(context, 'Medication discontinued');
+      if (mounted) AppSnackBar.success(context, l10n.medicationDiscontinued);
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to discontinue medication.', e);
+      if (mounted) AppSnackBar.errorFromException(context, l10n.failedToDiscontinueMedication, e);
     }
   }
 
   void _showEditMedicationDialog(Medication medication) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final dosageController = TextEditingController(text: medication.dosage);
     final notesController = TextEditingController(text: medication.notes ?? '');
@@ -55,7 +58,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: Text('Edit ${medication.name}', style: const TextStyle(fontFamily: 'ClashDisplay')),
+          title: Text(l10n.editMedicationName(medication.name), style: const TextStyle(fontFamily: 'ClashDisplay')),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -63,15 +66,15 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                 TextField(
                   controller: dosageController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Dosage',
-                    prefixIcon: Icon(Icons.science_outlined),
+                  decoration: InputDecoration(
+                    labelText: l10n.dosage,
+                    prefixIcon: const Icon(Icons.science_outlined),
                   ),
                 ),
                 const SizedBox(height: 12),
                 DropdownButtonFormField<String>(
                   value: unit,
-                  decoration: const InputDecoration(labelText: 'Unit'),
+                  decoration: InputDecoration(labelText: l10n.unit),
                   items: const ['mg', 'mcg', 'mL', 'g', 'IU', 'drops', 'puffs', 'tablets', 'capsules']
                       .map((u) => DropdownMenuItem(value: u, child: Text(u)))
                       .toList(),
@@ -80,18 +83,18 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                 const SizedBox(height: 12),
                 DropdownButtonFormField<MedicationFrequency>(
                   value: frequency,
-                  decoration: const InputDecoration(labelText: 'Frequency'),
+                  decoration: InputDecoration(labelText: l10n.frequency),
                   items: MedicationFrequency.values
                       .map((f) => DropdownMenuItem(
                             value: f,
-                            child: Text(_frequencyLabel(f)),
+                            child: Text(_frequencyLabel(f, l10n)),
                           ))
                       .toList(),
                   onChanged: (v) => setDialogState(() => frequency = v ?? frequency),
                 ),
                 const SizedBox(height: 12),
                 SwitchListTile(
-                  title: const Text('Reminders'),
+                  title: Text(l10n.reminders),
                   value: reminders,
                   onChanged: (v) => setDialogState(() => reminders = v),
                   contentPadding: EdgeInsets.zero,
@@ -100,8 +103,8 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                 TextField(
                   controller: notesController,
                   maxLines: 2,
-                  decoration: const InputDecoration(
-                    labelText: 'Notes',
+                  decoration: InputDecoration(
+                    labelText: l10n.notes,
                     alignLabelWithHint: true,
                   ),
                 ),
@@ -111,7 +114,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
           actions: [
             TextButton(
               onPressed: isSaving ? null : () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             ElevatedButton(
               onPressed: isSaving
@@ -132,19 +135,19 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                             );
                         if (mounted) {
                           Navigator.pop(ctx);
-                          AppSnackBar.success(context, 'Medication updated!');
+                          AppSnackBar.success(context, l10n.medicationUpdated);
                         }
                       } catch (e) {
                         if (mounted) {
                           setDialogState(() => isSaving = false);
-                          AppSnackBar.errorFromException(context, 'Failed to update medication.', e);
+                          AppSnackBar.errorFromException(context, l10n.failedToUpdateMedication, e);
                         }
                       }
                     },
               style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary(isDark)),
               child: isSaving
                   ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                  : const Text('Save', style: TextStyle(color: Colors.white)),
+                  : Text(l10n.save, style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -153,54 +156,56 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
   }
 
   Future<void> _markComplete(Medication medication) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       await ref.read(medicationsProvider.notifier).updateMedicationStatus(
             medication.id,
             MedicationStatus.completed,
           );
-      if (mounted) AppSnackBar.success(context, 'Medication marked as completed');
+      if (mounted) AppSnackBar.success(context, l10n.medicationMarkedCompleted);
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to update medication.', e);
+      if (mounted) AppSnackBar.errorFromException(context, l10n.failedToUpdateMedication, e);
     }
   }
 
-  static String _frequencyLabel(MedicationFrequency f) {
+  static String _frequencyLabel(MedicationFrequency f, AppLocalizations l10n) {
     switch (f) {
       case MedicationFrequency.onceDaily:
-        return 'Once Daily';
+        return l10n.onceDaily;
       case MedicationFrequency.twiceDaily:
-        return 'Twice Daily';
+        return l10n.twiceDaily;
       case MedicationFrequency.threeTimesDaily:
-        return 'Three Times Daily';
+        return l10n.threeTimesDaily;
       case MedicationFrequency.fourTimesDaily:
-        return 'Four Times Daily';
+        return l10n.fourTimesDaily;
       case MedicationFrequency.everyOtherDay:
-        return 'Every Other Day';
+        return l10n.everyOtherDay;
       case MedicationFrequency.weekly:
-        return 'Weekly';
+        return l10n.weekly;
       case MedicationFrequency.asNeeded:
-        return 'As Needed';
+        return l10n.asNeeded;
       case MedicationFrequency.custom:
-        return 'Custom';
+        return l10n.custom;
     }
   }
 
   Future<void> _deleteMedication(Medication medication) async {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete Medication'),
-        content: Text('Are you sure you want to delete ${medication.name}?'),
+        title: Text(l10n.deleteMedication),
+        content: Text(l10n.deleteMedicationConfirm(medication.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: ElevatedButton.styleFrom(backgroundColor: isDark ? AppColors.darkError : AppColors.lightError),
-            child: const Text('Delete'),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -209,14 +214,15 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
     if (confirmed == true) {
       try {
         await ref.read(medicationsProvider.notifier).deleteMedication(medication.id);
-        if (mounted) AppSnackBar.success(context, 'Medication deleted');
+        if (mounted) AppSnackBar.success(context, l10n.medicationDeleted);
       } catch (e) {
-        if (mounted) AppSnackBar.errorFromException(context, 'Failed to delete medication.', e);
+        if (mounted) AppSnackBar.errorFromException(context, l10n.failedToDeleteMedication, e);
       }
     }
   }
 
   void _showCardMenu(Medication medication) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     showModalBottomSheet(
       context: context,
@@ -252,7 +258,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
             if (medication.status == MedicationStatus.active) ...[
               ListTile(
                 leading: Icon(Icons.edit_outlined, color: AppColors.primary(isDark)),
-                title: const Text('Edit Details', style: TextStyle(fontFamily: 'Inter')),
+                title: Text(l10n.editDetails, style: const TextStyle(fontFamily: 'Inter')),
                 onTap: () {
                   Navigator.pop(ctx);
                   _showEditMedicationDialog(medication);
@@ -260,7 +266,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
               ),
               ListTile(
                 leading: Icon(Icons.check_circle_outline, color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess),
-                title: const Text('Mark Complete', style: TextStyle(fontFamily: 'Inter')),
+                title: Text(l10n.markComplete, style: const TextStyle(fontFamily: 'Inter')),
                 onTap: () {
                   Navigator.pop(ctx);
                   _markComplete(medication);
@@ -268,7 +274,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
               ),
               ListTile(
                 leading: Icon(Icons.block, color: isDark ? AppColors.darkWarning : AppColors.lightWarning),
-                title: const Text('Discontinue', style: TextStyle(fontFamily: 'Inter')),
+                title: Text(l10n.discontinue, style: const TextStyle(fontFamily: 'Inter')),
                 onTap: () {
                   Navigator.pop(ctx);
                   _discontinue(medication);
@@ -277,7 +283,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
             ],
             ListTile(
               leading: Icon(Icons.delete_outline, color: isDark ? AppColors.darkError : AppColors.lightError),
-              title: Text('Delete', style: TextStyle(fontFamily: 'Inter', color: isDark ? AppColors.darkError : AppColors.lightError)),
+              title: Text(l10n.delete, style: TextStyle(fontFamily: 'Inter', color: isDark ? AppColors.darkError : AppColors.lightError)),
               onTap: () {
                 Navigator.pop(ctx);
                 _deleteMedication(medication);
@@ -293,11 +299,12 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final medicationsAsync = ref.watch(medicationsProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Medications'),
+        title: Text(l10n.medications),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppConfig.addMedication),
@@ -318,7 +325,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                 child: TextField(
                   onChanged: (value) => setState(() => _searchQuery = value),
                   decoration: InputDecoration(
-                    hintText: 'Search medications...',
+                    hintText: l10n.searchMedications,
                     hintStyle: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
@@ -348,7 +355,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                 child: Row(
                   children: [
                     _FilterChip(
-                      label: 'Active',
+                      label: l10n.active,
                       selected: _filterStatus == MedicationStatus.active,
                       onSelected: () => setState(() => _filterStatus =
                           _filterStatus == MedicationStatus.active ? null : MedicationStatus.active),
@@ -356,7 +363,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                     ),
                     const SizedBox(width: 8),
                     _FilterChip(
-                      label: 'Completed',
+                      label: l10n.completed,
                       selected: _filterStatus == MedicationStatus.completed,
                       onSelected: () => setState(() => _filterStatus =
                           _filterStatus == MedicationStatus.completed ? null : MedicationStatus.completed),
@@ -364,7 +371,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                     ),
                     const SizedBox(width: 8),
                     _FilterChip(
-                      label: 'All',
+                      label: l10n.all,
                       selected: _filterStatus == null,
                       onSelected: () => setState(() => _filterStatus = null),
                       isDark: isDark,
@@ -377,11 +384,11 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
               // Medications list
               Expanded(
                 child: medications.isEmpty
-                    ? _EmptyState(isDark: isDark)
+                    ? _EmptyState(isDark: isDark, l10n: l10n)
                     : filtered.isEmpty
                         ? Center(
                             child: Text(
-                              'No medications match your search',
+                              l10n.noMedicationsMatchSearch,
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
@@ -398,6 +405,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                                 medication: medication,
                                 isDark: isDark,
                                 onMenuTap: () => _showCardMenu(medication),
+                                l10n: l10n,
                               );
                             },
                           ),
@@ -462,11 +470,13 @@ class _MedicationCard extends StatelessWidget {
   final Medication medication;
   final bool isDark;
   final VoidCallback onMenuTap;
+  final AppLocalizations l10n;
 
   const _MedicationCard({
     required this.medication,
     required this.isDark,
     required this.onMenuTap,
+    required this.l10n,
   });
 
   Color _statusColor() {
@@ -483,11 +493,11 @@ class _MedicationCard extends StatelessWidget {
   String _statusLabel() {
     switch (medication.status) {
       case MedicationStatus.active:
-        return 'Active';
+        return l10n.active;
       case MedicationStatus.completed:
-        return 'Completed';
+        return l10n.completed;
       case MedicationStatus.discontinued:
-        return 'Discontinued';
+        return l10n.discontinued;
     }
   }
 
@@ -585,7 +595,7 @@ class _MedicationCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Next dose: ${medication.nextDoseTime}',
+                  l10n.nextDose(medication.nextDoseTime),
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
@@ -637,7 +647,8 @@ class _MedicationCard extends StatelessWidget {
 
 class _EmptyState extends StatelessWidget {
   final bool isDark;
-  const _EmptyState({required this.isDark});
+  final AppLocalizations l10n;
+  const _EmptyState({required this.isDark, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -654,7 +665,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'No Medications Yet',
+              l10n.noMedicationsYet,
               style: TextStyle(
                 fontFamily: 'ClashDisplay',
                 fontSize: 20,
@@ -664,7 +675,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Add your medications to track dosages,\nfrequency, and adherence',
+              l10n.addMedicationsTrack,
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 14,

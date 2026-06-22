@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../shared/theme/app_colors.dart';
 
@@ -12,8 +13,9 @@ class TermsOfServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Terms of Service')),
+      appBar: AppBar(title: Text(l10n.termsOfService)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Column(
@@ -51,7 +53,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${AppConfig.appName} Terms of Service',
+                          l10n.termsOfServiceTitle(AppConfig.appName),
                           style: TextStyle(
                             fontFamily: 'ClashDisplay',
                             fontSize: 16,
@@ -61,7 +63,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          'Last updated: Version ${AppConfig.version}',
+                          l10n.lastUpdatedVersion(AppConfig.version),
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
@@ -78,19 +80,15 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '1',
-              title: 'Acceptance of Terms',
+              title: l10n.tosSection1Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'By creating an account, accessing, or using the ${AppConfig.appName} '
-                  'mobile application ("the Service"), you agree to be bound by these '
-                  'Terms of Service ("Terms"). If you do not agree to these Terms, you '
-                  'must not access or use the Service.',
+                  l10n.tosSection1Para1(AppConfig.appName),
                   isDark: isDark,
                 ),
                 _Para(
-                  'The Service is provided by ${AppConfig.producer} ("we", "us", or "our"). '
-                  'These Terms form a legally binding agreement between you and us.',
+                  l10n.tosSection1Para2(AppConfig.producer),
                   isDark: isDark,
                 ),
               ],
@@ -98,19 +96,15 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '2',
-              title: 'Eligibility & Account',
+              title: l10n.tosSection2Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'You must be at least 13 years old to use the Service. If you are under '
-                  '18, you represent that your parent or legal guardian has read and '
-                  'agreed to these Terms on your behalf.',
+                  l10n.tosSection2Para1,
                   isDark: isDark,
                 ),
                 _Para(
-                  'You are responsible for maintaining the confidentiality of your account '
-                  'credentials and for all activities that occur under your account. '
-                  'Notify us immediately of any unauthorized use of your account.',
+                  l10n.tosSection2Para2,
                   isDark: isDark,
                 ),
               ],
@@ -118,28 +112,19 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '3',
-              title: 'Health Information — Not Medical Advice',
+              title: l10n.tosSection3Title,
               isDark: isDark,
               children: [
                 _Para(
-                  '${AppConfig.appName} is a health companion application intended for '
-                  'informational and organizational purposes only. The Service is NOT a '
-                  'medical device and does not provide medical advice, diagnosis, or '
-                  'treatment recommendations.',
+                  l10n.tosSection3Para1(AppConfig.appName),
                   isDark: isDark,
                 ),
                 _Para(
-                  'The AI triage feature provides general guidance based on the symptoms '
-                  'you report. It is not a substitute for professional medical judgment. '
-                  'Always seek the advice of a qualified healthcare provider with any '
-                  'questions you may have regarding a medical condition. Never disregard '
-                  'professional medical advice or delay seeking it because of something '
-                  'you read in this Service.',
+                  l10n.tosSection3Para2,
                   isDark: isDark,
                 ),
                 _Para(
-                  'In a medical emergency, call your local emergency number (e.g. 911, 112) '
-                  'immediately. Do not rely on the Service for emergency response.',
+                  l10n.tosSection3Para3,
                   isDark: isDark,
                 ),
               ],
@@ -147,39 +132,33 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '4',
-              title: 'Use of the Service',
+              title: l10n.tosSection4Title,
               isDark: isDark,
               children: [
-                _Para('You agree NOT to:', isDark: isDark, bold: true),
-                _Bullet('Use the Service for any unlawful purpose;', isDark: isDark),
-                _Bullet('Attempt to reverse-engineer, decompile, or disassemble the app;', isDark: isDark),
-                _Bullet('Upload content that is malicious, fraudulent, or violates intellectual property rights;', isDark: isDark),
-                _Bullet('Interfere with the proper functioning of the Service or attempt to access data belonging to other users;', isDark: isDark),
-                _Bullet('Use the Service to send unsolicited communications or spam.', isDark: isDark),
+                _Para(l10n.tosSection4Intro, isDark: isDark, bold: true),
+                _Bullet(l10n.tosSection4Bullet1, isDark: isDark),
+                _Bullet(l10n.tosSection4Bullet2, isDark: isDark),
+                _Bullet(l10n.tosSection4Bullet3, isDark: isDark),
+                _Bullet(l10n.tosSection4Bullet4, isDark: isDark),
+                _Bullet(l10n.tosSection4Bullet5, isDark: isDark),
               ],
             ),
 
             _Section(
               number: '5',
-              title: 'Subscriptions & Payments',
+              title: l10n.tosSection5Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'Certain features of the Service require a paid subscription ("Pro" or '
-                  '"Enterprise" plan). Subscription fees are billed monthly through the '
-                  'platform application store (Apple App Store or Google Play Store) '
-                  'subject to their respective terms.',
+                  l10n.tosSection5Para1,
                   isDark: isDark,
                 ),
                 _Para(
-                  'Subscriptions automatically renew unless cancelled at least 24 hours '
-                  'before the end of the current billing period. You can manage or cancel '
-                  'your subscription at any time through your platform\'s account settings.',
+                  l10n.tosSection5Para2,
                   isDark: isDark,
                 ),
                 _Para(
-                  'We may change subscription fees upon reasonable notice. Fee changes '
-                  'will not apply to your current billing period.',
+                  l10n.tosSection5Para3,
                   isDark: isDark,
                 ),
               ],
@@ -187,19 +166,15 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '6',
-              title: 'Your Data',
+              title: l10n.tosSection6Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'You retain ownership of the health data you submit to the Service. '
-                  'Our use of your data is described in our Privacy Policy, which is '
-                  'incorporated into these Terms by reference.',
+                  l10n.tosSection6Para1,
                   isDark: isDark,
                 ),
                 _Para(
-                  'You may export your data at any time via the in-app Export feature, '
-                  'and you may permanently delete your account and all associated data '
-                  'via Settings → Delete Account.',
+                  l10n.tosSection6Para2,
                   isDark: isDark,
                 ),
               ],
@@ -207,20 +182,15 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '7',
-              title: 'Disclaimers',
+              title: l10n.tosSection7Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT '
-                  'WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT '
-                  'LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A '
-                  'PARTICULAR PURPOSE, OR NON-INFRINGEMENT.',
+                  l10n.tosSection7Para1,
                   isDark: isDark,
                 ),
                 _Para(
-                  'We do not warrant that the Service will be uninterrupted, error-free, '
-                  'or secure, or that the AI triage recommendations will be accurate or '
-                  'appropriate for your specific situation.',
+                  l10n.tosSection7Para2,
                   isDark: isDark,
                 ),
               ],
@@ -228,16 +198,11 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '8',
-              title: 'Limitation of Liability',
+              title: l10n.tosSection8Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL '
-                  '${AppConfig.producer.toUpperCase()} BE LIABLE FOR ANY INDIRECT, '
-                  'INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS '
-                  'OF DATA, ARISING OUT OF OR RELATED TO YOUR USE OF (OR INABILITY TO '
-                  'USE) THE SERVICE, WHETHER BASED ON WARRANTY, CONTRACT, TORT, OR ANY '
-                  'OTHER LEGAL THEORY.',
+                  l10n.tosSection8Para1(AppConfig.producer),
                   isDark: isDark,
                 ),
               ],
@@ -245,19 +210,15 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '9',
-              title: 'Termination',
+              title: l10n.tosSection9Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'You may stop using the Service and delete your account at any time via '
-                  'Settings. We may suspend or terminate your access to the Service if you '
-                  'violate these Terms or if we reasonably believe we are required to do '
-                  'so by law.',
+                  l10n.tosSection9Para1,
                   isDark: isDark,
                 ),
                 _Para(
-                  'Upon termination, all licenses granted to you will end, and your data '
-                  'will be deleted in accordance with our Privacy Policy.',
+                  l10n.tosSection9Para2,
                   isDark: isDark,
                 ),
               ],
@@ -265,13 +226,11 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '10',
-              title: 'Changes to These Terms',
+              title: l10n.tosSection10Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'We may update these Terms from time to time. We will notify you of '
-                  'material changes via the app or by email. Continued use of the Service '
-                  'after changes take effect constitutes acceptance of the revised Terms.',
+                  l10n.tosSection10Para1,
                   isDark: isDark,
                 ),
               ],
@@ -279,11 +238,11 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '11',
-              title: 'Contact',
+              title: l10n.tosSection11Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'Questions about these Terms? Contact us at support@vitalseker.com.',
+                  l10n.tosSection11Para1,
                   isDark: isDark,
                 ),
               ],
@@ -293,8 +252,7 @@ class TermsOfServiceScreen extends StatelessWidget {
             Divider(color: AppColors.divider(isDark)),
             const SizedBox(height: 12),
             Text(
-              '© ${DateTime.now().year} ${AppConfig.producer}. All rights reserved. '
-              'Version ${AppConfig.version}.',
+              l10n.tosCopyright(DateTime.now().year, AppConfig.producer, AppConfig.version),
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 11,

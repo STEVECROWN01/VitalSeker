@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -40,6 +41,22 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   static const List<String> _bloodTypeOptions = [
     'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'
   ];
+
+  /// Maps the internal gender value (stored as English: "Male"/"Female"/"Other")
+  /// to its localized display label. The stored value stays English so existing
+  /// profile data keeps parsing across language switches.
+  String _genderLabel(String gender, AppLocalizations l10n) {
+    switch (gender) {
+      case 'Male':
+        return l10n.male;
+      case 'Female':
+        return l10n.female;
+      case 'Other':
+        return l10n.other;
+      default:
+        return gender;
+    }
+  }
 
   @override
   void initState() {
@@ -114,12 +131,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   Future<void> _pickDateOfBirth() async {
     final now = DateTime.now();
+    final l10n = AppLocalizations.of(context)!;
     final picked = await showDatePicker(
       context: context,
       initialDate: _dateOfBirth ?? DateTime(now.year - 25),
       firstDate: DateTime(1900),
       lastDate: now,
-      helpText: 'Select Date of Birth',
+      helpText: l10n.selectDateOfBirth,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -143,7 +161,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Future<void> _signUp() async {
     if (!_formKey.currentState!.validate()) return;
     if (!_acceptTerms) {
-      _showError('Please accept the Terms of Service and Privacy Policy to continue.');
+      final l10n = AppLocalizations.of(context)!;
+      _showError(l10n.acceptTermsRequired);
       return;
     }
 
@@ -164,7 +183,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             (user != null && user.confirmationSentAt != null);
 
         if (needsConfirmation) {
-          _showSuccess('Account created! Please check your email to verify your account.');
+          final l10n = AppLocalizations.of(context)!;
+          _showSuccess(l10n.accountCreatedVerifyEmail);
           await Future.delayed(const Duration(seconds: 2));
           if (mounted) context.go(AppConfig.login);
         } else {
@@ -230,10 +250,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return LoadingOverlay(
       isLoading: _isLoading,
-      message: 'Creating account...',
+      message: l10n.creatingAccount,
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
@@ -257,7 +278,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Create Account',
+                    l10n.createAccount,
                     style: TextStyle(
                       fontFamily: 'ClashDisplay',
                       fontSize: 28,
@@ -267,7 +288,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Join VitalSeker and take control of your health',
+                    l10n.joinVitalSeker,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
@@ -280,13 +301,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     controller: _nameController,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      labelText: 'Full Name',
-                      prefixIcon: Icon(Icons.person_outline),
+                    decoration: InputDecoration(
+                      labelText: l10n.fullName,
+                      prefixIcon: const Icon(Icons.person_outline),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Name is required';
-                      if (value.trim().length < 2) return 'Name must be at least 2 characters';
+                      if (value == null || value.isEmpty) return l10n.nameRequired;
+                      if (value.trim().length < 2) return l10n.nameMinChars;
                       return null;
                     },
                   ),
@@ -296,13 +317,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      prefixIcon: Icon(Icons.email_outlined),
+                    decoration: InputDecoration(
+                      labelText: l10n.email,
+                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Email is required';
-                      if (!value.contains('@') || !value.contains('.')) return 'Enter a valid email address';
+                      if (value == null || value.isEmpty) return l10n.emailRequired;
+                      if (!value.contains('@') || !value.contains('.')) return l10n.enterValidEmailAddress;
                       return null;
                     },
                   ),
@@ -313,8 +334,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     obscureText: _obscurePassword,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'At least 6 characters',
+                      labelText: l10n.password,
+                      hintText: l10n.atLeast6Chars,
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
@@ -322,10 +343,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Password is required';
-                      if (value.length < 6) return 'Password must be at least 6 characters';
-                      if (!value.contains(RegExp(r'[A-Z]'))) return 'Include at least one uppercase letter';
-                      if (!value.contains(RegExp(r'[0-9]'))) return 'Include at least one number';
+                      if (value == null || value.isEmpty) return l10n.passwordRequired;
+                      if (value.length < 6) return l10n.passwordMinLength;
+                      if (!value.contains(RegExp(r'[A-Z]'))) return l10n.includeUppercase;
+                      if (!value.contains(RegExp(r'[0-9]'))) return l10n.includeNumber;
                       return null;
                     },
                   ),
@@ -337,7 +358,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (_) => _signUp(),
                     decoration: InputDecoration(
-                      labelText: 'Confirm Password',
+                      labelText: l10n.confirmPassword,
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(_obscureConfirmPassword ? Icons.visibility_off : Icons.visibility),
@@ -345,8 +366,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Please confirm your password';
-                      if (value != _passwordController.text) return 'Passwords do not match';
+                      if (value == null || value.isEmpty) return l10n.confirmPasswordRequired;
+                      if (value != _passwordController.text) return l10n.passwordsDoNotMatch;
                       return null;
                     },
                   ),
@@ -365,7 +386,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Optional Details',
+                        l10n.optionalDetails,
                         style: TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 16,
@@ -391,14 +412,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       child: TextFormField(
                         controller: _dobController,
                         decoration: InputDecoration(
-                          labelText: 'Date of Birth',
+                          labelText: l10n.dateOfBirth,
                           prefixIcon: const Icon(Icons.cake_outlined),
                           suffixIcon: Icon(
                             Icons.calendar_today_outlined,
                             size: 18,
                             color: AppColors.textSecondary(isDark),
                           ),
-                          hintText: 'Select your date of birth',
+                          hintText: l10n.selectDateOfBirthHint,
                         ),
                         style: TextStyle(
                           fontFamily: 'Inter',
@@ -415,16 +436,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   // Gender Dropdown
                   DropdownButtonFormField<String>(
                     value: _gender,
-                    decoration: const InputDecoration(
-                      labelText: 'Gender',
-                      prefixIcon: Icon(Icons.wc_outlined),
-                      hintText: 'Select gender',
+                    decoration: InputDecoration(
+                      labelText: l10n.gender,
+                      prefixIcon: const Icon(Icons.wc_outlined),
+                      hintText: l10n.selectGender,
                     ),
                     items: _genderOptions.map((gender) {
                       return DropdownMenuItem<String>(
                         value: gender,
                         child: Text(
-                          gender,
+                          _genderLabel(gender, l10n),
                           style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
                         ),
                       );
@@ -441,10 +462,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   // Blood Type Dropdown
                   DropdownButtonFormField<String>(
                     value: _bloodType,
-                    decoration: const InputDecoration(
-                      labelText: 'Blood Type',
-                      prefixIcon: Icon(Icons.bloodtype_outlined),
-                      hintText: 'Select blood type',
+                    decoration: InputDecoration(
+                      labelText: l10n.bloodType,
+                      prefixIcon: const Icon(Icons.bloodtype_outlined),
+                      hintText: l10n.selectBloodType,
                     ),
                     items: _bloodTypeOptions.map((type) {
                       return DropdownMenuItem<String>(
@@ -481,7 +502,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           onTap: () => setState(() => _acceptTerms = !_acceptTerms),
                           child: Text.rich(
                             TextSpan(
-                              text: 'I agree to the ',
+                              text: l10n.iAgreeTo,
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 13,
@@ -489,15 +510,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               ),
                               children: [
                                 TextSpan(
-                                  text: 'Terms of Service',
+                                  text: l10n.termsOfService,
                                   style: TextStyle(
                                     color: AppColors.primary(isDark),
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                const TextSpan(text: ' and '),
+                                TextSpan(text: l10n.andText),
                                 TextSpan(
-                                  text: 'Privacy Policy',
+                                  text: l10n.privacyPolicy,
                                   style: TextStyle(
                                     color: AppColors.primary(isDark),
                                     fontWeight: FontWeight.w600,
@@ -518,7 +539,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       minimumSize: const Size(double.infinity, 56),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     ),
-                    child: const Text('Create Account'),
+                    child: Text(l10n.createAccount),
                   ),
                   const SizedBox(height: 24),
                   // Divider
@@ -528,7 +549,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          'or continue with',
+                          l10n.orContinueWith,
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
@@ -545,7 +566,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     onPressed: _signInWithGoogle,
                     icon: Icon(Icons.g_mobiledata_rounded, size: 24, color: AppColors.textPrimary(isDark)),
                     label: Text(
-                      'Continue with Google',
+                      l10n.continueWithGoogle,
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 15,
@@ -566,7 +587,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     onPressed: _signInWithApple,
                     icon: Icon(Icons.apple, size: 24, color: AppColors.textPrimary(isDark)),
                     label: Text(
-                      'Continue with Apple',
+                      l10n.continueWithApple,
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 15,
@@ -587,7 +608,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Already have an account? ',
+                        l10n.alreadyHaveAccount,
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
@@ -597,7 +618,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       TextButton(
                         onPressed: () => context.go(AppConfig.login),
                         child: Text(
-                          'Sign In',
+                          l10n.signIn,
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             fontWeight: FontWeight.w600,

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../core/providers/auth_provider.dart';
@@ -59,6 +60,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final triage =
         widget.triageData['triage'] as Map<String, dynamic>? ?? widget.triageData;
@@ -70,13 +72,12 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
     final redFlags =
         (triage['red_flags'] as List<dynamic>? ?? []).cast<String>();
     final possibleConditions = triage['possible_conditions'] as List<dynamic>? ?? [];
-    final disclaimer = triage['disclaimer'] as String? ??
-        'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+    final disclaimer = triage['disclaimer'] as String? ?? l10n.triageDisclaimer;
     final followUpQuestions =
         (triage['follow_up_questions'] as List<dynamic>? ?? []).cast<String>();
 
     final heroColor = _urgencyColor(urgencyLevel);
-    final headline = _seekCareHeadline(seekCare);
+    final headline = _seekCareHeadline(seekCare, l10n);
 
     // Build the symptom chips below the hero. The edge function does not
     // currently echo the user-supplied symptoms back in the triage map, so we
@@ -88,11 +89,11 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
           final name = (c is Map ? c['name'] : c)?.toString() ?? '';
           return name;
         }).where((s) => s.isNotEmpty),
-      if (possibleConditions.isEmpty) _seekCareLabel(seekCare),
+      if (possibleConditions.isEmpty) _seekCareLabel(seekCare, l10n),
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Triage Results')),
+      appBar: AppBar(title: Text(l10n.triageResults)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: Column(
@@ -131,7 +132,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
                   UrgencyBadge(urgencyLevel: urgencyLevel, fontSize: 12),
                   const SizedBox(height: 6),
                   Text(
-                    'Urgency Score: $urgencyScore/100',
+                    l10n.urgencyScoreCaption(urgencyScore),
                     style: TextStyle(
                       fontFamily: 'JetBrainsMono',
                       fontSize: 13,
@@ -157,14 +158,14 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
             // ── 5. "When to escalate" amber card ──
             _EscalationCard(
               isDark: isDark,
-              criteria: _escalationCriteria(urgencyLevel, redFlags),
+              criteria: _escalationCriteria(urgencyLevel, redFlags, l10n),
             ),
             const SizedBox(height: 24),
 
             // ── 6a. Red Flags ──
             if (redFlags.isNotEmpty) ...[
-              const _SectionTitle(
-                title: 'Red Flags',
+              _SectionTitle(
+                title: l10n.redFlags,
                 icon: Icons.warning_amber_rounded,
                 color: AppColors.urgencyEmergency,
               ),
@@ -192,7 +193,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
             // ── 6b. Recommendations ──
             if (recommendations.isNotEmpty) ...[
               _SectionTitle(
-                title: 'Recommendations',
+                title: l10n.recommendations,
                 icon: Icons.lightbulb_outline,
                 color: AppColors.primary(isDark),
               ),
@@ -230,7 +231,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
             // ── 6c. Possible Conditions ──
             if (possibleConditions.isNotEmpty) ...[
               _SectionTitle(
-                title: 'Possible Conditions',
+                title: l10n.possibleConditions,
                 icon: Icons.medical_information_outlined,
                 color: AppColors.secondary(isDark),
               ),
@@ -279,7 +280,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
             // ── 6d. Follow-up Questions ──
             if (followUpQuestions.isNotEmpty) ...[
               _SectionTitle(
-                title: 'Follow-up Questions',
+                title: l10n.followUpQuestions,
                 icon: Icons.help_outline,
                 color: isDark ? AppColors.darkInfo : AppColors.lightInfo,
               ),
@@ -349,7 +350,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.bookmark_add_outlined, size: 18),
-                    label: Text(_isSaving ? 'Saving...' : 'Save to Passport'),
+                    label: Text(_isSaving ? l10n.saving : l10n.saveToPassport),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
@@ -364,12 +365,12 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
                     onPressed: () => Share.share(
                       'My VitalSeker triage result:\n'
                       'Urgency: ${urgencyLevel.toUpperCase()} ($urgencyScore/100)\n'
-                      'Recommendation: ${_seekCareLabel(seekCare)}\n\n'
+                      'Recommendation: ${_seekCareLabel(seekCare, l10n)}\n\n'
                       '$disclaimer',
                       subject: 'VitalSeker Triage Result',
                     ),
                     icon: const Icon(Icons.share_outlined, size: 18),
-                    label: const Text('Share Result'),
+                    label: Text(l10n.shareResult),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
@@ -491,40 +492,41 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
 
   /// Headline shown beneath the hero — derived from `seek_care`.
   /// "Monitor at Home" is the green-light (low) variant per the design mockup.
-  String _seekCareHeadline(String care) {
+  String _seekCareHeadline(String care, AppLocalizations l10n) {
     switch (care) {
       case 'self-care':
-        return 'Monitor at Home';
+        return l10n.monitorAtHome;
       case 'schedule-appointment':
-        return 'See a Doctor Soon';
+        return l10n.seeDoctorSoon;
       case 'urgent-care':
-        return 'Visit Urgent Care';
+        return l10n.visitUrgentCare;
       case 'emergency':
-        return 'Emergency Care Now';
+        return l10n.emergencyCareNow;
       default:
-        return 'Monitor at Home';
+        return l10n.monitorAtHome;
     }
   }
 
-  String _seekCareLabel(String care) {
+  String _seekCareLabel(String care, AppLocalizations l10n) {
     switch (care) {
       case 'self-care':
-        return 'Self-Care Recommended';
+        return l10n.selfCareRecommended;
       case 'schedule-appointment':
-        return 'Schedule an Appointment';
+        return l10n.scheduleAppointmentCare;
       case 'urgent-care':
-        return 'Visit Urgent Care';
+        return l10n.visitUrgentCare;
       case 'emergency':
-        return 'Seek Emergency Care';
+        return l10n.seekEmergencyCare;
       default:
-        return 'Consult a Healthcare Provider';
+        return l10n.consultHealthcareProvider;
     }
   }
 
   /// Build the escalation-criteria list for the amber card. Uses red flags as
   /// the primary source, then appends per-urgency static advice so the card is
   /// never empty.
-  List<String> _escalationCriteria(String urgencyLevel, List<String> redFlags) {
+  List<String> _escalationCriteria(
+      String urgencyLevel, List<String> redFlags, AppLocalizations l10n) {
     final criteria = <String>[];
     if (redFlags.isNotEmpty) {
       criteria.addAll(redFlags.take(3));
@@ -532,30 +534,30 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
     switch (urgencyLevel.toLowerCase()) {
       case 'low':
         criteria.addAll([
-          'Symptoms worsen or spread to new body areas',
-          'Fever rises above 39°C (102°F)',
-          'No improvement after 48 hours of self-care',
+          l10n.escalateLow1,
+          l10n.escalateLow2,
+          l10n.escalateLow3,
         ]);
         break;
       case 'medium':
         criteria.addAll([
-          'Symptoms persist beyond 3 days',
-          'Pain intensifies or becomes unmanageable',
-          'New red-flag symptoms appear',
+          l10n.escalateMedium1,
+          l10n.escalateMedium2,
+          l10n.escalateMedium3,
         ]);
         break;
       case 'high':
         criteria.addAll([
-          'Symptoms rapidly worsen',
-          'Difficulty breathing or chest tightness develops',
-          'High fever (>39°C) that doesn’t respond to medication',
+          l10n.escalateHigh1,
+          l10n.escalateHigh2,
+          l10n.escalateHigh3,
         ]);
         break;
       case 'emergency':
         criteria.addAll([
-          'Call emergency services immediately',
-          'Do not drive yourself — get a ride or ambulance',
-          'Bring this triage result and any medications you take',
+          l10n.escalateEmergency1,
+          l10n.escalateEmergency2,
+          l10n.escalateEmergency3,
         ]);
         break;
     }
@@ -736,6 +738,7 @@ class _EscalationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -752,7 +755,7 @@ class _EscalationCard extends StatelessWidget {
               Icon(Icons.warning_amber_rounded, color: _accent, size: 22),
               const SizedBox(width: 8),
               Text(
-                'When to escalate',
+                l10n.whenToEscalate,
                 style: TextStyle(
                   fontFamily: 'Outfit',
                   fontSize: 16,

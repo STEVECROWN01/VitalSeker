@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -25,17 +26,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   bool _isSigningOut = false;
 
   Future<void> _signOut() async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Sign Out'),
-        content: const Text('Are you sure you want to sign out?'),
+        title: Text(l10n.signOut),
+        content: Text(l10n.areYouSureSignOut),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.urgencyEmergency),
-            child: const Text('Sign Out'),
+            child: Text(l10n.signOut),
           ),
         ],
       ),
@@ -48,7 +50,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         await authService.signOut();
         if (mounted) context.go(AppConfig.login);
       } catch (e) {
-        if (mounted) AppSnackBar.errorFromException(context, 'Failed to sign out. Please try again.', e);
+        if (mounted) AppSnackBar.errorFromException(context, l10n.failedToSignOut, e);
       } finally {
         if (mounted) setState(() => _isSigningOut = false);
       }
@@ -58,6 +60,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final profileAsync = ref.watch(userProfileProvider);
     final isPro = ref.watch(isProUserProvider);
     final familyAsync = ref.watch(familyProfilesProvider);
@@ -66,20 +69,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile',
+          l10n.profile,
           style: AppTextStyles.heading3.copyWith(color: AppColors.primary(isDark)),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
-            tooltip: 'Notifications',
+            tooltip: l10n.notifications,
             onPressed: () => context.push(AppConfig.notificationsSettings),
           ),
         ],
       ),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text('Error: $e')), // ignore: hardcoded_l10n - error display includes dynamic exception text
         data: (profile) {
           final name = profile?.fullName ?? 'User';
           final email = profile?.email ?? '';
@@ -163,7 +166,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                       : const Color(0xFF326F59)),
                               const SizedBox(width: 6),
                               Text(
-                                'VitalSeker Pro',
+                                l10n.vitalSekerPro,
                                 style: AppTextStyles.labelMedium.copyWith(
                                   color: isDark
                                       ? AppColors.darkOnSurface
@@ -193,7 +196,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     size: 16, color: AppColors.primary(isDark)),
                                 const SizedBox(width: 6),
                                 Text(
-                                  'Upgrade to Pro',
+                                  l10n.upgradeToPro,
                                   style: AppTextStyles.labelMedium.copyWith(
                                     color: AppColors.primary(isDark),
                                   ),
@@ -220,17 +223,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   return Row(
                     children: [
                       _StatCard(
-                          label: 'Vitals Logged',
+                          label: l10n.vitalsLogged,
                           value: '$vitalsCount',
                           isDark: isDark),
                       const SizedBox(width: 12),
                       _StatCard(
-                          label: 'Triage Sessions',
+                          label: l10n.triageSessions,
                           value: '$triageCount',
                           isDark: isDark),
                       const SizedBox(width: 12),
                       _StatCard(
-                          label: 'Days Active',
+                          label: l10n.daysActive,
                           value: '$daysActive',
                           isDark: isDark),
                     ],
@@ -240,15 +243,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                 // ── Appearance ──
                 _MenuSection(
-                  title: 'Appearance',
+                  title: l10n.appearance,
                   isDark: isDark,
                   children: [
                     _MenuItem(
                       icon: Icons.dark_mode_outlined,
                       iconBg: _tint(AppColors.primary(isDark), isDark),
                       iconFg: AppColors.primary(isDark),
-                      label: 'Dark Mode',
-                      subtitle: _themeSubtitle(ref.read(themeModeProvider)),
+                      label: l10n.darkMode,
+                      subtitle: _themeSubtitle(ref.read(themeModeProvider), l10n),
                       trailing: Switch(
                         value: Theme.of(context).brightness == Brightness.dark,
                         onChanged: (v) => ref
@@ -266,23 +269,23 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                 // ── Account ──
                 _MenuSection(
-                  title: 'Account',
+                  title: l10n.account,
                   isDark: isDark,
                   children: [
                     _MenuItem(
                       icon: Icons.badge_outlined,
                       iconBg: _tint(AppColors.secondary(isDark), isDark),
                       iconFg: AppColors.secondary(isDark),
-                      label: 'Health Passport',
-                      subtitle: 'Manage medical credentials',
+                      label: l10n.healthPassport,
+                      subtitle: l10n.manageMedicalCredentials,
                       onTap: () => context.push(AppConfig.passport),
                     ),
                     _MenuItem(
                       icon: Icons.family_restroom,
                       iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                       iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                      label: 'Family Profiles',
-                      subtitle: '$familyCount connected member${familyCount == 1 ? '' : 's'}',
+                      label: l10n.familyProfiles,
+                      subtitle: l10n.connectedMembers(familyCount, familyCount == 1 ? '' : 's'),
                       onTap: () => context.push(AppConfig.family),
                     ),
                     _MenuItem(
@@ -291,7 +294,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       iconFg: isDark
                           ? AppColors.darkOnSurface
                           : AppColors.primary(isDark),
-                      label: 'Language',
+                      label: l10n.language,
                       subtitle: 'English (US)',
                       onTap: () {
                         showModalBottomSheet(
@@ -303,7 +306,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(16),
                                   child: Text(
-                                    'Select Language',
+                                    l10n.selectLanguage,
                                     style: TextStyle(
                                       fontFamily: 'ClashDisplay',
                                       fontSize: 18,
@@ -332,16 +335,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       icon: Icons.notifications_active_outlined,
                       iconBg: _tint(AppColors.primary(isDark), isDark),
                       iconFg: AppColors.primary(isDark),
-                      label: 'Notifications',
-                      subtitle: 'Alerts & smart reminders',
+                      label: l10n.notifications,
+                      subtitle: l10n.alertsSmartReminders,
                       onTap: () => context.push(AppConfig.notificationsSettings),
                     ),
                     _MenuItem(
                       icon: Icons.folder_outlined,
                       iconBg: _tint(AppColors.secondary(isDark), isDark),
                       iconFg: AppColors.secondary(isDark),
-                      label: 'Medical Records',
-                      subtitle: 'Documents & imaging',
+                      label: l10n.medicalRecords,
+                      subtitle: l10n.documentsImaging,
                       onTap: () => context.push(AppConfig.medicalRecords),
                     ),
                     _MenuItem(
@@ -350,16 +353,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       iconFg: isDark
                           ? AppColors.darkOnSurface
                           : AppColors.primary(isDark),
-                      label: 'Medical Translation',
-                      subtitle: 'Translate medical terms',
+                      label: l10n.medicalTranslation,
+                      subtitle: l10n.translateMedicalTermsSubtitle,
                       onTap: () => context.push(AppConfig.translation),
                     ),
                     _MenuItem(
                       icon: Icons.badge_outlined,
                       iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                       iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                      label: 'Medical ID',
-                      subtitle: 'Emergency medical card',
+                      label: l10n.medicalID,
+                      subtitle: l10n.emergencyMedicalCard,
                       onTap: () => context.push(AppConfig.medicalId),
                     ),
                   ],
@@ -367,15 +370,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                 // ── Privacy & Data ──
                 _MenuSection(
-                  title: 'Privacy & Data',
+                  title: l10n.privacyData,
                   isDark: isDark,
                   children: [
                     _MenuItem(
                       icon: Icons.shield_outlined,
                       iconBg: _tint(AppColors.error(isDark), isDark),
                       iconFg: AppColors.error(isDark),
-                      label: 'Security & Storage',
-                      subtitle: 'AES-256 encryption active',
+                      label: l10n.securityStorage,
+                      subtitle: l10n.aes256EncryptionActive,
                       // Points to the Settings screen (where data-management
                       // + security toggles live) — NOT the Privacy Policy page.
                       onTap: () => context.push(AppConfig.settings),
@@ -384,8 +387,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       icon: Icons.download_outlined,
                       iconBg: _tint(AppColors.primary(isDark), isDark),
                       iconFg: AppColors.primary(isDark),
-                      label: 'Export Data',
-                      subtitle: 'Download your health data',
+                      label: l10n.exportData,
+                      subtitle: l10n.downloadYourHealthData,
                       onTap: () => context.push(AppConfig.exportScreen),
                     ),
                   ],
@@ -393,31 +396,31 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                 // ── Support ──
                 _MenuSection(
-                  title: 'Support',
+                  title: l10n.support,
                   isDark: isDark,
                   children: [
                     _MenuItem(
                       icon: Icons.settings_outlined,
                       iconBg: _tint(AppColors.primary(isDark), isDark),
                       iconFg: AppColors.primary(isDark),
-                      label: 'Settings',
-                      subtitle: 'Theme, password, account',
+                      label: l10n.settings,
+                      subtitle: l10n.themePasswordAccount,
                       onTap: () => context.push(AppConfig.settings),
                     ),
                     _MenuItem(
                       icon: Icons.help_outline,
                       iconBg: _tint(AppColors.secondary(isDark), isDark),
                       iconFg: AppColors.secondary(isDark),
-                      label: 'Help Center',
-                      subtitle: 'FAQs & documentation',
+                      label: l10n.helpCenter,
+                      subtitle: l10n.faqsDocumentation,
                       onTap: () => context.push(AppConfig.helpSupport),
                     ),
                     _MenuItem(
                       icon: Icons.support_agent,
                       iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                       iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                      label: 'Contact Concierge',
-                      subtitle: 'Priority Pro support',
+                      label: l10n.contactConcierge,
+                      subtitle: l10n.priorityProSupport,
                       onTap: () => context.push(AppConfig.helpSupport),
                     ),
                   ],
@@ -425,29 +428,29 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                 // ── About ──
                 _MenuSection(
-                  title: 'About',
+                  title: l10n.about,
                   isDark: isDark,
                   children: [
                     _MenuItem(
                       icon: Icons.info_outline,
                       iconBg: _tint(AppColors.primary(isDark), isDark),
                       iconFg: AppColors.primary(isDark),
-                      label: 'About VitalSeker',
-                      subtitle: 'Version ${AppConfig.version}',
+                      label: l10n.aboutVitalSeker,
+                      subtitle: l10n.aboutVitalSekerVersion(AppConfig.version),
                       onTap: () => context.push(AppConfig.about),
                     ),
                     _MenuItem(
                       icon: Icons.description_outlined,
                       iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                       iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                      label: 'Terms of Service',
+                      label: l10n.termsOfService,
                       onTap: () => context.push(AppConfig.termsOfService),
                     ),
                     _MenuItem(
                       icon: Icons.privacy_tip_outlined,
                       iconBg: _tint(AppColors.secondary(isDark), isDark),
                       iconFg: AppColors.secondary(isDark),
-                      label: 'Privacy Policy',
+                      label: l10n.privacyPolicy,
                       onTap: () => context.push(AppConfig.privacyPolicy),
                     ),
                   ],
@@ -468,7 +471,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             child: CircularProgressIndicator(strokeWidth: 2))
                         : const Icon(Icons.logout, color: AppColors.urgencyEmergency),
                     label: Text(
-                      _isSigningOut ? 'Signing out...' : 'Sign Out',
+                      _isSigningOut ? l10n.signingOut : l10n.signOut,
                       style: AppTextStyles.button.copyWith(
                         color: AppColors.urgencyEmergency,
                       ),
@@ -488,7 +491,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 // ── Footer ──
                 const SizedBox(height: 24),
                 Text(
-                  'Powered by Keter Marketing',
+                  l10n.poweredBy,
                   style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
                   ),
@@ -503,14 +506,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  String _themeSubtitle(ThemeMode mode) {
+  String _themeSubtitle(ThemeMode mode, AppLocalizations l10n) {
     switch (mode) {
       case ThemeMode.dark:
-        return 'Dark';
+        return l10n.dark;
       case ThemeMode.light:
-        return 'Light';
+        return l10n.light;
       default:
-        return 'System default';
+        return l10n.systemDefault;
     }
   }
 

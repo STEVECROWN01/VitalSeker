@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -9,9 +10,10 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('About')),
+      appBar: AppBar(title: Text(l10n.about)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -31,9 +33,9 @@ class AboutScreen extends StatelessWidget {
                     child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 40),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
+                  Text(
                     AppConfig.appName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'ClashDisplay',
                       fontSize: 28,
                       fontWeight: FontWeight.w700,
@@ -49,7 +51,7 @@ class AboutScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Version ${AppConfig.version}',
+                    l10n.aboutVitalSekerVersion(AppConfig.version),
                     style: TextStyle(
                       fontFamily: 'JetBrainsMono',
                       fontSize: 12,
@@ -63,11 +65,12 @@ class AboutScreen extends StatelessWidget {
 
             // About
             _SectionCard(
-              title: 'About VitalSeker',
+              title: l10n.aboutVitalSeker,
               icon: Icons.info_outline,
+              isDark: isDark,
               children: [
                 Text(
-                  'VitalSeker is your AI-powered health companion that puts you in control of your health journey. With intelligent symptom triage, a secure health passport, emergency SOS alerts, and personalized weekly insights, VitalSeker ensures you always have the information you need when it matters most. Built with cutting-edge AI technology and bank-grade security, your health data stays private and protected.',
+                  l10n.aboutVitalSekerBody,
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
@@ -80,23 +83,25 @@ class AboutScreen extends StatelessWidget {
 
             // Features
             _SectionCard(
-              title: 'Key Features',
+              title: l10n.keyFeatures,
               icon: Icons.star_outline,
+              isDark: isDark,
               children: [
-                _FeatureItem(icon: Icons.psychology, title: 'AI Symptom Triage', description: 'Get instant AI-powered health recommendations'),
-                _FeatureItem(icon: Icons.badge, title: 'Health Passport', description: 'Carry your encrypted health profile everywhere'),
-                _FeatureItem(icon: Icons.qr_code_2, title: 'QR Code Sharing', description: 'Share health info securely with any provider'),
-                _FeatureItem(icon: Icons.emergency, title: 'Emergency SOS', description: 'One-tap alerts with GPS location sharing'),
-                _FeatureItem(icon: Icons.insights, title: 'Weekly Insights', description: 'AI-generated health summaries (Pro)'),
-                _FeatureItem(icon: Icons.family_restroom, title: 'Family Profiles', description: 'Manage health for your entire family'),
-                _FeatureItem(icon: Icons.picture_as_pdf, title: 'PDF Export', description: 'Generate and share health reports'),
+                _FeatureItem(icon: Icons.psychology, title: l10n.featureAiTriageTitle, description: l10n.featureAiTriageDesc, isDark: isDark),
+                _FeatureItem(icon: Icons.badge, title: l10n.featureHealthPassportTitle, description: l10n.featureHealthPassportDesc, isDark: isDark),
+                _FeatureItem(icon: Icons.qr_code_2, title: l10n.featureQrSharingTitle, description: l10n.featureQrSharingDesc, isDark: isDark),
+                _FeatureItem(icon: Icons.emergency, title: l10n.featureEmergencySosTitle, description: l10n.featureEmergencySosDesc, isDark: isDark),
+                _FeatureItem(icon: Icons.insights, title: l10n.featureWeeklyInsightsTitle, description: l10n.featureWeeklyInsightsDesc, isDark: isDark),
+                _FeatureItem(icon: Icons.family_restroom, title: l10n.featureFamilyProfilesTitle, description: l10n.featureFamilyProfilesDesc, isDark: isDark),
+                _FeatureItem(icon: Icons.picture_as_pdf, title: l10n.featurePdfExportTitle, description: l10n.featurePdfExportDesc, isDark: isDark),
               ],
             ),
 
             // Keter Marketing Credit
             _SectionCard(
-              title: 'Producer',
+              title: l10n.producer,
               icon: Icons.business,
+              isDark: isDark,
               children: [
                 Container(
                   width: double.infinity,
@@ -105,23 +110,23 @@ class AboutScreen extends StatelessWidget {
                     gradient: AppColors.brandGradient,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      Icon(Icons.rocket_launch, color: Colors.white, size: 32),
-                      SizedBox(height: 8),
+                      const Icon(Icons.rocket_launch, color: Colors.white, size: 32),
+                      const SizedBox(height: 8),
                       Text(
                         AppConfig.producer,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
-                        'Concept, Design & Development',
-                        style: TextStyle(
+                        l10n.conceptDesignDevelopment,
+                        style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 12,
                           color: Colors.white70,
@@ -135,17 +140,18 @@ class AboutScreen extends StatelessWidget {
 
             // Legal
             _SectionCard(
-              title: 'Legal',
+              title: l10n.legal,
               icon: Icons.gavel,
+              isDark: isDark,
               children: [
                 ListTile(
-                  title: const Text('Privacy Policy', style: TextStyle(fontFamily: 'Inter')),
+                  title: Text(l10n.privacyPolicy, style: const TextStyle(fontFamily: 'Inter')),
                   trailing: const Icon(Icons.chevron_right, size: 16),
                   onTap: () => context.push(AppConfig.privacyPolicy),
                   contentPadding: EdgeInsets.zero,
                 ),
                 ListTile(
-                  title: const Text('Terms of Service', style: TextStyle(fontFamily: 'Inter')),
+                  title: Text(l10n.termsOfService, style: const TextStyle(fontFamily: 'Inter')),
                   trailing: const Icon(Icons.chevron_right, size: 16),
                   onTap: () => context.push(AppConfig.termsOfService),
                   contentPadding: EdgeInsets.zero,
@@ -156,7 +162,7 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                'Powered by ${AppConfig.producer}',
+                l10n.poweredByProducer(AppConfig.producer),
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,
@@ -174,13 +180,13 @@ class AboutScreen extends StatelessWidget {
 class _SectionCard extends StatelessWidget {
   final String title;
   final IconData icon;
+  final bool isDark;
   final List<Widget> children;
 
-  const _SectionCard({required this.title, required this.icon, required this.children});
+  const _SectionCard({required this.title, required this.icon, required this.isDark, required this.children});
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Column(
@@ -221,12 +227,12 @@ class _FeatureItem extends StatelessWidget {
   final IconData icon;
   final String title;
   final String description;
+  final bool isDark;
 
-  const _FeatureItem({required this.icon, required this.title, required this.description});
+  const _FeatureItem({required this.icon, required this.title, required this.description, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(

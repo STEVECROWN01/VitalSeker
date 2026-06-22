@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -25,30 +26,33 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
   }
 
   Future<void> _markComplete(Appointment appointment) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       await ref.read(appointmentsProvider.notifier).updateAppointmentStatus(
             appointment.id,
             AppointmentStatus.completed,
           );
-      if (mounted) AppSnackBar.success(context, 'Appointment marked as completed');
+      if (mounted) AppSnackBar.success(context, l10n.appointmentMarkedCompleted);
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to update appointment.', e);
+      if (mounted) AppSnackBar.errorFromException(context, l10n.failedToUpdateAppointment, e);
     }
   }
 
   Future<void> _cancelAppointment(Appointment appointment) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       await ref.read(appointmentsProvider.notifier).updateAppointmentStatus(
             appointment.id,
             AppointmentStatus.cancelled,
           );
-      if (mounted) AppSnackBar.success(context, 'Appointment cancelled');
+      if (mounted) AppSnackBar.success(context, l10n.appointmentCancelled);
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to cancel appointment.', e);
+      if (mounted) AppSnackBar.errorFromException(context, l10n.failedToCancelAppointment, e);
     }
   }
 
   Future<void> _rescheduleAppointment(Appointment appointment) async {
+    final l10n = AppLocalizations.of(context)!;
     // Pick a new date.
     final newDate = await showDatePicker(
       context: context,
@@ -57,7 +61,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
           : DateTime.now().add(const Duration(days: 1)),
       firstDate: DateTime.now(),
       lastDate: DateTime(2030),
-      helpText: 'Select new date',
+      helpText: l10n.selectNewDate,
     );
     if (newDate == null || !mounted) return;
 
@@ -65,7 +69,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     final newTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(appointment.dateTime),
-      helpText: 'Select new time',
+      helpText: l10n.selectNewTime,
     );
     if (newTime == null || !mounted) return;
 
@@ -85,30 +89,31 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
       if (mounted) {
         AppSnackBar.success(
           context,
-          'Rescheduled to ${newDate.day}/${newDate.month}/${newDate.year} at ${newTime.format(context)}',
+          l10n.rescheduledTo('${newDate.day}/${newDate.month}/${newDate.year}', newTime.format(context)),
         );
       }
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to reschedule appointment.', e);
+      if (mounted) AppSnackBar.errorFromException(context, l10n.failedToRescheduleAppointment, e);
     }
   }
 
   Future<void> _deleteAppointment(Appointment appointment) async {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete Appointment'),
-        content: Text('Are you sure you want to delete the appointment with ${appointment.doctorName}?'),
+        title: Text(l10n.deleteAppointment),
+        content: Text(l10n.deleteAppointmentConfirm(appointment.doctorName)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: ElevatedButton.styleFrom(backgroundColor: isDark ? AppColors.darkError : AppColors.lightError),
-            child: const Text('Delete'),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -117,14 +122,15 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     if (confirmed == true) {
       try {
         await ref.read(appointmentsProvider.notifier).deleteAppointment(appointment.id);
-        if (mounted) AppSnackBar.success(context, 'Appointment deleted');
+        if (mounted) AppSnackBar.success(context, l10n.appointmentDeleted);
       } catch (e) {
-        if (mounted) AppSnackBar.errorFromException(context, 'Failed to delete appointment.', e);
+        if (mounted) AppSnackBar.errorFromException(context, l10n.failedToDeleteAppointment, e);
       }
     }
   }
 
   void _showCardActions(Appointment appointment) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     showModalBottomSheet(
       context: context,
@@ -160,7 +166,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
             if (appointment.status == AppointmentStatus.upcoming) ...[
               ListTile(
                 leading: Icon(Icons.check_circle_outline, color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess),
-                title: const Text('Mark Complete', style: TextStyle(fontFamily: 'Inter')),
+                title: Text(l10n.markComplete, style: const TextStyle(fontFamily: 'Inter')),
                 onTap: () {
                   Navigator.pop(ctx);
                   _markComplete(appointment);
@@ -168,7 +174,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
               ),
               ListTile(
                 leading: Icon(Icons.event_repeat, color: AppColors.primary(isDark)),
-                title: const Text('Reschedule', style: TextStyle(fontFamily: 'Inter')),
+                title: Text(l10n.reschedule, style: const TextStyle(fontFamily: 'Inter')),
                 onTap: () {
                   Navigator.pop(ctx);
                   _rescheduleAppointment(appointment);
@@ -176,7 +182,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
               ),
               ListTile(
                 leading: Icon(Icons.cancel_outlined, color: isDark ? AppColors.darkWarning : AppColors.lightWarning),
-                title: const Text('Cancel Appointment', style: TextStyle(fontFamily: 'Inter')),
+                title: Text(l10n.cancelAppointment, style: const TextStyle(fontFamily: 'Inter')),
                 onTap: () {
                   Navigator.pop(ctx);
                   _cancelAppointment(appointment);
@@ -185,7 +191,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
             ],
             ListTile(
               leading: Icon(Icons.delete_outline, color: isDark ? AppColors.darkError : AppColors.lightError),
-              title: Text('Delete', style: TextStyle(fontFamily: 'Inter', color: isDark ? AppColors.darkError : AppColors.lightError)),
+              title: Text(l10n.delete, style: TextStyle(fontFamily: 'Inter', color: isDark ? AppColors.darkError : AppColors.lightError)),
               onTap: () {
                 Navigator.pop(ctx);
                 _deleteAppointment(appointment);
@@ -201,11 +207,12 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final appointmentsAsync = ref.watch(appointmentsProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Appointments'),
+        title: Text(l10n.appointments),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppConfig.addAppointment),
@@ -226,14 +233,14 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                 child: Row(
                   children: [
                     _StatusFilterChip(
-                      label: 'All',
+                      label: l10n.all,
                       selected: _filterStatus == null,
                       onSelected: () => setState(() => _filterStatus = null),
                       isDark: isDark,
                     ),
                     const SizedBox(width: 8),
                     _StatusFilterChip(
-                      label: 'Upcoming',
+                      label: l10n.upcoming,
                       selected: _filterStatus == AppointmentStatus.upcoming,
                       onSelected: () => setState(() => _filterStatus =
                           _filterStatus == AppointmentStatus.upcoming
@@ -244,7 +251,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                     ),
                     const SizedBox(width: 8),
                     _StatusFilterChip(
-                      label: 'Completed',
+                      label: l10n.completed,
                       selected: _filterStatus == AppointmentStatus.completed,
                       onSelected: () => setState(() => _filterStatus =
                           _filterStatus == AppointmentStatus.completed
@@ -255,7 +262,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                     ),
                     const SizedBox(width: 8),
                     _StatusFilterChip(
-                      label: 'Cancelled',
+                      label: l10n.cancelled,
                       selected: _filterStatus == AppointmentStatus.cancelled,
                       onSelected: () => setState(() => _filterStatus =
                           _filterStatus == AppointmentStatus.cancelled
@@ -272,11 +279,11 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
               // Appointments list
               Expanded(
                 child: appointments.isEmpty
-                    ? _EmptyState(isDark: isDark)
+                    ? _EmptyState(isDark: isDark, l10n: l10n)
                     : filtered.isEmpty
                         ? Center(
                             child: Text(
-                              'No appointments match the filter',
+                              l10n.noAppointmentsMatchFilter,
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
@@ -293,6 +300,7 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                                 appointment: appointment,
                                 isDark: isDark,
                                 onActionsTap: () => _showCardActions(appointment),
+                                l10n: l10n,
                               );
                             },
                           ),
@@ -356,11 +364,13 @@ class _AppointmentCard extends StatelessWidget {
   final Appointment appointment;
   final bool isDark;
   final VoidCallback onActionsTap;
+  final AppLocalizations l10n;
 
   const _AppointmentCard({
     required this.appointment,
     required this.isDark,
     required this.onActionsTap,
+    required this.l10n,
   });
 
   Color _statusColor() {
@@ -554,7 +564,8 @@ class _AppointmentCard extends StatelessWidget {
 
 class _EmptyState extends StatelessWidget {
   final bool isDark;
-  const _EmptyState({required this.isDark});
+  final AppLocalizations l10n;
+  const _EmptyState({required this.isDark, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -571,7 +582,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'No Appointments Yet',
+              l10n.noAppointmentsYet,
               style: TextStyle(
                 fontFamily: 'ClashDisplay',
                 fontSize: 20,
@@ -581,7 +592,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Schedule your first appointment to\nkeep track of visits',
+              l10n.scheduleFirstAppointment,
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 14,

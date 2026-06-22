@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
@@ -146,25 +147,24 @@ class _SosScreenState extends ConsumerState<SosScreen>
   Future<void> _confirmAndTriggerSos() async {
     // Confirmation dialog — prevents accidental triggers from a completed
     // 3-second hold (e.g. phone in pocket).
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
-        title: const Text('Send Emergency SOS?'),
-        content: const Text(
-          'This will send an SMS with your live location to all of your emergency contacts.',
-        ),
+        title: Text(l10n.sendEmergencySOS),
+        content: Text(l10n.sosMessageBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.urgencyEmergency,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Send SOS'),
+            child: Text(l10n.sendSOS),
           ),
         ],
       ),
@@ -395,8 +395,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
       await launchUrl(uri);
     } else {
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not launch call to $phoneNumber')),
+          SnackBar(content: Text(l10n.couldNotLaunchCall(phoneNumber))),
         );
       }
     }
@@ -497,12 +498,13 @@ class _SosScreenState extends ConsumerState<SosScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final profileAsync = ref.watch(userProfileProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Emergency SOS'),
+        title: Text(l10n.emergencySosTitle),
         backgroundColor: _isActiveState ? const Color(0xFFB8321D) : null,
         foregroundColor: _isActiveState ? Colors.white : null,
       ),
@@ -526,7 +528,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 // ── SOS Button ──
                 if (!_isActiveState) ...[
                   Text(
-                    'Press and hold to send\nemergency alert',
+                    l10n.pressAndHold,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 16,
@@ -538,7 +540,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                   _buildIdleSosButton(),
                   const SizedBox(height: 16),
                   Text(
-                    _isHolding ? 'Keep holding...' : 'Hold for 3 seconds',
+                    _isHolding ? l10n.keepHolding : l10n.holdFor3Seconds,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
@@ -565,7 +567,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      'Quick Dial',
+                      l10n.quickDial,
                       style: TextStyle(
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
@@ -583,7 +585,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     Expanded(
                       child: _QuickDialButton(
                         label: '112',
-                        subtitle: 'EU Emergency',
+                        subtitle: l10n.euEmergency,
                         icon: Icons.phone,
                         color: AppColors.urgencyEmergency,
                         isDark: isDark,
@@ -594,7 +596,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     Expanded(
                       child: _QuickDialButton(
                         label: '911',
-                        subtitle: 'US Emergency',
+                        subtitle: l10n.usEmergency,
                         icon: Icons.phone,
                         color: AppColors.urgencyHigh,
                         isDark: isDark,
@@ -613,7 +615,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                   child: OutlinedButton.icon(
                     onPressed: _shareLocation,
                     icon: const Icon(Icons.location_on_outlined, size: 20),
-                    label: const Text('Share My Location'),
+                    label: Text(l10n.shareMyLocation),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: _isActiveState
                           ? Colors.white
@@ -646,7 +648,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      'Emergency Contacts',
+                      l10n.emergencyContacts,
                       style: TextStyle(
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
@@ -679,7 +681,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                                 color: AppColors.textHint(isDark)),
                             const SizedBox(height: 8),
                             Text(
-                              'No emergency contacts configured',
+                              l10n.noEmergencyContacts,
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
@@ -696,7 +698,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                             GestureDetector(
                               onTap: () => context.push(AppConfig.editProfile),
                               child: Text(
-                                'Add contacts in your profile settings',
+                                l10n.addContactsInProfile,
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 12,
@@ -740,7 +742,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      'Nearby Hospitals',
+                      l10n.nearbyHospitals,
                       style: TextStyle(
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
@@ -775,7 +777,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      'Medical ID',
+                      l10n.medicalIDSection,
                       style: TextStyle(
                         fontFamily: 'ClashDisplay',
                         fontSize: 18,
@@ -806,7 +808,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                           if (profile.bloodType != null)
                             _MedicalIdRow(
                               icon: Icons.bloodtype,
-                              label: 'Blood Type',
+                              label: l10n.bloodType,
                               value: profile.bloodType!,
                               color: AppColors.urgencyEmergency,
                               isDark: isDark,
@@ -814,7 +816,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                           if (profile.allergies.isNotEmpty)
                             _MedicalIdRow(
                               icon: Icons.warning_amber_rounded,
-                              label: 'Allergies',
+                              label: l10n.allergies,
                               value: profile.allergies.join(', '),
                               color: AppColors.urgencyMedium,
                               isDark: isDark,
@@ -822,7 +824,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                           if (profile.chronicConditions.isNotEmpty)
                             _MedicalIdRow(
                               icon: Icons.medical_information,
-                              label: 'Conditions',
+                              label: l10n.conditions,
                               value: profile.chronicConditions.join(', '),
                               color: AppColors.urgencyHigh,
                               isDark: isDark,
@@ -847,9 +849,8 @@ class _SosScreenState extends ConsumerState<SosScreen>
                                     color: AppColors.textSecondary(isDark),
                                   ),
                                   children: [
-                                    const TextSpan(
-                                      text:
-                                          'No medical information on file. Update your profile to ',
+                                    TextSpan(
+                                      text: l10n.noMedicalInfoPrefix,
                                     ),
                                     WidgetSpan(
                                       alignment: PlaceholderAlignment.baseline,
@@ -858,7 +859,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                                         onTap: () => context
                                             .push(AppConfig.medicalId),
                                         child: Text(
-                                          'add medical ID data',
+                                          l10n.addMedicalIdData,
                                           style: TextStyle(
                                             fontFamily: 'Inter',
                                             fontSize: 13,
@@ -906,7 +907,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'SOS sends your GPS location to your emergency contacts via SMS. Make sure your contacts are configured in your profile.',
+                          l10n.sosTip,
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
@@ -1040,6 +1041,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
   // contact card with live location.
   // ─────────────────────────────────────────────────────────────────────
   Widget _buildActiveState() {
+    final l10n = AppLocalizations.of(context)!;
     final smsSent = _sosResult?['sms_sent'] == true;
     final contactsNotified = (_sosResult?['contacts_notified'] as List?) ?? [];
     final sentCount =
@@ -1079,7 +1081,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'SENDING',
+                        l10n.sendingCaps,
                         style: TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 13,
@@ -1103,7 +1105,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        sendFailed ? 'SOS FAILED' : 'SOS ACTIVE',
+                        sendFailed ? l10n.sosFailed : l10n.sosActive,
                         style: const TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 20,
@@ -1119,10 +1121,10 @@ class _SosScreenState extends ConsumerState<SosScreen>
         const SizedBox(height: 32),
         Text(
           _isSending
-              ? 'Sending Emergency Alert'
+              ? l10n.sendingEmergencyAlert
               : (sendFailed
-                  ? 'Alert Could Not Be Sent'
-                  : 'Emergency Alert Sent'),
+                  ? l10n.alertCouldNotBeSent
+                  : l10n.emergencyAlertSent),
           style: const TextStyle(
             fontFamily: 'ClashDisplay',
             fontSize: 24,
@@ -1134,7 +1136,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
         const SizedBox(height: 12),
         if (_isSending)
           Text(
-            'Sending in $_countdownSeconds…',
+            l10n.sendingIn(_countdownSeconds),
             style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 16,
@@ -1170,7 +1172,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                   child: OutlinedButton.icon(
                     onPressed: _triggerSos,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Try Again'),
+                    label: Text(l10n.tryAgain),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.white,
                       side: const BorderSide(color: Colors.white),
@@ -1186,7 +1188,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 child: ElevatedButton.icon(
                   onPressed: _resolveSos,
                   icon: Icon(sendFailed ? Icons.close : Icons.check_circle),
-                  label: Text(sendFailed ? 'Dismiss' : "I'm Safe - Resolve"),
+                  label: Text(sendFailed ? l10n.dismiss : l10n.imSafeResolve),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: const Color(0xFFB8321D),
@@ -1443,6 +1445,7 @@ class _HospitalFinderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: onFindHospitals,
       child: Container(
@@ -1481,7 +1484,7 @@ class _HospitalFinderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Find Hospitals Near Me',
+                    l10n.findHospitalsNearMe,
                     style: TextStyle(
                       fontFamily: 'ClashDisplay',
                       fontSize: 16,
@@ -1491,7 +1494,7 @@ class _HospitalFinderCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Opens your maps app with emergency hospitals nearby',
+                    l10n.opensMapsHospitals,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 12,
@@ -1534,6 +1537,7 @@ class _ActiveContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -1554,7 +1558,7 @@ class _ActiveContactCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Live Location',
+                      l10n.liveLocation,
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 12,
@@ -1567,8 +1571,8 @@ class _ActiveContactCard extends StatelessWidget {
                     Text(
                       locationText ??
                           (isSending
-                              ? 'Acquiring GPS coordinates…'
-                              : 'Location unavailable'),
+                              ? l10n.acquiringGps
+                              : l10n.locationUnavailable),
                       style: const TextStyle(
                         fontFamily: 'JetBrainsMono',
                         fontSize: 14,
@@ -1595,7 +1599,7 @@ class _ActiveContactCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Contacts Notified',
+                        l10n.contactsNotified,
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 12,
@@ -1606,7 +1610,7 @@ class _ActiveContactCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        '$sentCount contact${sentCount == 1 ? '' : 's'} reached via SMS',
+                        l10n.contactsNotifiedCount(sentCount),
                         style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,

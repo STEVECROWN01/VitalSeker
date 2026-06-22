@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -23,17 +24,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   String _selectedLanguage = 'English (US)';
 
   Future<void> _signOut() async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Sign Out'),
-        content: const Text('Are you sure you want to sign out?'),
+        title: Text(l10n.signOut),
+        content: Text(l10n.areYouSureSignOut),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.urgencyEmergency),
-            child: const Text('Sign Out'),
+            child: Text(l10n.signOut),
           ),
         ],
       ),
@@ -45,12 +47,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         await authService.signOut();
         if (mounted) context.go(AppConfig.login);
       } catch (e) {
-        if (mounted) AppSnackBar.errorFromException(context, 'Failed to sign out. Please try again.', e);
+        if (mounted) AppSnackBar.errorFromException(context, l10n.failedToSignOut, e);
       }
     }
   }
 
   void _showChangePasswordDialog() {
+    final l10n = AppLocalizations.of(context)!;
     final currentPasswordController = TextEditingController();
     final newPasswordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
@@ -61,34 +64,34 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('Change Password', style: TextStyle(fontFamily: 'ClashDisplay')),
+          title: Text(l10n.changePassword, style: const TextStyle(fontFamily: 'ClashDisplay')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: currentPasswordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Current Password',
-                  prefixIcon: Icon(Icons.lock_outline),
+                decoration: InputDecoration(
+                  labelText: l10n.currentPassword,
+                  prefixIcon: const Icon(Icons.lock_outline),
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: newPasswordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'New Password',
-                  prefixIcon: Icon(Icons.lock),
+                decoration: InputDecoration(
+                  labelText: l10n.newPassword,
+                  prefixIcon: const Icon(Icons.lock),
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: confirmPasswordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Confirm New Password',
-                  prefixIcon: Icon(Icons.lock),
+                decoration: InputDecoration(
+                  labelText: l10n.confirmNewPassword,
+                  prefixIcon: const Icon(Icons.lock),
                 ),
               ),
             ],
@@ -96,19 +99,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             ElevatedButton(
               onPressed: isChanging ? null : () async {
                 if (newPasswordController.text != confirmPasswordController.text) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Passwords do not match')),
+                    SnackBar(content: Text(l10n.passwordsDoNotMatch)),
                   );
                   return;
                 }
                 if (newPasswordController.text.length < 6) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Password must be at least 6 characters')),
+                    SnackBar(content: Text(l10n.passwordMinLength)),
                   );
                   return;
                 }
@@ -120,19 +123,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     Navigator.pop(ctx);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: const Text('Password updated successfully'),
+                        content: Text(l10n.passwordUpdatedSuccessfully),
                         backgroundColor: AppColors.success(isDark),
                       ),
                     );
                   }
                 } catch (e) {
-                  if (mounted) AppSnackBar.errorFromException(context, 'Failed to update password. Please try again.', e);
+                  if (mounted) AppSnackBar.errorFromException(context, l10n.failedToUpdatePassword, e);
                   setDialogState(() => isChanging = false);
                 }
               },
               child: isChanging
                   ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Text('Update'),
+                  : Text(l10n.update),
             ),
           ],
         ),
@@ -141,6 +144,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   void _showDeleteAccountDialog() {
+    final l10n = AppLocalizations.of(context)!;
     final email = ref.read(userProfileProvider).valueOrNull?.email ??
         ref.read(currentUserProvider)?.email ??
         '';
@@ -156,20 +160,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             children: [
               Icon(Icons.warning_amber_rounded, color: AppColors.urgencyEmergency),
               const SizedBox(width: 8),
-              const Text('Delete Account', style: TextStyle(fontFamily: 'ClashDisplay')),
+              Text(l10n.deleteAccount, style: const TextStyle(fontFamily: 'ClashDisplay')),
             ],
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'This action is irreversible. All your data — vitals, medications, appointments, symptom logs, family profiles, and health passport — will be permanently deleted.',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 13),
+              Text(
+                l10n.deleteAccountIrreversible,
+                style: const TextStyle(fontFamily: 'Inter', fontSize: 13),
               ),
               const SizedBox(height: 16),
               Text(
-                'Type your email to confirm:',
+                l10n.typeEmailToConfirm,
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,
@@ -204,7 +208,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           actions: [
             TextButton(
               onPressed: isDeleting ? null : () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             FilledButton(
               onPressed: isDeleting
@@ -212,7 +216,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   : () async {
                       final typed = confirmController.text.trim().toLowerCase();
                       if (typed.isEmpty || typed != email.toLowerCase()) {
-                        AppSnackBar.error(context, 'Email does not match.');
+                        AppSnackBar.error(context, l10n.emailDoesNotMatch);
                         return;
                       }
                       setDialogState(() => isDeleting = true);
@@ -231,7 +235,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         }
                         if (!mounted) return;
                         Navigator.pop(ctx);
-                        AppSnackBar.success(context, 'Account deleted. Sorry to see you go.');
+                        AppSnackBar.success(context, l10n.accountDeleted);
                         // Clear ALL cached state so the login screen shows fresh.
                         ref.invalidate(userProfileProvider);
                         ref.invalidate(authStateProvider);
@@ -241,7 +245,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         setDialogState(() => isDeleting = false);
                         AppSnackBar.errorFromException(
                           context,
-                          'Failed to delete account. Please try again or contact support.',
+                          l10n.failedToDeleteAccount,
                           e,
                         );
                       }
@@ -255,7 +259,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       height: 18,
                       child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                     )
-                  : const Text('Delete Permanently'),
+                  : Text(l10n.deletePermanently),
             ),
           ],
         ),
@@ -264,6 +268,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   void _showLanguageSheet() {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final langs = ['English (US)', 'English (UK)', 'French', 'Spanish', 'Arabic', 'Swahili'];
     showModalBottomSheet(
@@ -279,7 +284,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Padding(
               padding: const EdgeInsets.all(16),
               child: Text(
-                'Select Language',
+                l10n.selectLanguage,
                 style: AppTextStyles.heading4.copyWith(color: AppColors.textPrimary(isDark)),
               ),
             ),
@@ -312,6 +317,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final themeMode = ref.watch(themeModeProvider);
     final profileAsync = ref.watch(userProfileProvider);
     final isPro = ref.watch(isProUserProvider);
@@ -321,7 +327,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Settings',
+          l10n.settings,
           style: AppTextStyles.heading3.copyWith(color: AppColors.primary(isDark)),
         ),
       ),
@@ -331,15 +337,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           children: [
             // ── Appearance ──
             _SettingsSection(
-              title: 'Appearance',
+              title: l10n.appearance,
               isDark: isDark,
               children: [
                 _SettingsTile(
                   icon: Icons.dark_mode_outlined,
                   iconBg: _tint(AppColors.primary(isDark), isDark),
                   iconFg: AppColors.primary(isDark),
-                  label: 'Dark Mode',
-                  subtitle: _themeSubtitle(themeMode),
+                  label: l10n.darkMode,
+                  subtitle: _themeSubtitle(themeMode, l10n),
                   trailing: Switch(
                     value: Theme.of(context).brightness == Brightness.dark,
                     onChanged: (v) => ref
@@ -356,7 +362,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   icon: Icons.language,
                   iconBg: _tint(AppColors.primaryContainer(isDark), isDark),
                   iconFg: isDark ? AppColors.darkOnSurface : AppColors.primary(isDark),
-                  label: 'Language',
+                  label: l10n.language,
                   subtitle: _selectedLanguage,
                   onTap: _showLanguageSheet,
                 ),
@@ -365,33 +371,33 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
             // ── Account ──
             _SettingsSection(
-              title: 'Account',
+              title: l10n.account,
               isDark: isDark,
               children: [
                 _SettingsTile(
                   icon: Icons.badge_outlined,
                   iconBg: _tint(AppColors.secondary(isDark), isDark),
                   iconFg: AppColors.secondary(isDark),
-                  label: 'Health Passport',
-                  subtitle: 'Manage medical credentials',
+                  label: l10n.healthPassport,
+                  subtitle: l10n.manageMedicalCredentials,
                   onTap: () => context.push(AppConfig.passport),
                 ),
                 _SettingsTile(
                   icon: Icons.family_restroom,
                   iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                   iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                  label: 'Family Profiles',
-                  subtitle: '$familyCount connected member${familyCount == 1 ? '' : 's'}',
+                  label: l10n.familyProfiles,
+                  subtitle: l10n.connectedMembers(familyCount, familyCount == 1 ? '' : 's'),
                   onTap: () => context.push(AppConfig.family),
                 ),
                 _SettingsTile(
                   icon: Icons.email_outlined,
                   iconBg: _tint(AppColors.primary(isDark), isDark),
                   iconFg: AppColors.primary(isDark),
-                  label: 'Email',
+                  label: l10n.email,
                   subtitle: profileAsync.maybeWhen(
-                    data: (p) => p?.email ?? 'N/A',
-                    orElse: () => 'Loading...',
+                    data: (p) => p?.email ?? l10n.nA,
+                    orElse: () => l10n.loading,
                   ),
                   trailing: Icon(Icons.lock_outline, size: 18, color: AppColors.textHint(isDark)),
                 ),
@@ -399,8 +405,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   icon: Icons.lock_outline,
                   iconBg: _tint(AppColors.secondary(isDark), isDark),
                   iconFg: AppColors.secondary(isDark),
-                  label: 'Change Password',
-                  subtitle: 'Update your account credentials',
+                  label: l10n.changePassword,
+                  subtitle: l10n.updateAccountCredentials,
                   onTap: _showChangePasswordDialog,
                 ),
                 if (isPro)
@@ -408,8 +414,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     icon: Icons.workspace_premium_outlined,
                     iconBg: _tint(const Color(0xFFFFB74D), isDark),
                     iconFg: const Color(0xFFFF9800),
-                    label: 'VitalSeker Pro',
-                    subtitle: 'Manage your subscription',
+                    label: l10n.vitalSekerPro,
+                    subtitle: l10n.manageYourSubscription,
                     onTap: () => context.push(AppConfig.subscription),
                   ),
               ],
@@ -417,31 +423,31 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
             // ── Privacy & Data ──
             _SettingsSection(
-              title: 'Privacy & Data',
+              title: l10n.privacyData,
               isDark: isDark,
               children: [
                 _SettingsTile(
                   icon: Icons.shield_outlined,
                   iconBg: _tint(AppColors.error(isDark), isDark),
                   iconFg: AppColors.error(isDark),
-                  label: 'Security & Storage',
-                  subtitle: 'AES-256 encryption active',
+                  label: l10n.securityStorage,
+                  subtitle: l10n.aes256EncryptionActive,
                   onTap: () => context.push(AppConfig.privacyPolicy),
                 ),
                 _SettingsTile(
                   icon: Icons.download_outlined,
                   iconBg: _tint(AppColors.primary(isDark), isDark),
                   iconFg: AppColors.primary(isDark),
-                  label: 'Export Data',
-                  subtitle: 'Download your health data',
+                  label: l10n.exportData,
+                  subtitle: l10n.downloadYourHealthData,
                   onTap: () => context.push(AppConfig.exportScreen),
                 ),
                 _SettingsTile(
                   icon: Icons.delete_forever_outlined,
                   iconBg: _tint(AppColors.urgencyEmergency, isDark),
                   iconFg: AppColors.urgencyEmergency,
-                  label: 'Delete Account',
-                  subtitle: 'Permanently remove your data',
+                  label: l10n.deleteAccount,
+                  subtitle: l10n.permanentlyRemoveYourData,
                   onTap: _showDeleteAccountDialog,
                 ),
               ],
@@ -449,31 +455,31 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
             // ── Support ──
             _SettingsSection(
-              title: 'Support',
+              title: l10n.support,
               isDark: isDark,
               children: [
                 _SettingsTile(
                   icon: Icons.help_outline,
                   iconBg: _tint(AppColors.secondary(isDark), isDark),
                   iconFg: AppColors.secondary(isDark),
-                  label: 'Help Center',
-                  subtitle: 'FAQs & documentation',
+                  label: l10n.helpCenter,
+                  subtitle: l10n.faqsDocumentation,
                   onTap: () => context.push(AppConfig.helpSupport),
                 ),
                 _SettingsTile(
                   icon: Icons.support_agent,
                   iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                   iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                  label: 'Contact Concierge',
-                  subtitle: 'Priority Pro support',
+                  label: l10n.contactConcierge,
+                  subtitle: l10n.priorityProSupport,
                   onTap: () => context.push(AppConfig.helpSupport),
                 ),
                 _SettingsTile(
                   icon: Icons.logout,
                   iconBg: _tint(AppColors.urgencyEmergency, isDark),
                   iconFg: AppColors.urgencyEmergency,
-                  label: 'Sign Out',
-                  subtitle: 'End your current session',
+                  label: l10n.signOut,
+                  subtitle: l10n.endYourCurrentSession,
                   onTap: _signOut,
                 ),
               ],
@@ -481,29 +487,29 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
             // ── About ──
             _SettingsSection(
-              title: 'About',
+              title: l10n.about,
               isDark: isDark,
               children: [
                 _SettingsTile(
                   icon: Icons.info_outline,
                   iconBg: _tint(AppColors.primary(isDark), isDark),
                   iconFg: AppColors.primary(isDark),
-                  label: 'About VitalSeker',
-                  subtitle: 'Version ${AppConfig.version}',
+                  label: l10n.aboutVitalSeker,
+                  subtitle: l10n.aboutVitalSekerVersion(AppConfig.version),
                   onTap: () => context.push(AppConfig.about),
                 ),
                 _SettingsTile(
                   icon: Icons.description_outlined,
                   iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                   iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                  label: 'Terms of Service',
+                  label: l10n.termsOfService,
                   onTap: () => context.push(AppConfig.termsOfService),
                 ),
                 _SettingsTile(
                   icon: Icons.privacy_tip_outlined,
                   iconBg: _tint(AppColors.secondary(isDark), isDark),
                   iconFg: AppColors.secondary(isDark),
-                  label: 'Privacy Policy',
+                  label: l10n.privacyPolicy,
                   onTap: () => context.push(AppConfig.privacyPolicy),
                 ),
               ],
@@ -512,7 +518,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             // ── Footer ──
             const SizedBox(height: 24),
             Text(
-              'Powered by Keter Marketing',
+              l10n.poweredBy,
               style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
               ),
@@ -525,14 +531,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  String _themeSubtitle(ThemeMode mode) {
+  String _themeSubtitle(ThemeMode mode, AppLocalizations l10n) {
     switch (mode) {
       case ThemeMode.dark:
-        return 'Dark';
+        return l10n.dark;
       case ThemeMode.light:
-        return 'Light';
+        return l10n.light;
       default:
-        return 'System default';
+        return l10n.systemDefault;
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -65,11 +66,12 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
   }
 
   Future<void> _addFamilyMember() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_nameController.text.trim().isEmpty ||
         _relationshipController.text.trim().isEmpty) {
       AppSnackBar.error(
         context,
-        'Please fill in name and relationship',
+        l10n.pleaseFillNameRelationship,
       );
       return;
     }
@@ -79,7 +81,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
       final user = ref.read(currentUserProvider);
       if (user == null) {
         if (!mounted) return;
-        AppSnackBar.error(context, 'You must be signed in to add a family member');
+        AppSnackBar.error(context, l10n.mustBeSignedInToAddFamily);
         return;
       }
 
@@ -96,12 +98,12 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
 
       if (!mounted) return;
       Navigator.pop(context);
-      AppSnackBar.success(context, 'Family member added!');
+      AppSnackBar.success(context, l10n.familyMemberAdded);
     } catch (e) {
       if (!mounted) return;
       AppSnackBar.errorFromException(
         context,
-        'Failed to add family member. Please try again.',
+        l10n.failedToAddFamily,
         e,
       );
     } finally {
@@ -110,17 +112,18 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
   }
 
   Future<void> _deleteMember(String id, String name) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Remove Family Member'),
+        title: Text(l10n.removeFamilyMember),
         content: Text(
-          'Are you sure you want to remove $name from your family profiles?',
+          l10n.removeFamilyMemberConfirm(name),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
@@ -128,7 +131,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
               backgroundColor: AppColors.urgencyEmergency,
               foregroundColor: Colors.white,
             ),
-            child: const Text('Remove'),
+            child: Text(l10n.remove),
           ),
         ],
       ),
@@ -141,18 +144,19 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
       await db.deleteFamilyProfile(id);
       ref.invalidate(familyProfilesProvider);
       if (!mounted) return;
-      AppSnackBar.success(context, 'Family member removed');
+      AppSnackBar.success(context, l10n.familyMemberRemoved);
     } catch (e) {
       if (!mounted) return;
       AppSnackBar.errorFromException(
         context,
-        'Failed to remove family member. Please try again.',
+        l10n.failedToRemoveFamily,
         e,
       );
     }
   }
 
   void _showAddDialog() {
+    final l10n = AppLocalizations.of(context)!;
     // Reset form state each time the dialog opens so stale values from a
     // previous open don't persist.
     _resetForm();
@@ -173,7 +177,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                 child: Icon(Icons.person_add, color: AppColors.primary(isDark), size: 20),
               ),
               const SizedBox(width: 12),
-              const Text('Add Family Member'),
+              Text(l10n.addFamilyMember),
             ],
           ),
           content: Column(
@@ -182,26 +186,26 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
               TextField(
                 controller: _nameController,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Full Name',
-                  prefixIcon: Icon(Icons.person_outline),
+                decoration: InputDecoration(
+                  labelText: l10n.fullNameLabel,
+                  prefixIcon: const Icon(Icons.person_outline),
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _relationshipController,
                 textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
-                  labelText: 'Relationship (e.g., Spouse, Child)',
-                  prefixIcon: Icon(Icons.family_restroom),
+                decoration: InputDecoration(
+                  labelText: l10n.relationshipExample,
+                  prefixIcon: const Icon(Icons.family_restroom),
                 ),
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: _selectedBloodType,
-                decoration: const InputDecoration(
-                  labelText: 'Blood Type (optional)',
-                  prefixIcon: Icon(Icons.bloodtype_outlined),
+                decoration: InputDecoration(
+                  labelText: l10n.bloodTypeOptional,
+                  prefixIcon: const Icon(Icons.bloodtype_outlined),
                 ),
                 items: _bloodTypeOptions.map((type) {
                   return DropdownMenuItem<String>(
@@ -223,13 +227,13 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             ElevatedButton(
               onPressed: _isAdding ? null : _addFamilyMember,
               child: _isAdding
                   ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Text('Add'),
+                  : Text(l10n.add),
             ),
           ],
         ),
@@ -253,6 +257,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final profilesAsync = ref.watch(familyProfilesProvider);
     final profileAsync = ref.watch(userProfileProvider);
     final passportAsync = ref.watch(healthPassportProvider);
@@ -284,6 +289,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                   isDark: isDark,
                   error: e,
                   onRetry: () => ref.invalidate(familyProfilesProvider),
+                  l10n: l10n,
                 ),
                 data: (profiles) {
                   final ownerProfile = profileAsync.valueOrNull;
@@ -298,16 +304,18 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                         _HeaderSection(
                           isDark: isDark,
                           isPro: isPro,
+                          l10n: l10n,
                         ),
                         const SizedBox(height: 20),
                         // Owner card
                         _OwnerCard(
                           isDark: isDark,
-                          fullName: ownerProfile?.fullName ?? 'Account Owner',
+                          fullName: ownerProfile?.fullName ?? l10n.accountOwnerDefault,
                           bloodType: ownerProfile?.bloodType,
                           dateOfBirth: ownerProfile?.dateOfBirth,
                           gender: ownerProfile?.gender,
                           score: ownerScore,
+                          l10n: l10n,
                         )
                             .animate()
                             .slideY(duration: 400.ms, begin: 0.1)
@@ -323,6 +331,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                                 onTap: () {},
                                 onDelete: () =>
                                     _deleteMember(p.id, p.fullName),
+                                l10n: l10n,
                               )
                                   .animate()
                                   .slideY(
@@ -340,6 +349,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                           isDark: isDark,
                           enabled: !isAtLimit,
                           onTap: _showAddDialog,
+                          l10n: l10n,
                         )
                             .animate()
                             .slideY(
@@ -354,7 +364,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                         if (isAtLimit) ...[
                           const SizedBox(height: 8),
                           Text(
-                            'You\'ve reached the 5-member Pro limit.',
+                            l10n.reachedProLimit,
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 12,
@@ -364,7 +374,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                         ],
                         const SizedBox(height: 32),
                         // Pro upsell section
-                        _ProUpsellSection(isDark: isDark, isPro: isPro),
+                        _ProUpsellSection(isDark: isDark, isPro: isPro, l10n: l10n),
                       ],
                     ),
                   );
@@ -467,7 +477,8 @@ class _TopBar extends StatelessWidget {
 class _HeaderSection extends StatelessWidget {
   final bool isDark;
   final bool isPro;
-  const _HeaderSection({required this.isDark, required this.isPro});
+  final AppLocalizations l10n;
+  const _HeaderSection({required this.isDark, required this.isPro, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -475,7 +486,7 @@ class _HeaderSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Family Profiles',
+          l10n.familyProfiles,
           style: TextStyle(
             fontFamily: 'ClashDisplay',
             fontSize: 32,
@@ -495,7 +506,7 @@ class _HeaderSection extends StatelessWidget {
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Text(
-                isPro ? 'PRO ACTIVE' : 'PRO FEATURE',
+                isPro ? l10n.proActive : l10n.proFeature,
                 style: TextStyle(
                   fontFamily: 'DMSans',
                   fontSize: 11,
@@ -508,7 +519,7 @@ class _HeaderSection extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: Text(
-                'Manage health for your whole family (5 max)',
+                l10n.manageHealthWholeFamily,
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 13,
@@ -535,6 +546,7 @@ class _OwnerCard extends StatelessWidget {
   final DateTime? dateOfBirth;
   final String? gender;
   final int score;
+  final AppLocalizations l10n;
   const _OwnerCard({
     required this.isDark,
     required this.fullName,
@@ -542,18 +554,19 @@ class _OwnerCard extends StatelessWidget {
     required this.dateOfBirth,
     required this.gender,
     required this.score,
+    required this.l10n,
   });
 
   String _ageLine() {
     final parts = <String>[];
     if (dateOfBirth != null) {
       final age = DateTime.now().year - dateOfBirth!.year;
-      parts.add('$age years');
+      parts.add(l10n.years(age));
     }
     if (gender != null && gender!.isNotEmpty) {
       parts.add(_capitalize(gender!));
     }
-    return parts.isEmpty ? 'Owner profile' : parts.join(' • ');
+    return parts.isEmpty ? l10n.ownerProfile : parts.join(' • ');
   }
 
   String _capitalize(String s) =>
@@ -647,7 +660,7 @@ class _OwnerCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'ACCOUNT OWNER',
+                    l10n.accountOwner,
                     style: TextStyle(
                       fontFamily: 'DMSans',
                       fontSize: 11,
@@ -706,7 +719,7 @@ class _OwnerCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Text(
-                'Score: $score',
+                l10n.scoreValue(score),
                 style: TextStyle(
                   fontFamily: 'JetBrainsMono',
                   fontSize: 12,
@@ -732,18 +745,20 @@ class _FamilyMemberCard extends StatelessWidget {
   final int score;
   final VoidCallback onTap;
   final VoidCallback onDelete;
+  final AppLocalizations l10n;
   const _FamilyMemberCard({
     required this.isDark,
     required this.profile,
     required this.score,
     required this.onTap,
     required this.onDelete,
+    required this.l10n,
   });
 
   String _ageLine() {
     if (profile.dateOfBirth != null) {
       final age = DateTime.now().year - profile.dateOfBirth!.year;
-      return '$age years';
+      return l10n.years(age);
     }
     return '—';
   }
@@ -895,7 +910,7 @@ class _FamilyMemberCard extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete_outline, size: 20),
                 color: AppColors.urgencyEmergency,
-                tooltip: 'Remove member',
+                tooltip: l10n.removeMember,
                 onPressed: onDelete,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
@@ -916,10 +931,12 @@ class _AddMemberCard extends StatefulWidget {
   final bool isDark;
   final bool enabled;
   final VoidCallback onTap;
+  final AppLocalizations l10n;
   const _AddMemberCard({
     required this.isDark,
     required this.enabled,
     required this.onTap,
+    required this.l10n,
   });
 
   @override
@@ -1005,7 +1022,7 @@ class _AddMemberCardState extends State<_AddMemberCard>
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    widget.enabled ? 'Add Family Member' : 'Limit reached',
+                    widget.enabled ? widget.l10n.addFamilyMember : widget.l10n.limitReached,
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 18,
@@ -1100,7 +1117,8 @@ class _DashedBorderPainter extends BoxPainter {
 class _ProUpsellSection extends StatelessWidget {
   final bool isDark;
   final bool isPro;
-  const _ProUpsellSection({required this.isDark, required this.isPro});
+  final AppLocalizations l10n;
+  const _ProUpsellSection({required this.isDark, required this.isPro, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -1204,7 +1222,7 @@ class _ProUpsellSection extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'UPGRADE YOUR CARE',
+                      l10n.upgradeYourCare,
                       style: TextStyle(
                         fontFamily: 'DMSans',
                         fontSize: 10,
@@ -1220,8 +1238,8 @@ class _ProUpsellSection extends StatelessWidget {
               // Headline
               Text(
                 isPro
-                    ? 'You\'re protecting the whole circle.'
-                    : 'Protect the whole circle.',
+                    ? l10n.protectingWholeCircle
+                    : l10n.protectWholeCircle,
                 style: TextStyle(
                   fontFamily: 'ClashDisplay',
                   fontSize: 28,
@@ -1235,8 +1253,8 @@ class _ProUpsellSection extends StatelessWidget {
               // Body
               Text(
                 isPro
-                    ? 'Thanks for being a Pro member. You can monitor heart rate variability, sleep patterns, and AI-driven health risk assessments for up to 5 family members under a single subscription.'
-                    : 'With VitalSeker Pro, you can monitor heart rate variability, sleep patterns, and AI-driven health risk assessments for up to 5 family members under a single subscription.',
+                    ? l10n.proMemberThanks
+                    : l10n.proUpsellBody,
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 14,
@@ -1264,7 +1282,7 @@ class _ProUpsellSection extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            'Upgrade to Pro — \$${AppConfig.proPriceMonthly}/mo',
+                            l10n.upgradeToProPrice('\$${AppConfig.proPriceMonthly}'),
                             style: TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 14,
@@ -1299,7 +1317,7 @@ class _ProUpsellSection extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            'Learn More',
+                            l10n.learnMore,
                             style: TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 14,
@@ -1324,7 +1342,7 @@ class _ProUpsellSection extends StatelessWidget {
                           icon: const Icon(Icons.workspace_premium,
                               color: Colors.white),
                           label: Text(
-                            'Manage Subscription',
+                            l10n.manageSubscription,
                             style: TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 14,
@@ -1382,7 +1400,7 @@ class _ErrorState extends StatelessWidget {
             Icon(Icons.error_outline, size: 64, color: AppColors.urgencyEmergency),
             const SizedBox(height: 16),
             Text(
-              'Failed to load profiles',
+              l10n.failedToLoadProfiles,
               style: TextStyle(
                 fontFamily: 'ClashDisplay',
                 fontSize: 18,
@@ -1403,7 +1421,7 @@ class _ErrorState extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: onRetry,
-              child: const Text('Retry'),
+              child: Text(l10n.retry),
             ),
           ],
         ),

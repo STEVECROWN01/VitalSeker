@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/auth_provider.dart';
@@ -111,7 +112,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to save notification setting'),
+            content: Text(AppLocalizations.of(context)!.failedToSaveNotificationSetting),
             backgroundColor: AppColors.urgencyEmergency,
             behavior: SnackBarBehavior.floating,
           ),
@@ -123,6 +124,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     // Read profile reactively so we re-load if it changes upstream.
     ref.watch(userProfileProvider);
 
@@ -135,14 +137,14 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
     final weekly = _weeklyReport ?? true;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Notification Settings')),
+      appBar: AppBar(title: Text(l10n.notificationSettings)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Reminders Section
-            _SectionLabel(label: 'Reminders'),
+            _SectionLabel(label: l10n.reminders),
             Card(
               child: Column(
                 children: [
@@ -156,7 +158,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       ),
                       child: Icon(Icons.healing_outlined, color: AppColors.primary(isDark), size: 20),
                     ),
-                    title: const Text('Triage Reminders', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
+                    title: Text(l10n.triageReminders, style: const TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
                       _triageSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
@@ -179,7 +181,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       ),
                       child: Icon(Icons.medication_outlined, color: isDark ? AppColors.darkInfo : AppColors.lightInfo, size: 20),
                     ),
-                    title: const Text('Medication Reminders', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
+                    title: Text(l10n.medicationReminders, style: const TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
                       _medicationSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
@@ -202,7 +204,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       ),
                       child: Icon(Icons.calendar_today_outlined, color: isDark ? AppColors.darkSecondary : AppColors.lightSecondary, size: 20),
                     ),
-                    title: const Text('Appointment Reminders', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
+                    title: Text(l10n.appointmentReminders, style: const TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
                       _appointmentSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
@@ -225,7 +227,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       ),
                       child: Icon(Icons.monitor_heart_outlined, color: isDark ? AppColors.darkWarning : AppColors.lightWarning, size: 20),
                     ),
-                    title: const Text('Vitals Logging Reminders', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
+                    title: Text(l10n.vitalsLoggingReminders, style: const TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
                       _vitalsSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
@@ -244,7 +246,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
             const SizedBox(height: 8),
 
             // Insights Section
-            _SectionLabel(label: 'Insights & Tips'),
+            _SectionLabel(label: l10n.insightsTips),
             Card(
               child: Column(
                 children: [
@@ -258,7 +260,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       ),
                       child: Icon(Icons.lightbulb_outline, color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess, size: 20),
                     ),
-                    title: const Text('Health Tips', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
+                    title: Text(l10n.healthTips, style: const TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
                       _healthTipsSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
@@ -281,7 +283,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                       ),
                       child: Icon(Icons.summarize_outlined, color: AppColors.primary(isDark), size: 20),
                     ),
-                    title: const Text('Weekly Report', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
+                    title: Text(l10n.weeklyReport, style: const TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                     subtitle: Text(
                       _weeklyReportSchedule,
                       style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: AppColors.textSecondary(isDark)),
@@ -314,7 +316,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.',
+                      l10n.notificationPreferences,
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 12,

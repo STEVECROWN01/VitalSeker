@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/config/app_config.dart';
@@ -30,34 +31,29 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
   /// previously-open item on the next rebuild.
   int? _expandedFaqIndex;
 
-  /// Static FAQ content. Kept as a top-level constant so the build method
+  /// Build the localized FAQ content. Kept as a method so the build method
   /// can iterate with `.asMap().entries` and feed each entry's index into
   /// the controlled [_FaqItem] below.
-  static const List<({String question, String answer})> _faqItems = [
+  List<({String question, String answer})> _buildFaqItems(AppLocalizations l10n) => [
     (
-      question: 'How does the AI symptom triage work?',
-      answer:
-          'Our AI analyzes your reported symptoms against a comprehensive medical database to provide urgency-based recommendations. It categorizes your condition into Low, Medium, High, or Emergency urgency levels and suggests appropriate next steps.',
+      question: l10n.faqQuestion1,
+      answer: l10n.faqAnswer1,
     ),
     (
-      question: 'Is my health data secure?',
-      answer:
-          'Yes. All data is encrypted end-to-end using AES-256 encryption. We comply with GDPR and HIPAA standards. Your health information is never shared with third parties without your explicit consent.',
+      question: l10n.faqQuestion2,
+      answer: l10n.faqAnswer2,
     ),
     (
-      question: 'How do I share my health passport?',
-      answer:
-          'Navigate to your Health Passport from the bottom navigation bar. Tap the QR code icon to generate a shareable QR code that healthcare providers can scan to access your critical health information securely.',
+      question: l10n.faqQuestion3,
+      answer: l10n.faqAnswer3,
     ),
     (
-      question: 'Can I add family members?',
-      answer:
-          'Yes! Pro subscribers can add up to 5 family member profiles, and Enterprise subscribers have unlimited family profiles. Each family member gets their own health passport and triage capabilities.',
+      question: l10n.faqQuestion4,
+      answer: l10n.faqAnswer4,
     ),
     (
-      question: 'How do I cancel my subscription?',
-      answer:
-          'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.',
+      question: l10n.faqQuestion5,
+      answer: l10n.faqAnswer5,
     ),
   ];
 
@@ -94,24 +90,25 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
   }
 
   Future<void> _submitSupport() async {
+    final l10n = AppLocalizations.of(context)!;
     final subject = _subjectController.text.trim();
     final message = _messageController.text.trim();
     if (subject.isEmpty || message.isEmpty) {
-      AppSnackBar.error(context, 'Please fill in both subject and message.');
+      AppSnackBar.error(context, l10n.pleaseFillSubjectMessage);
       return;
     }
     if (subject.length < 5) {
-      AppSnackBar.error(context, 'Subject must be at least 5 characters.');
+      AppSnackBar.error(context, l10n.subjectMinLength);
       return;
     }
     if (message.length < 10) {
-      AppSnackBar.error(context, 'Message must be at least 10 characters.');
+      AppSnackBar.error(context, l10n.messageMinLength);
       return;
     }
 
     final user = ref.read(currentUserProvider);
     if (user == null) {
-      AppSnackBar.error(context, 'You must be signed in to submit a support request.');
+      AppSnackBar.error(context, l10n.mustBeSignedInToSubmitSupport);
       return;
     }
 
@@ -138,8 +135,8 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
         AppSnackBar.success(
           context,
           priority == 'urgent'
-              ? 'Urgent request received! Our team will prioritize this.'
-              : 'Support request sent! We\'ll respond within 24 hours.',
+              ? l10n.urgentRequestReceived
+              : l10n.supportRequestSent,
         );
       }
     } catch (e) {
@@ -150,7 +147,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
       if (mounted) {
         AppSnackBar.errorFromException(
           context,
-          'Failed to submit support request. Please try again or email support@vitalseker.com.',
+          l10n.failedToSubmitSupport,
           e,
         );
       }
@@ -162,20 +159,22 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
+    final faqItems = _buildFaqItems(l10n);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Help & Support')),
+      appBar: AppBar(title: Text(l10n.helpSupport)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // FAQ Section
-            _SectionLabel(label: 'Frequently Asked Questions'),
+            _SectionLabel(label: l10n.frequentlyAskedQuestions),
             Card(
               child: Column(
                 children: [
-                  // Build the FAQ items from the static list. Each item is
+                  // Build the FAQ items from the localized list. Each item is
                   // a controlled [_FaqItem]: passing `isExpanded` based on
                   // whether its index matches `_expandedFaqIndex`, and an
                   // `onToggle` callback that flips the field. Opening item
@@ -191,7 +190,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                   // that stay collapsed keep their key and aren't rebuilt,
                   // which is correct because their visual state is also
                   // unchanged.)
-                  for (final entry in _faqItems.asMap().entries)
+                  for (final entry in faqItems.asMap().entries)
                     _FaqItem(
                       key: ValueKey(
                         'faq-${entry.key}-${_expandedFaqIndex == entry.key}',
@@ -217,7 +216,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
             const SizedBox(height: 8),
 
             // Contact Support Section
-            _SectionLabel(label: 'Contact Support'),
+            _SectionLabel(label: l10n.contactSupport),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -226,9 +225,9 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                     TextField(
                       controller: _subjectController,
                       textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        labelText: 'Subject',
-                        prefixIcon: Icon(Icons.subject_outlined),
+                      decoration: InputDecoration(
+                        labelText: l10n.subject,
+                        prefixIcon: const Icon(Icons.subject_outlined),
                       ),
                       style: const TextStyle(fontFamily: 'Inter'),
                     ),
@@ -237,10 +236,10 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                       controller: _messageController,
                       maxLines: 5,
                       textInputAction: TextInputAction.newline,
-                      decoration: const InputDecoration(
-                        labelText: 'Message',
+                      decoration: InputDecoration(
+                        labelText: l10n.message,
                         alignLabelWithHint: true,
-                        prefixIcon: Padding(
+                        prefixIcon: const Padding(
                           padding: EdgeInsets.only(bottom: 40),
                           child: Icon(Icons.message_outlined),
                         ),
@@ -255,7 +254,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            'Your request is saved to your account and visible to our support team. We respond within 24 hours.',
+                            l10n.supportRequestSaved,
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 11,
@@ -282,9 +281,9 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                                 height: 18,
                                 child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                               )
-                            : const Text(
-                                'Submit',
-                                style: TextStyle(
+                            : Text(
+                                l10n.submit,
+                                style: const TextStyle(
                                   fontFamily: 'Outfit',
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -300,7 +299,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
             const SizedBox(height: 8),
 
             // Email Contact
-            _SectionLabel(label: 'Other Ways to Reach Us'),
+            _SectionLabel(label: l10n.otherWaysToReachUs),
             Card(
               child: ListTile(
                 leading: Container(
@@ -312,7 +311,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                   ),
                   child: Icon(Icons.email_outlined, color: AppColors.primary(isDark), size: 20),
                 ),
-                title: const Text('Email Us', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
+                title: Text(l10n.emailUs, style: const TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w500)),
                 subtitle: Text(
                   'support@vitalseker.com',
                   style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: AppColors.primary(isDark)),
@@ -324,7 +323,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                     await launchUrl(uri);
                   } else {
                     if (context.mounted) {
-                      AppSnackBar.info(context, 'Could not open email client. Please email support@vitalseker.com manually.');
+                      AppSnackBar.info(context, l10n.couldNotOpenEmailClient);
                     }
                   }
                 },
@@ -347,7 +346,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Version ${AppConfig.version}',
+                    l10n.aboutVitalSekerVersion(AppConfig.version),
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 12,

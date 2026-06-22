@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:pdf/pdf.dart';
@@ -111,6 +112,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
   bool get _includeHistory => _includeSymptomsLog;
 
   Future<void> _exportPdf({required bool viaEmail}) async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() => viaEmail ? _isEmailing = true : _isExporting = true);
     try {
       final passport = ref.read(healthPassportProvider).valueOrNull;
@@ -334,6 +336,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: AppColors.background(isDark),
@@ -351,7 +354,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                   children: [
                     // Title + subtitle
                     Text(
-                      'Export Medical Report',
+                      l10n.exportMedicalReport,
                       style: TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 22,
@@ -362,7 +365,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Configure and preview your comprehensive health summary before generating a secure PDF.',
+                      l10n.exportConfigurePreview,
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 13,
@@ -389,6 +392,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                           setState(() => _includeMedications = v),
                       onToggleAiSummary: (v) =>
                           setState(() => _includeAiSummary = v),
+                      l10n: l10n,
                     ),
                     const SizedBox(height: 16),
                     // Action buttons
@@ -398,6 +402,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                       isEmailing: _isEmailing,
                       onGenerate: () => _exportPdf(viaEmail: false),
                       onEmail: () => _exportPdf(viaEmail: true),
+                      l10n: l10n,
                     ),
                     const SizedBox(height: 28),
                     // Live preview pane
@@ -409,10 +414,11 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                       includeSymptomsLog: _includeSymptomsLog,
                       includeMedications: _includeMedications,
                       includeAiSummary: _includeAiSummary,
+                      l10n: l10n,
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'PDF includes ${AppConfig.producer} credit as producer',
+                      l10n.pdfIncludesProducer(AppConfig.producer),
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 11,
@@ -509,6 +515,7 @@ class _ConfigurationCard extends StatelessWidget {
   final ValueChanged<bool> onToggleSymptomsLog;
   final ValueChanged<bool> onToggleMedications;
   final ValueChanged<bool> onToggleAiSummary;
+  final AppLocalizations l10n;
 
   const _ConfigurationCard({
     required this.isDark,
@@ -522,6 +529,7 @@ class _ConfigurationCard extends StatelessWidget {
     required this.onToggleSymptomsLog,
     required this.onToggleMedications,
     required this.onToggleAiSummary,
+    required this.l10n,
   });
 
   @override
@@ -538,7 +546,7 @@ class _ConfigurationCard extends StatelessWidget {
         children: [
           // Date Range
           Text(
-            'Date Range',
+            l10n.dateRange,
             style: TextStyle(
               fontFamily: 'Outfit',
               fontSize: 14,
@@ -597,7 +605,7 @@ class _ConfigurationCard extends StatelessWidget {
           const SizedBox(height: 16),
           // Include Sections
           Text(
-            'Include Sections',
+            l10n.includeSections,
             style: TextStyle(
               fontFamily: 'Outfit',
               fontSize: 14,
@@ -607,25 +615,25 @@ class _ConfigurationCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           _SectionCheckbox(
-            label: 'Patient Overview & Vital Stats',
+            label: l10n.patientOverview,
             value: includePatientOverview,
             onChanged: onTogglePatientOverview,
             isDark: isDark,
           ),
           _SectionCheckbox(
-            label: 'Symptoms & Triage Log',
+            label: l10n.symptomsTriageLog,
             value: includeSymptomsLog,
             onChanged: onToggleSymptomsLog,
             isDark: isDark,
           ),
           _SectionCheckbox(
-            label: 'Medications & Allergies',
+            label: l10n.medicationsAllergies,
             value: includeMedications,
             onChanged: onToggleMedications,
             isDark: isDark,
           ),
           _SectionCheckbox(
-            label: 'AI Analysis Summary',
+            label: l10n.aiAnalysisSummary,
             value: includeAiSummary,
             onChanged: onToggleAiSummary,
             isDark: isDark,
@@ -708,12 +716,14 @@ class _ActionButtons extends StatelessWidget {
   final bool isEmailing;
   final VoidCallback onGenerate;
   final VoidCallback onEmail;
+  final AppLocalizations l10n;
   const _ActionButtons({
     required this.isDark,
     required this.isExporting,
     required this.isEmailing,
     required this.onGenerate,
     required this.onEmail,
+    required this.l10n,
   });
 
   @override
@@ -757,7 +767,7 @@ class _ActionButtons extends StatelessWidget {
                       const Icon(Icons.download, color: Colors.white, size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      isExporting ? 'Generating…' : 'Generate PDF',
+                      isExporting ? l10n.generating : l10n.generatePDF,
                       style: TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 16,
@@ -807,7 +817,7 @@ class _ActionButtons extends StatelessWidget {
                       Icon(Icons.mail, color: AppColors.primary(isDark), size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      isEmailing ? 'Sending…' : 'Send by Email',
+                      isEmailing ? l10n.sending : l10n.sendByEmail,
                       style: TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 16,
@@ -839,6 +849,7 @@ class _PreviewPane extends StatelessWidget {
   final bool includeSymptomsLog;
   final bool includeMedications;
   final bool includeAiSummary;
+  final AppLocalizations l10n;
   const _PreviewPane({
     required this.isDark,
     required this.previewData,
@@ -847,6 +858,7 @@ class _PreviewPane extends StatelessWidget {
     required this.includeSymptomsLog,
     required this.includeMedications,
     required this.includeAiSummary,
+    required this.l10n,
   });
 
   @override
@@ -865,7 +877,7 @@ class _PreviewPane extends StatelessWidget {
           Row(
             children: [
               Text(
-                'PREVIEW (PAGE 1 OF 2)'.toUpperCase(),
+                l10n.preview,
                 style: TextStyle(
                   fontFamily: 'DMSans',
                   fontSize: 11,
@@ -917,6 +929,7 @@ class _PreviewPane extends StatelessWidget {
                   includeSymptomsLog: includeSymptomsLog,
                   includeMedications: includeMedications,
                   includeAiSummary: includeAiSummary,
+                  l10n: l10n,
                 ),
               ),
             ),
@@ -935,6 +948,7 @@ class _PreviewDocument extends StatelessWidget {
   final bool includeSymptomsLog;
   final bool includeMedications;
   final bool includeAiSummary;
+  final AppLocalizations l10n;
   const _PreviewDocument({
     required this.isDark,
     required this.previewData,
@@ -943,6 +957,7 @@ class _PreviewDocument extends StatelessWidget {
     required this.includeSymptomsLog,
     required this.includeMedications,
     required this.includeAiSummary,
+    required this.l10n,
   });
 
   String get _patientName => previewData['patient']?['name'] ?? 'Alexander Sterling';

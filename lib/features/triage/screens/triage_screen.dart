@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -48,7 +49,8 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
     super.initState();
     // Add initial AI greeting after first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _addAiMessage('Hello! I\'m VitalSeker AI. How are you feeling today? Describe your symptoms and I\'ll help assess your condition.');
+      final l10n = AppLocalizations.of(context)!;
+      _addAiMessage(l10n.aiGreeting);
     });
   }
 
@@ -117,6 +119,8 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
     final text = _messageController.text.trim();
     if (text.isEmpty || _isProcessing) return;
 
+    final l10n = AppLocalizations.of(context)!;
+
     _messageController.clear();
     _addUserMessage(text);
 
@@ -167,17 +171,17 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
       final redFlags = (triage['red_flags'] as List<dynamic>? ?? []).cast<String>();
 
       final responseBuffer = StringBuffer();
-      responseBuffer.writeln('Based on your symptoms, here\'s my assessment:');
+      responseBuffer.writeln(l10n.triageAssessmentIntro);
       responseBuffer.writeln();
-      responseBuffer.writeln('Urgency: ${urgencyLevel.toUpperCase()} ($urgencyScore/100)');
+      responseBuffer.writeln('${l10n.urgencyLabel}: ${urgencyLevel.toUpperCase()} ($urgencyScore/100)');
 
       if (seekCare.isNotEmpty) {
-        responseBuffer.writeln('Care recommendation: ${_seekCareLabel(seekCare)}');
+        responseBuffer.writeln('${l10n.careRecommendationLabel}: ${_seekCareLabel(seekCare, l10n)}');
       }
 
       if (redFlags.isNotEmpty) {
         responseBuffer.writeln();
-        responseBuffer.writeln('⚠️ Red flags:');
+        responseBuffer.writeln(l10n.redFlagsLabel);
         for (final flag in redFlags.take(3)) {
           responseBuffer.writeln('• $flag');
         }
@@ -185,14 +189,14 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
 
       if (recommendations.isNotEmpty) {
         responseBuffer.writeln();
-        responseBuffer.writeln('Recommendations:');
+        responseBuffer.writeln(l10n.recommendationsLabel);
         for (final rec in recommendations.take(3)) {
           responseBuffer.writeln('• $rec');
         }
       }
 
       responseBuffer.writeln();
-      responseBuffer.writeln('Tap "View Detailed Results" below for the full analysis.');
+      responseBuffer.writeln(l10n.tapForFullAnalysis);
 
       _addAiMessage(
         responseBuffer.toString(),
@@ -205,7 +209,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
       });
 
       _addAiMessage(
-        'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $e',
+        l10n.triageErrorMessage(e.toString()),
       );
     } finally {
       if (mounted) setState(() => _isProcessing = false);
@@ -234,7 +238,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
       found.add(text.length > 50 ? '${text.substring(0, 50)}...' : text);
     }
 
-    return found.isNotEmpty ? found : ['General discomfort'];
+    return found.isNotEmpty ? found : [AppLocalizations.of(context)!.generalDiscomfort];
   }
 
   int _inferSeverity(String text) {
@@ -254,7 +258,8 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
       _lastTriageResult = null;
       _isProcessing = false;
     });
-    _addAiMessage('Hello! I\'m VitalSeker AI. How are you feeling today? Describe your symptoms and I\'ll help assess your condition.');
+    final l10n = AppLocalizations.of(context)!;
+    _addAiMessage(l10n.aiGreeting);
   }
 
   Color _severityColor(int severity) {
@@ -264,27 +269,28 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
     return AppColors.urgencyEmergency;
   }
 
-  String _severityLabel(int severity) {
-    if (severity <= 2) return 'Mild';
-    if (severity <= 4) return 'Moderate';
-    if (severity <= 6) return 'Significant';
-    if (severity <= 8) return 'Severe';
-    return 'Extreme';
+  String _severityLabel(int severity, AppLocalizations l10n) {
+    if (severity <= 2) return l10n.mild;
+    if (severity <= 4) return l10n.moderate;
+    if (severity <= 6) return l10n.significant;
+    if (severity <= 8) return l10n.severeLabel;
+    return l10n.extreme;
   }
 
-  String _seekCareLabel(String care) {
+  String _seekCareLabel(String care, AppLocalizations l10n) {
     switch (care) {
-      case 'self-care': return 'Self-Care Recommended';
-      case 'schedule-appointment': return 'Schedule an Appointment';
-      case 'urgent-care': return 'Visit Urgent Care';
-      case 'emergency': return 'Seek Emergency Care';
-      default: return 'Consult a Healthcare Provider';
+      case 'self-care': return l10n.selfCareRecommended;
+      case 'schedule-appointment': return l10n.scheduleAppointmentCare;
+      case 'urgent-care': return l10n.visitUrgentCare;
+      case 'emergency': return l10n.seekEmergencyCare;
+      default: return l10n.consultHealthcareProvider;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     // Wrap the Scaffold in a Stack so we can layer the full-screen
     // AiThinkingScreen on top while `_isProcessing` is true. The existing
@@ -307,13 +313,13 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
                   child: const Icon(Icons.psychology, color: Colors.white, size: 18),
                 ),
                 const SizedBox(width: 10),
-                const Text('AI Triage'),
+                Text(l10n.aiTriage),
               ],
             ),
             actions: [
               IconButton(
                 icon: const Icon(Icons.add_comment_outlined),
-                tooltip: 'New Chat',
+                tooltip: l10n.newChat,
                 onPressed: _startNewChat,
               ),
             ],
@@ -373,7 +379,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
                           onSubmitted: (_) => _sendMessage(),
                           enabled: !_isProcessing,
                           decoration: InputDecoration(
-                            hintText: 'Describe your symptoms...',
+                            hintText: l10n.describeSymptoms,
                             hintStyle: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 14,
@@ -464,6 +470,7 @@ class _ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // Typing indicator
     if (message.isTyping) {
       return _TypingIndicator(isDark: isDark);
@@ -540,7 +547,7 @@ class _ChatBubble extends StatelessWidget {
                           child: ElevatedButton.icon(
                             onPressed: onViewResults,
                             icon: const Icon(Icons.open_in_new_rounded, size: 16),
-                            label: const Text('View Detailed Results'),
+                            label: Text(l10n.viewDetailedResults),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: isUser
                                   ? Colors.white.withValues(alpha: 0.2)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -16,6 +17,7 @@ class PassportScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final passportAsync = ref.watch(healthPassportProvider);
     final profileAsync = ref.watch(userProfileProvider);
@@ -24,14 +26,14 @@ class PassportScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Health Passport',
+          l10n.healthPassport,
           style: AppTextStyles.heading3.copyWith(color: AppColors.primary(isDark)),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.qr_code_2),
             onPressed: () => context.push('${AppConfig.passport}/qr'),
-            tooltip: 'Show QR Code',
+            tooltip: l10n.showQrCode,
           ),
         ],
       ),
@@ -98,7 +100,7 @@ class PassportScreen extends ConsumerWidget {
                             ],
                           ),
                           Text(
-                            'HEALTH PASSPORT',
+                            l10n.healthPassport.toUpperCase(),
                             style: AppTextStyles.labelSmall.copyWith(
                               color: Colors.white.withValues(alpha: 0.65),
                               letterSpacing: 1.5,
@@ -161,7 +163,7 @@ class PassportScreen extends ConsumerWidget {
                               _StatusPill(
                                 icon: Icons.warning_amber_rounded,
                                 label:
-                                    '${passport.allergies.length} Allerg${passport.allergies.length == 1 ? 'y' : 'ies'}',
+                                    l10n.allergiesCount(passport.allergies.length),
                                 bg: const Color(0xFFFFDAD6).withValues(alpha: isDark ? 0.35 : 0.85),
                                 fg: isDark ? const Color(0xFFFFB4AB) : const Color(0xFF93000A),
                                 iconColor: isDark ? const Color(0xFFFFB4AB) : AppColors.lightError,
@@ -170,7 +172,7 @@ class PassportScreen extends ConsumerWidget {
                               _StatusPill(
                                 icon: Icons.medication_rounded,
                                 label:
-                                    '${passport.medications.length} Medication${passport.medications.length == 1 ? '' : 's'}',
+                                    l10n.medicationsCount(passport.medications.length),
                                 bg: Colors.white.withValues(alpha: 0.16),
                                 fg: Colors.white,
                                 iconColor: Colors.white.withValues(alpha: 0.9),
@@ -189,7 +191,7 @@ class PassportScreen extends ConsumerWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            passport.isActive ? 'Active' : 'Inactive',
+                            passport.isActive ? l10n.active : l10n.inactive,
                             style: AppTextStyles.bodySmall.copyWith(
                               color: Colors.white.withValues(alpha: 0.85),
                             ),
@@ -231,7 +233,7 @@ class PassportScreen extends ConsumerWidget {
                 if (passport.allergies.isNotEmpty) ...[
                   _SectionCard(
                     isDark: isDark,
-                    heading: 'Known Allergies',
+                    heading: l10n.knownAllergies,
                     headingIcon: Icons.coronavirus_rounded,
                     headingColor: AppColors.error(isDark),
                     child: Wrap(
@@ -249,7 +251,7 @@ class PassportScreen extends ConsumerWidget {
                 if (passport.medications.isNotEmpty) ...[
                   _SectionCard(
                     isDark: isDark,
-                    heading: 'Current Medications',
+                    heading: l10n.currentMedications,
                     headingIcon: Icons.medication_rounded,
                     headingColor: AppColors.primary(isDark),
                     action: GestureDetector(
@@ -287,7 +289,7 @@ class PassportScreen extends ConsumerWidget {
                   _InfoCard(
                     icon: Icons.health_and_safety,
                     iconColor: AppColors.primary(isDark),
-                    title: 'Chronic Conditions',
+                    title: l10n.chronicConditions,
                     value: passport.chronicConditions.join(', '),
                   ),
 
@@ -296,7 +298,7 @@ class PassportScreen extends ConsumerWidget {
                   _InfoCard(
                     icon: Icons.shield,
                     iconColor: AppColors.info(isDark),
-                    title: 'Insurance',
+                    title: l10n.insurance,
                     value:
                         '${passport.insuranceProvider}${passport.insurancePolicyNumber != null ? ' - ${passport.insurancePolicyNumber}' : ''}',
                   ),
@@ -305,7 +307,7 @@ class PassportScreen extends ConsumerWidget {
                 if (passport.emergencyContacts.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Text(
-                    'Emergency Contacts',
+                    l10n.emergencyContacts,
                     style: AppTextStyles.subheading1
                         .copyWith(color: AppColors.textPrimary(isDark)),
                   ),
@@ -371,7 +373,7 @@ class PassportScreen extends ConsumerWidget {
                       child: OutlinedButton.icon(
                         onPressed: () => context.push('${AppConfig.passport}/qr'),
                         icon: const Icon(Icons.qr_code_2),
-                        label: const Text('QR Code'),
+                        label: Text(l10n.qrCode),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           side: BorderSide(color: AppColors.border(isDark)),
@@ -385,7 +387,7 @@ class PassportScreen extends ConsumerWidget {
                       child: ElevatedButton.icon(
                         onPressed: () => context.push(AppConfig.exportScreen),
                         icon: const Icon(Icons.picture_as_pdf),
-                        label: const Text('Export PDF'),
+                        label: Text(l10n.exportPdf),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           backgroundColor: AppColors.primary(isDark),
@@ -402,7 +404,7 @@ class PassportScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 Center(
                   child: Text(
-                    'Powered by Keter Marketing',
+                    l10n.poweredBy,
                     style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
                     ),
@@ -419,6 +421,7 @@ class PassportScreen extends ConsumerWidget {
   }
 
   Widget _buildNoPassport(BuildContext context, bool isDark) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -426,13 +429,13 @@ class PassportScreen extends ConsumerWidget {
           Icon(Icons.badge_outlined, size: 80, color: AppColors.textTertiary(isDark)),
           const SizedBox(height: 16),
           Text(
-            'No Health Passport Yet',
+            l10n.noHealthPassportYet,
             style: AppTextStyles.heading4
                 .copyWith(color: AppColors.textSecondary(isDark)),
           ),
           const SizedBox(height: 8),
           Text(
-            'Complete your first triage to generate\nyour health passport',
+            l10n.completeFirstTriage,
             style: AppTextStyles.bodyMedium
                 .copyWith(color: AppColors.textHint(isDark)),
             textAlign: TextAlign.center,
@@ -444,7 +447,7 @@ class PassportScreen extends ConsumerWidget {
               backgroundColor: AppColors.primary(isDark),
               foregroundColor: Colors.white,
             ),
-            child: const Text('Start Triage'),
+            child: Text(l10n.startTriage),
           ),
         ],
       ),
@@ -503,17 +506,18 @@ class _DateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final dobStr = dateOfBirth != null
         ? '${dateOfBirth!.year}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}'
         : '—';
     final age = dateOfBirth != null
-        ? '${DateTime.now().difference(dateOfBirth!).inDays ~/ 365} years old'
-        : 'Not set';
+        ? l10n.yearsOld(DateTime.now().difference(dateOfBirth!).inDays ~/ 365)
+        : l10n.notSet;
 
     return _GridCard(
       isDark: isDark,
       icon: Icons.calendar_today_outlined,
-      label: 'Date of Birth',
+      label: l10n.dateOfBirth,
       children: [
         Text(
           dobStr,
@@ -548,10 +552,11 @@ class _BiometricsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return _GridCard(
       isDark: isDark,
       icon: Icons.height,
-      label: 'Height & Weight',
+      label: l10n.heightAndWeight,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -768,6 +773,7 @@ class _MedicationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -810,7 +816,7 @@ class _MedicationRow extends StatelessWidget {
               borderRadius: BorderRadius.circular(6),
             ),
             child: Text(
-              isActive ? 'ACTIVE' : 'INACTIVE',
+              isActive ? l10n.active.toUpperCase() : l10n.inactive.toUpperCase(),
               style: AppTextStyles.labelSmall.copyWith(
                 color: isDark ? AppColors.darkOnSurface : const Color(0xFF326F59),
                 fontSize: 9,

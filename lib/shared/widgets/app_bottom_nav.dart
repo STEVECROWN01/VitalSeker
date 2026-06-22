@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/config/app_config.dart';
 import '../../shared/theme/app_colors.dart';
@@ -18,6 +19,7 @@ class AppBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return NavigationBar(
       selectedIndex: currentIndex,
@@ -54,27 +56,27 @@ class AppBottomNav extends StatelessWidget {
         NavigationDestination(
           icon: const Icon(Icons.home_outlined),
           selectedIcon: const Icon(Icons.home),
-          label: 'Home',
+          label: l10n.home,
         ),
         NavigationDestination(
           icon: const Icon(Icons.history_outlined),
           selectedIcon: const Icon(Icons.history),
-          label: 'History',
+          label: l10n.history,
         ),
         NavigationDestination(
           icon: const Icon(Icons.healing_outlined),
           selectedIcon: const Icon(Icons.healing),
-          label: 'Triage',
+          label: l10n.triage,
         ),
         NavigationDestination(
           icon: const Icon(Icons.insights_outlined),
           selectedIcon: const Icon(Icons.insights),
-          label: 'Insights',
+          label: l10n.insights,
         ),
         NavigationDestination(
           icon: const Icon(Icons.badge_outlined),
           selectedIcon: const Icon(Icons.badge),
-          label: 'Passport',
+          label: l10n.passport,
         ),
       ],
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,29 +27,30 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
   /// subscription row directly so the rest of the app sees the new tier —
   /// this is clearly disclosed to the user via the dev-mode banner.
   Future<void> _changePlan(String planName) async {
+    final l10n = AppLocalizations.of(context)!;
     final user = ref.read(currentUserProvider);
     if (user == null) {
-      AppSnackBar.error(context, 'You must be signed in to change plans.');
+      AppSnackBar.error(context, l10n.mustBeSignedInToChangePlans);
       return;
     }
 
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Switch to $planName?'),
+        title: Text(l10n.switchToPlan(planName)),
         content: Text(
           planName == 'free'
-              ? 'You will lose access to Pro features at the end of your current billing period. Continue?'
-              : 'This will update your subscription to $planName. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.',
+              ? l10n.downgradeToFreeMessage
+              : l10n.upgradeToPlanMessage(planName),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Confirm'),
+            child: Text(l10n.confirm),
           ),
         ],
       ),
@@ -88,13 +90,13 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
         AppSnackBar.success(
           context,
           planName == 'free'
-              ? 'Downgraded to Free. Pro access ends at the next billing period.'
-              : 'Welcome to $planName! All features unlocked.',
+              ? l10n.downgradedToFree
+              : l10n.welcomeToPlan(planName),
         );
       }
     } catch (e) {
       if (mounted) {
-        AppSnackBar.errorFromException(context, 'Failed to update subscription. Please try again.', e);
+        AppSnackBar.errorFromException(context, l10n.failedToUpdateSubscription, e);
       }
     } finally {
       if (mounted) setState(() => _pendingPlan = null);
@@ -102,6 +104,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
   }
 
   Future<void> _restorePurchases() async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isRestoring = true);
     try {
       // In production: query RevenueCat / StoreKit for existing purchases.
@@ -109,11 +112,11 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
       ref.invalidate(subscriptionProvider);
       await ref.read(subscriptionProvider.future);
       if (mounted) {
-        AppSnackBar.success(context, 'Purchases restored.');
+        AppSnackBar.success(context, l10n.purchasesRestored);
       }
     } catch (e) {
       if (mounted) {
-        AppSnackBar.errorFromException(context, 'Failed to restore purchases.', e);
+        AppSnackBar.errorFromException(context, l10n.failedToRestorePurchases, e);
       }
     } finally {
       if (mounted) setState(() => _isRestoring = false);
@@ -123,6 +126,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final subAsync = ref.watch(subscriptionProvider);
     final currentPlan = subAsync.maybeWhen(
       data: (s) => s?.plan ?? 'free',
@@ -131,7 +135,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Subscription'),
+        title: Text(l10n.subscription),
         actions: [
           TextButton.icon(
             onPressed: _isRestoring ? null : _restorePurchases,
@@ -142,7 +146,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Icons.restore, size: 18),
-            label: const Text('Restore'),
+            label: Text(l10n.restore),
           ),
         ],
       ),
@@ -159,13 +163,13 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                 gradient: AppColors.brandGradient,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const Column(
+              child: Column(
                 children: [
-                  Icon(Icons.workspace_premium, color: Colors.white, size: 48),
-                  SizedBox(height: 12),
+                  const Icon(Icons.workspace_premium, color: Colors.white, size: 48),
+                  const SizedBox(height: 12),
                   Text(
-                    'Choose Your Plan',
-                    style: TextStyle(
+                    l10n.chooseYourPlan,
+                    style: const TextStyle(
                       fontFamily: 'ClashDisplay',
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
@@ -173,8 +177,8 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                     ),
                   ),
                   Text(
-                    'Unlock the full power of VitalSeker',
-                    style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: Colors.white70),
+                    l10n.unlockFullPower,
+                    style: const TextStyle(fontFamily: 'Inter', fontSize: 14, color: Colors.white70),
                   ),
                 ],
               ),
@@ -202,7 +206,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.',
+                      l10n.paymentIntegrationPending,
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 11,
@@ -218,15 +222,15 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
             // Free Plan
             _PlanCard(
-              planName: 'Free',
+              planName: l10n.free,
               price: '\$0',
-              period: 'forever',
+              period: l10n.forever,
               features: [
-                '3 AI triage sessions/month',
-                'Basic health passport',
-                'QR code sharing',
-                'Emergency SOS alerts',
-                'Single user profile',
+                l10n.freePlanFeature1,
+                l10n.freePlanFeature2,
+                l10n.freePlanFeature3,
+                l10n.freePlanFeature4,
+                l10n.freePlanFeature5,
               ],
               isCurrentPlan: currentPlan == 'free',
               isLoading: _pendingPlan == 'free',
@@ -237,16 +241,16 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
             // Pro Plan
             _PlanCard(
-              planName: 'Pro',
+              planName: l10n.pro,
               price: '\$${AppConfig.proPriceMonthly.toStringAsFixed(2)}',
-              period: '/month',
+              period: l10n.perMonth,
               features: [
-                'Unlimited AI triage sessions',
-                'Advanced health passport',
-                'Weekly AI insights',
-                'Family profiles (up to 5)',
-                'PDF export with full history',
-                'Priority support',
+                l10n.proPlanFeature1,
+                l10n.proPlanFeature2,
+                l10n.proPlanFeature3,
+                l10n.proPlanFeature4,
+                l10n.proPlanFeature5,
+                l10n.proPlanFeature6,
               ],
               isCurrentPlan: currentPlan == 'pro',
               isLoading: _pendingPlan == 'pro',
@@ -258,16 +262,16 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
             // Enterprise Plan
             _PlanCard(
-              planName: 'Enterprise',
+              planName: l10n.enterprise,
               price: '\$${AppConfig.enterprisePriceMonthly.toStringAsFixed(0)}',
-              period: '/month',
+              period: l10n.perMonth,
               features: [
-                'Everything in Pro',
-                'Unlimited family profiles',
-                'Custom branding',
-                'API access',
-                'Dedicated support',
-                'SLA guarantee',
+                l10n.enterprisePlanFeature1,
+                l10n.enterprisePlanFeature2,
+                l10n.enterprisePlanFeature3,
+                l10n.enterprisePlanFeature4,
+                l10n.enterprisePlanFeature5,
+                l10n.enterprisePlanFeature6,
               ],
               isCurrentPlan: currentPlan == 'enterprise',
               isLoading: _pendingPlan == 'enterprise',
@@ -284,18 +288,18 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                     await launchUrl(uri);
                   } else {
                     if (mounted) {
-                      AppSnackBar.info(context, 'Email sales@vitalseker.com for enterprise pricing.');
+                      AppSnackBar.info(context, l10n.emailSalesEnterprise);
                     }
                   }
                 },
                 icon: const Icon(Icons.alternate_email, size: 16),
-                label: const Text('Contact sales for custom Enterprise terms'),
+                label: Text(l10n.contactSalesEnterprise),
               ),
             ),
             const SizedBox(height: 8),
             Center(
               child: Text(
-                'Powered by ${AppConfig.producer}',
+                l10n.poweredByProducer(AppConfig.producer),
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,
@@ -335,6 +339,7 @@ class _PlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -373,9 +378,9 @@ class _PlanCard extends StatelessWidget {
                             color: AppColors.primary(isDark),
                             borderRadius: BorderRadius.circular(6),
                           ),
-                          child: const Text(
-                            'BEST VALUE',
-                            style: TextStyle(
+                          child: Text(
+                            l10n.bestValue,
+                            style: const TextStyle(
                               fontFamily: 'DMSans',
                               fontSize: 9,
                               fontWeight: FontWeight.w700,
@@ -436,7 +441,7 @@ class _PlanCard extends StatelessWidget {
                     ? OutlinedButton.icon(
                         onPressed: null,
                         icon: const Icon(Icons.check_circle_outline, size: 18),
-                        label: const Text('Current Plan'),
+                        label: Text(l10n.currentPlan),
                       )
                     : ElevatedButton(
                         onPressed: isLoading ? null : onTap,
@@ -451,7 +456,7 @@ class _PlanCard extends StatelessWidget {
                                 height: 18,
                                 child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                               )
-                            : Text(planName == 'Free' ? 'Downgrade' : 'Upgrade to $planName'),
+                            : Text(planName == l10n.free ? l10n.downgrade : l10n.upgradeToPlan(planName)),
                       ),
               ),
             ],

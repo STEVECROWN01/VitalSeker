@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -104,7 +105,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _resetPassword() async {
     final email = _emailController.text.trim();
     if (email.isEmpty || !email.contains('@')) {
-      _showError('Please enter your email address first.');
+      final l10n = AppLocalizations.of(context)!;
+      _showError(l10n.enterEmailFirst);
       return;
     }
 
@@ -113,6 +115,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       await authService.resetPassword(email);
       if (mounted) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -122,7 +125,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Password reset link sent to $email',
+                    l10n.passwordResetSent(email),
                     style: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                   ),
                 ),
@@ -143,10 +146,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return LoadingOverlay(
       isLoading: _isLoading,
-      message: 'Signing in...',
+      message: l10n.signingIn,
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
@@ -179,7 +183,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(height: 24),
                   Center(
                     child: Text(
-                      'Welcome Back',
+                      l10n.welcomeBack,
                       style: AppTextStyles.heading2.copyWith(
                         fontSize: 28,
                         color: AppColors.textPrimary(isDark),
@@ -189,7 +193,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(height: 8),
                   Center(
                     child: Text(
-                      'Sign in to your VitalSeker account',
+                      l10n.signInSubtitle,
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary(isDark),
                       ),
@@ -201,13 +205,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      prefixIcon: Icon(Icons.email_outlined),
+                    decoration: InputDecoration(
+                      labelText: l10n.email,
+                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Email is required';
-                      if (!value.contains('@')) return 'Enter a valid email';
+                      if (value == null || value.isEmpty) return l10n.emailRequired;
+                      if (!value.contains('@')) return l10n.enterValidEmail;
                       return null;
                     },
                   ).animate().slideX(duration: 400.ms, delay: 200.ms, begin: 0.1),
@@ -219,7 +223,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) => _signIn(),
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText: l10n.password,
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
@@ -227,8 +231,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Password is required';
-                      if (value.length < 6) return 'Password must be 6+ characters';
+                      if (value == null || value.isEmpty) return l10n.passwordRequired;
+                      if (value.length < 6) return l10n.passwordMinLength;
                       return null;
                     },
                   ).animate().slideX(duration: 400.ms, delay: 300.ms, begin: 0.1),
@@ -239,7 +243,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: TextButton(
                       onPressed: _resetPassword,
                       child: Text(
-                        'Forgot Password?',
+                        l10n.forgotPassword,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.primary(isDark),
                           fontWeight: FontWeight.w600,
@@ -257,7 +261,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     ),
-                    child: Text('Sign In', style: AppTextStyles.button.copyWith(fontSize: 16)),
+                    child: Text(l10n.signIn, style: AppTextStyles.button.copyWith(fontSize: 16)),
                   ).animate().fadeIn(duration: 400.ms, delay: 400.ms),
                   const SizedBox(height: 24),
                   // Divider
@@ -267,7 +271,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          'or continue with',
+                          l10n.orContinueWith,
                           style: AppTextStyles.labelMedium.copyWith(
                             color: AppColors.textHint(isDark),
                           ),
@@ -283,14 +287,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     children: [
                       _SocialButton(
                         icon: Icons.g_mobiledata_rounded,
-                        label: 'Google',
+                        label: l10n.google,
                         onPressed: _signInWithGoogle,
                         isDark: isDark,
                       ),
                       const SizedBox(width: 16),
                       _SocialButton(
                         icon: Icons.apple,
-                        label: 'Apple',
+                        label: l10n.apple,
                         onPressed: _signInWithApple,
                         isDark: isDark,
                       ),
@@ -302,7 +306,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account? ",
+                        l10n.dontHaveAccount,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textSecondary(isDark),
                         ),
@@ -310,7 +314,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       TextButton(
                         onPressed: () => context.go(AppConfig.register),
                         child: Text(
-                          'Sign Up',
+                          l10n.signUp,
                           style: AppTextStyles.subheading2.copyWith(
                             color: AppColors.primary(isDark),
                           ),
@@ -322,7 +326,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   // Footer credit
                   Center(
                     child: Text(
-                      'Powered by Keter Marketing',
+                      l10n.poweredBy,
                       style: AppTextStyles.labelSmall.copyWith(
                         color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
                       ),

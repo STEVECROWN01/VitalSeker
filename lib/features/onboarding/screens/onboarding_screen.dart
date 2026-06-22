@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -21,27 +22,29 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   int _currentPage = 0;
   bool _isNavigating = false;
 
-  // Design-correct titles, descriptions, and GREEN-ONLY gradients per Stitch mockups.
+  // Design-correct gradients per Stitch mockups.
   // Slide 1: "Know your body." — symptom checking
   // Slide 2: "Your health, always with you." — health passport
   // Slide 3: "Works everywhere. Even offline." — 40+ languages, offline support
-  final List<OnboardingPage> _pages = [
+  // Titles/descriptions are localized, so the pages list is built inside
+  // [build] where [AppLocalizations] is available.
+  List<OnboardingPage> _buildPages(AppLocalizations l10n) => [
     OnboardingPage(
       icon: Icons.favorite_rounded,
-      title: 'Know your body.',
-      description: 'Check any symptom and get reliable medical insights in seconds.',
+      title: l10n.onboardingTitle1,
+      description: l10n.onboardingDescription1,
       gradient: [const Color(0xFF054D39), const Color(0xFF0B7A5B)], // ForestDark → VitalGreen
     ),
     OnboardingPage(
       icon: Icons.badge_rounded,
-      title: 'Your health, always with you.',
-      description: 'Store your full medical profile, records, and digital insurance cards in one secure, encrypted vault.',
+      title: l10n.onboardingTitle2,
+      description: l10n.onboardingDescription2,
       gradient: [const Color(0xFF0B7A5B), const Color(0xFF0B9E70)], // VitalGreen → Electric Mint
     ),
     OnboardingPage(
       icon: Icons.language_rounded,
-      title: 'Works everywhere.\nEven offline.',
-      description: 'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re back online.',
+      title: l10n.onboardingTitle3,
+      description: l10n.onboardingDescription3,
       gradient: [const Color(0xFF0B9E70), const Color(0xFF1DB886)], // Electric Mint → lighter mint
     ),
   ];
@@ -84,6 +87,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
+    final pages = _buildPages(l10n);
 
     return Scaffold(
       body: SafeArea(
@@ -97,7 +102,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 child: TextButton(
                   onPressed: _finishOnboarding,
                   child: Text(
-                    'Skip',
+                    l10n.skip,
                     style: AppTextStyles.labelLarge.copyWith(
                       color: AppColors.textSecondary(isDark),
                     ),
@@ -109,12 +114,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
-                itemCount: _pages.length,
+                itemCount: pages.length,
                 onPageChanged: (index) {
                   setState(() => _currentPage = index);
                 },
                 itemBuilder: (context, index) {
-                  final page = _pages[index];
+                  final page = pages[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24), // 24dp page margin per tokens
                     child: Column(
@@ -182,7 +187,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               padding: const EdgeInsets.symmetric(vertical: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(_pages.length, (index) {
+                children: List.generate(pages.length, (index) {
                   return AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -206,7 +211,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 height: 52, // 52px min touch target per DESIGN.md
                 child: ElevatedButton(
                   onPressed: _isNavigating ? null : () {
-                    if (_currentPage == _pages.length - 1) {
+                    if (_currentPage == pages.length - 1) {
                       _finishOnboarding();
                     } else {
                       _pageController.nextPage(
@@ -232,7 +237,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           ),
                         )
                       : Text(
-                          _currentPage == _pages.length - 1 ? 'Enter VitalSeker' : 'Next',
+                          _currentPage == pages.length - 1 ? l10n.enterVitalSeker : l10n.next,
                           style: AppTextStyles.button.copyWith(color: Colors.white),
                         ),
                 ),
@@ -242,7 +247,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Text(
-                'Powered by ${AppConfig.producer}',
+                l10n.poweredByProducer(AppConfig.producer),
                 style: AppTextStyles.labelSmall.copyWith(
                   color: AppColors.textTertiary(isDark),
                 ),

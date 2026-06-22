@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -158,17 +159,18 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   }
 
   /// Time-of-day-aware greeting ("Good morning/afternoon/evening/night").
-  String _greeting() {
+  String _greeting(AppLocalizations l10n) {
     final h = DateTime.now().hour;
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    if (h < 22) return 'Good evening';
-    return 'Good night';
+    if (h < 12) return l10n.goodMorning;
+    if (h < 17) return l10n.goodAfternoon;
+    if (h < 22) return l10n.goodEvening;
+    return l10n.goodNight;
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final profileAsync = ref.watch(userProfileProvider);
     final passportAsync = ref.watch(healthPassportProvider);
     final logsAsync = ref.watch(symptomLogsProvider);
@@ -184,13 +186,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     final firstName = profileAsync.maybeWhen(
       data: (p) {
         final full = p?.fullName;
-        if (full == null || full.isEmpty) return 'User';
+        if (full == null || full.isEmpty) return l10n.userFallback;
         final parts = full.split(RegExp(r'\s+'));
         return parts.isNotEmpty && parts.first.isNotEmpty
             ? parts.first
-            : 'User';
+            : l10n.userFallback;
       },
-      orElse: () => 'User',
+      orElse: () => l10n.userFallback,
     );
 
     return Scaffold(
@@ -215,7 +217,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        '${_greeting()},',
+                        '${_greeting(l10n)},',
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 12,
@@ -284,7 +286,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   const SizedBox(height: 24),
 
                   // 3. Quick Actions (bento grid)
-                  _SectionHeader(title: 'Quick Actions'),
+                  _SectionHeader(title: l10n.quickActions),
                   const SizedBox(height: 12),
                   _BentoQuickActions(isDark: isDark)
                       .animate()
@@ -302,8 +304,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
                   // 5. Recent Checks
                   _SectionHeader(
-                    title: 'Recent Checks',
-                    actionText: 'View All',
+                    title: l10n.recentChecks,
+                    actionText: l10n.viewAll,
                     onAction: () => context.push(AppConfig.history),
                   ),
                   const SizedBox(height: 12),
@@ -317,11 +319,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         return GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: () => context.push(AppConfig.triage),
-                          child: const _EmptyStateCard(
+                          child: _EmptyStateCard(
                             icon: Icons.history,
-                            message: 'No symptom logs yet',
+                            message: l10n.noSymptomsLogs,
                             subtitle:
-                                'Start your first triage to see activity here',
+                                l10n.startTriage,
                           ),
                         );
                       }
@@ -340,10 +342,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         child: CircularProgressIndicator(),
                       ),
                     ),
-                    error: (_, __) => const _EmptyStateCard(
+                    error: (_, __) => _EmptyStateCard(
                       icon: Icons.error_outline,
-                      message: 'Failed to load recent checks',
-                      subtitle: 'Pull down to retry',
+                      message: l10n.failedLoadRecentChecks,
+                      subtitle: l10n.pullDownRetry,
                     ),
                     orElse: () => const SizedBox.shrink(),
                   ),
@@ -352,7 +354,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   // 6. Footer
                   Center(
                     child: Text(
-                      'Powered by Keter Marketing',
+                      l10n.poweredBy,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Inter',
@@ -454,6 +456,7 @@ class _ThemeTogglePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -475,7 +478,7 @@ class _ThemeTogglePill extends StatelessWidget {
             ),
             const SizedBox(width: 4),
             Text(
-              isDark ? 'Light' : 'Dark',
+              isDark ? l10n.light : l10n.dark,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -550,17 +553,18 @@ class _HealthScoreHeroCard extends StatelessWidget {
   final int score;
   const _HealthScoreHeroCard({required this.score});
 
-  String _conditionLabel() {
-    if (score >= 80) return 'Good condition';
-    if (score >= 60) return 'Fair condition';
-    if (score >= 40) return 'Needs attention';
-    if (score >= 20) return 'Poor condition';
-    return 'Critical';
+  String _conditionLabel(AppLocalizations l10n) {
+    if (score >= 80) return l10n.goodCondition;
+    if (score >= 60) return l10n.fairCondition;
+    if (score >= 40) return l10n.needsAttention;
+    if (score >= 20) return l10n.poorCondition;
+    return l10n.critical;
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDark;
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24),
@@ -582,7 +586,7 @@ class _HealthScoreHeroCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                'HEALTH SCORE',
+                l10n.healthScore.toUpperCase(),
                 style: TextStyle(
                   fontFamily: 'DMSans',
                   fontSize: 11,
@@ -604,7 +608,7 @@ class _HealthScoreHeroCard extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  '${_conditionLabel()} ✨',
+                  '${_conditionLabel(l10n)} ✨',
                   style: const TextStyle(
                     fontFamily: 'DMSans',
                     fontSize: 11,
@@ -656,7 +660,7 @@ class _HealthScoreHeroCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Your overall health indicator',
+                      l10n.overallHealthIndicator,
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 12,
@@ -697,7 +701,7 @@ class _HealthScoreHeroCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Tap for weekly insights',
+                  l10n.tapForWeeklyInsights,
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 13,
@@ -795,14 +799,15 @@ class _BentoQuickActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         // Row 1: large "Check Symptoms Now" — col-span-2, secondary-container bg
         _LargeBentoCard(
           isDark: isDark,
           icon: Icons.healing,
-          title: 'Check Symptoms Now',
-          subtitle: 'AI-powered triage in 60 seconds',
+          title: l10n.checkSymptomsNow,
+          subtitle: l10n.aiPoweredTriage60s,
           onTap: () => context.push(AppConfig.triage),
         ),
         const SizedBox(height: 12),
@@ -813,8 +818,8 @@ class _BentoQuickActions extends StatelessWidget {
               child: _SmallBentoCard(
                 isDark: isDark,
                 icon: Icons.shield_outlined,
-                title: 'Health Passport',
-                subtitle: 'QR & medical info',
+                title: l10n.healthPassport,
+                subtitle: l10n.qrAndMedicalInfo,
                 onTap: () => context.push(AppConfig.passport),
               ),
             ),
@@ -823,8 +828,8 @@ class _BentoQuickActions extends StatelessWidget {
               child: _SmallBentoCard(
                 isDark: isDark,
                 icon: Icons.history,
-                title: 'My History',
-                subtitle: 'Past checks & vitals',
+                title: l10n.myHistory,
+                subtitle: l10n.pastChecksAndVitals,
                 onTap: () => context.push(AppConfig.history),
               ),
             ),
@@ -1005,6 +1010,7 @@ class _EmergencySosButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -1021,18 +1027,18 @@ class _EmergencySosButton extends StatelessWidget {
             ),
           ],
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.emergency,
               color: Colors.white,
               size: 22,
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
-              'EMERGENCY SOS',
-              style: TextStyle(
+              l10n.emergencySOS,
+              style: const TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
@@ -1063,23 +1069,24 @@ class _RecentCheckItem extends StatelessWidget {
     return AppColors.error(isDark);
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(DateTime date, AppLocalizations l10n) {
     final now = DateTime.now();
     final diff = now.difference(date);
-    if (diff.inHours < 1) return 'Just now';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays == 0) return 'Today';
-    if (diff.inDays == 1) return 'Yesterday';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inHours < 1) return l10n.justNow;
+    if (diff.inHours < 24) return l10n.hoursAgo(diff.inHours);
+    if (diff.inDays == 0) return l10n.todayLabel;
+    if (diff.inDays == 1) return l10n.yesterdayLabel;
+    if (diff.inDays < 7) return l10n.daysAgo(diff.inDays);
     return '${date.day}/${date.month}';
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDark;
+    final l10n = AppLocalizations.of(context)!;
     final color = _severityColor(isDark);
     final title = log.symptoms.take(2).join(', ');
-    final displayTitle = title.isEmpty ? 'Symptom check' : title;
+    final displayTitle = title.isEmpty ? l10n.symptomCheck : title;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
@@ -1121,7 +1128,7 @@ class _RecentCheckItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Severity ${log.severity}/10 · ${_formatDate(log.loggedAt)}',
+                  '${l10n.severity} ${log.severity}/10 · ${_formatDate(log.loggedAt, l10n)}',
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 11,
