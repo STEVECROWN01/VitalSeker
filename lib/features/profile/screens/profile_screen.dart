@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/family_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/symptom_log_provider.dart';
@@ -313,10 +314,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 ),
                                 ...['English (US)', 'English (UK)', 'French', 'Spanish', 'Portuguese', 'German', 'Italian', 'Dutch', 'Arabic', 'Swahili', 'Hausa', 'Yoruba', 'Igbo', 'Chinese', 'Japanese', 'Korean', 'Hindi', 'Bengali', 'Urdu', 'Turkish', 'Russian', 'Polish', 'Vietnamese', 'Thai', 'Indonesian', 'Tagalog'].map((lang) => ListTile(
                                   title: Text(lang, style: const TextStyle(fontFamily: 'Inter')),
-                                  trailing: 'English' == lang
+                                  trailing: ref.watch(localeProvider).languageCode == (languageLocales[lang]?.languageCode ?? 'en')
                                       ? Icon(Icons.check, color: AppColors.primary(isDark))
                                       : null,
-                                  onTap: () => Navigator.pop(ctx),
+                                  onTap: () {
+                                    ref.read(localeProvider.notifier).setLocaleByLanguageName(lang);
+                                    Navigator.pop(ctx);
+                                  },
                                 )),
                               ],
                             ),

@@ -3,9 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'core/services/supabase_service.dart';
 import 'core/router/app_router.dart';
 import 'core/providers/theme_provider.dart';
+import 'core/providers/locale_provider.dart';
 import 'shared/theme/app_theme.dart';
 
 void main() async {
@@ -36,6 +39,7 @@ class VitalSekerApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
     final themeMode = ref.watch(themeModeProvider);
+    final locale = ref.watch(localeProvider);
 
     return MaterialApp.router(
       title: 'VitalSeker',
@@ -43,6 +47,14 @@ class VitalSekerApp extends ConsumerWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
+      locale: locale,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: router,
       builder: (context, child) {
         return MediaQuery(
