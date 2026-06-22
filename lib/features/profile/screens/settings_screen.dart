@@ -219,15 +219,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       try {
                         final edgeService = EdgeFunctionService();
                         await edgeService.deleteAccount(confirmEmail: typed);
+                        // Force sign out from ALL providers including Google.
+                        // GoogleSignIn caches a token on the device — we must
+                        // explicitly revoke it so the user can't silently
+                        // re-login with the same Google account after deletion.
                         try {
                           await ref.read(authServiceProvider).signOut();
                         } catch (_) {
-                          // signOut may throw if the session was already invalidated; ignore.
+                          // signOut may throw if the session was already
+                          // invalidated by the edge function; ignore.
                         }
                         if (!mounted) return;
                         Navigator.pop(ctx);
                         AppSnackBar.success(context, 'Account deleted. Sorry to see you go.');
+                        // Clear ALL cached state so the login screen shows fresh.
                         ref.invalidate(userProfileProvider);
+                        ref.invalidate(authStateProvider);
                         if (mounted) context.go(AppConfig.login);
                       } catch (e) {
                         if (!mounted) return;

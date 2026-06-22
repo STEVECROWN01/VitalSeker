@@ -82,6 +82,11 @@ serve(async (req: Request) => {
       return new Response(JSON.stringify({ error: 'Failed to delete account' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
     }
 
+    // Also sign out the user from all sessions (including Google OAuth).
+    // This revokes all refresh tokens so the user can't silently re-login
+    // with a cached Google token after deletion.
+    await supabaseAdmin.auth.admin.signOut(user.id, 'global')
+
     return new Response(JSON.stringify({
       deleted: true,
       user_id: user.id,

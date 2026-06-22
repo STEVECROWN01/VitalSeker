@@ -352,6 +352,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       subtitle: 'Download your health data',
                       onTap: () => context.push(AppConfig.exportScreen),
                     ),
+                    _MenuItem(
+                      icon: Icons.delete_forever_outlined,
+                      iconBg: _tint(AppColors.urgencyEmergency, isDark),
+                      iconFg: AppColors.urgencyEmergency,
+                      label: 'Delete Account',
+                      subtitle: 'Permanently remove your data',
+                      onTap: () => context.push(AppConfig.settings),
+                    ),
                   ],
                 ),
 
