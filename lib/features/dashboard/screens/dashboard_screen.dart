@@ -310,11 +310,19 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   logsAsync.maybeWhen(
                     data: (logs) {
                       if (logs.isEmpty) {
-                        return const _EmptyStateCard(
-                          icon: Icons.history,
-                          message: 'No symptom logs yet',
-                          subtitle:
-                              'Start your first triage to see activity here',
+                        // Make the empty-state card itself tappable — tapping
+                        // it deep-links straight into triage so the user can
+                        // log their first symptom and seed the "Recent
+                        // Checks" list.
+                        return GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () => context.push(AppConfig.triage),
+                          child: const _EmptyStateCard(
+                            icon: Icons.history,
+                            message: 'No symptom logs yet',
+                            subtitle:
+                                'Start your first triage to see activity here',
+                          ),
                         );
                       }
                       return Column(

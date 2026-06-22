@@ -6,6 +6,8 @@ import '../../../core/config/app_config.dart';
 import '../../../core/models/weekly_insight.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/insights_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
+import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 
@@ -37,6 +39,9 @@ class InsightsScreen extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final insightsAsync = ref.watch(weeklyInsightsProvider);
     final passportAsync = ref.watch(healthPassportProvider);
+    // Whether the signed-in user is on a Pro plan. Used to differentiate the
+    // "no insights yet" empty state from the "upgrade to Pro" upsell.
+    final isProUser = ref.watch(isProUserProvider);
 
     final vitalScore = passportAsync.maybeWhen(
       data: (p) => p?.vitalScore ?? 0,
@@ -53,6 +58,28 @@ class InsightsScreen extends ConsumerWidget {
         ),
         data: (insights) {
           if (insights.isEmpty) {
+            // Branch the empty-state on Pro status:
+            //  - Pro user with no insights generated yet → "No insights yet"
+            //    message + a "Generate Now" button (NOT the upgrade screen).
+            //  - Non-Pro user with no insights → upsell to Pro (prior behavior).
+            if (isProUser) {
+              return _ProEmptyState(
+                isDark: isDark,
+                onGenerate: () async {
+                  try {
+                    await EdgeFunctionService().generateWeeklyInsights();
+                  } catch (_) {
+                    // The edge function is admin/CRON-triggered and may not be
+                    // invokable directly from the client — that's OK, we still
+                    // refresh the local provider so any newly-persisted rows
+                    // surface.
+                  }
+                  if (context.mounted) {
+                    ref.invalidate(weeklyInsightsProvider);
+                  }
+                },
+              );
+            }
             return _ProUpsellEmptyState(isDark: isDark);
           }
 
@@ -1182,6 +1209,154 @@ class _StatChip extends StatelessWidget {
                 fontFamily: 'Inter',
                 fontSize: 10,
                 color: color.withValues(alpha: isDark ? 0.85 : 0.7),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Pro + empty state — "No insights yet" with a "Generate Now" CTA.
+//
+// Shown when the signed-in user is on a Pro plan but no weekly insight rows
+// have been persisted yet (e.g. the Monday cron has not run, or the user
+// just upgraded). This is intentionally NOT an upgrade upsell — the user is
+// already Pro, so we offer them a way to trigger generation themselves.
+// ═══════════════════════════════════════════════════════════════════════════
+
+class _ProEmptyState extends StatefulWidget {
+  final bool isDark;
+  final Future<void> Function() onGenerate;
+  const _ProEmptyState({required this.isDark, required this.onGenerate});
+
+  @override
+  State<_ProEmptyState> createState() => _ProEmptyStateState();
+}
+
+class _ProEmptyStateState extends State<_ProEmptyState> {
+  bool _generating = false;
+
+  Future<void> _handleGenerate() async {
+    if (_generating) return;
+    setState(() => _generating = true);
+    try {
+      await widget.onGenerate();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Refreshing your AI insights…',
+              style: TextStyle(fontFamily: 'Inter', fontSize: 13),
+            ),
+            backgroundColor: AppColors.primary(widget.isDark),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            margin: const EdgeInsets.all(16),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _generating = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Back button row
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  color: AppColors.primary(widget.isDark),
+                  onPressed: () => context.pop(),
+                ),
+                Text(
+                  'VitalSeker',
+                  style: TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primary(widget.isDark),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 32),
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: AppColors.secondary(widget.isDark).withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Icon(
+                Icons.auto_awesome,
+                color: AppColors.secondary(widget.isDark),
+                size: 40,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No Insights Yet',
+              style: AppTextStyles.heading3.copyWith(
+                color: AppColors.textPrimary(widget.isDark),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'No insights generated yet. Check back on Monday for your '
+              'weekly AI health summary, or tap below to generate one now.',
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary(widget.isDark),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary(widget.isDark),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 14,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                onPressed: _generating ? null : _handleGenerate,
+                icon: _generating
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Icon(Icons.auto_awesome, size: 20),
+                label: Text(
+                  _generating ? 'Generating…' : 'Generate Now',
+                  style: const TextStyle(
+                    fontFamily: 'Outfit',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ],

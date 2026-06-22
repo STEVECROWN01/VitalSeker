@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../core/config/app_config.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
@@ -175,22 +177,103 @@ class _SosScreenState extends ConsumerState<SosScreen>
     }
   }
 
+  /// Acquire the user's current GPS position.
+  ///
+  /// Robustly handles every failure mode that previously surfaced as a
+  /// generic "Could not get current location" message:
+  ///   1. Location services (GPS) disabled — opens the system location
+  ///      settings so the user can enable them.
+  ///   2. Permission denied — calls [Geolocator.requestPermission] first.
+  ///   3. Permission denied forever — prompts the user to open app settings.
+  ///   4. GPS acquisition takes too long — a 10s [timeLimit] is set so the
+  ///      caller doesn't hang forever waiting for a fix.
+  ///
+  /// Returns the [Position] on success, or `null` on any failure (with a
+  /// contextual snackbar shown to the user via [AppSnackBar]).
   Future<Position?> _getCurrentLocation() async {
     try {
-      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) return null;
+      final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        // Location services are off — offer to open the system settings so
+        // the user can enable GPS. This is the most common cause of the old
+        // "Could not get current location" message.
+        if (mounted) {
+          AppSnackBar.error(
+            context,
+            'Location services are disabled. Please enable GPS in your device settings.',
+          );
+        }
+        // Best-effort attempt to open the system location settings so the
+        // user can flip the switch without leaving the flow. The user comes
+        // back to the app after enabling.
+        try {
+          await Geolocator.openLocationSettings();
+        } catch (_) {
+          // openLocationSettings may not be implemented on every platform —
+          // the snackbar above already told the user what to do.
+        }
+        return null;
+      }
 
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
+        // Explicitly request permission here. This is the call that was
+        // sometimes failing silently — calling it on the user gesture (the
+        // "Share My Location" / "Find Hospitals" tap) instead of proactively
+        // in initState gives Android the in-context permission dialog it
+        // expects.
         permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) return null;
+        if (permission == LocationPermission.denied ||
+            permission == LocationPermission.deniedForever) {
+          if (mounted) {
+            AppSnackBar.error(
+              context,
+              'Location permission denied. Please grant location access in your device settings.',
+            );
+          }
+          return null;
+        }
       }
-      if (permission == LocationPermission.deniedForever) return null;
+      if (permission == LocationPermission.deniedForever) {
+        // The user previously selected "Deny forever" — the OS won't show
+        // the permission dialog again, so we have to send them to app
+        // settings.
+        if (mounted) {
+          AppSnackBar.error(
+            context,
+            'Location permission is permanently denied. Please enable it in your app settings to use this feature.',
+          );
+        }
+        try {
+          await Geolocator.openAppSettings();
+        } catch (_) {}
+        return null;
+      }
 
+      // Use a 10s time limit so a slow GPS fix doesn't hang the call
+      // forever — the previous implementation could block indefinitely in
+      // tunnels / indoors.
       return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
+        timeLimit: const Duration(seconds: 10),
       );
+    } on TimeoutException {
+      if (mounted) {
+        AppSnackBar.error(
+          context,
+          'Could not get a GPS fix. Please try again outdoors or near a window.',
+        );
+      }
+      return null;
     } catch (e) {
+      debugPrint('_getCurrentLocation error: $e');
+      if (mounted) {
+        AppSnackBar.errorFromException(
+          context,
+          'Could not get current location. Please check location permissions.',
+          e,
+        );
+      }
       return null;
     }
   }
@@ -211,7 +294,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
       Position? position;
       try {
         position = await _getCurrentLocation();
-      } catch (_) {}
+      } catch (_) {
+        // Best-effort — the SOS still goes out without coordinates.
+      }
 
       final locationText = position != null
           ? '${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)}'
@@ -227,19 +312,41 @@ class _SosScreenState extends ConsumerState<SosScreen>
         locationAddress: locationText,
       );
 
+      // ── Success ──
+      // Flip _sosActive ON so the active state UI renders with the result
+      // message + contacts-notified card. The previous code already set
+      // _sosActive here, but combined with the finally-block that resets
+      // _isSending = false, the active state needs _sosActive to stay true
+      // — which it does. The bug was that on the error path below, the
+      // active state was never shown and the user saw no feedback at all.
       setState(() {
         _sosActive = true;
         _sosResult = result;
-        _sosMessage = result['message'] as String? ?? 'Emergency alert sent!';
+        _sosMessage = result['message'] as String? ??
+            'Emergency alert sent! Your contacts have been notified.';
       });
 
       // Continuous haptic
       HapticFeedback.mediumImpact();
     } catch (e) {
-      setState(() {
-        _sosMessage = 'Failed to send alert. Please try again or call emergency services directly.';
-      });
+      // ── Failure ──
+      // Set _sosActive = true here too so the active-state UI renders with
+      // the failure message — previously the error was written to
+      // _sosMessage but never shown because _isActiveState was false.
       debugPrint('SOS trigger error: $e');
+      setState(() {
+        _sosActive = true;
+        _sosResult = null;
+        _sosMessage =
+            'Failed to send alert. Please call emergency services directly (112 / 911).';
+      });
+      if (mounted) {
+        AppSnackBar.errorFromException(
+          context,
+          'SOS delivery failed. Please call 112 or 911 directly.',
+          e,
+        );
+      }
       HapticFeedback.heavyImpact();
     } finally {
       _countdownTimer?.cancel();
@@ -303,27 +410,42 @@ class _SosScreenState extends ConsumerState<SosScreen>
   }
 
   Future<void> _shareLocation() async {
+    final position = await _getCurrentLocation();
+    // _getCurrentLocation already shows a contextual snackbar on every
+    // failure mode (services off / permission denied / timeout / exception),
+    // so we just bail out silently here when it returns null.
+    if (position == null) return;
     try {
-      final position = await _getCurrentLocation();
-      if (position == null) {
-        if (mounted) AppSnackBar.error(context, 'Could not get current location. Please check location permissions.');
-        return;
-      }
       final locationText =
           'My emergency location: https://maps.google.com/?q=${position.latitude},${position.longitude}';
       await Clipboard.setData(ClipboardData(text: locationText));
-      if (mounted) AppSnackBar.success(context, 'Location link copied to clipboard!');
+      if (mounted) {
+        AppSnackBar.success(context, 'Location link copied to clipboard!');
+      }
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to get location. Please check location permissions.', e);
+      if (mounted) {
+        AppSnackBar.errorFromException(
+            context, 'Failed to copy location to clipboard.', e);
+      }
     }
   }
 
   /// Open the native maps app with a "hospitals near me" search centered on
-  /// the user's GPS location. On iOS this opens Apple Maps; on Android it
-  /// opens Google Maps. No API key required.
+  /// the user's GPS location.
   ///
-  /// Falls back to a generic "hospitals near me" search (no coordinates) if
-  /// location permission is denied — the maps app will use its own location.
+  /// Two-launch strategy:
+  ///   1. Try the `geo:` URI scheme which opens the native maps app
+  ///      (Apple Maps on iOS, Google Maps on Android) for an in-app,
+  ///      no-network experience.
+  ///   2. Fall back to `https://www.google.com/maps/search/hospital…` —
+  ///      this opens in the browser (or the Google Maps web app) and works
+  ///      on every device even if no maps app is installed. Using
+  ///      [LaunchMode.externalApplication] forces the system to hand the
+  ///      URL off to the user's preferred browser/maps app instead of
+  ///      rendering inside the in-app webview.
+  ///
+  /// If location permission is denied, we still launch a generic
+  /// "hospitals near me" search — the maps app will use its own location.
   Future<void> _findNearbyHospitals() async {
     HapticFeedback.selectionClick();
     Position? position;
@@ -333,26 +455,43 @@ class _SosScreenState extends ConsumerState<SosScreen>
       // GPS unavailable — fall through to generic search.
     }
 
-    // Use the geo: URI scheme which both iOS and Android handle by opening
-    // the default maps app. The `q=hospital` parameter triggers a nearby
-    // search. When we have coordinates, center the search there.
-    final Uri uri = position != null
+    // Build both candidate URIs up-front so we can fall through cleanly.
+    final Uri geoUri = position != null
         ? Uri.parse('geo:${position.latitude},${position.longitude}?q=hospital')
         : Uri.parse('geo:0,0?q=hospital');
-
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-      return;
-    }
-    // Fallback to the https://maps.google.com URL which opens in a browser
-    // or the Google Maps web app.
-    final fallback = position != null
-        ? Uri.parse('https://www.google.com/maps/search/hospital/@${position.latitude},${position.longitude},15z')
+    final Uri httpsUri = position != null
+        ? Uri.parse(
+            'https://www.google.com/maps/search/hospital/@${position.latitude},${position.longitude},15z')
         : Uri.parse('https://www.google.com/maps/search/hospital');
-    if (await canLaunchUrl(fallback)) {
-      await launchUrl(fallback, mode: LaunchMode.externalApplication);
-    } else if (mounted) {
-      AppSnackBar.error(context, 'Could not open maps app. Please search "hospital near me" manually.');
+
+    // ── Attempt 1: native maps app via geo: ──
+    try {
+      if (await canLaunchUrl(geoUri)) {
+        await launchUrl(geoUri, mode: LaunchMode.externalApplication);
+        return;
+      }
+    } catch (e) {
+      debugPrint('geo: launch failed: $e');
+    }
+
+    // ── Attempt 2: https URL — always works (browser or maps web app) ──
+    // Skip the canLaunchUrl check for https URLs on Android — package
+    // visibility can make it return false even when a browser is installed.
+    // Just try to launch and let the OS handle it.
+    try {
+      final launched =
+          await launchUrl(httpsUri, mode: LaunchMode.externalApplication);
+      if (launched) return;
+    } catch (e) {
+      debugPrint('https maps launch failed: $e');
+    }
+
+    // ── Last resort ──
+    if (mounted) {
+      AppSnackBar.error(
+        context,
+        'Could not open maps app. Please search "hospital near me" in your browser manually.',
+      );
     }
   }
 
@@ -548,12 +687,23 @@ class _SosScreenState extends ConsumerState<SosScreen>
                               ),
                             ),
                             const SizedBox(height: 4),
-                            Text(
-                              'Add contacts in your profile settings',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 12,
-                                color: AppColors.textHint(isDark),
+                            // "Add contacts in your profile settings" — the
+                            // entire text is tappable and deep-links to the
+                            // Edit Profile screen where the user can manage
+                            // their emergency contacts. Rendered as a
+                            // GestureDetector-wrapped Text so the whole
+                            // phrase is the tap target (per Bug 1 #3).
+                            GestureDetector(
+                              onTap: () => context.push(AppConfig.editProfile),
+                              child: Text(
+                                'Add contacts in your profile settings',
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 12,
+                                  color: AppColors.primary(isDark),
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: AppColors.primary(isDark),
+                                ),
                               ),
                             ),
                           ],
@@ -682,12 +832,47 @@ class _SosScreenState extends ConsumerState<SosScreen>
                               profile.chronicConditions.isEmpty)
                             Padding(
                               padding: const EdgeInsets.all(8),
-                              child: Text(
-                                'No medical information on file. Update your profile to add medical ID data.',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 13,
-                                  color: AppColors.textSecondary(isDark),
+                              // Per Bug 1 #4: only the "add medical ID data"
+                              // portion is tappable and deep-links to the
+                              // Medical ID screen. Implemented with Text.rich
+                              // + a WidgetSpan wrapping a GestureDetector so
+                              // we don't have to manage a TapGestureRecognizer
+                              // lifecycle (which would otherwise leak on
+                              // every rebuild of this `.when` callback).
+                              child: Text.rich(
+                                TextSpan(
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 13,
+                                    color: AppColors.textSecondary(isDark),
+                                  ),
+                                  children: [
+                                    const TextSpan(
+                                      text:
+                                          'No medical information on file. Update your profile to ',
+                                    ),
+                                    WidgetSpan(
+                                      alignment: PlaceholderAlignment.baseline,
+                                      baseline: TextBaseline.alphabetic,
+                                      child: GestureDetector(
+                                        onTap: () => context
+                                            .push(AppConfig.medicalId),
+                                        child: Text(
+                                          'add medical ID data',
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: 13,
+                                            color: AppColors.primary(isDark),
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor:
+                                                AppColors.primary(isDark),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const TextSpan(text: '.'),
+                                  ],
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -859,6 +1044,12 @@ class _SosScreenState extends ConsumerState<SosScreen>
     final contactsNotified = (_sosResult?['contacts_notified'] as List?) ?? [];
     final sentCount =
         contactsNotified.where((c) => c['status'] == 'sent').length;
+    // Whether the SOS alert actually went out. False in the catch-block path
+    // of [_triggerSos] (edge-function error, network failure, etc.) — we
+    // still want to render the active state so the user sees the failure
+    // message + can dismiss it, but with a "FAILED" label instead of
+    // "SOS ACTIVE".
+    final bool sendFailed = !_isSending && _sosResult == null;
 
     return Column(
       children: [
@@ -899,15 +1090,21 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       ),
                     ],
                   )
-                : const Column(
+                : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.check_circle,
-                          color: Colors.white, size: 60),
-                      SizedBox(height: 6),
+                      Icon(
+                        // Show an error icon when the send failed so the
+                        // user immediately understands the alert did not go
+                        // through (per Bug 1 #5 — give the user feedback).
+                        sendFailed ? Icons.error_outline : Icons.check_circle,
+                        color: Colors.white,
+                        size: 60,
+                      ),
+                      const SizedBox(height: 6),
                       Text(
-                        'SOS ACTIVE',
-                        style: TextStyle(
+                        sendFailed ? 'SOS FAILED' : 'SOS ACTIVE',
+                        style: const TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
@@ -921,7 +1118,11 @@ class _SosScreenState extends ConsumerState<SosScreen>
         ),
         const SizedBox(height: 32),
         Text(
-          _isSending ? 'Sending Emergency Alert' : 'Emergency Alert Sent',
+          _isSending
+              ? 'Sending Emergency Alert'
+              : (sendFailed
+                  ? 'Alert Could Not Be Sent'
+                  : 'Emergency Alert Sent'),
           style: const TextStyle(
             fontFamily: 'ClashDisplay',
             fontSize: 24,
@@ -960,18 +1161,43 @@ class _SosScreenState extends ConsumerState<SosScreen>
         ),
         const SizedBox(height: 24),
         if (!_isSending)
-          ElevatedButton.icon(
-            onPressed: _resolveSos,
-            icon: const Icon(Icons.check_circle),
-            label: const Text("I'm Safe - Resolve"),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: const Color(0xFFB8321D),
-              minimumSize: const Size(double.infinity, 56),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+          Row(
+            children: [
+              // On failure, show a "Try Again" button that re-triggers the
+              // SOS. On success, just show the "I'm Safe - Resolve" button.
+              if (sendFailed)
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: _triggerSos,
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Try Again'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: Colors.white),
+                      minimumSize: const Size.fromHeight(56),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  ),
+                ),
+              if (sendFailed) const SizedBox(width: 12),
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: _resolveSos,
+                  icon: Icon(sendFailed ? Icons.close : Icons.check_circle),
+                  label: Text(sendFailed ? 'Dismiss' : "I'm Safe - Resolve"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: const Color(0xFFB8321D),
+                    minimumSize: const Size.fromHeight(56),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
       ],
     );

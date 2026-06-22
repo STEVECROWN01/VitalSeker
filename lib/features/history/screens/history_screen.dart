@@ -129,6 +129,30 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                             color: AppColors.textHint(isDark),
                           ),
                         ),
+                        const SizedBox(height: 24),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary(isDark),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 14,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          onPressed: () => context.push(AppConfig.triage),
+                          icon: const Icon(Icons.healing, size: 20),
+                          label: const Text(
+                            'Start Your First Triage',
+                            style: TextStyle(
+                              fontFamily: 'Outfit',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),

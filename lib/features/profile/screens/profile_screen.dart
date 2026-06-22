@@ -311,7 +311,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     ),
                                   ),
                                 ),
-                                ...['English', 'French', 'Spanish', 'Arabic', 'Swahili'].map((lang) => ListTile(
+                                ...['English (US)', 'English (UK)', 'French', 'Spanish', 'Portuguese', 'German', 'Italian', 'Dutch', 'Arabic', 'Swahili', 'Hausa', 'Yoruba', 'Igbo', 'Chinese', 'Japanese', 'Korean', 'Hindi', 'Bengali', 'Urdu', 'Turkish', 'Russian', 'Polish', 'Vietnamese', 'Thai', 'Indonesian', 'Tagalog'].map((lang) => ListTile(
                                   title: Text(lang, style: const TextStyle(fontFamily: 'Inter')),
                                   trailing: 'English' == lang
                                       ? Icon(Icons.check, color: AppColors.primary(isDark))
@@ -372,7 +372,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       iconFg: AppColors.error(isDark),
                       label: 'Security & Storage',
                       subtitle: 'AES-256 encryption active',
-                      onTap: () => context.push(AppConfig.privacyPolicy),
+                      // Points to the Settings screen (where data-management
+                      // + security toggles live) — NOT the Privacy Policy page.
+                      onTap: () => context.push(AppConfig.settings),
                     ),
                     _MenuItem(
                       icon: Icons.download_outlined,

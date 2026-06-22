@@ -39,6 +39,7 @@ import '../../features/profile/screens/help_support_screen.dart';
 import '../../features/profile/screens/privacy_screen.dart';
 import '../../features/profile/screens/terms_of_service_screen.dart';
 import '../../features/profile/screens/medical_id_screen.dart';
+import '../../features/profile/screens/translation_screen.dart';
 import '../../shared/widgets/app_bottom_nav.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 
@@ -159,14 +160,29 @@ GoRouter createRouter(Ref ref) {
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
-          int currentIndex = 0;
+          // ── Bottom-nav active-tab resolution ────────────────────────────
+          // 5-tab bottom nav: Home(0) / History(1) / Triage(2) / Insights(3) /
+          // Passport(4). Use the FULL route paths (with the `/home/` prefix)
+          // so each tab matches its own sub-tree, e.g.
+          //   `/home/triage/result` → Triage tab (2)
+          //   `/home/passport/qr`   → Passport tab (4)
+          //   `/home/profile/...`   → Home tab (0) — profile lives under Home
+          //
+          // The `else` branch covers everything that is NOT one of the four
+          // dedicated tab roots (dashboard, health, vitals, profile, etc.).
           final location = state.matchedLocation;
-          // 5-tab bottom nav: Home(0) / History(1) / Triage(2) / Insights(3) / Passport(4)
-          if (location.startsWith(AppConfig.history)) currentIndex = 1;
-          else if (location.startsWith(AppConfig.triage)) currentIndex = 2;
-          else if (location.startsWith(AppConfig.insights)) currentIndex = 3;
-          else if (location.startsWith(AppConfig.passport)) currentIndex = 4;
-          else currentIndex = 0; // Home (dashboard, health, vitals, profile, etc.)
+          int currentIndex;
+          if (location.startsWith(AppConfig.triage)) {
+            currentIndex = 2; // Triage
+          } else if (location.startsWith(AppConfig.history)) {
+            currentIndex = 1; // History
+          } else if (location.startsWith(AppConfig.insights)) {
+            currentIndex = 3; // Insights
+          } else if (location.startsWith(AppConfig.passport)) {
+            currentIndex = 4; // Passport
+          } else {
+            currentIndex = 0; // Home (dashboard, health, vitals, profile, …)
+          }
 
           return ScaffoldWithNavBar(
             currentIndex: currentIndex,
@@ -311,6 +327,17 @@ GoRouter createRouter(Ref ref) {
                 pageBuilder: (context, state) => slideTransitionPage(
                     child: const MedicalIdScreen(), state: state),
               ),
+              GoRoute(
+                // Medical Translation screen — Bug 5: this route was missing
+                // from the router, so clicking "Medical Translation" on the
+                // profile screen showed a blank page. Registered as a child
+                // of the profile route so it inherits the bottom-nav shell
+                // + the slide-in-from-right transition used by every other
+                // profile sub-page.
+                path: 'translation',
+                pageBuilder: (context, state) => slideTransitionPage(
+                    child: const TranslationScreen(), state: state),
+              ),
             ],
           ),
         ],
@@ -374,7 +401,25 @@ final routerProvider = Provider<GoRouter>((ref) {
   return router;
 });
 
-class ScaffoldWithNavBar extends StatelessWidget {
+/// Shell scaffold that hosts the bottom-nav bar + the (optional) SOS
+/// FloatingActionButton overlay.
+///
+/// The SOS FAB only renders on the Home tab (`currentIndex == 0`) and is
+/// **draggable** so the user can move it out of the way when it covers
+/// content. Dragging is initiated with a long-press; a plain tap still
+/// triggers the SOS flow.
+///
+/// Implementation notes:
+///   - The body is wrapped in a `LayoutBuilder` + `Stack` so we can position
+///     the FAB with arbitrary coordinates.
+///   - The default position (when the user has not dragged yet) mirrors the
+///     FAB's natural bottom-right spot — `maxWidth - size - margin` on X and
+///     `maxHeight - size - margin` on Y, where `maxHeight` excludes the
+///     bottom-nav bar (the bar lives in Scaffold.bottomNavigationBar, so it
+///     does not eat into the body's vertical constraints).
+///   - The position is clamped to the body bounds so the FAB can never be
+///     dragged off-screen or under the bottom-nav bar.
+class ScaffoldWithNavBar extends StatefulWidget {
   final int currentIndex;
   final Widget child;
 
@@ -385,18 +430,113 @@ class ScaffoldWithNavBar extends StatelessWidget {
   });
 
   @override
+  State<ScaffoldWithNavBar> createState() => _ScaffoldWithNavBarState();
+}
+
+class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
+  /// When non-null, the user has dragged the FAB and this is the new top-left
+  /// coordinate (relative to the body Stack). Null = use default bottom-right.
+  Offset? _fabPosition;
+
+  // Standard FAB is 56×56. We pad with 16px of breathing room on each side.
+  static const double _fabSize = 56.0;
+  static const double _fabMargin = 16.0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: child,
-      bottomNavigationBar: AppBottomNav(currentIndex: currentIndex),
-      floatingActionButton: currentIndex == 0
-          ? FloatingActionButton(
-              heroTag: 'sos_fab',
-              onPressed: () => context.push(AppConfig.sos),
-              backgroundColor: AppColors.urgencyEmergency,
-              child: const Icon(Icons.emergency, color: Colors.white),
-            )
-          : null,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          // Default position: bottom-right of the body, just above the
+          // bottom-nav bar.
+          final defaultPos = Offset(
+            constraints.maxWidth - _fabSize - _fabMargin,
+            constraints.maxHeight - _fabSize - _fabMargin,
+          );
+          final pos = _fabPosition ?? defaultPos;
+
+          return Stack(
+            children: [
+              // Main screen content.
+              widget.child,
+              // Draggable SOS FAB — only on the Home tab.
+              if (widget.currentIndex == 0)
+                Positioned(
+                  left: pos.dx,
+                  top: pos.dy,
+                  child: _DraggableSosFab(
+                    onDrag: (delta) {
+                      setState(() {
+                        final base = _fabPosition ?? defaultPos;
+                        final newX = (base.dx + delta.dx)
+                            .clamp(0.0, constraints.maxWidth - _fabSize);
+                        final newY = (base.dy + delta.dy)
+                            .clamp(0.0, constraints.maxHeight - _fabSize);
+                        _fabPosition = Offset(newX, newY);
+                      });
+                    },
+                    onTap: () => context.push(AppConfig.sos),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+      bottomNavigationBar: AppBottomNav(currentIndex: widget.currentIndex),
+    );
+  }
+}
+
+/// Draggable SOS FloatingActionButton.
+///
+/// Gesture contract:
+///   - **Tap** → invokes [onTap] (navigates to the SOS screen).
+///   - **Long-press + drag** → invokes [onDrag] with the incremental delta on
+///     each move event; the parent repositions the FAB.
+///
+/// We use the long-press gesture channel (rather than a plain `onPanUpdate`)
+/// so that a quick tap is never misinterpreted as a drag — the user has to
+/// deliberately press-and-hold before the FAB starts moving.
+class _DraggableSosFab extends StatefulWidget {
+  final void Function(Offset delta) onDrag;
+  final VoidCallback onTap;
+
+  const _DraggableSosFab({required this.onDrag, required this.onTap});
+
+  @override
+  State<_DraggableSosFab> createState() => _DraggableSosFabState();
+}
+
+class _DraggableSosFabState extends State<_DraggableSosFab> {
+  /// Global position captured at the start of each long-press drag — used to
+  /// compute the incremental delta between `onLongPressMoveUpdate` callbacks.
+  Offset? _dragOrigin;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      // Long-press starts a drag session.
+      onLongPressStart: (details) {
+        _dragOrigin = details.globalPosition;
+      },
+      onLongPressMoveUpdate: (details) {
+        if (_dragOrigin == null) return;
+        final delta = details.globalPosition - _dragOrigin!;
+        _dragOrigin = details.globalPosition;
+        widget.onDrag(delta);
+      },
+      onLongPressEnd: (_) {
+        _dragOrigin = null;
+      },
+      child: FloatingActionButton(
+        heroTag: 'sos_fab',
+        backgroundColor: AppColors.urgencyEmergency,
+        // Short taps fall through to the FAB's own onPressed — the
+        // GestureDetector only intercepts the long-press channel.
+        onPressed: widget.onTap,
+        child: const Icon(Icons.emergency, color: Colors.white),
+      ),
     );
   }
 }

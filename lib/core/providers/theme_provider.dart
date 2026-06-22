@@ -15,7 +15,11 @@ final themeModeProvider = StateNotifierProvider<ThemeModeNotifier, ThemeMode>((r
 class ThemeModeNotifier extends StateNotifier<ThemeMode> {
   final Ref _ref;
   
-  ThemeModeNotifier(this._ref) : super(ThemeMode.system);
+  /// Defaults to [ThemeMode.dark] for new users — the app's primary aesthetic
+  /// is a dark "clinical" UI, so first-launch users should land in dark mode.
+  /// Once `loadTheme()` resolves (or the user manually picks a mode via
+  /// `setTheme`), this initial value is replaced with the persisted choice.
+  ThemeModeNotifier(this._ref) : super(ThemeMode.dark);
 
   Future<void> loadTheme() async {
     final user = _ref.read(currentUserProvider);
@@ -45,7 +49,10 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
     switch (theme) {
       case 'light': return ThemeMode.light;
       case 'dark': return ThemeMode.dark;
-      default: return ThemeMode.system;
+      // 'system' (the default in UserProfile) and any unrecognized value
+      // fall back to dark — the app's first-launch / out-of-the-box default.
+      // Users can still pick Light explicitly via Settings → Appearance.
+      default: return ThemeMode.dark;
     }
   }
 

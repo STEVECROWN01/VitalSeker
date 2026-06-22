@@ -79,12 +79,31 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
     try {
       final edgeService = EdgeFunctionService();
       final result = await edgeService.generateQr();
-      setState(() => _qrToken = result['qr_token'] as String?);
+      final token = result['qr_token'] as String?;
+      if (token == null || token.isEmpty) {
+        // The edge function returned 200 but no qr_token — surface this
+        // explicitly so we can see what's going on (per Bug 2 — improve
+        // error handling so the actual cause is visible).
+        throw Exception(
+          'Edge function returned no qr_token. Response: $result',
+        );
+      }
+      setState(() => _qrToken = token);
       ref.invalidate(healthPassportProvider);
     } catch (e) {
+      debugPrint('QR generation failed: $e');
       if (mounted) {
+        // Surface the actual error string in the snackbar instead of the
+        // generic "Failed to generate QR code" message — the original code
+        // hid the real cause (missing QR_ENCRYPTION_KEY, missing UNIQUE
+        // constraint on health_passports.user_id, edge function 500, etc.).
+        // Logging the full exception via debugPrint above so the dev console
+        // has the stack trace too.
         AppSnackBar.errorFromException(
-            context, 'Failed to generate QR code. Please try again.', e);
+          context,
+          'Failed to generate QR: ${e.toString()}',
+          e,
+        );
       }
     } finally {
       if (mounted) setState(() => _isGenerating = false);

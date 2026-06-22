@@ -19,6 +19,48 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
   final _messageController = TextEditingController();
   bool _isSubmitting = false;
 
+  /// Index of the currently-expanded FAQ item, or `null` if none are open.
+  ///
+  /// Per Bug 4: opening one FAQ should automatically close the others. The
+  /// previous implementation used independent [ExpansionTile] widgets each
+  /// with their own internal expansion state, so multiple items could be
+  /// open at once. We now drive the expansion from this single field and
+  /// rebuild the list with [initiallyExpanded] set on only the matching
+  /// index — opening item N sets _expandedFaqIndex = N, which collapses any
+  /// previously-open item on the next rebuild.
+  int? _expandedFaqIndex;
+
+  /// Static FAQ content. Kept as a top-level constant so the build method
+  /// can iterate with `.asMap().entries` and feed each entry's index into
+  /// the controlled [_FaqItem] below.
+  static const List<({String question, String answer})> _faqItems = [
+    (
+      question: 'How does the AI symptom triage work?',
+      answer:
+          'Our AI analyzes your reported symptoms against a comprehensive medical database to provide urgency-based recommendations. It categorizes your condition into Low, Medium, High, or Emergency urgency levels and suggests appropriate next steps.',
+    ),
+    (
+      question: 'Is my health data secure?',
+      answer:
+          'Yes. All data is encrypted end-to-end using AES-256 encryption. We comply with GDPR and HIPAA standards. Your health information is never shared with third parties without your explicit consent.',
+    ),
+    (
+      question: 'How do I share my health passport?',
+      answer:
+          'Navigate to your Health Passport from the bottom navigation bar. Tap the QR code icon to generate a shareable QR code that healthcare providers can scan to access your critical health information securely.',
+    ),
+    (
+      question: 'Can I add family members?',
+      answer:
+          'Yes! Pro subscribers can add up to 5 family member profiles, and Enterprise subscribers have unlimited family profiles. Each family member gets their own health passport and triage capabilities.',
+    ),
+    (
+      question: 'How do I cancel my subscription?',
+      answer:
+          'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.',
+    ),
+  ];
+
   @override
   void dispose() {
     _subjectController.dispose();
@@ -77,6 +119,13 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
     try {
       final db = ref.read(databaseServiceProvider);
       final priority = _inferPriority(subject, message);
+      // ── Persist the ticket to the support_tickets table ──
+      // This is the canonical "submit" — once this call returns successfully,
+      // the request is in the queue and the success snackbar below is the
+      // ONLY feedback shown. The "Could not open email client …" message is
+      // intentionally NOT in this code path (per Bug 3) — it lives only in
+      // the "Email Us" ListTile.onTap below so a form submission can never
+      // surface an email-client error.
       await db.insertSupportTicket(
         userId: user.id,
         subject: subject,
@@ -94,6 +143,10 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
         );
       }
     } catch (e) {
+      // The DB insert failed — show the failure message (not the email
+      // client message). The "email support@vitalseker.com" hint is part of
+      // the failure copy as a fallback contact channel, but we never invoke
+      // the email launcher here.
       if (mounted) {
         AppSnackBar.errorFromException(
           context,
@@ -122,26 +175,42 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
             Card(
               child: Column(
                 children: [
-                  _FaqItem(
-                    question: 'How does the AI symptom triage work?',
-                    answer: 'Our AI analyzes your reported symptoms against a comprehensive medical database to provide urgency-based recommendations. It categorizes your condition into Low, Medium, High, or Emergency urgency levels and suggests appropriate next steps.',
-                  ),
-                  _FaqItem(
-                    question: 'Is my health data secure?',
-                    answer: 'Yes. All data is encrypted end-to-end using AES-256 encryption. We comply with GDPR and HIPAA standards. Your health information is never shared with third parties without your explicit consent.',
-                  ),
-                  _FaqItem(
-                    question: 'How do I share my health passport?',
-                    answer: 'Navigate to your Health Passport from the bottom navigation bar. Tap the QR code icon to generate a shareable QR code that healthcare providers can scan to access your critical health information securely.',
-                  ),
-                  _FaqItem(
-                    question: 'Can I add family members?',
-                    answer: 'Yes! Pro subscribers can add up to 5 family member profiles, and Enterprise subscribers have unlimited family profiles. Each family member gets their own health passport and triage capabilities.',
-                  ),
-                  _FaqItem(
-                    question: 'How do I cancel my subscription?',
-                    answer: 'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.',
-                  ),
+                  // Build the FAQ items from the static list. Each item is
+                  // a controlled [_FaqItem]: passing `isExpanded` based on
+                  // whether its index matches `_expandedFaqIndex`, and an
+                  // `onToggle` callback that flips the field. Opening item
+                  // N collapses any other open item because only one index
+                  // can match `_expandedFaqIndex` at a time.
+                  //
+                  // We pass a `ValueKey` that combines the item index with
+                  // its `isExpanded` state. ExpansionTile is uncontrolled —
+                  // `initiallyExpanded` is only read on first build — so
+                  // when the parent's `_expandedFaqIndex` flips, the key
+                  // changes for the affected items and Flutter recreates
+                  // them with the new `initiallyExpanded` value. (Items
+                  // that stay collapsed keep their key and aren't rebuilt,
+                  // which is correct because their visual state is also
+                  // unchanged.)
+                  for (final entry in _faqItems.asMap().entries)
+                    _FaqItem(
+                      key: ValueKey(
+                        'faq-${entry.key}-${_expandedFaqIndex == entry.key}',
+                      ),
+                      question: entry.value.question,
+                      answer: entry.value.answer,
+                      isExpanded: _expandedFaqIndex == entry.key,
+                      onToggle: () {
+                        setState(() {
+                          // Tapping the currently-open item closes it;
+                          // tapping a collapsed item opens it (and the
+                          // previously-open one will collapse on rebuild).
+                          _expandedFaqIndex =
+                              _expandedFaqIndex == entry.key
+                                  ? null
+                                  : entry.key;
+                        });
+                      },
+                    ),
                 ],
               ),
             ),
@@ -300,7 +369,21 @@ class _FaqItem extends StatelessWidget {
   final String question;
   final String answer;
 
-  const _FaqItem({required this.question, required this.answer});
+  /// Whether this item is currently expanded. Driven from the parent's
+  /// `_expandedFaqIndex` field (single source of truth) so opening one
+  /// item automatically closes any other open item.
+  final bool isExpanded;
+
+  /// Tap callback that toggles the parent's expansion state for this item.
+  final VoidCallback onToggle;
+
+  const _FaqItem({
+    super.key,
+    required this.question,
+    required this.answer,
+    required this.isExpanded,
+    required this.onToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -310,6 +393,20 @@ class _FaqItem extends StatelessWidget {
         dividerColor: Colors.transparent,
       ),
       child: ExpansionTile(
+        // ── Controlled expansion (per Bug 4) ──
+        // `initiallyExpanded` only sets the initial state on first build —
+        // for ongoing control we'd need a different approach. But because
+        // the parent rebuilds with a fresh `isExpanded` value whenever
+        // _expandedFaqIndex changes, and because ExpansionTile reads
+        // `initiallyExpanded` on every rebuild (it's a key in the internal
+        // state restoration), tapping another item will collapse this one.
+        //
+        // We also wire `onExpansionChanged` to the parent's `onToggle` so
+        // tapping this tile's header flips `_expandedFaqIndex` — that
+        // triggers a rebuild which collapses any sibling tile whose
+        // `isExpanded` is now false.
+        initiallyExpanded: isExpanded,
+        onExpansionChanged: (_) => onToggle(),
         iconColor: AppColors.primary(isDark),
         collapsedIconColor: AppColors.textSecondary(isDark),
         tilePadding: const EdgeInsets.symmetric(horizontal: 16),
