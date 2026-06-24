@@ -5,6 +5,7 @@ import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 /// Medical Translation Screen
 ///
@@ -311,6 +312,8 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                   ],
                 ),
               ),
+            const SizedBox(height: 16),
+            const MedicalDisclaimerBanner(compact: true),
             const SizedBox(height: 40),
           ],
         ),

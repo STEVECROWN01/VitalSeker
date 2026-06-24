@@ -126,7 +126,7 @@ void main() {
             'name': 'Ibuprofen',
             'dosage': '200',
             'unit': 'mg',
-            'frequency': 'onceDaily',
+            'frequency': 'once_daily',
             'times': ['08:00'],
             'start_date': '2024-01-01',
             'end_date': null,
@@ -175,13 +175,17 @@ void main() {
             remindersEnabled: true,
           );
 
+      // ref.invalidateSelf() triggers an async rebuild. Wait for the
+      // provider to settle so the rebuild completes before we count calls.
+      await container.read(medicationsProvider.future);
+
       // Verify the insert was called with the right payload.
       final insertCall = fake.calls.firstWhere((c) => c.method == 'insertMedication');
       final data = insertCall.args['data'] as Map<String, dynamic>;
       expect(data['name'], 'Aspirin');
       expect(data['dosage'], '100');
       expect(data['unit'], 'mg');
-      expect(data['frequency'], 'onceDaily');
+      expect(data['frequency'], 'once_daily');
       expect(data['times'], ['08:00']);
       expect(data['reminders_enabled'], isTrue);
       expect(data['user_id'], fakeUser.id);
@@ -254,7 +258,7 @@ void main() {
       final data = updateCall.args['data'] as Map<String, dynamic>;
       expect(data['dosage'], '400');
       expect(data['unit'], 'mg');
-      expect(data['frequency'], 'twiceDaily');
+      expect(data['frequency'], 'twice_daily');
       expect(data['times'], ['08:00', '20:00']);
       expect(data['end_date'], '2024-12-31');
       expect(data['notes'], 'After meals');
@@ -269,7 +273,7 @@ void main() {
           {
             'id': 'vital-1',
             'user_id': 'user-1',
-            'type': 'heartRate',
+            'type': 'heart_rate',
             'value': 72.0,
             'value_secondary': null,
             'recorded_at': '2024-01-01T08:00:00.000Z',
@@ -311,7 +315,7 @@ void main() {
 
       final insertCall = fake.calls.firstWhere((c) => c.method == 'insertVital');
       final data = insertCall.args['data'] as Map<String, dynamic>;
-      expect(data['type'], 'bloodPressure');
+      expect(data['type'], 'blood_pressure');
       expect(data['value'], 120);
       expect(data['value_secondary'], 80);
       expect(data['user_id'], fakeUser.id);

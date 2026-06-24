@@ -352,7 +352,7 @@ abstract class AppLocalizations {
   /// No description provided for @startTriage.
   ///
   /// In en, this message translates to:
-  /// **'Start triage to see activity here'**
+  /// **'Start Triage'**
   String get startTriage;
 
   /// No description provided for @vitals.
@@ -3966,6 +3966,990 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account created, but optional profile fields (date of birth, gender, blood type) couldn\'t be saved. You can edit them later in Profile > Edit Profile.'**
   String get profileFieldsSaveFailed;
+
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicyTitle;
+
+  /// No description provided for @privacyLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: March 2025'**
+  String get privacyLastUpdated;
+
+  /// No description provided for @privacyIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'At {appName}, your privacy is paramount. This Privacy Policy explains how we collect, use, store, and protect your personal and health-related data. By using our services, you agree to the practices described below.'**
+  String privacyIntro(String appName);
+
+  /// No description provided for @privacySectionDataCollection.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Data Collection'**
+  String get privacySectionDataCollection;
+
+  /// No description provided for @privacyDataCollectionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We collect the following categories of data:\n\n• Personal Information: Name, email address, phone number, date of birth, and gender.\n• Health Data: Blood type, allergies, chronic conditions, medications, vital signs, symptom logs, and triage results.\n• Emergency Contacts: Names, phone numbers, and relationships of your designated contacts.\n• Device Data: Device type, operating system, and app version for compatibility and support.\n• Usage Data: Feature interactions and anonymized analytics to improve our services.\n\nWe only collect data that is necessary for providing our health companion services. You have full control over what information you provide.'**
+  String get privacyDataCollectionBody;
+
+  /// No description provided for @privacySectionDataStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Data Storage & Encryption'**
+  String get privacySectionDataStorage;
+
+  /// No description provided for @privacyDataStorageBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• QR Code Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.'**
+  String get privacyDataStorageBody;
+
+  /// No description provided for @privacySectionGdpr.
+  ///
+  /// In en, this message translates to:
+  /// **'3. GDPR Compliance'**
+  String get privacySectionGdpr;
+
+  /// No description provided for @privacyGdprBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{appName} is fully compliant with the General Data Protection Regulation (GDPR):\n\n• Lawful Basis: We process your data based on your explicit consent and contractual necessity.\n• Data Minimization: We only collect and process data that is strictly necessary.\n• Purpose Limitation: Your data is used only for the purposes for which it was collected.\n• Right to Access: You can request a complete copy of your personal data at any time.\n• Right to Rectification: You can update or correct your data through the app settings.\n• Right to Erasure: You can request complete deletion of your account and data.\n• Right to Portability: You can export your data in a machine-readable format.\n• Data Processing Agreements: All third-party processors have signed DPAs.\n• Cross-Border Transfers: Data is processed within the EU/EEA unless explicit consent is given otherwise.'**
+  String privacyGdprBody(String appName);
+
+  /// No description provided for @privacySectionYourRights.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Your Rights'**
+  String get privacySectionYourRights;
+
+  /// No description provided for @privacyRightsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have the following rights regarding your data:\n\n• Access: View all your personal and health data within the app or request a data export.\n• Correction: Edit your profile information at any time through Edit Profile.\n• Deletion: Request account deletion through Settings > Data & Privacy > Delete Account.\n• Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences.\n• Objection: Object to specific data processing activities by contacting our Data Protection Officer.\n• Withdrawal of Consent: You may withdraw consent at any time without affecting the lawfulness of prior processing.\n\nTo exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app support feature.'**
+  String get privacyRightsBody;
+
+  /// No description provided for @privacySectionContactUs.
+  ///
+  /// In en, this message translates to:
+  /// **'5. Contact Us'**
+  String get privacySectionContactUs;
+
+  /// No description provided for @privacyContactBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If you have any questions or concerns about this Privacy Policy or our data practices, please contact us:\n\n• Email: privacy@vitalseker.com\n• Support: support@vitalseker.com\n• Data Protection Officer: dpo@vitalseker.com\n• Address: {producer}, Data Protection Office\n\nWe aim to respond to all privacy-related inquiries within 30 days.'**
+  String privacyContactBody(String producer);
+
+  /// No description provided for @privacyCopyright.
+  ///
+  /// In en, this message translates to:
+  /// **'© 2025 {producer}. All rights reserved.'**
+  String privacyCopyright(String producer);
+
+  /// No description provided for @chooseFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get chooseFromGallery;
+
+  /// No description provided for @takePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a Photo'**
+  String get takePhoto;
+
+  /// No description provided for @removePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Photo'**
+  String get removePhoto;
+
+  /// No description provided for @avatarUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar updated!'**
+  String get avatarUpdated;
+
+  /// No description provided for @avatarUploadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to upload avatar. Please try again.'**
+  String get avatarUploadFailed;
+
+  /// No description provided for @avatarRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar removed.'**
+  String get avatarRemoved;
+
+  /// No description provided for @avatarRemoveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to remove avatar. Please try again.'**
+  String get avatarRemoveFailed;
+
+  /// No description provided for @profileUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully!'**
+  String get profileUpdatedSuccessfully;
+
+  /// No description provided for @profileUpdateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update profile. Please try again.'**
+  String get profileUpdateFailed;
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfileTitle;
+
+  /// No description provided for @errorPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String errorPrefix(String error);
+
+  /// No description provided for @personalInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personalInformation;
+
+  /// No description provided for @measurements.
+  ///
+  /// In en, this message translates to:
+  /// **'Measurements'**
+  String get measurements;
+
+  /// No description provided for @heightCm.
+  ///
+  /// In en, this message translates to:
+  /// **'Height (cm)'**
+  String get heightCm;
+
+  /// No description provided for @weightKg.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight (kg)'**
+  String get weightKg;
+
+  /// No description provided for @emergencyContactSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Contact'**
+  String get emergencyContactSection;
+
+  /// No description provided for @contactName.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Name'**
+  String get contactName;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// No description provided for @relationshipHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Spouse, Parent, Sibling'**
+  String get relationshipHint;
+
+  /// No description provided for @addAllergy.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Allergy'**
+  String get addAllergy;
+
+  /// No description provided for @noAllergiesAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'No allergies added'**
+  String get noAllergiesAdded;
+
+  /// No description provided for @addCondition.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Condition'**
+  String get addCondition;
+
+  /// No description provided for @noConditionsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'No conditions added'**
+  String get noConditionsAdded;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @healthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get healthTitle;
+
+  /// No description provided for @weeklyInsightsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Insights'**
+  String get weeklyInsightsTooltip;
+
+  /// No description provided for @yourHealthScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Health Score'**
+  String get yourHealthScore;
+
+  /// No description provided for @scoreDescriptionGreat.
+  ///
+  /// In en, this message translates to:
+  /// **'Your health metrics are looking great! Keep it up.'**
+  String get scoreDescriptionGreat;
+
+  /// No description provided for @scoreDescriptionGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good progress. A few areas could use attention.'**
+  String get scoreDescriptionGood;
+
+  /// No description provided for @scoreDescriptionModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Some health metrics need improvement. Consider our recommendations.'**
+  String get scoreDescriptionModerate;
+
+  /// No description provided for @scoreDescriptionLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Several areas need attention. Please consult a healthcare provider.'**
+  String get scoreDescriptionLow;
+
+  /// No description provided for @scoreDescriptionCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Immediate attention recommended. Please seek medical advice.'**
+  String get scoreDescriptionCritical;
+
+  /// No description provided for @riskFactors.
+  ///
+  /// In en, this message translates to:
+  /// **'Risk Factors'**
+  String get riskFactors;
+
+  /// No description provided for @allergyCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Allergies'**
+  String allergyCount(int count);
+
+  /// No description provided for @chronicConditionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Chronic Conditions'**
+  String chronicConditionCount(int count);
+
+  /// No description provided for @noRiskFactors.
+  ///
+  /// In en, this message translates to:
+  /// **'No risk factors identified'**
+  String get noRiskFactors;
+
+  /// No description provided for @recentTriageResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Triage Results'**
+  String get recentTriageResults;
+
+  /// No description provided for @noTriageResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No triage results yet'**
+  String get noTriageResults;
+
+  /// No description provided for @recommendedActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Actions'**
+  String get recommendedActions;
+
+  /// No description provided for @actionScheduleCheckup.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule a Check-up'**
+  String get actionScheduleCheckup;
+
+  /// No description provided for @actionScheduleCheckupDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your health score suggests it\'s time for a medical review.'**
+  String get actionScheduleCheckupDesc;
+
+  /// No description provided for @actionLogVitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Your Vitals'**
+  String get actionLogVitals;
+
+  /// No description provided for @actionLogVitalsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your blood pressure, heart rate, and other key metrics.'**
+  String get actionLogVitalsDesc;
+
+  /// No description provided for @actionRunSymptomCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Run a Symptom Check'**
+  String get actionRunSymptomCheck;
+
+  /// No description provided for @actionRunSymptomCheckDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use AI triage to assess any symptoms you\'re experiencing.'**
+  String get actionRunSymptomCheckDesc;
+
+  /// No description provided for @actionImproveSleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Improve Sleep Quality'**
+  String get actionImproveSleep;
+
+  /// No description provided for @actionImproveSleepDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Quality sleep is essential for recovery and immune function.'**
+  String get actionImproveSleepDesc;
+
+  /// No description provided for @actionStayActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay Active'**
+  String get actionStayActive;
+
+  /// No description provided for @actionStayActiveDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular exercise helps maintain cardiovascular health.'**
+  String get actionStayActiveDesc;
+
+  /// No description provided for @viewWeeklyInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'View Weekly Insights'**
+  String get viewWeeklyInsights;
+
+  /// No description provided for @minutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String minutesAgo(int minutes);
+
+  /// No description provided for @weeksAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{weeks}w ago'**
+  String weeksAgo(int weeks);
+
+  /// No description provided for @failedToLoadVitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load vitals'**
+  String get failedToLoadVitals;
+
+  /// No description provided for @noVitalsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Vitals Yet'**
+  String get noVitalsYet;
+
+  /// No description provided for @startLoggingVitalsPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Start logging your vital signs to track your health over time'**
+  String get startLoggingVitalsPrompt;
+
+  /// No description provided for @logFirstVital.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Your First Vital'**
+  String get logFirstVital;
+
+  /// No description provided for @day.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get day;
+
+  /// No description provided for @week.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get week;
+
+  /// No description provided for @month.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get month;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get noData;
+
+  /// No description provided for @trendUp.
+  ///
+  /// In en, this message translates to:
+  /// **'UP'**
+  String get trendUp;
+
+  /// No description provided for @trendDown.
+  ///
+  /// In en, this message translates to:
+  /// **'DOWN'**
+  String get trendDown;
+
+  /// No description provided for @trendStable.
+  ///
+  /// In en, this message translates to:
+  /// **'STABLE'**
+  String get trendStable;
+
+  /// No description provided for @logVitalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Vital'**
+  String get logVitalTitle;
+
+  /// No description provided for @vitalTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'VITAL TYPE'**
+  String get vitalTypeLabel;
+
+  /// No description provided for @valueLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'VALUE'**
+  String get valueLabel;
+
+  /// No description provided for @systolic.
+  ///
+  /// In en, this message translates to:
+  /// **'Systolic'**
+  String get systolic;
+
+  /// No description provided for @diastolic.
+  ///
+  /// In en, this message translates to:
+  /// **'Diastolic'**
+  String get diastolic;
+
+  /// No description provided for @dateTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'DATE & TIME'**
+  String get dateTimeLabel;
+
+  /// No description provided for @notesOptionalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTES (OPTIONAL)'**
+  String get notesOptionalLabel;
+
+  /// No description provided for @notesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add any notes about this reading...'**
+  String get notesHint;
+
+  /// No description provided for @saveVitalType.
+  ///
+  /// In en, this message translates to:
+  /// **'Save {vitalType}'**
+  String saveVitalType(String vitalType);
+
+  /// No description provided for @vitalSavedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'{vitalType} saved successfully'**
+  String vitalSavedSuccessfully(String vitalType);
+
+  /// No description provided for @vitalSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save vital. Please try again.'**
+  String get vitalSaveFailed;
+
+  /// No description provided for @vitalsHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vitals History'**
+  String get vitalsHistoryTitle;
+
+  /// No description provided for @range7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'7D'**
+  String get range7Days;
+
+  /// No description provided for @range1Month.
+  ///
+  /// In en, this message translates to:
+  /// **'1M'**
+  String get range1Month;
+
+  /// No description provided for @range3Months.
+  ///
+  /// In en, this message translates to:
+  /// **'3M'**
+  String get range3Months;
+
+  /// No description provided for @range6Months.
+  ///
+  /// In en, this message translates to:
+  /// **'6M'**
+  String get range6Months;
+
+  /// No description provided for @range1Year.
+  ///
+  /// In en, this message translates to:
+  /// **'1Y'**
+  String get range1Year;
+
+  /// No description provided for @noVitalTypeData.
+  ///
+  /// In en, this message translates to:
+  /// **'No {vitalType} Data'**
+  String noVitalTypeData(String vitalType);
+
+  /// No description provided for @noReadingsForPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'No readings found for the selected time period'**
+  String get noReadingsForPeriod;
+
+  /// No description provided for @singleReading.
+  ///
+  /// In en, this message translates to:
+  /// **'1 reading'**
+  String get singleReading;
+
+  /// No description provided for @average.
+  ///
+  /// In en, this message translates to:
+  /// **'Average'**
+  String get average;
+
+  /// No description provided for @min.
+  ///
+  /// In en, this message translates to:
+  /// **'Min'**
+  String get min;
+
+  /// No description provided for @max.
+  ///
+  /// In en, this message translates to:
+  /// **'Max'**
+  String get max;
+
+  /// No description provided for @latest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest'**
+  String get latest;
+
+  /// No description provided for @readingsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'READINGS'**
+  String get readingsLabel;
+
+  /// No description provided for @value.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get value;
+
+  /// No description provided for @source.
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get source;
+
+  /// No description provided for @showingReadingsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing 20 of {total} readings'**
+  String showingReadingsCount(int total);
+
+  /// No description provided for @addMedicationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Medication'**
+  String get addMedicationTitle;
+
+  /// No description provided for @medicationNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication Name'**
+  String get medicationNameLabel;
+
+  /// No description provided for @dosageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dosage'**
+  String get dosageLabel;
+
+  /// No description provided for @unitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get unitLabel;
+
+  /// No description provided for @frequencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency'**
+  String get frequencyLabel;
+
+  /// No description provided for @startDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get startDateLabel;
+
+  /// No description provided for @setEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Set end date'**
+  String get setEndDate;
+
+  /// No description provided for @endDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get endDateLabel;
+
+  /// No description provided for @doseTimesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'DOSE TIMES'**
+  String get doseTimesLabel;
+
+  /// No description provided for @doseNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose {number}'**
+  String doseNumber(int number);
+
+  /// No description provided for @notesOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes (optional)'**
+  String get notesOptional;
+
+  /// No description provided for @remindersLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get remindersLabel;
+
+  /// No description provided for @saveMedication.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Medication'**
+  String get saveMedication;
+
+  /// No description provided for @medicationAddedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication added successfully!'**
+  String get medicationAddedSuccessfully;
+
+  /// No description provided for @medicationAddFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add medication. Please try again.'**
+  String get medicationAddFailed;
+
+  /// No description provided for @addAppointmentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Appointment'**
+  String get addAppointmentTitle;
+
+  /// No description provided for @doctorNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor Name'**
+  String get doctorNameLabel;
+
+  /// No description provided for @specialtyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Specialty'**
+  String get specialtyLabel;
+
+  /// No description provided for @selectSpecialtyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select specialty'**
+  String get selectSpecialtyHint;
+
+  /// No description provided for @locationOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Location / Address (optional)'**
+  String get locationOptional;
+
+  /// No description provided for @reminderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get reminderLabel;
+
+  /// No description provided for @saveAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Appointment'**
+  String get saveAppointment;
+
+  /// No description provided for @appointmentScheduledSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment scheduled successfully!'**
+  String get appointmentScheduledSuccessfully;
+
+  /// No description provided for @appointmentScheduleFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to schedule appointment. Please try again.'**
+  String get appointmentScheduleFailed;
+
+  /// No description provided for @specialtyCardiologist.
+  ///
+  /// In en, this message translates to:
+  /// **'Cardiologist'**
+  String get specialtyCardiologist;
+
+  /// No description provided for @specialtyDermatologist.
+  ///
+  /// In en, this message translates to:
+  /// **'Dermatologist'**
+  String get specialtyDermatologist;
+
+  /// No description provided for @specialtyEndocrinologist.
+  ///
+  /// In en, this message translates to:
+  /// **'Endocrinologist'**
+  String get specialtyEndocrinologist;
+
+  /// No description provided for @specialtyGeneralPractice.
+  ///
+  /// In en, this message translates to:
+  /// **'General Practice'**
+  String get specialtyGeneralPractice;
+
+  /// No description provided for @specialtyNeurologist.
+  ///
+  /// In en, this message translates to:
+  /// **'Neurologist'**
+  String get specialtyNeurologist;
+
+  /// No description provided for @specialtyOphthalmologist.
+  ///
+  /// In en, this message translates to:
+  /// **'Ophthalmologist'**
+  String get specialtyOphthalmologist;
+
+  /// No description provided for @specialtyOrthopedic.
+  ///
+  /// In en, this message translates to:
+  /// **'Orthopedic'**
+  String get specialtyOrthopedic;
+
+  /// No description provided for @specialtyPediatrician.
+  ///
+  /// In en, this message translates to:
+  /// **'Pediatrician'**
+  String get specialtyPediatrician;
+
+  /// No description provided for @specialtyPsychiatrist.
+  ///
+  /// In en, this message translates to:
+  /// **'Psychiatrist'**
+  String get specialtyPsychiatrist;
+
+  /// No description provided for @specialtyOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get specialtyOther;
+
+  /// No description provided for @recordsLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load records. Please try again.'**
+  String get recordsLoadFailed;
+
+  /// No description provided for @notAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get notAvailable;
+
+  /// No description provided for @editRecordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Record'**
+  String get editRecordTitle;
+
+  /// No description provided for @addMedicalRecordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Medical Record'**
+  String get addMedicalRecordTitle;
+
+  /// No description provided for @titleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get titleLabel;
+
+  /// No description provided for @typeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get typeLabel;
+
+  /// No description provided for @recordTypeLabResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Lab Results'**
+  String get recordTypeLabResults;
+
+  /// No description provided for @recordTypePrescriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescriptions'**
+  String get recordTypePrescriptions;
+
+  /// No description provided for @recordTypeImaging.
+  ///
+  /// In en, this message translates to:
+  /// **'Imaging'**
+  String get recordTypeImaging;
+
+  /// No description provided for @recordTypeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get recordTypeOther;
+
+  /// No description provided for @descriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionLabel;
+
+  /// No description provided for @recordUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Record updated!'**
+  String get recordUpdated;
+
+  /// No description provided for @recordAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Record added!'**
+  String get recordAdded;
+
+  /// No description provided for @recordUpdateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update record.'**
+  String get recordUpdateFailed;
+
+  /// No description provided for @recordAddFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add record.'**
+  String get recordAddFailed;
+
+  /// No description provided for @deleteRecordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Record'**
+  String get deleteRecordTitle;
+
+  /// No description provided for @deleteRecordConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{title}\"? This cannot be undone.'**
+  String deleteRecordConfirm(String title);
+
+  /// No description provided for @recordDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Record deleted.'**
+  String get recordDeleted;
+
+  /// No description provided for @recordDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete record.'**
+  String get recordDeleteFailed;
+
+  /// No description provided for @medicalRecordsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical Records'**
+  String get medicalRecordsTitle;
+
+  /// No description provided for @searchRecordsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search records...'**
+  String get searchRecordsHint;
+
+  /// No description provided for @noRecordsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No records found'**
+  String get noRecordsFound;
+
+  /// No description provided for @tapToAddRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap + to add a medical record'**
+  String get tapToAddRecord;
+
+  /// No description provided for @untitled.
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled'**
+  String get untitled;
+
+  /// No description provided for @moreOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get moreOptions;
 }
 
 class _AppLocalizationsDelegate

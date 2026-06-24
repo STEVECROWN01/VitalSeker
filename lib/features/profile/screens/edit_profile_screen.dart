@@ -6,6 +6,7 @@ import '../../../core/models/user_profile.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 
 /// Action chosen in the avatar source-chooser bottom sheet.
@@ -88,6 +89,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final user = ref.read(currentUserProvider);
     if (user == null) return;
 
+    final l10n = AppLocalizations.of(context)!;
     final hasAvatar = _avatarUrl != null && _avatarUrl!.isNotEmpty;
 
     // Source-chooser: gallery, camera, or remove (only when an avatar
@@ -100,12 +102,12 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           children: [
             ListTile(
               leading: const Icon(Icons.photo_library_outlined),
-              title: const Text('Choose from Gallery'),
+              title: Text(l10n.chooseFromGallery),
               onTap: () => Navigator.pop(ctx, _AvatarAction.gallery),
             ),
             ListTile(
               leading: const Icon(Icons.camera_alt_outlined),
-              title: const Text('Take a Photo'),
+              title: Text(l10n.takePhoto),
               onTap: () => Navigator.pop(ctx, _AvatarAction.camera),
             ),
             if (hasAvatar)
@@ -115,7 +117,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   color: AppColors.urgencyEmergency,
                 ),
                 title: Text(
-                  'Remove Photo',
+                  l10n.removePhoto,
                   style: TextStyle(color: AppColors.urgencyEmergency),
                 ),
                 onTap: () => Navigator.pop(ctx, _AvatarAction.remove),
@@ -167,12 +169,12 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           _avatarUrl = publicUrl;
           _isUploadingAvatar = false;
         });
-        AppSnackBar.success(context, 'Avatar updated!');
+        AppSnackBar.success(context, l10n.avatarUpdated);
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isUploadingAvatar = false);
-        AppSnackBar.errorFromException(context, 'Failed to upload avatar. Please try again.', e);
+        AppSnackBar.errorFromException(context, l10n.avatarUploadFailed, e);
       }
     }
   }
@@ -185,6 +187,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final user = ref.read(currentUserProvider);
     if (user == null) return;
 
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isUploadingAvatar = true);
     try {
       final db = ref.read(databaseServiceProvider);
@@ -197,14 +200,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           _avatarUrl = null;
           _isUploadingAvatar = false;
         });
-        AppSnackBar.success(context, 'Avatar removed.');
+        AppSnackBar.success(context, l10n.avatarRemoved);
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isUploadingAvatar = false);
         AppSnackBar.errorFromException(
           context,
-          'Failed to remove avatar. Please try again.',
+          l10n.avatarRemoveFailed,
           e,
         );
       }
@@ -254,6 +257,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   Future<void> _saveProfile() async {
     if (!_formKey.currentState!.validate()) return;
 
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isSaving = true);
     try {
       final user = ref.read(currentUserProvider);
@@ -309,14 +313,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       ref.invalidate(userProfileProvider);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Profile updated successfully!')),
+          SnackBar(content: Text(l10n.profileUpdatedSuccessfully)),
         );
         context.pop();
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to update profile. Please try again.')),
+          SnackBar(content: Text(l10n.profileUpdateFailed)),
         );
       }
       debugPrint('Profile update error: $e');
@@ -329,10 +333,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final profileAsync = ref.watch(userProfileProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: Text(l10n.editProfileTitle),
         actions: [
           TextButton(
             onPressed: _isSaving ? null : _saveProfile,
@@ -342,8 +347,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     height: 16,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Text(
-                    'Save',
+                : Text(
+                    l10n.save,
                     style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600),
                   ),
           ),
@@ -351,7 +356,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       ),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(l10n.errorPrefix(e.toString()))),
         data: (profile) {
           // Populate fields once on first data arrival. Use a dedicated flag
           // instead of checking _nameController.text.isEmpty, because the
@@ -424,7 +429,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   const SizedBox(height: 32),
 
                   // Personal Info Section
-                  _SectionLabel(label: 'Personal Information'),
+                  _SectionLabel(label: l10n.personalInformation),
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
@@ -432,8 +437,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         children: [
                           TextFormField(
                             controller: _nameController,
-                            decoration: const InputDecoration(
-                              labelText: 'Full Name',
+                            decoration: InputDecoration(
+                              labelText: l10n.fullName,
                               prefixIcon: Icon(Icons.person_outline),
                             ),
                             style: const TextStyle(fontFamily: 'Inter'),
@@ -443,8 +448,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           TextFormField(
                             controller: _emailController,
                             readOnly: true,
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
+                            decoration: InputDecoration(
+                              labelText: l10n.email,
                               prefixIcon: Icon(Icons.email_outlined),
                               suffixIcon: Icon(Icons.lock_outline, size: 16),
                             ),
@@ -461,7 +466,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             title: Text(
                               _dateOfBirth != null
                                   ? '${_dateOfBirth!.day}/${_dateOfBirth!.month}/${_dateOfBirth!.year}'
-                                  : 'Select Date of Birth',
+                                  : l10n.selectDateOfBirth,
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 color: _dateOfBirth != null
@@ -476,14 +481,17 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           // Gender Dropdown
                           DropdownButtonFormField<String>(
                             value: _gender,
-                            decoration: const InputDecoration(
-                              labelText: 'Gender',
+                            decoration: InputDecoration(
+                              labelText: l10n.gender,
                               prefixIcon: Icon(Icons.wc_outlined),
                             ),
                             style: const TextStyle(fontFamily: 'Inter'),
                             items: _genders.map((g) => DropdownMenuItem(
                               value: g,
-                              child: Text(g, style: const TextStyle(fontFamily: 'Inter')),
+                              child: Text(
+                                g == 'Male' ? l10n.male : g == 'Female' ? l10n.female : l10n.other,
+                                style: const TextStyle(fontFamily: 'Inter'),
+                              ),
                             )).toList(),
                             onChanged: (v) => setState(() => _gender = v),
                           ),
@@ -491,8 +499,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           // Blood Type Dropdown
                           DropdownButtonFormField<String>(
                             value: _bloodType,
-                            decoration: const InputDecoration(
-                              labelText: 'Blood Type',
+                            decoration: InputDecoration(
+                              labelText: l10n.bloodType,
                               prefixIcon: Icon(Icons.bloodtype_outlined),
                             ),
                             style: const TextStyle(fontFamily: 'Inter'),
@@ -509,7 +517,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   const SizedBox(height: 20),
 
                   // Measurements Section
-                  _SectionLabel(label: 'Measurements'),
+                  _SectionLabel(label: l10n.measurements),
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
@@ -519,8 +527,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             child: TextFormField(
                               controller: _heightController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                labelText: 'Height (cm)',
+                              decoration: InputDecoration(
+                                labelText: l10n.heightCm,
                                 prefixIcon: Icon(Icons.height_outlined),
                               ),
                               style: const TextStyle(fontFamily: 'Inter'),
@@ -531,8 +539,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             child: TextFormField(
                               controller: _weightController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                labelText: 'Weight (kg)',
+                              decoration: InputDecoration(
+                                labelText: l10n.weightKg,
                                 prefixIcon: Icon(Icons.monitor_weight_outlined),
                               ),
                               style: const TextStyle(fontFamily: 'Inter'),
@@ -545,7 +553,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   const SizedBox(height: 20),
 
                   // Emergency Contact Section
-                  _SectionLabel(label: 'Emergency Contact'),
+                  _SectionLabel(label: l10n.emergencyContactSection),
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
@@ -553,8 +561,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         children: [
                           TextFormField(
                             controller: _emergencyNameController,
-                            decoration: const InputDecoration(
-                              labelText: 'Contact Name',
+                            decoration: InputDecoration(
+                              labelText: l10n.contactName,
                               prefixIcon: Icon(Icons.person_outline),
                             ),
                             style: const TextStyle(fontFamily: 'Inter'),
@@ -563,8 +571,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           TextFormField(
                             controller: _emergencyPhoneController,
                             keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                              labelText: 'Phone Number',
+                            decoration: InputDecoration(
+                              labelText: l10n.phoneNumber,
                               prefixIcon: Icon(Icons.phone_outlined),
                             ),
                             style: const TextStyle(fontFamily: 'Inter'),
@@ -572,10 +580,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           const SizedBox(height: 16),
                           TextFormField(
                             controller: _emergencyRelationshipController,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: 'Relationship',
                               prefixIcon: Icon(Icons.people_outline),
-                              hintText: 'e.g. Spouse, Parent, Sibling',
+                              hintText: l10n.relationshipHint,
                             ),
                             style: const TextStyle(fontFamily: 'Inter'),
                           ),
@@ -586,7 +594,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   const SizedBox(height: 20),
 
                   // Allergies Section
-                  _SectionLabel(label: 'Allergies'),
+                  _SectionLabel(label: l10n.allergies),
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
@@ -598,8 +606,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               Expanded(
                                 child: TextFormField(
                                   controller: _allergyController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Add Allergy',
+                                  decoration: InputDecoration(
+                                    labelText: l10n.addAllergy,
                                     prefixIcon: Icon(Icons.add_circle_outline),
                                     isDense: true,
                                   ),
@@ -628,7 +636,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           ),
                           if (_allergies.isEmpty)
                             Text(
-                              'No allergies added',
+                              l10n.noAllergiesAdded,
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 13,
@@ -642,7 +650,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   const SizedBox(height: 20),
 
                   // Chronic Conditions Section
-                  _SectionLabel(label: 'Chronic Conditions'),
+                  _SectionLabel(label: l10n.chronicConditions),
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
@@ -654,8 +662,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               Expanded(
                                 child: TextFormField(
                                   controller: _conditionController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Add Condition',
+                                  decoration: InputDecoration(
+                                    labelText: l10n.addCondition,
                                     prefixIcon: Icon(Icons.add_circle_outline),
                                     isDense: true,
                                   ),
@@ -683,7 +691,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           ),
                           if (_chronicConditions.isEmpty)
                             Text(
-                              'No conditions added',
+                              l10n.noConditionsAdded,
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 13,
@@ -712,9 +720,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               height: 20,
                               child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                             )
-                          : const Text(
-                              'Save Changes',
-                              style: TextStyle(
+                          : Text(
+                              l10n.saveChanges,
+                              style: const TextStyle(
                                 fontFamily: 'Outfit',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,

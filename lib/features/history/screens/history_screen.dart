@@ -7,6 +7,7 @@ import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/models/symptom_log.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/urgency_badge.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 /// Symptom History Screen — redesigned to match the Google Stitch UI design.
 ///
@@ -300,6 +301,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                       children: [
                         // ── 5. Export 30-day Report (Pro) button ──
                         _ExportReportButton(isDark: isDark),
+                        const SizedBox(height: 16),
+                        const MedicalDisclaimerBanner(),
                         const SizedBox(height: 16),
                         Text(
                           l10n.poweredBy,

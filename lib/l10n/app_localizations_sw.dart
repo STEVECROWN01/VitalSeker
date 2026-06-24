@@ -2138,4 +2138,545 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get profileFieldsSaveFailed =>
       'Account created, but optional profile fields (date of birth, gender, blood type) couldn\'t be saved. You can edit them later in Profile > Edit Profile.';
+
+  @override
+  String get privacyPolicyTitle => 'Privacy Policy';
+
+  @override
+  String get privacyLastUpdated => 'Last updated: March 2025';
+
+  @override
+  String privacyIntro(String appName) {
+    return 'At $appName, your privacy is paramount. This Privacy Policy explains how we collect, use, store, and protect your personal and health-related data. By using our services, you agree to the practices described below.';
+  }
+
+  @override
+  String get privacySectionDataCollection => '1. Data Collection';
+
+  @override
+  String get privacyDataCollectionBody =>
+      'We collect the following categories of data:\n\n• Personal Information: Name, email address, phone number, date of birth, and gender.\n• Health Data: Blood type, allergies, chronic conditions, medications, vital signs, symptom logs, and triage results.\n• Emergency Contacts: Names, phone numbers, and relationships of your designated contacts.\n• Device Data: Device type, operating system, and app version for compatibility and support.\n• Usage Data: Feature interactions and anonymized analytics to improve our services.\n\nWe only collect data that is necessary for providing our health companion services. You have full control over what information you provide.';
+
+  @override
+  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+
+  @override
+  String get privacyDataStorageBody =>
+      'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• QR Code Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
+
+  @override
+  String get privacySectionGdpr => '3. GDPR Compliance';
+
+  @override
+  String privacyGdprBody(String appName) {
+    return '$appName is fully compliant with the General Data Protection Regulation (GDPR):\n\n• Lawful Basis: We process your data based on your explicit consent and contractual necessity.\n• Data Minimization: We only collect and process data that is strictly necessary.\n• Purpose Limitation: Your data is used only for the purposes for which it was collected.\n• Right to Access: You can request a complete copy of your personal data at any time.\n• Right to Rectification: You can update or correct your data through the app settings.\n• Right to Erasure: You can request complete deletion of your account and data.\n• Right to Portability: You can export your data in a machine-readable format.\n• Data Processing Agreements: All third-party processors have signed DPAs.\n• Cross-Border Transfers: Data is processed within the EU/EEA unless explicit consent is given otherwise.';
+  }
+
+  @override
+  String get privacySectionYourRights => '4. Your Rights';
+
+  @override
+  String get privacyRightsBody =>
+      'You have the following rights regarding your data:\n\n• Access: View all your personal and health data within the app or request a data export.\n• Correction: Edit your profile information at any time through Edit Profile.\n• Deletion: Request account deletion through Settings > Data & Privacy > Delete Account.\n• Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences.\n• Objection: Object to specific data processing activities by contacting our Data Protection Officer.\n• Withdrawal of Consent: You may withdraw consent at any time without affecting the lawfulness of prior processing.\n\nTo exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app support feature.';
+
+  @override
+  String get privacySectionContactUs => '5. Contact Us';
+
+  @override
+  String privacyContactBody(String producer) {
+    return 'If you have any questions or concerns about this Privacy Policy or our data practices, please contact us:\n\n• Email: privacy@vitalseker.com\n• Support: support@vitalseker.com\n• Data Protection Officer: dpo@vitalseker.com\n• Address: $producer, Data Protection Office\n\nWe aim to respond to all privacy-related inquiries within 30 days.';
+  }
+
+  @override
+  String privacyCopyright(String producer) {
+    return '© 2025 $producer. All rights reserved.';
+  }
+
+  @override
+  String get chooseFromGallery => 'Choose from Gallery';
+
+  @override
+  String get takePhoto => 'Take a Photo';
+
+  @override
+  String get removePhoto => 'Remove Photo';
+
+  @override
+  String get avatarUpdated => 'Avatar updated!';
+
+  @override
+  String get avatarUploadFailed => 'Failed to upload avatar. Please try again.';
+
+  @override
+  String get avatarRemoved => 'Avatar removed.';
+
+  @override
+  String get avatarRemoveFailed => 'Failed to remove avatar. Please try again.';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profile updated successfully!';
+
+  @override
+  String get profileUpdateFailed =>
+      'Failed to update profile. Please try again.';
+
+  @override
+  String get editProfileTitle => 'Edit Profile';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get personalInformation => 'Personal Information';
+
+  @override
+  String get measurements => 'Measurements';
+
+  @override
+  String get heightCm => 'Height (cm)';
+
+  @override
+  String get weightKg => 'Weight (kg)';
+
+  @override
+  String get emergencyContactSection => 'Emergency Contact';
+
+  @override
+  String get contactName => 'Contact Name';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+
+  @override
+  String get addAllergy => 'Add Allergy';
+
+  @override
+  String get noAllergiesAdded => 'No allergies added';
+
+  @override
+  String get addCondition => 'Add Condition';
+
+  @override
+  String get noConditionsAdded => 'No conditions added';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get healthTitle => 'Health';
+
+  @override
+  String get weeklyInsightsTooltip => 'Weekly Insights';
+
+  @override
+  String get yourHealthScore => 'Your Health Score';
+
+  @override
+  String get scoreDescriptionGreat =>
+      'Your health metrics are looking great! Keep it up.';
+
+  @override
+  String get scoreDescriptionGood =>
+      'Good progress. A few areas could use attention.';
+
+  @override
+  String get scoreDescriptionModerate =>
+      'Some health metrics need improvement. Consider our recommendations.';
+
+  @override
+  String get scoreDescriptionLow =>
+      'Several areas need attention. Please consult a healthcare provider.';
+
+  @override
+  String get scoreDescriptionCritical =>
+      'Immediate attention recommended. Please seek medical advice.';
+
+  @override
+  String get riskFactors => 'Risk Factors';
+
+  @override
+  String allergyCount(int count) {
+    return '$count Allergies';
+  }
+
+  @override
+  String chronicConditionCount(int count) {
+    return '$count Chronic Conditions';
+  }
+
+  @override
+  String get noRiskFactors => 'No risk factors identified';
+
+  @override
+  String get recentTriageResults => 'Recent Triage Results';
+
+  @override
+  String get noTriageResults => 'No triage results yet';
+
+  @override
+  String get recommendedActions => 'Recommended Actions';
+
+  @override
+  String get actionScheduleCheckup => 'Schedule a Check-up';
+
+  @override
+  String get actionScheduleCheckupDesc =>
+      'Your health score suggests it\'s time for a medical review.';
+
+  @override
+  String get actionLogVitals => 'Log Your Vitals';
+
+  @override
+  String get actionLogVitalsDesc =>
+      'Track your blood pressure, heart rate, and other key metrics.';
+
+  @override
+  String get actionRunSymptomCheck => 'Run a Symptom Check';
+
+  @override
+  String get actionRunSymptomCheckDesc =>
+      'Use AI triage to assess any symptoms you\'re experiencing.';
+
+  @override
+  String get actionImproveSleep => 'Improve Sleep Quality';
+
+  @override
+  String get actionImproveSleepDesc =>
+      'Quality sleep is essential for recovery and immune function.';
+
+  @override
+  String get actionStayActive => 'Stay Active';
+
+  @override
+  String get actionStayActiveDesc =>
+      'Regular exercise helps maintain cardiovascular health.';
+
+  @override
+  String get viewWeeklyInsights => 'View Weekly Insights';
+
+  @override
+  String minutesAgo(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String weeksAgo(int weeks) {
+    return '${weeks}w ago';
+  }
+
+  @override
+  String get failedToLoadVitals => 'Failed to load vitals';
+
+  @override
+  String get noVitalsYet => 'No Vitals Yet';
+
+  @override
+  String get startLoggingVitalsPrompt =>
+      'Start logging your vital signs to track your health over time';
+
+  @override
+  String get logFirstVital => 'Log Your First Vital';
+
+  @override
+  String get day => 'Day';
+
+  @override
+  String get week => 'Week';
+
+  @override
+  String get month => 'Month';
+
+  @override
+  String get noData => 'No data';
+
+  @override
+  String get trendUp => 'UP';
+
+  @override
+  String get trendDown => 'DOWN';
+
+  @override
+  String get trendStable => 'STABLE';
+
+  @override
+  String get logVitalTitle => 'Log Vital';
+
+  @override
+  String get vitalTypeLabel => 'VITAL TYPE';
+
+  @override
+  String get valueLabel => 'VALUE';
+
+  @override
+  String get systolic => 'Systolic';
+
+  @override
+  String get diastolic => 'Diastolic';
+
+  @override
+  String get dateTimeLabel => 'DATE & TIME';
+
+  @override
+  String get notesOptionalLabel => 'NOTES (OPTIONAL)';
+
+  @override
+  String get notesHint => 'Add any notes about this reading...';
+
+  @override
+  String saveVitalType(String vitalType) {
+    return 'Save $vitalType';
+  }
+
+  @override
+  String vitalSavedSuccessfully(String vitalType) {
+    return '$vitalType saved successfully';
+  }
+
+  @override
+  String get vitalSaveFailed => 'Failed to save vital. Please try again.';
+
+  @override
+  String get vitalsHistoryTitle => 'Vitals History';
+
+  @override
+  String get range7Days => '7D';
+
+  @override
+  String get range1Month => '1M';
+
+  @override
+  String get range3Months => '3M';
+
+  @override
+  String get range6Months => '6M';
+
+  @override
+  String get range1Year => '1Y';
+
+  @override
+  String noVitalTypeData(String vitalType) {
+    return 'No $vitalType Data';
+  }
+
+  @override
+  String get noReadingsForPeriod =>
+      'No readings found for the selected time period';
+
+  @override
+  String get singleReading => '1 reading';
+
+  @override
+  String get average => 'Average';
+
+  @override
+  String get min => 'Min';
+
+  @override
+  String get max => 'Max';
+
+  @override
+  String get latest => 'Latest';
+
+  @override
+  String get readingsLabel => 'READINGS';
+
+  @override
+  String get value => 'Value';
+
+  @override
+  String get source => 'Source';
+
+  @override
+  String showingReadingsCount(int total) {
+    return 'Showing 20 of $total readings';
+  }
+
+  @override
+  String get addMedicationTitle => 'Add Medication';
+
+  @override
+  String get medicationNameLabel => 'Medication Name';
+
+  @override
+  String get dosageLabel => 'Dosage';
+
+  @override
+  String get unitLabel => 'Unit';
+
+  @override
+  String get frequencyLabel => 'Frequency';
+
+  @override
+  String get startDateLabel => 'Start Date';
+
+  @override
+  String get setEndDate => 'Set end date';
+
+  @override
+  String get endDateLabel => 'End Date';
+
+  @override
+  String get doseTimesLabel => 'DOSE TIMES';
+
+  @override
+  String doseNumber(int number) {
+    return 'Dose $number';
+  }
+
+  @override
+  String get notesOptional => 'Notes (optional)';
+
+  @override
+  String get remindersLabel => 'Reminders';
+
+  @override
+  String get saveMedication => 'Save Medication';
+
+  @override
+  String get medicationAddedSuccessfully => 'Medication added successfully!';
+
+  @override
+  String get medicationAddFailed =>
+      'Failed to add medication. Please try again.';
+
+  @override
+  String get addAppointmentTitle => 'Add Appointment';
+
+  @override
+  String get doctorNameLabel => 'Doctor Name';
+
+  @override
+  String get specialtyLabel => 'Specialty';
+
+  @override
+  String get selectSpecialtyHint => 'Select specialty';
+
+  @override
+  String get locationOptional => 'Location / Address (optional)';
+
+  @override
+  String get reminderLabel => 'Reminder';
+
+  @override
+  String get saveAppointment => 'Save Appointment';
+
+  @override
+  String get appointmentScheduledSuccessfully =>
+      'Appointment scheduled successfully!';
+
+  @override
+  String get appointmentScheduleFailed =>
+      'Failed to schedule appointment. Please try again.';
+
+  @override
+  String get specialtyCardiologist => 'Cardiologist';
+
+  @override
+  String get specialtyDermatologist => 'Dermatologist';
+
+  @override
+  String get specialtyEndocrinologist => 'Endocrinologist';
+
+  @override
+  String get specialtyGeneralPractice => 'General Practice';
+
+  @override
+  String get specialtyNeurologist => 'Neurologist';
+
+  @override
+  String get specialtyOphthalmologist => 'Ophthalmologist';
+
+  @override
+  String get specialtyOrthopedic => 'Orthopedic';
+
+  @override
+  String get specialtyPediatrician => 'Pediatrician';
+
+  @override
+  String get specialtyPsychiatrist => 'Psychiatrist';
+
+  @override
+  String get specialtyOther => 'Other';
+
+  @override
+  String get recordsLoadFailed => 'Failed to load records. Please try again.';
+
+  @override
+  String get notAvailable => 'N/A';
+
+  @override
+  String get editRecordTitle => 'Edit Record';
+
+  @override
+  String get addMedicalRecordTitle => 'Add Medical Record';
+
+  @override
+  String get titleLabel => 'Title';
+
+  @override
+  String get typeLabel => 'Type';
+
+  @override
+  String get recordTypeLabResults => 'Lab Results';
+
+  @override
+  String get recordTypePrescriptions => 'Prescriptions';
+
+  @override
+  String get recordTypeImaging => 'Imaging';
+
+  @override
+  String get recordTypeOther => 'Other';
+
+  @override
+  String get descriptionLabel => 'Description';
+
+  @override
+  String get recordUpdated => 'Record updated!';
+
+  @override
+  String get recordAdded => 'Record added!';
+
+  @override
+  String get recordUpdateFailed => 'Failed to update record.';
+
+  @override
+  String get recordAddFailed => 'Failed to add record.';
+
+  @override
+  String get deleteRecordTitle => 'Delete Record';
+
+  @override
+  String deleteRecordConfirm(String title) {
+    return 'Are you sure you want to delete \"$title\"? This cannot be undone.';
+  }
+
+  @override
+  String get recordDeleted => 'Record deleted.';
+
+  @override
+  String get recordDeleteFailed => 'Failed to delete record.';
+
+  @override
+  String get medicalRecordsTitle => 'Medical Records';
+
+  @override
+  String get searchRecordsHint => 'Search records...';
+
+  @override
+  String get noRecordsFound => 'No records found';
+
+  @override
+  String get tapToAddRecord => 'Tap + to add a medical record';
+
+  @override
+  String get untitled => 'Untitled';
+
+  @override
+  String get moreOptions => 'More options';
 }

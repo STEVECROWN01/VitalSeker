@@ -13,6 +13,7 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 /// QR Display Screen — redesigned to match the Google Stitch UI design.
 ///
@@ -386,6 +387,8 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                 ),
               ],
               const SizedBox(height: 32),
+              const MedicalDisclaimerBanner(),
+              const SizedBox(height: 16),
               // ── 6. Footer ──
               Text(
                 l10n.poweredBy,

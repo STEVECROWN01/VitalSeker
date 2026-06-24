@@ -82,7 +82,9 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
       await db.updateMedication(medicationId, {
         'dosage': dosage,
         'unit': unit,
-        'frequency': frequency.name,
+        // Use jsonValue (snake_case) instead of .name (camelCase) so the DB
+        // value matches what Medication.fromJson expects.
+        'frequency': frequency.jsonValue,
         'times': times,
         'end_date': endDate?.toIso8601String().split('T')[0],
         'notes': notes,

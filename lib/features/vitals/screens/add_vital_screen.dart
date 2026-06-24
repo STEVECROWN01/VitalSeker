@@ -159,11 +159,11 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
       }
 
       if (mounted) {
-        AppSnackBar.success(context, '${_selectedType.displayName} saved successfully');
+        AppSnackBar.success(context, AppLocalizations.of(context)!.vitalSavedSuccessfully(_selectedType.displayName));
         context.pop();
       }
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to save vital. Please try again.', e);
+      if (mounted) AppSnackBar.errorFromException(context, AppLocalizations.of(context)!.vitalSaveFailed, e);
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
@@ -172,9 +172,10 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Log Vital')),
+      appBar: AppBar(title: Text(l10n.logVitalTitle)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: Column(
@@ -182,7 +183,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
           children: [
             // Vital Type Selector
             Text(
-              'VITAL TYPE',
+              l10n.vitalTypeLabel,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -254,7 +255,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
 
             // Value Input Section
             Text(
-              'VALUE',
+              l10n.valueLabel,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -275,7 +276,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                       keyboardType: const TextInputType.numberWithOptions(decimal: false),
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        labelText: 'Systolic',
+                        labelText: l10n.systolic,
                         labelStyle: const TextStyle(fontFamily: 'Inter'),
                         suffixText: _selectedType.unit,
                         suffixStyle: TextStyle(
@@ -296,7 +297,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                       keyboardType: const TextInputType.numberWithOptions(decimal: false),
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        labelText: 'Diastolic',
+                        labelText: l10n.diastolic,
                         labelStyle: const TextStyle(fontFamily: 'Inter'),
                         suffixText: _selectedType.unit,
                         suffixStyle: TextStyle(
@@ -340,7 +341,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
 
             // Date/Time Picker
             Text(
-              'DATE & TIME',
+              l10n.dateTimeLabel,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -417,7 +418,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
 
             // Notes
             Text(
-              'NOTES (OPTIONAL)',
+              l10n.notesOptionalLabel,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -431,7 +432,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
               controller: _notesController,
               maxLines: 3,
               decoration: InputDecoration(
-                hintText: 'Add any notes about this reading...',
+                hintText: l10n.notesHint,
                 hintStyle: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 14,
@@ -470,7 +471,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                           const Icon(Icons.check_circle_outline, size: 20),
                           const SizedBox(width: 8),
                           Text(
-                            'Save ${_selectedType.displayName}',
+                            l10n.saveVitalType(_selectedType.displayName),
                             style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 16,

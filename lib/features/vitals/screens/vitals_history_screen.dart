@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/models/vital.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -36,11 +37,12 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final typeVitals = ref.watch(vitalsByTypeProvider(_selectedType));
     final filteredVitals = _filterByRange(typeVitals);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Vitals History')),
+      appBar: AppBar(title: Text(l10n.vitalsHistoryTitle)),
       body: Column(
         children: [
           // Vital Type Dropdown
@@ -125,7 +127,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                         ),
                       ),
                       child: Text(
-                        _rangeLabels[index],
+                        _rangeLabel(l10n, index),
                         style: TextStyle(
                           fontFamily: 'Outfit',
                           fontSize: 13,
@@ -146,7 +148,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
           // Content
           Expanded(
             child: filteredVitals.isEmpty
-                ? _buildEmptyState(isDark)
+                ? _buildEmptyState(isDark, l10n)
                 : SingleChildScrollView(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
@@ -156,6 +158,8 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                           vitals: filteredVitals,
                           vitalType: _selectedType,
                           isDark: isDark,
+                          emptyText: l10n.noReadingsForPeriod,
+                          singleReadingText: l10n.singleReading,
                         ),
                         const SizedBox(height: 20),
 
@@ -183,7 +187,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
     );
   }
 
-  Widget _buildEmptyState(bool isDark) {
+  Widget _buildEmptyState(bool isDark, AppLocalizations l10n) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -199,7 +203,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
           ),
           const SizedBox(height: 16),
           Text(
-            'No ${_selectedType.displayName} Data',
+            l10n.noVitalTypeData(_selectedType.displayName),
             style: TextStyle(
               fontFamily: 'ClashDisplay',
               fontSize: 20,
@@ -209,7 +213,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'No readings found for the\nselected time period',
+            l10n.noReadingsForPeriod,
             style: TextStyle(
               fontFamily: 'Inter',
               fontSize: 14,
@@ -222,6 +226,23 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
       ),
     );
   }
+
+  String _rangeLabel(AppLocalizations l10n, int index) {
+    switch (index) {
+      case 0:
+        return l10n.range7Days;
+      case 1:
+        return l10n.range1Month;
+      case 2:
+        return l10n.range3Months;
+      case 3:
+        return l10n.range6Months;
+      case 4:
+        return l10n.range1Year;
+      default:
+        return _rangeLabels[index];
+    }
+  }
 }
 
 // ─── Line Chart ──────────────────────────────────────────────────────────────
@@ -230,11 +251,15 @@ class _VitalChart extends StatelessWidget {
   final List<Vital> vitals;
   final VitalType vitalType;
   final bool isDark;
+  final String emptyText;
+  final String singleReadingText;
 
   const _VitalChart({
     required this.vitals,
     required this.vitalType,
     required this.isDark,
+    required this.emptyText,
+    required this.singleReadingText,
   });
 
   @override
@@ -255,6 +280,8 @@ class _VitalChart extends StatelessWidget {
           vitals: vitals,
           color: vitalType.color,
           isDark: isDark,
+          emptyText: emptyText,
+          singleReadingText: singleReadingText,
         ),
       ),
     );
@@ -265,11 +292,15 @@ class _LineChartPainter extends CustomPainter {
   final List<Vital> vitals;
   final Color color;
   final bool isDark;
+  final String emptyText;
+  final String singleReadingText;
 
   _LineChartPainter({
     required this.vitals,
     required this.color,
     required this.isDark,
+    required this.emptyText,
+    required this.singleReadingText,
   });
 
   @override
@@ -278,7 +309,7 @@ class _LineChartPainter extends CustomPainter {
       // Single point or no data
       final tp = TextPainter(
         text: TextSpan(
-          text: vitals.isEmpty ? 'No data' : '1 reading',
+          text: vitals.isEmpty ? emptyText : singleReadingText,
           style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 13,
@@ -392,6 +423,7 @@ class _StatisticsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (vitals.isEmpty) return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context)!;
 
     final values = vitals.map((v) => v.value).toList();
     final avg = values.reduce((a, b) => a + b) / values.length;
@@ -402,7 +434,7 @@ class _StatisticsRow extends StatelessWidget {
     return Row(
       children: [
         _StatCard(
-          label: 'Average',
+          label: l10n.average,
           value: _formatValue(avg),
           unit: vitalType.unit,
           color: AppColors.primary(isDark),
@@ -410,7 +442,7 @@ class _StatisticsRow extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         _StatCard(
-          label: 'Min',
+          label: l10n.min,
           value: _formatValue(min),
           unit: vitalType.unit,
           color: isDark ? AppColors.darkInfo : AppColors.lightInfo,
@@ -418,7 +450,7 @@ class _StatisticsRow extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         _StatCard(
-          label: 'Max',
+          label: l10n.max,
           value: _formatValue(max),
           unit: vitalType.unit,
           color: AppColors.urgencyMedium,
@@ -426,7 +458,7 @@ class _StatisticsRow extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         _StatCard(
-          label: 'Latest',
+          label: l10n.latest,
           value: _formatValue(latest),
           unit: vitalType.unit,
           color: vitalType.color,
@@ -510,6 +542,7 @@ class _VitalsDataTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.cardBackground(isDark),
@@ -524,7 +557,7 @@ class _VitalsDataTable extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
             child: Text(
-              'READINGS',
+              l10n.readingsLabel,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -571,7 +604,7 @@ class _VitalsDataTable extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    'Value',
+                    l10n.value,
                     style: TextStyle(
                       fontFamily: 'DMSans',
                       fontSize: 11,
@@ -585,7 +618,7 @@ class _VitalsDataTable extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    'Source',
+                    l10n.source,
                     style: TextStyle(
                       fontFamily: 'DMSans',
                       fontSize: 11,
@@ -610,7 +643,7 @@ class _VitalsDataTable extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               child: Center(
                 child: Text(
-                  'Showing 20 of ${vitals.length} readings',
+                  l10n.showingReadingsCount(vitals.length),
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,

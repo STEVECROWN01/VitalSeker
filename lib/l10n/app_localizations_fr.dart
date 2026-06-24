@@ -111,7 +111,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noSymptomsLogs => 'Aucun journal de symptômes';
 
   @override
-  String get startTriage => 'Commencez le triage pour voir l\'activité';
+  String get startTriage => 'Commencer le triage';
 
   @override
   String get vitals => 'Signes Vitaux';
@@ -1503,7 +1503,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dateOfBirth => 'Date de naissance';
 
   @override
-  String get selectDateOfBirth => 'Select Date of Birth';
+  String get selectDateOfBirth => 'Sélectionner la date de naissance';
 
   @override
   String get selectDateOfBirthHint => 'Select your date of birth';
@@ -1577,11 +1577,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pastChecksAndVitals => 'Past checks & vitals';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'À l\'instant';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return 'il y a $hours h';
   }
 
   @override
@@ -1592,7 +1592,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return 'il y a $days j';
   }
 
   @override
@@ -2139,4 +2139,550 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get profileFieldsSaveFailed =>
       'Compte créé, mais les champs optionnels (date de naissance, genre, groupe sanguin) n\'ont pas pu être enregistrés. Vous pouvez les modifier dans Profil > Modifier le profil.';
+
+  @override
+  String get privacyPolicyTitle => 'Politique de confidentialité';
+
+  @override
+  String get privacyLastUpdated => 'Dernière mise à jour : mars 2025';
+
+  @override
+  String privacyIntro(String appName) {
+    return 'Chez $appName, votre confidentialité est primordiale. Cette politique de confidentialité explique comment nous collectons, utilisons, stockons et protégeons vos données personnelles et de santé. En utilisant nos services, vous acceptez les pratiques décrites ci-dessous.';
+  }
+
+  @override
+  String get privacySectionDataCollection => '1. Collecte des données';
+
+  @override
+  String get privacyDataCollectionBody =>
+      'Nous collectons les catégories de données suivantes :\n\n• Informations personnelles : Nom, adresse e-mail, numéro de téléphone, date de naissance et sexe.\n• Données de santé : Groupe sanguin, allergies, maladies chroniques, médicaments, signes vitaux, journaux de symptômes et résultats de triage.\n• Contacts d\'urgence : Noms, numéros de téléphone et relations de vos contacts désignés.\n• Données de l\'appareil : Type d\'appareil, système d\'exploitation et version de l\'application.\n• Données d\'utilisation : Interactions avec les fonctionnalités et analyses anonymisées.\n\nNous ne collectons que les données nécessaires à la prestation de nos services de compagnon santé.';
+
+  @override
+  String get privacySectionDataStorage =>
+      '2. Stockage et chiffrement des données';
+
+  @override
+  String get privacyDataStorageBody =>
+      'Vos données sont stockées avec des mesures de sécurité de pointe :\n\n• Chiffrement au repos : Toutes les données stockées sont chiffrées en AES-256.\n• Chiffrement en transit : Toutes les transmissions utilisent le chiffrement TLS 1.3.\n• Passeport de santé : Vos données de passeport sont chiffrées avec une clé unique.\n• Partage QR : Les données partagées via QR sont chiffrées et limitées dans le temps.\n• Infrastructure : Nos serveurs sont hébergés dans des centres de données certifiés SOC 2 Type II.\n\nNous ne stockons pas d\'informations de paiement.';
+
+  @override
+  String get privacySectionGdpr => '3. Conformité RGPD';
+
+  @override
+  String privacyGdprBody(String appName) {
+    return '$appName est entièrement conforme au RGPD :\n\n• Base légale : Nous traitons vos données sur la base de votre consentement explicite.\n• Minimisation : Nous ne collectons que les données strictement nécessaires.\n• Limitation des finalités : Vos données sont utilisées uniquement pour les finalités pour lesquelles elles ont été collectées.\n• Droit d\'accès : Vous pouvez demander une copie complète de vos données.\n• Droit de rectification : Vous pouvez mettre à jour vos données via les paramètres.\n• Droit à l\'effacement : Vous pouvez demander la suppression de votre compte.\n• Droit à la portabilité : Vous pouvez exporter vos données.\n• Transferts hors UE : Les données sont traitées dans l\'UE/EEE sauf consentement explicite.';
+  }
+
+  @override
+  String get privacySectionYourRights => '4. Vos droits';
+
+  @override
+  String get privacyRightsBody =>
+      'Vous disposez des droits suivants concernant vos données :\n\n• Accès : Consultez vos données dans l\'application ou demandez un export.\n• Correction : Modifiez vos informations via Modifier le profil.\n• Suppression : Demandez la suppression via Paramètres > Confidentialité > Supprimer le compte.\n• Restriction : Limitez le traitement de certaines données.\n• Opposition : Opposez-vous à des traitements spécifiques en contactant notre DPO.\n• Retrait du consentement : Vous pouvez retirer votre consentement à tout moment.\n\nPour exercer ces droits, contactez-nous à privacy@vitalseker.com.';
+
+  @override
+  String get privacySectionContactUs => '5. Nous contacter';
+
+  @override
+  String privacyContactBody(String producer) {
+    return 'Si vous avez des questions concernant cette politique, contactez-nous :\n\n• E-mail : privacy@vitalseker.com\n• Support : support@vitalseker.com\n• DPO : dpo@vitalseker.com\n• Adresse : $producer, Bureau de protection des données\n\nNous répondons à toutes les demandes de confidentialité sous 30 jours.';
+  }
+
+  @override
+  String privacyCopyright(String producer) {
+    return '© 2025 $producer. Tous droits réservés.';
+  }
+
+  @override
+  String get chooseFromGallery => 'Choisir depuis la galerie';
+
+  @override
+  String get takePhoto => 'Prendre une photo';
+
+  @override
+  String get removePhoto => 'Supprimer la photo';
+
+  @override
+  String get avatarUpdated => 'Avatar mis à jour !';
+
+  @override
+  String get avatarUploadFailed =>
+      'Échec du téléchargement de l\'avatar. Réessayez.';
+
+  @override
+  String get avatarRemoved => 'Avatar supprimé.';
+
+  @override
+  String get avatarRemoveFailed =>
+      'Échec de la suppression de l\'avatar. Réessayez.';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profil mis à jour avec succès !';
+
+  @override
+  String get profileUpdateFailed =>
+      'Échec de la mise à jour du profil. Réessayez.';
+
+  @override
+  String get editProfileTitle => 'Modifier le profil';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Erreur : $error';
+  }
+
+  @override
+  String get personalInformation => 'Informations personnelles';
+
+  @override
+  String get measurements => 'Mesures';
+
+  @override
+  String get heightCm => 'Taille (cm)';
+
+  @override
+  String get weightKg => 'Poids (kg)';
+
+  @override
+  String get emergencyContactSection => 'Contact d\'urgence';
+
+  @override
+  String get contactName => 'Nom du contact';
+
+  @override
+  String get phoneNumber => 'Numéro de téléphone';
+
+  @override
+  String get relationshipHint => 'ex. Conjoint, Parent, Frère/Sœur';
+
+  @override
+  String get addAllergy => 'Ajouter une allergie';
+
+  @override
+  String get noAllergiesAdded => 'Aucune allergie ajoutée';
+
+  @override
+  String get addCondition => 'Ajouter une maladie';
+
+  @override
+  String get noConditionsAdded => 'Aucune maladie ajoutée';
+
+  @override
+  String get saveChanges => 'Enregistrer les modifications';
+
+  @override
+  String get healthTitle => 'Santé';
+
+  @override
+  String get weeklyInsightsTooltip => 'Aperçus hebdomadaires';
+
+  @override
+  String get yourHealthScore => 'Votre score de santé';
+
+  @override
+  String get scoreDescriptionGreat =>
+      'Vos indicateurs de santé sont excellents ! Continuez ainsi.';
+
+  @override
+  String get scoreDescriptionGood =>
+      'Bon progrès. Quelques domaines pourraient être améliorés.';
+
+  @override
+  String get scoreDescriptionModerate =>
+      'Certains indicateurs de santé nécessitent une amélioration. Consultez nos recommandations.';
+
+  @override
+  String get scoreDescriptionLow =>
+      'Plusieurs domaines nécessitent une attention. Veuillez consulter un professionnel de santé.';
+
+  @override
+  String get scoreDescriptionCritical =>
+      'Attention immédiate recommandée. Veuillez consulter un médecin.';
+
+  @override
+  String get riskFactors => 'Facteurs de risque';
+
+  @override
+  String allergyCount(int count) {
+    return '$count allergies';
+  }
+
+  @override
+  String chronicConditionCount(int count) {
+    return '$count maladies chroniques';
+  }
+
+  @override
+  String get noRiskFactors => 'Aucun facteur de risque identifié';
+
+  @override
+  String get recentTriageResults => 'Résultats de triage récents';
+
+  @override
+  String get noTriageResults => 'Aucun résultat de triage pour le moment';
+
+  @override
+  String get recommendedActions => 'Actions recommandées';
+
+  @override
+  String get actionScheduleCheckup => 'Planifier un examen';
+
+  @override
+  String get actionScheduleCheckupDesc =>
+      'Votre score de santé indique qu\'il est temps d\'un examen médical.';
+
+  @override
+  String get actionLogVitals => 'Enregistrer vos signes vitaux';
+
+  @override
+  String get actionLogVitalsDesc =>
+      'Suivez votre tension, rythme cardiaque et autres indicateurs clés.';
+
+  @override
+  String get actionRunSymptomCheck => 'Faire un diagnostic de symptômes';
+
+  @override
+  String get actionRunSymptomCheckDesc =>
+      'Utilisez le triage IA pour évaluer vos symptômes.';
+
+  @override
+  String get actionImproveSleep => 'Améliorer la qualité du sommeil';
+
+  @override
+  String get actionImproveSleepDesc =>
+      'Un sommeil de qualité est essentiel pour la récupération et l\'immunité.';
+
+  @override
+  String get actionStayActive => 'Rester actif';
+
+  @override
+  String get actionStayActiveDesc =>
+      'L\'exercice régulier aide à maintenir la santé cardiovasculaire.';
+
+  @override
+  String get viewWeeklyInsights => 'Voir les aperçus hebdomadaires';
+
+  @override
+  String minutesAgo(int minutes) {
+    return 'il y a $minutes min';
+  }
+
+  @override
+  String weeksAgo(int weeks) {
+    return 'il y a $weeks sem';
+  }
+
+  @override
+  String get failedToLoadVitals => 'Échec du chargement des signes vitaux';
+
+  @override
+  String get noVitalsYet => 'Aucun signe vital pour le moment';
+
+  @override
+  String get startLoggingVitalsPrompt =>
+      'Commencez à enregistrer vos signes vitaux pour suivre votre santé dans le temps';
+
+  @override
+  String get logFirstVital => 'Enregistrer votre premier signe vital';
+
+  @override
+  String get day => 'Jour';
+
+  @override
+  String get week => 'Semaine';
+
+  @override
+  String get month => 'Mois';
+
+  @override
+  String get noData => 'Aucune donnée';
+
+  @override
+  String get trendUp => 'HAUSSE';
+
+  @override
+  String get trendDown => 'BAISSE';
+
+  @override
+  String get trendStable => 'STABLE';
+
+  @override
+  String get logVitalTitle => 'Enregistrer un signe vital';
+
+  @override
+  String get vitalTypeLabel => 'TYPE DE SIGNES';
+
+  @override
+  String get valueLabel => 'VALEUR';
+
+  @override
+  String get systolic => 'Systolique';
+
+  @override
+  String get diastolic => 'Diastolique';
+
+  @override
+  String get dateTimeLabel => 'DATE ET HEURE';
+
+  @override
+  String get notesOptionalLabel => 'NOTES (FACULTATIF)';
+
+  @override
+  String get notesHint => 'Ajoutez des notes sur cette mesure...';
+
+  @override
+  String saveVitalType(String vitalType) {
+    return 'Enregistrer $vitalType';
+  }
+
+  @override
+  String vitalSavedSuccessfully(String vitalType) {
+    return '$vitalType enregistré avec succès';
+  }
+
+  @override
+  String get vitalSaveFailed =>
+      'Échec de l\'enregistrement du signe vital. Réessayez.';
+
+  @override
+  String get vitalsHistoryTitle => 'Historique des signes vitaux';
+
+  @override
+  String get range7Days => '7J';
+
+  @override
+  String get range1Month => '1M';
+
+  @override
+  String get range3Months => '3M';
+
+  @override
+  String get range6Months => '6M';
+
+  @override
+  String get range1Year => '1A';
+
+  @override
+  String noVitalTypeData(String vitalType) {
+    return 'Aucune donnée $vitalType';
+  }
+
+  @override
+  String get noReadingsForPeriod =>
+      'Aucune mesure trouvée pour la période sélectionnée';
+
+  @override
+  String get singleReading => '1 mesure';
+
+  @override
+  String get average => 'Moyenne';
+
+  @override
+  String get min => 'Min';
+
+  @override
+  String get max => 'Max';
+
+  @override
+  String get latest => 'Dernier';
+
+  @override
+  String get readingsLabel => 'MESURES';
+
+  @override
+  String get value => 'Valeur';
+
+  @override
+  String get source => 'Source';
+
+  @override
+  String showingReadingsCount(int total) {
+    return 'Affichage de 20 sur $total mesures';
+  }
+
+  @override
+  String get addMedicationTitle => 'Ajouter un médicament';
+
+  @override
+  String get medicationNameLabel => 'Nom du médicament';
+
+  @override
+  String get dosageLabel => 'Dosage';
+
+  @override
+  String get unitLabel => 'Unité';
+
+  @override
+  String get frequencyLabel => 'Fréquence';
+
+  @override
+  String get startDateLabel => 'Date de début';
+
+  @override
+  String get setEndDate => 'Définir une date de fin';
+
+  @override
+  String get endDateLabel => 'Date de fin';
+
+  @override
+  String get doseTimesLabel => 'HEURES DES PRISES';
+
+  @override
+  String doseNumber(int number) {
+    return 'Prise $number';
+  }
+
+  @override
+  String get notesOptional => 'Notes (facultatif)';
+
+  @override
+  String get remindersLabel => 'Rappels';
+
+  @override
+  String get saveMedication => 'Enregistrer le médicament';
+
+  @override
+  String get medicationAddedSuccessfully => 'Médicament ajouté avec succès !';
+
+  @override
+  String get medicationAddFailed =>
+      'Échec de l\'ajout du médicament. Réessayez.';
+
+  @override
+  String get addAppointmentTitle => 'Ajouter un rendez-vous';
+
+  @override
+  String get doctorNameLabel => 'Nom du médecin';
+
+  @override
+  String get specialtyLabel => 'Spécialité';
+
+  @override
+  String get selectSpecialtyHint => 'Sélectionner une spécialité';
+
+  @override
+  String get locationOptional => 'Lieu / Adresse (facultatif)';
+
+  @override
+  String get reminderLabel => 'Rappel';
+
+  @override
+  String get saveAppointment => 'Enregistrer le rendez-vous';
+
+  @override
+  String get appointmentScheduledSuccessfully =>
+      'Rendez-vous planifié avec succès !';
+
+  @override
+  String get appointmentScheduleFailed =>
+      'Échec de la planification du rendez-vous. Réessayez.';
+
+  @override
+  String get specialtyCardiologist => 'Cardiologue';
+
+  @override
+  String get specialtyDermatologist => 'Dermatologue';
+
+  @override
+  String get specialtyEndocrinologist => 'Endocrinologue';
+
+  @override
+  String get specialtyGeneralPractice => 'Médecine générale';
+
+  @override
+  String get specialtyNeurologist => 'Neurologue';
+
+  @override
+  String get specialtyOphthalmologist => 'Ophtalmologue';
+
+  @override
+  String get specialtyOrthopedic => 'Orthopédiste';
+
+  @override
+  String get specialtyPediatrician => 'Pédiatre';
+
+  @override
+  String get specialtyPsychiatrist => 'Psychiatre';
+
+  @override
+  String get specialtyOther => 'Autre';
+
+  @override
+  String get recordsLoadFailed =>
+      'Échec du chargement des dossiers. Réessayez.';
+
+  @override
+  String get notAvailable => 'N/D';
+
+  @override
+  String get editRecordTitle => 'Modifier le dossier';
+
+  @override
+  String get addMedicalRecordTitle => 'Ajouter un dossier médical';
+
+  @override
+  String get titleLabel => 'Titre';
+
+  @override
+  String get typeLabel => 'Type';
+
+  @override
+  String get recordTypeLabResults => 'Résultats de laboratoire';
+
+  @override
+  String get recordTypePrescriptions => 'Ordonnances';
+
+  @override
+  String get recordTypeImaging => 'Imagerie';
+
+  @override
+  String get recordTypeOther => 'Autre';
+
+  @override
+  String get descriptionLabel => 'Description';
+
+  @override
+  String get recordUpdated => 'Dossier mis à jour !';
+
+  @override
+  String get recordAdded => 'Dossier ajouté !';
+
+  @override
+  String get recordUpdateFailed => 'Échec de la mise à jour du dossier.';
+
+  @override
+  String get recordAddFailed => 'Échec de l\'ajout du dossier.';
+
+  @override
+  String get deleteRecordTitle => 'Supprimer le dossier';
+
+  @override
+  String deleteRecordConfirm(String title) {
+    return 'Voulez-vous vraiment supprimer « $title » ? Cette action est irréversible.';
+  }
+
+  @override
+  String get recordDeleted => 'Dossier supprimé.';
+
+  @override
+  String get recordDeleteFailed => 'Échec de la suppression du dossier.';
+
+  @override
+  String get medicalRecordsTitle => 'Dossiers médicaux';
+
+  @override
+  String get searchRecordsHint => 'Rechercher des dossiers...';
+
+  @override
+  String get noRecordsFound => 'Aucun dossier trouvé';
+
+  @override
+  String get tapToAddRecord => 'Appuyez sur + pour ajouter un dossier médical';
+
+  @override
+  String get untitled => 'Sans titre';
+
+  @override
+  String get moreOptions => 'Plus d\'options';
 }
