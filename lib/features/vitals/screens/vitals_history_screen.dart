@@ -686,7 +686,7 @@ class _DataRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                vital.source.substring(0, 1).toUpperCase(),
+                (vital.source.isEmpty ? '?' : vital.source.substring(0, 1)).toUpperCase(),
                 style: TextStyle(
                   fontFamily: 'DMSans',
                   fontSize: 10,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -67,6 +67,21 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
 
   Future<void> _addFamilyMember() async {
     final l10n = AppLocalizations.of(context)!;
+
+    // Pro-gating: family profiles is a Pro-only feature per Cahier des Charges
+    // Section 2.6 ("Profils Famille (Pro) — Jusqu'à 5 profils familiaux").
+    final isPro = ref.read(isProUserProvider);
+    if (!isPro) {
+      if (!mounted) return;
+      AppSnackBar.error(
+        context,
+        l10n.familyProfilesProOnly,
+      );
+      // Redirect to subscription screen
+      context.push(AppConfig.subscription);
+      return;
+    }
+
     if (_nameController.text.trim().isEmpty ||
         _relationshipController.text.trim().isEmpty) {
       AppSnackBar.error(
@@ -293,7 +308,9 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                 ),
                 data: (profiles) {
                   final ownerProfile = profileAsync.valueOrNull;
-                  final memberCount = profiles.length + 1; // owner + members
+                  // Spec: "Profils Famille (Pro): Jusqu'à 5 profils familiaux"
+                  // = up to 5 family member profiles (NOT counting the owner).
+                  final memberCount = profiles.length;
                   final isAtLimit = memberCount >= 5;
                   return SingleChildScrollView(
                     padding: const EdgeInsets.fromLTRB(20, 12, 20, 80),
@@ -1383,10 +1400,12 @@ class _ErrorState extends StatelessWidget {
   final bool isDark;
   final Object error;
   final VoidCallback onRetry;
+  final AppLocalizations l10n;
   const _ErrorState({
     required this.isDark,
     required this.error,
     required this.onRetry,
+    required this.l10n,
   });
 
   @override

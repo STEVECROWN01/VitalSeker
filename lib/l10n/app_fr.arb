@@ -156,5 +156,15 @@
   "accountDeleted": "Compte supprimé. Désolé de vous voir partir.",
   "sendEmergencySOS": "Envoyer SOS d'Urgence ?",
   "sosMessageBody": "Ceci enverra un SMS avec votre position à tous vos contacts d'urgence.",
-  "sendSOS": "Envoyer SOS"
+  "sendSOS": "Envoyer SOS",
+  "euEmergency": "Urgence UE",
+  "usEmergency": "Urgence US",
+  "samuEmergency": "SAMU (FR)",
+  "medicalDisclaimer": "Ces informations ne constituent pas un diagnostic médical. VitalSeker ne remplace pas un professionnel de santé qualifié.",
+  "poweredByGlm": "Propulsé par GLM-4",
+  "aiTriageIn90Seconds": "Triage IA en 90 secondes",
+  "familyProfilesProOnly": "Les profils famille sont une fonctionnalité Pro. Passez à Pro pour ajouter des membres.",
+  "exportProOnly": "L'export PDF est une fonctionnalité Pro. Passez à Pro pour générer des rapports.",
+  "triageLimitReached": "Vous avez atteint votre limite mensuelle de triages gratuits (3). Passez à Pro pour des triages illimités.",
+  "monthlyTriageLimit": "3 triages par mois (offre gratuite)"
 }

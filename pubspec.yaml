@@ -13,7 +13,7 @@ dependencies:
   # Localization
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   # Supabase
   supabase_flutter: ^2.6.0

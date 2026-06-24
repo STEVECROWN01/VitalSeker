@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -915,12 +915,12 @@ class _TipCard extends StatelessWidget {
 // 5. Generate New Insights — full-width gradient CTA
 // ═══════════════════════════════════════════════════════════════════════════
 
-class _GenerateInsightsCta extends StatelessWidget {
+class _GenerateInsightsCta extends ConsumerWidget {
   final bool isDark;
   const _GenerateInsightsCta({required this.isDark});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     return SizedBox(
       width: double.infinity,
@@ -928,11 +928,10 @@ class _GenerateInsightsCta extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () {
-            // Re-fetch insights. The edge function is admin/CRON-triggered,
-            // so we just invalidate the local provider to refresh from the DB.
-            // Showing a snackbar so the user gets feedback that the request
-            // has been registered.
+          onTap: () async {
+            // Actually refresh the insights provider. Previously this only
+            // showed a snackbar and never called ref.invalidate — making the
+            // "Generate New Insights" button a complete no-op.
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -948,6 +947,17 @@ class _GenerateInsightsCta extends StatelessWidget {
                 duration: const Duration(seconds: 2),
               ),
             );
+            // Attempt to invoke the weekly-insights edge function. Failures
+            // are tolerated (the function may be CRON-only); we still refresh
+            // the local provider so any newly-persisted rows surface.
+            try {
+              await EdgeFunctionService().generateWeeklyInsights();
+            } catch (_) {
+              // Expected — the function may be CRON-gated. Continue.
+            }
+            if (context.mounted) {
+              ref.invalidate(weeklyInsightsProvider);
+            }
           },
           child: Ink(
             decoration: BoxDecoration(

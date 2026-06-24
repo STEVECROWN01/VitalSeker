@@ -16,10 +16,12 @@ const corsHeaders = {
  *   - Fails CLOSED if QR_ENCRYPTION_KEY is missing or too short — no insecure
  *     fallback key. Set the secret via:
  *       supabase secrets set QR_ENCRYPTION_KEY=$(openssl rand -base64 32)
- *   - Tokens encode an `expires_at` (default 90 days). A decrypt endpoint can
- *     enforce this; the upsert also stores expires_at on the passport row.
+ *   - Tokens encode an `expires_at` (24 hours per VitalSeker spec Section 7.5:
+ *     "Token QR partageable : UUID cryptographique + expiration 24h").
+ *     A decrypt endpoint can enforce this; the upsert also stores expires_at
+ *     on the passport row.
  */
-const QR_TOKEN_TTL_DAYS = 90
+const QR_TOKEN_TTL_DAYS = 1  // 24 hours — per Cahier des Charges Section 7.5
 
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
@@ -58,23 +60,29 @@ serve(async (req: Request) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }
-    // Pad/truncate to exactly 32 bytes (AES-256). If using base64 input, decode it.
+    // Decode the QR_ENCRYPTION_KEY to exactly 32 bytes (AES-256).
+    // Fail CLOSED if the key is not a valid 32-byte base64 string — no insecure
+    // zero-padding fallback. Operators must set a proper key via:
+    //   supabase secrets set QR_ENCRYPTION_KEY=$(openssl rand -base64 32)
     let keyBytes: Uint8Array
     try {
-      // Try base64 decode first
       const decoded = atob(rawKey)
       keyBytes = new Uint8Array(decoded.length)
       for (let i = 0; i < decoded.length; i++) keyBytes[i] = decoded.charCodeAt(i)
-      if (keyBytes.length < 32) throw new Error('decoded key < 32 bytes')
-    } catch {
-      // Fall back to raw UTF-8 bytes
-      const encoded = new TextEncoder().encode(rawKey)
-      keyBytes = encoded.slice(0, 32)
       if (keyBytes.length < 32) {
-        const padded = new Uint8Array(32)
-        padded.set(keyBytes)
-        keyBytes = padded
+        console.error('QR_ENCRYPTION_KEY decoded to < 32 bytes. Regenerate with: openssl rand -base64 32')
+        return new Response(JSON.stringify({ error: 'QR service misconfigured' }), {
+          status: 503,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        })
       }
+      keyBytes = keyBytes.slice(0, 32)
+    } catch {
+      console.error('QR_ENCRYPTION_KEY is not valid base64. Regenerate with: openssl rand -base64 32')
+      return new Response(JSON.stringify({ error: 'QR service misconfigured' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
     }
 
     // Generate encrypted QR token

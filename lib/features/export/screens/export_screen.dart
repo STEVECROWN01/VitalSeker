@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -8,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/health_passport_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -113,6 +115,17 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 
   Future<void> _exportPdf({required bool viaEmail}) async {
     final l10n = AppLocalizations.of(context)!;
+
+    // Pro-gating: PDF export is a Pro-only feature per Cahier des Charges
+    // Section 2.5 ("Export PDF médecin (Pro) — Aperçu rapport, envoi par email").
+    final isPro = ref.read(isProUserProvider);
+    if (!isPro) {
+      if (!mounted) return;
+      AppSnackBar.error(context, l10n.exportProOnly);
+      context.push(AppConfig.subscription);
+      return;
+    }
+
     setState(() => viaEmail ? _isEmailing = true : _isExporting = true);
     try {
       final passport = ref.read(healthPassportProvider).valueOrNull;

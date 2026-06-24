@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/appointment.dart';
 import '../providers/auth_provider.dart';
 import '../services/database_service.dart';
+import 'user_profile_provider.dart';
 
 final appointmentsProvider = AsyncNotifierProvider<AppointmentsNotifier, List<Appointment>>(AppointmentsNotifier.new);
 
@@ -10,7 +11,7 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
   Future<List<Appointment>> build() async {
     final user = ref.watch(currentUserProvider);
     if (user == null) return [];
-    final db = DatabaseService();
+    final db = ref.read(databaseServiceProvider);
     final data = await db.getAppointments(user.id);
     return data.map((e) => Appointment.fromJson(e)).toList();
   }
@@ -39,7 +40,7 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
       updatedAt: now,
     );
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.insertAppointment(appointment.toJson());
       ref.invalidateSelf();
     } catch (e) {
@@ -49,7 +50,7 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
 
   Future<void> updateAppointmentStatus(String appointmentId, AppointmentStatus status) async {
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.updateAppointment(appointmentId, {'status': status.name});
       ref.invalidateSelf();
     } catch (e) {
@@ -65,7 +66,7 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     required DateTime newDateTime,
   }) async {
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.updateAppointment(appointmentId, {
         'date_time': newDateTime.toIso8601String(),
         'status': AppointmentStatus.upcoming.name,
@@ -78,7 +79,7 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
 
   Future<void> deleteAppointment(String appointmentId) async {
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.deleteAppointment(appointmentId);
       ref.invalidateSelf();
     } catch (e) {

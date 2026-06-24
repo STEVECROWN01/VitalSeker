@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/family_provider.dart';
+import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
@@ -270,7 +271,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   void _showLanguageSheet() {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final langs = ['English (US)', 'English (UK)', 'French', 'Spanish', 'Arabic', 'Swahili'];
+    // Use the full 26-language list from locale_provider (matches the Profile
+    // screen). Previously this only offered 6 languages — a confusing subset
+    // that didn't include Portuguese, German, Chinese, etc.
+    final langs = languageLocales.keys.toList();
+    final currentLocale = ref.read(localeProvider);
+    final currentLangName = localeToLanguageName(currentLocale);
     showModalBottomSheet(
       context: context,
       backgroundColor: AppColors.surface(isDark),
@@ -278,28 +284,47 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                l10n.selectLanguage,
-                style: AppTextStyles.heading4.copyWith(color: AppColors.textPrimary(isDark)),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.7,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  l10n.selectLanguage,
+                  style: AppTextStyles.heading4.copyWith(color: AppColors.textPrimary(isDark)),
+                ),
               ),
-            ),
-            ...langs.map((lang) => ListTile(
-              title: Text(lang, style: AppTextStyles.bodyMedium),
-              trailing: _selectedLanguage == lang
-                  ? Icon(Icons.check, color: AppColors.primary(isDark))
-                  : null,
-              onTap: () {
-                setState(() => _selectedLanguage = lang);
-                Navigator.pop(ctx);
-              },
-            )),
-            const SizedBox(height: 8),
-          ],
+              const Divider(height: 1),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: langs.length,
+                  itemBuilder: (ctx, i) {
+                    final lang = langs[i];
+                    return ListTile(
+                      title: Text(lang, style: AppTextStyles.bodyMedium),
+                      trailing: currentLangName == lang
+                          ? Icon(Icons.check, color: AppColors.primary(isDark))
+                          : null,
+                      onTap: () {
+                        // Actually call localeProvider so the locale changes
+                        // immediately and persists to the DB (was previously
+                        // a no-op that only updated a local field).
+                        ref.read(localeProvider.notifier).setLocaleByLanguageName(lang);
+                        setState(() => _selectedLanguage = lang);
+                        Navigator.pop(ctx);
+                      },
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
     );
@@ -363,7 +388,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   iconBg: _tint(AppColors.primaryContainer(isDark), isDark),
                   iconFg: isDark ? AppColors.darkOnSurface : AppColors.primary(isDark),
                   label: l10n.language,
-                  subtitle: _selectedLanguage,
+                  // Reflect the current locale from localeProvider (was previously
+                  // always hardcoded 'English (US)' — never updated).
+                  subtitle: localeToLanguageName(ref.watch(localeProvider)),
                   onTap: _showLanguageSheet,
                 ),
               ],

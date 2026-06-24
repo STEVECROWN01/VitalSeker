@@ -17,6 +17,7 @@ class EdgeFunctionService {
     List<String>? bodyRegions,
     String? notes,
     List<Map<String, String>>? conversationHistory,
+    String? language,
   }) async {
     final body = <String, dynamic>{
       'symptoms': symptoms,
@@ -24,6 +25,9 @@ class EdgeFunctionService {
       'duration': duration,
       'body_regions': bodyRegions,
       'notes': notes,
+      // Per spec Rule R6 (multilingual): tell the edge function which language
+      // the user is using so GLM can respond in that language.
+      'language': language ?? 'en',
     };
     if (conversationHistory != null && conversationHistory.isNotEmpty) {
       body['conversation_history'] = conversationHistory;

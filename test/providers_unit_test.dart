@@ -7,6 +7,7 @@ import 'package:vitalseker/core/models/vital.dart';
 import 'package:vitalseker/core/providers/appointments_provider.dart';
 import 'package:vitalseker/core/providers/auth_provider.dart';
 import 'package:vitalseker/core/providers/medications_provider.dart';
+import 'package:vitalseker/core/providers/user_profile_provider.dart';
 import 'package:vitalseker/core/providers/vitals_provider.dart';
 import 'package:vitalseker/core/services/database_service.dart';
 

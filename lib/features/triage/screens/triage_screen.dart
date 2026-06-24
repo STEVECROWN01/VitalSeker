@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
+import '../../../core/providers/locale_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 import 'ai_thinking_screen.dart';
 
 class TriageScreen extends ConsumerStatefulWidget {
@@ -153,6 +155,9 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
         severity: severity,
         notes: text,
         conversationHistory: historyToSend,
+        // Pass the user's current locale so GLM responds in the right language
+        // (spec Rule R6: "Répondre dans la langue de l'utilisateur").
+        language: ref.read(localeProvider).languageCode,
       );
 
       _lastTriageResult = result;
@@ -346,6 +351,12 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
                     );
                   },
                 ),
+              ),
+
+              // Medical disclaimer — spec Section 7: required on every result screen.
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: MedicalDisclaimerBanner(compact: true),
               ),
 
               // Bottom input bar

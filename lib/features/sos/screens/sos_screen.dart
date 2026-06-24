@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
@@ -584,6 +584,17 @@ class _SosScreenState extends ConsumerState<SosScreen>
                   children: [
                     Expanded(
                       child: _QuickDialButton(
+                        label: '15',
+                        subtitle: l10n.samuEmergency,
+                        icon: Icons.phone,
+                        color: AppColors.urgencyEmergency,
+                        isDark: isDark,
+                        onTap: () => _makePhoneCall('15'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _QuickDialButton(
                         label: '112',
                         subtitle: l10n.euEmergency,
                         icon: Icons.phone,
@@ -1068,7 +1079,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
               border: Border.all(color: Colors.white, width: 3),
             ),
             child: _isSending
-                ? const Column(
+                ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(

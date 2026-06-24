@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -60,8 +60,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    // Defer to first frame so providers have a chance to resolve.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _loadAiTip());
+    // Note: the previous implementation called _loadAiTip() here, which
+    // misused the triage edge function (a $0.003/consultation call) to
+    // generate a "wellness tip" that was never rendered after the dashboard
+    // redesign. The dead code has been removed to avoid wasting AI calls
+    // on every dashboard mount. If AI-generated tips are needed in the
+    // future, implement a dedicated edge function.
   }
 
   /// Fetch a real AI-generated health tip via the triage edge function.
@@ -807,7 +811,7 @@ class _BentoQuickActions extends StatelessWidget {
           isDark: isDark,
           icon: Icons.healing,
           title: l10n.checkSymptomsNow,
-          subtitle: l10n.aiPoweredTriage60s,
+          subtitle: l10n.aiTriageIn90Seconds,
           onTap: () => context.push(AppConfig.triage),
         ),
         const SizedBox(height: 12),

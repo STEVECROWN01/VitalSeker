@@ -35,7 +35,11 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
 
   Future<void> _loadRecords() async {
     final user = ref.read(currentUserProvider);
-    if (user == null) return;
+    if (user == null) {
+      // Avoid infinite spinner if user is somehow null (signed out mid-screen).
+      if (mounted) setState(() => _isLoading = false);
+      return;
+    }
     try {
       final db = ref.read(databaseServiceProvider);
       final records = await db.getMedicalRecords(user.id);

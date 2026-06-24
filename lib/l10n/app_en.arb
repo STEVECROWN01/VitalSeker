@@ -769,6 +769,7 @@
   "dismiss": "Dismiss",
   "euEmergency": "EU Emergency",
   "usEmergency": "US Emergency",
+  "samuEmergency": "SAMU (FR)",
   "opensMapsHospitals": "Opens your maps app with emergency hospitals nearby",
   "liveLocation": "Live Location",
   "acquiringGps": "Acquiring GPS coordinates…",
@@ -887,5 +888,20 @@
         "type": "String"
       }
     }
-  }
+  },
+  "medicalDisclaimer": "This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.",
+  "poweredByGlm": "Powered by GLM-4",
+  "aiTriageIn90Seconds": "AI-powered triage in 90 seconds",
+  "vitalValueOutOfRange": "Value out of expected range",
+  "vitalRangeHintHeartRate": "Heart rate should be between 30 and 220 BPM",
+  "vitalRangeHintBloodPressure": "Blood pressure should be between 60-250 (systolic) and 40-150 (diastolic)",
+  "vitalRangeHintTemperature": "Body temperature should be between 30 and 45 °C",
+  "vitalRangeHintOxygen": "Blood oxygen should be between 50 and 100 %",
+  "vitalRangeHintGlucose": "Blood glucose should be between 20 and 600 mg/dL",
+  "vitalRangeHintWeight": "Weight should be between 2 and 500 kg",
+  "vitalRangeHintHeight": "Height should be between 30 and 250 cm",
+  "familyProfilesProOnly": "Family Profiles is a Pro feature. Upgrade to add family members.",
+  "exportProOnly": "PDF Export is a Pro feature. Upgrade to generate reports.",
+  "triageLimitReached": "You have reached your free monthly triage limit (3). Upgrade to Pro for unlimited triages.",
+  "monthlyTriageLimit": "3 triages per month (Free plan)"
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../services/database_service.dart';
+import 'auth_provider.dart';
 
 /// Maps language display names to Locale objects.
 const Map<String, Locale> languageLocales = {
@@ -49,22 +51,68 @@ String localeToLanguageName(Locale locale) {
 }
 
 /// Provider for the app's current locale. Changing this immediately
-/// re-translates the entire app via Flutter's localization system.
+/// re-translates the entire app via Flutter's localization system AND
+/// persists the choice to the users table so it survives app restarts.
 final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
-  return LocaleNotifier();
+  return LocaleNotifier(ref);
 });
 
 class LocaleNotifier extends StateNotifier<Locale> {
-  LocaleNotifier() : super(const Locale('en'));
+  final Ref _ref;
+
+  LocaleNotifier(this._ref) : super(const Locale('en')) {
+    // Load saved locale when auth state changes (i.e. on sign-in).
+    _ref.listen<AsyncValue>(authStateProvider, (_, __) {
+      loadLocale();
+    });
+  }
+
+  /// Load the user's saved language preference from the DB. Called on app
+  /// start and on auth state changes.
+  Future<void> loadLocale() async {
+    final user = _ref.read(currentUserProvider);
+    if (user == null) return;
+    try {
+      final db = DatabaseService();
+      final profile = await db.getUserProfile(user.id);
+      if (profile != null) {
+        final langCode = profile.preferredLanguage;
+        if (langCode.isNotEmpty && langCode != 'en') {
+          // Try to find a matching locale
+          for (final entry in languageLocales.entries) {
+            if (entry.value.languageCode == langCode) {
+              state = entry.value;
+              return;
+            }
+          }
+        }
+      }
+    } catch (_) {}
+  }
 
   void setLocale(Locale locale) {
     state = locale;
+    _persist(locale);
   }
 
   void setLocaleByLanguageName(String languageName) {
     final locale = languageLocales[languageName];
     if (locale != null) {
       state = locale;
+      _persist(locale);
     }
+  }
+
+  /// Persist the locale to the users table so it survives app restarts.
+  /// Falls back silently if the user is not signed in or the DB write fails.
+  Future<void> _persist(Locale locale) async {
+    final user = _ref.read(currentUserProvider);
+    if (user == null) return;
+    try {
+      final db = DatabaseService();
+      await db.updateUserProfile(user.id, {
+        'preferred_language': locale.languageCode,
+      });
+    } catch (_) {}
   }
 }

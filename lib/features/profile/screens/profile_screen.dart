@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -295,7 +295,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           ? AppColors.darkOnSurface
                           : AppColors.primary(isDark),
                       label: l10n.language,
-                      subtitle: 'English (US)',
+                      // Reflect the actual selected locale (was hardcoded 'English (US)').
+                      subtitle: localeToLanguageName(ref.watch(localeProvider)),
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
