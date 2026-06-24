@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/medications_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 class MedicalIdScreen extends ConsumerStatefulWidget {
   const MedicalIdScreen({super.key});
@@ -247,15 +249,17 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                 ),
                 const SizedBox(height: 20),
 
-                // Share Button
+                // View QR button (the previous label "Share Medical ID" was
+                // misleading — the button only navigates to the QR screen,
+                // it doesn't actually share. Now the label matches the action.)
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
                     onPressed: () => context.push(AppConfig.qrDisplay),
-                    icon: const Icon(Icons.share_outlined),
-                    label: const Text(
-                      'Share Medical ID',
-                      style: TextStyle(
+                    icon: const Icon(Icons.qr_code_2),
+                    label: Text(
+                      AppLocalizations.of(context)!.viewQrCode,
+                      style: const TextStyle(
                         fontFamily: 'Outfit',
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -269,7 +273,12 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
+
+                // Medical disclaimer — required on every screen displaying
+                // clinical data per Cahier des Charges Section 7.
+                const MedicalDisclaimerBanner(),
+                const SizedBox(height: 20),
               ],
             ),
           );

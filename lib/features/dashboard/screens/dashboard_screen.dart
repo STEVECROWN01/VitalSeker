@@ -728,32 +728,35 @@ class _HealthScoreHeroCard extends StatelessWidget {
   }
 }
 
-/// 7-bar mini chart (MON–SUN) derived deterministically from the vital score.
-/// Today's bar is highlighted in solid white; other bars are white @ 35%.
+/// 7-bar mini chart (MON–SUN).
+///
+/// PREVIOUSLY this widget fabricated deterministic data (_variations = [-6, 3,
+/// 7, -3, 9, 4, 0]) to make the chart look populated. That was misleading —
+/// users thought the app was showing real historical scores.
+///
+/// NOW: only today's bar shows the actual vital score; the other 6 bars are
+/// rendered as small "no data" stubs. When real history is available (e.g.
+/// via a future vitals_score_history table), this widget should be updated
+/// to plot real values for each day.
 class _WeeklyMiniChart extends StatelessWidget {
   final int score;
   const _WeeklyMiniChart({required this.score});
 
   static const _days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  // Deterministic MON–SUN offsets around the current score.
-  static const _variations = [-6, 3, 7, -3, 9, 4, 0];
 
   @override
   Widget build(BuildContext context) {
     // DateTime.weekday: 1=Mon … 7=Sun → 0-based for our array.
     final today = (DateTime.now().weekday - 1) % 7;
-    final values = List<double>.generate(
-      7,
-      (i) => (score + _variations[i]).clamp(0, 100).toDouble(),
-    );
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: List.generate(7, (i) {
         final isToday = i == today;
-        // Bar height: min 8px (for score 0) → max 40px (for score 100).
-        final barHeight = 8 + (values[i] / 100) * 32;
+        // Today's bar shows the real score (scaled to 8-40px).
+        // Other bars are 4px stubs indicating "no historical data yet".
+        final barHeight = isToday ? (8 + (score / 100) * 32) : 4.0;
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [

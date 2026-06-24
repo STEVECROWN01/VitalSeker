@@ -570,7 +570,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get passwordsDoNotMatch => 'Passwords do not match';
 
   @override
-  String get passwordMinLength => 'Password must be at least 6 characters';
+  String get passwordMinLength => 'Password must be at least 8 characters';
 
   @override
   String get passwordUpdatedSuccessfully => 'Password updated successfully';
@@ -1484,7 +1484,13 @@ class AppLocalizationsSw extends AppLocalizations {
   String get includeUppercase => 'Include at least one uppercase letter';
 
   @override
+  String get includeLowercase => 'Include at least one lowercase letter';
+
+  @override
   String get includeNumber => 'Include at least one number';
+
+  @override
+  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
 
   @override
   String get confirmPasswordRequired => 'Please confirm your password';
@@ -2117,4 +2123,19 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get monthlyTriageLimit => '3 triages per month (Free plan)';
+
+  @override
+  String get viewQrCode => 'View QR Code';
+
+  @override
+  String get shareMedicalId => 'Share Medical ID';
+
+  @override
+  String translationTooLong(int max) {
+    return 'Text is too long (max $max characters). Please shorten and try again.';
+  }
+
+  @override
+  String get profileFieldsSaveFailed =>
+      'Account created, but optional profile fields (date of birth, gender, blood type) couldn\'t be saved. You can edit them later in Profile > Edit Profile.';
 }

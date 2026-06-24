@@ -160,25 +160,26 @@ class InsightsScreen extends ConsumerWidget {
     );
   }
 
-  /// Build a 4-point symptom-frequency series (most recent week last).
-  /// Pads with deterministic synthetic points if fewer than 4 weeks of data.
+  /// Build a symptom-frequency series (most recent week last).
+  ///
+  /// PREVIOUSLY this method padded the series with fabricated "synthetic"
+  /// data points when fewer than 4 weeks of data existed — a user with only
+  /// 1 week of real data saw a 4-week curve where 3 of the 4 points were
+  /// fabricated, with no visual indication that those weeks were synthetic.
+  ///
+  /// NOW: returns only the real data points. The chart renders fewer bars
+  /// (or a single bar) when there's less data, which is honest.
   List<_WeekPoint> _buildSymptomSeries(List<WeeklyInsight> insights) {
     // Sort ascending by weekStart so W1 = oldest, W4 = newest.
     final sorted = [...insights]
       ..sort((a, b) => a.weekStart.compareTo(b.weekStart));
     final points = sorted.map((i) => i.trendAnalysis.symptomFrequency.toDouble()).toList();
-    while (points.length < 4) {
-      // Pad at the front with a deterministic synthetic value derived from
-      // the earliest known point so the curve has 4 visible data points.
-      final base = points.isEmpty ? 5.0 : points.first;
-      final synthetic = (base * 1.2 + points.length).clamp(1.0, 30.0);
-      points.insert(0, synthetic);
-    }
     // Keep only the last 4 weeks (most recent 4 data points).
     final last4 = points.length > 4 ? points.sublist(points.length - 4) : points;
+    // Use dynamic labels based on actual count (W1, W2, W3, W4) — but only
+    // for the weeks we actually have data for.
     return last4.asMap().entries.map((e) {
-      const labels = ['W1', 'W2', 'W3', 'W4'];
-      return _WeekPoint(label: labels[e.key], value: e.value);
+      return _WeekPoint(label: 'W${e.key + 1}', value: e.value);
     }).toList();
   }
 }

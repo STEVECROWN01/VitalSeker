@@ -170,6 +170,99 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
     }
   }
 
+  /// Show a read-only bottom sheet with the family member's details when
+  /// their card is tapped. Previously tapping the card did nothing (empty
+  /// onTap handler), which was confusing — the card visually responded to
+  /// taps (ripple effect) but no UI appeared.
+  void _showMemberDetails(FamilyProfile p) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.surface(isDark),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 40, height: 4,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.outlineVariant(isDark),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: AppColors.primaryContainer(isDark),
+                    child: Text(
+                      p.fullName.isNotEmpty ? p.fullName[0].toUpperCase() : '?',
+                      style: TextStyle(color: AppColors.primary(isDark)),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(p.fullName,
+                            style: TextStyle(
+                              fontFamily: 'ClashDisplay',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textPrimary(isDark),
+                            )),
+                        if (p.relationship.isNotEmpty)
+                          Text(p.relationship,
+                              style: TextStyle(
+                                fontFamily: 'DMSans',
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 0.05,
+                                color: AppColors.textSecondary(isDark),
+                              )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              if (p.bloodType != null && p.bloodType!.isNotEmpty)
+                _DetailRow(label: l10n.bloodType, value: p.bloodType!, isDark: isDark),
+              if (p.dateOfBirth != null)
+                _DetailRow(
+                  label: l10n.dateOfBirth,
+                  value: '${p.dateOfBirth!.year}-${p.dateOfBirth!.month.toString().padLeft(2, '0')}-${p.dateOfBirth!.day.toString().padLeft(2, '0')}',
+                  isDark: isDark,
+                ),
+              if (p.allergies.isNotEmpty)
+                _DetailRow(label: l10n.allergies, value: p.allergies.join(', '), isDark: isDark),
+              if (p.chronicConditions.isNotEmpty)
+                _DetailRow(label: l10n.chronicConditions, value: p.chronicConditions.join(', '), isDark: isDark),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: Text(l10n.close),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void _showAddDialog() {
     final l10n = AppLocalizations.of(context)!;
     // Reset form state each time the dialog opens so stale values from a
@@ -256,18 +349,13 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
     );
   }
 
-  /// Derive a deterministic 0–100 "health score" for a family member from
-  /// their profile. The model doesn't track scores for family members (only
-  /// the owner has a vital score via the health passport), so we derive a
-  /// stable synthetic number based on the data we *do* have (allergies,
-  /// chronic conditions count, name hash) — purely for the small circular
-  /// indicator shown on each card per the design.
-  int _derivedScore(FamilyProfile p) {
-    final hash = p.fullName.hashCode.abs();
-    final base = 70 + (hash % 25); // 70..94
-    final penalty = (p.allergies.length + p.chronicConditions.length) * 3;
-    return (base - penalty).clamp(40, 99);
-  }
+  /// Returns null because the family member health score is NOT tracked in
+  /// the data model — only the owner has a vital score via the health
+  /// passport. The previous implementation fabricated a deterministic number
+  /// from `p.fullName.hashCode` which was deceptive (parents thought the
+  /// score reflected their child's actual health). Now we return null and
+  /// the card shows a "—" placeholder until real scores are tracked.
+  int? _familyMemberScore(FamilyProfile p) => null;
 
   @override
   Widget build(BuildContext context) {
@@ -344,8 +432,12 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                               child: _FamilyMemberCard(
                                 isDark: isDark,
                                 profile: p,
-                                score: _derivedScore(p),
-                                onTap: () {},
+                                score: _familyMemberScore(p),
+                                // Show a bottom sheet with member details when
+                                // tapped. Previously this was `() {}` — the
+                                // card visually responded to taps (ripple)
+                                // but did nothing, which was confusing.
+                                onTap: () => _showMemberDetails(p),
                                 onDelete: () =>
                                     _deleteMember(p.id, p.fullName),
                                 l10n: l10n,
@@ -759,7 +851,10 @@ class _OwnerCard extends StatelessWidget {
 class _FamilyMemberCard extends StatelessWidget {
   final bool isDark;
   final FamilyProfile profile;
-  final int score;
+  /// Family member health score. Null when no real score is tracked (which is
+  /// always, currently — see _familyMemberScore comment). The card shows a
+  /// "—" placeholder in that case instead of a fabricated number.
+  final int? score;
   final VoidCallback onTap;
   final VoidCallback onDelete;
   final AppLocalizations l10n;
@@ -774,16 +869,26 @@ class _FamilyMemberCard extends StatelessWidget {
 
   String _ageLine() {
     if (profile.dateOfBirth != null) {
-      final age = DateTime.now().year - profile.dateOfBirth!.year;
+      // Correct age calculation — accounts for whether the birthday has
+      // occurred this year. The previous `now.year - dob.year` was wrong by
+      // up to 1 year for anyone whose birthday hasn't happened yet this year.
+      final now = DateTime.now();
+      final dob = profile.dateOfBirth!;
+      int age = now.year - dob.year;
+      if (now.month < dob.month || (now.month == dob.month && now.day < dob.day)) {
+        age--;
+      }
+      if (age < 0) return '—';
       return l10n.years(age);
     }
     return '—';
   }
 
   Color _scoreColor() {
-    if (score >= 80) return AppColors.success(isDark);
-    if (score >= 60) return AppColors.primary(isDark);
-    if (score >= 40) return AppColors.warning(isDark);
+    if (score == null) return AppColors.outline(isDark);
+    if (score! >= 80) return AppColors.success(isDark);
+    if (score! >= 60) return AppColors.primary(isDark);
+    if (score! >= 40) return AppColors.warning(isDark);
     return AppColors.error(isDark);
   }
 
@@ -912,7 +1017,9 @@ class _FamilyMemberCard extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    '$score',
+                    // Show "—" when no real score is tracked (was previously
+                    // a fabricated number from the user's name hash).
+                    score == null ? '—' : '$score',
                     style: TextStyle(
                       fontFamily: 'JetBrainsMono',
                       fontSize: 13,
@@ -1449,3 +1556,46 @@ class _ErrorState extends StatelessWidget {
   }
 }
 
+
+/// Helper row for the member details bottom sheet.
+class _DetailRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool isDark;
+  const _DetailRow({required this.label, required this.value, required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 110,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontFamily: 'DMSans',
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 0.05,
+                color: AppColors.textSecondary(isDark),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 13,
+                color: AppColors.textPrimary(isDark),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -7,6 +7,7 @@ import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/user_profile.dart';
@@ -417,16 +418,17 @@ class _SosScreenState extends ConsumerState<SosScreen>
     // so we just bail out silently here when it returns null.
     if (position == null) return;
     try {
+      // Use Share.share to open the system share sheet (SMS, WhatsApp, email,
+      // etc.). The previous implementation copied to clipboard only, which
+      // was counter-intuitive — the user tapped "Share My Location" expecting
+      // to send via SMS to a contact, not to get a clipboard copy.
       final locationText =
           'My emergency location: https://maps.google.com/?q=${position.latitude},${position.longitude}';
-      await Clipboard.setData(ClipboardData(text: locationText));
-      if (mounted) {
-        AppSnackBar.success(context, 'Location link copied to clipboard!');
-      }
+      await Share.share(locationText, subject: 'Emergency Location');
     } catch (e) {
       if (mounted) {
         AppSnackBar.errorFromException(
-            context, 'Failed to copy location to clipboard.', e);
+            context, 'Failed to share location.', e);
       }
     }
   }

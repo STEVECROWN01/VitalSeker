@@ -26,10 +26,21 @@ const sanitizePhone = (raw: unknown): string | null => {
   return trimmed
 }
 
-const sanitizeCoordinate = (raw: unknown): number | null => {
+const sanitizeCoordinate = (raw: unknown, kind: 'lat' | 'lng'): number | null => {
   if (typeof raw !== 'number' || !Number.isFinite(raw)) return null
-  // Reject NaN-as-0 truthiness tricks. Allow 0 only if explicitly finite.
+  // Per spec: validate latitude is in [-90, 90] and longitude in [-180, 180].
+  // Previously only checked Number.isFinite, so latitude: 99999 would be
+  // accepted and sent to Twilio/Google Maps.
+  if (kind === 'lat' && (raw < -90 || raw > 90)) return null
+  if (kind === 'lng' && (raw < -180 || raw > 180)) return null
   return raw
+}
+
+// XML-escape a string for safe interpolation into prompts / message bodies.
+function escapeForSms(s: string): string {
+  return s.replace(/[<>&"']/g, c => ({
+    '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;'
+  }[c]!))
 }
 
 serve(async (req: Request) => {
@@ -61,8 +72,8 @@ serve(async (req: Request) => {
     }
 
     const body = await req.json().catch(() => ({}))
-    const latitude = sanitizeCoordinate(body?.latitude)
-    const longitude = sanitizeCoordinate(body?.longitude)
+    const latitude = sanitizeCoordinate(body?.latitude, 'lat')
+    const longitude = sanitizeCoordinate(body?.longitude, 'lng')
     const location_address = typeof body?.location_address === 'string'
       ? body.location_address.slice(0, 500)
       : null
@@ -96,6 +107,16 @@ serve(async (req: Request) => {
       .eq('id', user.id)
       .maybeSingle()
 
+    // Fetch the user's health passport to include the QR token URL in the
+    // SOS message — per spec Section 2.4: "Bouton SOS — envoie passeport +
+    // localisation GPS à contacts d'urgence". Previously the message had
+    // location only, no passport link.
+    const { data: passport } = await supabaseClient
+      .from('health_passports')
+      .select('qr_token')
+      .eq('user_id', user.id)
+      .maybeSingle()
+
     const emergencyContacts = (userProfile?.emergency_contacts || []) as Array<{ name?: string; phone?: string; number?: string }>
     const contactsNotified: Array<{ name: string; phone: string; status: string }> = []
 
@@ -123,19 +144,35 @@ serve(async (req: Request) => {
     const twilioAccountSid = Deno.env.get('TWILIO_ACCOUNT_SID')
     const twilioAuthToken = Deno.env.get('TWILIO_AUTH_TOKEN')
     const twilioPhoneNumber = Deno.env.get('TWILIO_PHONE_NUMBER')
+    // Optional WhatsApp sender — set TWILIO_WHATSAPP_NUMBER to enable
+    // WhatsApp messages in addition to SMS (per spec Section 2.4:
+    // "Fonctionne par SMS en cas d'absence d'internet" — extend to WhatsApp).
+    const twilioWhatsAppNumber = Deno.env.get('TWILIO_WHATSAPP_NUMBER')
 
     let smsSent = false
 
     if (twilioAccountSid && twilioAuthToken && twilioPhoneNumber && emergencyContacts.length > 0) {
-      const userName = userProfile?.full_name || 'A VitalSeker user'
-      const locationInfo = location_address || (latitude !== null && longitude !== null ? `${latitude}, ${longitude}` : 'Unknown location')
-      const mapsLink = latitude !== null && longitude !== null ? `https://maps.google.com/?q=${latitude},${longitude}` : ''
+      // Sanitize the user's name (max 100 chars) to prevent abuse.
+      const rawName = (userProfile?.full_name || 'A VitalSeker user').slice(0, 100)
+      const userName = escapeForSms(rawName)
+      const locationInfo = location_address
+        ? escapeForSms(location_address)
+        : (latitude !== null && longitude !== null ? `${latitude}, ${longitude}` : 'Unknown location')
+      const mapsLink = latitude !== null && longitude !== null
+        ? `https://maps.google.com/?q=${latitude},${longitude}`
+        : ''
+      // Build a passport link line if a QR token is available. The recipient
+      // can scan this with any QR reader to view the sender's encrypted
+      // health passport (blood type, allergies, medications, etc.).
+      const passportLine = passport?.qr_token
+        ? `\nHealth Passport: https://vitalseker.app/qr/${encodeURIComponent(passport.qr_token)}`
+        : ''
 
-      const messageBody = `EMERGENCY SOS from ${userName} via VitalSeker!\n\nLocation: ${locationInfo}${mapsLink ? '\nMap: ' + mapsLink : ''}\n\nThis is an automated emergency alert. Please respond immediately.`
+      const messageBody = `EMERGENCY SOS from ${userName} via VitalSeker!\n\nLocation: ${locationInfo}${mapsLink ? '\nMap: ' + mapsLink : ''}${passportLine}\n\nThis is an automated emergency alert. Please respond immediately or call emergency services (15 / 112).`
 
       for (const contact of emergencyContacts) {
         const rawPhone = contact.phone || contact.number
-        const contactName = contact.name || 'Contact'
+        const contactName = escapeForSms((contact.name || 'Contact').slice(0, 100))
         const contactPhone = sanitizePhone(rawPhone)
 
         if (!contactPhone) {
@@ -163,6 +200,31 @@ serve(async (req: Request) => {
           if (twilioResponse.ok) {
             contactsNotified.push({ name: contactName, phone: contactPhone, status: 'sent' })
             smsSent = true
+
+            // Also send via WhatsApp if a WhatsApp sender number is configured.
+            // WhatsApp messages can reach users who don't have SMS but do have
+            // data — common in emerging markets (per spec target audience).
+            if (twilioWhatsAppNumber) {
+              try {
+                const waBody = new URLSearchParams({
+                  To: `whatsapp:${contactPhone}`,
+                  From: `whatsapp:${twilioWhatsAppNumber}`,
+                  Body: messageBody,
+                })
+                await fetch(twilioUrl, {
+                  method: 'POST',
+                  headers: {
+                    'Authorization': 'Basic ' + btoa(`${twilioAccountSid}:${twilioAuthToken}`),
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: waBody.toString(),
+                })
+                // We don't track WhatsApp status separately to keep the
+                // contacts_notified array shape stable for the client.
+              } catch (e) {
+                console.error('WhatsApp send error (non-fatal):', e)
+              }
+            }
           } else {
             const errText = await twilioResponse.text()
             console.error('Twilio SMS failed:', errText)

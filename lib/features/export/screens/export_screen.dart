@@ -973,8 +973,13 @@ class _PreviewDocument extends StatelessWidget {
     required this.l10n,
   });
 
-  String get _patientName => previewData['patient']?['name'] ?? 'Alexander Sterling';
-  String get _patientDob => previewData['patient']?['date_of_birth'] ?? '14 May 1985 (38)';
+  // Previously these getters returned mock data ('Alexander Sterling',
+  // '14 May 1985 (38)') when no real data was loaded — a user with no
+  // passport would see a fake patient profile in the live preview, which
+  // was misleading. Now they return a localized "—" placeholder until the
+  // real data is fetched via the exportPdf edge function call.
+  String get _patientName => previewData['patient']?['name'] ?? '—';
+  String get _patientDob => previewData['patient']?['date_of_birth'] ?? '—';
   int get _vitalScore => previewData['health_passport']?['vital_score'] ?? 0;
 
   @override
@@ -1095,7 +1100,9 @@ class _PreviewDocument extends StatelessWidget {
                     const SizedBox(height: 6),
                     _PreviewInfoRow(
                       label: 'Primary Care Physician',
-                      value: 'Dr. Sarah Jenkins',
+                      // Use real physician name from data if available,
+                      // otherwise "—" (was hardcoded 'Dr. Sarah Jenkins').
+                      value: previewData['patient']?['primary_care_physician'] ?? '—',
                     ),
                     const SizedBox(height: 6),
                     _PreviewInfoRow(

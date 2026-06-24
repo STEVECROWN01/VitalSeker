@@ -570,7 +570,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get passwordsDoNotMatch => 'Passwords do not match';
 
   @override
-  String get passwordMinLength => 'Password must be at least 6 characters';
+  String get passwordMinLength =>
+      'Le mot de passe doit comporter au moins 8 caractères';
 
   @override
   String get passwordUpdatedSuccessfully => 'Password updated successfully';
@@ -1481,10 +1482,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get atLeast6Chars => 'At least 6 characters';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => 'Inclure au moins une lettre majuscule';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeLowercase => 'Inclure au moins une lettre minuscule';
+
+  @override
+  String get includeNumber => 'Inclure au moins un chiffre';
+
+  @override
+  String get includeSymbol => 'Inclure au moins un symbole (!@#\$%^&*)';
 
   @override
   String get confirmPasswordRequired => 'Please confirm your password';
@@ -1493,7 +1500,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get optionalDetails => 'Optional Details';
 
   @override
-  String get dateOfBirth => 'Date of Birth';
+  String get dateOfBirth => 'Date de naissance';
 
   @override
   String get selectDateOfBirth => 'Select Date of Birth';
@@ -2117,4 +2124,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get monthlyTriageLimit => '3 triages par mois (offre gratuite)';
+
+  @override
+  String get viewQrCode => 'Voir le code QR';
+
+  @override
+  String get shareMedicalId => 'Partager le dossier médical';
+
+  @override
+  String translationTooLong(int max) {
+    return 'Le texte est trop long (max $max caractères). Raccourcissez et réessayez.';
+  }
+
+  @override
+  String get profileFieldsSaveFailed =>
+      'Compte créé, mais les champs optionnels (date de naissance, genre, groupe sanguin) n\'ont pas pu être enregistrés. Vous pouvez les modifier dans Profil > Modifier le profil.';
 }

@@ -1240,7 +1240,7 @@ abstract class AppLocalizations {
   /// No description provided for @passwordMinLength.
   ///
   /// In en, this message translates to:
-  /// **'Password must be at least 6 characters'**
+  /// **'Password must be at least 8 characters'**
   String get passwordMinLength;
 
   /// No description provided for @passwordUpdatedSuccessfully.
@@ -2833,11 +2833,23 @@ abstract class AppLocalizations {
   /// **'Include at least one uppercase letter'**
   String get includeUppercase;
 
+  /// No description provided for @includeLowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'Include at least one lowercase letter'**
+  String get includeLowercase;
+
   /// No description provided for @includeNumber.
   ///
   /// In en, this message translates to:
   /// **'Include at least one number'**
   String get includeNumber;
+
+  /// No description provided for @includeSymbol.
+  ///
+  /// In en, this message translates to:
+  /// **'Include at least one symbol (!@#\$%^&*)'**
+  String get includeSymbol;
 
   /// No description provided for @confirmPasswordRequired.
   ///
@@ -3930,6 +3942,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'3 triages per month (Free plan)'**
   String get monthlyTriageLimit;
+
+  /// No description provided for @viewQrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'View QR Code'**
+  String get viewQrCode;
+
+  /// No description provided for @shareMedicalId.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Medical ID'**
+  String get shareMedicalId;
+
+  /// No description provided for @translationTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Text is too long (max {max} characters). Please shorten and try again.'**
+  String translationTooLong(int max);
+
+  /// No description provided for @profileFieldsSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created, but optional profile fields (date of birth, gender, blood type) couldn\'t be saved. You can edit them later in Profile > Edit Profile.'**
+  String get profileFieldsSaveFailed;
 }
 
 class _AppLocalizationsDelegate

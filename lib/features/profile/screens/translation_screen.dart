@@ -35,15 +35,51 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
   String? _translation;
   bool _isLoading = false;
 
+  /// Max chars per translation request. Protects the DeepL free-tier quota
+  /// (1M chars/month) from a single oversized request. The edge function
+  /// also caps at 1000 chars server-side as a defense-in-depth.
+  static const int _maxChars = 1000;
+
+  /// Map display names → ISO 639-1 codes (uppercase for DeepL).
+  /// The previous implementation passed the display name ('French') to the
+  /// edge function, which then had to do its own mapping. Sending the ISO
+  /// code is more robust and lets the edge function trust the client.
+  static const Map<String, String> _langCodes = {
+    'French': 'FR',
+    'Spanish': 'ES',
+    'Arabic': 'AR',
+    'German': 'DE',
+    'Portuguese': 'PT',
+    'Chinese': 'ZH',
+    'Japanese': 'JA',
+    'Italian': 'IT',
+    'Dutch': 'NL',
+    'Polish': 'PL',
+    'Russian': 'RU',
+    'Korean': 'KO',
+    'Turkish': 'TR',
+    'Indonesian': 'ID',
+    'Thai': 'TH',
+    'Vietnamese': 'VI',
+    'Hindi': 'HI',
+    'Bengali': 'BN',
+    'Urdu': 'UR',
+    // Note: Swahili, Hausa, Yoruba, Igbo, Tagalog are NOT supported by
+    // DeepL as of 2025. They're intentionally omitted from this map; the
+    // edge function returns the original text with a note for these.
+    'Swahili': 'SW',
+    'Hausa': 'HA',
+    'Yoruba': 'YO',
+    'Igbo': 'IG',
+    'Tagalog': 'TL',
+  };
+
   static const List<String> _languages = [
-    'French',
-    'Spanish',
-    'Arabic',
-    'Swahili',
-    'German',
-    'Portuguese',
-    'Chinese',
-    'Japanese',
+    'French', 'Spanish', 'Arabic', 'Swahili', 'German',
+    'Portuguese', 'Chinese', 'Japanese', 'Italian', 'Dutch',
+    'Polish', 'Russian', 'Korean', 'Turkish', 'Indonesian',
+    'Thai', 'Vietnamese', 'Hindi', 'Bengali', 'Urdu',
+    'Hausa', 'Yoruba', 'Igbo', 'Tagalog',
   ];
 
   @override
@@ -56,8 +92,16 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
     final l10n = AppLocalizations.of(context)!;
     final text = _textController.text.trim();
     if (text.isEmpty) {
+      AppSnackBar.error(context, l10n.pleaseEnterTermToTranslate);
+      return;
+    }
+    // Enforce client-side character limit to protect DeepL monthly quota.
+    // The edge function also caps at 1000 chars server-side.
+    if (text.length > _maxChars) {
       AppSnackBar.error(
-          context, l10n.pleaseEnterTermToTranslate);
+        context,
+        l10n.translationTooLong(_maxChars),
+      );
       return;
     }
 
@@ -68,19 +112,25 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
 
     try {
       final edgeService = EdgeFunctionService();
+      // Pass the ISO 639-1 code (e.g. 'FR') instead of the display name
+      // ('French') — more robust and lets the edge function trust the client.
+      final isoCode = _langCodes[_targetLang] ?? _targetLang;
       final result = await edgeService.translate(
         text: text,
-        targetLang: _targetLang,
+        targetLang: isoCode,
       );
       if (!mounted) return;
+      // Check emptiness BEFORE setState so we don't briefly render an empty
+      // result card with a green checkmark.
+      if (result.isEmpty) {
+        setState(() => _isLoading = false);
+        AppSnackBar.error(context, l10n.noTranslationReturned);
+        return;
+      }
       setState(() {
         _translation = result;
         _isLoading = false;
       });
-      if (result.isEmpty) {
-        AppSnackBar.error(
-            context, l10n.noTranslationReturned);
-      }
     } catch (e) {
       if (!mounted) return;
       setState(() => _isLoading = false);

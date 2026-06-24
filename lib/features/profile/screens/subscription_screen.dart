@@ -63,13 +63,18 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
       final existing = await db.getSubscription(user.id);
 
       final now = DateTime.now();
-      final periodEnd = DateTime(now.year, now.month + 1, now.day);
+      // Compute one month from now correctly. DateTime(year, month + 1, day)
+      // silently normalizes Jan 31 + 1 month → Mar 3 (skipping Feb), which
+      // short-changes the user by 3 days. Instead, add 30 days as a stable
+      // approximation. For real IAP, RevenueCat / StoreKit provides the exact
+      // period end — this DB write is a placeholder until that's integrated.
+      final periodEnd = now.add(const Duration(days: 30));
 
       if (existing == null) {
         await db.createSubscription({
           'user_id': user.id,
           'plan': planName,
-          'status': planName == 'free' ? 'active' : 'active',
+          'status': 'active',
           'current_period_start': now.toIso8601String(),
           'current_period_end': periodEnd.toIso8601String(),
           'cancel_at_period_end': false,

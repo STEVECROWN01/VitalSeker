@@ -166,5 +166,16 @@
   "familyProfilesProOnly": "Les profils famille sont une fonctionnalité Pro. Passez à Pro pour ajouter des membres.",
   "exportProOnly": "L'export PDF est une fonctionnalité Pro. Passez à Pro pour générer des rapports.",
   "triageLimitReached": "Vous avez atteint votre limite mensuelle de triages gratuits (3). Passez à Pro pour des triages illimités.",
-  "monthlyTriageLimit": "3 triages par mois (offre gratuite)"
+  "monthlyTriageLimit": "3 triages par mois (offre gratuite)",
+  "viewQrCode": "Voir le code QR",
+  "shareMedicalId": "Partager le dossier médical",
+  "translationTooLong": "Le texte est trop long (max {max} caractères). Raccourcissez et réessayez.",
+  "close": "Fermer",
+  "dateOfBirth": "Date de naissance",
+  "passwordMinLength": "Le mot de passe doit comporter au moins 8 caractères",
+  "includeUppercase": "Inclure au moins une lettre majuscule",
+  "includeLowercase": "Inclure au moins une lettre minuscule",
+  "includeNumber": "Inclure au moins un chiffre",
+  "includeSymbol": "Inclure au moins un symbole (!@#$%^&*)",
+  "profileFieldsSaveFailed": "Compte créé, mais les champs optionnels (date de naissance, genre, groupe sanguin) n'ont pas pu être enregistrés. Vous pouvez les modifier dans Profil > Modifier le profil."
 }

@@ -193,7 +193,7 @@
   "confirmNewPassword": "Confirm New Password",
   "update": "Update",
   "passwordsDoNotMatch": "Passwords do not match",
-  "passwordMinLength": "Password must be at least 6 characters",
+  "passwordMinLength": "Password must be at least 8 characters",
   "passwordUpdatedSuccessfully": "Password updated successfully",
   "failedToUpdatePassword": "Failed to update password. Please try again.",
   "deleteAccountIrreversible": "This action is irreversible. All your data — vitals, medications, appointments, symptom logs, family profiles, and health passport — will be permanently deleted.",
@@ -585,7 +585,9 @@
   "nameMinChars": "Name must be at least 2 characters",
   "atLeast6Chars": "At least 6 characters",
   "includeUppercase": "Include at least one uppercase letter",
+  "includeLowercase": "Include at least one lowercase letter",
   "includeNumber": "Include at least one number",
+  "includeSymbol": "Include at least one symbol (!@#$%^&*)",
   "confirmPasswordRequired": "Please confirm your password",
   "optionalDetails": "Optional Details",
   "dateOfBirth": "Date of Birth",
@@ -903,5 +905,15 @@
   "familyProfilesProOnly": "Family Profiles is a Pro feature. Upgrade to add family members.",
   "exportProOnly": "PDF Export is a Pro feature. Upgrade to generate reports.",
   "triageLimitReached": "You have reached your free monthly triage limit (3). Upgrade to Pro for unlimited triages.",
-  "monthlyTriageLimit": "3 triages per month (Free plan)"
+  "monthlyTriageLimit": "3 triages per month (Free plan)",
+  "viewQrCode": "View QR Code",
+  "shareMedicalId": "Share Medical ID",
+  "translationTooLong": "Text is too long (max {max} characters). Please shorten and try again.",
+  "@translationTooLong": {
+    "placeholders": {
+      "max": {"type": "int"}
+    }
+  },
+  "close": "Close",
+  "profileFieldsSaveFailed": "Account created, but optional profile fields (date of birth, gender, blood type) couldn't be saved. You can edit them later in Profile > Edit Profile."
 }

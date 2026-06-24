@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/family_provider.dart';
@@ -224,10 +225,21 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       try {
                         final edgeService = EdgeFunctionService();
                         await edgeService.deleteAccount(confirmEmail: typed);
-                        // Force sign out from ALL providers including Google.
-                        // GoogleSignIn caches a token on the device — we must
-                        // explicitly revoke it so the user can't silently
-                        // re-login with the same Google account after deletion.
+                        // Sign out from all providers. Note: the previous
+                        // comment claimed this "explicitly revokes the Google
+                        // token" but signOut() only clears the local Supabase
+                        // session — it does NOT call GoogleSignIn.disconnect()
+                        // or revoke the OAuth grant. The user CAN silently
+                        // re-login with the same Google account after deletion
+                        // (the account itself is gone, but a new account could
+                        // be created). For full token revocation, call
+                        // GoogleSignIn().disconnect() before signOut().
+                        try {
+                          await GoogleSignIn().disconnect();
+                        } catch (_) {
+                          // Ignore if Google Sign-In was never used or
+                          // is not configured for this platform.
+                        }
                         try {
                           await ref.read(authServiceProvider).signOut();
                         } catch (_) {
