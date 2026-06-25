@@ -4950,6 +4950,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'More options'**
   String get moreOptions;
+
+  /// No description provided for @triageStepOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String triageStepOf(Object current, Object total);
+
+  /// No description provided for @triageQ1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'What are your main symptoms today?'**
+  String get triageQ1Title;
+
+  /// No description provided for @triageQ1Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all that apply. This helps our AI analyze your condition accurately.'**
+  String get triageQ1Subtitle;
+
+  /// No description provided for @triageQ2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'How long have you had these symptoms?'**
+  String get triageQ2Title;
+
+  /// No description provided for @triageQ2Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the option that best describes when your symptoms started.'**
+  String get triageQ2Subtitle;
+
+  /// No description provided for @triageQ3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'What is your age and biological sex?'**
+  String get triageQ3Title;
+
+  /// No description provided for @triageQ3Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This information helps calibrate the triage assessment.'**
+  String get triageQ3Subtitle;
+
+  /// No description provided for @triageQ4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Any known conditions or medications?'**
+  String get triageQ4Title;
+
+  /// No description provided for @triageQ4Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-filled from your profile. Edit if needed.'**
+  String get triageQ4Subtitle;
+
+  /// No description provided for @triageQ5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Any additional notes?'**
+  String get triageQ5Title;
+
+  /// No description provided for @triageQ5Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe any other details about your symptoms or situation.'**
+  String get triageQ5Subtitle;
+
+  /// No description provided for @triageSeverityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall Severity'**
+  String get triageSeverityLabel;
+
+  /// No description provided for @triageSeverityMild.
+  ///
+  /// In en, this message translates to:
+  /// **'Mild'**
+  String get triageSeverityMild;
+
+  /// No description provided for @triageSeveritySevere.
+  ///
+  /// In en, this message translates to:
+  /// **'Severe'**
+  String get triageSeveritySevere;
+
+  /// No description provided for @severityVeryMild.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Mild'**
+  String get severityVeryMild;
+
+  /// No description provided for @severityMild.
+  ///
+  /// In en, this message translates to:
+  /// **'Mild'**
+  String get severityMild;
+
+  /// No description provided for @severityModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get severityModerate;
+
+  /// No description provided for @severityDistracting.
+  ///
+  /// In en, this message translates to:
+  /// **'Distracting'**
+  String get severityDistracting;
+
+  /// No description provided for @severitySevere.
+  ///
+  /// In en, this message translates to:
+  /// **'Severe'**
+  String get severitySevere;
+
+  /// No description provided for @severityUnbearable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unbearable'**
+  String get severityUnbearable;
+
+  /// No description provided for @durationToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today (started today)'**
+  String get durationToday;
+
+  /// No description provided for @duration1To3Days.
+  ///
+  /// In en, this message translates to:
+  /// **'1-3 days'**
+  String get duration1To3Days;
+
+  /// No description provided for @duration4To7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'4-7 days'**
+  String get duration4To7Days;
+
+  /// No description provided for @duration1To2Weeks.
+  ///
+  /// In en, this message translates to:
+  /// **'1-2 weeks'**
+  String get duration1To2Weeks;
+
+  /// No description provided for @durationMoreThan2Weeks.
+  ///
+  /// In en, this message translates to:
+  /// **'More than 2 weeks'**
+  String get durationMoreThan2Weeks;
+
+  /// No description provided for @age.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get age;
+
+  /// No description provided for @ageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your age'**
+  String get ageHint;
+
+  /// No description provided for @yearsSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get yearsSuffix;
+
+  /// No description provided for @biologicalSex.
+  ///
+  /// In en, this message translates to:
+  /// **'Biological Sex'**
+  String get biologicalSex;
+
+  /// No description provided for @conditionsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Diabetes, Hypertension, Asthma'**
+  String get conditionsHint;
+
+  /// No description provided for @medicationsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Lisinopril 10mg, Metformin 500mg'**
+  String get medicationsHint;
+
+  /// No description provided for @triageSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get triageSummary;
+
+  /// No description provided for @analyzeWithAi.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze with AI'**
+  String get analyzeWithAi;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @triageFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Triage analysis failed. Please try again.'**
+  String get triageFailed;
+
+  /// No description provided for @symptomFever.
+  ///
+  /// In en, this message translates to:
+  /// **'Fever'**
+  String get symptomFever;
+
+  /// No description provided for @symptomHeadache.
+  ///
+  /// In en, this message translates to:
+  /// **'Headache'**
+  String get symptomHeadache;
+
+  /// No description provided for @symptomCough.
+  ///
+  /// In en, this message translates to:
+  /// **'Cough'**
+  String get symptomCough;
+
+  /// No description provided for @symptomShortnessOfBreath.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Breath'**
+  String get symptomShortnessOfBreath;
+
+  /// No description provided for @symptomFatigue.
+  ///
+  /// In en, this message translates to:
+  /// **'Fatigue'**
+  String get symptomFatigue;
+
+  /// No description provided for @symptomDizziness.
+  ///
+  /// In en, this message translates to:
+  /// **'Dizziness'**
+  String get symptomDizziness;
+
+  /// No description provided for @symptomNausea.
+  ///
+  /// In en, this message translates to:
+  /// **'Nausea'**
+  String get symptomNausea;
+
+  /// No description provided for @symptomChills.
+  ///
+  /// In en, this message translates to:
+  /// **'Chills'**
+  String get symptomChills;
+
+  /// No description provided for @symptomMuscleAche.
+  ///
+  /// In en, this message translates to:
+  /// **'Muscle Ache'**
+  String get symptomMuscleAche;
+
+  /// No description provided for @symptomInsomnia.
+  ///
+  /// In en, this message translates to:
+  /// **'Insomnia'**
+  String get symptomInsomnia;
+
+  /// No description provided for @symptomChestPain.
+  ///
+  /// In en, this message translates to:
+  /// **'Chest Pain'**
+  String get symptomChestPain;
+
+  /// No description provided for @symptomAbdominalPain.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdominal Pain'**
+  String get symptomAbdominalPain;
+
+  /// No description provided for @symptomSoreThroat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sore Throat'**
+  String get symptomSoreThroat;
+
+  /// No description provided for @symptomRunnyNose.
+  ///
+  /// In en, this message translates to:
+  /// **'Runny Nose'**
+  String get symptomRunnyNose;
+
+  /// No description provided for @symptomVomiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Vomiting'**
+  String get symptomVomiting;
+
+  /// No description provided for @symptomDiarrhea.
+  ///
+  /// In en, this message translates to:
+  /// **'Diarrhea'**
+  String get symptomDiarrhea;
+
+  /// No description provided for @symptomRash.
+  ///
+  /// In en, this message translates to:
+  /// **'Rash'**
+  String get symptomRash;
+
+  /// No description provided for @symptomJointPain.
+  ///
+  /// In en, this message translates to:
+  /// **'Joint Pain'**
+  String get symptomJointPain;
+
+  /// No description provided for @purchaseCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase was cancelled.'**
+  String get purchaseCancelled;
+
+  /// No description provided for @noPurchasesToRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'No previous purchases found to restore.'**
+  String get noPurchasesToRestore;
 }
 
 class _AppLocalizationsDelegate

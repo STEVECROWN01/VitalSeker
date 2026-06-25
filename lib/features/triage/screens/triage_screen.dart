@@ -5,11 +5,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/locale_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/theme/app_text_styles.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
 import 'ai_thinking_screen.dart';
 
+/// Structured 5-question triage flow per Cahier des Charges Section 4:
+/// "Triage — Question 1" + "Triage — Questions 2–5"
+///
+/// Flow:
+///   Step 1: Symptom selection (multi-select chips) + severity slider 1-10
+///   Step 2: Duration (chips: today / 1-3 days / 4-7 days / 1-2 weeks / >2 weeks)
+///   Step 3: Age + biological sex (affects triage logic)
+///   Step 4: Known conditions + current medications (pre-filled from passport)
+///   Step 5: Additional notes (free text) + review → "Analyze with AI"
+///
+/// Total: 5 questions in 90 seconds (per spec target).
 class TriageScreen extends ConsumerStatefulWidget {
   const TriageScreen({super.key});
 
@@ -17,278 +31,153 @@ class TriageScreen extends ConsumerStatefulWidget {
   ConsumerState<TriageScreen> createState() => _TriageScreenState();
 }
 
-class _ChatMessage {
-  final String text;
-  final bool isUser;
-  final DateTime timestamp;
-  final Map<String, dynamic>? triageResult;
-  final bool isTyping;
-
-  _ChatMessage({
-    required this.text,
-    required this.isUser,
-    required this.timestamp,
-    this.triageResult,
-    this.isTyping = false,
-  });
-}
-
 class _TriageScreenState extends ConsumerState<TriageScreen> {
-  final _messageController = TextEditingController();
-  final _scrollController = ScrollController();
-  final List<_ChatMessage> _messages = [];
-  bool _isProcessing = false;
-  Map<String, dynamic>? _lastTriageResult;
+  int _currentStep = 0;
+  static const int _totalSteps = 5;
 
-  /// Rolling window of past turns sent to the edge function on each new
-  /// message so Claude has conversation context. Capped at the last 5 turns
-  /// (10 messages max) to bound token usage.
-  static const int _maxHistoryTurns = 5;
-  final List<Map<String, String>> _conversationHistory = [];
+  // Step 1: Symptoms + severity
+  final Set<String> _selectedSymptoms = {};
+  int _severity = 5; // 1-10
+
+  // Step 2: Duration
+  String? _duration;
+
+  // Step 3: Age + sex
+  final _ageController = TextEditingController();
+  String? _biologicalSex;
+
+  // Step 4: Conditions + medications
+  final _conditionsController = TextEditingController();
+  final _medicationsController = TextEditingController();
+
+  // Step 5: Notes
+  final _notesController = TextEditingController();
+
+  bool _isProcessing = false;
+
+  // Common symptoms for Step 1 (matches Stitch design)
+  static const _commonSymptoms = [
+    'fever', 'headache', 'cough', 'shortness_of_breath', 'fatigue',
+    'dizziness', 'nausea', 'chills', 'muscle_ache', 'insomnia',
+    'chest_pain', 'abdominal_pain', 'sore_throat', 'runny_nose',
+    'vomiting', 'diarrhea', 'rash', 'joint_pain',
+  ];
+
+  static const _durationOptions = [
+    'today', '1_to_3_days', '4_to_7_days', '1_to_2_weeks', 'more_than_2_weeks',
+  ];
 
   @override
   void initState() {
     super.initState();
-    // Add initial AI greeting after first frame
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final l10n = AppLocalizations.of(context)!;
-      _addAiMessage(l10n.aiGreeting);
-    });
+    // Pre-fill Step 4 (conditions/medications) from the user's passport once
+    // the profile resolves.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _prefillFromProfile());
+  }
+
+  void _prefillFromProfile() {
+    final profile = ref.read(userProfileProvider).valueOrNull;
+    if (profile != null) {
+      if (profile.chronicConditions.isNotEmpty) {
+        _conditionsController.text = profile.chronicConditions.join(', ');
+      }
+      // Pre-fill age from DOB if available
+      if (profile.dateOfBirth != null) {
+        final now = DateTime.now();
+        int age = now.year - profile.dateOfBirth!.year;
+        if (now.month < profile.dateOfBirth!.month ||
+            (now.month == profile.dateOfBirth!.month && now.day < profile.dateOfBirth!.day)) {
+          age--;
+        }
+        if (age > 0) _ageController.text = age.toString();
+      }
+      if (profile.gender != null) {
+        _biologicalSex = profile.gender;
+      }
+    }
   }
 
   @override
   void dispose() {
-    _messageController.dispose();
-    _scrollController.dispose();
+    _ageController.dispose();
+    _conditionsController.dispose();
+    _medicationsController.dispose();
+    _notesController.dispose();
     super.dispose();
   }
 
-  void _addAiMessage(String text, {Map<String, dynamic>? triageResult}) {
-    setState(() {
-      _messages.add(_ChatMessage(
-        text: text,
-        isUser: false,
-        timestamp: DateTime.now(),
-        triageResult: triageResult,
-      ));
-    });
-    // Only track turns that have meaningful text (skip empty / typing bubbles)
-    // AND that contain a triage result — those are the "real" AI responses
-    // worth remembering for context. Pure conversational AI text (greeting,
-    // error) is also tracked so follow-up questions make sense.
-    if (text.isNotEmpty) {
-      _conversationHistory.add({'role': 'assistant', 'content': text});
-      _trimHistory();
-    }
-    _scrollToBottom();
-  }
-
-  void _addUserMessage(String text) {
-    setState(() {
-      _messages.add(_ChatMessage(
-        text: text,
-        isUser: true,
-        timestamp: DateTime.now(),
-      ));
-    });
-    if (text.isNotEmpty) {
-      _conversationHistory.add({'role': 'user', 'content': text});
-      _trimHistory();
-    }
-    _scrollToBottom();
-  }
-
-  void _trimHistory() {
-    // Keep the last _maxHistoryTurns turns (1 turn = 1 user + 1 assistant msg).
-    while (_conversationHistory.length > _maxHistoryTurns * 2) {
-      _conversationHistory.removeAt(0);
+  bool get _isStepValid {
+    switch (_currentStep) {
+      case 0:
+        return _selectedSymptoms.isNotEmpty;
+      case 1:
+        return _duration != null;
+      case 2:
+        return _ageController.text.isNotEmpty && _biologicalSex != null;
+      case 3:
+        return true; // Conditions/medications are optional
+      case 4:
+        return true; // Notes are optional
+      default:
+        return false;
     }
   }
 
-  void _scrollToBottom() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent + 80,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      }
-    });
+  void _nextStep() {
+    if (!_isStepValid) return;
+    if (_currentStep < _totalSteps - 1) {
+      setState(() => _currentStep++);
+    } else {
+      _runTriage();
+    }
   }
 
-  Future<void> _sendMessage() async {
-    final text = _messageController.text.trim();
-    if (text.isEmpty || _isProcessing) return;
+  void _previousStep() {
+    if (_currentStep > 0) {
+      setState(() => _currentStep--);
+    }
+  }
 
-    final l10n = AppLocalizations.of(context)!;
-
-    _messageController.clear();
-    _addUserMessage(text);
-
+  Future<void> _runTriage() async {
     setState(() => _isProcessing = true);
 
-    // Show typing indicator
-    setState(() {
-      _messages.add(_ChatMessage(
-        text: '',
-        isUser: false,
-        timestamp: DateTime.now(),
-        isTyping: true,
-      ));
-    });
-    _scrollToBottom();
+    // Show the AI thinking overlay
+    if (mounted) {
+      Navigator.of(context).push(
+        PageRouteBuilder(
+          opaque: false,
+          pageBuilder: (context, _, __) => const AiThinkingScreen(),
+        ),
+      );
+    }
 
     try {
       final edgeService = EdgeFunctionService();
-      // Parse symptoms from user message
-      final symptoms = _parseSymptoms(text);
-      final severity = _inferSeverity(text);
-
-      // Pass the conversation history (last 5 turns) so follow-up questions
-      // like "is that why I've been dizzy?" actually work as a conversation.
-      // Send a defensive copy so the edge function can't mutate our list.
-      final historyToSend = List<Map<String, String>>.from(_conversationHistory);
-
       final result = await edgeService.runTriage(
-        symptoms: symptoms,
-        severity: severity,
-        notes: text,
-        conversationHistory: historyToSend,
-        // Pass the user's current locale so GLM responds in the right language
-        // (spec Rule R6: "Répondre dans la langue de l'utilisateur").
+        symptoms: _selectedSymptoms.toList(),
+        severity: _severity,
+        duration: _duration,
+        notes: _notesController.text.trim().isEmpty
+            ? null
+            : _notesController.text.trim(),
         language: ref.read(localeProvider).languageCode,
       );
 
-      _lastTriageResult = result;
+      if (!mounted) return;
+      Navigator.of(context).pop(); // Close AI thinking overlay
 
-      // Remove typing indicator
-      setState(() {
-        _messages.removeWhere((m) => m.isTyping);
-      });
-
-      // Build AI response from triage result
       final triage = result['triage'] as Map<String, dynamic>? ?? result;
-      final urgencyLevel = triage['urgency_level'] as String? ?? 'medium';
-      final urgencyScore = triage['urgency_score'] as int? ?? 50;
-      final seekCare = triage['seek_care'] as String? ?? '';
-      final recommendations = (triage['recommendations'] as List<dynamic>? ?? []).cast<String>();
-      final redFlags = (triage['red_flags'] as List<dynamic>? ?? []).cast<String>();
-
-      final responseBuffer = StringBuffer();
-      responseBuffer.writeln(l10n.triageAssessmentIntro);
-      responseBuffer.writeln();
-      responseBuffer.writeln('${l10n.urgencyLabel}: ${urgencyLevel.toUpperCase()} ($urgencyScore/100)');
-
-      if (seekCare.isNotEmpty) {
-        responseBuffer.writeln('${l10n.careRecommendationLabel}: ${_seekCareLabel(seekCare, l10n)}');
-      }
-
-      if (redFlags.isNotEmpty) {
-        responseBuffer.writeln();
-        responseBuffer.writeln(l10n.redFlagsLabel);
-        for (final flag in redFlags.take(3)) {
-          responseBuffer.writeln('• $flag');
-        }
-      }
-
-      if (recommendations.isNotEmpty) {
-        responseBuffer.writeln();
-        responseBuffer.writeln(l10n.recommendationsLabel);
-        for (final rec in recommendations.take(3)) {
-          responseBuffer.writeln('• $rec');
-        }
-      }
-
-      responseBuffer.writeln();
-      responseBuffer.writeln(l10n.tapForFullAnalysis);
-
-      _addAiMessage(
-        responseBuffer.toString(),
-        triageResult: result,
-      );
+      context.push(AppConfig.triageResult, extra: triage);
     } catch (e) {
-      // Remove typing indicator
-      setState(() {
-        _messages.removeWhere((m) => m.isTyping);
-      });
-
-      _addAiMessage(
-        l10n.triageErrorMessage(e.toString()),
+      if (!mounted) return;
+      Navigator.of(context).pop(); // Close AI thinking overlay
+      AppSnackBar.errorFromException(
+        context,
+        AppLocalizations.of(context)!.triageFailed,
+        e,
       );
     } finally {
       if (mounted) setState(() => _isProcessing = false);
-    }
-  }
-
-  List<String> _parseSymptoms(String text) {
-    final commonSymptoms = [
-      'headache', 'fever', 'cough', 'fatigue', 'nausea',
-      'dizziness', 'chest pain', 'shortness of breath', 'sore throat',
-      'body aches', 'loss of taste', 'loss of smell', 'runny nose',
-      'stomach pain', 'back pain', 'joint pain', 'rash',
-      'vomiting', 'diarrhea', 'chills', 'sweating', 'bleeding',
-    ];
-
-    final lower = text.toLowerCase();
-    final found = <String>[];
-    for (final s in commonSymptoms) {
-      if (lower.contains(s)) {
-        found.add(s.split(' ').map((w) => w[0].toUpperCase() + w.substring(1)).join(' '));
-      }
-    }
-
-    // If no known symptoms matched, use the whole message as a custom symptom
-    if (found.isEmpty && text.length > 2) {
-      found.add(text.length > 50 ? '${text.substring(0, 50)}...' : text);
-    }
-
-    return found.isNotEmpty ? found : [AppLocalizations.of(context)!.generalDiscomfort];
-  }
-
-  int _inferSeverity(String text) {
-    final lower = text.toLowerCase();
-    if (lower.contains('severe') || lower.contains('extreme') || lower.contains('unbearable')) return 9;
-    if (lower.contains('very bad') || lower.contains('intense') || lower.contains('awful')) return 8;
-    if (lower.contains('bad') || lower.contains('painful') || lower.contains('worse')) return 7;
-    if (lower.contains('moderate') || lower.contains('uncomfortable')) return 5;
-    if (lower.contains('mild') || lower.contains('slight') || lower.contains('minor')) return 3;
-    return 5;
-  }
-
-  void _startNewChat() {
-    setState(() {
-      _messages.clear();
-      _conversationHistory.clear();
-      _lastTriageResult = null;
-      _isProcessing = false;
-    });
-    final l10n = AppLocalizations.of(context)!;
-    _addAiMessage(l10n.aiGreeting);
-  }
-
-  Color _severityColor(int severity) {
-    if (severity <= 3) return AppColors.urgencyLow;
-    if (severity <= 6) return AppColors.urgencyMedium;
-    if (severity <= 8) return AppColors.urgencyHigh;
-    return AppColors.urgencyEmergency;
-  }
-
-  String _severityLabel(int severity, AppLocalizations l10n) {
-    if (severity <= 2) return l10n.mild;
-    if (severity <= 4) return l10n.moderate;
-    if (severity <= 6) return l10n.significant;
-    if (severity <= 8) return l10n.severeLabel;
-    return l10n.extreme;
-  }
-
-  String _seekCareLabel(String care, AppLocalizations l10n) {
-    switch (care) {
-      case 'self-care': return l10n.selfCareRecommended;
-      case 'schedule-appointment': return l10n.scheduleAppointmentCare;
-      case 'urgent-care': return l10n.visitUrgentCare;
-      case 'emergency': return l10n.seekEmergencyCare;
-      default: return l10n.consultHealthcareProvider;
     }
   }
 
@@ -297,422 +186,544 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
-    // Wrap the Scaffold in a Stack so we can layer the full-screen
-    // AiThinkingScreen on top while `_isProcessing` is true. The existing
-    // `_TypingIndicator` chat bubble still renders underneath (preserved
-    // per spec) — the overlay simply sits on top of it.
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: AppBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (_currentStep > 0) {
+              _previousStep();
+            } else {
+              context.pop();
+            }
+          },
+        ),
+        title: Text(l10n.triage, style: AppTextStyles.heading4),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(6),
+          child: _buildProgressBar(isDark),
+        ),
+      ),
+      body: Column(
+        children: [
+          // Step label
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.brandGradient,
-                    borderRadius: BorderRadius.circular(10),
+                Text(
+                  l10n.triageStepOf(_currentStep + 1, _totalSteps),
+                  style: AppTextStyles.labelLarge.copyWith(
+                    color: AppColors.textSecondary(isDark),
                   ),
-                  child: const Icon(Icons.psychology, color: Colors.white, size: 18),
                 ),
-                const SizedBox(width: 10),
-                Text(l10n.aiTriage),
+                if (_currentStep > 0)
+                  TextButton(
+                    onPressed: _previousStep,
+                    child: Text(l10n.back),
+                  ),
               ],
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.add_comment_outlined),
-                tooltip: l10n.newChat,
-                onPressed: _startNewChat,
-              ),
-            ],
           ),
-          body: Column(
+          // Step content
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: _buildStepContent(isDark, l10n),
+            ),
+          ),
+          // Medical disclaimer
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: MedicalDisclaimerBanner(compact: true),
+          ),
+          // Bottom navigation
+          _buildBottomBar(isDark, l10n),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProgressBar(bool isDark) {
+    return LinearProgressIndicator(
+      value: (_currentStep + 1) / _totalSteps,
+      minHeight: 6,
+      backgroundColor: AppColors.outlineVariant(isDark),
+      valueColor: AlwaysStoppedAnimation(AppColors.primary(isDark)),
+    );
+  }
+
+  Widget _buildStepContent(bool isDark, AppLocalizations l10n) {
+    switch (_currentStep) {
+      case 0:
+        return _buildStep1Symptoms(isDark, l10n);
+      case 1:
+        return _buildStep2Duration(isDark, l10n);
+      case 2:
+        return _buildStep3AgeSex(isDark, l10n);
+      case 3:
+        return _buildStep4Conditions(isDark, l10n);
+      case 4:
+        return _buildStep5Notes(isDark, l10n);
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // Step 1: Symptom selection + severity slider
+  // ═══════════════════════════════════════════════════════════════════════
+  Widget _buildStep1Symptoms(bool isDark, AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.triageQ1Title, style: AppTextStyles.heading2.copyWith(
+          color: AppColors.textPrimary(isDark),
+        )),
+        const SizedBox(height: 8),
+        Text(l10n.triageQ1Subtitle, style: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary(isDark),
+        )),
+        const SizedBox(height: 24),
+        // Symptom chips
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: _commonSymptoms.map((symptom) {
+            final isSelected = _selectedSymptoms.contains(symptom);
+            final label = _symptomLabel(symptom, l10n);
+            return FilterChip(
+              label: Text(label),
+              selected: isSelected,
+              onSelected: (selected) {
+                setState(() {
+                  if (selected) {
+                    _selectedSymptoms.add(symptom);
+                  } else {
+                    _selectedSymptoms.remove(symptom);
+                  }
+                });
+              },
+              selectedColor: AppColors.primary(isDark),
+              labelStyle: TextStyle(
+                color: isSelected ? Colors.white : AppColors.textPrimary(isDark),
+                fontFamily: 'DMSans',
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+              backgroundColor: AppColors.inputFill(isDark),
+              side: BorderSide(
+                color: isSelected ? AppColors.primary(isDark) : AppColors.outlineVariant(isDark),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 32),
+        // Severity slider
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: AppColors.cardBackground(isDark),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Chat messages
-              Expanded(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  itemCount: _messages.length,
-                  itemBuilder: (context, index) {
-                    final message = _messages[index];
-                    return _ChatBubble(
-                      message: message,
-                      isDark: isDark,
-                      onViewResults: message.triageResult != null
-                          ? () => context.push(
-                                AppConfig.triageResult,
-                                extra: message.triageResult,
-                              )
-                          : null,
-                    );
-                  },
+              Text(l10n.triageSeverityLabel, style: AppTextStyles.labelLarge.copyWith(
+                color: AppColors.textSecondary(isDark),
+              )),
+              const SizedBox(height: 8),
+              Text(
+                _severityLabel(_severity, l10n),
+                style: AppTextStyles.heading3.copyWith(
+                  color: _severity > 7 ? AppColors.error(isDark) : AppColors.primary(isDark),
                 ),
               ),
-
-              // Medical disclaimer — spec Section 7: required on every result screen.
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: MedicalDisclaimerBanner(compact: true),
+              const SizedBox(height: 16),
+              Slider(
+                value: _severity.toDouble(),
+                min: 1,
+                max: 10,
+                divisions: 9,
+                activeColor: AppColors.primary(isDark),
+                label: '$_severity',
+                onChanged: (value) => setState(() => _severity = value.round()),
               ),
-
-              // Bottom input bar
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                decoration: BoxDecoration(
-                  color: AppColors.surface(isDark),
-                  border: Border(
-                    top: BorderSide(
-                      color: AppColors.border(isDark),
-                    ),
-                  ),
-                  boxShadow: isDark
-                      ? null
-                      : [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.04),
-                            blurRadius: 8,
-                            offset: const Offset(0, -2),
-                          ),
-                        ],
-                ),
-                child: SafeArea(
-                  top: false,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _messageController,
-                          textInputAction: TextInputAction.send,
-                          onSubmitted: (_) => _sendMessage(),
-                          enabled: !_isProcessing,
-                          decoration: InputDecoration(
-                            hintText: l10n.describeSymptoms,
-                            hintStyle: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 14,
-                              color: AppColors.textHint(isDark),
-                            ),
-                            filled: true,
-                            fillColor: AppColors.inputFill(isDark),
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24),
-                              borderSide: BorderSide(
-                                color: (AppColors.primary(isDark)).withValues(alpha: 0.3),
-                              ),
-                            ),
-                          ),
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            color: AppColors.textPrimary(isDark),
-                          ),
-                          maxLines: 4,
-                          minLines: 1,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: _isProcessing
-                              ? null
-                              : AppColors.brandGradient,
-                          color: _isProcessing
-                              ? (isDark ? AppColors.grey700 : AppColors.grey300)
-                              : null,
-                          shape: BoxShape.circle,
-                        ),
-                        child: IconButton(
-                          onPressed: _isProcessing ? null : _sendMessage,
-                          icon: _isProcessing
-                              ? SizedBox(
-                                  width: 18,
-                                  height: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: AppColors.textSecondary(isDark),
-                                  ),
-                                )
-                              : const Icon(Icons.send_rounded, color: Colors.white, size: 20),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(l10n.triageSeverityMild, style: AppTextStyles.labelSmall.copyWith(
+                    color: AppColors.textSecondary(isDark),
+                  )),
+                  Text(l10n.triageSeveritySevere, style: AppTextStyles.labelSmall.copyWith(
+                    color: AppColors.textSecondary(isDark),
+                  )),
+                ],
               ),
             ],
           ),
         ),
-
-        // Full-screen AI thinking overlay — additional layer on top of the
-        // chat. Dismissed automatically when `_isProcessing` flips to false.
-        if (_isProcessing)
-          const Positioned.fill(
-            child: AiThinkingScreen(),
-          ),
       ],
     );
   }
-}
 
-class _ChatBubble extends StatelessWidget {
-  final _ChatMessage message;
-  final bool isDark;
-  final VoidCallback? onViewResults;
-
-  const _ChatBubble({
-    required this.message,
-    required this.isDark,
-    this.onViewResults,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    // Typing indicator
-    if (message.isTyping) {
-      return _TypingIndicator(isDark: isDark);
-    }
-
-    final isUser = message.isUser;
-
-    return Padding(
-      padding: EdgeInsets.only(
-        left: isUser ? 48 : 0,
-        right: isUser ? 0 : 48,
-        bottom: 12,
-      ),
-      child: Row(
-        mainAxisAlignment:
-            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          if (!isUser) ...[
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                gradient: AppColors.brandGradient,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Icon(Icons.psychology, color: Colors.white, size: 16),
-            ),
-            const SizedBox(width: 8),
-          ],
-          Flexible(
-            child: Column(
-              crossAxisAlignment:
-                  isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: isUser
-                        ? (AppColors.primary(isDark))
-                        : (AppColors.subtleBackground(isDark)),
-                    borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(18),
-                      topRight: const Radius.circular(18),
-                      bottomLeft: Radius.circular(isUser ? 18 : 4),
-                      bottomRight: Radius.circular(isUser ? 4 : 18),
-                    ),
-                    border: isUser
-                        ? null
-                        : Border.all(
-                            color: AppColors.border(isDark),
-                          ),
+  // ═══════════════════════════════════════════════════════════════════════
+  // Step 2: Duration
+  // ═══════════════════════════════════════════════════════════════════════
+  Widget _buildStep2Duration(bool isDark, AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.triageQ2Title, style: AppTextStyles.heading2.copyWith(
+          color: AppColors.textPrimary(isDark),
+        )),
+        const SizedBox(height: 8),
+        Text(l10n.triageQ2Subtitle, style: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary(isDark),
+        )),
+        const SizedBox(height: 24),
+        ..._durationOptions.map((option) {
+          final isSelected = _duration == option;
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: InkWell(
+              onTap: () => setState(() => _duration = option),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? AppColors.primaryContainer(isDark)
+                      : AppColors.cardBackground(isDark),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: isSelected ? AppColors.primary(isDark) : AppColors.outlineVariant(isDark),
+                    width: isSelected ? 2 : 1,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SelectableText(
-                        message.text,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
-                          height: 1.5,
-                          color: isUser
-                              ? Colors.white
-                              : (AppColors.onBackground(isDark)),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
+                      color: isSelected ? AppColors.primary(isDark) : AppColors.outline(isDark),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        _durationLabel(option, l10n),
+                        style: AppTextStyles.bodyLarge.copyWith(
+                          color: AppColors.textPrimary(isDark),
                         ),
                       ),
-                      // View detailed results button
-                      if (message.triageResult != null && onViewResults != null) ...[
-                        const SizedBox(height: 12),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            onPressed: onViewResults,
-                            icon: const Icon(Icons.open_in_new_rounded, size: 16),
-                            label: Text(l10n.viewDetailedResults),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: isUser
-                                  ? Colors.white.withValues(alpha: 0.2)
-                                  : (AppColors.primary(isDark)),
-                              foregroundColor: isUser
-                                  ? Colors.white
-                                  : Colors.white,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              textStyle: const TextStyle(
-                                fontFamily: 'Outfit',
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+      ],
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // Step 3: Age + biological sex
+  // ═══════════════════════════════════════════════════════════════════════
+  Widget _buildStep3AgeSex(bool isDark, AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.triageQ3Title, style: AppTextStyles.heading2.copyWith(
+          color: AppColors.textPrimary(isDark),
+        )),
+        const SizedBox(height: 8),
+        Text(l10n.triageQ3Subtitle, style: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary(isDark),
+        )),
+        const SizedBox(height: 24),
+        // Age
+        Text(l10n.age, style: AppTextStyles.labelLarge.copyWith(
+          color: AppColors.textSecondary(isDark),
+        )),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: _ageController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            hintText: l10n.ageHint,
+            suffixText: l10n.yearsSuffix,
+          ),
+        ),
+        const SizedBox(height: 24),
+        // Biological sex
+        Text(l10n.biologicalSex, style: AppTextStyles.labelLarge.copyWith(
+          color: AppColors.textSecondary(isDark),
+        )),
+        const SizedBox(height: 8),
+        Row(
+          children: ['male', 'female', 'other'].map((sex) {
+            final isSelected = _biologicalSex == sex;
+            return Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: InkWell(
+                  onTap: () => setState(() => _biologicalSex = sex),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? AppColors.primaryContainer(isDark)
+                          : AppColors.cardBackground(isDark),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isSelected ? AppColors.primary(isDark) : AppColors.outlineVariant(isDark),
+                        width: isSelected ? 2 : 1,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        _sexLabel(sex, l10n),
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: isSelected ? AppColors.primary(isDark) : AppColors.textPrimary(isDark),
+                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
                         ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // Step 4: Known conditions + medications
+  // ═══════════════════════════════════════════════════════════════════════
+  Widget _buildStep4Conditions(bool isDark, AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.triageQ4Title, style: AppTextStyles.heading2.copyWith(
+          color: AppColors.textPrimary(isDark),
+        )),
+        const SizedBox(height: 8),
+        Text(l10n.triageQ4Subtitle, style: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary(isDark),
+        )),
+        const SizedBox(height: 24),
+        Text(l10n.chronicConditions, style: AppTextStyles.labelLarge.copyWith(
+          color: AppColors.textSecondary(isDark),
+        )),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: _conditionsController,
+          maxLines: 3,
+          decoration: InputDecoration(
+            hintText: l10n.conditionsHint,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Text(l10n.medications, style: AppTextStyles.labelLarge.copyWith(
+          color: AppColors.textSecondary(isDark),
+        )),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: _medicationsController,
+          maxLines: 3,
+          decoration: InputDecoration(
+            hintText: l10n.medicationsHint,
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // Step 5: Notes + review
+  // ═══════════════════════════════════════════════════════════════════════
+  Widget _buildStep5Notes(bool isDark, AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.triageQ5Title, style: AppTextStyles.heading2.copyWith(
+          color: AppColors.textPrimary(isDark),
+        )),
+        const SizedBox(height: 8),
+        Text(l10n.triageQ5Subtitle, style: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary(isDark),
+        )),
+        const SizedBox(height: 24),
+        TextFormField(
+          controller: _notesController,
+          maxLines: 5,
+          decoration: InputDecoration(
+            hintText: l10n.notesHint,
+          ),
+        ),
+        const SizedBox(height: 32),
+        // Summary
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.cardBackground(isDark),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.outlineVariant(isDark)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l10n.triageSummary, style: AppTextStyles.labelLarge.copyWith(
+                color: AppColors.textSecondary(isDark),
+              )),
+              const SizedBox(height: 12),
+              _SummaryRow(label: l10n.symptoms, value: _selectedSymptoms.map((s) => _symptomLabel(s, l10n)).join(', ')),
+              const SizedBox(height: 6),
+              _SummaryRow(label: l10n.triageSeverityLabel, value: '$_severity/10 ($_severityLabel(_severity, l10n))'),
+              const SizedBox(height: 6),
+              _SummaryRow(label: l10n.triageQ2Title, value: _duration != null ? _durationLabel(_duration!, l10n) : '—'),
+              const SizedBox(height: 6),
+              _SummaryRow(label: l10n.age, value: _ageController.text.isEmpty ? '—' : '${_ageController.text} ${l10n.yearsSuffix}'),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBottomBar(bool isDark, AppLocalizations l10n) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+      decoration: BoxDecoration(
+        color: AppColors.surface(isDark),
+        border: Border(top: BorderSide(color: AppColors.outlineVariant(isDark))),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: ElevatedButton(
+            onPressed: _isStepValid && !_isProcessing ? _nextStep : null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary(isDark),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
+            child: _isProcessing
+                ? const SizedBox(
+                    width: 20, height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        _currentStep == _totalSteps - 1
+                            ? l10n.analyzeWithAi
+                            : l10n.next,
+                        style: AppTextStyles.button.copyWith(fontSize: 16),
+                      ),
+                      if (_currentStep == _totalSteps - 1) ...[
+                        const SizedBox(width: 8),
+                        const Icon(Icons.psychology, size: 20),
                       ],
                     ],
                   ),
-                ),
-                const SizedBox(height: 4),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Text(
-                    _formatTime(message.timestamp),
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 10,
-                      color: AppColors.textTertiary(isDark),
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ),
-          if (isUser) ...[
-            const SizedBox(width: 8),
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: (AppColors.primary(isDark)).withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(Icons.person, color: AppColors.primary(isDark), size: 16),
-            ),
-          ],
-        ],
+        ),
       ),
-    ).animate().fadeIn(duration: 200.ms).slideY(begin: 0.05, end: 0);
+    );
   }
 
-  String _formatTime(DateTime dt) {
-    final hour = dt.hour.toString().padLeft(2, '0');
-    final minute = dt.minute.toString().padLeft(2, '0');
-    return '$hour:$minute';
+  // ── Label helpers ──
+  String _symptomLabel(String key, AppLocalizations l10n) {
+    // Try l10n first; fall back to humanized key
+    try {
+      switch (key) {
+        case 'fever': return l10n.symptomFever;
+        case 'headache': return l10n.symptomHeadache;
+        case 'cough': return l10n.symptomCough;
+        case 'shortness_of_breath': return l10n.symptomShortnessOfBreath;
+        case 'fatigue': return l10n.symptomFatigue;
+        case 'dizziness': return l10n.symptomDizziness;
+        case 'nausea': return l10n.symptomNausea;
+        case 'chills': return l10n.symptomChills;
+        case 'muscle_ache': return l10n.symptomMuscleAche;
+        case 'insomnia': return l10n.symptomInsomnia;
+        case 'chest_pain': return l10n.symptomChestPain;
+        case 'abdominal_pain': return l10n.symptomAbdominalPain;
+        case 'sore_throat': return l10n.symptomSoreThroat;
+        case 'runny_nose': return l10n.symptomRunnyNose;
+        case 'vomiting': return l10n.symptomVomiting;
+        case 'diarrhea': return l10n.symptomDiarrhea;
+        case 'rash': return l10n.symptomRash;
+        case 'joint_pain': return l10n.symptomJointPain;
+        default: return key.split('_').map((w) => w[0].toUpperCase() + w.substring(1)).join(' ');
+      }
+    } catch (_) {
+      return key.split('_').map((w) => w[0].toUpperCase() + w.substring(1)).join(' ');
+    }
+  }
+
+  String _severityLabel(int severity, AppLocalizations l10n) {
+    if (severity <= 2) return l10n.severityVeryMild;
+    if (severity <= 4) return l10n.severityMild;
+    if (severity <= 5) return l10n.severityModerate;
+    if (severity <= 7) return l10n.severityDistracting;
+    if (severity <= 9) return l10n.severitySevere;
+    return l10n.severityUnbearable;
+  }
+
+  String _durationLabel(String key, AppLocalizations l10n) {
+    switch (key) {
+      case 'today': return l10n.durationToday;
+      case '1_to_3_days': return l10n.duration1To3Days;
+      case '4_to_7_days': return l10n.duration4To7Days;
+      case '1_to_2_weeks': return l10n.duration1To2Weeks;
+      case 'more_than_2_weeks': return l10n.durationMoreThan2Weeks;
+      default: return key;
+    }
+  }
+
+  String _sexLabel(String key, AppLocalizations l10n) {
+    switch (key) {
+      case 'male': return l10n.male;
+      case 'female': return l10n.female;
+      default: return l10n.other;
+    }
   }
 }
 
-class _TypingIndicator extends StatefulWidget {
-  final bool isDark;
-  const _TypingIndicator({required this.isDark});
-
-  @override
-  State<_TypingIndicator> createState() => _TypingIndicatorState();
-}
-
-class _TypingIndicatorState extends State<_TypingIndicator>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+class _SummaryRow extends StatelessWidget {
+  final String label;
+  final String value;
+  const _SummaryRow({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              gradient: AppColors.brandGradient,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Icon(Icons.psychology, color: Colors.white, size: 16),
-          ),
-          const SizedBox(width: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            decoration: BoxDecoration(
-              color: AppColors.subtleBackground(widget.isDark),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(18),
-                topRight: Radius.circular(18),
-                bottomLeft: Radius.circular(4),
-                bottomRight: Radius.circular(18),
-              ),
-              border: Border.all(
-                color: AppColors.border(widget.isDark),
-              ),
-            ),
-            child: AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(3, (index) {
-                    final progress = (_controller.value * 3 - index) % 1.0;
-                    final scale = progress < 0.5
-                        ? 0.5 + progress
-                        : 1.5 - progress;
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: Transform.scale(
-                        scale: scale.clamp(0.5, 1.2),
-                        child: Container(
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: (AppColors.primary(widget.isDark))
-                                .withValues(alpha: 0.6 + (scale - 0.5) * 0.4),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 100,
+          child: Text(label, style: AppTextStyles.labelSmall.copyWith(
+            color: AppColors.textSecondary(isDark),
+          )),
+        ),
+        Expanded(
+          child: Text(value, style: AppTextStyles.bodySmall.copyWith(
+            color: AppColors.textPrimary(isDark),
+          )),
+        ),
+      ],
     );
   }
 }

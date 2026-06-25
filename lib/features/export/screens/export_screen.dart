@@ -14,6 +14,7 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 /// PDF Export screen — redesigned to match the Google Stitch UI design.
 ///
@@ -407,6 +408,8 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                           setState(() => _includeAiSummary = v),
                       l10n: l10n,
                     ),
+                    const SizedBox(height: 16),
+                    const MedicalDisclaimerBanner(compact: true),
                     const SizedBox(height: 16),
                     // Action buttons
                     _ActionButtons(

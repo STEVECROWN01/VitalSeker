@@ -3,6 +3,7 @@ import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../core/services/revenuecat_service.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
@@ -59,15 +60,39 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
     setState(() => _pendingPlan = planName);
     try {
+      // ── RevenueCat IAP Integration ────────────────────────────────────
+      // Per Cahier des Charges Section 3: "Paiements — RevenueCat".
+      // If RevenueCat is configured (API key set), process the purchase through
+      // the App Store / Google Play. If not configured (dev mode), fall back
+      // to the direct DB write for testing.
+      final rcService = RevenueCatService();
+      if (rcService.isConfigured && planName != 'free') {
+        final offering = await rcService.getCurrentOffering();
+        if (offering != null) {
+          // Find the package matching the selected plan
+          final package = offering.availablePackages.where((p) {
+            return p.identifier.toLowerCase().contains(planName);
+          }).firstOrNull;
+          if (package != null) {
+            final success = await rcService.purchasePackage(package);
+            if (!success) {
+              if (mounted) {
+                AppSnackBar.error(context, l10n.purchaseCancelled);
+              }
+              return;
+            }
+            // Purchase successful — RevenueCat will sync the entitlement.
+            // Also update the local DB so the app reflects the change immediately.
+          }
+        }
+      }
+
       final db = ref.read(databaseServiceProvider);
       final existing = await db.getSubscription(user.id);
 
       final now = DateTime.now();
-      // Compute one month from now correctly. DateTime(year, month + 1, day)
-      // silently normalizes Jan 31 + 1 month → Mar 3 (skipping Feb), which
-      // short-changes the user by 3 days. Instead, add 30 days as a stable
-      // approximation. For real IAP, RevenueCat / StoreKit provides the exact
-      // period end — this DB write is a placeholder until that's integrated.
+      // Compute one month from now correctly using Duration(days: 30).
+      // For real IAP, RevenueCat / StoreKit provides the exact period end.
       final periodEnd = now.add(const Duration(days: 30));
 
       if (existing == null) {
@@ -112,12 +137,31 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
     final l10n = AppLocalizations.of(context)!;
     setState(() => _isRestoring = true);
     try {
-      // In production: query RevenueCat / StoreKit for existing purchases.
-      // For now, just refresh the subscription from the DB.
-      ref.invalidate(subscriptionProvider);
-      await ref.read(subscriptionProvider.future);
-      if (mounted) {
-        AppSnackBar.success(context, l10n.purchasesRestored);
+      // Restore purchases via RevenueCat (queries App Store / Google Play).
+      // Per Cahier des Charges Section 3: "RevenueCat — Gestion abonnements".
+      final rcService = RevenueCatService();
+      if (rcService.isConfigured) {
+        final restored = await rcService.restorePurchases();
+        if (restored) {
+          ref.invalidate(subscriptionProvider);
+          if (mounted) {
+            AppSnackBar.success(context, l10n.purchasesRestored);
+          }
+        } else {
+          // No active Pro entitlement found — refresh from DB anyway.
+          ref.invalidate(subscriptionProvider);
+          await ref.read(subscriptionProvider.future);
+          if (mounted) {
+            AppSnackBar.success(context, l10n.noPurchasesToRestore);
+          }
+        }
+      } else {
+        // RevenueCat not configured (dev mode) — just refresh from DB.
+        ref.invalidate(subscriptionProvider);
+        await ref.read(subscriptionProvider.future);
+        if (mounted) {
+          AppSnackBar.success(context, l10n.purchasesRestored);
+        }
       }
     } catch (e) {
       if (mounted) {

@@ -34,7 +34,7 @@
   "emergencySOS": "EMERGENCY SOS",
   "recentChecks": "Recent Checks",
   "noSymptomsLogs": "No symptoms logs yet",
-  "startTriage": "Start triage to see activity here",
+  "startTriage": "Start Triage",
   "vitals": "Vitals",
   "logVitals": "Log Vitals",
   "heartRate": "Heart Rate",
@@ -168,8 +168,12 @@
   "connectedMembers": "{count} connected member{s}",
   "@connectedMembers": {
     "placeholders": {
-      "count": {"type": "int"},
-      "s": {"type": "String"}
+      "count": {
+        "type": "int"
+      },
+      "s": {
+        "type": "String"
+      }
     }
   },
   "alertsSmartReminders": "Alerts & smart reminders",
@@ -184,7 +188,9 @@
   "aboutVitalSekerVersion": "Version {version}",
   "@aboutVitalSekerVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "changePassword": "Change Password",
@@ -235,21 +241,27 @@
   "upgradeToPlan": "Upgrade to {plan}",
   "@upgradeToPlan": {
     "placeholders": {
-      "plan": {"type": "String"}
+      "plan": {
+        "type": "String"
+      }
     }
   },
   "mustBeSignedInToChangePlans": "You must be signed in to change plans.",
   "switchToPlan": "Switch to {plan}?",
   "@switchToPlan": {
     "placeholders": {
-      "plan": {"type": "String"}
+      "plan": {
+        "type": "String"
+      }
     }
   },
   "downgradeToFreeMessage": "You will lose access to Pro features at the end of your current billing period. Continue?",
   "upgradeToPlanMessage": "This will update your subscription to {plan}. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.",
   "@upgradeToPlanMessage": {
     "placeholders": {
-      "plan": {"type": "String"}
+      "plan": {
+        "type": "String"
+      }
     }
   },
   "confirm": "Confirm",
@@ -257,7 +269,9 @@
   "welcomeToPlan": "Welcome to {plan}! All features unlocked.",
   "@welcomeToPlan": {
     "placeholders": {
-      "plan": {"type": "String"}
+      "plan": {
+        "type": "String"
+      }
     }
   },
   "failedToUpdateSubscription": "Failed to update subscription. Please try again.",
@@ -268,7 +282,9 @@
   "poweredByProducer": "Powered by {producer}",
   "@poweredByProducer": {
     "placeholders": {
-      "producer": {"type": "String"}
+      "producer": {
+        "type": "String"
+      }
     }
   },
   "frequentlyAskedQuestions": "Frequently Asked Questions",
@@ -307,7 +323,9 @@
   "pdfIncludesProducer": "PDF includes {producer} credit as producer",
   "@pdfIncludesProducer": {
     "placeholders": {
-      "producer": {"type": "String"}
+      "producer": {
+        "type": "String"
+      }
     }
   },
   "proFeature": "PRO FEATURE",
@@ -318,13 +336,17 @@
   "years": "{age} years",
   "@years": {
     "placeholders": {
-      "age": {"type": "int"}
+      "age": {
+        "type": "int"
+      }
     }
   },
   "scoreValue": "Score: {score}",
   "@scoreValue": {
     "placeholders": {
-      "score": {"type": "int"}
+      "score": {
+        "type": "int"
+      }
     }
   },
   "reachedProLimit": "You've reached the 5-member Pro limit.",
@@ -337,7 +359,9 @@
   "removeFamilyMemberConfirm": "Are you sure you want to remove {name} from your family profiles?",
   "@removeFamilyMemberConfirm": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "remove": "Remove",
@@ -354,7 +378,9 @@
   "upgradeToProPrice": "Upgrade to Pro — ${price}/mo",
   "@upgradeToProPrice": {
     "placeholders": {
-      "price": {"type": "String"}
+      "price": {
+        "type": "String"
+      }
     }
   },
   "manageSubscription": "Manage Subscription",
@@ -366,13 +392,14 @@
   "editMedicationName": "Edit {name}",
   "@editMedicationName": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "dosage": "Dosage",
   "unit": "Unit",
   "frequency": "Frequency",
-  "reminders": "Reminders",
   "notes": "Notes",
   "medicationDiscontinued": "Medication discontinued",
   "failedToDiscontinueMedication": "Failed to discontinue medication.",
@@ -383,7 +410,9 @@
   "deleteMedicationConfirm": "Are you sure you want to delete {name}?",
   "@deleteMedicationConfirm": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "medicationDeleted": "Medication deleted",
@@ -394,7 +423,9 @@
   "nextDose": "Next dose: {time}",
   "@nextDose": {
     "placeholders": {
-      "time": {"type": "String"}
+      "time": {
+        "type": "String"
+      }
     }
   },
   "onceDaily": "Once Daily",
@@ -418,8 +449,12 @@
   "rescheduledTo": "Rescheduled to {date} at {time}",
   "@rescheduledTo": {
     "placeholders": {
-      "date": {"type": "String"},
-      "time": {"type": "String"}
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
     }
   },
   "failedToRescheduleAppointment": "Failed to reschedule appointment.",
@@ -427,7 +462,9 @@
   "deleteAppointmentConfirm": "Are you sure you want to delete the appointment with {doctor}?",
   "@deleteAppointmentConfirm": {
     "placeholders": {
-      "doctor": {"type": "String"}
+      "doctor": {
+        "type": "String"
+      }
     }
   },
   "appointmentDeleted": "Appointment deleted",
@@ -441,7 +478,9 @@
   "translationTargetLanguage": "Translation ({lang})",
   "@translationTargetLanguage": {
     "placeholders": {
-      "lang": {"type": "String"}
+      "lang": {
+        "type": "String"
+      }
     }
   },
   "translationWillAppear": "Your translation will appear here.",
@@ -473,26 +512,34 @@
   "termsOfServiceTitle": "{appName} Terms of Service",
   "@termsOfServiceTitle": {
     "placeholders": {
-      "appName": {"type": "String"}
+      "appName": {
+        "type": "String"
+      }
     }
   },
   "lastUpdatedVersion": "Last updated: Version {version}",
   "@lastUpdatedVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "tosSection1Title": "Acceptance of Terms",
   "tosSection1Para1": "By creating an account, accessing, or using the {appName} mobile application (\"the Service\"), you agree to be bound by these Terms of Service (\"Terms\"). If you do not agree to these Terms, you must not access or use the Service.",
   "@tosSection1Para1": {
     "placeholders": {
-      "appName": {"type": "String"}
+      "appName": {
+        "type": "String"
+      }
     }
   },
   "tosSection1Para2": "The Service is provided by {producer} (\"we\", \"us\", or \"our\"). These Terms form a legally binding agreement between you and us.",
   "@tosSection1Para2": {
     "placeholders": {
-      "producer": {"type": "String"}
+      "producer": {
+        "type": "String"
+      }
     }
   },
   "tosSection2Title": "Eligibility & Account",
@@ -502,7 +549,9 @@
   "tosSection3Para1": "{appName} is a health companion application intended for informational and organizational purposes only. The Service is NOT a medical device and does not provide medical advice, diagnosis, or treatment recommendations.",
   "@tosSection3Para1": {
     "placeholders": {
-      "appName": {"type": "String"}
+      "appName": {
+        "type": "String"
+      }
     }
   },
   "tosSection3Para2": "The AI triage feature provides general guidance based on the symptoms you report. It is not a substitute for professional medical judgment. Always seek the advice of a qualified healthcare provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay seeking it because of something you read in this Service.",
@@ -528,7 +577,9 @@
   "tosSection8Para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL {producer} BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF DATA, ARISING OUT OF OR RELATED TO YOUR USE OF (OR INABILITY TO USE) THE SERVICE, WHETHER BASED ON WARRANTY, CONTRACT, TORT, OR ANY OTHER LEGAL THEORY.",
   "@tosSection8Para1": {
     "placeholders": {
-      "producer": {"type": "String"}
+      "producer": {
+        "type": "String"
+      }
     }
   },
   "tosSection9Title": "Termination",
@@ -541,9 +592,15 @@
   "tosCopyright": "© {year} {producer}. All rights reserved. Version {version}.",
   "@tosCopyright": {
     "placeholders": {
-      "year": {"type": "int"},
-      "producer": {"type": "String"},
-      "version": {"type": "String"}
+      "year": {
+        "type": "int"
+      },
+      "producer": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      }
     }
   },
   "free": "Free",
@@ -911,30 +968,54 @@
   "translationTooLong": "Text is too long (max {max} characters). Please shorten and try again.",
   "@translationTooLong": {
     "placeholders": {
-      "max": {"type": "int"}
+      "max": {
+        "type": "int"
+      }
     }
   },
-  "close": "Close",
   "profileFieldsSaveFailed": "Account created, but optional profile fields (date of birth, gender, blood type) couldn't be saved. You can edit them later in Profile > Edit Profile.",
   "privacyPolicyTitle": "Privacy Policy",
   "privacyLastUpdated": "Last updated: March 2025",
   "privacyIntro": "At {appName}, your privacy is paramount. This Privacy Policy explains how we collect, use, store, and protect your personal and health-related data. By using our services, you agree to the practices described below.",
-  "@privacyIntro": { "placeholders": { "appName": { "type": "String" } } },
+  "@privacyIntro": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
   "privacySectionDataCollection": "1. Data Collection",
   "privacyDataCollectionBody": "We collect the following categories of data:\n\n• Personal Information: Name, email address, phone number, date of birth, and gender.\n• Health Data: Blood type, allergies, chronic conditions, medications, vital signs, symptom logs, and triage results.\n• Emergency Contacts: Names, phone numbers, and relationships of your designated contacts.\n• Device Data: Device type, operating system, and app version for compatibility and support.\n• Usage Data: Feature interactions and anonymized analytics to improve our services.\n\nWe only collect data that is necessary for providing our health companion services. You have full control over what information you provide.",
   "privacySectionDataStorage": "2. Data Storage & Encryption",
   "privacyDataStorageBody": "Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• QR Code Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.",
   "privacySectionGdpr": "3. GDPR Compliance",
   "privacyGdprBody": "{appName} is fully compliant with the General Data Protection Regulation (GDPR):\n\n• Lawful Basis: We process your data based on your explicit consent and contractual necessity.\n• Data Minimization: We only collect and process data that is strictly necessary.\n• Purpose Limitation: Your data is used only for the purposes for which it was collected.\n• Right to Access: You can request a complete copy of your personal data at any time.\n• Right to Rectification: You can update or correct your data through the app settings.\n• Right to Erasure: You can request complete deletion of your account and data.\n• Right to Portability: You can export your data in a machine-readable format.\n• Data Processing Agreements: All third-party processors have signed DPAs.\n• Cross-Border Transfers: Data is processed within the EU/EEA unless explicit consent is given otherwise.",
-  "@privacyGdprBody": { "placeholders": { "appName": { "type": "String" } } },
+  "@privacyGdprBody": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
   "privacySectionYourRights": "4. Your Rights",
   "privacyRightsBody": "You have the following rights regarding your data:\n\n• Access: View all your personal and health data within the app or request a data export.\n• Correction: Edit your profile information at any time through Edit Profile.\n• Deletion: Request account deletion through Settings > Data & Privacy > Delete Account.\n• Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences.\n• Objection: Object to specific data processing activities by contacting our Data Protection Officer.\n• Withdrawal of Consent: You may withdraw consent at any time without affecting the lawfulness of prior processing.\n\nTo exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app support feature.",
   "privacySectionContactUs": "5. Contact Us",
   "privacyContactBody": "If you have any questions or concerns about this Privacy Policy or our data practices, please contact us:\n\n• Email: privacy@vitalseker.com\n• Support: support@vitalseker.com\n• Data Protection Officer: dpo@vitalseker.com\n• Address: {producer}, Data Protection Office\n\nWe aim to respond to all privacy-related inquiries within 30 days.",
-  "@privacyContactBody": { "placeholders": { "producer": { "type": "String" } } },
+  "@privacyContactBody": {
+    "placeholders": {
+      "producer": {
+        "type": "String"
+      }
+    }
+  },
   "privacyCopyright": "© 2025 {producer}. All rights reserved.",
-  "@privacyCopyright": { "placeholders": { "producer": { "type": "String" } } },
-
+  "@privacyCopyright": {
+    "placeholders": {
+      "producer": {
+        "type": "String"
+      }
+    }
+  },
   "chooseFromGallery": "Choose from Gallery",
   "takePhoto": "Take a Photo",
   "removePhoto": "Remove Photo",
@@ -946,9 +1027,14 @@
   "profileUpdateFailed": "Failed to update profile. Please try again.",
   "editProfileTitle": "Edit Profile",
   "errorPrefix": "Error: {error}",
-  "@errorPrefix": { "placeholders": { "error": { "type": "String" } } },
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "personalInformation": "Personal Information",
-  "selectDateOfBirth": "Select Date of Birth",
   "measurements": "Measurements",
   "heightCm": "Height (cm)",
   "weightKg": "Weight (kg)",
@@ -961,7 +1047,6 @@
   "addCondition": "Add Condition",
   "noConditionsAdded": "No conditions added",
   "saveChanges": "Save Changes",
-
   "healthTitle": "Health",
   "weeklyInsightsTooltip": "Weekly Insights",
   "yourHealthScore": "Your Health Score",
@@ -972,13 +1057,24 @@
   "scoreDescriptionCritical": "Immediate attention recommended. Please seek medical advice.",
   "riskFactors": "Risk Factors",
   "allergyCount": "{count} Allergies",
-  "@allergyCount": { "placeholders": { "count": { "type": "int" } } },
+  "@allergyCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "chronicConditionCount": "{count} Chronic Conditions",
-  "@chronicConditionCount": { "placeholders": { "count": { "type": "int" } } },
+  "@chronicConditionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "noRiskFactors": "No risk factors identified",
   "recentTriageResults": "Recent Triage Results",
   "noTriageResults": "No triage results yet",
-  "startTriage": "Start Triage",
   "recommendedActions": "Recommended Actions",
   "actionScheduleCheckup": "Schedule a Check-up",
   "actionScheduleCheckupDesc": "Your health score suggests it's time for a medical review.",
@@ -991,16 +1087,22 @@
   "actionStayActive": "Stay Active",
   "actionStayActiveDesc": "Regular exercise helps maintain cardiovascular health.",
   "viewWeeklyInsights": "View Weekly Insights",
-  "justNow": "Just now",
   "minutesAgo": "{minutes}m ago",
-  "@minutesAgo": { "placeholders": { "minutes": { "type": "int" } } },
-  "hoursAgo": "{hours}h ago",
-  "@hoursAgo": { "placeholders": { "hours": { "type": "int" } } },
-  "daysAgo": "{days}d ago",
-  "@daysAgo": { "placeholders": { "days": { "type": "int" } } },
+  "@minutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "weeksAgo": "{weeks}w ago",
-  "@weeksAgo": { "placeholders": { "weeks": { "type": "int" } } },
-
+  "@weeksAgo": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
   "failedToLoadVitals": "Failed to load vitals",
   "noVitalsYet": "No Vitals Yet",
   "startLoggingVitalsPrompt": "Start logging your vital signs to track your health over time",
@@ -1012,7 +1114,6 @@
   "trendUp": "UP",
   "trendDown": "DOWN",
   "trendStable": "STABLE",
-
   "logVitalTitle": "Log Vital",
   "vitalTypeLabel": "VITAL TYPE",
   "valueLabel": "VALUE",
@@ -1022,11 +1123,22 @@
   "notesOptionalLabel": "NOTES (OPTIONAL)",
   "notesHint": "Add any notes about this reading...",
   "saveVitalType": "Save {vitalType}",
-  "@saveVitalType": { "placeholders": { "vitalType": { "type": "String" } } },
+  "@saveVitalType": {
+    "placeholders": {
+      "vitalType": {
+        "type": "String"
+      }
+    }
+  },
   "vitalSavedSuccessfully": "{vitalType} saved successfully",
-  "@vitalSavedSuccessfully": { "placeholders": { "vitalType": { "type": "String" } } },
+  "@vitalSavedSuccessfully": {
+    "placeholders": {
+      "vitalType": {
+        "type": "String"
+      }
+    }
+  },
   "vitalSaveFailed": "Failed to save vital. Please try again.",
-
   "vitalsHistoryTitle": "Vitals History",
   "range7Days": "7D",
   "range1Month": "1M",
@@ -1034,7 +1146,13 @@
   "range6Months": "6M",
   "range1Year": "1Y",
   "noVitalTypeData": "No {vitalType} Data",
-  "@noVitalTypeData": { "placeholders": { "vitalType": { "type": "String" } } },
+  "@noVitalTypeData": {
+    "placeholders": {
+      "vitalType": {
+        "type": "String"
+      }
+    }
+  },
   "noReadingsForPeriod": "No readings found for the selected time period",
   "singleReading": "1 reading",
   "average": "Average",
@@ -1045,8 +1163,13 @@
   "value": "Value",
   "source": "Source",
   "showingReadingsCount": "Showing 20 of {total} readings",
-  "@showingReadingsCount": { "placeholders": { "total": { "type": "int" } } },
-
+  "@showingReadingsCount": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "addMedicationTitle": "Add Medication",
   "medicationNameLabel": "Medication Name",
   "dosageLabel": "Dosage",
@@ -1057,13 +1180,18 @@
   "endDateLabel": "End Date",
   "doseTimesLabel": "DOSE TIMES",
   "doseNumber": "Dose {number}",
-  "@doseNumber": { "placeholders": { "number": { "type": "int" } } },
+  "@doseNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "notesOptional": "Notes (optional)",
   "remindersLabel": "Reminders",
   "saveMedication": "Save Medication",
   "medicationAddedSuccessfully": "Medication added successfully!",
   "medicationAddFailed": "Failed to add medication. Please try again.",
-
   "addAppointmentTitle": "Add Appointment",
   "doctorNameLabel": "Doctor Name",
   "specialtyLabel": "Specialty",
@@ -1083,7 +1211,6 @@
   "specialtyPediatrician": "Pediatrician",
   "specialtyPsychiatrist": "Psychiatrist",
   "specialtyOther": "Other",
-
   "recordsLoadFailed": "Failed to load records. Please try again.",
   "notAvailable": "N/A",
   "editRecordTitle": "Edit Record",
@@ -1101,7 +1228,13 @@
   "recordAddFailed": "Failed to add record.",
   "deleteRecordTitle": "Delete Record",
   "deleteRecordConfirm": "Are you sure you want to delete \"{title}\"? This cannot be undone.",
-  "@deleteRecordConfirm": { "placeholders": { "title": { "type": "String" } } },
+  "@deleteRecordConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "recordDeleted": "Record deleted.",
   "recordDeleteFailed": "Failed to delete record.",
   "medicalRecordsTitle": "Medical Records",
@@ -1109,5 +1242,60 @@
   "noRecordsFound": "No records found",
   "tapToAddRecord": "Tap + to add a medical record",
   "untitled": "Untitled",
-  "moreOptions": "More options"
+  "moreOptions": "More options",
+  "triageStepOf": "Step {current} of {total}",
+  "triageQ1Title": "What are your main symptoms today?",
+  "triageQ1Subtitle": "Select all that apply. This helps our AI analyze your condition accurately.",
+  "triageQ2Title": "How long have you had these symptoms?",
+  "triageQ2Subtitle": "Select the option that best describes when your symptoms started.",
+  "triageQ3Title": "What is your age and biological sex?",
+  "triageQ3Subtitle": "This information helps calibrate the triage assessment.",
+  "triageQ4Title": "Any known conditions or medications?",
+  "triageQ4Subtitle": "Pre-filled from your profile. Edit if needed.",
+  "triageQ5Title": "Any additional notes?",
+  "triageQ5Subtitle": "Describe any other details about your symptoms or situation.",
+  "triageSeverityLabel": "Overall Severity",
+  "triageSeverityMild": "Mild",
+  "triageSeveritySevere": "Severe",
+  "severityVeryMild": "Very Mild",
+  "severityMild": "Mild",
+  "severityModerate": "Moderate",
+  "severityDistracting": "Distracting",
+  "severitySevere": "Severe",
+  "severityUnbearable": "Unbearable",
+  "durationToday": "Today (started today)",
+  "duration1To3Days": "1-3 days",
+  "duration4To7Days": "4-7 days",
+  "duration1To2Weeks": "1-2 weeks",
+  "durationMoreThan2Weeks": "More than 2 weeks",
+  "age": "Age",
+  "ageHint": "Enter your age",
+  "yearsSuffix": "years",
+  "biologicalSex": "Biological Sex",
+  "conditionsHint": "e.g. Diabetes, Hypertension, Asthma",
+  "medicationsHint": "e.g. Lisinopril 10mg, Metformin 500mg",
+  "triageSummary": "Summary",
+  "analyzeWithAi": "Analyze with AI",
+  "back": "Back",
+  "triageFailed": "Triage analysis failed. Please try again.",
+  "symptomFever": "Fever",
+  "symptomHeadache": "Headache",
+  "symptomCough": "Cough",
+  "symptomShortnessOfBreath": "Short Breath",
+  "symptomFatigue": "Fatigue",
+  "symptomDizziness": "Dizziness",
+  "symptomNausea": "Nausea",
+  "symptomChills": "Chills",
+  "symptomMuscleAche": "Muscle Ache",
+  "symptomInsomnia": "Insomnia",
+  "symptomChestPain": "Chest Pain",
+  "symptomAbdominalPain": "Abdominal Pain",
+  "symptomSoreThroat": "Sore Throat",
+  "symptomRunnyNose": "Runny Nose",
+  "symptomVomiting": "Vomiting",
+  "symptomDiarrhea": "Diarrhea",
+  "symptomRash": "Rash",
+  "symptomJointPain": "Joint Pain",
+  "purchaseCancelled": "Purchase was cancelled.",
+  "noPurchasesToRestore": "No previous purchases found to restore."
 }

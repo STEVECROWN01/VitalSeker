@@ -91,6 +91,29 @@ supabase secrets set CRON_SECRET=your_generated_cron_secret
 supabase secrets set QR_ENCRYPTION_KEY=your_generated_qr_key
 ```
 
+### Step 5b: Set Client-Side Secrets (Flutter .env)
+
+These secrets are loaded by the Flutter app at runtime. Set them in your
+`.env` file (gitignored — never commit) or via `--dart-define` for CI/CD:
+
+```bash
+# Sentry (crash monitoring)
+SENTRY_DSN=https://your_sentry_dsn@sentry.io/123
+
+# OneSignal (push notifications)
+ONESIGNAL_APP_ID=your-onesignal-app-id
+
+# PostHog (analytics)
+POSTHOG_API_KEY=phc_your_posthog_api_key
+POSTHOG_HOST=https://us.i.posthog.com
+
+# RevenueCat (in-app purchases)
+REVENUECAT_API_KEY=appl_your_revenuecat_key
+```
+
+All of these are optional in development — the app runs in no-op mode
+without them. They MUST be set for production deployment.
+
 ### Step 6: Configure CRON for Weekly Insights
 In the Supabase Dashboard → Database → Cron Jobs, add a schedule that invokes
 the weekly-insights function **with the `x-cron-secret` header** so the

@@ -1398,7 +1398,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get skip => 'Skip';
 
   @override
-  String get next => 'Next';
+  String get next => 'Suivant';
 
   @override
   String get enterVitalSeker => 'Enter VitalSeker';
@@ -2685,4 +2685,179 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get moreOptions => 'Plus d\'options';
+
+  @override
+  String triageStepOf(Object current, Object total) {
+    return 'Étape $current sur $total';
+  }
+
+  @override
+  String get triageQ1Title =>
+      'Quels sont vos principaux symptômes aujourd\'hui ?';
+
+  @override
+  String get triageQ1Subtitle =>
+      'Sélectionnez toutes les options applicables. Cela aide notre IA à analyser votre état avec précision.';
+
+  @override
+  String get triageQ2Title =>
+      'Depuis combien de temps avez-vous ces symptômes ?';
+
+  @override
+  String get triageQ2Subtitle =>
+      'Sélectionnez l\'option qui décrit le mieux le début de vos symptômes.';
+
+  @override
+  String get triageQ3Title => 'Quel est votre âge et votre sexe biologique ?';
+
+  @override
+  String get triageQ3Subtitle =>
+      'Ces informations calibrent l\'évaluation du triage.';
+
+  @override
+  String get triageQ4Title => 'Des maladies connues ou des médicaments ?';
+
+  @override
+  String get triageQ4Subtitle =>
+      'Pré-rempli depuis votre profil. Modifiez si nécessaire.';
+
+  @override
+  String get triageQ5Title => 'Des notes supplémentaires ?';
+
+  @override
+  String get triageQ5Subtitle =>
+      'Décrivez tout autre détail sur vos symptômes ou votre situation.';
+
+  @override
+  String get triageSeverityLabel => 'Sévérité globale';
+
+  @override
+  String get triageSeverityMild => 'Léger';
+
+  @override
+  String get triageSeveritySevere => 'Sévère';
+
+  @override
+  String get severityVeryMild => 'Très léger';
+
+  @override
+  String get severityMild => 'Léger';
+
+  @override
+  String get severityModerate => 'Modéré';
+
+  @override
+  String get severityDistracting => 'Gênant';
+
+  @override
+  String get severitySevere => 'Sévère';
+
+  @override
+  String get severityUnbearable => 'Insupportable';
+
+  @override
+  String get durationToday => 'Aujourd\'hui (commencé aujourd\'hui)';
+
+  @override
+  String get duration1To3Days => '1-3 jours';
+
+  @override
+  String get duration4To7Days => '4-7 jours';
+
+  @override
+  String get duration1To2Weeks => '1-2 semaines';
+
+  @override
+  String get durationMoreThan2Weeks => 'Plus de 2 semaines';
+
+  @override
+  String get age => 'Âge';
+
+  @override
+  String get ageHint => 'Entrez votre âge';
+
+  @override
+  String get yearsSuffix => 'ans';
+
+  @override
+  String get biologicalSex => 'Sexe biologique';
+
+  @override
+  String get conditionsHint => 'ex. Diabète, Hypertension, Asthme';
+
+  @override
+  String get medicationsHint => 'ex. Lisinopril 10mg, Metformine 500mg';
+
+  @override
+  String get triageSummary => 'Résumé';
+
+  @override
+  String get analyzeWithAi => 'Analyser avec l\'IA';
+
+  @override
+  String get back => 'Retour';
+
+  @override
+  String get triageFailed =>
+      'L\'analyse du triage a échoué. Veuillez réessayer.';
+
+  @override
+  String get symptomFever => 'Fièvre';
+
+  @override
+  String get symptomHeadache => 'Mal de tête';
+
+  @override
+  String get symptomCough => 'Toux';
+
+  @override
+  String get symptomShortnessOfBreath => 'Essoufflement';
+
+  @override
+  String get symptomFatigue => 'Fatigue';
+
+  @override
+  String get symptomDizziness => 'Vertiges';
+
+  @override
+  String get symptomNausea => 'Nausées';
+
+  @override
+  String get symptomChills => 'Frissons';
+
+  @override
+  String get symptomMuscleAche => 'Douleurs musculaires';
+
+  @override
+  String get symptomInsomnia => 'Insomnie';
+
+  @override
+  String get symptomChestPain => 'Douleur thoracique';
+
+  @override
+  String get symptomAbdominalPain => 'Douleur abdominale';
+
+  @override
+  String get symptomSoreThroat => 'Mal de gorge';
+
+  @override
+  String get symptomRunnyNose => 'Nez qui coule';
+
+  @override
+  String get symptomVomiting => 'Vomissements';
+
+  @override
+  String get symptomDiarrhea => 'Diarrhée';
+
+  @override
+  String get symptomRash => 'Éruption cutanée';
+
+  @override
+  String get symptomJointPain => 'Douleurs articulaires';
+
+  @override
+  String get purchaseCancelled => 'L\'achat a été annulé.';
+
+  @override
+  String get noPurchasesToRestore => 'Aucun achat précédent à restaurer.';
 }
