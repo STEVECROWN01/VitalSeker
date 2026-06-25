@@ -1,16 +1,13 @@
 {
   "@@locale": "en_GB",
-
   "appName": "VitalSeker",
   "tagline": "Your AI Health Companion",
   "poweredBy": "Powered by Keter Marketing",
-
   "navHome": "Home",
   "navHistory": "History",
   "navTriage": "Triage",
   "navInsights": "Insights",
   "navPassport": "Passport",
-
   "welcomeBack": "Welcome Back",
   "signIn": "Sign In",
   "createAccount": "Create Account",
@@ -35,7 +32,6 @@
   "passwordTooShort": "Password must be at least 6 characters",
   "passwordUpdated": "Password updated successfully",
   "failedToUpdatePassword": "Failed to update password. Please try again.",
-
   "goodMorning": "Good morning",
   "goodAfternoon": "Good afternoon",
   "goodEvening": "Good evening",
@@ -57,7 +53,6 @@
   "needsAttention": "Needs attention",
   "poorCondition": "Poor condition",
   "critical": "Critical",
-
   "vitals": "Vitals",
   "logVitals": "Log Vitals",
   "logVital": "Log Vital",
@@ -81,7 +76,6 @@
   "mgDl": "mmol/L",
   "noVitalsYet": "No vitals logged yet",
   "logFirstVital": "Log your first vital sign to start tracking",
-
   "aiTriage": "AI Triage",
   "describeSymptoms": "Describe your symptoms...",
   "analyzingSymptoms": "Analysing your symptoms",
@@ -96,7 +90,6 @@
   "seeDoctor": "See Doctor",
   "emergencyCare": "Emergency Care",
   "callEmergency": "Call Emergency",
-
   "profile": "Profile",
   "settings": "Settings",
   "editProfile": "Edit Profile",
@@ -132,7 +125,6 @@
   "vitalSekerPro": "VitalSeker Pro",
   "manageSubscription": "Manage your subscription",
   "upgradeToPro": "Upgrade to Pro",
-
   "pressAndHoldSOS": "Press and hold to send emergency alert",
   "holdFor3Seconds": "Hold for 3 seconds",
   "imSafeResolve": "I'm Safe - Resolve",
@@ -143,7 +135,6 @@
   "sosSent": "SOS alert sent successfully",
   "sosCancelled": "SOS cancelled",
   "failedToSendSOS": "Failed to send SOS. Please try again.",
-
   "medications": "Medications",
   "addMedication": "Add Medication",
   "active": "Active",
@@ -160,7 +151,6 @@
   "notes": "Notes",
   "noMedicationsYet": "No medications yet",
   "addFirstMedication": "Add your first medication to start tracking",
-
   "appointments": "Appointments",
   "addAppointment": "Add Appointment",
   "upcoming": "Upcoming",
@@ -175,15 +165,13 @@
   "reason": "Reason",
   "noAppointmentsYet": "No appointments yet",
   "addFirstAppointment": "Add your first appointment to start tracking",
-
   "familyProfiles": "Family Profiles",
   "addFamilyMember": "Add Family Member",
   "accountOwner": "Account Owner",
   "removeFamilyMember": "Remove Family Member",
   "relationship": "Relationship",
   "noFamilyMembersYet": "No family members yet",
-  "connectedMembers": "connected member(s)",
-
+  "connectedMembers": "{count} connected member{s}",
   "commonSave": "Save",
   "commonCancel": "Cancel",
   "commonDelete": "Delete",
@@ -200,7 +188,6 @@
   "commonError": "Error",
   "commonSuccess": "Success",
   "commonDeletePermanently": "Delete Permanently",
-
   "healthPassport": "Health Passport",
   "healthPassportQR": "Health Passport QR",
   "generateQRCode": "Generate QR Code",
@@ -225,7 +212,6 @@
   "gender": "Gender",
   "height": "Height",
   "phone": "Phone",
-
   "insights": "Insights",
   "weeklyInsights": "Weekly Insights",
   "viewWeeklyInsights": "View Weekly Insights",
@@ -236,12 +222,10 @@
   "appointmentReminders": "Appointment Reminders",
   "vitalsLoggingReminders": "Vitals Logging Reminders",
   "weeklyReport": "Weekly Report",
-
   "history": "History",
   "symptomHistory": "Symptom History",
   "noHistoryYet": "No history yet",
   "severity": "Severity",
-
   "subscription": "Subscription",
   "currentPlan": "Current Plan",
   "switchPlanConfirm": "Switch to {planName}?",
@@ -249,7 +233,6 @@
   "free": "Free",
   "pro": "Pro",
   "enterprise": "Enterprise",
-
   "medicalTranslation": "Medical Translation",
   "translate": "Translate",
   "translating": "Translating...",
@@ -258,12 +241,10 @@
   "translationResult": "Translation ({lang})",
   "yourTranslationWillAppearHere": "Your translation will appear here.",
   "translationFailed": "Translation failed. Please try again.",
-
   "onboarding": "Onboarding",
   "getStarted": "Get Started",
   "skip": "Skip",
   "next": "Next",
-
   "deleteAccountWarning": "This action is irreversible. All your data — vitals, medications, appointments, symptom logs, family profiles, and health passport — will be permanently deleted.",
   "typeEmailToConfirm": "Type your email to confirm:",
   "emailDoesNotMatch": "Email does not match.",

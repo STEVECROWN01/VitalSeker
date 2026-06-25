@@ -15,7 +15,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get tagline => 'Ọrẹ̀ Ìlera AI rẹ';
 
   @override
-  String get home => 'Home';
+  String get home => 'Ile';
 
   @override
   String get history => 'Ìtàn';
@@ -27,7 +27,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get insights => 'Ìmọ̀';
 
   @override
-  String get passport => 'Passport';
+  String get passport => 'Paspọọti';
 
   @override
   String get welcomeBack => 'Ká bọ̀, ká lọ́';
@@ -36,7 +36,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get signIn => 'Wọlé';
 
   @override
-  String get signUp => 'Sign Up';
+  String get signUp => 'Forúkọsílẹ̀';
 
   @override
   String get signOut => 'Jáde';
@@ -99,7 +99,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get healthPassport => 'Pásípọ́ọ̀tì Ìlera';
 
   @override
-  String get myHistory => 'My History';
+  String get myHistory => 'My Itan';
 
   @override
   String get emergencySOS => 'SOS Iṣẹ́-Ìyọjú';
@@ -108,7 +108,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get recentChecks => 'Àyẹ̀wò Tuntun';
 
   @override
-  String get noSymptomsLogs => 'No symptoms logs yet';
+  String get noSymptomsLogs => 'Bẹ́ẹ̀kọ́ Àmì logs yet';
 
   @override
   String get startTriage => 'Bẹ̀rẹ̀ Ìpínyà';
@@ -150,7 +150,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get analyzingSymptoms => 'À n ṣàyẹ̀wò àwọn ààmínì rẹ';
 
   @override
-  String get aiProcessing => 'AI is processing your health data';
+  String get aiProcessing => 'AI is processing your Ilera data';
 
   @override
   String get send => 'Ránṣẹ́';
@@ -162,13 +162,13 @@ class AppLocalizationsYo extends AppLocalizations {
   String get viewDetailedResults => 'Wo Èrè Pípẹ̀';
 
   @override
-  String get monitorAtHome => 'Monitor at Home';
+  String get monitorAtHome => 'Monitor at Ile';
 
   @override
   String get whenToEscalate => 'When to escalate';
 
   @override
-  String get saveToPassport => 'Save to Passport';
+  String get saveToPassport => 'Pamọ to Paspọọti';
 
   @override
   String get shareResult => 'Pín Èrè';
@@ -291,34 +291,34 @@ class AppLocalizationsYo extends AppLocalizations {
   String get discontinued => 'Ti dá dúró';
 
   @override
-  String get save => 'Save';
+  String get save => 'Pamọ';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Pa';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Paarẹ';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Ṣatunṣe';
 
   @override
-  String get add => 'Add';
+  String get add => 'Fi kun';
 
   @override
-  String get close => 'Close';
+  String get close => 'Ti';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Gbiyanju lẹẹkansi';
 
   @override
-  String get loading => 'Loading...';
+  String get loading => 'LoaN nkọ';
 
   @override
   String get poweredBy => 'Pẹ̀lú ìtìlẹ́yìn Keter Marketing';
 
   @override
-  String get pressAndHold => 'Press and hold to send emergency alert';
+  String get pressAndHold => 'Press and hold to send Iṣẹ́-ní-bẹ̀bẹ̀ alert';
 
   @override
   String get holdFor3Seconds => 'Pa fún ìṣẹ́jú mẹ́ta';
@@ -339,20 +339,21 @@ class AppLocalizationsYo extends AppLocalizations {
   String get emergencyContacts => 'Àwọn Ìkànsí Iṣẹ́-Ìyọjú';
 
   @override
-  String get medicalIDSection => 'Medical ID';
+  String get medicalIDSection => 'ID ìlera';
 
   @override
-  String get noEmergencyContacts => 'No emergency contacts configured';
+  String get noEmergencyContacts =>
+      'Bẹ́ẹ̀kọ́ Iṣẹ́-ní-bẹ̀bẹ̀ contacts configured';
 
   @override
-  String get addContactsInProfile => 'Add contacts in your profile settings';
+  String get addContactsInProfile => 'Fi kun contacts in your Alaye Ẹ̀yìn';
 
   @override
-  String get noMedicalInfo => 'No medical information on file';
+  String get noMedicalInfo => 'Bẹ́ẹ̀kọ́ medical information on file';
 
   @override
   String get updateProfileMedicalID =>
-      'Update your profile to add medical ID data';
+      'Update your Alaye to Fi kun medical ID data';
 
   @override
   String get symptomHistory => 'Ìtàn Ààmínì';
@@ -371,48 +372,48 @@ class AppLocalizationsYo extends AppLocalizations {
   String get weeklyInsights => 'Ìmọ̀ Ọ̀sẹ̀';
 
   @override
-  String get noInsightsYet => 'No Insights Yet';
+  String get noInsightsYet => 'Bẹ́ẹ̀kọ́ Ọgbọ́n Yet';
 
   @override
   String get checkBackMonday =>
-      'No insights generated yet. Check back on Monday for your weekly AI health summary.';
+      'Bẹ́ẹ̀kọ́ Ọgbọ́n generated yet. Check Pada sẹ́yìn on Monday for your weekly AI Ilera summary.';
 
   @override
   String get generateNow => 'Generate Now';
 
   @override
   String get upgradeProInsights =>
-      'Upgrade to Pro to unlock AI-powered weekly health insights.';
+      'Ẹ̀kọ́-sókè to Pro to unlock AI-powered weekly Ilera iỌgbọ́n';
 
   @override
   String get proPlan => 'Pro Plan';
 
   @override
-  String get viewAllPlans => 'View all plans';
+  String get viewAllPlans => 'View Gbogbo plans';
 
   @override
-  String get exportMedicalReport => 'Export Medical Report';
+  String get exportMedicalReport => 'Jade Medical Report';
 
   @override
   String get generatePDF => 'Generate PDF';
 
   @override
-  String get sendByEmail => 'Send by Email';
+  String get sendByEmail => 'Send by Imẹeli';
 
   @override
   String get patientOverview => 'Patient Overview & Vital Stats';
 
   @override
-  String get symptomsTriageLog => 'Symptoms & Triage Log';
+  String get symptomsTriageLog => 'Àmì & Triage Log';
 
   @override
-  String get medicationsAllergies => 'Medications & Allergies';
+  String get medicationsAllergies => 'Oogun & Àlẹ́sẹ́';
 
   @override
   String get aiAnalysisSummary => 'AI Analysis Summary';
 
   @override
-  String get dateRange => 'Date Range';
+  String get dateRange => 'Deeti Range';
 
   @override
   String get last30Days => 'Last 30 Days';
@@ -424,7 +425,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get translate => 'Túmọ̀';
 
   @override
-  String get translateMedicalTerms => 'Translate medical terms';
+  String get translateMedicalTerms => 'Translate medical Àdéhùn';
 
   @override
   String get targetLanguage => 'Ède Tó n bọ̀';
@@ -464,27 +465,27 @@ class AppLocalizationsYo extends AppLocalizations {
   String get reminders => 'Àwọn Ìránwọ́';
 
   @override
-  String get insightsTips => 'Insights & Tips';
+  String get insightsTips => 'Ọgbọ́n & Tips';
 
   @override
   String get thisActionIrreversible =>
-      'This action is irreversible. All your data will be permanently deleted.';
+      'This action is irreversible. Gbogbo your data will be permanently deleted.';
 
   @override
   String get typeEmailToConfirm => 'Tẹ ímẹ̀ẹ̀lì rẹ láti múdájú:';
 
   @override
-  String get deletePermanently => 'Delete Permanently';
+  String get deletePermanently => 'Paarẹ Permanently';
 
   @override
   String get accountDeleted => 'Akáìntì ti parẹ́. Má bínú tí o bá n lọ.';
 
   @override
-  String get sendEmergencySOS => 'Send Emergency SOS?';
+  String get sendEmergencySOS => 'Send SOS Iṣẹ́-ní-bẹ̀bẹ̀?';
 
   @override
   String get sosMessageBody =>
-      'This will send an SMS with your live location to all of your emergency contacts.';
+      'This will send an SMS with your live Ibi to Gbogbo of your Iṣẹ́-ní-bẹ̀bẹ̀ contacts.';
 
   @override
   String get sendSOS => 'Ránṣẹ́ SOS';
@@ -496,7 +497,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get failedToSignOut => 'Kò le jáde. Jọ̀wọ́ gbiyànjú lẹ́ẹ̀kan si.';
 
   @override
-  String get vitalsLogged => 'Vitals Logged';
+  String get vitalsLogged => 'Awọn amiaye Logged';
 
   @override
   String get triageSessions => 'Triage Sessions';
@@ -515,7 +516,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String connectedMembers(int count, String s) {
-    return 'àwọn ẹgbẹ́ tó jọ̀wọ́';
+    return '$count connected member$s';
   }
 
   @override
@@ -525,19 +526,19 @@ class AppLocalizationsYo extends AppLocalizations {
   String get documentsImaging => 'Documents & imaging';
 
   @override
-  String get translateMedicalTermsSubtitle => 'Translate medical terms';
+  String get translateMedicalTermsSubtitle => 'Translate medical Àdéhùn';
 
   @override
-  String get emergencyMedicalCard => 'Emergency medical card';
+  String get emergencyMedicalCard => 'Iṣẹ́-ní-bẹ̀bẹ̀ medical card';
 
   @override
   String get aes256EncryptionActive => 'AES-256 encryption active';
 
   @override
-  String get downloadYourHealthData => 'Download your health data';
+  String get downloadYourHealthData => 'Download your Ilera data';
 
   @override
-  String get themePasswordAccount => 'Theme, password, account';
+  String get themePasswordAccount => 'Theme, pỌ̀rọ̀-igbaniwọle account';
 
   @override
   String get faqsDocumentation => 'FAQs & documentation';
@@ -569,10 +570,12 @@ class AppLocalizationsYo extends AppLocalizations {
   String get passwordsDoNotMatch => 'Àwọn ọ̀rọ̀-ìpamọ́ kò bára wọn mu';
 
   @override
-  String get passwordMinLength => 'Password must be at least 8 characters';
+  String get passwordMinLength =>
+      'Ọ̀rọ̀-igbaniwọle must be at least 8 characters';
 
   @override
-  String get passwordUpdatedSuccessfully => 'Password updated successfully';
+  String get passwordUpdatedSuccessfully =>
+      'Ọ̀rọ̀-igbaniwọle updated successfully';
 
   @override
   String get failedToUpdatePassword =>
@@ -580,7 +583,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get deleteAccountIrreversible =>
-      'This action is irreversible. All your data — vitals, medications, appointments, symptom logs, family profiles, and health passport — will be permanently deleted.';
+      'This action is irreversible. Gbogbo your data — vAwọn amiaye mOogun appointments, symptom logs, Ẹbí profiles, and Ilera Paspọọti — will be permanently deleted.';
 
   @override
   String get emailDoesNotMatch => 'Ímẹ̀ẹ̀lì kò bára mu.';
@@ -593,7 +596,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get manageYourSubscription => 'Manage your subscription';
 
   @override
-  String get permanentlyRemoveYourData => 'Permanently remove your data';
+  String get permanentlyRemoveYourData => 'Permanently Yọ kuro your data';
 
   @override
   String get endYourCurrentSession => 'End your current session';
@@ -611,7 +614,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get subscription => 'Ìfowósowọ́pọ̀';
 
   @override
-  String get restore => 'Restore';
+  String get restore => 'Dá padà';
 
   @override
   String get chooseYourPlan => 'Choose Your Plan';
@@ -630,43 +633,43 @@ class AppLocalizationsYo extends AppLocalizations {
   String get perMonth => '/month';
 
   @override
-  String get freePlanFeature1 => '3 AI triage sessions/month';
+  String get freePlanFeature1 => '3 AI Triage sessions/month';
 
   @override
-  String get freePlanFeature2 => 'Basic health passport';
+  String get freePlanFeature2 => 'Basic Ilera Paspọọti';
 
   @override
   String get freePlanFeature3 => 'QR code sharing';
 
   @override
-  String get freePlanFeature4 => 'Emergency SOS alerts';
+  String get freePlanFeature4 => 'SOS Iṣẹ́-ní-bẹ̀bẹ̀ alerts';
 
   @override
-  String get freePlanFeature5 => 'Single user profile';
+  String get freePlanFeature5 => 'Single user Alaye';
 
   @override
-  String get proPlanFeature1 => 'Unlimited AI triage sessions';
+  String get proPlanFeature1 => 'Unlimited AI Triage sessions';
 
   @override
-  String get proPlanFeature2 => 'Advanced health passport';
+  String get proPlanFeature2 => 'Advanced Ilera Paspọọti';
 
   @override
-  String get proPlanFeature3 => 'Weekly AI insights';
+  String get proPlanFeature3 => 'Weekly AI Ọgbọ́n';
 
   @override
-  String get proPlanFeature4 => 'Family profiles (up to 5)';
+  String get proPlanFeature4 => 'Ẹbí profiles (up to 5)';
 
   @override
-  String get proPlanFeature5 => 'PDF export with full history';
+  String get proPlanFeature5 => 'PDF Jade with full Itan';
 
   @override
-  String get proPlanFeature6 => 'Priority support';
+  String get proPlanFeature6 => 'Priority Àtìlẹ́yìn';
 
   @override
   String get enterprisePlanFeature1 => 'Everything in Pro';
 
   @override
-  String get enterprisePlanFeature2 => 'Unlimited family profiles';
+  String get enterprisePlanFeature2 => 'Unlimited Ẹbí profiles';
 
   @override
   String get enterprisePlanFeature3 => 'Custom branding';
@@ -675,7 +678,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get enterprisePlanFeature4 => 'API access';
 
   @override
-  String get enterprisePlanFeature5 => 'Dedicated support';
+  String get enterprisePlanFeature5 => 'Dedicated Àtìlẹ́yìn';
 
   @override
   String get enterprisePlanFeature6 => 'SLA guarantee';
@@ -691,7 +694,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String upgradeToPlan(String plan) {
-    return 'Upgrade to $plan';
+    return 'Ẹ̀kọ́-sókè to $plan';
   }
 
   @override
@@ -713,15 +716,15 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get confirm => 'Confirm';
+  String get confirm => 'Jẹrisi';
 
   @override
   String get downgradedToFree =>
-      'Downgraded to Free. Pro access ends at the next billing period.';
+      'Downgraded to FỌfẹ́ Pro access ends at the Tẹ̀síwájú billing period.';
 
   @override
   String welcomeToPlan(String plan) {
-    return 'Welcome to $plan! All features unlocked.';
+    return 'Welcome to $plan! Gbogbo features unlocked.';
   }
 
   @override
@@ -732,15 +735,15 @@ class AppLocalizationsYo extends AppLocalizations {
   String get purchasesRestored => 'Purchases restored.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to restore purchases.';
+  String get failedToRestorePurchases => 'Failed to Dá padà purchases.';
 
   @override
   String get contactSalesEnterprise =>
-      'Contact sales for custom Enterprise terms';
+      'Contact sales for custom Ile-iṣẹ́ Àdéhùn';
 
   @override
   String get emailSalesEnterprise =>
-      'Email sales@vitalseker.com for enterprise pricing.';
+      'Imẹeli sales@vitalseker.com for Ile-iṣẹ́ pricing.';
 
   @override
   String poweredByProducer(String producer) {
@@ -751,7 +754,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get frequentlyAskedQuestions => 'Frequently Asked Questions';
 
   @override
-  String get contactSupport => 'Contact Support';
+  String get contactSupport => 'Contact Àtìlẹ́yìn';
 
   @override
   String get subject => 'Subject';
@@ -763,14 +766,14 @@ class AppLocalizationsYo extends AppLocalizations {
   String get submit => 'Submit';
 
   @override
-  String get otherWaysToReachUs => 'Other Ways to Reach Us';
+  String get otherWaysToReachUs => 'Miiran Ways to Reach Us';
 
   @override
-  String get emailUs => 'Email Us';
+  String get emailUs => 'Imẹeli Us';
 
   @override
   String get supportRequestSaved =>
-      'Your request is saved to your account and visible to our support team. We respond within 24 hours.';
+      'Your request is saved to your account and visible to our Àtìlẹ́yìn team. We respond within 24 hours.';
 
   @override
   String get pleaseFillSubjectMessage =>
@@ -784,7 +787,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get mustBeSignedInToSubmitSupport =>
-      'You must be signed in to submit a support request.';
+      'You must be signed in to submit a Àtìlẹ́yìn request.';
 
   @override
   String get urgentRequestReceived =>
@@ -792,46 +795,46 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get supportRequestSent =>
-      'Support request sent! We\'ll respond within 24 hours.';
+      'Àtìlẹ́yìn request sent! We\'ll respond within 24 hours.';
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit support request. Please try again or email support@vitalseker.com.';
+      'Failed to submit Àtìlẹ́yìn request. Please try again or Imẹeli support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
-      'Could not open email client. Please email support@vitalseker.com manually.';
+      'Could not open Imẹeli client. Please Imẹeli support@vitalseker.com manually.';
 
   @override
-  String get faqQuestion1 => 'How does the AI symptom triage work?';
+  String get faqQuestion1 => 'How does the AI symptom Triage work?';
 
   @override
   String get faqAnswer1 =>
-      'Our AI analyzes your reported symptoms against a comprehensive medical database to provide urgency-based recommendations. It categorizes your condition into Low, Medium, High, or Emergency urgency levels and suggests appropriate next steps.';
+      'Our AI analyzes your reported Àmì against a comprehensive medical database to provide urgency-based recommendations. It categorizes your condition into Low, Medium, High, or Iṣẹ́-ní-bẹ̀bẹ̀ urgency levels and suggests appropriate Tẹ̀síwájú steps.';
 
   @override
-  String get faqQuestion2 => 'Is my health data secure?';
+  String get faqQuestion2 => 'Is my Ilera data secure?';
 
   @override
   String get faqAnswer2 =>
-      'Yes. All data is encrypted end-to-end using AES-256 encryption. We comply with GDPR and HIPAA standards. Your health information is never shared with third parties without your explicit consent.';
+      'YBẹ́ẹ̀ni Gbogbo data is encrypted end-to-end using AES-256 encryption. We comply with GDPR and HIPAA standards. Your Ilera information is never shared with third parties without your explicit consent.';
 
   @override
-  String get faqQuestion3 => 'How do I share my health passport?';
+  String get faqQuestion3 => 'How do I Pín my Ilera pPaspọọti';
 
   @override
   String get faqAnswer3 =>
-      'Navigate to your Health Passport from the bottom navigation bar. Tap the QR code icon to generate a shareable QR code that healthcare providers can scan to access your critical health information securely.';
+      'Navigate to your Ilera Paspọọti from the bottom navigation bar. Tap the QR code icon to generate a shareable QR code that healthcare providers can scan to access your critical Ilera information securely.';
 
   @override
-  String get faqQuestion4 => 'Can I add family members?';
+  String get faqQuestion4 => 'Can I Fi kun Ẹbí members?';
 
   @override
   String get faqAnswer4 =>
-      'Yes! Pro subscribers can add up to 5 family member profiles, and Enterprise subscribers have unlimited family profiles. Each family member gets their own health passport and triage capabilities.';
+      'YBẹ́ẹ̀ni Pro subscribers can Fi kun up to 5 Ẹbí member profiles, and Ile-iṣẹ́ subscribers have unlimited Ẹbí profiles. Each Ẹbí member gets their own Ilera Paspọọti and Triage capabilities.';
 
   @override
-  String get faqQuestion5 => 'How do I cancel my subscription?';
+  String get faqQuestion5 => 'How do I Pa my subscription?';
 
   @override
   String get faqAnswer5 =>
@@ -839,7 +842,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get exportConfigurePreview =>
-      'Configure and preview your comprehensive health summary before generating a secure PDF.';
+      'Configure and preview your comprehensive Ilera summary before generating a secure PDF.';
 
   @override
   String get includeSections => 'Include Sections';
@@ -848,10 +851,10 @@ class AppLocalizationsYo extends AppLocalizations {
   String get last3Months => 'Last 3 Months';
 
   @override
-  String get yearToDate => 'Year to Date';
+  String get yearToDate => 'Year to Deeti';
 
   @override
-  String get allTime => 'All Time';
+  String get allTime => 'Gbogbo Àkókò';
 
   @override
   String get generating => 'Generating…';
@@ -865,20 +868,20 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get proFeature => 'PRO FEATURE';
+  String get proFeature => 'Pro FEATURE';
 
   @override
-  String get proActive => 'PRO ACTIVE';
+  String get proActive => 'Pro ACTIVE';
 
   @override
   String get manageHealthWholeFamily =>
-      'Manage health for your whole family (5 max)';
+      'Manage Ilera for your whole Ẹbí (5 max)';
 
   @override
   String get accountOwnerDefault => 'Account Owner';
 
   @override
-  String get ownerProfile => 'Owner profile';
+  String get ownerProfile => 'Owner Alaye';
 
   @override
   String years(int age) {
@@ -898,18 +901,18 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get pleaseFillNameRelationship =>
-      'Please fill in name and relationship';
+      'Please fill in Orúkọ and relationship';
 
   @override
   String get mustBeSignedInToAddFamily =>
-      'You must be signed in to add a family member';
+      'You must be signed in to Fi kun a Ẹbí member';
 
   @override
-  String get familyMemberAdded => 'Family member added!';
+  String get familyMemberAdded => 'Ẹbí member added!';
 
   @override
   String get failedToAddFamily =>
-      'Failed to add family member. Please try again.';
+      'Failed to Fi kun Ẹbí member. Please try again.';
 
   @override
   String get removeFamilyMember => 'Yọ Ẹgbẹ́ Ìdílé Kúrò';
@@ -920,44 +923,44 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get remove => 'Remove';
+  String get remove => 'Yọ kuro';
 
   @override
-  String get familyMemberRemoved => 'Family member removed';
+  String get familyMemberRemoved => 'Ẹbí member removed';
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to remove family member. Please try again.';
+      'Failed to Yọ kuro Ẹbí member. Please try again.';
 
   @override
-  String get fullNameLabel => 'Full Name';
+  String get fullNameLabel => 'Full Orúkọ';
 
   @override
   String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
 
   @override
-  String get bloodTypeOptional => 'Blood Type (optional)';
+  String get bloodTypeOptional => 'Ẹ̀yà ẹ̀jẹ̀ (optional)';
 
   @override
-  String get removeMember => 'Remove member';
+  String get removeMember => 'Yọ kuro member';
 
   @override
-  String get upgradeYourCare => 'UPGRADE YOUR CARE';
+  String get upgradeYourCare => 'Ẹ̀kọ́-sókè YOUR CARE';
 
   @override
   String get protectingWholeCircle => 'You\'re protecting the whole circle.';
 
   @override
   String get proMemberThanks =>
-      'Thanks for being a Pro member. You can monitor heart rate variability, sleep patterns, and AI-driven health risk assessments for up to 5 family members under a single subscription.';
+      'Thanks for being a Pro member. You can monitor heart rate variability, sleep patterns, and AI-driven Ilera risk assessments for up to 5 Ẹbí members under a single subscription.';
 
   @override
   String get proUpsellBody =>
-      'With VitalSeker Pro, you can monitor heart rate variability, sleep patterns, and AI-driven health risk assessments for up to 5 family members under a single subscription.';
+      'With VitalSeker PPro you can monitor heart rate variability, sleep patterns, and AI-driven Ilera risk assessments for up to 5 Ẹbí members under a single subscription.';
 
   @override
   String upgradeToProPrice(String price) {
-    return 'Upgrade to Pro — \$$price/mo';
+    return 'Ẹ̀kọ́-sókè to Pro — \$$price/mo';
   }
 
   @override
@@ -967,17 +970,17 @@ class AppLocalizationsYo extends AppLocalizations {
   String get failedToLoadProfiles => 'Failed to load profiles';
 
   @override
-  String get searchMedications => 'Search medications...';
+  String get searchMedications => 'Wa medOogun';
 
   @override
-  String get noMedicationsMatchSearch => 'No medications match your search';
+  String get noMedicationsMatchSearch => 'Bẹ́ẹ̀kọ́ Oogun match your Wa';
 
   @override
   String get noMedicationsYet => 'A kò tíì ní oògùn';
 
   @override
   String get addMedicationsTrack =>
-      'Add your medications to track dosages,\nfrequency, and adherence';
+      'Fi kun your Oogun to track dosages, frequency, and adherence';
 
   @override
   String editMedicationName(String name) {
@@ -1024,7 +1027,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get medicationDeleted => 'Medication deleted';
 
   @override
-  String get failedToDeleteMedication => 'Failed to delete medication.';
+  String get failedToDeleteMedication => 'Failed to Paarẹ medication.';
 
   @override
   String get editDetails => 'Sẹ́ Àwọn Ìmúdájú';
@@ -1053,7 +1056,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get fourTimesDaily => 'Four Times Daily';
 
   @override
-  String get everyOtherDay => 'Every Other Day';
+  String get everyOtherDay => 'Every Miiran Day';
 
   @override
   String get weekly => 'Weekly';
@@ -1065,17 +1068,17 @@ class AppLocalizationsYo extends AppLocalizations {
   String get custom => 'Custom';
 
   @override
-  String get all => 'All';
+  String get all => 'Gbogbo';
 
   @override
-  String get noAppointmentsMatchFilter => 'No appointments match the filter';
+  String get noAppointmentsMatchFilter => 'Bẹ́ẹ̀kọ́ appointments match the Yan';
 
   @override
   String get noAppointmentsYet => 'A kò tíì ní ìpàdé';
 
   @override
   String get scheduleFirstAppointment =>
-      'Schedule your first appointment to\nkeep track of visits';
+      'Schedule your first appointment to keep track of visits';
 
   @override
   String get appointmentMarkedCompleted => 'Appointment marked as completed';
@@ -1087,13 +1090,13 @@ class AppLocalizationsYo extends AppLocalizations {
   String get appointmentCancelled => 'Appointment cancelled';
 
   @override
-  String get failedToCancelAppointment => 'Failed to cancel appointment.';
+  String get failedToCancelAppointment => 'Failed to Pa appointment.';
 
   @override
-  String get selectNewDate => 'Select new date';
+  String get selectNewDate => 'Select new Deeti';
 
   @override
-  String get selectNewTime => 'Select new time';
+  String get selectNewTime => 'Select new Àkókò';
 
   @override
   String rescheduledTo(String date, String time) {
@@ -1109,14 +1112,14 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String deleteAppointmentConfirm(String doctor) {
-    return 'Are you sure you want to delete the appointment with $doctor?';
+    return 'Are you sure you want to Paarẹ the appointment with $doctor?';
   }
 
   @override
   String get appointmentDeleted => 'Appointment deleted';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to delete appointment.';
+  String get failedToDeleteAppointment => 'Failed to Paarẹ appointment.';
 
   @override
   String get reschedule => 'Tún ìpàdé tò';
@@ -1126,7 +1129,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get medicalTranslationIntro =>
-      'Translate medical terms and phrases into your preferred language. Useful for travel, consultations, and discussing care with non-English-speaking providers.';
+      'Translate medical Àdéhùn and phrases into your preferred lÈdè Useful for travel, consultations, and discussing care with non-English-speaking providers.';
 
   @override
   String get medicalTermOrPhrase => 'Ọ̀rọ̀ tàbí ọ̀rọ̀-ṣíṣe oníṣẹ́-abẹ';
@@ -1152,7 +1155,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get noTranslationReturned =>
-      'No translation was returned. Please try a different term.';
+      'Bẹ́ẹ̀kọ́ translation was returned. Please try a different term.';
 
   @override
   String get translationFailed =>
@@ -1181,58 +1184,56 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get aboutVitalSekerBody =>
-      'VitalSeker is your AI-powered health companion that puts you in control of your health journey. With intelligent symptom triage, a secure health passport, emergency SOS alerts, and personalized weekly insights, VitalSeker ensures you always have the information you need when it matters most. Built with cutting-edge AI technology and bank-grade security, your health data stays private and protected.';
+      'VitalSeker is your AI-powered Ilera companion that puts you in control of your Ilera journey. With intelligent symptom tTriage a secure Ilera pPaspọọti Iṣẹ́-ní-bẹ̀bẹ̀ SOS alerts, and personalized weekly iỌgbọ́n VitalSeker ensures you always have the information you need when it matters most. Built with cutting-edge AI technology and bank-grade security, your Ilera data stays private and protected.';
 
   @override
   String get featureAiTriageTitle => 'AI Symptom Triage';
 
   @override
   String get featureAiTriageDesc =>
-      'Get instant AI-powered health recommendations';
+      'Get instant AI-powered Ilera recommendations';
 
   @override
-  String get featureHealthPassportTitle => 'Health Passport';
+  String get featureHealthPassportTitle => 'Ilera Paspọọti';
 
   @override
   String get featureHealthPassportDesc =>
-      'Carry your encrypted health profile everywhere';
+      'Carry your encrypted Ilera Alaye everywhere';
 
   @override
-  String get featureQrSharingTitle => 'QR Code Sharing';
+  String get featureQrSharingTitle => 'Koodu QR Sharing';
 
   @override
   String get featureQrSharingDesc =>
-      'Share health info securely with any provider';
+      'Pín Ilera info securely with any provider';
 
   @override
-  String get featureEmergencySosTitle => 'Emergency SOS';
+  String get featureEmergencySosTitle => 'SOS Iṣẹ́-ní-bẹ̀bẹ̀';
 
   @override
-  String get featureEmergencySosDesc =>
-      'One-tap alerts with GPS location sharing';
+  String get featureEmergencySosDesc => 'One-tap alerts with GPS Ibi sharing';
 
   @override
-  String get featureWeeklyInsightsTitle => 'Weekly Insights';
+  String get featureWeeklyInsightsTitle => 'Weekly Ọgbọ́n';
 
   @override
-  String get featureWeeklyInsightsDesc => 'AI-generated health summaries (Pro)';
+  String get featureWeeklyInsightsDesc => 'AI-generated Ilera summaries (PPro';
 
   @override
-  String get featureFamilyProfilesTitle => 'Family Profiles';
+  String get featureFamilyProfilesTitle => 'Ẹbí Profiles';
 
   @override
-  String get featureFamilyProfilesDesc =>
-      'Manage health for your entire family';
+  String get featureFamilyProfilesDesc => 'Manage Ilera for your entire Ẹbí';
 
   @override
-  String get featurePdfExportTitle => 'PDF Export';
+  String get featurePdfExportTitle => 'PDF Jade';
 
   @override
-  String get featurePdfExportDesc => 'Generate and share health reports';
+  String get featurePdfExportDesc => 'Generate and Pín Ilera reports';
 
   @override
   String termsOfServiceTitle(String appName) {
-    return '$appName Terms of Service';
+    return '$appName Àdéhùn of Service';
   }
 
   @override
@@ -1241,16 +1242,16 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get tosSection1Title => 'Acceptance of Terms';
+  String get tosSection1Title => 'Acceptance of Àdéhùn';
 
   @override
   String tosSection1Para1(String appName) {
-    return 'By creating an account, accessing, or using the $appName mobile application (\"the Service\"), you agree to be bound by these Terms of Service (\"Terms\"). If you do not agree to these Terms, you must not access or use the Service.';
+    return 'By creating an account, accessing, or using the $appName mobile application (\"the Service\"), you agree to be bound by these Àdéhùn of Service (\"TerÀdéhùn If you do not agree to these TÀdéhùn you must not access or use the Service.';
   }
 
   @override
   String tosSection1Para2(String producer) {
-    return 'The Service is provided by $producer (\"we\", \"us\", or \"our\"). These Terms form a legally binding agreement between you and us.';
+    return 'The Service is provided by $producer (\"we\", \"us\", or \"our\"). These Àdéhùn form a legally binding agreement between you and us.';
   }
 
   @override
@@ -1258,27 +1259,27 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get tosSection2Para1 =>
-      'You must be at least 13 years old to use the Service. If you are under 18, you represent that your parent or legal guardian has read and agreed to these Terms on your behalf.';
+      'You must be at least 13 years old to use the Service. If you are under 18, you represent that your parent or legal guardian has read and agreed to these Àdéhùn on your behalf.';
 
   @override
   String get tosSection2Para2 =>
-      'You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. Notify us immediately of any unauthorized use of your account.';
+      'You are responsible for maintaining the confidentiality of your account credentials and for Gbogbo activities that occur under your account. Notify us immediately of any unauthorized use of your account.';
 
   @override
-  String get tosSection3Title => 'Health Information — Not Medical Advice';
+  String get tosSection3Title => 'Ilera Information — Not Medical Advice';
 
   @override
   String tosSection3Para1(String appName) {
-    return '$appName is a health companion application intended for informational and organizational purposes only. The Service is NOT a medical device and does not provide medical advice, diagnosis, or treatment recommendations.';
+    return '$appName is a Ilera companion application intended for informational and organizational purposes only. The Service is NOT a medical device and does not provide medical advice, diagnosis, or treatment recommendations.';
   }
 
   @override
   String get tosSection3Para2 =>
-      'The AI triage feature provides general guidance based on the symptoms you report. It is not a substitute for professional medical judgment. Always seek the advice of a qualified healthcare provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay seeking it because of something you read in this Service.';
+      'The AI Triage feature provides general guidance based on the Àmì you report. It is not a substitute for professional medical judgment. Always seek the advice of a qualified healthcare provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay seeking it because of something you read in this Service.';
 
   @override
   String get tosSection3Para3 =>
-      'In a medical emergency, call your local emergency number (e.g. 911, 112) immediately. Do not rely on the Service for emergency response.';
+      'In a medical eIṣẹ́-ní-bẹ̀bẹ̀ call your local Iṣẹ́-ní-bẹ̀bẹ̀ number (e.g. 911, 112) immediately. Do not rely on the Service for Iṣẹ́-ní-bẹ̀bẹ̀ response.';
 
   @override
   String get tosSection4Title => 'Use of the Service';
@@ -1299,7 +1300,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get tosSection4Bullet4 =>
-      'Interfere with the proper functioning of the Service or attempt to access data belonging to other users;';
+      'Interfere with the proper functioning of the Service or attempt to access data belonging to Miiran users;';
 
   @override
   String get tosSection4Bullet5 =>
@@ -1310,11 +1311,11 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get tosSection5Para1 =>
-      'Certain features of the Service require a paid subscription (\"Pro\" or \"Enterprise\" plan). Subscription fees are billed monthly through the platform application store (Apple App Store or Google Play Store) subject to their respective terms.';
+      'Certain features of the Service require a paid subscription (\"PPro or \"EIle-iṣẹ́ plan). Subscription fees are billed monthly through the platform application store (Apple App Store or Google Play Store) subject to their respective tÀdéhùn';
 
   @override
   String get tosSection5Para2 =>
-      'Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current billing period. You can manage or cancel your subscription at any time through your platform\'s account settings.';
+      'Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current billing period. You can manage or Pa your subscription at any Àkókò through your platform\'s account sẸ̀yìn';
 
   @override
   String get tosSection5Para3 =>
@@ -1325,11 +1326,11 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get tosSection6Para1 =>
-      'You retain ownership of the health data you submit to the Service. Our use of your data is described in our Privacy Policy, which is incorporated into these Terms by reference.';
+      'You retain ownership of the Ilera data you submit to the Service. Our use of your data is described in our Àdánwò Policy, which is incorporated into these Àdéhùn by reference.';
 
   @override
   String get tosSection6Para2 =>
-      'You may export your data at any time via the in-app Export feature, and you may permanently delete your account and all associated data via Settings → Delete Account.';
+      'You may Jade your data at any Àkókò via the in-app Jade feature, and you may permanently Paarẹ your account and Gbogbo associated data via Ẹ̀yìn → Paarẹ Account.';
 
   @override
   String get tosSection7Title => 'Disclaimers';
@@ -1340,14 +1341,14 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get tosSection7Para2 =>
-      'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI triage recommendations will be accurate or appropriate for your specific situation.';
+      'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI Triage recommendations will be accurate or appropriate for your specific situation.';
 
   @override
   String get tosSection8Title => 'Limitation of Liability';
 
   @override
   String tosSection8Para1(String producer) {
-    return 'TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL $producer BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF DATA, ARISING OUT OF OR RELATED TO YOUR USE OF (OR INABILITY TO USE) THE SERVICE, WHETHER BASED ON WARRANTY, CONTRACT, TORT, OR ANY OTHER LEGAL THEORY.';
+    return 'TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN Bẹ́ẹ̀kọ́ EVENT SHALL $producer BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF DATA, ARISING OUT OF OR RELATED TO YOUR USE OF (OR INABILITY TO USE) THE SERVICE, WHETHER BASED ON WARRANTY, CONTRACT, TORT, OR ANY Miiran LEGAL THEORY.';
   }
 
   @override
@@ -1355,29 +1356,29 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get tosSection9Para1 =>
-      'You may stop using the Service and delete your account at any time via Settings. We may suspend or terminate your access to the Service if you violate these Terms or if we reasonably believe we are required to do so by law.';
+      'You may stop using the Service and Paarẹ your account at any Àkókò via SẸ̀yìn We may suspend or terminate your access to the Service if you violate these Àdéhùn or if we reasonably believe we are Pataki to do so by law.';
 
   @override
   String get tosSection9Para2 =>
-      'Upon termination, all licenses granted to you will end, and your data will be deleted in accordance with our Privacy Policy.';
+      'Upon termination, Gbogbo licenses granted to you will end, and your data will be deleted in accordance with our Àdánwò Policy.';
 
   @override
-  String get tosSection10Title => 'Changes to These Terms';
+  String get tosSection10Title => 'Changes to These Àdéhùn';
 
   @override
   String get tosSection10Para1 =>
-      'We may update these Terms from time to time. We will notify you of material changes via the app or by email. Continued use of the Service after changes take effect constitutes acceptance of the revised Terms.';
+      'We may update these Àdéhùn from Àkókò to tÀkókò We will notify you of material changes via the app or by eImẹeli Continued use of the Service after changes take effect constitutes acceptance of the revised TÀdéhùn';
 
   @override
   String get tosSection11Title => 'Contact';
 
   @override
   String get tosSection11Para1 =>
-      'Questions about these Terms? Contact us at support@vitalseker.com.';
+      'Questions Nipa these TÀdéhùn Contact us at support@vitalseker.com.';
 
   @override
   String tosCopyright(int year, String producer, String version) {
-    return '© $year $producer. All rights reserved. Version $version.';
+    return '© $year $producer. Gbogbo rights reserved. Version $version.';
   }
 
   @override
@@ -1406,21 +1407,21 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get onboardingDescription1 =>
-      'Check any symptom and get reliable medical insights in seconds.';
+      'Check any symptom and get reliable medical Ọgbọ́n in seconds.';
 
   @override
-  String get onboardingTitle2 => 'Your health, always with you.';
+  String get onboardingTitle2 => 'Your hIlera always with you.';
 
   @override
   String get onboardingDescription2 =>
-      'Store your full medical profile, records, and digital insurance cards in one secure, encrypted vault.';
+      'Store your full medical pAlaye records, and digital insurance cards in one secure, encrypted vault.';
 
   @override
-  String get onboardingTitle3 => 'Works everywhere.\nEven offline.';
+  String get onboardingTitle3 => 'Works everywhere. Even offline.';
 
   @override
   String get onboardingDescription3 =>
-      'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re back online.';
+      'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re Pada sẹ́yìn online.';
 
   @override
   String get signInSubtitle => 'Sign in to your VitalSeker account';
@@ -1429,19 +1430,19 @@ class AppLocalizationsYo extends AppLocalizations {
   String get signingIn => 'Signing in...';
 
   @override
-  String get emailRequired => 'Email is required';
+  String get emailRequired => 'Imẹeli is Pataki';
 
   @override
-  String get enterValidEmail => 'Enter a valid email';
+  String get enterValidEmail => 'Enter a valid Imẹeli';
 
   @override
-  String get enterValidEmailAddress => 'Enter a valid email address';
+  String get enterValidEmailAddress => 'Enter a valid Imẹeli address';
 
   @override
-  String get passwordRequired => 'Password is required';
+  String get passwordRequired => 'Ọ̀rọ̀-igbaniwọle is Pataki';
 
   @override
-  String get enterEmailFirst => 'Please enter your email address first.';
+  String get enterEmailFirst => 'Please enter your Imẹeli address first.';
 
   @override
   String passwordResetSent(String email) {
@@ -1455,10 +1456,10 @@ class AppLocalizationsYo extends AppLocalizations {
   String get apple => 'Apple';
 
   @override
-  String get male => 'Male';
+  String get male => 'Ọkùnrin';
 
   @override
-  String get female => 'Female';
+  String get female => 'Obìnrin';
 
   @override
   String get other => 'Miiran';
@@ -1467,14 +1468,13 @@ class AppLocalizationsYo extends AppLocalizations {
   String get creatingAccount => 'Creating account...';
 
   @override
-  String get joinVitalSeker =>
-      'Join VitalSeker and take control of your health';
+  String get joinVitalSeker => 'Join VitalSeker and take control of your Ilera';
 
   @override
-  String get nameRequired => 'Name is required';
+  String get nameRequired => 'Orúkọ is Pataki';
 
   @override
-  String get nameMinChars => 'Name must be at least 2 characters';
+  String get nameMinChars => 'Orúkọ must be at least 2 characters';
 
   @override
   String get atLeast6Chars => 'At least 6 characters';
@@ -1492,19 +1492,19 @@ class AppLocalizationsYo extends AppLocalizations {
   String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
 
   @override
-  String get confirmPasswordRequired => 'Please confirm your password';
+  String get confirmPasswordRequired => 'Please Jẹrisi your Ọ̀rọ̀-igbaniwọle';
 
   @override
-  String get optionalDetails => 'Optional Details';
+  String get optionalDetails => 'Ìyàsọ́tọ̀ Details';
 
   @override
   String get dateOfBirth => 'Déètì Ìbí';
 
   @override
-  String get selectDateOfBirth => 'Select Date of Birth';
+  String get selectDateOfBirth => 'Select Deeti ibí';
 
   @override
-  String get selectDateOfBirthHint => 'Select your date of birth';
+  String get selectDateOfBirthHint => 'Select your Deeti of birth';
 
   @override
   String get gender => 'Àkọlé';
@@ -1519,18 +1519,18 @@ class AppLocalizationsYo extends AppLocalizations {
   String get selectBloodType => 'Select blood type';
 
   @override
-  String get iAgreeTo => 'I agree to the ';
+  String get iAgreeTo => 'I agree to the';
 
   @override
-  String get andText => ' and ';
+  String get andText => 'and';
 
   @override
   String get acceptTermsRequired =>
-      'Please accept the Terms of Service and Privacy Policy to continue.';
+      'Please accept the Àdéhùn of Service and Àdánwò Policy to continue.';
 
   @override
   String get accountCreatedVerifyEmail =>
-      'Account created! Please check your email to verify your account.';
+      'Account created! Please check your Imẹeli to verify your account.';
 
   @override
   String get userFallback => 'User';
@@ -1542,7 +1542,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get failedLoadRecentChecks => 'Failed to load recent checks';
 
   @override
-  String get pullDownRetry => 'Pull down to retry';
+  String get pullDownRetry => 'Pull down to Gbiyanju lẹẹkansi';
 
   @override
   String get goodCondition => 'Ipo rere';
@@ -1560,19 +1560,19 @@ class AppLocalizationsYo extends AppLocalizations {
   String get critical => 'Pàjàpàlà';
 
   @override
-  String get overallHealthIndicator => 'Your overall health indicator';
+  String get overallHealthIndicator => 'Your overall Ilera indicator';
 
   @override
   String get tapForWeeklyInsights => 'Tẹ láti rí ìmọ̀ ọ̀sẹ̀ méjì';
 
   @override
-  String get aiPoweredTriage60s => 'AI-powered triage in 60 seconds';
+  String get aiPoweredTriage60s => 'AI-powered Triage in 60 seconds';
 
   @override
   String get qrAndMedicalInfo => 'QR & medical info';
 
   @override
-  String get pastChecksAndVitals => 'Past checks & vitals';
+  String get pastChecksAndVitals => 'Past checks & Awọn amiaye';
 
   @override
   String get justNow => 'Just now';
@@ -1583,10 +1583,10 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get todayLabel => 'Today';
+  String get todayLabel => 'Ọnọlọ';
 
   @override
-  String get yesterdayLabel => 'Yesterday';
+  String get yesterdayLabel => 'Ọnọna';
 
   @override
   String daysAgo(int days) {
@@ -1601,11 +1601,11 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get aiGreeting =>
-      'Hello! I\'m VitalSeker AI. How are you feeling today? Describe your symptoms and I\'ll help assess your condition.';
+      'Hello! I\'m VitalSeker AI. How are you feeling tỌnọlọ Describe your Àmì and I\'ll Ìrànlọ́wọ́ assess your condition.';
 
   @override
   String get triageAssessmentIntro =>
-      'Based on your symptoms, here\'s my assessment:';
+      'Based on your sÀmì here\'s my assessment:';
 
   @override
   String get urgencyLabel => 'Urgency';
@@ -1641,7 +1641,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get visitUrgentCare => 'Visit Urgent Care';
 
   @override
-  String get seekEmergencyCare => 'Seek Emergency Care';
+  String get seekEmergencyCare => 'Seek Iṣẹ́-ní-bẹ̀bẹ̀ Care';
 
   @override
   String get consultHealthcareProvider => 'Consult a Healthcare Provider';
@@ -1688,32 +1688,32 @@ class AppLocalizationsYo extends AppLocalizations {
   String get seeDoctorSoon => 'See a Doctor Soon';
 
   @override
-  String get emergencyCareNow => 'Emergency Care Now';
+  String get emergencyCareNow => 'Iṣẹ́-ní-bẹ̀bẹ̀ Care Now';
 
   @override
   String get triageDisclaimer =>
       'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
 
   @override
-  String get escalateLow1 => 'Symptoms worsen or spread to new body areas';
+  String get escalateLow1 => 'Àmì worsen or spread to new body areas';
 
   @override
-  String get escalateLow2 => 'Fever rises above 39°C (102°F)';
+  String get escalateLow2 => 'Àìsàn ibá rises above 39°C (102°F)';
 
   @override
-  String get escalateLow3 => 'No improvement after 48 hours of self-care';
+  String get escalateLow3 => 'Bẹ́ẹ̀kọ́ improvement after 48 hours of self-care';
 
   @override
-  String get escalateMedium1 => 'Symptoms persist beyond 3 days';
+  String get escalateMedium1 => 'Àmì persist beyond 3 days';
 
   @override
   String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
 
   @override
-  String get escalateMedium3 => 'New red-flag symptoms appear';
+  String get escalateMedium3 => 'New red-flag Àmì appear';
 
   @override
-  String get escalateHigh1 => 'Symptoms rapidly worsen';
+  String get escalateHigh1 => 'Àmì rapidly worsen';
 
   @override
   String get escalateHigh2 =>
@@ -1721,10 +1721,10 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get escalateHigh3 =>
-      'High fever (>39°C) that doesn\'t respond to medication';
+      'High Àìsàn ibá (>39°C) that doesn\'t respond to medication';
 
   @override
-  String get escalateEmergency1 => 'Call emergency services immediately';
+  String get escalateEmergency1 => 'Call Iṣẹ́-ní-bẹ̀bẹ̀ services immediately';
 
   @override
   String get escalateEmergency2 =>
@@ -1732,19 +1732,19 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get escalateEmergency3 =>
-      'Bring this triage result and any medications you take';
+      'Bring this Triage result and any Oogun you take';
 
   @override
-  String get showQrCode => 'Show QR Code';
+  String get showQrCode => 'Show Koodu QR';
 
   @override
   String get inactive => 'Inactive';
 
   @override
-  String get knownAllergies => 'Known Allergies';
+  String get knownAllergies => 'Known Àlẹ́sẹ́';
 
   @override
-  String get currentMedications => 'Current Medications';
+  String get currentMedications => 'Current Oogun';
 
   @override
   String get chronicConditions => 'Àwọn Àrùn Dídáwẹ́';
@@ -1756,17 +1756,17 @@ class AppLocalizationsYo extends AppLocalizations {
   String get qrCode => 'Kóòdù QR';
 
   @override
-  String get exportPdf => 'Export PDF';
+  String get exportPdf => 'Jade PDF';
 
   @override
-  String get noHealthPassportYet => 'No Health Passport Yet';
+  String get noHealthPassportYet => 'Bẹ́ẹ̀kọ́ Ilera Paspọọti Yet';
 
   @override
   String get completeFirstTriage =>
-      'Complete your first triage to generate\nyour health passport';
+      'Complete your first Triage to generate your Ilera Paspọọti';
 
   @override
-  String get heightAndWeight => 'Height & Weight';
+  String get heightAndWeight => 'Gígùn & Iwọn';
 
   @override
   String get notSet => 'Not set';
@@ -1799,23 +1799,23 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get healthPassportQr => 'Health Passport QR';
+  String get healthPassportQr => 'Ilera Paspọọti QR';
 
   @override
   String get pointQrReader =>
-      'Point this at any QR reader to securely share your vitals.';
+      'Point this at any QR reader to securely Pín your vAwọn amiaye';
 
   @override
   String get download => 'DOWNLOAD';
 
   @override
-  String get share => 'SHARE';
+  String get share => 'Pín';
 
   @override
-  String get noQrCodeGenerated => 'No QR Code Generated';
+  String get noQrCodeGenerated => 'No Koodu QR Generated';
 
   @override
-  String get generateQrCode => 'Generate QR Code';
+  String get generateQrCode => 'Generate Koodu QR';
 
   @override
   String get expired => 'Expired';
@@ -1826,7 +1826,7 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get emergencySosTitle => 'Emergency SOS';
+  String get emergencySosTitle => 'SOS Iṣẹ́-ní-bẹ̀bẹ̀';
 
   @override
   String get keepHolding => 'Keep holding...';
@@ -1842,14 +1842,14 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get noMedicalInfoPrefix =>
-      'No medical information on file. Update your profile to ';
+      'Bẹ́ẹ̀kọ́ medical information on file. Update your Alaye to';
 
   @override
-  String get addMedicalIdData => 'add medical ID data';
+  String get addMedicalIdData => 'Fi kun medical ID data';
 
   @override
   String get sosTip =>
-      'SOS sends your GPS location to your emergency contacts via SMS. Make sure your contacts are configured in your profile.';
+      'SOS sends your GPS Ibi to your Iṣẹ́-ní-bẹ̀bẹ̀ contacts via SMS. Make sure your contacts are configured in your pAlaye';
 
   @override
   String get sendingCaps => 'SENDING';
@@ -1861,13 +1861,13 @@ class AppLocalizationsYo extends AppLocalizations {
   String get sosActive => 'SOS ACTIVE';
 
   @override
-  String get sendingEmergencyAlert => 'Sending Emergency Alert';
+  String get sendingEmergencyAlert => 'Sending Iṣẹ́-ní-bẹ̀bẹ̀ Alert';
 
   @override
   String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
 
   @override
-  String get emergencyAlertSent => 'Emergency Alert Sent';
+  String get emergencyAlertSent => 'Iṣẹ́-ní-bẹ̀bẹ̀ Alert Sent';
 
   @override
   String sendingIn(int seconds) {
@@ -1891,16 +1891,16 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get opensMapsHospitals =>
-      'Opens your maps app with emergency hospitals nearby';
+      'Opens your maps app with Iṣẹ́-ní-bẹ̀bẹ̀ hospitals nearby';
 
   @override
-  String get liveLocation => 'Live Location';
+  String get liveLocation => 'Live Ibi';
 
   @override
   String get acquiringGps => 'Acquiring GPS coordinates…';
 
   @override
-  String get locationUnavailable => 'Location unavailable';
+  String get locationUnavailable => 'Ibi unavailable';
 
   @override
   String get contactsNotified => 'Contacts Notified';
@@ -1917,7 +1917,7 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load history';
+  String get failedLoadHistory => 'Failed to load Itan';
 
   @override
   String thisMonthCount(int count) {
@@ -1925,13 +1925,13 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get noLogsMatchFilters => 'No logs match your filters';
+  String get noLogsMatchFilters => 'Bẹ́ẹ̀kọ́ logs match your filters';
 
   @override
-  String get tryDifferentSearch => 'Try a different search or filter.';
+  String get tryDifferentSearch => 'Try a different Wa or fYan';
 
   @override
-  String get searchLogs => 'Search logs...';
+  String get searchLogs => 'Wa logs...';
 
   @override
   String get filterGreen => 'Green';
@@ -1948,7 +1948,7 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get allSymptoms => 'All Symptoms';
+  String get allSymptoms => 'Gbogbo Àmì';
 
   @override
   String bodyRegionsCaption(String regions) {
@@ -1974,7 +1974,7 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get export30DayReport => 'Export 30-day Report (Pro)';
+  String get export30DayReport => 'Jade 30-day Report (PPro';
 
   @override
   String get weeklyBreakdown => 'Weekly Breakdown';
@@ -1983,7 +1983,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get proAnalysis => 'Pro Analysis';
 
   @override
-  String get yourHealthThisWeek => 'Your health this week';
+  String get yourHealthThisWeek => 'Your Ilera this week';
 
   @override
   String scoreChangePts(int change) {
@@ -2033,10 +2033,10 @@ class AppLocalizationsYo extends AppLocalizations {
   String get refreshingAiInsights => 'Refreshing your AI insights…';
 
   @override
-  String get generateNewInsights => 'Generate New Insights';
+  String get generateNewInsights => 'Generate New Ọgbọ́n';
 
   @override
-  String get symptoms => 'Symptoms';
+  String get symptoms => 'Àmì';
 
   @override
   String get avgSeverity => 'Avg Severity';
@@ -2046,11 +2046,11 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get checkBackMondayOrGenerate =>
-      'No insights generated yet. Check back on Monday for your weekly AI health summary, or tap below to generate one now.';
+      'Bẹ́ẹ̀kọ́ Ọgbọ́n generated yet. Check Pada sẹ́yìn on Monday for your weekly AI Ilera summary, or tap below to generate one now.';
 
   @override
   String get upgradeProInsightsFull =>
-      'Upgrade to Pro to unlock AI-powered weekly health insights. Get personalized recommendations and trend analysis every Monday.';
+      'Ẹ̀kọ́-sókè to Pro to unlock AI-powered weekly Ilera iỌgbọ́n Get personalized recommendations and trend analysis every Monday.';
 
   @override
   String proPlanMonthly(double price) {
@@ -2058,11 +2058,10 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get weeklyInsightsUnlimitedTriage =>
-      'Weekly insights, unlimited triage';
+  String get weeklyInsightsUnlimitedTriage => 'Weekly iỌgbọ́n unlimited Triage';
 
   @override
-  String get couldNotLoadInsights => 'Could not load insights';
+  String get couldNotLoadInsights => 'Could not load Ọgbọ́n';
 
   @override
   String couldNotLaunchCall(String phoneNumber) {
@@ -2077,7 +2076,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get poweredByGlm => 'Powered by GLM-4';
 
   @override
-  String get aiTriageIn90Seconds => 'AI-powered triage in 90 seconds';
+  String get aiTriageIn90Seconds => 'AI-powered Triage in 90 seconds';
 
   @override
   String get vitalValueOutOfRange => 'Value out of expected range';
@@ -2088,7 +2087,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get vitalRangeHintBloodPressure =>
-      'Blood pressure should be between 60-250 (systolic) and 40-150 (diastolic)';
+      'Blood pressure should be between 60-250 (sSistoliki and 40-150 (dDayastoliki';
 
   @override
   String get vitalRangeHintTemperature =>
@@ -2103,31 +2102,31 @@ class AppLocalizationsYo extends AppLocalizations {
       'Blood glucose should be between 20 and 600 mg/dL';
 
   @override
-  String get vitalRangeHintWeight => 'Weight should be between 2 and 500 kg';
+  String get vitalRangeHintWeight => 'Iwọn should be between 2 and 500 kg';
 
   @override
-  String get vitalRangeHintHeight => 'Height should be between 30 and 250 cm';
+  String get vitalRangeHintHeight => 'Gígùn should be between 30 and 250 cm';
 
   @override
   String get familyProfilesProOnly =>
-      'Family Profiles is a Pro feature. Upgrade to add family members.';
+      'Ẹbí Profiles is a Pro feature. Ẹ̀kọ́-sókè to Fi kun Ẹbí members.';
 
   @override
   String get exportProOnly =>
-      'PDF Export is a Pro feature. Upgrade to generate reports.';
+      'PDF Jade is a Pro feature. Ẹ̀kọ́-sókè to generate reports.';
 
   @override
   String get triageLimitReached =>
-      'You have reached your free monthly triage limit (3). Upgrade to Pro for unlimited triages.';
+      'You have reached your Ọfẹ́ monthly Triage limit (3). Ẹ̀kọ́-sókè to Pro for unlimited triages.';
 
   @override
-  String get monthlyTriageLimit => '3 triages per month (Free plan)';
+  String get monthlyTriageLimit => '3 triages per month (Ọfẹ́ plan)';
 
   @override
-  String get viewQrCode => 'View QR Code';
+  String get viewQrCode => 'View Koodu QR';
 
   @override
-  String get shareMedicalId => 'Share Medical ID';
+  String get shareMedicalId => 'Share ID ìlera';
 
   @override
   String translationTooLong(int max) {
@@ -2136,17 +2135,17 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get profileFieldsSaveFailed =>
-      'Account created, but optional profile fields (date of birth, gender, blood type) couldn\'t be saved. You can edit them later in Profile > Edit Profile.';
+      'Account created, but Ìyàsọ́tọ̀ Alaye fields (Deeti of birth, gender, blood type) couldn\'t be saved. You can Ṣatunṣe them later in Alaye > Ṣatunṣe PAlaye';
 
   @override
-  String get privacyPolicyTitle => 'Privacy Policy';
+  String get privacyPolicyTitle => 'Àdánwò Policy';
 
   @override
   String get privacyLastUpdated => 'Last updated: March 2025';
 
   @override
   String privacyIntro(String appName) {
-    return 'At $appName, your privacy is paramount. This Privacy Policy explains how we collect, use, store, and protect your personal and health-related data. By using our services, you agree to the practices described below.';
+    return 'At $appName, your Àdánwò is paramount. This Àdánwò Policy explains how we collect, use, store, and protect your personal and health-related data. By using our services, you agree to the practices described below.';
   }
 
   @override
@@ -2154,21 +2153,21 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get privacyDataCollectionBody =>
-      'We collect the following categories of data:\n\n• Personal Information: Name, email address, phone number, date of birth, and gender.\n• Health Data: Blood type, allergies, chronic conditions, medications, vital signs, symptom logs, and triage results.\n• Emergency Contacts: Names, phone numbers, and relationships of your designated contacts.\n• Device Data: Device type, operating system, and app version for compatibility and support.\n• Usage Data: Feature interactions and anonymized analytics to improve our services.\n\nWe only collect data that is necessary for providing our health companion services. You have full control over what information you provide.';
+      'We collect the following categories of data: • Personal Information: NOrúkọ Imẹeli address, Fọọnu number, Deeti of birth, and gender. • Ilera Data: Blood type, aÀlẹ́sẹ́ chronic conditions, mOogun vital signs, symptom logs, and Triage results. • Iṣẹ́-ní-bẹ̀bẹ̀ Contacts: Names, Fọọnu numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sÀtìlẹ́yìn • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our Ilera companion services. You have full control over what information you provide.';
 
   @override
   String get privacySectionDataStorage => '2. Data Storage & Encryption';
 
   @override
   String get privacyDataStorageBody =>
-      'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• QR Code Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
+      'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• Koodu QR Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
   String get privacySectionGdpr => '3. GDPR Compliance';
 
   @override
   String privacyGdprBody(String appName) {
-    return '$appName is fully compliant with the General Data Protection Regulation (GDPR):\n\n• Lawful Basis: We process your data based on your explicit consent and contractual necessity.\n• Data Minimization: We only collect and process data that is strictly necessary.\n• Purpose Limitation: Your data is used only for the purposes for which it was collected.\n• Right to Access: You can request a complete copy of your personal data at any time.\n• Right to Rectification: You can update or correct your data through the app settings.\n• Right to Erasure: You can request complete deletion of your account and data.\n• Right to Portability: You can export your data in a machine-readable format.\n• Data Processing Agreements: All third-party processors have signed DPAs.\n• Cross-Border Transfers: Data is processed within the EU/EEA unless explicit consent is given otherwise.';
+    return '$appName is fully compliant with the General Data Protection Regulation (GDPR): • Lawful Basis: We process your data based on your explicit consent and contractual necessity. • Data Minimization: We only collect and process data that is strictly necessary. • Purpose Limitation: Your data is used only for the purposes for which it was collected. • Right to Access: You can request a complete copy of your personal data at any tÀkókò • Right to Rectification: You can update or correct your data through the app sẸ̀yìn • Right to Erasure: You can request complete deletion of your account and data. • Right to Portability: You can Jade your data in a machine-readable format. • Data Processing Agreements: Gbogbo third-party processors have signed DPAs. • Cross-Border Transfers: Data is processed within the EU/EEA unless explicit consent is given otherwise.';
   }
 
   @override
@@ -2176,19 +2175,19 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get privacyRightsBody =>
-      'You have the following rights regarding your data:\n\n• Access: View all your personal and health data within the app or request a data export.\n• Correction: Edit your profile information at any time through Edit Profile.\n• Deletion: Request account deletion through Settings > Data & Privacy > Delete Account.\n• Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences.\n• Objection: Object to specific data processing activities by contacting our Data Protection Officer.\n• Withdrawal of Consent: You may withdraw consent at any time without affecting the lawfulness of prior processing.\n\nTo exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app support feature.';
+      'You have the following rights regarding your data: • Access: View Gbogbo your personal and Ilera data within the app or request a data eJade • Correction: Ṣatunṣe your Alaye information at any Àkókò through Ṣatunṣe PAlaye • Deletion: Request account deletion through Ẹ̀yìn > Data & Àdánwò > Paarẹ Account. • Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences. • Objection: Object to specific data processing activities by contacting our Data Protection Officer. • Withdrawal of Consent: You may withdraw consent at any Àkókò without affecting the lawfulness of prior processing. To exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app Àtìlẹ́yìn feature.';
 
   @override
   String get privacySectionContactUs => '5. Contact Us';
 
   @override
   String privacyContactBody(String producer) {
-    return 'If you have any questions or concerns about this Privacy Policy or our data practices, please contact us:\n\n• Email: privacy@vitalseker.com\n• Support: support@vitalseker.com\n• Data Protection Officer: dpo@vitalseker.com\n• Address: $producer, Data Protection Office\n\nWe aim to respond to all privacy-related inquiries within 30 days.';
+    return 'If you have any questions or concerns Nipa this Àdánwò Policy or our data practices, please contact us: • EImẹeli privacy@vitalseker.com • SÀtìlẹ́yìn support@vitalseker.com • Data Protection Officer: dpo@vitalseker.com • Address: $producer, Data Protection Office We aim to respond to Gbogbo privacy-related inquiries within 30 days.';
   }
 
   @override
   String privacyCopyright(String producer) {
-    return '© 2025 $producer. All rights reserved.';
+    return '© 2025 $producer. Gbogbo rights reserved.';
   }
 
   @override
@@ -2198,7 +2197,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get takePhoto => 'Take a Photo';
 
   @override
-  String get removePhoto => 'Remove Photo';
+  String get removePhoto => 'Yọ kuro Photo';
 
   @override
   String get avatarUpdated => 'Avatar updated!';
@@ -2210,17 +2209,17 @@ class AppLocalizationsYo extends AppLocalizations {
   String get avatarRemoved => 'Avatar removed.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to remove avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'Failed to Yọ kuro avatar. Please try again.';
 
   @override
-  String get profileUpdatedSuccessfully => 'Profile updated successfully!';
+  String get profileUpdatedSuccessfully => 'Alaye updated successfully!';
 
   @override
-  String get profileUpdateFailed =>
-      'Failed to update profile. Please try again.';
+  String get profileUpdateFailed => 'Failed to update pAlaye Please try again.';
 
   @override
-  String get editProfileTitle => 'Edit Profile';
+  String get editProfileTitle => 'Ṣatunṣe Alaye';
 
   @override
   String errorPrefix(String error) {
@@ -2234,50 +2233,50 @@ class AppLocalizationsYo extends AppLocalizations {
   String get measurements => 'Measurements';
 
   @override
-  String get heightCm => 'Height (cm)';
+  String get heightCm => 'Gígùn (cm)';
 
   @override
-  String get weightKg => 'Weight (kg)';
+  String get weightKg => 'Iwọn (kg)';
 
   @override
-  String get emergencyContactSection => 'Emergency Contact';
+  String get emergencyContactSection => 'Iṣẹ́-ní-bẹ̀bẹ̀ Contact';
 
   @override
-  String get contactName => 'Contact Name';
+  String get contactName => 'Contact Orúkọ';
 
   @override
-  String get phoneNumber => 'Phone Number';
+  String get phoneNumber => 'Fọọnu Number';
 
   @override
   String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
 
   @override
-  String get addAllergy => 'Add Allergy';
+  String get addAllergy => 'Fi kun Allergy';
 
   @override
-  String get noAllergiesAdded => 'No allergies added';
+  String get noAllergiesAdded => 'Bẹ́ẹ̀kọ́ Àlẹ́sẹ́ added';
 
   @override
-  String get addCondition => 'Add Condition';
+  String get addCondition => 'Fi kun Condition';
 
   @override
-  String get noConditionsAdded => 'No conditions added';
+  String get noConditionsAdded => 'Bẹ́ẹ̀kọ́ conditions added';
 
   @override
-  String get saveChanges => 'Save Changes';
+  String get saveChanges => 'Pamọ Changes';
 
   @override
-  String get healthTitle => 'Health';
+  String get healthTitle => 'Ilera';
 
   @override
-  String get weeklyInsightsTooltip => 'Weekly Insights';
+  String get weeklyInsightsTooltip => 'Weekly Ọgbọ́n';
 
   @override
-  String get yourHealthScore => 'Your Health Score';
+  String get yourHealthScore => 'Your Ilera Score';
 
   @override
   String get scoreDescriptionGreat =>
-      'Your health metrics are looking great! Keep it up.';
+      'Your Ilera metrics are looking great! Keep it up.';
 
   @override
   String get scoreDescriptionGood =>
@@ -2285,7 +2284,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get scoreDescriptionModerate =>
-      'Some health metrics need improvement. Consider our recommendations.';
+      'Some Ilera metrics need improvement. Consider our recommendations.';
 
   @override
   String get scoreDescriptionLow =>
@@ -2300,22 +2299,22 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String allergyCount(int count) {
-    return '$count Allergies';
+    return '$count Àlẹ́sẹ́';
   }
 
   @override
   String chronicConditionCount(int count) {
-    return '$count Chronic Conditions';
+    return '$count Àrùn rírun';
   }
 
   @override
-  String get noRiskFactors => 'No risk factors identified';
+  String get noRiskFactors => 'Bẹ́ẹ̀kọ́ risk factors identified';
 
   @override
   String get recentTriageResults => 'Recent Triage Results';
 
   @override
-  String get noTriageResults => 'No triage results yet';
+  String get noTriageResults => 'Bẹ́ẹ̀kọ́ Triage results yet';
 
   @override
   String get recommendedActions => 'Recommended Actions';
@@ -2325,21 +2324,21 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get actionScheduleCheckupDesc =>
-      'Your health score suggests it\'s time for a medical review.';
+      'Your Ilera score suggests it\'s Àkókò for a medical review.';
 
   @override
-  String get actionLogVitals => 'Log Your Vitals';
+  String get actionLogVitals => 'Log Your Awọn amiaye';
 
   @override
   String get actionLogVitalsDesc =>
-      'Track your blood pressure, heart rate, and other key metrics.';
+      'Track your blood pressure, heart rate, and Miiran key metrics.';
 
   @override
   String get actionRunSymptomCheck => 'Run a Symptom Check';
 
   @override
   String get actionRunSymptomCheckDesc =>
-      'Use AI triage to assess any symptoms you\'re experiencing.';
+      'Use AI Triage to assess any Àmì you\'re experiencing.';
 
   @override
   String get actionImproveSleep => 'Improve Sleep Quality';
@@ -2353,7 +2352,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get actionStayActiveDesc =>
-      'Regular exercise helps maintain cardiovascular health.';
+      'Regular exercise helps maintain cardiovascular hIlera';
 
   @override
   String get viewWeeklyInsights => 'Wo Ìmọ̀ Ọ̀sẹ̀';
@@ -2369,14 +2368,14 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load vitals';
+  String get failedToLoadVitals => 'Failed to load Awọn amiaye';
 
   @override
   String get noVitalsYet => 'A kò tíì kọ àwọn ìdánwò sílẹ̀';
 
   @override
   String get startLoggingVitalsPrompt =>
-      'Start logging your vital signs to track your health over time';
+      'Start logging your vital signs to track your Ilera over Àkókò';
 
   @override
   String get logFirstVital => 'Kọ ìdánwò àkọ́kọ́ rẹ láti bẹ̀rẹ̀ ìtọ́pa';
@@ -2391,7 +2390,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get month => 'Month';
 
   @override
-  String get noData => 'No data';
+  String get noData => 'Bẹ́ẹ̀kọ́ data';
 
   @override
   String get trendUp => 'UP';
@@ -2418,17 +2417,17 @@ class AppLocalizationsYo extends AppLocalizations {
   String get diastolic => 'Diyastolik';
 
   @override
-  String get dateTimeLabel => 'DATE & TIME';
+  String get dateTimeLabel => 'Deeti & Àkókò';
 
   @override
-  String get notesOptionalLabel => 'NOTES (OPTIONAL)';
+  String get notesOptionalLabel => 'Àkọsílẹ̀ (OÌyàsọ́tọ̀';
 
   @override
-  String get notesHint => 'Add any notes about this reading...';
+  String get notesHint => 'Fi kun any Àkọsílẹ̀ Nipa this reading...';
 
   @override
   String saveVitalType(String vitalType) {
-    return 'Save $vitalType';
+    return 'Pamọ $vitalType';
   }
 
   @override
@@ -2437,10 +2436,10 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to save vital. Please try again.';
+  String get vitalSaveFailed => 'Failed to Pamọ vital. Please try again.';
 
   @override
-  String get vitalsHistoryTitle => 'Vitals History';
+  String get vitalsHistoryTitle => 'Awọn amiaye Itan';
 
   @override
   String get range7Days => '7D';
@@ -2459,7 +2458,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String noVitalTypeData(String vitalType) {
-    return 'No $vitalType Data';
+    return 'Bẹ́ẹ̀kọ́ $vitalType Data';
   }
 
   @override
@@ -2496,10 +2495,10 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get addMedicationTitle => 'Add Medication';
+  String get addMedicationTitle => 'Fi kun Medication';
 
   @override
-  String get medicationNameLabel => 'Medication Name';
+  String get medicationNameLabel => 'Medication Orúkọ';
 
   @override
   String get dosageLabel => 'Dosage';
@@ -2511,13 +2510,13 @@ class AppLocalizationsYo extends AppLocalizations {
   String get frequencyLabel => 'Frequency';
 
   @override
-  String get startDateLabel => 'Start Date';
+  String get startDateLabel => 'Start Deeti';
 
   @override
-  String get setEndDate => 'Set end date';
+  String get setEndDate => 'Set end Deeti';
 
   @override
-  String get endDateLabel => 'End Date';
+  String get endDateLabel => 'End Deeti';
 
   @override
   String get doseTimesLabel => 'DOSE TIMES';
@@ -2528,41 +2527,41 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get notesOptional => 'Notes (optional)';
+  String get notesOptional => 'Àkọsílẹ̀ (oÌyàsọ́tọ̀';
 
   @override
   String get remindersLabel => 'Reminders';
 
   @override
-  String get saveMedication => 'Save Medication';
+  String get saveMedication => 'Pamọ Medication';
 
   @override
   String get medicationAddedSuccessfully => 'Medication added successfully!';
 
   @override
   String get medicationAddFailed =>
-      'Failed to add medication. Please try again.';
+      'Failed to Fi kun medication. Please try again.';
 
   @override
-  String get addAppointmentTitle => 'Add Appointment';
+  String get addAppointmentTitle => 'Fi kun Appointment';
 
   @override
-  String get doctorNameLabel => 'Doctor Name';
+  String get doctorNameLabel => 'Orúkọ dókítà';
 
   @override
-  String get specialtyLabel => 'Specialty';
+  String get specialtyLabel => 'Pàtàkì';
 
   @override
-  String get selectSpecialtyHint => 'Select specialty';
+  String get selectSpecialtyHint => 'Select Pàtàkì';
 
   @override
-  String get locationOptional => 'Location / Address (optional)';
+  String get locationOptional => 'Ibi / Address (oÌyàsọ́tọ̀';
 
   @override
-  String get reminderLabel => 'Reminder';
+  String get reminderLabel => 'Ìrántí';
 
   @override
-  String get saveAppointment => 'Save Appointment';
+  String get saveAppointment => 'Pamọ Appointment';
 
   @override
   String get appointmentScheduledSuccessfully =>
@@ -2600,7 +2599,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get specialtyPsychiatrist => 'Psychiatrist';
 
   @override
-  String get specialtyOther => 'Other';
+  String get specialtyOther => 'Miiran';
 
   @override
   String get recordsLoadFailed => 'Failed to load records. Please try again.';
@@ -2609,10 +2608,10 @@ class AppLocalizationsYo extends AppLocalizations {
   String get notAvailable => 'N/A';
 
   @override
-  String get editRecordTitle => 'Edit Record';
+  String get editRecordTitle => 'Ṣatunṣe Record';
 
   @override
-  String get addMedicalRecordTitle => 'Add Medical Record';
+  String get addMedicalRecordTitle => 'Fi kun Medical Record';
 
   @override
   String get titleLabel => 'Title';
@@ -2630,7 +2629,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get recordTypeImaging => 'Imaging';
 
   @override
-  String get recordTypeOther => 'Other';
+  String get recordTypeOther => 'Miiran';
 
   @override
   String get descriptionLabel => 'Description';
@@ -2645,33 +2644,33 @@ class AppLocalizationsYo extends AppLocalizations {
   String get recordUpdateFailed => 'Failed to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to add record.';
+  String get recordAddFailed => 'Failed to Fi kun record.';
 
   @override
-  String get deleteRecordTitle => 'Delete Record';
+  String get deleteRecordTitle => 'Paarẹ Record';
 
   @override
   String deleteRecordConfirm(String title) {
-    return 'Are you sure you want to delete \"$title\"? This cannot be undone.';
+    return 'Are you sure you want to Paarẹ \"$title\"? This cannot be undone.';
   }
 
   @override
   String get recordDeleted => 'Record deleted.';
 
   @override
-  String get recordDeleteFailed => 'Failed to delete record.';
+  String get recordDeleteFailed => 'Failed to Paarẹ record.';
 
   @override
-  String get medicalRecordsTitle => 'Medical Records';
+  String get medicalRecordsTitle => 'Àkọsílẹ̀ ìlera';
 
   @override
-  String get searchRecordsHint => 'Search records...';
+  String get searchRecordsHint => 'Wa records...';
 
   @override
-  String get noRecordsFound => 'No records found';
+  String get noRecordsFound => 'Bẹ́ẹ̀kọ́ records found';
 
   @override
-  String get tapToAddRecord => 'Tap + to add a medical record';
+  String get tapToAddRecord => 'Tap + to Fi kun a medical record';
 
   @override
   String get untitled => 'Untitled';
@@ -2685,39 +2684,39 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get triageQ1Title => 'What are your main symptoms today?';
+  String get triageQ1Title => 'What are your main Àmì tỌnọlọ';
 
   @override
   String get triageQ1Subtitle =>
-      'Select all that apply. This helps our AI analyze your condition accurately.';
+      'Select Gbogbo that apply. This helps our AI analyze your condition accurately.';
 
   @override
-  String get triageQ2Title => 'How long have you had these symptoms?';
+  String get triageQ2Title => 'How long have you had these sÀmì';
 
   @override
   String get triageQ2Subtitle =>
-      'Select the option that best describes when your symptoms started.';
+      'Select the option that best describes when your Àmì started.';
 
   @override
-  String get triageQ3Title => 'What is your age and biological sex?';
+  String get triageQ3Title => 'What is your Ọdún and biological sex?';
 
   @override
   String get triageQ3Subtitle =>
-      'This information helps calibrate the triage assessment.';
+      'This information helps calibrate the Triage assessment.';
 
   @override
-  String get triageQ4Title => 'Any known conditions or medications?';
+  String get triageQ4Title => 'Any known conditions or mOogun';
 
   @override
   String get triageQ4Subtitle =>
-      'Pre-filled from your profile. Edit if needed.';
+      'Pre-filled from your pAlaye Ṣatunṣe if needed.';
 
   @override
-  String get triageQ5Title => 'Any additional notes?';
+  String get triageQ5Title => 'Any additional nÀkọsílẹ̀';
 
   @override
   String get triageQ5Subtitle =>
-      'Describe any other details about your symptoms or situation.';
+      'Describe any Miiran details Nipa your Àmì or situation.';
 
   @override
   String get triageSeverityLabel => 'Overall Severity';
@@ -2747,7 +2746,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get severityUnbearable => 'Unbearable';
 
   @override
-  String get durationToday => 'Today (started today)';
+  String get durationToday => 'Ọnọlọ (started tỌnọlọ';
 
   @override
   String get duration1To3Days => '1-3 days';
@@ -2762,10 +2761,10 @@ class AppLocalizationsYo extends AppLocalizations {
   String get durationMoreThan2Weeks => 'More than 2 weeks';
 
   @override
-  String get age => 'Age';
+  String get age => 'Ọdún';
 
   @override
-  String get ageHint => 'Enter your age';
+  String get ageHint => 'Enter your Ọdún';
 
   @override
   String get yearsSuffix => 'years';
@@ -2783,34 +2782,34 @@ class AppLocalizationsYo extends AppLocalizations {
   String get triageSummary => 'Summary';
 
   @override
-  String get analyzeWithAi => 'Analyze with AI';
+  String get analyzeWithAi => 'Yẹ̀wò pẹ̀lú AI';
 
   @override
-  String get back => 'Back';
+  String get back => 'Pada sẹ́yìn';
 
   @override
   String get triageFailed => 'Triage analysis failed. Please try again.';
 
   @override
-  String get symptomFever => 'Fever';
+  String get symptomFever => 'Àìsàn ibá';
 
   @override
-  String get symptomHeadache => 'Headache';
+  String get symptomHeadache => 'Èéfín';
 
   @override
-  String get symptomCough => 'Cough';
+  String get symptomCough => 'Íkọ́';
 
   @override
   String get symptomShortnessOfBreath => 'Short Breath';
 
   @override
-  String get symptomFatigue => 'Fatigue';
+  String get symptomFatigue => 'Lilẹ̀';
 
   @override
-  String get symptomDizziness => 'Dizziness';
+  String get symptomDizziness => 'Wúnrẹ̀n';
 
   @override
-  String get symptomNausea => 'Nausea';
+  String get symptomNausea => 'Nùùsì';
 
   @override
   String get symptomChills => 'Chills';
@@ -2849,5 +2848,6 @@ class AppLocalizationsYo extends AppLocalizations {
   String get purchaseCancelled => 'Purchase was cancelled.';
 
   @override
-  String get noPurchasesToRestore => 'No previous purchases found to restore.';
+  String get noPurchasesToRestore =>
+      'Bẹ́ẹ̀kọ́ previous purchases found to rDá padà';
 }

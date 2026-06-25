@@ -3174,7 +3174,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String connectedMembers(int count, String s) {
-    return 'connected member(s)';
+    return '$count connected member$s';
   }
 
   @override

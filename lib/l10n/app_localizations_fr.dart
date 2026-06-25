@@ -837,7 +837,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profil > Subscription et select the Free plan to downgrade. Votre Pro ou Enterprise features will remain active until the end of votre current billing period.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
@@ -1780,7 +1780,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String allergiesCount(int count) {
-    return '$count allergies';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Allergies',
+      one: '$count Allergy',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1788,7 +1794,7 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Médicaments',
+      other: '$count Medications',
       one: '$count Medication',
     );
     return '$_temp0';
@@ -1960,7 +1966,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'Recommandation IA';
+    return 'AI Recommendation: $recommendation';
   }
 
   @override
@@ -2466,7 +2472,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'Aucune mesure trouvée pour la période sélectionnée';
+      'No readings found for the selected time period';
 
   @override
   String get singleReading => '1 mesure';
