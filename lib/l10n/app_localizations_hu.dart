@@ -12,7 +12,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get appName => 'VitalSeker';
 
   @override
-  String get tagline => 'Your AI Health Companion';
+  String get tagline =>
+      'A mesterséges intelligenciával működő egészségügyi társad';
 
   @override
   String get home => 'Kezdőlap';
@@ -21,7 +22,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get history => 'Előzmények';
 
   @override
-  String get triage => 'Triage';
+  String get triage => 'Osztályozás';
 
   @override
   String get insights => 'Elemzések';
@@ -42,7 +43,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get signOut => 'Kijelentkezés';
 
   @override
-  String get email => 'Email';
+  String get email => 'E-mail';
 
   @override
   String get password => 'Jelszó';
@@ -54,43 +55,43 @@ class AppLocalizationsHu extends AppLocalizations {
   String get confirmPassword => 'Megerősítés Jelszó';
 
   @override
-  String get createAccount => 'Create Account';
+  String get createAccount => 'Fiók létrehozása';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'Még nincs fiókod?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'Van már fiókod?';
 
   @override
-  String get orContinueWith => 'or continue with';
+  String get orContinueWith => 'vagy folytassa a';
 
   @override
-  String get continueWithGoogle => 'Continue with Google';
+  String get continueWithGoogle => 'Folytatás a Google-on';
 
   @override
-  String get continueWithApple => 'Continue with Apple';
+  String get continueWithApple => 'Folytatás az Apple-nél';
 
   @override
   String get forgotPassword => 'Forgot PJelszó';
 
   @override
-  String get goodMorning => 'Good morning';
+  String get goodMorning => 'Jó reggelt';
 
   @override
-  String get goodAfternoon => 'Good afternoon';
+  String get goodAfternoon => 'Jó napot!';
 
   @override
-  String get goodEvening => 'Good evening';
+  String get goodEvening => 'Jó estét!';
 
   @override
-  String get goodNight => 'Good night';
+  String get goodNight => 'Jó éjszakát!';
 
   @override
   String get healthScore => 'Egészség Score';
 
   @override
-  String get quickActions => 'Quick Actions';
+  String get quickActions => 'Gyors műveletek';
 
   @override
   String get checkSymptomsNow => 'Check Tünetek Now';
@@ -105,13 +106,13 @@ class AppLocalizationsHu extends AppLocalizations {
   String get emergencySOS => 'SOS vészhelyzet';
 
   @override
-  String get recentChecks => 'Recent Checks';
+  String get recentChecks => 'Legutóbbi ellenőrzések';
 
   @override
   String get noSymptomsLogs => 'Nem Tünetek logs yet';
 
   @override
-  String get startTriage => 'Start Triage';
+  String get startTriage => 'A triázs megkezdése';
 
   @override
   String get vitals => 'Életfunkciók';
@@ -129,19 +130,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get spo2 => 'SpO2';
 
   @override
-  String get temperature => 'Temperature';
+  String get temperature => 'Hőmérséklet';
 
   @override
   String get weight => 'Súly';
 
   @override
-  String get bloodGlucose => 'Blood Glucose';
+  String get bloodGlucose => 'Vércukorszint';
 
   @override
-  String get respiratoryRate => 'Respiratory Rate';
+  String get respiratoryRate => 'Légzésszám';
 
   @override
-  String get aiTriage => 'AI Triage';
+  String get aiTriage => 'AI-alapú triázs';
 
   @override
   String get describeSymptoms => 'Describe your symTünetek';
@@ -153,19 +154,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get aiProcessing => 'AI is processing your Egészség data';
 
   @override
-  String get send => 'Send';
+  String get send => 'Küldés';
 
   @override
-  String get newChat => 'New Chat';
+  String get newChat => 'Új csevegés';
 
   @override
-  String get viewDetailedResults => 'View Detailed Results';
+  String get viewDetailedResults => 'Részletes eredmények megtekintése';
 
   @override
   String get monitorAtHome => 'Monitor at Kezdőlap';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => 'Mikor kell a problémát magasabb szintre emelni';
 
   @override
   String get saveToPassport => 'Mentés to Útlevél';
@@ -207,19 +208,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get selectLanguage => 'Select Nyelv';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'Megjelenés';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'Sötét mód';
 
   @override
-  String get account => 'Account';
+  String get account => 'Fiók';
 
   @override
   String get privacyData => 'Adatvédelem & Data';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'Biztonság és tárolás';
 
   @override
   String get exportData => 'Exportálás Data';
@@ -231,7 +232,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get helpCenter => 'Súgó Center';
 
   @override
-  String get contactConcierge => 'Contact Concierge';
+  String get contactConcierge => 'Kapcsolat: Portaszolgálat';
 
   @override
   String get aboutVitalSeker => 'Rólunk VitalSeker';
@@ -243,7 +244,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get medicalID => 'Orvosi azonosító';
 
   @override
-  String get medicalTranslation => 'Medical Translation';
+  String get medicalTranslation => 'Orvosi fordítás';
 
   @override
   String get familyProfiles => 'Család Profiles';
@@ -252,16 +253,16 @@ class AppLocalizationsHu extends AppLocalizations {
   String get addFamilyMember => 'Hozzáadás Család Member';
 
   @override
-  String get accountOwner => 'ACCOUNT OWNER';
+  String get accountOwner => 'A Fiók tulajdonosa';
 
   @override
   String get upgradeToPro => 'Frissítés to Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'Védd meg az egész kört!';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'További információk';
 
   @override
   String get medications => 'Gyógyszerek';
@@ -270,25 +271,25 @@ class AppLocalizationsHu extends AppLocalizations {
   String get addMedication => 'Hozzáadás Medication';
 
   @override
-  String get appointments => 'Appointments';
+  String get appointments => 'Időpontok';
 
   @override
   String get addAppointment => 'Hozzáadás Appointment';
 
   @override
-  String get upcoming => 'Upcoming';
+  String get upcoming => 'Közelgő események';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Befejezve';
 
   @override
-  String get cancelled => 'Cancelled';
+  String get cancelled => 'Törölve';
 
   @override
-  String get active => 'Active';
+  String get active => 'Aktív';
 
   @override
-  String get discontinued => 'Discontinued';
+  String get discontinued => 'Kivont termék';
 
   @override
   String get save => 'Mentés';
@@ -321,19 +322,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get pressAndHold => 'Press and hold to send Vészhelyzet alert';
 
   @override
-  String get holdFor3Seconds => 'Hold for 3 seconds';
+  String get holdFor3Seconds => 'Tartsa így 3 másodpercig';
 
   @override
-  String get imSafeResolve => 'I\'m Safe - Resolve';
+  String get imSafeResolve => 'Biztonságban vagyok – Resolve';
 
   @override
   String get shareMyLocation => 'Megosztás My Helyszín';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'Kórházak a közelemben';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'Gyorshívás';
 
   @override
   String get emergencyContacts => 'Vészhelyzet Contacts';
@@ -362,10 +363,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get noHistoryYet => 'Nem Előzmények Yet';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere => 'A tünetnaplóid itt fognak megjelenni';
 
   @override
-  String get startFirstTriage => 'Start Your First Triage';
+  String get startFirstTriage => 'Kezdje el az első triázst!';
 
   @override
   String get weeklyInsights => 'Weekly Elemzések';
@@ -378,7 +379,7 @@ class AppLocalizationsHu extends AppLocalizations {
       'Nem Elemzések generated yet. Check Vissza on Monday for your weekly AI Egészség summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'Most generálás';
 
   @override
   String get upgradeProInsights =>
@@ -394,13 +395,13 @@ class AppLocalizationsHu extends AppLocalizations {
   String get exportMedicalReport => 'Exportálás Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'PDF létrehozása';
 
   @override
-  String get sendByEmail => 'Send by Email';
+  String get sendByEmail => 'Elküldés e-mailben';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview => 'A beteg áttekintése és életjelek';
 
   @override
   String get symptomsTriageLog => 'Tünetek & Triage Log';
@@ -409,19 +410,20 @@ class AppLocalizationsHu extends AppLocalizations {
   String get medicationsAllergies => 'Gyógyszerek & Allergiák';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary =>
+      'Mesterséges intelligencia elemzésének összefoglalása';
 
   @override
   String get dateRange => 'Dátum Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => 'Az elmúlt 30 nap';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'ELŐNÉZET';
 
   @override
-  String get translate => 'Translate';
+  String get translate => 'Fordítás';
 
   @override
   String get translateMedicalTerms => 'Translate medical Feltételek';
@@ -431,25 +433,26 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+      'Írja be a lefordítandó orvosi kifejezést vagy szót';
 
   @override
   String translationResult(Object lang) {
-    return 'Translation Result';
+    return 'Fordítási eredmény';
   }
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'Az értesítési beállítások a fiókodba kerülnek mentésre. Mostantól testreszabhatod az ütemterveket — bármelyik ütemtervre kattintva módosíthatod azokat.';
 
   @override
-  String get triageReminders => 'Triage Reminders';
+  String get triageReminders => 'Emlékeztetők a triázshoz';
 
   @override
-  String get medicationReminders => 'Medication Reminders';
+  String get medicationReminders =>
+      'Gyógyszeres kezelésre vonatkozó emlékeztetők';
 
   @override
-  String get appointmentReminders => 'Appointment Reminders';
+  String get appointmentReminders => 'Időpont-emlékeztetők';
 
   @override
   String get vitalsLoggingReminders => 'Életfunkciók Logging Reminders';
@@ -458,10 +461,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get healthTips => 'Egészség Tips';
 
   @override
-  String get weeklyReport => 'Weekly Report';
+  String get weeklyReport => 'Heti jelentés';
 
   @override
-  String get reminders => 'Reminders';
+  String get reminders => 'Emlékeztetők';
 
   @override
   String get insightsTips => 'Elemzések & Tips';
@@ -477,7 +480,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get deletePermanently => 'Törlés Permanently';
 
   @override
-  String get accountDeleted => 'Account deleted. Sorry to see you go.';
+  String get accountDeleted => 'A fiók törölve. Sajnáljuk, hogy távozik.';
 
   @override
   String get sendEmergencySOS => 'Send SOS vészhelyzet?';
@@ -487,31 +490,32 @@ class AppLocalizationsHu extends AppLocalizations {
       'This will send an SMS with your live Helyszín to Összes of your Vészhelyzet contacts.';
 
   @override
-  String get sendSOS => 'Send SOS';
+  String get sendSOS => 'SOS küldése';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'Biztosan ki szeretne jelentkezni?';
 
   @override
-  String get failedToSignOut => 'Failed to sign out. Please try again.';
+  String get failedToSignOut =>
+      'A kijelentkezés nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get vitalsLogged => 'Életfunkciók Logged';
 
   @override
-  String get triageSessions => 'Triage Sessions';
+  String get triageSessions => 'Selejtező foglalkozások';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'Aktív napok száma';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'Kijelentkezés...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials => 'Orvosi képesítések kezelése';
 
   @override
   String connectedMembers(num count) {
@@ -525,10 +529,10 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'Értesítések és intelligens emlékeztetők';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'Dokumentumok és képalkotás';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical Feltételek';
@@ -537,7 +541,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get emergencyMedicalCard => 'Vészhelyzet medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'AES-256 titkosítás aktív';
 
   @override
   String get downloadYourHealthData => 'Download your Egészség data';
@@ -546,14 +550,14 @@ class AppLocalizationsHu extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pJelszó account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'GYIK és dokumentáció';
 
   @override
   String get priorityProSupport => 'Priority Pro Támogatás';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Verzió $version';
   }
 
   @override
@@ -569,10 +573,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get confirmNewPassword => 'Megerősítés New Jelszó';
 
   @override
-  String get update => 'Update';
+  String get update => 'Frissítés';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'A jelszavak nem egyeznek';
 
   @override
   String get passwordMinLength => 'Jelszó must be at least 8 characters';
@@ -589,51 +593,52 @@ class AppLocalizationsHu extends AppLocalizations {
       'This action is irreversible. Összes your data — vÉletfunkciók mGyógyszerek appointments, symptom logs, Család profiles, and Egészség Útlevél — will be permanently deleted.';
 
   @override
-  String get emailDoesNotMatch => 'Email does not match.';
+  String get emailDoesNotMatch => 'Az e-mail-cím nem egyezik.';
 
   @override
   String get failedToDeleteAccount =>
       'Failed to Törlés account. Please try again or contact sTámogatás';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'Előfizetés kezelése';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently Eltávolítás your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'Zárja be a jelenlegi munkamenetet';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Sötét';
 
   @override
-  String get light => 'Light';
+  String get light => 'Fény';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'A rendszer alapértelmezett beállítása';
 
   @override
-  String get subscription => 'Subscription';
+  String get subscription => 'Előfizetés';
 
   @override
   String get restore => 'Visszaállítás';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'Válassza ki a csomagját!';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower =>
+      'Fedezze fel a VitalSeker teljes teljesítményét!';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'Az alkalmazáson belüli fizetési funkció integrálása (RevenueCat / StoreKit) jelenleg folyamatban van. A csomagmódosítások tesztelés céljából közvetlenül a fiókodra kerülnek alkalmazásra.';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'örökre';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/hónap';
 
   @override
   String get freePlanFeature1 => '3 AI Triage sessions/month';
@@ -642,7 +647,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get freePlanFeature2 => 'Basic Egészség Útlevél';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'QR-kód megosztása';
 
   @override
   String get freePlanFeature4 => 'SOS vészhelyzet alerts';
@@ -669,31 +674,31 @@ class AppLocalizationsHu extends AppLocalizations {
   String get proPlanFeature6 => 'Priority Támogatás';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 => 'A Pro verzióban minden megtalálható';
 
   @override
   String get enterprisePlanFeature2 => 'Unlimited Család profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'Egyedi arculattervezés';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'API-hozzáférés';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Támogatás';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'SLA-garancia';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'A LEGJOBB ÁR-ÉRTÉK ARÁNY';
 
   @override
-  String get currentPlan => 'Current Plan';
+  String get currentPlan => 'Jelenlegi terv';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Minősítéscsökkentés';
 
   @override
   String upgradeToPlan(String plan) {
@@ -702,20 +707,20 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+      'A csomagváltáshoz be kell jelentkeznie.';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'Át szeretne váltani a $plan csomagra?';
   }
 
   @override
   String get downgradeToFreeMessage =>
-      'You will lose access to Pro features at the end of your current billing period. Continue?';
+      'A jelenlegi számlázási időszak végén elveszíti a Pro funkciókhoz való hozzáférését. Folytatja?';
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return 'Ezzel előfizetésed a $plan csomagra frissül. Éles környezetben ez a platform fizetési korlátjának aktiválását jelentené; jelenleg azonban a módosítás tesztelési célból közvetlenül a fiókodra kerül alkalmazásra.';
   }
 
   @override
@@ -732,10 +737,10 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'Az előfizetés frissítése nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'A vásárlások helyreállítva.';
 
   @override
   String get failedToRestorePurchases => 'Failed to Visszaállítás purchases.';
@@ -754,25 +759,25 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'Gyakran feltett kérdések';
 
   @override
   String get contactSupport => 'Contact Támogatás';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'Tárgy';
 
   @override
-  String get message => 'Message';
+  String get message => 'Üzenet';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'Elküldés';
 
   @override
   String get otherWaysToReachUs => 'Egyéb Ways to Reach Us';
 
   @override
-  String get emailUs => 'Email Us';
+  String get emailUs => 'Írjon nekünk e-mailt';
 
   @override
   String get supportRequestSaved =>
@@ -780,13 +785,15 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+      'Kérjük, töltse ki mind a tárgyat, mind az üzenetet.';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength =>
+      'A tárgy mezőnek legalább 5 karakterből kell állnia.';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength =>
+      'Az üzenetnek legalább 10 karakterből kell állnia.';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -794,7 +801,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'Sürgős kérés érkezett! Csapatunk kiemelt figyelmet szentel ennek.';
 
   @override
   String get supportRequestSent =>
@@ -848,10 +855,10 @@ class AppLocalizationsHu extends AppLocalizations {
       'Configure and preview your comprehensive Egészség summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'Szekciók felvétele';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => 'Az elmúlt 3 hónap';
 
   @override
   String get yearToDate => 'Year to Dátum';
@@ -860,14 +867,14 @@ class AppLocalizationsHu extends AppLocalizations {
   String get allTime => 'Összes Idő';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'Készítés folyamatban…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'Küldés…';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'A PDF-fájlban $producer szerepel producerként';
   }
 
   @override
@@ -881,26 +888,26 @@ class AppLocalizationsHu extends AppLocalizations {
       'Manage Egészség for your whole Család (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'A fiók tulajdonosa';
 
   @override
   String get ownerProfile => 'Owner Profil';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age év';
   }
 
   @override
   String scoreValue(int score) {
-    return 'Score: $score';
+    return 'Pontszám: $score';
   }
 
   @override
-  String get reachedProLimit => 'You\'ve reached the 5-member Pro limit.';
+  String get reachedProLimit => 'Elérted az 5 fős Pro-korlátot.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'Elérte a határt';
 
   @override
   String get pleaseFillNameRelationship =>
@@ -922,7 +929,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return 'Biztosan el akarod távolítani $name-t a családi profiljaidból?';
   }
 
   @override
@@ -939,7 +946,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get fullNameLabel => 'Full Név';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => 'Kapcsolat (pl. házastárs, gyermek)';
 
   @override
   String get bloodTypeOptional => 'Vércsoport (optional)';
@@ -951,7 +958,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get upgradeYourCare => 'Frissítés YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'Az egész kört véded.';
 
   @override
   String get proMemberThanks =>
@@ -967,10 +974,10 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get manageSubscription => 'Manage Subscription';
+  String get manageSubscription => 'Előfizetés kezelése';
 
   @override
-  String get failedToLoadProfiles => 'Failed to load profiles';
+  String get failedToLoadProfiles => 'A profilok betöltése nem sikerült';
 
   @override
   String get searchMedications => 'Keresés medGyógyszerek';
@@ -987,47 +994,49 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return '$name szerkesztése';
   }
 
   @override
-  String get dosage => 'Dosage';
+  String get dosage => 'Adagolás';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'Egység';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'Frekvencia';
 
   @override
   String get notes => 'Jegyzetek';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'A gyógyszeres kezelés megszüntetése';
 
   @override
   String get failedToDiscontinueMedication =>
-      'Failed to discontinue medication.';
+      'Nem sikerült leállítani a gyógyszeres kezelést.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'A gyógyszeres kezelés frissítve!';
 
   @override
-  String get failedToUpdateMedication => 'Failed to update medication.';
+  String get failedToUpdateMedication =>
+      'A gyógyszeradatok frissítése nem sikerült.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted =>
+      '„Befejezett” jelöléssel ellátott gyógyszer';
 
   @override
   String get deleteMedication => 'Törlés Medication';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'Biztosan törölni szeretné $name-t?';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'A gyógyszer törölve';
 
   @override
   String get failedToDeleteMedication => 'Failed to Törlés medication.';
@@ -1036,39 +1045,39 @@ class AppLocalizationsHu extends AppLocalizations {
   String get editDetails => 'Szerkesztés Details';
 
   @override
-  String get markComplete => 'Mark Complete';
+  String get markComplete => 'Befejezés megjelölése';
 
   @override
-  String get discontinue => 'Discontinue';
+  String get discontinue => 'Megszüntetés';
 
   @override
   String nextDose(String time) {
-    return 'Next dose: $time';
+    return 'Következő adag: $time';
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => 'Naponta egyszer';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => 'Naponta kétszer';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => 'Naponta háromszor';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => 'Naponta négyszer';
 
   @override
   String get everyOtherDay => 'Every Egyéb Day';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Heti';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => 'Szükség szerint';
 
   @override
-  String get custom => 'Custom';
+  String get custom => 'Egyedi';
 
   @override
   String get all => 'Összes';
@@ -1084,13 +1093,14 @@ class AppLocalizationsHu extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted => 'A találkozó befejezettként jelölve';
 
   @override
-  String get failedToUpdateAppointment => 'Failed to update appointment.';
+  String get failedToUpdateAppointment =>
+      'A találkozó frissítése nem sikerült.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => 'A találkozó elmarad';
 
   @override
   String get failedToCancelAppointment => 'Failed to Mégse appointment.';
@@ -1103,12 +1113,12 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return 'Az időpontot $date $time-ra módosítottuk';
   }
 
   @override
   String get failedToRescheduleAppointment =>
-      'Failed to reschedule appointment.';
+      'A találkozó átütemezése nem sikerült.';
 
   @override
   String get deleteAppointment => 'Törlés Appointment';
@@ -1119,13 +1129,13 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => 'A találkozó törölve';
 
   @override
   String get failedToDeleteAppointment => 'Failed to Törlés appointment.';
 
   @override
-  String get reschedule => 'Reschedule';
+  String get reschedule => 'Időpont módosítása';
 
   @override
   String get cancelAppointment => 'Mégse Appointment';
@@ -1135,33 +1145,34 @@ class AppLocalizationsHu extends AppLocalizations {
       'Translate medical Feltételek and phrases into your preferred lNyelv Useful for travel, consultations, and discussing care with non-English-speaking providers.';
 
   @override
-  String get medicalTermOrPhrase => 'Medical term or phrase';
+  String get medicalTermOrPhrase => 'Orvosi kifejezés vagy szakkifejezés';
 
   @override
   String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+      'pl. „magas vérnyomás”, „naponta kétszer, étkezés közben vegye be”';
 
   @override
-  String get translating => 'Translating...';
+  String get translating => 'Fordítás folyamatban...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return 'Fordítás ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear => 'A fordításod itt fog megjelenni.';
 
   @override
   String get pleaseEnterTermToTranslate =>
-      'Please enter a medical term or phrase to translate.';
+      'Kérjük, írja be a lefordítandó orvosi kifejezést vagy szót.';
 
   @override
   String get noTranslationReturned =>
       'Nem translation was returned. Please try a different term.';
 
   @override
-  String get translationFailed => 'Translation failed. Please try again.';
+  String get translationFailed =>
+      'A fordítás nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get notificationSettings => 'Notification Beállítások';
@@ -1171,16 +1182,17 @@ class AppLocalizationsHu extends AppLocalizations {
       'Failed to Mentés notification setting';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => 'Főbb jellemzők';
 
   @override
   String get producer => 'Producer';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => 'Koncepció, tervezés és fejlesztés';
 
   @override
-  String get updateAccountCredentials => 'Update your account credentials';
+  String get updateAccountCredentials =>
+      'Frissítse fiókja bejelentkezési adatait';
 
   @override
   String get legal => 'Legal';
@@ -1190,7 +1202,8 @@ class AppLocalizationsHu extends AppLocalizations {
       'VitalSeker is your AI-powered Egészség companion that puts you in control of your Egészség journey. With intelligent symptom tTriage a secure Egészség pÚtlevél Vészhelyzet SOS alerts, and personalized weekly iElemzések VitalSeker ensures you always have the information you need when it matters most. Built with cutting-edge AI technology and bank-grade security, your Egészség data stays private and protected.';
 
   @override
-  String get featureAiTriageTitle => 'AI Symptom Triage';
+  String get featureAiTriageTitle =>
+      'Mesterséges intelligencia alapú tünet-szűrés';
 
   @override
   String get featureAiTriageDesc =>
@@ -1244,7 +1257,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return 'Utolsó frissítés: $version verzió';
   }
 
   @override
@@ -1261,7 +1274,7 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => 'Jogosultság és fiók';
 
   @override
   String get tosSection2Para1 =>
@@ -1288,21 +1301,22 @@ class AppLocalizationsHu extends AppLocalizations {
       'In a medical eVészhelyzet call your local Vészhelyzet number (e.g. 911, 112) immediately. Do not rely on the Service for Vészhelyzet response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => 'A szolgáltatás használata';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => 'Ön vállalja, hogy NEM fogja:';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 =>
+      'a Szolgáltatást bármilyen jogellenes célra felhasználni;';
 
   @override
   String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+      'Az alkalmazás visszafejtésére, dekompilálására vagy szétszerelésére irányuló kísérlet;';
 
   @override
   String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+      'rosszindulatú, csalárd vagy a szellemi tulajdonjogokat sértő tartalmak feltöltése;';
 
   @override
   String get tosSection4Bullet4 =>
@@ -1310,10 +1324,10 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+      'A Szolgáltatás használata nem kért üzenetek vagy spam küldésére.';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => 'Előfizetések és fizetések';
 
   @override
   String get tosSection5Para1 =>
@@ -1325,10 +1339,10 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get tosSection5Para3 =>
-      'We may change subscription fees upon reasonable notice. Fee changes will not apply to your current billing period.';
+      'Ésszerű előzetes értesítés mellett módosíthatjuk az előfizetési díjakat. A díjváltozások nem vonatkoznak az Ön jelenlegi számlázási időszakára.';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => 'Az Ön adatai';
 
   @override
   String get tosSection6Para1 =>
@@ -1339,18 +1353,18 @@ class AppLocalizationsHu extends AppLocalizations {
       'You may Exportálás your data at any Idő via the in-app Exportálás feature, and you may permanently Törlés your account and Összes associated data via Beállítások → Törlés Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => 'Jogi nyilatkozatok';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      'A SZOLGÁLTATÁS „AZONOS ÁLLAPOTBAN” ÉS „RENDELKEZÉSRE ÁLLÓ ÁLLAPOTBAN” KERÜL NYÚJTÁSRA, BÁRMIFÉLE GARANCIA NÉLKÜL, akár kifejezett, akár vélelmezett formában, ideértve többek között a forgalomképességre, egy adott célra való alkalmasságra vagy a jogsértésmentességre vonatkozó vélelmezett garanciákat.';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI Triage recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => 'Felelősségkorlátozás';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1358,7 +1372,7 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => 'Felmondás';
 
   @override
   String get tosSection9Para1 =>
@@ -1376,7 +1390,7 @@ class AppLocalizationsHu extends AppLocalizations {
       'We may update these Feltételek from Idő to tIdő We will notify you of material changes via the app or by eEmail Continued use of the Service after changes take effect constitutes acceptance of the revised TFeltételek';
 
   @override
-  String get tosSection11Title => 'Contact';
+  String get tosSection11Title => 'Kapcsolat';
 
   @override
   String get tosSection11Para1 =>
@@ -1397,19 +1411,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get enterprise => 'Vállalati';
 
   @override
-  String get nA => 'N/A';
+  String get nA => 'Nem alkalmazandó';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Hajó';
 
   @override
   String get next => 'Tovább';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Lépjen be a VitalSekerbe';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => 'Ismerd meg a testedet!';
 
   @override
   String get onboardingDescription1 =>
@@ -1430,10 +1444,10 @@ class AppLocalizationsHu extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re Vissza online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'Jelentkezzen be a VitalSeker-fiókjába';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'Bejelentkezés...';
 
   @override
   String get emailRequired => 'Email is Kötelező';
@@ -1452,7 +1466,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String passwordResetSent(String email) {
-    return 'Password reset link sent to $email';
+    return 'A jelszó-visszaállítási linket elküldtük a $email címre';
   }
 
   @override
@@ -1471,7 +1485,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get other => 'Egyéb';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => 'Fiók létrehozása...';
 
   @override
   String get joinVitalSeker =>
@@ -1484,19 +1498,20 @@ class AppLocalizationsHu extends AppLocalizations {
   String get nameMinChars => 'Név must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => 'Legalább 6 karakter';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => 'Legalább egy nagybetűt kell tartalmaznia';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase => 'Legalább egy kisbetűt kell tartalmaznia';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => 'Legalább egy számot kell megadni';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol =>
+      'Legalább egy szimbólumot kell tartalmaznia (!@#\$%^&*)';
 
   @override
   String get confirmPasswordRequired => 'Please Megerősítés your Jelszó';
@@ -1514,16 +1529,16 @@ class AppLocalizationsHu extends AppLocalizations {
   String get selectDateOfBirthHint => 'Select your Dátum of birth';
 
   @override
-  String get gender => 'Gender';
+  String get gender => 'Nemi hovatartozás';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => 'Válassza ki a nemet';
 
   @override
   String get bloodType => 'Vércsoport';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => 'Válassza ki a vércsoportot';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1540,31 +1555,32 @@ class AppLocalizationsHu extends AppLocalizations {
       'Account created! Please check your Email to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => 'Felhasználó';
 
   @override
   String get viewAll => 'View Összes';
 
   @override
-  String get failedLoadRecentChecks => 'Failed to load recent checks';
+  String get failedLoadRecentChecks =>
+      'A legutóbbi ellenőrzések betöltése nem sikerült';
 
   @override
   String get pullDownRetry => 'Pull down to Újrapróbálás';
 
   @override
-  String get goodCondition => 'Good condition';
+  String get goodCondition => 'Jó állapotú';
 
   @override
-  String get fairCondition => 'Fair condition';
+  String get fairCondition => 'Jó állapotú';
 
   @override
-  String get needsAttention => 'Needs attention';
+  String get needsAttention => 'Figyelmet igényel';
 
   @override
-  String get poorCondition => 'Poor condition';
+  String get poorCondition => 'Rossz állapot';
 
   @override
-  String get critical => 'Critical';
+  String get critical => 'Kritikus';
 
   @override
   String get overallHealthIndicator => 'Your overall Egészség indicator';
@@ -1576,17 +1592,17 @@ class AppLocalizationsHu extends AppLocalizations {
   String get aiPoweredTriage60s => 'AI-powered Triage in 60 seconds';
 
   @override
-  String get qrAndMedicalInfo => 'QR & medical info';
+  String get qrAndMedicalInfo => 'QR-kód és egészségügyi információk';
 
   @override
   String get pastChecksAndVitals => 'Past checks & Életfunkciók';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Épp most';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '$hours órával ezelőtt';
   }
 
   @override
@@ -1597,14 +1613,14 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return '$days napja';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => 'Tünetellenőrzés';
 
   @override
-  String get severity => 'Severity';
+  String get severity => 'Súlyosság';
 
   @override
   String get aiGreeting =>
@@ -1615,91 +1631,91 @@ class AppLocalizationsHu extends AppLocalizations {
       'Based on your sTünetek here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => 'Sürgősség';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => 'Ápolási tanácsok';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ Figyelmeztető jelek:';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => 'Ajánlások:';
 
   @override
   String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+      'A teljes elemzés megtekintéséhez kattintson az alábbi „Részletes eredmények megtekintése” gombra.';
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $error';
+    return 'Sajnálom, hiba történt a tüneteid elemzése közben. Kérlek, próbáld meg újra, vagy írd le másképp a tüneteidet.\n\nHiba: $error';
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => 'Általános rossz közérzet';
 
   @override
-  String get selfCareRecommended => 'Self-Care Recommended';
+  String get selfCareRecommended => 'Az önellátás ajánlott';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => 'Időpontfoglalás';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => 'Látogasson el a sürgősségi rendelőbe';
 
   @override
   String get seekEmergencyCare => 'Seek Vészhelyzet Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider => 'Forduljon orvoshoz!';
 
   @override
-  String get mild => 'Mild';
+  String get mild => 'Enyhe';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => 'Közepes';
 
   @override
-  String get significant => 'Significant';
+  String get significant => 'Jelentős';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => 'Súlyos';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => 'Extrém';
 
   @override
-  String get triageResults => 'Triage Results';
+  String get triageResults => 'A triázs eredményei';
 
   @override
   String urgencyScoreCaption(int score) {
-    return 'Urgency Score: $score/100';
+    return 'Sürgősségi pontszám: $score/100';
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => 'Figyelmeztető jelek';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => 'Ajánlások';
 
   @override
-  String get possibleConditions => 'Possible Conditions';
+  String get possibleConditions => 'Lehetséges feltételek';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => 'Kiegészítő kérdések';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Mentés...';
 
   @override
-  String get seeDoctorSoon => 'See a Doctor Soon';
+  String get seeDoctorSoon => 'Minél hamarabb keressen fel egy orvost!';
 
   @override
   String get emergencyCareNow => 'Vészhelyzet Care Now';
 
   @override
   String get triageDisclaimer =>
-      'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+      'Ez nem orvosi diagnózis. A megfelelő orvosi tanácsért mindig forduljon egészségügyi szakemberhez.';
 
   @override
   String get escalateLow1 => 'Tünetek worsen or spread to new body areas';
@@ -1714,7 +1730,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get escalateMedium1 => 'Tünetek persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 =>
+      'A fájdalom fokozódik, vagy kezelhetetlenné válik';
 
   @override
   String get escalateMedium3 => 'New red-flag Tünetek appear';
@@ -1724,7 +1741,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+      'Légzési nehézség vagy mellkasi szorító érzés jelentkezik';
 
   @override
   String get escalateHigh3 =>
@@ -1735,7 +1752,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'Ne vezessen saját autóval — kérjen elvitát vagy hívjon mentőt';
 
   @override
   String get escalateEmergency3 =>
@@ -1745,7 +1762,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get showQrCode => 'Show QR kód';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'Inaktív';
 
   @override
   String get knownAllergies => 'Known Allergiák';
@@ -1757,7 +1774,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get chronicConditions => 'Krónikus betegségek';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'Biztosítás';
 
   @override
   String get qrCode => 'QR kód';
@@ -1776,11 +1793,11 @@ class AppLocalizationsHu extends AppLocalizations {
   String get heightAndWeight => 'Magasság & Súly';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'Nincs beállítva';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count éves';
   }
 
   @override
@@ -1813,7 +1830,7 @@ class AppLocalizationsHu extends AppLocalizations {
       'Point this at any QR reader to securely Megosztás your vÉletfunkciók';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'Letöltés';
 
   @override
   String get share => 'Megosztás';
@@ -1825,27 +1842,27 @@ class AppLocalizationsHu extends AppLocalizations {
   String get generateQrCode => 'Generate QR kód';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'Lejárt';
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'Érvényes ${minutes}h ${hours}m ideig';
   }
 
   @override
   String get emergencySosTitle => 'SOS vészhelyzet';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'Maradjon vonalban...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'Közeli kórházak';
 
   @override
   String get allergies => 'Allergiák';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'Feltételek';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1859,10 +1876,10 @@ class AppLocalizationsHu extends AppLocalizations {
       'SOS sends your GPS Helyszín to your Vészhelyzet contacts via SMS. Make sure your contacts are configured in your pProfil';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'KÜLDÉS';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS-hiba';
 
   @override
   String get sosActive => 'SOS ACTIVE';
@@ -1871,21 +1888,21 @@ class AppLocalizationsHu extends AppLocalizations {
   String get sendingEmergencyAlert => 'Sending Vészhelyzet Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'A riasztás elküldése nem sikerült';
 
   @override
   String get emergencyAlertSent => 'Vészhelyzet Alert Sent';
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'Küldés $seconds alatt…';
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'Próbáld meg újra';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => 'Elutasítás';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1904,13 +1921,13 @@ class AppLocalizationsHu extends AppLocalizations {
   String get liveLocation => 'Live Helyszín';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => 'GPS-koordináták lekérése…';
 
   @override
   String get locationUnavailable => 'Helyszín unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => 'Értesített kapcsolatok';
 
   @override
   String contactsNotifiedCount(int count) {
@@ -1928,7 +1945,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count E HÓNAPBAN';
   }
 
   @override
@@ -1941,17 +1958,17 @@ class AppLocalizationsHu extends AppLocalizations {
   String get searchLogs => 'Keresés logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => 'Zöld';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => 'Sárga';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'Hálózat';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return 'Súlyosság: $score/10';
   }
 
   @override
@@ -1959,35 +1976,35 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'Testrészek: $regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return 'Időtartam: $duration';
   }
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'Mesterséges intelligencia által javasolt: $recommendation';
   }
 
   @override
-  String get viewFullTriageResult => 'View Full Triage Result';
+  String get viewFullTriageResult => 'A teljes triázs-eredmény megtekintése';
 
   @override
   String notesCaption(String notes) {
-    return 'Notes: $notes';
+    return 'Megjegyzések: $notes';
   }
 
   @override
   String get export30DayReport => 'Exportálás 30-day Report (PPro';
 
   @override
-  String get weeklyBreakdown => 'Weekly Breakdown';
+  String get weeklyBreakdown => 'Heti bontás';
 
   @override
-  String get proAnalysis => 'Pro Analysis';
+  String get proAnalysis => 'Szakértői elemzés';
 
   @override
   String get yourHealthThisWeek => 'Your Egészség this week';
@@ -1998,46 +2015,47 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'Trendelemzés';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => 'A TŰNETEK GYAKORISÁGA (4. hét)';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => 'Magas';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'Átlag';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => 'Alacsony';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => 'A mélyalvás meghosszabbítása';
 
   @override
   String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+      'A héten a vége felé csökkent a testhőmérséklete. Próbáljon meg hűvösebb hőmérsékletet (65°F) tartani a szobában, hogy gyorsabban elérje a mélyalvási fázisokat.';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => 'A folyadékpótlás előrehozása';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'A délutáni naplóbejegyzésekben enyhe kiszáradásra utaló jelek figyelhetők meg. A napi vízbeviteli mennyiség 40%-át fogyassza el reggel 10 óra előtt, hogy stabilizálja az anyagcserét.';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'A tevékenység ütemének szabályozása';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      'Az ízületi fájdalom hirtelen fellángolása összefüggésben áll az edzés intenzitásának hirtelen növekedésével. A 2. zónán túli kardióedzés megkezdése előtt mindenképpen végezzen 10 perces dinamikus bemelegítést.';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => 'Személyre szabott megközelítés';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights =>
+      'Az AI-vel kapcsolatos ismereteinek frissítése…';
 
   @override
   String get generateNewInsights => 'Generate New Elemzések';
@@ -2046,10 +2064,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get symptoms => 'Tünetek';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => 'Átlagos súlyosság';
 
   @override
-  String get scoreChange => 'Score Change';
+  String get scoreChange => 'Pontszámváltozás';
 
   @override
   String get checkBackMondayOrGenerate =>
@@ -2061,7 +2079,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String proPlanMonthly(double price) {
-    return 'Pro Plan - \$$price/mo';
+    return 'Pro Plan – \$$price/hó';
   }
 
   @override
@@ -2073,12 +2091,12 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String couldNotLaunchCall(String phoneNumber) {
-    return 'Could not launch call to $phoneNumber';
+    return 'Nem sikerült kezdeményezni a $phoneNumber számra irányuló hívást';
   }
 
   @override
   String get medicalDisclaimer =>
-      'This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.';
+      'Ez az információ nem minősül orvosi diagnózisnak. A VitalSeker nem helyettesíti a képzett egészségügyi szakembert.';
 
   @override
   String get poweredByGlm => 'Powered by GLM-4';
@@ -2087,11 +2105,11 @@ class AppLocalizationsHu extends AppLocalizations {
   String get aiTriageIn90Seconds => 'AI-powered Triage in 90 seconds';
 
   @override
-  String get vitalValueOutOfRange => 'Value out of expected range';
+  String get vitalValueOutOfRange => 'Az érték a várt tartományon kívül esik';
 
   @override
   String get vitalRangeHintHeartRate =>
-      'Heart rate should be between 30 and 220 BPM';
+      'A pulzusszámnak 30 és 220 BPM között kell lennie';
 
   @override
   String get vitalRangeHintBloodPressure =>
@@ -2099,15 +2117,15 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+      'A testhőmérsékletnek 30 és 45 °C között kell lennie';
 
   @override
   String get vitalRangeHintOxygen =>
-      'Blood oxygen should be between 50 and 100 %';
+      'A vér oxigénszintjének 50 és 100 % között kell lennie';
 
   @override
   String get vitalRangeHintGlucose =>
-      'Blood glucose should be between 20 and 600 mg/dL';
+      'A vércukorszintnek 20 és 600 mg/dL között kell lennie';
 
   @override
   String get vitalRangeHintWeight => 'Súly should be between 2 and 500 kg';
@@ -2138,7 +2156,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return 'A szöveg túl hosszú (maximum $max karakter). Kérjük, rövidítse le, majd próbálja meg újra.';
   }
 
   @override
@@ -2149,7 +2167,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get privacyPolicyTitle => 'Adatvédelem Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => 'Utolsó frissítés: 2025. március';
 
   @override
   String privacyIntro(String appName) {
@@ -2157,21 +2175,21 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '1. Adatgyűjtés';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: NNév Email address, Telefon number, Dátum of birth, and gender. • Egészség Data: Blood type, aAllergiák chronic conditions, mGyógyszerek vital signs, symptom logs, and Triage results. • Vészhelyzet Contacts: Names, Telefon numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sTámogatás • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our Egészség companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage => '2. Adattárolás és titkosítás';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• QR kód Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '3. A GDPR-nek való megfelelés';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2179,14 +2197,14 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '4. A jogai';
 
   @override
   String get privacyRightsBody =>
       'You have the following rights regarding your data: • Access: View Összes your personal and Egészség data within the app or request a data eExportálás • Correction: Szerkesztés your Profil information at any Idő through Szerkesztés PProfil • Deletion: Request account deletion through Beállítások > Data & Adatvédelem > Törlés Account. • Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences. • Objection: Object to specific data processing activities by contacting our Data Protection Officer. • Withdrawal of Consent: You may withdraw consent at any Idő without affecting the lawfulness of prior processing. To exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app Támogatás feature.';
 
   @override
-  String get privacySectionContactUs => '5. Contact Us';
+  String get privacySectionContactUs => '5. Kapcsolat';
 
   @override
   String privacyContactBody(String producer) {
@@ -2199,22 +2217,23 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get chooseFromGallery => 'Choose from Gallery';
+  String get chooseFromGallery => 'Válasszon a Galériából';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => 'Készíts egy fotót!';
 
   @override
   String get removePhoto => 'Eltávolítás Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => 'Az avatar frissült!';
 
   @override
-  String get avatarUploadFailed => 'Failed to upload avatar. Please try again.';
+  String get avatarUploadFailed =>
+      'Az avatar feltöltése nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => 'Az avatár eltávolítva.';
 
   @override
   String get avatarRemoveFailed =>
@@ -2236,10 +2255,10 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => 'Személyes adatok';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => 'Mérések';
 
   @override
   String get heightCm => 'Magasság (cm)';
@@ -2257,7 +2276,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get phoneNumber => 'Telefon Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => 'pl. házastárs, szülő, testvér';
 
   @override
   String get addAllergy => 'Hozzáadás Allergy';
@@ -2289,7 +2308,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+      'Jó az előrehaladás. Néhány területen azonban még lenne mit javítani.';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2297,14 +2316,14 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get scoreDescriptionLow =>
-      'Several areas need attention. Please consult a healthcare provider.';
+      'Számos területen figyelmet kell fordítani. Kérjük, forduljon orvoshoz.';
 
   @override
   String get scoreDescriptionCritical =>
-      'Immediate attention recommended. Please seek medical advice.';
+      'Azonnali beavatkozás ajánlott. Kérjük, forduljon orvoshoz.';
 
   @override
-  String get riskFactors => 'Risk Factors';
+  String get riskFactors => 'Kockázati tényezők';
 
   @override
   String allergyCount(int count) {
@@ -2320,16 +2339,16 @@ class AppLocalizationsHu extends AppLocalizations {
   String get noRiskFactors => 'Nem risk factors identified';
 
   @override
-  String get recentTriageResults => 'Recent Triage Results';
+  String get recentTriageResults => 'Legutóbbi triázs-eredmények';
 
   @override
   String get noTriageResults => 'Nem Triage results yet';
 
   @override
-  String get recommendedActions => 'Recommended Actions';
+  String get recommendedActions => 'Ajánlott intézkedések';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => 'Vegyen fel időpontot szűrővizsgálatra';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2343,21 +2362,21 @@ class AppLocalizationsHu extends AppLocalizations {
       'Track your blood pressure, heart rate, and Egyéb key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => 'Tünetellenőrzés elvégzése';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI Triage to assess any Tünetek you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => 'Az alvás minőségének javítása';
 
   @override
   String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+      'A minőségi alvás elengedhetetlen a regenerációhoz és az immunrendszer működéséhez.';
 
   @override
-  String get actionStayActive => 'Stay Active';
+  String get actionStayActive => 'Maradj aktív!';
 
   @override
   String get actionStayActiveDesc =>
@@ -2368,12 +2387,12 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '$minutes perce';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '$weeks hete';
   }
 
   @override
@@ -2387,16 +2406,16 @@ class AppLocalizationsHu extends AppLocalizations {
       'Start logging your vital signs to track your Egészség over Idő';
 
   @override
-  String get logFirstVital => 'Log Your First Vital';
+  String get logFirstVital => 'Rögzítsd az első életjelet!';
 
   @override
-  String get day => 'Day';
+  String get day => 'Nap';
 
   @override
-  String get week => 'Week';
+  String get week => 'Hét';
 
   @override
-  String get month => 'Month';
+  String get month => 'Hónap';
 
   @override
   String get noData => 'Nem data';
@@ -2411,13 +2430,13 @@ class AppLocalizationsHu extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => 'Napló – Fontos';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'VITAL TÍPUS';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => 'ÉRTÉK';
 
   @override
   String get systolic => 'Szisztolés';
@@ -2441,7 +2460,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return 'A $vitalType mentése sikeresen megtörtént';
   }
 
   @override
@@ -2475,32 +2494,32 @@ class AppLocalizationsHu extends AppLocalizations {
       'No readings found for the selected time period';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '1 olvasás';
 
   @override
-  String get average => 'Average';
+  String get average => 'Átlag';
 
   @override
-  String get min => 'Min';
+  String get min => 'Nekem van';
 
   @override
   String get max => 'Max';
 
   @override
-  String get latest => 'Latest';
+  String get latest => 'Legfrissebb';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => 'OLVASMÁNYOK';
 
   @override
-  String get value => 'Value';
+  String get value => 'Érték';
 
   @override
-  String get source => 'Source';
+  String get source => 'Forrás';
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return '$total mérési eredményből 20-at jelenítünk meg';
   }
 
   @override
@@ -2510,13 +2529,13 @@ class AppLocalizationsHu extends AppLocalizations {
   String get medicationNameLabel => 'Medication Név';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => 'Adagolás';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'Egység';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => 'Frekvencia';
 
   @override
   String get startDateLabel => 'Start Dátum';
@@ -2528,24 +2547,25 @@ class AppLocalizationsHu extends AppLocalizations {
   String get endDateLabel => 'End Dátum';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => 'ADAGOLÁSI IDŐPONTOK';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'Adag $number';
   }
 
   @override
   String get notesOptional => 'Jegyzetek (oOpcionális';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => 'Emlékeztetők';
 
   @override
   String get saveMedication => 'Mentés Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully =>
+      'A gyógyszer hozzáadása sikeresen megtörtént!';
 
   @override
   String get medicationAddFailed =>
@@ -2574,44 +2594,45 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+      'A találkozó lefoglalása sikeresen megtörtént!';
 
   @override
   String get appointmentScheduleFailed =>
-      'Failed to schedule appointment. Please try again.';
+      'A találkozó ütemezése nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => 'Kardiológus';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => 'Bőrgyógyász';
 
   @override
-  String get specialtyEndocrinologist => 'Endocrinologist';
+  String get specialtyEndocrinologist => 'Endokrinológus';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => 'Általános orvosi rendelő';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => 'ideggyógyász';
 
   @override
-  String get specialtyOphthalmologist => 'Ophthalmologist';
+  String get specialtyOphthalmologist => 'Szemész';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => 'Ortopédiai';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => 'Gyermekorvos';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => 'Pszichiáter';
 
   @override
   String get specialtyOther => 'Egyéb';
 
   @override
-  String get recordsLoadFailed => 'Failed to load records. Please try again.';
+  String get recordsLoadFailed =>
+      'A rekordok betöltése nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2623,34 +2644,34 @@ class AppLocalizationsHu extends AppLocalizations {
   String get addMedicalRecordTitle => 'Hozzáadás Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => 'Cím';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'Típus';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => 'Laboreredmények';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => 'Előírások';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => 'Képalkotás';
 
   @override
   String get recordTypeOther => 'Egyéb';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => 'Leírás';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => 'A rekord frissült!';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => 'A bejegyzés hozzáadva!';
 
   @override
-  String get recordUpdateFailed => 'Failed to update record.';
+  String get recordUpdateFailed => 'A rekord frissítése nem sikerült.';
 
   @override
   String get recordAddFailed => 'Failed to Hozzáadás record.';
@@ -2664,7 +2685,7 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => 'A rekord törölve.';
 
   @override
   String get recordDeleteFailed => 'Failed to Törlés record.';
@@ -2685,11 +2706,11 @@ class AppLocalizationsHu extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => 'További lehetőségek';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return '$total lépés a $current közül';
   }
 
   @override
@@ -2728,46 +2749,46 @@ class AppLocalizationsHu extends AppLocalizations {
       'Describe any Egyéb details Rólunk your Tünetek or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => 'Általános súlyosság';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => 'Enyhe';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => 'Súlyos';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => 'Nagyon enyhe';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => 'Enyhe';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => 'Közepes';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => 'Figyelemelterelő';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => 'Súlyos';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => 'Elviselhetetlen';
 
   @override
   String get durationToday => 'Ma (started tMa';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => '1–3 nap';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => '4–7 nap';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => '1–2 hét';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => 'Több mint 2 hét';
 
   @override
   String get age => 'Életkor';
@@ -2776,19 +2797,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get ageHint => 'Enter your Életkor';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => 'évek';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => 'Biológiai nem';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => 'pl. cukorbetegség, magas vérnyomás, asztma';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint => 'pl. Lisinopril 10 mg, Metformin 500 mg';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => 'Összefoglalás';
 
   @override
   String get analyzeWithAi => 'AI elemzés';
@@ -2797,7 +2818,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get back => 'Vissza';
 
   @override
-  String get triageFailed => 'Triage analysis failed. Please try again.';
+  String get triageFailed =>
+      'A triázs-elemzés sikertelen volt. Kérjük, próbálja meg újra.';
 
   @override
   String get symptomFever => 'Láz';
@@ -2809,7 +2831,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get symptomCough => 'Köhögés';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => 'Rövid lélegzetvétel';
 
   @override
   String get symptomFatigue => 'Fáradtság';
@@ -2821,40 +2843,40 @@ class AppLocalizationsHu extends AppLocalizations {
   String get symptomNausea => 'Hányinger';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => 'Hidegrázás';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => 'Izomfájdalom';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => 'Álmatlanság';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => 'Mellkasi fájdalom';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => 'Hasi fájdalom';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => 'Torokfájás';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => 'Orrfolyás';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => 'Hányás';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => 'Hasmenés';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => 'Bőrkiütés';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => 'Ízületi fájdalom';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => 'A vásárlás törlésre került.';
 
   @override
   String get noPurchasesToRestore =>

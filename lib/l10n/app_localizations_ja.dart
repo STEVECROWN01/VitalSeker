@@ -165,7 +165,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get monitorAtHome => 'Monitor at ホーム';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => 'いつエスカレーションすべきか';
 
   @override
   String get saveToPassport => '保存 to パスポート';
@@ -219,7 +219,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get privacyData => 'プライバシーとデータ';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'セキュリティとストレージ';
 
   @override
   String get exportData => 'データエクスポート';
@@ -258,10 +258,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get upgradeToPro => 'Proにアップグレード';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => '円全体を守ってください。';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => '詳細はこちら';
 
   @override
   String get medications => '薬';
@@ -330,7 +330,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get shareMyLocation => '位置情報を共有';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => '近くの病院を探す';
 
   @override
   String get quickDial => 'クイック ダイヤル';
@@ -361,7 +361,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noHistoryYet => '履歴はまだありません';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere => '症状の記録はここに表示されます';
 
   @override
   String get startFirstTriage => '最初のトリアージを開始してアクティビティを表示';
@@ -377,7 +377,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'いいえ インサイト generated yet. Check 戻る on Monday for your weekly AI 健康 summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => '今すぐ生成';
 
   @override
   String get upgradeProInsights =>
@@ -393,13 +393,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exportMedicalReport => 'エクスポート Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'PDFを生成する';
 
   @override
   String get sendByEmail => 'Send by メール';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview => '患者の概要とバイタルサイン';
 
   @override
   String get symptomsTriageLog => '症状 & トリアージ Log';
@@ -408,16 +408,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get medicationsAllergies => '薬 & アレルギー';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'AI分析の概要';
 
   @override
   String get dateRange => '日付 Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => '過去30日間';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'プレビュー';
 
   @override
   String get translate => '翻訳';
@@ -438,7 +438,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      '通知設定はアカウントに保存されます。スケジュールのカスタマイズ機能が利用可能になりました。変更したいスケジュールをタップしてください。';
 
   @override
   String get triageReminders => 'トリアージリマインダー';
@@ -488,7 +488,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sendSOS => 'SOSを送信';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => '本当にログアウトしますか？';
 
   @override
   String get failedToSignOut => 'サインアウトに失敗しました。再試行してください。';
@@ -506,7 +506,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'ログアウト中...';
 
   @override
   String get manageMedicalCredentials => 'Manage 医療 credentials';
@@ -523,10 +523,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'アラートとスマートリマインダー';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => '文書・画像処理';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical 利用規約';
@@ -535,7 +535,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get emergencyMedicalCard => '緊急 medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'AES-256暗号化が有効';
 
   @override
   String get downloadYourHealthData => 'Download your 健康 data';
@@ -544,14 +544,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pパスワード account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'よくある質問とドキュメント';
 
   @override
   String get priorityProSupport => '優先Proサポート';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'バージョン $version';
   }
 
   @override
@@ -592,13 +592,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get failedToDeleteAccount => 'アカウントの削除に失敗しました。再試行するかサポートにお問い合わせください。';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'サブスクリプションの管理';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently 削除 your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => '現在のセッションを終了する';
 
   @override
   String get dark => 'ダーク';
@@ -616,20 +616,20 @@ class AppLocalizationsJa extends AppLocalizations {
   String get restore => '復元';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'プランをお選びください';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'VitalSekerの真の力を解き放つ';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'アプリ内課金の連携（RevenueCat / StoreKit）は現在準備中です。テストのため、プランの変更はお客様のアカウントに直接反映されます。';
 
   @override
-  String get forever => 'forever';
+  String get forever => '永遠に';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/月';
 
   @override
   String get freePlanFeature1 => '3 AI トリアージ sessions/month';
@@ -638,7 +638,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get freePlanFeature2 => 'Basic 健康 パスポート';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'QRコードの共有';
 
   @override
   String get freePlanFeature4 => '緊急SOS alerts';
@@ -674,22 +674,22 @@ class AppLocalizationsJa extends AppLocalizations {
   String get enterprisePlanFeature3 => 'カスタム branding';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'APIへのアクセス';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated サポート';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'SLA保証';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => '最高のコストパフォーマンス';
 
   @override
   String get currentPlan => '現在のプラン';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => '格下げ';
 
   @override
   String upgradeToPlan(String plan) {
@@ -697,12 +697,11 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+  String get mustBeSignedInToChangePlans => 'プランを変更するには、ログインする必要があります。';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return '$planに変更しますか？';
   }
 
   @override
@@ -731,7 +730,7 @@ class AppLocalizationsJa extends AppLocalizations {
       '失敗 to update subscription. Please try again.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => '購入履歴が復元されました。';
 
   @override
   String get failedToRestorePurchases => 'Failed to 復元 purchases.';
@@ -749,7 +748,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'よくある質問';
 
   @override
   String get contactSupport => 'Contact サポート';
@@ -774,8 +773,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'Your request is saved to your account and visible to our サポート team. We respond within 24 hours.';
 
   @override
-  String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+  String get pleaseFillSubjectMessage => '件名と本文の両方をご記入ください。';
 
   @override
   String get subjectMinLength => '件名 must be at least 5 characters.';
@@ -788,8 +786,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'You must be signed in to submit a サポート request.';
 
   @override
-  String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+  String get urgentRequestReceived => '緊急のご依頼をいただきました！当チームが優先的に対応いたします。';
 
   @override
   String get supportRequestSent =>
@@ -836,17 +833,17 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to プロフィール > Subscription and select the 無料 plan to downgrade. Your Pro or エンタープライズ features will remain active until the end of your current billing period.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
       'Configure and preview your comprehensive 健康 summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'セクションを含める';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => '過去3ヶ月';
 
   @override
   String get yearToDate => 'Year to 日付';
@@ -855,14 +852,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get allTime => 'すべて 時間';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => '生成中…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => '送信中…';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'PDFには、$producerがプロデューサーとしてクレジットされています';
   }
 
   @override
@@ -875,14 +872,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get manageHealthWholeFamily => 'Manage 健康 for your whole 家族 (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'アカウント所有者';
 
   @override
   String get ownerProfile => 'Owner プロフィール';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age歳';
   }
 
   @override
@@ -894,7 +891,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get reachedProLimit => 'You\'ve reached the 5-member プロ limit.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => '上限に達しました';
 
   @override
   String get pleaseFillNameRelationship => 'Please fill in 名前 and relationship';
@@ -914,7 +911,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return '$nameを家族プロフィールから削除してもよろしいですか？';
   }
 
   @override
@@ -931,7 +928,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get fullNameLabel => 'Full 名前';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => '関係（例：配偶者、子供）';
 
   @override
   String get bloodTypeOptional => '血液型 (optional)';
@@ -943,7 +940,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get upgradeYourCare => 'アップグレード YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'あなたは円全体を守っているのです。';
 
   @override
   String get proMemberThanks =>
@@ -986,7 +983,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get dosage => '用量';
 
   @override
-  String get unit => 'Unit';
+  String get unit => '単位';
 
   @override
   String get frequency => '頻度';
@@ -995,30 +992,30 @@ class AppLocalizationsJa extends AppLocalizations {
   String get notes => 'メモ';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => '投薬の中止';
 
   @override
   String get failedToDiscontinueMedication => '失敗 to discontinue medication.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => '投薬内容が更新されました！';
 
   @override
   String get failedToUpdateMedication => '失敗 to update medication.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted => '「完了」とマークされた投薬';
 
   @override
   String get deleteMedication => '薬を削除';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return '$name を削除してもよろしいですか？';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => '薬が削除されました';
 
   @override
   String get failedToDeleteMedication => 'Failed to 削除 medication.';
@@ -1038,16 +1035,16 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => '1日1回';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => '1日2回';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => '1日3回';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => '1日4回';
 
   @override
   String get everyOtherDay => 'Every その他 Day';
@@ -1056,7 +1053,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get weekly => '毎週';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => '必要に応じて';
 
   @override
   String get custom => 'カスタム';
@@ -1075,13 +1072,13 @@ class AppLocalizationsJa extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted => '「完了」としてマークされた予約';
 
   @override
   String get failedToUpdateAppointment => '失敗 to update appointment.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => '予約がキャンセルされました';
 
   @override
   String get failedToCancelAppointment => 'Failed to キャンセル appointment.';
@@ -1094,7 +1091,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return '$dateの$timeに変更されました';
   }
 
   @override
@@ -1109,7 +1106,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => '予約が削除されました';
 
   @override
   String get failedToDeleteAppointment => 'Failed to 削除 appointment.';
@@ -1128,19 +1125,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get medicalTermOrPhrase => '医療用語またはフレーズ';
 
   @override
-  String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+  String get medicalTermHint => '例：「高血圧」、「1日2回、食事と一緒に服用してください」';
 
   @override
   String get translating => '翻訳中...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return '翻訳 ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear => '翻訳結果はここに表示されます。';
 
   @override
   String get pleaseEnterTermToTranslate =>
@@ -1160,13 +1156,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get failedToSaveNotificationSetting => '通知設定の保存に失敗しました';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => '主な機能';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'プロデューサー';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => 'コンセプト、デザイン、開発';
 
   @override
   String get updateAccountCredentials => '更新 your account credentials';
@@ -1228,7 +1224,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return '最終更新日：バージョン $version';
   }
 
   @override
@@ -1245,7 +1241,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => '利用資格とアカウント';
 
   @override
   String get tosSection2Para1 =>
@@ -1272,32 +1268,29 @@ class AppLocalizationsJa extends AppLocalizations {
       'In a medical e緊急 call your local 緊急 number (e.g. 911, 112) immediately. Do not rely on the Service for 緊急 response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => '本サービスの利用';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => 'お客様は、以下の行為を行わないことに同意するものとします：';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 => '本サービスを違法な目的で使用すること；';
 
   @override
-  String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+  String get tosSection4Bullet2 => '本アプリのリバースエンジニアリング、逆コンパイル、または逆アセンブルを試みること；';
 
   @override
-  String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+  String get tosSection4Bullet3 => '悪意のある、詐欺的な、または知的財産権を侵害するコンテンツをアップロードすること；';
 
   @override
   String get tosSection4Bullet4 =>
       'Interfere with the proper functioning of the Service or attempt to access data belonging to その他 users;';
 
   @override
-  String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+  String get tosSection4Bullet5 => '本サービスを利用して、未承諾の通信やスパムを送信すること。';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => '定期購読と支払い';
 
   @override
   String get tosSection5Para1 =>
@@ -1312,7 +1305,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'We may change subscription fees upon reasonable notice. Fee changes will ではない apply to your current billing period.';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => 'お客様のデータ';
 
   @override
   String get tosSection6Para1 =>
@@ -1323,18 +1316,18 @@ class AppLocalizationsJa extends AppLocalizations {
       'You may エクスポート your data at any 時間 via the in-app エクスポート feature, and you may permanently 削除 your account and すべて associated data via 設定 → 削除 Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => '免責事項';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      '本サービスは、「現状有姿」かつ「利用可能な状態」で提供され、明示・黙示を問わず、いかなる種類の保証も付随せず、 明示か黙示かを問わず、商品性、特定目的への適合性、または権利侵害の不存在に関する黙示の保証を含みますが、これらに限定されません。';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI トリアージ recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => '責任の制限';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1342,7 +1335,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => '解約';
 
   @override
   String get tosSection9Para1 =>
@@ -1381,7 +1374,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get enterprise => 'エンタープライズ';
 
   @override
-  String get nA => 'N/A';
+  String get nA => '該当なし';
 
   @override
   String get skip => 'スキップ';
@@ -1390,10 +1383,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get next => '次へ';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'VitalSeker を入力';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => '自分の体をよく知ろう。';
 
   @override
   String get onboardingDescription1 =>
@@ -1414,10 +1407,10 @@ class AppLocalizationsJa extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re 戻る online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'VitalSekerアカウントにログインしてください';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'ログイン中...';
 
   @override
   String get emailRequired => 'メール is 必須';
@@ -1455,7 +1448,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get other => 'その他';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => 'アカウントを作成中...';
 
   @override
   String get joinVitalSeker => 'Join VitalSeker and take control of your 健康';
@@ -1467,19 +1460,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get nameMinChars => '名前 must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => '6文字以上';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => '大文字を少なくとも1つ含めてください';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase => '少なくとも1つの小文字を含めてください';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => '少なくとも1つの数字を含めてください';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol => '少なくとも1つの記号（!@#\$%^&*）を含めてください';
 
   @override
   String get confirmPasswordRequired => 'Please 確認 your パスワード';
@@ -1500,13 +1493,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get gender => '性別';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => '性別を選択してください';
 
   @override
   String get bloodType => '血液型';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => '血液型を選択してください';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1523,7 +1516,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'Account created! Please check your メール to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => 'ユーザー';
 
   @override
   String get viewAll => 'すべて表示';
@@ -1565,11 +1558,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pastChecksAndVitals => 'Past checks & バイタル';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'ついさっき';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '$hours時間前';
   }
 
   @override
@@ -1580,11 +1573,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return '${days}d前';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => '症状チェック';
 
   @override
   String get severity => '重症度';
@@ -1598,20 +1591,19 @@ class AppLocalizationsJa extends AppLocalizations {
       'Based on your s症状 here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => '緊急性';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => 'お手入れのアドバイス';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ 要注意点：';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => '推奨事項：';
 
   @override
-  String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+  String get tapForFullAnalysis => '詳細な分析結果をご覧になるには、下の「詳細結果を表示」をタップしてください。';
 
   @override
   String triageErrorMessage(String error) {
@@ -1619,37 +1611,37 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => '全身の不快感';
 
   @override
   String get selfCareRecommended => 'Self-Care 推奨';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => '予約をする';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => '緊急診療を受診する';
 
   @override
   String get seekEmergencyCare => 'Seek 緊急 Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider => '医療従事者に相談してください';
 
   @override
-  String get mild => 'Mild';
+  String get mild => 'マイルド';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => '中程度';
 
   @override
-  String get significant => 'Significant';
+  String get significant => '重要な';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => '重度';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => 'エクストリーム';
 
   @override
   String get triageResults => 'トリアージ結果';
@@ -1660,19 +1652,19 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => '危険信号';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => '推奨事項';
 
   @override
   String get possibleConditions => 'Possible 疾患';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => '追加の質問';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => '保存中...';
 
   @override
   String get seeDoctorSoon => 'See a 医師 Soon';
@@ -1696,7 +1688,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get escalateMedium1 => '症状 persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 => '痛みが強くなったり、耐えられなくなったりする';
 
   @override
   String get escalateMedium3 => 'New red-flag 症状 appear';
@@ -1705,8 +1697,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get escalateHigh1 => '症状 rapidly worsen';
 
   @override
-  String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+  String get escalateHigh2 => '呼吸困難や胸の圧迫感が生じる';
 
   @override
   String get escalateHigh3 =>
@@ -1726,7 +1717,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get showQrCode => 'Show QRコード';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => '非アクティブ';
 
   @override
   String get knownAllergies => 'Known アレルギー';
@@ -1738,7 +1729,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get chronicConditions => '慢性疾患';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => '保険';
 
   @override
   String get qrCode => 'QRコード';
@@ -1757,11 +1748,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get heightAndWeight => '身長 & 体重';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => '未設定';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count歳';
   }
 
   @override
@@ -1769,7 +1760,7 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count アレルギー',
+      other: '$count Allergies',
       one: '$count Allergy',
     );
     return '$_temp0';
@@ -1780,7 +1771,7 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count 薬',
+      other: '$count Medications',
       one: '$count Medication',
     );
     return '$_temp0';
@@ -1794,7 +1785,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'Point this at any QR reader to securely 共有 your vバイタル';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'ダウンロード';
 
   @override
   String get share => '共有';
@@ -1810,14 +1801,14 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return '有効期間：${hours}h ${minutes}m';
   }
 
   @override
   String get emergencySosTitle => '緊急SOS';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'そのまま持ち続けて…';
 
   @override
   String get nearbyHospitals => '近く Hospitals';
@@ -1840,10 +1831,10 @@ class AppLocalizationsJa extends AppLocalizations {
       'SOS sends your GPS 場所 to your 緊急 contacts via SMS. Make sure your contacts are configured in your pプロフィール';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => '送信中';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS 失敗';
 
   @override
   String get sosActive => 'SOS ACTIVE';
@@ -1859,14 +1850,14 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return '$seconds後に送信中…';
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'もう一度試す';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => '閉じる';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1885,13 +1876,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get liveLocation => 'Live 場所';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => 'GPS座標を取得中…';
 
   @override
   String get locationUnavailable => '場所 unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => '連絡先に通知済み';
 
   @override
   String contactsNotifiedCount(int count) {
@@ -1909,7 +1900,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count 今月';
   }
 
   @override
@@ -1922,17 +1913,17 @@ class AppLocalizationsJa extends AppLocalizations {
   String get searchLogs => '検索 logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => 'グリーン';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => '黄色';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'ネットワーク';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return '深刻度：$score/10';
   }
 
   @override
@@ -1940,17 +1931,17 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return '身体の部位：$regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return '所要時間：$duration';
   }
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'AIによるおすすめ：$recommendation';
   }
 
   @override
@@ -1979,46 +1970,46 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'トレンド分析';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => '症状の出現頻度（4週）';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => '高い';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => '平均';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => '低';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => '深い睡眠を長くする';
 
   @override
   String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+      '今週後半、あなたの深部体温が低下しました。深い睡眠段階への移行を早めるため、室温を少し低く（65°F）保つようにしてください。';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => '水分補給は早めに';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      '午後の記録から軽度の脱水症状の兆候が確認されました。1日の水分摂取量の40％を午前10時前に摂取するように調整し、代謝率を安定させてください。';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'ペース配分';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      '関節痛の急激な悪化は、運動強度の急激な増加と関連しています。ゾーン2を超える有酸素運動を行う前には、必ず10分間のダイナミックウォームアップを行ってください。';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => '一人ひとりに合わせた取り組み';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights => 'AIに関する知見を更新中…';
 
   @override
   String get generateNewInsights => 'Generate New インサイト';
@@ -2027,7 +2018,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get symptoms => '症状';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => '平均深刻度';
 
   @override
   String get scoreChange => 'スコア Change';
@@ -2078,8 +2069,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'Blood pressure should be between 60-250 (s収縮期 and 40-150 (d拡張期';
 
   @override
-  String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+  String get vitalRangeHintTemperature => '体温は30～45 °Cの範囲であるべきです';
 
   @override
   String get vitalRangeHintOxygen => '血液 oxygen should be between 50 and 100 %';
@@ -2117,7 +2107,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return 'テキストが長すぎます（最大 $max 文字）。短くして、もう一度お試しください。';
   }
 
   @override
@@ -2128,7 +2118,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get privacyPolicyTitle => 'プライバシー Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => '最終更新日：2025年3月';
 
   @override
   String privacyIntro(String appName) {
@@ -2136,21 +2126,21 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '1. データ収集';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: N名前 メール address, 電話 number, 日付 of birth, and gender. • 健康 Data: Blood type, aアレルギー chronic conditions, m薬 vital signs, symptom logs, and トリアージ results. • 緊急 Contacts: Names, 電話 numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sサポート • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our 健康 companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage => '2. データの保存と暗号化';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• QRコード Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '3. GDPRへの準拠';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2158,7 +2148,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '4. お客様の権利';
 
   @override
   String get privacyRightsBody =>
@@ -2181,19 +2171,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get chooseFromGallery => 'ギャラリーから選択';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => '写真を撮る';
 
   @override
   String get removePhoto => '削除 Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => 'アバターが更新されました！';
 
   @override
   String get avatarUploadFailed => '失敗 to upload avatar. Please try again.';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => 'アバターが削除されました。';
 
   @override
   String get avatarRemoveFailed => 'Failed to 削除 avatar. Please try again.';
@@ -2214,10 +2204,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => '個人情報';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => '測定値';
 
   @override
   String get heightCm => '身長 (cm)';
@@ -2235,7 +2225,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get phoneNumber => '電話 Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => '例：配偶者、親、兄弟姉妹';
 
   @override
   String get addAllergy => '追加 Allergy';
@@ -2266,8 +2256,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'Your 健康 metrics are looking great! Keep it up.';
 
   @override
-  String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+  String get scoreDescriptionGood => '順調に進んでいます。いくつか注意が必要な箇所があります。';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2307,7 +2296,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get recommendedActions => '推奨 アクション';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => '検診の予約をする';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2321,18 +2310,17 @@ class AppLocalizationsJa extends AppLocalizations {
       'Track your blood pressure, heart rate, and その他 key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => '症状チェックを実行する';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI トリアージ to assess any 症状 you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => '睡眠の質を向上させる';
 
   @override
-  String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+  String get actionImproveSleepDesc => '質の高い睡眠は、体の回復や免疫機能にとって不可欠です。';
 
   @override
   String get actionStayActive => 'Stay アクティブ';
@@ -2346,12 +2334,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '$minutes分前';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '$weeks週間前';
   }
 
   @override
@@ -2389,7 +2377,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => 'ログ・バイタル';
 
   @override
   String get vitalTypeLabel => 'VITAL TYPE';
@@ -2419,7 +2407,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return '$vitalType の保存に成功しました';
   }
 
   @override
@@ -2450,10 +2438,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'なし readings found for the selected time period';
+      'No readings found for the selected time period';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '1回の閲覧';
 
   @override
   String get average => '平均';
@@ -2468,7 +2456,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get latest => '最新';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => '朗読';
 
   @override
   String get value => '値';
@@ -2478,7 +2466,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return '$total件の投稿のうち20件を表示しています';
   }
 
   @override
@@ -2488,13 +2476,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get medicationNameLabel => 'Medication 名前';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => '用法・用量';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => '単位';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => '周波数';
 
   @override
   String get startDateLabel => 'Start 日付';
@@ -2506,24 +2494,24 @@ class AppLocalizationsJa extends AppLocalizations {
   String get endDateLabel => 'End 日付';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => '投与時間';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return '投与量 $number';
   }
 
   @override
   String get notesOptional => 'メモ (o任意';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => 'お知らせ';
 
   @override
   String get saveMedication => '保存 Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully => '薬の追加に成功しました！';
 
   @override
   String get medicationAddFailed =>
@@ -2551,39 +2539,38 @@ class AppLocalizationsJa extends AppLocalizations {
   String get saveAppointment => '保存 Appointment';
 
   @override
-  String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+  String get appointmentScheduledSuccessfully => '予約が正常に完了しました！';
 
   @override
   String get appointmentScheduleFailed =>
       '失敗 to schedule appointment. Please try again.';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => '循環器科医';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => '皮膚科医';
 
   @override
-  String get specialtyEndocrinologist => 'Endocrinologist';
+  String get specialtyEndocrinologist => '内分泌専門医';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => '一般診療';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => '神経内科医';
 
   @override
-  String get specialtyOphthalmologist => 'Ophthalmologist';
+  String get specialtyOphthalmologist => '眼科医';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => '整形外科';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => '小児科医';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => '精神科医';
 
   @override
   String get specialtyOther => 'その他';
@@ -2601,31 +2588,31 @@ class AppLocalizationsJa extends AppLocalizations {
   String get addMedicalRecordTitle => '追加 Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => 'タイトル';
 
   @override
   String get typeLabel => '型';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => '検査結果';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => '処方箋';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => '画像処理';
 
   @override
   String get recordTypeOther => 'その他';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => '説明';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => 'レコードが更新されました！';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => 'レコードが追加されました！';
 
   @override
   String get recordUpdateFailed => '失敗 to update record.';
@@ -2642,7 +2629,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => 'レコードが削除されました。';
 
   @override
   String get recordDeleteFailed => 'Failed to 削除 record.';
@@ -2663,11 +2650,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => 'その他のオプション';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return '$totalのうち、$current番目のステップ';
   }
 
   @override
@@ -2705,46 +2692,46 @@ class AppLocalizationsJa extends AppLocalizations {
       'Describe any その他 details 概要 your 症状 or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => '全体的な深刻度';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => 'マイルド';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => '重度';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => 'ごく軽度';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => 'マイルド';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => '中程度';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => '気が散る';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => '重度';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => '耐え難い';
 
   @override
   String get durationToday => '今日 (started t今日';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => '1～3日';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => '4～7日';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => '1～2週間';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => '2週間以上';
 
   @override
   String get age => '年齢';
@@ -2753,19 +2740,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get ageHint => 'Enter your 年齢';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => '年';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => '生物学的性別';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => '例：糖尿病、高血圧、喘息';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint => '例：リシノプリル 10mg、メトホルミン 500mg';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => '概要';
 
   @override
   String get analyzeWithAi => 'AIで分析';
@@ -2786,7 +2773,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get symptomCough => '咳';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => '息切れ';
 
   @override
   String get symptomFatigue => '疲労';
@@ -2798,40 +2785,40 @@ class AppLocalizationsJa extends AppLocalizations {
   String get symptomNausea => '吐き気';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => '悪寒';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => '筋肉痛';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => '不眠症';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => '胸の痛み';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => '腹痛';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => '喉の痛み';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => '鼻水';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => '嘔吐';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => '下痢';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => '発疹';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => '関節痛';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => '購入がキャンセルされました。';
 
   @override
   String get noPurchasesToRestore => 'いいえ previous purchases found to r復元';

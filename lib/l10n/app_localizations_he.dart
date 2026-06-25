@@ -838,7 +838,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to פרופיל > Subscription and select the חינם plan to downgrade. Your Pro or ארגון features will remain active until the end of your current billing period.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
@@ -1781,7 +1781,7 @@ class AppLocalizationsHe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count אלרגיות',
+      other: '$count Allergies',
       one: '$count Allergy',
     );
     return '$_temp0';
@@ -1792,7 +1792,7 @@ class AppLocalizationsHe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count תרופות',
+      other: '$count Medications',
       one: '$count Medication',
     );
     return '$_temp0';
@@ -2462,7 +2462,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'אין readings found for the selected time period';
+      'No readings found for the selected time period';
 
   @override
   String get singleReading => '1 reading';

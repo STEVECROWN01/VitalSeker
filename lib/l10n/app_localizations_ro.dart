@@ -12,7 +12,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get appName => 'VitalSeker';
 
   @override
-  String get tagline => 'Your AI Health Companion';
+  String get tagline => 'Asistentul tău de sănătate bazat pe IA';
 
   @override
   String get home => 'Acasă';
@@ -42,7 +42,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get signOut => 'Deconectare';
 
   @override
-  String get email => 'Email';
+  String get email => 'E-mail';
 
   @override
   String get password => 'Parolă';
@@ -54,43 +54,43 @@ class AppLocalizationsRo extends AppLocalizations {
   String get confirmPassword => 'Confirmare Parolă';
 
   @override
-  String get createAccount => 'Create Account';
+  String get createAccount => 'Creează un cont';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'Nu ai un cont?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'Ai deja un cont?';
 
   @override
-  String get orContinueWith => 'or continue with';
+  String get orContinueWith => 'sau continuați cu';
 
   @override
-  String get continueWithGoogle => 'Continue with Google';
+  String get continueWithGoogle => 'Continuă cu Google';
 
   @override
-  String get continueWithApple => 'Continue with Apple';
+  String get continueWithApple => 'Continuă cu Apple';
 
   @override
   String get forgotPassword => 'Forgot PParolă';
 
   @override
-  String get goodMorning => 'Good morning';
+  String get goodMorning => 'Bună dimineața';
 
   @override
-  String get goodAfternoon => 'Good afternoon';
+  String get goodAfternoon => 'Bună ziua';
 
   @override
-  String get goodEvening => 'Good evening';
+  String get goodEvening => 'Bună seara';
 
   @override
-  String get goodNight => 'Good night';
+  String get goodNight => 'Noapte bună';
 
   @override
   String get healthScore => 'Sănătate Score';
 
   @override
-  String get quickActions => 'Quick Actions';
+  String get quickActions => 'Acțiuni rapide';
 
   @override
   String get checkSymptomsNow => 'Check Simptome Now';
@@ -105,7 +105,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get emergencySOS => 'SOS de urgență';
 
   @override
-  String get recentChecks => 'Recent Checks';
+  String get recentChecks => 'Verificări recente';
 
   @override
   String get noSymptomsLogs => 'Nu Simptome logs yet';
@@ -129,16 +129,16 @@ class AppLocalizationsRo extends AppLocalizations {
   String get spo2 => 'SpO2';
 
   @override
-  String get temperature => 'Temperature';
+  String get temperature => 'Temperaturi';
 
   @override
   String get weight => 'Greutate';
 
   @override
-  String get bloodGlucose => 'Blood Glucose';
+  String get bloodGlucose => 'Glicemia';
 
   @override
-  String get respiratoryRate => 'Respiratory Rate';
+  String get respiratoryRate => 'Frecvența respiratorie';
 
   @override
   String get aiTriage => 'AI Triaj';
@@ -153,19 +153,20 @@ class AppLocalizationsRo extends AppLocalizations {
   String get aiProcessing => 'AI is processing your Sănătate data';
 
   @override
-  String get send => 'Send';
+  String get send => 'Trimite';
 
   @override
-  String get newChat => 'New Chat';
+  String get newChat => 'Chat nou';
 
   @override
-  String get viewDetailedResults => 'View Detailed Results';
+  String get viewDetailedResults => 'Vizualizați rezultatele detaliate';
 
   @override
   String get monitorAtHome => 'Monitor at Acasă';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate =>
+      'Când trebuie să se recurgă la un nivel superior';
 
   @override
   String get saveToPassport => 'Salvare to Pașaport';
@@ -207,22 +208,22 @@ class AppLocalizationsRo extends AppLocalizations {
   String get selectLanguage => 'Select Limbă';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'Aspect';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'Modul întunecat';
 
   @override
-  String get account => 'Account';
+  String get account => 'Cont';
 
   @override
   String get privacyData => 'Confidențialitate & Data';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'Securitate și stocare';
 
   @override
-  String get exportData => 'Export Data';
+  String get exportData => 'Exportare date';
 
   @override
   String get support => 'Suport';
@@ -243,7 +244,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get medicalID => 'ID medical';
 
   @override
-  String get medicalTranslation => 'Medical Translation';
+  String get medicalTranslation => 'Traduceri medicale';
 
   @override
   String get familyProfiles => 'Familie Profiles';
@@ -252,16 +253,16 @@ class AppLocalizationsRo extends AppLocalizations {
   String get addFamilyMember => 'Adăugare Familie Member';
 
   @override
-  String get accountOwner => 'ACCOUNT OWNER';
+  String get accountOwner => 'TITULARUL CONTULUI';
 
   @override
   String get upgradeToPro => 'Actualizare to Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'Protejați întregul cerc.';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'Află mai multe';
 
   @override
   String get medications => 'Medicamente';
@@ -270,25 +271,25 @@ class AppLocalizationsRo extends AppLocalizations {
   String get addMedication => 'Adăugare Medication';
 
   @override
-  String get appointments => 'Appointments';
+  String get appointments => 'Programări';
 
   @override
   String get addAppointment => 'Adăugare Appointment';
 
   @override
-  String get upcoming => 'Upcoming';
+  String get upcoming => 'În curând';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Finalizat';
 
   @override
-  String get cancelled => 'Cancelled';
+  String get cancelled => 'Anulat';
 
   @override
-  String get active => 'Active';
+  String get active => 'Activ';
 
   @override
-  String get discontinued => 'Discontinued';
+  String get discontinued => 'Produs retras din vânzare';
 
   @override
   String get save => 'Salvare';
@@ -321,19 +322,19 @@ class AppLocalizationsRo extends AppLocalizations {
   String get pressAndHold => 'Press and hold to send Urgență alert';
 
   @override
-  String get holdFor3Seconds => 'Hold for 3 seconds';
+  String get holdFor3Seconds => 'Mențineți poziția timp de 3 secunde';
 
   @override
-  String get imSafeResolve => 'I\'m Safe - Resolve';
+  String get imSafeResolve => 'Sunt în siguranță - Rezoluție';
 
   @override
   String get shareMyLocation => 'Partajare My Locație';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'Găsește spitale în apropierea mea';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'Apelare rapidă';
 
   @override
   String get emergencyContacts => 'Urgență Contacts';
@@ -361,7 +362,8 @@ class AppLocalizationsRo extends AppLocalizations {
   String get noHistoryYet => 'Nu Istoric Yet';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere =>
+      'Jurnalele tale de simptome vor apărea aici';
 
   @override
   String get startFirstTriage => 'Start Your First Triaj';
@@ -377,7 +379,7 @@ class AppLocalizationsRo extends AppLocalizations {
       'Nu Statistici generated yet. Check Înapoi on Monday for your weekly AI Sănătate summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'Generează acum';
 
   @override
   String get upgradeProInsights =>
@@ -390,16 +392,17 @@ class AppLocalizationsRo extends AppLocalizations {
   String get viewAllPlans => 'View Toate plans';
 
   @override
-  String get exportMedicalReport => 'Export Medical Report';
+  String get exportMedicalReport => 'Exportare raport medical';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'Generați un fișier PDF';
 
   @override
-  String get sendByEmail => 'Send by Email';
+  String get sendByEmail => 'Trimite prin e-mail';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview =>
+      'Prezentare generală a pacientului și semne vitale';
 
   @override
   String get symptomsTriageLog => 'Simptome & Triaj Log';
@@ -408,19 +411,19 @@ class AppLocalizationsRo extends AppLocalizations {
   String get medicationsAllergies => 'Medicamente & Alergii';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'Rezumatul analizei bazate pe IA';
 
   @override
   String get dateRange => 'Dată Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => 'Ultimele 30 de zile';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'PREVIZUALIZARE';
 
   @override
-  String get translate => 'Translate';
+  String get translate => 'Traduceți';
 
   @override
   String get translateMedicalTerms => 'Translate medical Termeni';
@@ -430,25 +433,25 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+      'Introduceți termenul sau expresia medicală pe care doriți să o traduceți';
 
   @override
   String translationResult(Object lang) {
-    return 'Translation Result';
+    return 'Rezultatul traducerii';
   }
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'Preferințele tale privind notificările sunt salvate în contul tău. Acum poți personaliza programul — atinge orice program pentru a-l modifica.';
 
   @override
   String get triageReminders => 'Triaj Reminders';
 
   @override
-  String get medicationReminders => 'Medication Reminders';
+  String get medicationReminders => 'Memento-uri privind medicamentele';
 
   @override
-  String get appointmentReminders => 'Appointment Reminders';
+  String get appointmentReminders => 'Mementouri privind programările';
 
   @override
   String get vitalsLoggingReminders => 'Semne vitale Logging Reminders';
@@ -457,10 +460,10 @@ class AppLocalizationsRo extends AppLocalizations {
   String get healthTips => 'Sănătate Tips';
 
   @override
-  String get weeklyReport => 'Weekly Report';
+  String get weeklyReport => 'Raport săptămânal';
 
   @override
-  String get reminders => 'Reminders';
+  String get reminders => 'Memento-uri';
 
   @override
   String get insightsTips => 'Statistici & Tips';
@@ -476,7 +479,8 @@ class AppLocalizationsRo extends AppLocalizations {
   String get deletePermanently => 'Ștergere Permanently';
 
   @override
-  String get accountDeleted => 'Account deleted. Sorry to see you go.';
+  String get accountDeleted =>
+      'Contul a fost șters. Ne pare rău că ne părăsești.';
 
   @override
   String get sendEmergencySOS => 'Send SOS de urgență?';
@@ -486,13 +490,14 @@ class AppLocalizationsRo extends AppLocalizations {
       'This will send an SMS with your live Locație to Toate of your Urgență contacts.';
 
   @override
-  String get sendSOS => 'Send SOS';
+  String get sendSOS => 'Trimite SOS';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'Ești sigur că vrei să te deconectezi?';
 
   @override
-  String get failedToSignOut => 'Failed to sign out. Please try again.';
+  String get failedToSignOut =>
+      'Nu s-a putut efectua deconectarea. Vă rugăm să încercați din nou.';
 
   @override
   String get vitalsLogged => 'Semne vitale Logged';
@@ -501,16 +506,16 @@ class AppLocalizationsRo extends AppLocalizations {
   String get triageSessions => 'Triaj Sessions';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'Zile active';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'Mă deconectez...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials => 'Gestionarea acreditărilor medicale';
 
   @override
   String connectedMembers(num count) {
@@ -524,10 +529,10 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'Alerte și mementouri inteligente';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'Documente și imagini';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical Termeni';
@@ -536,7 +541,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get emergencyMedicalCard => 'Urgență medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'Criptarea AES-256 este activă';
 
   @override
   String get downloadYourHealthData => 'Download your Sănătate data';
@@ -545,14 +550,14 @@ class AppLocalizationsRo extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pParolă account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'Întrebări frecvente și documentație';
 
   @override
   String get priorityProSupport => 'Priority Pro Suport';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Versiunea $version';
   }
 
   @override
@@ -568,10 +573,10 @@ class AppLocalizationsRo extends AppLocalizations {
   String get confirmNewPassword => 'Confirmare New Parolă';
 
   @override
-  String get update => 'Update';
+  String get update => 'Actualizare';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'Parolele nu se potrivesc';
 
   @override
   String get passwordMinLength => 'Parolă must be at least 8 characters';
@@ -588,51 +593,51 @@ class AppLocalizationsRo extends AppLocalizations {
       'This action is irreversible. Toate your data — vSemne vitale mMedicamente appointments, symptom logs, Familie profiles, and Sănătate Pașaport — will be permanently deleted.';
 
   @override
-  String get emailDoesNotMatch => 'Email does not match.';
+  String get emailDoesNotMatch => 'Adresa de e-mail nu corespunde.';
 
   @override
   String get failedToDeleteAccount =>
       'Failed to Ștergere account. Please try again or contact sSuport';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'Gestionați-vă abonamentul';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently Eliminare your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'Încheie sesiunea curentă';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Întuneric';
 
   @override
-  String get light => 'Light';
+  String get light => 'Lumină';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'Setarea implicită a sistemului';
 
   @override
-  String get subscription => 'Subscription';
+  String get subscription => 'Abonament';
 
   @override
   String get restore => 'Restabilire';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'Alege-ți planul';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'Descoperă întreaga putere a VitalSeker';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'Integrarea plăților în aplicație (RevenueCat / StoreKit) este în curs de realizare. Modificările aduse abonamentului sunt aplicate direct în contul tău, în scop de testare.';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'pentru totdeauna';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/lună';
 
   @override
   String get freePlanFeature1 => '3 AI Triaj sessions/month';
@@ -641,7 +646,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get freePlanFeature2 => 'Basic Sănătate Pașaport';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'Partajarea codurilor QR';
 
   @override
   String get freePlanFeature4 => 'SOS de urgență alerts';
@@ -668,31 +673,31 @@ class AppLocalizationsRo extends AppLocalizations {
   String get proPlanFeature6 => 'Priority Suport';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 => 'Tot ce oferă versiunea Pro';
 
   @override
   String get enterprisePlanFeature2 => 'Unlimited Familie profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'Branding personalizat';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Acces la API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Suport';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'Garanția SLA';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'CEL MAI BUN RAPORT CALITATE-PREȚ';
 
   @override
-  String get currentPlan => 'Current Plan';
+  String get currentPlan => 'Planul actual';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Retrogradare';
 
   @override
   String upgradeToPlan(String plan) {
@@ -701,20 +706,20 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+      'Trebuie să fiți autentificat pentru a schimba planul.';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'Vrei să treci la $plan?';
   }
 
   @override
   String get downgradeToFreeMessage =>
-      'You will lose access to Pro features at the end of your current billing period. Continue?';
+      'La sfârșitul perioadei de facturare curente, nu veți mai avea acces la funcțiile Pro. Doriți să continuați?';
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return 'Această acțiune va actualiza abonamentul dumneavoastră la $plan. În mediul de producție, această acțiune ar activa sistemul de acces cu plată al platformei; deocamdată, modificarea se aplică direct contului dumneavoastră, în scop de testare.';
   }
 
   @override
@@ -731,10 +736,10 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'Nu s-a putut actualiza abonamentul. Vă rugăm să încercați din nou.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'Achizițiile au fost restabilite.';
 
   @override
   String get failedToRestorePurchases => 'Failed to Restabilire purchases.';
@@ -753,25 +758,25 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'Întrebări frecvente';
 
   @override
   String get contactSupport => 'Contact Suport';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'Subiect';
 
   @override
-  String get message => 'Message';
+  String get message => 'Mesaj';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'Trimite';
 
   @override
   String get otherWaysToReachUs => 'Altul Ways to Reach Us';
 
   @override
-  String get emailUs => 'Email Us';
+  String get emailUs => 'Trimiteți-ne un e-mail';
 
   @override
   String get supportRequestSaved =>
@@ -779,13 +784,15 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+      'Vă rugăm să completați atât câmpul „Subiect”, cât și cel pentru „Mesaj”.';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength =>
+      'Subiectul trebuie să conțină cel puțin 5 caractere.';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength =>
+      'Mesajul trebuie să conțină cel puțin 10 caractere.';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -793,7 +800,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'Am primit o solicitare urgentă! Echipa noastră va acorda prioritate acestei solicitări.';
 
   @override
   String get supportRequestSent =>
@@ -847,10 +854,10 @@ class AppLocalizationsRo extends AppLocalizations {
       'Configure and preview your comprehensive Sănătate summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'Includeți secțiuni';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => 'Ultimele 3 luni';
 
   @override
   String get yearToDate => 'Year to Dată';
@@ -859,14 +866,14 @@ class AppLocalizationsRo extends AppLocalizations {
   String get allTime => 'Toate Oră';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'Se generează…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'Se trimite…';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'Fișierul PDF menționează $producer în calitate de producător';
   }
 
   @override
@@ -880,26 +887,27 @@ class AppLocalizationsRo extends AppLocalizations {
       'Manage Sănătate for your whole Familie (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'Titularul contului';
 
   @override
   String get ownerProfile => 'Owner Profil';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age ani';
   }
 
   @override
   String scoreValue(int score) {
-    return 'Score: $score';
+    return 'Scor: $score';
   }
 
   @override
-  String get reachedProLimit => 'You\'ve reached the 5-member Pro limit.';
+  String get reachedProLimit =>
+      'Ați atins limita de 5 membri pentru categoria Pro.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'S-a atins limita';
 
   @override
   String get pleaseFillNameRelationship =>
@@ -921,7 +929,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return 'Ești sigur că vrei să îl elimini pe $name din profilurile familiei tale?';
   }
 
   @override
@@ -938,7 +946,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get fullNameLabel => 'Full Nume';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => 'Relație (de exemplu, soț/soție, copil)';
 
   @override
   String get bloodTypeOptional => 'Grupă sanguină (optional)';
@@ -950,7 +958,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get upgradeYourCare => 'Actualizare YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'Tu protejezi întregul cerc.';
 
   @override
   String get proMemberThanks =>
@@ -966,10 +974,10 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get manageSubscription => 'Manage Subscription';
+  String get manageSubscription => 'Gestionare abonament';
 
   @override
-  String get failedToLoadProfiles => 'Failed to load profiles';
+  String get failedToLoadProfiles => 'Nu s-au putut încărca profilurile';
 
   @override
   String get searchMedications => 'Căutare medMedicamente';
@@ -986,47 +994,49 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'Editează $name';
   }
 
   @override
-  String get dosage => 'Dosage';
+  String get dosage => 'Dozaj';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'Unitate';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'Frecvență';
 
   @override
   String get notes => 'Notițe';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'Tratamentul a fost întrerupt';
 
   @override
   String get failedToDiscontinueMedication =>
-      'Failed to discontinue medication.';
+      'Nu s-a reușit întreruperea tratamentului.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'Medicamentele au fost actualizate!';
 
   @override
-  String get failedToUpdateMedication => 'Failed to update medication.';
+  String get failedToUpdateMedication =>
+      'Nu s-a reușit actualizarea medicamentelor.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted =>
+      'Medicament marcat ca fiind administrat';
 
   @override
   String get deleteMedication => 'Ștergere Medication';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'Ești sigur că vrei să ștergi $name?';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'Medicament eliminat';
 
   @override
   String get failedToDeleteMedication => 'Failed to Ștergere medication.';
@@ -1035,39 +1045,39 @@ class AppLocalizationsRo extends AppLocalizations {
   String get editDetails => 'Editare Details';
 
   @override
-  String get markComplete => 'Mark Complete';
+  String get markComplete => 'Marchează ca finalizat';
 
   @override
-  String get discontinue => 'Discontinue';
+  String get discontinue => 'A opri';
 
   @override
   String nextDose(String time) {
-    return 'Next dose: $time';
+    return 'Următoarea doză: $time';
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => 'O dată pe zi';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => 'De două ori pe zi';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => 'De trei ori pe zi';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => 'De patru ori pe zi';
 
   @override
   String get everyOtherDay => 'Every Altul Day';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Săptămânal';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => 'După cum este necesar';
 
   @override
-  String get custom => 'Custom';
+  String get custom => 'Personalizat';
 
   @override
   String get all => 'Toate';
@@ -1083,13 +1093,14 @@ class AppLocalizationsRo extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted =>
+      'Programare marcată ca fiind finalizată';
 
   @override
-  String get failedToUpdateAppointment => 'Failed to update appointment.';
+  String get failedToUpdateAppointment => 'Nu s-a putut actualiza programarea.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => 'Programare anulată';
 
   @override
   String get failedToCancelAppointment => 'Failed to Anulare appointment.';
@@ -1102,12 +1113,12 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return 'Reprogramat pentru data de $date la ora $time';
   }
 
   @override
   String get failedToRescheduleAppointment =>
-      'Failed to reschedule appointment.';
+      'Nu s-a reușit reprogramarea programării.';
 
   @override
   String get deleteAppointment => 'Ștergere Appointment';
@@ -1118,13 +1129,13 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => 'Programare ștearsă';
 
   @override
   String get failedToDeleteAppointment => 'Failed to Ștergere appointment.';
 
   @override
-  String get reschedule => 'Reschedule';
+  String get reschedule => 'Reprogramare';
 
   @override
   String get cancelAppointment => 'Anulare Appointment';
@@ -1134,33 +1145,34 @@ class AppLocalizationsRo extends AppLocalizations {
       'Translate medical Termeni and phrases into your preferred lLimbă Useful for travel, consultations, and discussing care with non-English-speaking providers.';
 
   @override
-  String get medicalTermOrPhrase => 'Medical term or phrase';
+  String get medicalTermOrPhrase => 'Termen sau expresie medicală';
 
   @override
   String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+      'de exemplu, „hipertensiune”, „se administrează de două ori pe zi, în timpul meselor”';
 
   @override
-  String get translating => 'Translating...';
+  String get translating => 'Se traduce...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return 'Traducere ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear => 'Traducerea ta va apărea aici.';
 
   @override
   String get pleaseEnterTermToTranslate =>
-      'Please enter a medical term or phrase to translate.';
+      'Vă rugăm să introduceți un termen sau o expresie medicală pe care doriți să o traduceți.';
 
   @override
   String get noTranslationReturned =>
       'Nu translation was returned. Please try a different term.';
 
   @override
-  String get translationFailed => 'Translation failed. Please try again.';
+  String get translationFailed =>
+      'Traducerea a eșuat. Vă rugăm să încercați din nou.';
 
   @override
   String get notificationSettings => 'Notification Setări';
@@ -1170,16 +1182,17 @@ class AppLocalizationsRo extends AppLocalizations {
       'Failed to Salvare notification setting';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => 'Caracteristici principale';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'Producător';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => 'Concept, proiectare și dezvoltare';
 
   @override
-  String get updateAccountCredentials => 'Update your account credentials';
+  String get updateAccountCredentials =>
+      'Actualizați datele de autentificare ale contului dumneavoastră';
 
   @override
   String get legal => 'Legal';
@@ -1231,7 +1244,7 @@ class AppLocalizationsRo extends AppLocalizations {
       'Manage Sănătate for your entire Familie';
 
   @override
-  String get featurePdfExportTitle => 'PDF Export';
+  String get featurePdfExportTitle => 'Exportă în format PDF';
 
   @override
   String get featurePdfExportDesc => 'Generate and Partajare Sănătate reports';
@@ -1243,7 +1256,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return 'Ultima actualizare: Versiunea $version';
   }
 
   @override
@@ -1260,7 +1273,7 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => 'Condiții de eligibilitate și cont';
 
   @override
   String get tosSection2Para1 =>
@@ -1287,21 +1300,22 @@ class AppLocalizationsRo extends AppLocalizations {
       'In a medical eUrgență call your local Urgență number (e.g. 911, 112) immediately. Do not rely on the Service for Urgență response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => 'Utilizarea serviciului';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => 'Sunteți de acord să NU:';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 =>
+      'Utilizarea Serviciului în orice scop ilegal;';
 
   @override
   String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+      'Încercarea de a efectua inginerie inversă, de a decompila sau de a dezasambla aplicația;';
 
   @override
   String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+      'Să încărcați conținut rău intenționat, fraudulos sau care încalcă drepturile de proprietate intelectuală;';
 
   @override
   String get tosSection4Bullet4 =>
@@ -1309,10 +1323,10 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+      'Nu utilizați Serviciul pentru a trimite comunicări nesolicitate sau spam.';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => 'Abonamente și plăți';
 
   @override
   String get tosSection5Para1 =>
@@ -1324,10 +1338,10 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get tosSection5Para3 =>
-      'We may change subscription fees upon reasonable notice. Fee changes will not apply to your current billing period.';
+      'Ne rezervăm dreptul de a modifica tarifele de abonament, cu un preaviz rezonabil. Modificările tarifelor nu se vor aplica perioadei de facturare curente.';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => 'Datele dumneavoastră';
 
   @override
   String get tosSection6Para1 =>
@@ -1338,18 +1352,18 @@ class AppLocalizationsRo extends AppLocalizations {
       'You may Export your data at any Oră via the in-app Export feature, and you may permanently Ștergere your account and Toate associated data via Setări → Ștergere Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => 'Declarații de exonerare de răspundere';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      'SERVICIUL ESTE FURNIZAT „AȘA CUM ESTE” ȘI „AȘA CUM ESTE DISPONIBIL”, FĂRĂ NICIUN FEL DE GARANȚII, FIE EXPRESE, FIE IMPLICITE, INCLUZÂND, DAR FĂRĂ A SE LIMITA LA, GARANȚIILE IMPLICITE DE COMERCIALIZARE, DE ADECVARE PENTRU UN ANUMIT SCOP SAU DE NECONTRAFACERE.';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI Triaj recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => 'Limitarea răspunderii';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1357,7 +1371,7 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => 'Încetarea contractului';
 
   @override
   String get tosSection9Para1 =>
@@ -1393,22 +1407,22 @@ class AppLocalizationsRo extends AppLocalizations {
   String get pro => 'Pro';
 
   @override
-  String get enterprise => 'Enterprise';
+  String get enterprise => 'Întreprindere';
 
   @override
-  String get nA => 'N/A';
+  String get nA => 'Nu se aplică';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Navă';
 
   @override
   String get next => 'Următorul';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Intră în VitalSeker';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => 'Cunoaște-ți corpul.';
 
   @override
   String get onboardingDescription1 =>
@@ -1429,10 +1443,10 @@ class AppLocalizationsRo extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re Înapoi online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'Conectează-te la contul tău VitalSeker';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'Se efectuează autentificarea...';
 
   @override
   String get emailRequired => 'Email is Obligatoriu';
@@ -1451,7 +1465,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String passwordResetSent(String email) {
-    return 'Password reset link sent to $email';
+    return 'Linkul pentru resetarea parolei a fost trimis la $email';
   }
 
   @override
@@ -1470,7 +1484,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get other => 'Altul';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => 'Se creează contul...';
 
   @override
   String get joinVitalSeker =>
@@ -1483,19 +1497,19 @@ class AppLocalizationsRo extends AppLocalizations {
   String get nameMinChars => 'Nume must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => 'Cel puțin 6 caractere';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => 'Includeți cel puțin o literă majusculă';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase => 'Includeți cel puțin o literă mică';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => 'Introduceți cel puțin un număr';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol => 'Includeți cel puțin un simbol (!@#\$%^&*)';
 
   @override
   String get confirmPasswordRequired => 'Please Confirmare your Parolă';
@@ -1513,16 +1527,16 @@ class AppLocalizationsRo extends AppLocalizations {
   String get selectDateOfBirthHint => 'Select your Dată of birth';
 
   @override
-  String get gender => 'Gender';
+  String get gender => 'Genul';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => 'Alegeți sexul';
 
   @override
   String get bloodType => 'Grupă sanguină';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => 'Selectați grupa sanguină';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1539,31 +1553,32 @@ class AppLocalizationsRo extends AppLocalizations {
       'Account created! Please check your Email to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => 'Utilizator';
 
   @override
   String get viewAll => 'View Toate';
 
   @override
-  String get failedLoadRecentChecks => 'Failed to load recent checks';
+  String get failedLoadRecentChecks =>
+      'Nu s-au putut încărca verificările recente';
 
   @override
   String get pullDownRetry => 'Pull down to Reîncercare';
 
   @override
-  String get goodCondition => 'Good condition';
+  String get goodCondition => 'În stare bună';
 
   @override
-  String get fairCondition => 'Fair condition';
+  String get fairCondition => 'Stare acceptabilă';
 
   @override
-  String get needsAttention => 'Needs attention';
+  String get needsAttention => 'Necesită atenție';
 
   @override
-  String get poorCondition => 'Poor condition';
+  String get poorCondition => 'Stare proastă';
 
   @override
-  String get critical => 'Critical';
+  String get critical => 'Critic';
 
   @override
   String get overallHealthIndicator => 'Your overall Sănătate indicator';
@@ -1575,17 +1590,17 @@ class AppLocalizationsRo extends AppLocalizations {
   String get aiPoweredTriage60s => 'AI-powered Triaj in 60 seconds';
 
   @override
-  String get qrAndMedicalInfo => 'QR & medical info';
+  String get qrAndMedicalInfo => 'Cod QR și informații medicale';
 
   @override
   String get pastChecksAndVitals => 'Past checks & Semne vitale';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Chiar acum';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '$hours ore în urmă';
   }
 
   @override
@@ -1596,14 +1611,14 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return 'Acum $days zile';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => 'Verificarea simptomelor';
 
   @override
-  String get severity => 'Severity';
+  String get severity => 'Gradul de gravitate';
 
   @override
   String get aiGreeting =>
@@ -1614,91 +1629,92 @@ class AppLocalizationsRo extends AppLocalizations {
       'Based on your sSimptome here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => 'Urgență';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => 'Recomandări privind îngrijirea';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ Semnale de alarmă:';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => 'Recomandări:';
 
   @override
   String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+      'Atingeți „Vizualizați rezultatele detaliate” de mai jos pentru a vedea analiza completă.';
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $error';
+    return 'Îmi pare rău, a apărut o eroare la analizarea simptomelor dumneavoastră. Vă rugăm să încercați din nou sau să descrieți simptomele într-un alt mod.\n\nEroare: $error';
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => 'Stare generală de disconfort';
 
   @override
-  String get selfCareRecommended => 'Self-Care Recommended';
+  String get selfCareRecommended => 'Se recomandă îngrijirea personală';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => 'Programează o întâlnire';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => 'Vizitați serviciul de urgențe';
 
   @override
   String get seekEmergencyCare => 'Seek Urgență Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider =>
+      'Consultați un specialist din domeniul sănătății';
 
   @override
-  String get mild => 'Mild';
+  String get mild => 'Ușor';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => 'Moderat';
 
   @override
-  String get significant => 'Significant';
+  String get significant => 'Semnificativ';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => 'Grav';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => 'Extrem';
 
   @override
   String get triageResults => 'Triaj Results';
 
   @override
   String urgencyScoreCaption(int score) {
-    return 'Urgency Score: $score/100';
+    return 'Scorul de urgență: $score/100';
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => 'Semnale de alarmă';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => 'Recomandări';
 
   @override
-  String get possibleConditions => 'Possible Conditions';
+  String get possibleConditions => 'Condiții posibile';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => 'Întrebări suplimentare';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Se salvează...';
 
   @override
-  String get seeDoctorSoon => 'See a Doctor Soon';
+  String get seeDoctorSoon => 'Mergeți cât mai curând la medic';
 
   @override
   String get emergencyCareNow => 'Urgență Care Now';
 
   @override
   String get triageDisclaimer =>
-      'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+      'Acesta nu este un diagnostic medical. Consultați întotdeauna un specialist din domeniul sănătății pentru a primi sfaturi medicale adecvate.';
 
   @override
   String get escalateLow1 => 'Simptome worsen or spread to new body areas';
@@ -1713,7 +1729,8 @@ class AppLocalizationsRo extends AppLocalizations {
   String get escalateMedium1 => 'Simptome persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 =>
+      'Durerea se intensifică sau devine insuportabilă';
 
   @override
   String get escalateMedium3 => 'New red-flag Simptome appear';
@@ -1723,7 +1740,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+      'Apare dificultate de respirație sau senzație de apăsare în piept';
 
   @override
   String get escalateHigh3 =>
@@ -1734,7 +1751,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'Nu conduceți singur — cereți cuiva să vă ducă sau chemați o ambulanță';
 
   @override
   String get escalateEmergency3 =>
@@ -1744,7 +1761,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get showQrCode => 'Show Cod QR';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'Inactiv';
 
   @override
   String get knownAllergies => 'Known Alergii';
@@ -1756,13 +1773,13 @@ class AppLocalizationsRo extends AppLocalizations {
   String get chronicConditions => 'Afecțiuni cronice';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'Asigurări';
 
   @override
   String get qrCode => 'Cod QR';
 
   @override
-  String get exportPdf => 'Export PDF';
+  String get exportPdf => 'Exportă în format PDF';
 
   @override
   String get noHealthPassportYet => 'Nu Sănătate Pașaport Yet';
@@ -1775,11 +1792,11 @@ class AppLocalizationsRo extends AppLocalizations {
   String get heightAndWeight => 'Înălțime & Greutate';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'Nu este setat';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count ani';
   }
 
   @override
@@ -1812,7 +1829,7 @@ class AppLocalizationsRo extends AppLocalizations {
       'Point this at any QR reader to securely Partajare your vSemne vitale';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'Descărcare';
 
   @override
   String get share => 'Partajare';
@@ -1824,27 +1841,27 @@ class AppLocalizationsRo extends AppLocalizations {
   String get generateQrCode => 'Generate Cod QR';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'Expirat';
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'Valabil pentru ${minutes}h ${hours}m';
   }
 
   @override
   String get emergencySosTitle => 'SOS de urgență';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'Așteaptă puțin...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'Spitale din apropiere';
 
   @override
   String get allergies => 'Alergii';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'Condiții';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1858,10 +1875,10 @@ class AppLocalizationsRo extends AppLocalizations {
       'SOS sends your GPS Locație to your Urgență contacts via SMS. Make sure your contacts are configured in your pProfil';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'TRIMITERE';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS EȘUAT';
 
   @override
   String get sosActive => 'SOS ACTIVE';
@@ -1870,21 +1887,21 @@ class AppLocalizationsRo extends AppLocalizations {
   String get sendingEmergencyAlert => 'Sending Urgență Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'Nu s-a putut trimite alerta';
 
   @override
   String get emergencyAlertSent => 'Urgență Alert Sent';
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'Se trimite în $seconds…';
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'Încearcă din nou';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => 'Ignoră';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1903,13 +1920,13 @@ class AppLocalizationsRo extends AppLocalizations {
   String get liveLocation => 'Live Locație';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => 'Se obțin coordonatele GPS…';
 
   @override
   String get locationUnavailable => 'Locație unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => 'Persoane de contact notificate';
 
   @override
   String contactsNotifiedCount(int count) {
@@ -1927,7 +1944,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count LUNEA ACEASTA';
   }
 
   @override
@@ -1940,17 +1957,17 @@ class AppLocalizationsRo extends AppLocalizations {
   String get searchLogs => 'Căutare logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => 'Verde';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => 'Galben';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'Rețea';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return 'Grad de gravitate: $score/10';
   }
 
   @override
@@ -1958,17 +1975,17 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'Zonele corpului: $regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return 'Durată: $duration';
   }
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'Recomandare AI: $recommendation';
   }
 
   @override
@@ -1976,17 +1993,17 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String notesCaption(String notes) {
-    return 'Notes: $notes';
+    return 'Note: $notes';
   }
 
   @override
   String get export30DayReport => 'Export 30-day Report (PPro';
 
   @override
-  String get weeklyBreakdown => 'Weekly Breakdown';
+  String get weeklyBreakdown => 'Analiză săptămânală';
 
   @override
-  String get proAnalysis => 'Pro Analysis';
+  String get proAnalysis => 'Analiză profesională';
 
   @override
   String get yourHealthThisWeek => 'Your Sănătate this week';
@@ -1997,46 +2014,46 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'Analiza tendințelor';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => 'FRECVENȚA SIMPTOMELOR (4W)';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => 'Ridicat';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'Media';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => 'Scăzut';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => 'Prelungirea somnului profund';
 
   @override
   String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+      'Temperatura corpului tău a scăzut spre sfârșitul acestei săptămâni. Încearcă să menții o temperatură mai scăzută în cameră (65°F) pentru a accelera intrarea în fazele de somn profund.';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => 'Hidratare cu alimentare frontală';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'În înregistrările din după-amiaza s-au detectat semne de deshidratare ușoară. Consumați 40% din aportul zilnic de apă înainte de ora 10:00, pentru a stabiliza rata metabolică.';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'Activitatea de stimulare';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      'Exacerbările durerilor articulare sunt corelate cu creșteri bruște ale intensității. Asigură-te că faci o încălzire dinamică de 10 minute înainte de a depăși zona 2 de antrenament cardio.';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => 'Abordare personalizată';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights => 'Actualizarea informațiilor privind IA…';
 
   @override
   String get generateNewInsights => 'Generate New Statistici';
@@ -2045,10 +2062,10 @@ class AppLocalizationsRo extends AppLocalizations {
   String get symptoms => 'Simptome';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => 'Gravitate medie';
 
   @override
-  String get scoreChange => 'Score Change';
+  String get scoreChange => 'Modificare scor';
 
   @override
   String get checkBackMondayOrGenerate =>
@@ -2060,7 +2077,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String proPlanMonthly(double price) {
-    return 'Pro Plan - \$$price/mo';
+    return 'Pro Plan - \$$price/lună';
   }
 
   @override
@@ -2072,12 +2089,12 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String couldNotLaunchCall(String phoneNumber) {
-    return 'Could not launch call to $phoneNumber';
+    return 'Nu s-a putut iniția apelul către $phoneNumber';
   }
 
   @override
   String get medicalDisclaimer =>
-      'This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.';
+      'Aceste informații nu constituie un diagnostic medical. VitalSeker nu înlocuiește un specialist calificat din domeniul sănătății.';
 
   @override
   String get poweredByGlm => 'Powered by GLM-4';
@@ -2086,11 +2103,11 @@ class AppLocalizationsRo extends AppLocalizations {
   String get aiTriageIn90Seconds => 'AI-powered Triaj in 90 seconds';
 
   @override
-  String get vitalValueOutOfRange => 'Value out of expected range';
+  String get vitalValueOutOfRange => 'Valoare în afara intervalului preconizat';
 
   @override
   String get vitalRangeHintHeartRate =>
-      'Heart rate should be between 30 and 220 BPM';
+      'Frecvența cardiacă ar trebui să se situeze între 30 și 220 BPM';
 
   @override
   String get vitalRangeHintBloodPressure =>
@@ -2098,15 +2115,15 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+      'Temperatura corpului trebuie să se situeze între 30 și 45 °C';
 
   @override
   String get vitalRangeHintOxygen =>
-      'Blood oxygen should be between 50 and 100 %';
+      'Nivelul de oxigen din sânge ar trebui să se situeze între 50 și 100 %';
 
   @override
   String get vitalRangeHintGlucose =>
-      'Blood glucose should be between 20 and 600 mg/dL';
+      'Glicemia trebuie să se situeze între 20 și 600 mg/dL';
 
   @override
   String get vitalRangeHintWeight => 'Greutate should be between 2 and 500 kg';
@@ -2137,7 +2154,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return 'Textul este prea lung (maxim $max caractere). Vă rugăm să-l scurtați și să încercați din nou.';
   }
 
   @override
@@ -2148,7 +2165,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get privacyPolicyTitle => 'Confidențialitate Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => 'Ultima actualizare: martie 2025';
 
   @override
   String privacyIntro(String appName) {
@@ -2156,21 +2173,21 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '1. Colectarea datelor';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: NNume Email address, Telefon number, Dată of birth, and gender. • Sănătate Data: Blood type, aAlergii chronic conditions, mMedicamente vital signs, symptom logs, and Triaj results. • Urgență Contacts: Names, Telefon numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sSuport • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our Sănătate companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage => '2. Stocarea și criptarea datelor';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• Cod QR Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '3. Conformitatea cu RGPD';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2178,14 +2195,14 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '4. Drepturile dumneavoastră';
 
   @override
   String get privacyRightsBody =>
       'You have the following rights regarding your data: • Access: View Toate your personal and Sănătate data within the app or request a data eExport • Correction: Editare your Profil information at any Oră through Editare PProfil • Deletion: Request account deletion through Setări > Data & Confidențialitate > Ștergere Account. • Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences. • Objection: Object to specific data processing activities by contacting our Data Protection Officer. • Withdrawal of Consent: You may withdraw consent at any Oră without affecting the lawfulness of prior processing. To exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app Suport feature.';
 
   @override
-  String get privacySectionContactUs => '5. Contact Us';
+  String get privacySectionContactUs => '5. Contactați-ne';
 
   @override
   String privacyContactBody(String producer) {
@@ -2198,22 +2215,23 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get chooseFromGallery => 'Choose from Gallery';
+  String get chooseFromGallery => 'Alege din Galerie';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => 'Fă o poză';
 
   @override
   String get removePhoto => 'Eliminare Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => 'Avatarul a fost actualizat!';
 
   @override
-  String get avatarUploadFailed => 'Failed to upload avatar. Please try again.';
+  String get avatarUploadFailed =>
+      'Nu s-a reușit încărcarea avatarului. Vă rugăm să încercați din nou.';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => 'Avatarul a fost eliminat.';
 
   @override
   String get avatarRemoveFailed =>
@@ -2235,10 +2253,10 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => 'Informații personale';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => 'Măsurători';
 
   @override
   String get heightCm => 'Înălțime (cm)';
@@ -2256,7 +2274,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get phoneNumber => 'Telefon Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => 'de exemplu: soț/soție, părinte, frate/soră';
 
   @override
   String get addAllergy => 'Adăugare Allergy';
@@ -2288,7 +2306,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+      'Se înregistrează progrese bune. Există câteva aspecte care ar necesita o atenție mai mare.';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2296,14 +2314,14 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get scoreDescriptionLow =>
-      'Several areas need attention. Please consult a healthcare provider.';
+      'Există câteva aspecte care necesită atenție. Vă rugăm să consultați un specialist din domeniul sănătății.';
 
   @override
   String get scoreDescriptionCritical =>
-      'Immediate attention recommended. Please seek medical advice.';
+      'Se recomandă acordarea unei atenții imediate. Vă rugăm să consultați un medic.';
 
   @override
-  String get riskFactors => 'Risk Factors';
+  String get riskFactors => 'Factori de risc';
 
   @override
   String allergyCount(int count) {
@@ -2325,10 +2343,10 @@ class AppLocalizationsRo extends AppLocalizations {
   String get noTriageResults => 'Nu Triaj results yet';
 
   @override
-  String get recommendedActions => 'Recommended Actions';
+  String get recommendedActions => 'Acțiuni recomandate';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => 'Programează-ți o consultație medicală';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2342,21 +2360,21 @@ class AppLocalizationsRo extends AppLocalizations {
       'Track your blood pressure, heart rate, and Altul key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => 'Efectuați o verificare a simptomelor';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI Triaj to assess any Simptome you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => 'Îmbunătățirea calității somnului';
 
   @override
   String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+      'Un somn de calitate este esențial pentru recuperare și pentru funcționarea sistemului imunitar.';
 
   @override
-  String get actionStayActive => 'Stay Active';
+  String get actionStayActive => 'Rămâi activ';
 
   @override
   String get actionStayActiveDesc =>
@@ -2367,12 +2385,12 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '${minutes}m în urmă';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '$weeks săptămâni în urmă';
   }
 
   @override
@@ -2386,16 +2404,16 @@ class AppLocalizationsRo extends AppLocalizations {
       'Start logging your vital signs to track your Sănătate over Oră';
 
   @override
-  String get logFirstVital => 'Log Your First Vital';
+  String get logFirstVital => 'Înregistrează-ți primul indicator vital';
 
   @override
-  String get day => 'Day';
+  String get day => 'Asta';
 
   @override
-  String get week => 'Week';
+  String get week => 'Săptămână';
 
   @override
-  String get month => 'Month';
+  String get month => 'Luna';
 
   @override
   String get noData => 'Nu data';
@@ -2410,19 +2428,19 @@ class AppLocalizationsRo extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => 'Jurnal vital';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'TIPUL VITAL';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => 'VALOARE';
 
   @override
   String get systolic => 'Sistolic';
 
   @override
-  String get diastolic => 'Diastolic';
+  String get diastolic => 'Diastolică';
 
   @override
   String get dateTimeLabel => 'Dată & Oră';
@@ -2440,7 +2458,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return '$vitalType a fost salvat cu succes';
   }
 
   @override
@@ -2474,32 +2492,32 @@ class AppLocalizationsRo extends AppLocalizations {
       'No readings found for the selected time period';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '1 lectură';
 
   @override
-  String get average => 'Average';
+  String get average => 'Medie';
 
   @override
-  String get min => 'Min';
+  String get min => 'Am';
 
   @override
   String get max => 'Max';
 
   @override
-  String get latest => 'Latest';
+  String get latest => 'Ultimele noutăți';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => 'LECTURI';
 
   @override
-  String get value => 'Value';
+  String get value => 'Valoare';
 
   @override
-  String get source => 'Source';
+  String get source => 'Sursă';
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return 'Se afișează 20 din $total înregistrări';
   }
 
   @override
@@ -2509,13 +2527,13 @@ class AppLocalizationsRo extends AppLocalizations {
   String get medicationNameLabel => 'Medication Nume';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => 'Dozaj';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'Unitate';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => 'Frecvență';
 
   @override
   String get startDateLabel => 'Start Dată';
@@ -2527,24 +2545,25 @@ class AppLocalizationsRo extends AppLocalizations {
   String get endDateLabel => 'End Dată';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => 'ORARUL DE ADMINISTRARE';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'Doză $number';
   }
 
   @override
   String get notesOptional => 'Notițe (oOpțional';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => 'Memento-uri';
 
   @override
   String get saveMedication => 'Salvare Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully =>
+      'Medicamentul a fost adăugat cu succes!';
 
   @override
   String get medicationAddFailed =>
@@ -2573,44 +2592,45 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+      'Programarea a fost efectuată cu succes!';
 
   @override
   String get appointmentScheduleFailed =>
-      'Failed to schedule appointment. Please try again.';
+      'Nu s-a putut programa întâlnirea. Vă rugăm să încercați din nou.';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => 'Cardiolog';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => 'Dermatolog';
 
   @override
-  String get specialtyEndocrinologist => 'Endocrinologist';
+  String get specialtyEndocrinologist => 'Endocrinolog';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => 'Medicină generală';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => 'Neurolog';
 
   @override
-  String get specialtyOphthalmologist => 'Ophthalmologist';
+  String get specialtyOphthalmologist => 'Oftalmolog';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => 'Ortopedie';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => 'Pediatru';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => 'Psihiatru';
 
   @override
   String get specialtyOther => 'Altul';
 
   @override
-  String get recordsLoadFailed => 'Failed to load records. Please try again.';
+  String get recordsLoadFailed =>
+      'Nu s-au putut încărca înregistrările. Vă rugăm să încercați din nou.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2622,34 +2642,34 @@ class AppLocalizationsRo extends AppLocalizations {
   String get addMedicalRecordTitle => 'Adăugare Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => 'Titlu';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'Tip';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => 'Rezultatele analizelor de laborator';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => 'Prescripții';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => 'Imagistică';
 
   @override
   String get recordTypeOther => 'Altul';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => 'Descriere';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => 'Înregistrarea a fost actualizată!';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => 'Înregistrarea a fost adăugată!';
 
   @override
-  String get recordUpdateFailed => 'Failed to update record.';
+  String get recordUpdateFailed => 'Nu s-a putut actualiza înregistrarea.';
 
   @override
   String get recordAddFailed => 'Failed to Adăugare record.';
@@ -2663,7 +2683,7 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => 'Înregistrarea a fost ștersă.';
 
   @override
   String get recordDeleteFailed => 'Failed to Ștergere record.';
@@ -2684,11 +2704,11 @@ class AppLocalizationsRo extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => 'Mai multe opțiuni';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Pasul $current din $total';
   }
 
   @override
@@ -2727,46 +2747,46 @@ class AppLocalizationsRo extends AppLocalizations {
       'Describe any Altul details Despre your Simptome or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => 'Gradul general de gravitate';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => 'Ușor';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => 'Grav';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => 'Foarte ușoară';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => 'Ușor';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => 'Moderat';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => 'Care distrage atenția';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => 'Grav';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => 'De nesuportat';
 
   @override
   String get durationToday => 'Astăzi (started tAstăzi';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => '1-3 zile';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => '4-7 zile';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => '1-2 săptămâni';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => 'Mai mult de 2 săptămâni';
 
   @override
   String get age => 'Vârstă';
@@ -2775,19 +2795,20 @@ class AppLocalizationsRo extends AppLocalizations {
   String get ageHint => 'Enter your Vârstă';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => 'ani';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => 'Sexul biologic';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => 'de exemplu: diabet, hipertensiune, astm';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint =>
+      'de exemplu, Lisinopril 10 mg, Metformină 500 mg';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => 'Rezumat';
 
   @override
   String get analyzeWithAi => 'Analiză cu AI';
@@ -2808,7 +2829,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get symptomCough => 'Tuse';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => 'Respirație scurtă';
 
   @override
   String get symptomFatigue => 'Oboseală';
@@ -2820,40 +2841,40 @@ class AppLocalizationsRo extends AppLocalizations {
   String get symptomNausea => 'Greață';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => 'Fiori';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => 'Dureri musculare';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => 'Insomnie';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => 'Durere toracică';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => 'Dureri abdominale';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => 'Durere în gât';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => 'Nasul care curge';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => 'Vărsături';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => 'Diaree';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => 'Erupție cutanată';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => 'Dureri articulare';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => 'Achiziția a fost anulată.';
 
   @override
   String get noPurchasesToRestore =>

@@ -12,7 +12,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get appName => 'VitalSeker';
 
   @override
-  String get tagline => 'Your AI Health Companion';
+  String get tagline => 'Ο σύντροφός σας για την υγεία με τεχνητή νοημοσύνη';
 
   @override
   String get home => 'Αρχική';
@@ -42,7 +42,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get signOut => 'Αποσύνδεση';
 
   @override
-  String get email => 'Email';
+  String get email => 'Ηλεκτρονικό ταχυδρομείο';
 
   @override
   String get password => 'Κωδικός';
@@ -54,43 +54,43 @@ class AppLocalizationsEl extends AppLocalizations {
   String get confirmPassword => 'Επιβεβαίωση Κωδικός';
 
   @override
-  String get createAccount => 'Create Account';
+  String get createAccount => 'Δημιουργία λογαριασμού';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'Δεν έχετε λογαριασμό;';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'Έχετε ήδη λογαριασμό;';
 
   @override
-  String get orContinueWith => 'or continue with';
+  String get orContinueWith => 'ή συνεχίστε με';
 
   @override
-  String get continueWithGoogle => 'Continue with Google';
+  String get continueWithGoogle => 'Συνέχεια με το Google';
 
   @override
-  String get continueWithApple => 'Continue with Apple';
+  String get continueWithApple => 'Συνέχεια με την Apple';
 
   @override
   String get forgotPassword => 'Forgot PΚωδικός';
 
   @override
-  String get goodMorning => 'Good morning';
+  String get goodMorning => 'Καλημέρα';
 
   @override
-  String get goodAfternoon => 'Good afternoon';
+  String get goodAfternoon => 'Καλησπέρα';
 
   @override
-  String get goodEvening => 'Good evening';
+  String get goodEvening => 'Καλησπέρα';
 
   @override
-  String get goodNight => 'Good night';
+  String get goodNight => 'Καληνύχτα';
 
   @override
   String get healthScore => 'Υγεία Score';
 
   @override
-  String get quickActions => 'Quick Actions';
+  String get quickActions => 'Γρήγορες ενέργειες';
 
   @override
   String get checkSymptomsNow => 'Check Συμπτώματα Now';
@@ -105,7 +105,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get emergencySOS => 'SOS έκτακτης ανάγκης';
 
   @override
-  String get recentChecks => 'Recent Checks';
+  String get recentChecks => 'Πρόσφατοι έλεγχοι';
 
   @override
   String get noSymptomsLogs => 'Όχι Συμπτώματα logs yet';
@@ -129,16 +129,16 @@ class AppLocalizationsEl extends AppLocalizations {
   String get spo2 => 'SpO2';
 
   @override
-  String get temperature => 'Temperature';
+  String get temperature => 'Θερμοκρασίες';
 
   @override
   String get weight => 'Βάρος';
 
   @override
-  String get bloodGlucose => 'Blood Glucose';
+  String get bloodGlucose => 'Γλυκόζη αίματος';
 
   @override
-  String get respiratoryRate => 'Respiratory Rate';
+  String get respiratoryRate => 'Αναπνευστικός ρυθμός';
 
   @override
   String get aiTriage => 'AI Διαλογή';
@@ -153,19 +153,20 @@ class AppLocalizationsEl extends AppLocalizations {
   String get aiProcessing => 'AI is processing your Υγεία data';
 
   @override
-  String get send => 'Send';
+  String get send => 'Αποστολή';
 
   @override
-  String get newChat => 'New Chat';
+  String get newChat => 'Νέα συνομιλία';
 
   @override
-  String get viewDetailedResults => 'View Detailed Results';
+  String get viewDetailedResults => 'Προβολή λεπτομερών αποτελεσμάτων';
 
   @override
   String get monitorAtHome => 'Monitor at Αρχική';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate =>
+      'Πότε πρέπει να αναφερθεί το θέμα σε ανώτερο επίπεδο';
 
   @override
   String get saveToPassport => 'Αποθήκευση to Διαβατήριο';
@@ -207,19 +208,19 @@ class AppLocalizationsEl extends AppLocalizations {
   String get selectLanguage => 'Select Γλώσσα';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'Εμφάνιση';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'Σκοτεινή λειτουργία';
 
   @override
-  String get account => 'Account';
+  String get account => 'Λογαριασμός';
 
   @override
   String get privacyData => 'Απόρρητο & Data';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'Ασφάλεια και αποθήκευση';
 
   @override
   String get exportData => 'Εξαγωγή Data';
@@ -231,7 +232,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get helpCenter => 'Βοήθεια Center';
 
   @override
-  String get contactConcierge => 'Contact Concierge';
+  String get contactConcierge => 'Επικοινωνία με τον θυρωρό';
 
   @override
   String get aboutVitalSeker => 'Σχετικά VitalSeker';
@@ -243,7 +244,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get medicalID => 'Ιατρικό ID';
 
   @override
-  String get medicalTranslation => 'Medical Translation';
+  String get medicalTranslation => 'Ιατρική μετάφραση';
 
   @override
   String get familyProfiles => 'Οικογένεια Profiles';
@@ -252,16 +253,16 @@ class AppLocalizationsEl extends AppLocalizations {
   String get addFamilyMember => 'Προσθήκη Οικογένεια Member';
 
   @override
-  String get accountOwner => 'ACCOUNT OWNER';
+  String get accountOwner => 'ΙΔΙΟΚΤΗΤΗΣ ΛΟΓΑΡΙΑΣΜΟΥ';
 
   @override
   String get upgradeToPro => 'Αναβάθμιση to Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'Προστάτεψε ολόκληρο τον κύκλο.';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'Μάθετε περισσότερα';
 
   @override
   String get medications => 'Φάρμακα';
@@ -270,25 +271,25 @@ class AppLocalizationsEl extends AppLocalizations {
   String get addMedication => 'Προσθήκη Medication';
 
   @override
-  String get appointments => 'Appointments';
+  String get appointments => 'Ραντεβού';
 
   @override
   String get addAppointment => 'Προσθήκη Appointment';
 
   @override
-  String get upcoming => 'Upcoming';
+  String get upcoming => 'Προσεχείς εκδηλώσεις';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Ολοκληρώθηκε';
 
   @override
-  String get cancelled => 'Cancelled';
+  String get cancelled => 'Ακυρώθηκε';
 
   @override
-  String get active => 'Active';
+  String get active => 'Ενεργό';
 
   @override
-  String get discontinued => 'Discontinued';
+  String get discontinued => 'Δεν διατίθεται πλέον';
 
   @override
   String get save => 'Αποθήκευση';
@@ -321,19 +322,19 @@ class AppLocalizationsEl extends AppLocalizations {
   String get pressAndHold => 'Press and hold to send Επείγον alert';
 
   @override
-  String get holdFor3Seconds => 'Hold for 3 seconds';
+  String get holdFor3Seconds => 'Κρατήστε για 3 δευτερόλεπτα';
 
   @override
-  String get imSafeResolve => 'I\'m Safe - Resolve';
+  String get imSafeResolve => '«I\'m Safe» - Resolve';
 
   @override
   String get shareMyLocation => 'Κοινοποίηση My Τοποθεσία';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'Βρες νοσοκομεία κοντά μου';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'Γρήγορη κλήση';
 
   @override
   String get emergencyContacts => 'Επείγον Contacts';
@@ -362,7 +363,8 @@ class AppLocalizationsEl extends AppLocalizations {
   String get noHistoryYet => 'Όχι Ιστορικό Yet';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere =>
+      'Τα αρχεία καταγραφής των συμπτωμάτων σας θα εμφανίζονται εδώ';
 
   @override
   String get startFirstTriage => 'Start Your First Διαλογή';
@@ -378,7 +380,7 @@ class AppLocalizationsEl extends AppLocalizations {
       'Όχι Ευφυΐα generated yet. Check Πίσω on Monday for your weekly AI Υγεία summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'Δημιουργία τώρα';
 
   @override
   String get upgradeProInsights =>
@@ -394,13 +396,14 @@ class AppLocalizationsEl extends AppLocalizations {
   String get exportMedicalReport => 'Εξαγωγή Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'Δημιουργία αρχείου PDF';
 
   @override
-  String get sendByEmail => 'Send by Email';
+  String get sendByEmail => 'Αποστολή μέσω email';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview =>
+      'Συνοπτική παρουσίαση του ασθενούς και ζωτικά σημεία';
 
   @override
   String get symptomsTriageLog => 'Συμπτώματα & Διαλογή Log';
@@ -409,19 +412,19 @@ class AppLocalizationsEl extends AppLocalizations {
   String get medicationsAllergies => 'Φάρμακα & Αλλεργίες';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'Σύνοψη ανάλυσης τεχνητής νοημοσύνης';
 
   @override
   String get dateRange => 'Ημερομηνία Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => 'Τελευταίες 30 ημέρες';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'ΠΡΟΕΠΙΣΚΟΠΗΣΗ';
 
   @override
-  String get translate => 'Translate';
+  String get translate => 'Μετάφραση';
 
   @override
   String get translateMedicalTerms => 'Translate medical Όροι';
@@ -431,25 +434,25 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+      'Εισάγετε ιατρικό όρο ή φράση προς μετάφραση';
 
   @override
   String translationResult(Object lang) {
-    return 'Translation Result';
+    return 'Αποτέλεσμα μετάφρασης';
   }
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'Οι προτιμήσεις σας όσον αφορά τις ειδοποιήσεις αποθηκεύονται στον λογαριασμό σας. Η δυνατότητα προσαρμογής του προγράμματος είναι πλέον διαθέσιμη — πατήστε οποιοδήποτε πρόγραμμα για να το αλλάξετε.';
 
   @override
   String get triageReminders => 'Διαλογή Reminders';
 
   @override
-  String get medicationReminders => 'Medication Reminders';
+  String get medicationReminders => 'Υπενθυμίσεις για τη λήψη φαρμάκων';
 
   @override
-  String get appointmentReminders => 'Appointment Reminders';
+  String get appointmentReminders => 'Υπενθυμίσεις ραντεβού';
 
   @override
   String get vitalsLoggingReminders => 'Ζωτικά σημεία Logging Reminders';
@@ -458,10 +461,10 @@ class AppLocalizationsEl extends AppLocalizations {
   String get healthTips => 'Υγεία Tips';
 
   @override
-  String get weeklyReport => 'Weekly Report';
+  String get weeklyReport => 'Εβδομαδιαία έκθεση';
 
   @override
-  String get reminders => 'Reminders';
+  String get reminders => 'Υπενθυμίσεις';
 
   @override
   String get insightsTips => 'Ευφυΐα & Tips';
@@ -477,7 +480,8 @@ class AppLocalizationsEl extends AppLocalizations {
   String get deletePermanently => 'Διαγραφή Permanently';
 
   @override
-  String get accountDeleted => 'Account deleted. Sorry to see you go.';
+  String get accountDeleted =>
+      'Ο λογαριασμός διαγράφηκε. Λυπούμαστε που μας αφήνεις.';
 
   @override
   String get sendEmergencySOS => 'Send SOS έκτακτης ανάγκης?';
@@ -487,13 +491,14 @@ class AppLocalizationsEl extends AppLocalizations {
       'This will send an SMS with your live Τοποθεσία to Όλα of your Επείγον contacts.';
 
   @override
-  String get sendSOS => 'Send SOS';
+  String get sendSOS => 'Αποστολή SOS';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'Είστε σίγουροι ότι θέλετε να αποσυνδεθείτε;';
 
   @override
-  String get failedToSignOut => 'Failed to sign out. Please try again.';
+  String get failedToSignOut =>
+      'Η αποσύνδεση απέτυχε. Παρακαλώ, δοκιμάστε ξανά.';
 
   @override
   String get vitalsLogged => 'Ζωτικά σημεία Logged';
@@ -502,16 +507,16 @@ class AppLocalizationsEl extends AppLocalizations {
   String get triageSessions => 'Διαλογή Sessions';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'Ημέρες δραστηριότητας';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'Αποσύνδεση...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials => 'Διαχείριση ιατρικών πιστοποιητικών';
 
   @override
   String connectedMembers(num count) {
@@ -525,10 +530,10 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'Ειδοποιήσεις και έξυπνες υπενθυμίσεις';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'Έγγραφα και απεικόνιση';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical Όροι';
@@ -537,7 +542,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get emergencyMedicalCard => 'Επείγον medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'Η κρυπτογράφηση AES-256 είναι ενεργή';
 
   @override
   String get downloadYourHealthData => 'Download your Υγεία data';
@@ -546,14 +551,14 @@ class AppLocalizationsEl extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pΚωδικός account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'Συχνές ερωτήσεις και τεκμηρίωση';
 
   @override
   String get priorityProSupport => 'Priority Pro Υποστήριξη';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Έκδοση $version';
   }
 
   @override
@@ -569,10 +574,10 @@ class AppLocalizationsEl extends AppLocalizations {
   String get confirmNewPassword => 'Επιβεβαίωση New Κωδικός';
 
   @override
-  String get update => 'Update';
+  String get update => 'Ενημέρωση';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'Οι κωδικοί πρόσβασης δεν ταιριάζουν';
 
   @override
   String get passwordMinLength => 'Κωδικός must be at least 8 characters';
@@ -589,51 +594,52 @@ class AppLocalizationsEl extends AppLocalizations {
       'This action is irreversible. Όλα your data — vΖωτικά σημεία mΦάρμακα appointments, symptom logs, Οικογένεια profiles, and Υγεία Διαβατήριο — will be permanently deleted.';
 
   @override
-  String get emailDoesNotMatch => 'Email does not match.';
+  String get emailDoesNotMatch => 'Η διεύθυνση email δεν ταιριάζει.';
 
   @override
   String get failedToDeleteAccount =>
       'Failed to Διαγραφή account. Please try again or contact sΥποστήριξη';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'Διαχείριση της συνδρομής σας';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently Αφαίρεση your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'Τερματίστε την τρέχουσα συνεδρία σας';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Σκοτεινό';
 
   @override
-  String get light => 'Light';
+  String get light => 'Φως';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'Προεπιλογή συστήματος';
 
   @override
-  String get subscription => 'Subscription';
+  String get subscription => 'Συνδρομή';
 
   @override
   String get restore => 'Επαναφορά';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'Επιλέξτε το πακέτο σας';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower =>
+      'Αξιοποιήστε πλήρως τις δυνατότητες του VitalSeker';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'Η ενσωμάτωση της δυνατότητας πληρωμών μέσα από την εφαρμογή (RevenueCat / StoreKit) βρίσκεται σε εκκρεμότητα. Οι αλλαγές στο πακέτο εφαρμόζονται απευθείας στον λογαριασμό σας για δοκιμαστικούς σκοπούς.';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'για πάντα';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/μήνα';
 
   @override
   String get freePlanFeature1 => '3 AI Διαλογή sessions/month';
@@ -642,7 +648,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get freePlanFeature2 => 'Basic Υγεία Διαβατήριο';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'Κοινή χρήση κωδικού QR';
 
   @override
   String get freePlanFeature4 => 'SOS έκτακτης ανάγκης alerts';
@@ -669,31 +675,31 @@ class AppLocalizationsEl extends AppLocalizations {
   String get proPlanFeature6 => 'Priority Υποστήριξη';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 => 'Όλα στο Pro';
 
   @override
   String get enterprisePlanFeature2 => 'Unlimited Οικογένεια profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'Προσαρμοσμένη επωνυμία';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Πρόσβαση στο API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Υποστήριξη';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'Εγγύηση SLA';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'ΚΑΛΥΤΕΡΗ ΣΧΕΣΗ ΠΟΙΟΤΗΤΑΣ-ΤΙΜΗΣ';
 
   @override
-  String get currentPlan => 'Current Plan';
+  String get currentPlan => 'Τρέχον σχέδιο';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Υποβάθμιση';
 
   @override
   String upgradeToPlan(String plan) {
@@ -702,20 +708,20 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+      'Πρέπει να έχετε συνδεθεί για να αλλάξετε πακέτο.';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'Θέλετε να μεταβείτε στο $plan?';
   }
 
   @override
   String get downgradeToFreeMessage =>
-      'You will lose access to Pro features at the end of your current billing period. Continue?';
+      'Θα χάσετε την πρόσβαση στις λειτουργίες της έκδοσης Pro στο τέλος της τρέχουσας περιόδου χρέωσης. Θέλετε να συνεχίσετε;';
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return 'Με αυτόν τον τρόπο θα ενημερωθεί η συνδρομή σας στο $plan. Σε περιβάλλον παραγωγής, αυτό θα ενεργοποιούσε το paywall της πλατφόρμας· προς το παρόν, η αλλαγή εφαρμόζεται απευθείας στον λογαριασμό σας για δοκιμαστικούς σκοπούς.';
   }
 
   @override
@@ -732,10 +738,10 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'Δεν κατέστη δυνατή η ενημέρωση της συνδρομής. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'Οι αγορές αποκαταστάθηκαν.';
 
   @override
   String get failedToRestorePurchases => 'Failed to Επαναφορά purchases.';
@@ -754,25 +760,25 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'Συχνές ερωτήσεις';
 
   @override
   String get contactSupport => 'Contact Υποστήριξη';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'Θέμα';
 
   @override
-  String get message => 'Message';
+  String get message => 'Μήνυμα';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'Υποβολή';
 
   @override
   String get otherWaysToReachUs => 'Άλλο Ways to Reach Us';
 
   @override
-  String get emailUs => 'Email Us';
+  String get emailUs => 'Στείλτε μας email';
 
   @override
   String get supportRequestSaved =>
@@ -780,13 +786,15 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+      'Παρακαλώ συμπληρώστε τόσο το θέμα όσο και το μήνυμα.';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength =>
+      'Το θέμα πρέπει να έχει τουλάχιστον 5 χαρακτήρες.';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength =>
+      'Το μήνυμα πρέπει να έχει τουλάχιστον 10 χαρακτήρες.';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -794,7 +802,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'Λάβαμε επείγουσα αίτηση! Η ομάδα μας θα της δώσει προτεραιότητα.';
 
   @override
   String get supportRequestSent =>
@@ -848,10 +856,10 @@ class AppLocalizationsEl extends AppLocalizations {
       'Configure and preview your comprehensive Υγεία summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'Συμπερίληψη ενοτήτων';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => 'Τελευταίοι 3 μήνες';
 
   @override
   String get yearToDate => 'Year to Ημερομηνία';
@@ -860,14 +868,14 @@ class AppLocalizationsEl extends AppLocalizations {
   String get allTime => 'Όλα Ώρα';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'Δημιουργία…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'Αποστολή…';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'Το PDF περιλαμβάνει την αναφορά του $producer ως παραγωγού';
   }
 
   @override
@@ -881,26 +889,26 @@ class AppLocalizationsEl extends AppLocalizations {
       'Manage Υγεία for your whole Οικογένεια (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'Κάτοχος λογαριασμού';
 
   @override
   String get ownerProfile => 'Owner Προφίλ';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age χρόνια';
   }
 
   @override
   String scoreValue(int score) {
-    return 'Score: $score';
+    return 'Βαθμολογία: $score';
   }
 
   @override
-  String get reachedProLimit => 'You\'ve reached the 5-member Pro limit.';
+  String get reachedProLimit => 'Έχετε φτάσει το όριο των 5 μελών του Pro.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'Επιτεύχθηκε το όριο';
 
   @override
   String get pleaseFillNameRelationship =>
@@ -922,7 +930,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return 'Είσαι σίγουρος ότι θέλεις να διαγράψεις το $name από τα προφίλ της οικογένειάς σου;';
   }
 
   @override
@@ -939,7 +947,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get fullNameLabel => 'Full Όνομα';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => 'Σχέση (π.χ. σύζυγος, παιδί)';
 
   @override
   String get bloodTypeOptional => 'Ομάδα αίματος (optional)';
@@ -951,7 +959,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get upgradeYourCare => 'Αναβάθμιση YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'Προστατεύεις ολόκληρο τον κύκλο.';
 
   @override
   String get proMemberThanks =>
@@ -967,10 +975,10 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get manageSubscription => 'Manage Subscription';
+  String get manageSubscription => 'Διαχείριση συνδρομής';
 
   @override
-  String get failedToLoadProfiles => 'Failed to load profiles';
+  String get failedToLoadProfiles => 'Δεν κατέστη δυνατή η φόρτωση των προφίλ';
 
   @override
   String get searchMedications => 'Αναζήτηση medΦάρμακα';
@@ -987,47 +995,49 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'Επεξεργασία $name';
   }
 
   @override
-  String get dosage => 'Dosage';
+  String get dosage => 'Δοσολογία';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'Μονάδα';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'Συχνότητα';
 
   @override
   String get notes => 'Σημειώσεις';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'Διακοπή της φαρμακευτικής αγωγής';
 
   @override
   String get failedToDiscontinueMedication =>
-      'Failed to discontinue medication.';
+      'Δεν κατάφερε να διακόψει τη λήψη των φαρμάκων.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'Ενημέρωση φαρμακευτικής αγωγής!';
 
   @override
-  String get failedToUpdateMedication => 'Failed to update medication.';
+  String get failedToUpdateMedication =>
+      'Δεν κατέστη δυνατή η ενημέρωση των φαρμάκων.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted =>
+      'Φάρμακο που έχει επισημανθεί ως ολοκληρωμένο';
 
   @override
   String get deleteMedication => 'Διαγραφή Medication';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'Είσαι σίγουρος ότι θέλεις να διαγράψεις το $name?';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'Το φάρμακο διαγράφηκε';
 
   @override
   String get failedToDeleteMedication => 'Failed to Διαγραφή medication.';
@@ -1036,39 +1046,39 @@ class AppLocalizationsEl extends AppLocalizations {
   String get editDetails => 'Επεξεργασία Details';
 
   @override
-  String get markComplete => 'Mark Complete';
+  String get markComplete => 'Σημείωση: Ολοκλήρωση';
 
   @override
-  String get discontinue => 'Discontinue';
+  String get discontinue => 'Διακοπή';
 
   @override
   String nextDose(String time) {
-    return 'Next dose: $time';
+    return 'Επόμενη δόση: $time';
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => 'Μία φορά την ημέρα';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => 'Δύο φορές την ημέρα';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => 'Τρεις φορές την ημέρα';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => 'Τέσσερις φορές την ημέρα';
 
   @override
   String get everyOtherDay => 'Every Άλλο Day';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Εβδομαδιαία';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => 'Όποτε απαιτείται';
 
   @override
-  String get custom => 'Custom';
+  String get custom => 'Προσαρμοσμένο';
 
   @override
   String get all => 'Όλα';
@@ -1084,13 +1094,15 @@ class AppLocalizationsEl extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted =>
+      'Το ραντεβού έχει επισημανθεί ως ολοκληρωμένο';
 
   @override
-  String get failedToUpdateAppointment => 'Failed to update appointment.';
+  String get failedToUpdateAppointment =>
+      'Δεν κατέστη δυνατή η ενημέρωση του ραντεβού.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => 'Το ραντεβού ακυρώθηκε';
 
   @override
   String get failedToCancelAppointment => 'Failed to Ακύρωση appointment.';
@@ -1103,12 +1115,12 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return 'Αναπρογραμματίστηκε για την $time στις $date';
   }
 
   @override
   String get failedToRescheduleAppointment =>
-      'Failed to reschedule appointment.';
+      'Δεν κατέστη δυνατή η αλλαγή της ημερομηνίας του ραντεβού.';
 
   @override
   String get deleteAppointment => 'Διαγραφή Appointment';
@@ -1119,13 +1131,13 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => 'Το ραντεβού διαγράφηκε';
 
   @override
   String get failedToDeleteAppointment => 'Failed to Διαγραφή appointment.';
 
   @override
-  String get reschedule => 'Reschedule';
+  String get reschedule => 'Αλλαγή ημερομηνίας';
 
   @override
   String get cancelAppointment => 'Ακύρωση Appointment';
@@ -1135,33 +1147,34 @@ class AppLocalizationsEl extends AppLocalizations {
       'Translate medical Όροι and phrases into your preferred lΓλώσσα Useful for travel, consultations, and discussing care with non-English-speaking providers.';
 
   @override
-  String get medicalTermOrPhrase => 'Medical term or phrase';
+  String get medicalTermOrPhrase => 'Ιατρικός όρος ή φράση';
 
   @override
   String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+      'π.χ. «υπέρταση», «να λαμβάνεται δύο φορές την ημέρα μαζί με το φαγητό»';
 
   @override
-  String get translating => 'Translating...';
+  String get translating => 'Μετάφραση...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return 'Μετάφραση ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear => 'Η μετάφρασή σας θα εμφανιστεί εδώ.';
 
   @override
   String get pleaseEnterTermToTranslate =>
-      'Please enter a medical term or phrase to translate.';
+      'Παρακαλώ εισάγετε έναν ιατρικό όρο ή μια φράση για μετάφραση.';
 
   @override
   String get noTranslationReturned =>
       'Όχι translation was returned. Please try a different term.';
 
   @override
-  String get translationFailed => 'Translation failed. Please try again.';
+  String get translationFailed =>
+      'Η μετάφραση απέτυχε. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
   String get notificationSettings => 'Notification Ρυθμίσεις';
@@ -1171,16 +1184,17 @@ class AppLocalizationsEl extends AppLocalizations {
       'Failed to Αποθήκευση notification setting';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => 'Βασικά χαρακτηριστικά';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'Παραγωγός';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => 'Ιδέα, Σχεδιασμός & Ανάπτυξη';
 
   @override
-  String get updateAccountCredentials => 'Update your account credentials';
+  String get updateAccountCredentials =>
+      'Ενημερώστε τα στοιχεία σύνδεσης του λογαριασμού σας';
 
   @override
   String get legal => 'Legal';
@@ -1243,7 +1257,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return 'Τελευταία ενημέρωση: Έκδοση $version';
   }
 
   @override
@@ -1260,7 +1274,7 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => 'Δικαίωμα συμμετοχής & Λογαριασμός';
 
   @override
   String get tosSection2Para1 =>
@@ -1287,21 +1301,22 @@ class AppLocalizationsEl extends AppLocalizations {
       'In a medical eΕπείγον call your local Επείγον number (e.g. 911, 112) immediately. Do not rely on the Service for Επείγον response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => 'Χρήση της Υπηρεσίας';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => 'Συμφωνείτε να ΜΗΝ:';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 =>
+      'Να χρησιμοποιείτε την Υπηρεσία για οποιονδήποτε παράνομο σκοπό·';
 
   @override
   String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+      'Να επιχειρήσετε να προβείτε σε αντίστροφη μηχανική, αποσυμπίληση ή αποσυναρμολόγηση της εφαρμογής·';
 
   @override
   String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+      'Να ανεβάζετε περιεχόμενο που είναι κακόβουλο, απατηλό ή παραβιάζει τα δικαιώματα πνευματικής ιδιοκτησίας·';
 
   @override
   String get tosSection4Bullet4 =>
@@ -1309,10 +1324,10 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+      'Να χρησιμοποιείτε την Υπηρεσία για την αποστολή ανεπιθύμητων μηνυμάτων ή spam.';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => 'Συνδρομές και πληρωμές';
 
   @override
   String get tosSection5Para1 =>
@@ -1324,10 +1339,10 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get tosSection5Para3 =>
-      'We may change subscription fees upon reasonable notice. Fee changes will not apply to your current billing period.';
+      'Ενδέχεται να τροποποιήσουμε τα τέλη συνδρομής κατόπιν εύλογης προειδοποίησης. Οι αλλαγές στα τέλη δεν θα ισχύουν για την τρέχουσα περίοδο χρέωσής σας.';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => 'Τα δεδομένα σας';
 
   @override
   String get tosSection6Para1 =>
@@ -1338,18 +1353,18 @@ class AppLocalizationsEl extends AppLocalizations {
       'You may Εξαγωγή your data at any Ώρα via the in-app Εξαγωγή feature, and you may permanently Διαγραφή your account and Όλα associated data via Ρυθμίσεις → Διαγραφή Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => 'Αποποίηση ευθύνης';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      'Η ΥΠΗΡΕΣΙΑ ΠΑΡΕΧΕΤΑΙ «ΩΣ ΕΧΕΙ» ΚΑΙ «ΩΣ ΔΙΑΘΕΣΙΜΗ» ΧΩΡΙΣ ΕΓΓΥΗΣΕΙΣ ΟΠΟΙΟΥΔΗΠΟΤΕ ΕΙΔΟΥΣ, ΕΙΤΕ ΡΗΤΕΣ ΕΙΤΕ ΣΙΩΠΗΡΕΣ, ΣΥΜΠΕΡΙΛΑΜΒΑΝΟΜΕΝΩΝ, ΕΝΔΕΙΚΤΙΚΑ, ΤΩΝ ΣΙΩΠΗΡΩΝ ΕΓΓΥΗΣΕΩΝ ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ, ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ Ή ΜΗ ΠΑΡΑΒΙΑΣΗΣ.';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI Διαλογή recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => 'Περιορισμός ευθύνης';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1357,7 +1372,7 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => 'Λήξη';
 
   @override
   String get tosSection9Para1 =>
@@ -1375,7 +1390,7 @@ class AppLocalizationsEl extends AppLocalizations {
       'We may update these Όροι from Ώρα to tΏρα We will notify you of material changes via the app or by eEmail Continued use of the Service after changes take effect constitutes acceptance of the revised TΌροι';
 
   @override
-  String get tosSection11Title => 'Contact';
+  String get tosSection11Title => 'Επικοινωνία';
 
   @override
   String get tosSection11Para1 =>
@@ -1393,22 +1408,22 @@ class AppLocalizationsEl extends AppLocalizations {
   String get pro => 'Pro';
 
   @override
-  String get enterprise => 'Enterprise';
+  String get enterprise => 'Επιχείρηση';
 
   @override
-  String get nA => 'N/A';
+  String get nA => 'Δεν ισχύει';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Πλοίο';
 
   @override
   String get next => 'Επόμενο';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Μπείτε στο VitalSeker';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => 'Γνώρισε το σώμα σου.';
 
   @override
   String get onboardingDescription1 =>
@@ -1429,10 +1444,10 @@ class AppLocalizationsEl extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re Πίσω online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'Συνδεθείτε στον λογαριασμό σας στο VitalSeker';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'Σύνδεση...';
 
   @override
   String get emailRequired => 'Email is Απαιτείται';
@@ -1451,7 +1466,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String passwordResetSent(String email) {
-    return 'Password reset link sent to $email';
+    return 'Ο σύνδεσμος επαναφοράς κωδικού πρόσβασης έχει σταλεί στο $email';
   }
 
   @override
@@ -1470,7 +1485,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get other => 'Άλλο';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => 'Δημιουργία λογαριασμού...';
 
   @override
   String get joinVitalSeker => 'Join VitalSeker and take control of your Υγεία';
@@ -1482,19 +1497,19 @@ class AppLocalizationsEl extends AppLocalizations {
   String get nameMinChars => 'Όνομα must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => 'Τουλάχιστον 6 χαρακτήρες';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => 'Περιλάβετε τουλάχιστον ένα κεφαλαίο γράμμα';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase => 'Περιλάβετε τουλάχιστον ένα μικρό γράμμα';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => 'Συμπεριλάβετε τουλάχιστον έναν αριθμό';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol => 'Περιλάβετε τουλάχιστον ένα σύμβολο (!@#\$%^&*)';
 
   @override
   String get confirmPasswordRequired => 'Please Επιβεβαίωση your Κωδικός';
@@ -1512,16 +1527,16 @@ class AppLocalizationsEl extends AppLocalizations {
   String get selectDateOfBirthHint => 'Select your Ημερομηνία of birth';
 
   @override
-  String get gender => 'Gender';
+  String get gender => 'Φύλο';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => 'Επιλέξτε φύλο';
 
   @override
   String get bloodType => 'Ομάδα αίματος';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => 'Επιλέξτε την ομάδα αίματος';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1538,31 +1553,32 @@ class AppLocalizationsEl extends AppLocalizations {
       'Account created! Please check your Email to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => 'Χρήστης';
 
   @override
   String get viewAll => 'View Όλα';
 
   @override
-  String get failedLoadRecentChecks => 'Failed to load recent checks';
+  String get failedLoadRecentChecks =>
+      'Δεν κατέστη δυνατή η φόρτωση των πρόσφατων επιταγών';
 
   @override
   String get pullDownRetry => 'Pull down to Επανάληψη';
 
   @override
-  String get goodCondition => 'Good condition';
+  String get goodCondition => 'Σε καλή κατάσταση';
 
   @override
-  String get fairCondition => 'Fair condition';
+  String get fairCondition => 'Σε ικανοποιητική κατάσταση';
 
   @override
-  String get needsAttention => 'Needs attention';
+  String get needsAttention => 'Χρειάζεται προσοχή';
 
   @override
-  String get poorCondition => 'Poor condition';
+  String get poorCondition => 'Κακή κατάσταση';
 
   @override
-  String get critical => 'Critical';
+  String get critical => 'Κρίσιμο';
 
   @override
   String get overallHealthIndicator => 'Your overall Υγεία indicator';
@@ -1574,17 +1590,17 @@ class AppLocalizationsEl extends AppLocalizations {
   String get aiPoweredTriage60s => 'AI-powered Διαλογή in 60 seconds';
 
   @override
-  String get qrAndMedicalInfo => 'QR & medical info';
+  String get qrAndMedicalInfo => 'QR και ιατρικές πληροφορίες';
 
   @override
   String get pastChecksAndVitals => 'Past checks & Ζωτικά σημεία';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Μόλις τώρα';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '$hours ώρες πριν';
   }
 
   @override
@@ -1595,14 +1611,14 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return '${days}d πριν';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => 'Έλεγχος συμπτωμάτων';
 
   @override
-  String get severity => 'Severity';
+  String get severity => 'Βαθμός σοβαρότητας';
 
   @override
   String get aiGreeting =>
@@ -1613,91 +1629,92 @@ class AppLocalizationsEl extends AppLocalizations {
       'Based on your sΣυμπτώματα here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => 'Επείγον';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => 'Συμβουλές φροντίδας';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ Προειδοποιητικά σημάδια:';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => 'Συστάσεις:';
 
   @override
   String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+      'Πατήστε «Προβολή λεπτομερών αποτελεσμάτων» παρακάτω για να δείτε την πλήρη ανάλυση.';
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $error';
+    return 'Λυπάμαι, προέκυψε σφάλμα κατά την ανάλυση των συμπτωμάτων σας. Παρακαλώ δοκιμάστε ξανά ή περιγράψτε τα συμπτώματά σας με διαφορετικό τρόπο.\n\nΣφάλμα: $error';
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => 'Γενική αδιαθεσία';
 
   @override
-  String get selfCareRecommended => 'Self-Care Recommended';
+  String get selfCareRecommended => 'Συνιστάται η φροντίδα του εαυτού σας';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => 'Κλείστε ραντεβού';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => 'Επισκεφθείτε το Κέντρο Επείγουσας Περίθαλψης';
 
   @override
   String get seekEmergencyCare => 'Seek Επείγον Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider =>
+      'Συμβουλευτείτε έναν επαγγελματία υγείας';
 
   @override
-  String get mild => 'Mild';
+  String get mild => 'Ήπια';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => 'Μέτρια';
 
   @override
-  String get significant => 'Significant';
+  String get significant => 'Σημαντικό';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => 'Σοβαρό';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => 'Ακραίο';
 
   @override
   String get triageResults => 'Διαλογή Results';
 
   @override
   String urgencyScoreCaption(int score) {
-    return 'Urgency Score: $score/100';
+    return 'Δείκτης επείγοντος: $score/100';
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => 'Προειδοποιητικά σημάδια';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => 'Συστάσεις';
 
   @override
-  String get possibleConditions => 'Possible Conditions';
+  String get possibleConditions => 'Πιθανές συνθήκες';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => 'Ερωτήσεις για περαιτέρω διερεύνηση';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Αποθήκευση...';
 
   @override
-  String get seeDoctorSoon => 'See a Doctor Soon';
+  String get seeDoctorSoon => 'Επισκεφθείτε σύντομα έναν γιατρό';
 
   @override
   String get emergencyCareNow => 'Επείγον Care Now';
 
   @override
   String get triageDisclaimer =>
-      'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+      'Αυτό δεν αποτελεί ιατρική διάγνωση. Συμβουλευτείτε πάντα έναν επαγγελματία υγείας για την κατάλληλη ιατρική συμβουλή.';
 
   @override
   String get escalateLow1 => 'Συμπτώματα worsen or spread to new body areas';
@@ -1712,7 +1729,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get escalateMedium1 => 'Συμπτώματα persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 => 'Ο πόνος εντείνεται ή γίνεται αφόρητος';
 
   @override
   String get escalateMedium3 => 'New red-flag Συμπτώματα appear';
@@ -1722,7 +1739,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+      'Εμφανίζεται δυσκολία στην αναπνοή ή αίσθημα σφίξιμου στο στήθος';
 
   @override
   String get escalateHigh3 =>
@@ -1733,7 +1750,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'Μην οδηγήσετε εσείς — ζητήστε να σας μεταφέρουν ή καλέστε ασθενοφόρο';
 
   @override
   String get escalateEmergency3 =>
@@ -1743,7 +1760,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get showQrCode => 'Show Κωδικός QR';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'Ανενεργό';
 
   @override
   String get knownAllergies => 'Known Αλλεργίες';
@@ -1755,7 +1772,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get chronicConditions => 'Χρόνιες παθήσεις';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'Ασφάλιση';
 
   @override
   String get qrCode => 'Κωδικός QR';
@@ -1774,11 +1791,11 @@ class AppLocalizationsEl extends AppLocalizations {
   String get heightAndWeight => 'Ύψος & Βάρος';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'Δεν έχει οριστεί';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count ετών';
   }
 
   @override
@@ -1811,7 +1828,7 @@ class AppLocalizationsEl extends AppLocalizations {
       'Point this at any QR reader to securely Κοινοποίηση your vΖωτικά σημεία';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'Λήψη';
 
   @override
   String get share => 'Κοινοποίηση';
@@ -1823,27 +1840,27 @@ class AppLocalizationsEl extends AppLocalizations {
   String get generateQrCode => 'Generate Κωδικός QR';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'Έχει λήξει';
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'Ισχύει για ${minutes}h ${hours}m';
   }
 
   @override
   String get emergencySosTitle => 'SOS έκτακτης ανάγκης';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'Περίμενε λίγο...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'Νοσοκομεία της περιοχής';
 
   @override
   String get allergies => 'Αλλεργίες';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'Όροι';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1857,10 +1874,10 @@ class AppLocalizationsEl extends AppLocalizations {
       'SOS sends your GPS Τοποθεσία to your Επείγον contacts via SMS. Make sure your contacts are configured in your pΠροφίλ';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'ΑΠΟΣΤΟΛΗ';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS ΑΠΟΤΥΧΙΑ';
 
   @override
   String get sosActive => 'SOS ACTIVE';
@@ -1869,21 +1886,22 @@ class AppLocalizationsEl extends AppLocalizations {
   String get sendingEmergencyAlert => 'Sending Επείγον Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent =>
+      'Δεν ήταν δυνατή η αποστολή της ειδοποίησης';
 
   @override
   String get emergencyAlertSent => 'Επείγον Alert Sent';
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'Αποστολή σε $seconds…';
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'Δοκίμασε ξανά';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => 'Απόρριψη';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1902,13 +1920,13 @@ class AppLocalizationsEl extends AppLocalizations {
   String get liveLocation => 'Live Τοποθεσία';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => 'Λήψη συντεταγμένων GPS…';
 
   @override
   String get locationUnavailable => 'Τοποθεσία unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => 'Ειδοποιηθέντες επαφές';
 
   @override
   String contactsNotifiedCount(int count) {
@@ -1926,7 +1944,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count ΑΥΤΌ ΤΟ ΜΉΝΑ';
   }
 
   @override
@@ -1939,17 +1957,17 @@ class AppLocalizationsEl extends AppLocalizations {
   String get searchLogs => 'Αναζήτηση logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => 'Πράσινο';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => 'Κίτρινο';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'Δίκτυο';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return 'Βαθμός σοβαρότητας: $score/10';
   }
 
   @override
@@ -1957,17 +1975,17 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'Περιοχές του σώματος: $regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return 'Διάρκεια: $duration';
   }
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'Πρόταση τεχνητής νοημοσύνης: $recommendation';
   }
 
   @override
@@ -1975,17 +1993,17 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String notesCaption(String notes) {
-    return 'Notes: $notes';
+    return 'Σημειώσεις: $notes';
   }
 
   @override
   String get export30DayReport => 'Εξαγωγή 30-day Report (PPro';
 
   @override
-  String get weeklyBreakdown => 'Weekly Breakdown';
+  String get weeklyBreakdown => 'Εβδομαδιαία ανάλυση';
 
   @override
-  String get proAnalysis => 'Pro Analysis';
+  String get proAnalysis => 'Επαγγελματική ανάλυση';
 
   @override
   String get yourHealthThisWeek => 'Your Υγεία this week';
@@ -1996,46 +2014,47 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'Ανάλυση τάσεων';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => 'ΣΥΧΝΟΤΗΤΑ ΣΥΜΠΤΩΜΑΤΩΝ (4W)';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => 'Υψηλό';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'Μέσος όρος';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => 'Χαμηλή';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => 'Επέκταση του βαθύ ύπνου';
 
   @override
   String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+      'Η θερμοκρασία του σώματός σας μειώθηκε προς το τέλος αυτής της εβδομάδας. Προσπαθήστε να διατηρήσετε το δωμάτιο σε χαμηλότερη θερμοκρασία (65°F) για να επιταχύνετε την έναρξη των φάσεων του βαθιού ύπνου.';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => 'Προληπτική ενυδάτωση';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'Στα αρχεία καταγραφής του απογεύματος εντοπίστηκαν δείκτες ήπιας αφυδάτωσης. Μεταφέρετε το 40% της ημερήσιας πρόσληψης νερού σας πριν από τις 10 π.μ., προκειμένου να σταθεροποιήσετε τον μεταβολικό ρυθμό.';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'Ρυθμός δραστηριότητας';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      'Οι εξάρσεις στον πόνο των αρθρώσεων σχετίζονται με απότομες αυξήσεις της έντασης. Φροντίστε να κάνετε μια δυναμική προθέρμανση 10 λεπτών πριν προχωρήσετε σε καρδιοπροπόνηση πέρα από τη ζώνη 2.';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => 'Εξατομικευμένη προσέγγιση';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights =>
+      'Ενημέρωση των αναλύσεων τεχνητής νοημοσύνης…';
 
   @override
   String get generateNewInsights => 'Generate New Ευφυΐα';
@@ -2044,10 +2063,10 @@ class AppLocalizationsEl extends AppLocalizations {
   String get symptoms => 'Συμπτώματα';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => 'Μέση σοβαρότητα';
 
   @override
-  String get scoreChange => 'Score Change';
+  String get scoreChange => 'Αλλαγή βαθμολογίας';
 
   @override
   String get checkBackMondayOrGenerate =>
@@ -2059,7 +2078,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String proPlanMonthly(double price) {
-    return 'Pro Plan - \$$price/mo';
+    return 'Pro Plan - \$$price/μήνα';
   }
 
   @override
@@ -2071,12 +2090,12 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String couldNotLaunchCall(String phoneNumber) {
-    return 'Could not launch call to $phoneNumber';
+    return 'Δεν ήταν δυνατή η πραγματοποίηση κλήσης προς τον αριθμό $phoneNumber';
   }
 
   @override
   String get medicalDisclaimer =>
-      'This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.';
+      'Οι πληροφορίες αυτές δεν αποτελούν ιατρική διάγνωση. Το VitalSeker δεν υποκαθιστά έναν εξειδικευμένο επαγγελματία υγείας.';
 
   @override
   String get poweredByGlm => 'Powered by GLM-4';
@@ -2085,11 +2104,11 @@ class AppLocalizationsEl extends AppLocalizations {
   String get aiTriageIn90Seconds => 'AI-powered Διαλογή in 90 seconds';
 
   @override
-  String get vitalValueOutOfRange => 'Value out of expected range';
+  String get vitalValueOutOfRange => 'Τιμή εκτός του αναμενόμενου εύρους';
 
   @override
   String get vitalRangeHintHeartRate =>
-      'Heart rate should be between 30 and 220 BPM';
+      'Ο καρδιακός ρυθμός πρέπει να κυμαίνεται μεταξύ 30 και 220 παλμών ανά λεπτό';
 
   @override
   String get vitalRangeHintBloodPressure =>
@@ -2097,15 +2116,15 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+      'Η θερμοκρασία του σώματος πρέπει να κυμαίνεται μεταξύ 30 και 45 °C';
 
   @override
   String get vitalRangeHintOxygen =>
-      'Blood oxygen should be between 50 and 100 %';
+      'Το οξυγόνο στο αίμα πρέπει να κυμαίνεται μεταξύ 50 και 100 %';
 
   @override
   String get vitalRangeHintGlucose =>
-      'Blood glucose should be between 20 and 600 mg/dL';
+      'Η γλυκόζη στο αίμα πρέπει να κυμαίνεται μεταξύ 20 και 600 mg/dL';
 
   @override
   String get vitalRangeHintWeight => 'Βάρος should be between 2 and 500 kg';
@@ -2136,7 +2155,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return 'Το κείμενο είναι πολύ μακρύ (μέγιστο $max χαρακτήρες). Παρακαλώ συντομεύστε το και δοκιμάστε ξανά.';
   }
 
   @override
@@ -2147,7 +2166,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get privacyPolicyTitle => 'Απόρρητο Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => 'Τελευταία ενημέρωση: Μάρτιος 2025';
 
   @override
   String privacyIntro(String appName) {
@@ -2155,21 +2174,22 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '1. Συλλογή δεδομένων';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: NΌνομα Email address, Τηλέφωνο number, Ημερομηνία of birth, and gender. • Υγεία Data: Blood type, aΑλλεργίες chronic conditions, mΦάρμακα vital signs, symptom logs, and Διαλογή results. • Επείγον Contacts: Names, Τηλέφωνο numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sΥποστήριξη • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our Υγεία companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage =>
+      '2. Αποθήκευση και κρυπτογράφηση δεδομένων';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• Κωδικός QR Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '3. Συμμόρφωση με τον ΓΚΠΔ';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2177,14 +2197,14 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '4. Τα δικαιώματά σας';
 
   @override
   String get privacyRightsBody =>
       'You have the following rights regarding your data: • Access: View Όλα your personal and Υγεία data within the app or request a data eΕξαγωγή • Correction: Επεξεργασία your Προφίλ information at any Ώρα through Επεξεργασία PΠροφίλ • Deletion: Request account deletion through Ρυθμίσεις > Data & Απόρρητο > Διαγραφή Account. • Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences. • Objection: Object to specific data processing activities by contacting our Data Protection Officer. • Withdrawal of Consent: You may withdraw consent at any Ώρα without affecting the lawfulness of prior processing. To exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app Υποστήριξη feature.';
 
   @override
-  String get privacySectionContactUs => '5. Contact Us';
+  String get privacySectionContactUs => '5. Επικοινωνήστε μαζί μας';
 
   @override
   String privacyContactBody(String producer) {
@@ -2197,22 +2217,23 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get chooseFromGallery => 'Choose from Gallery';
+  String get chooseFromGallery => 'Επιλέξτε από τη συλλογή φωτογραφιών';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => 'Τράβα μια φωτογραφία';
 
   @override
   String get removePhoto => 'Αφαίρεση Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => 'Το προφίλ ενημερώθηκε!';
 
   @override
-  String get avatarUploadFailed => 'Failed to upload avatar. Please try again.';
+  String get avatarUploadFailed =>
+      'Δεν κατέστη δυνατή η μεταφόρτωση του προφίλ. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => 'Το avatar καταργήθηκε.';
 
   @override
   String get avatarRemoveFailed =>
@@ -2234,10 +2255,10 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => 'Προσωπικά στοιχεία';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => 'Μετρήσεις';
 
   @override
   String get heightCm => 'Ύψος (cm)';
@@ -2255,7 +2276,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get phoneNumber => 'Τηλέφωνο Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => 'π.χ. σύζυγος, γονέας, αδελφός/αδελφή';
 
   @override
   String get addAllergy => 'Προσθήκη Allergy';
@@ -2287,7 +2308,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+      'Καλή πρόοδος. Υπάρχουν μερικά σημεία που χρήζουν προσοχής.';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2295,14 +2316,14 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get scoreDescriptionLow =>
-      'Several areas need attention. Please consult a healthcare provider.';
+      'Υπάρχουν διάφοροι τομείς που απαιτούν προσοχή. Παρακαλούμε να συμβουλευτείτε έναν επαγγελματία υγείας.';
 
   @override
   String get scoreDescriptionCritical =>
-      'Immediate attention recommended. Please seek medical advice.';
+      'Συνιστάται άμεση φροντίδα. Παρακαλείστε να συμβουλευτείτε γιατρό.';
 
   @override
-  String get riskFactors => 'Risk Factors';
+  String get riskFactors => 'Παράγοντες κινδύνου';
 
   @override
   String allergyCount(int count) {
@@ -2324,10 +2345,10 @@ class AppLocalizationsEl extends AppLocalizations {
   String get noTriageResults => 'Όχι Διαλογή results yet';
 
   @override
-  String get recommendedActions => 'Recommended Actions';
+  String get recommendedActions => 'Συνιστώμενες ενέργειες';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => 'Κλείστε ραντεβού για προληπτικό έλεγχο';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2341,21 +2362,21 @@ class AppLocalizationsEl extends AppLocalizations {
       'Track your blood pressure, heart rate, and Άλλο key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => 'Εκτέλεση ελέγχου συμπτωμάτων';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI Διαλογή to assess any Συμπτώματα you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => 'Βελτίωση της ποιότητας του ύπνου';
 
   @override
   String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+      'Ο ποιοτικός ύπνος είναι απαραίτητος για την ανάρρωση και τη λειτουργία του ανοσοποιητικού συστήματος.';
 
   @override
-  String get actionStayActive => 'Stay Active';
+  String get actionStayActive => 'Μείνετε δραστήριοι';
 
   @override
   String get actionStayActiveDesc =>
@@ -2366,12 +2387,12 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '$minutes λεπτά πριν';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '$weeks εβδομάδες πριν';
   }
 
   @override
@@ -2385,16 +2406,16 @@ class AppLocalizationsEl extends AppLocalizations {
       'Start logging your vital signs to track your Υγεία over Ώρα';
 
   @override
-  String get logFirstVital => 'Log Your First Vital';
+  String get logFirstVital => 'Καταγράψτε τα πρώτα σας ζωτικά σημεία';
 
   @override
-  String get day => 'Day';
+  String get day => 'Αυτό';
 
   @override
-  String get week => 'Week';
+  String get week => 'Εβδομάδα';
 
   @override
-  String get month => 'Month';
+  String get month => 'Μήνας';
 
   @override
   String get noData => 'Όχι data';
@@ -2409,13 +2430,13 @@ class AppLocalizationsEl extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => 'Καταγραφή ζωτικών δεικτών';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'ΒΑΣΙΚΟΣ ΤΥΠΟΣ';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => 'ΑΞΙΑ';
 
   @override
   String get systolic => 'Συστολική';
@@ -2439,7 +2460,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return 'Το $vitalType αποθηκεύτηκε με επιτυχία';
   }
 
   @override
@@ -2473,32 +2494,32 @@ class AppLocalizationsEl extends AppLocalizations {
       'No readings found for the selected time period';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '1 ανάγνωση';
 
   @override
-  String get average => 'Average';
+  String get average => 'Μέσος όρος';
 
   @override
-  String get min => 'Min';
+  String get min => 'I';
 
   @override
-  String get max => 'Max';
+  String get max => 'Μαξ';
 
   @override
-  String get latest => 'Latest';
+  String get latest => 'Τελευταία νέα';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => 'ΑΝΑΓΝΩΣΕΙΣ';
 
   @override
-  String get value => 'Value';
+  String get value => 'Τιμή';
 
   @override
-  String get source => 'Source';
+  String get source => 'Πηγή';
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return 'Εμφάνιση 20 από $total μετρήσεις';
   }
 
   @override
@@ -2508,13 +2529,13 @@ class AppLocalizationsEl extends AppLocalizations {
   String get medicationNameLabel => 'Medication Όνομα';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => 'Δοσολογία';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'Μονάδα';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => 'Συχνότητα';
 
   @override
   String get startDateLabel => 'Start Ημερομηνία';
@@ -2526,24 +2547,25 @@ class AppLocalizationsEl extends AppLocalizations {
   String get endDateLabel => 'End Ημερομηνία';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => 'ΩΡΕΣ ΧΟΡΗΓΗΣΗΣ';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'Δόση $number';
   }
 
   @override
   String get notesOptional => 'Σημειώσεις (oΠροαιρετικό';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => 'Υπενθυμίσεις';
 
   @override
   String get saveMedication => 'Αποθήκευση Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully =>
+      'Το φάρμακο προστέθηκε με επιτυχία!';
 
   @override
   String get medicationAddFailed =>
@@ -2572,44 +2594,45 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+      'Το ραντεβού προγραμματίστηκε με επιτυχία!';
 
   @override
   String get appointmentScheduleFailed =>
-      'Failed to schedule appointment. Please try again.';
+      'Δεν κατέστη δυνατό να προγραμματιστεί το ραντεβού. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => 'Καρδιολόγος';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => 'Δερματολόγος';
 
   @override
-  String get specialtyEndocrinologist => 'Endocrinologist';
+  String get specialtyEndocrinologist => 'Ενδοκρινολόγος';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => 'Γενική Ιατρική';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => 'Νευρολόγος';
 
   @override
-  String get specialtyOphthalmologist => 'Ophthalmologist';
+  String get specialtyOphthalmologist => 'Οφθαλμίατρος';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => 'Ορθοπεδική';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => 'Παιδίατρος';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => 'Ψυχίατρος';
 
   @override
   String get specialtyOther => 'Άλλο';
 
   @override
-  String get recordsLoadFailed => 'Failed to load records. Please try again.';
+  String get recordsLoadFailed =>
+      'Δεν κατέστη δυνατή η φόρτωση των εγγραφών. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2621,34 +2644,35 @@ class AppLocalizationsEl extends AppLocalizations {
   String get addMedicalRecordTitle => 'Προσθήκη Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => 'Τίτλος';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'Τύπος';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => 'Αποτελέσματα εργαστηριακών εξετάσεων';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => 'Οδηγίες χρήσης';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => 'Απεικόνιση';
 
   @override
   String get recordTypeOther => 'Άλλο';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => 'Περιγραφή';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => 'Η εγγραφή ενημερώθηκε!';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => 'Η εγγραφή προστέθηκε!';
 
   @override
-  String get recordUpdateFailed => 'Failed to update record.';
+  String get recordUpdateFailed =>
+      'Δεν κατέστη δυνατή η ενημέρωση της εγγραφής.';
 
   @override
   String get recordAddFailed => 'Failed to Προσθήκη record.';
@@ -2662,7 +2686,7 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => 'Η εγγραφή διαγράφηκε.';
 
   @override
   String get recordDeleteFailed => 'Failed to Διαγραφή record.';
@@ -2683,11 +2707,11 @@ class AppLocalizationsEl extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => 'Περισσότερες επιλογές';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Βήμα $total από $current';
   }
 
   @override
@@ -2726,46 +2750,46 @@ class AppLocalizationsEl extends AppLocalizations {
       'Describe any Άλλο details Σχετικά your Συμπτώματα or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => 'Συνολική σοβαρότητα';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => 'Ήπια';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => 'Σοβαρό';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => 'Πολύ ήπιο';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => 'Ήπια';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => 'Μέτρια';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => 'Αποσπά την προσοχή';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => 'Σοβαρό';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => 'Αφόρητο';
 
   @override
   String get durationToday => 'Σήμερα (started tΣήμερα';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => '1-3 ημέρες';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => '4-7 ημέρες';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => '1-2 εβδομάδες';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => 'Πάνω από 2 εβδομάδες';
 
   @override
   String get age => 'Ηλικία';
@@ -2774,19 +2798,19 @@ class AppLocalizationsEl extends AppLocalizations {
   String get ageHint => 'Enter your Ηλικία';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => 'χρόνια';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => 'Βιολογικό φύλο';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => 'π.χ. διαβήτης, υπέρταση, άσθμα';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint => 'π.χ. Λισινοπρίλη 10 mg, Μετφορμίνη 500 mg';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => 'Περίληψη';
 
   @override
   String get analyzeWithAi => 'Ανάλυση με AI';
@@ -2807,7 +2831,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get symptomCough => 'Βήχας';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => 'Σύντομη αναπνοή';
 
   @override
   String get symptomFatigue => 'Κόπωση';
@@ -2819,40 +2843,40 @@ class AppLocalizationsEl extends AppLocalizations {
   String get symptomNausea => 'Ναυτία';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => 'Ρίγη';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => 'Μυϊκός πόνος';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => 'Αϋπνία';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => 'Πόνος στο στήθος';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => 'Κοιλιακός πόνος';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => 'Πονόλαιμος';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => 'Ρινική καταρροή';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => 'Εμετός';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => 'Διάρροια';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => 'Εξάνθημα';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => 'Πόνος στις αρθρώσεις';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => 'Η αγορά ακυρώθηκε.';
 
   @override
   String get noPurchasesToRestore =>

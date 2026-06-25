@@ -842,7 +842,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Wasifu > Subscription and select the Bure plan to downgrade. Your Pro or Kampuni features will remain active until the end of your current billing period.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
@@ -1786,7 +1786,7 @@ class AppLocalizationsSw extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Mzio',
+      other: '$count Allergies',
       one: '$count Allergy',
     );
     return '$_temp0';
@@ -1797,7 +1797,7 @@ class AppLocalizationsSw extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Dawa',
+      other: '$count Medications',
       one: '$count Medication',
     );
     return '$_temp0';
@@ -2470,7 +2470,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'Hakuna readings found for the selected time period';
+      'No readings found for the selected time period';
 
   @override
   String get singleReading => '1 reading';

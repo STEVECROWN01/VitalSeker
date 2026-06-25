@@ -2874,7 +2874,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get history => 'History';
 
   @override
-  String get triage => 'Triage';
+  String get triage => 'Sorting';
 
   @override
   String get insights => 'Insights';
@@ -2982,7 +2982,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get spo2 => 'SpO2';
 
   @override
-  String get temperature => 'Temperature';
+  String get temperature => 'Temperatures';
 
   @override
   String get weight => 'Weight';
@@ -3084,7 +3084,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get helpCenter => 'Help Centre';
 
   @override
-  String get contactConcierge => 'Contact Concierge';
+  String get contactConcierge => 'Contact the Concierge';
 
   @override
   String get aboutVitalSeker => 'About VitalSeker';
@@ -4083,7 +4083,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
       'Manage health for your entire family';
 
   @override
-  String get featurePdfExportTitle => 'PDF Export';
+  String get featurePdfExportTitle => 'Export PDF';
 
   @override
   String get featurePdfExportDesc => 'Generate and share health reports';
@@ -4248,10 +4248,10 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get enterprise => 'Enterprise';
 
   @override
-  String get nA => 'N/A';
+  String get nA => 'Not applicable';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Ship';
 
   @override
   String get next => 'Next';
@@ -4353,7 +4353,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get confirmPasswordRequired => 'Please confirm your password';
 
   @override
-  String get optionalDetails => 'Optional Details';
+  String get optionalDetails => 'Optional details';
 
   @override
   String get dateOfBirth => 'Date of Birth';
@@ -4664,7 +4664,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
       'Point this at any QR reader to securely share your vitals.';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'Download';
 
   @override
   String get share => 'SHARE';
@@ -4696,7 +4696,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get allergies => 'Allergies';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'Terms and Conditions';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -4798,7 +4798,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get filterYellow => 'Yellow';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'Network';
 
   @override
   String severityCaption(int score) {
@@ -5223,7 +5223,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '$weeks weeks ago';
   }
 
   @override
@@ -5331,7 +5331,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get average => 'Average';
 
   @override
-  String get min => 'Min';
+  String get min => 'I';
 
   @override
   String get max => 'Max';
@@ -5674,7 +5674,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get symptomChills => 'Chills';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => 'Muscle ache';
 
   @override
   String get symptomInsomnia => 'Insomnia';

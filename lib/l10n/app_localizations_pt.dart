@@ -258,7 +258,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get upgradeToPro => 'Atualizar para Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'Protege todo o círculo.';
 
   @override
   String get learnMore => 'Saiba mais';
@@ -695,7 +695,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get currentPlan => 'Plano atual';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Rebaixamento';
 
   @override
   String upgradeToPlan(String plan) {
@@ -796,7 +796,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'Recebemos um pedido urgente! A nossa equipa vai dar prioridade a este assunto.';
 
   @override
   String get supportRequestSent =>
@@ -843,7 +843,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Perfil > Assinatura and select the Grátis plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
@@ -869,7 +869,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'O PDF inclui a menção a $producer como produtor';
   }
 
   @override
@@ -1006,20 +1006,20 @@ class AppLocalizationsPt extends AppLocalizations {
   String get notes => 'Notas';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'Medicação suspensa';
 
   @override
   String get failedToDiscontinueMedication =>
       'Falha to discontinue medication.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'Medicação atualizada!';
 
   @override
   String get failedToUpdateMedication => 'Falha ao atualizar medication.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted => 'Medicação marcada como concluída';
 
   @override
   String get deleteMedication => 'Excluir medicamento';
@@ -1030,7 +1030,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'Medicação eliminada';
 
   @override
   String get failedToDeleteMedication => 'Failed to Excluir medication.';
@@ -1087,13 +1087,13 @@ class AppLocalizationsPt extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted => 'Compromisso marcado como concluído';
 
   @override
   String get failedToUpdateAppointment => 'Falha ao atualizar appointment.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => 'Consulta cancelada';
 
   @override
   String get failedToCancelAppointment => 'Failed to Cancelar appointment.';
@@ -1122,7 +1122,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => 'Marcação eliminada';
 
   @override
   String get failedToDeleteAppointment => 'Failed to Excluir appointment.';
@@ -1149,7 +1149,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return 'Tradução ($lang)';
   }
 
   @override
@@ -1296,7 +1296,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get tosSection4Intro => 'You agree NOT a:';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 =>
+      'Utilizar o Serviço para qualquer fim ilegal;';
 
   @override
   String get tosSection4Bullet2 =>
@@ -1345,7 +1346,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      'O SERVIÇO É FORNECIDO «TAL COMO ESTÁ» E «CONFORME DISPONÍVEL», SEM GARANTIAS DE QUALQUER TIPO, SEJAM ELAS EXPRESSAS OU IMPLÍCITAS, INCLUINDO, ENTRE OUTRAS, GARANTIAS IMPLÍCITAS DE COMERCIALIZAÇÃO, ADEQUAÇÃO A UM DETERMINADO FIM OU NÃO VIOLAÇÃO.';
 
   @override
   String get tosSection7Para2 =>
@@ -1435,7 +1436,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get signInSubtitle => 'Entre em sua conta VitalSeker';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'A iniciar sessão...';
 
   @override
   String get emailRequired => 'E-mail is Obrigatório';
@@ -1588,7 +1589,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '${hours}h atrás';
   }
 
   @override
@@ -1599,7 +1600,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return '${days}d atrás';
   }
 
   @override
@@ -1790,7 +1791,7 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Alergias',
+      other: '$count Allergies',
       one: '$count Allergy',
     );
     return '$_temp0';
@@ -1801,7 +1802,7 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medicamentos',
+      other: '$count Medications',
       one: '$count Medication',
     );
     return '$_temp0';
@@ -1831,7 +1832,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'Válido por ${minutes}h ${hours}m';
   }
 
   @override
@@ -1861,7 +1862,7 @@ class AppLocalizationsPt extends AppLocalizations {
       'SOS sends your GPS Localização to your Emergência contacts via SMS. Make sure your contacts are configured in your pPerfil';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'ENVIO';
 
   @override
   String get sosFailed => 'SOS FALHOU';
@@ -1930,7 +1931,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count ESTE MÊS';
   }
 
   @override
@@ -1961,12 +1962,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'Regiões do corpo: $regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return 'Duração: $duration';
   }
 
   @override
@@ -2003,7 +2004,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get trendAnalysis => 'Análise de tendências';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => 'FREQUÊNCIA DOS SINTOMAS (4W)';
 
   @override
   String get chartHigh => 'Alto';
@@ -2015,21 +2016,21 @@ class AppLocalizationsPt extends AppLocalizations {
   String get chartLow => 'Baixo';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => 'Prolongar o sono profundo';
 
   @override
   String get tipSleepBody =>
       'Your core temperature dropped late esta semana. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => 'Hidratação antecipada';
 
   @override
   String get tipHydrationBody =>
       'Leve dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'Atividade de estimulação cardíaca';
 
   @override
   String get tipActivityBody =>
@@ -2101,7 +2102,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+      'A temperatura corporal deve situar-se entre os 30 e os 45 °C';
 
   @override
   String get vitalRangeHintOxygen =>
@@ -2371,12 +2372,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '${minutes}m há';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '$weeks semanas atrás';
   }
 
   @override
@@ -2476,7 +2477,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'Nenhuma leitura encontrada para o período selecionado';
+      'No readings found for the selected time period';
 
   @override
   String get singleReading => '1 leitura';
@@ -2695,7 +2696,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Passo $total de $current';
   }
 
   @override
@@ -2788,10 +2789,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get biologicalSex => 'Sexo biológico';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => 'por exemplo, diabetes, hipertensão, asma';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint =>
+      'por exemplo, Lisinopril 10 mg, Metformina 500 mg';
 
   @override
   String get triageSummary => 'Resumo';

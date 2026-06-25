@@ -844,7 +844,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Ve a Perfil > Suscripción y selecciona el plan Free para degradar. Tus funciones Pro o Enterprise permanecerán activas hasta el final de tu periodo de facturación actual.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
@@ -1793,8 +1793,8 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Alergias',
-      one: '$count Alergia',
+      other: '$count Allergies',
+      one: '$count Allergy',
     );
     return '$_temp0';
   }
@@ -1804,8 +1804,8 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medicamentos',
-      one: '$count Medicamento',
+      other: '$count Medications',
+      one: '$count Medication',
     );
     return '$_temp0';
   }
@@ -1922,8 +1922,8 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contactos notificados por SMS',
-      one: '$count contacto notificado por SMS',
+      other: '$count contacts reached via SMS',
+      one: '$count contact reached via SMS',
     );
     return '$_temp0';
   }
@@ -2478,7 +2478,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No se encontraron lecturas para el periodo de tiempo seleccionado';
+      'No readings found for the selected time period';
 
   @override
   String get singleReading => '1 lectura';

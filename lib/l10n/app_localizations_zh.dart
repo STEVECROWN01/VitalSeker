@@ -165,7 +165,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get monitorAtHome => 'Monitor at 首页';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => '何时上报';
 
   @override
   String get saveToPassport => '保存 to 护照';
@@ -219,7 +219,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get privacyData => '隐私与数据';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => '安全与存储';
 
   @override
   String get exportData => '导出数据';
@@ -258,10 +258,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get upgradeToPro => '升级到Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => '保护整个圆圈。';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => '了解更多';
 
   @override
   String get medications => '药物';
@@ -330,7 +330,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get shareMyLocation => '分享我的位置';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => '查找附近的医院';
 
   @override
   String get quickDial => '快速 拨号';
@@ -360,7 +360,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noHistoryYet => '暂无历史';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere => '您的症状记录将显示在此处';
 
   @override
   String get startFirstTriage => '开始您的第一次分诊以查看活动';
@@ -376,7 +376,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '否 洞察 generated yet. Check 返回 on Monday for your weekly AI 健康 summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => '立即生成';
 
   @override
   String get upgradeProInsights =>
@@ -392,13 +392,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exportMedicalReport => '导出 Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => '生成 PDF';
 
   @override
   String get sendByEmail => 'Send by 邮箱';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview => '患者概况与生命体征';
 
   @override
   String get symptomsTriageLog => '症状 & 分诊 Log';
@@ -407,16 +407,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get medicationsAllergies => '药物 & 过敏';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'AI分析摘要';
 
   @override
   String get dateRange => '日期 Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => '过去30天';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => '预览';
 
   @override
   String get translate => '翻译';
@@ -437,7 +437,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      '您的通知偏好设置已保存至您的账户。现在可以自定义日程安排了——点击任意日程即可进行修改。';
 
   @override
   String get triageReminders => '分诊提醒';
@@ -487,7 +487,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sendSOS => '发送SOS';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => '您确定要注销吗？';
 
   @override
   String get failedToSignOut => '退出失败。请重试。';
@@ -505,7 +505,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => '正在注销...';
 
   @override
   String get manageMedicalCredentials => 'Manage 医疗 credentials';
@@ -522,10 +522,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => '提醒与智能提醒';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => '文档与影像';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical 条款';
@@ -534,7 +534,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get emergencyMedicalCard => '紧急 medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'AES-256 加密已启用';
 
   @override
   String get downloadYourHealthData => 'Download your 健康 data';
@@ -543,14 +543,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themePasswordAccount => 'Theme, p密码 account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => '常见问题与文档';
 
   @override
   String get priorityProSupport => '优先Pro支持';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return '版本 $version';
   }
 
   @override
@@ -591,13 +591,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get failedToDeleteAccount => '删除账户失败。请重试或联系支持。';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => '管理您的订阅';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently 移除 your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => '结束当前会话';
 
   @override
   String get dark => '深色';
@@ -615,20 +615,20 @@ class AppLocalizationsZh extends AppLocalizations {
   String get restore => '恢复';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => '选择您的套餐';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => '释放VitalSeker的全部潜力';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      '应用内支付集成（RevenueCat / StoreKit）正在处理中。套餐变更将直接应用到您的账户中以便进行测试。';
 
   @override
-  String get forever => 'forever';
+  String get forever => '永远';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/月';
 
   @override
   String get freePlanFeature1 => '3 AI 分诊 sessions/month';
@@ -637,7 +637,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get freePlanFeature2 => 'Basic 健康 护照';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => '二维码分享';
 
   @override
   String get freePlanFeature4 => '紧急SOS alerts';
@@ -673,22 +673,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get enterprisePlanFeature3 => '自定义 branding';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'API 访问';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated 支持';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'SLA 保证';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => '最超值';
 
   @override
   String get currentPlan => '当前计划';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => '降级';
 
   @override
   String upgradeToPlan(String plan) {
@@ -696,12 +696,11 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+  String get mustBeSignedInToChangePlans => '您必须登录后才能更改套餐。';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return '切换到 $plan？';
   }
 
   @override
@@ -730,7 +729,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '失败 to update subscription. Please try again.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => '已恢复购买功能。';
 
   @override
   String get failedToRestorePurchases => 'Failed to 恢复 purchases.';
@@ -747,7 +746,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => '常见问题解答';
 
   @override
   String get contactSupport => 'Contact 支持';
@@ -772,8 +771,7 @@ class AppLocalizationsZh extends AppLocalizations {
       'Your request is saved to your account and visible to our 支持 team. We respond within 24 hours.';
 
   @override
-  String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+  String get pleaseFillSubjectMessage => '请同时填写主题和正文。';
 
   @override
   String get subjectMinLength => '主题 must be at least 5 characters.';
@@ -786,8 +784,7 @@ class AppLocalizationsZh extends AppLocalizations {
       'You must be signed in to submit a 支持 request.';
 
   @override
-  String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+  String get urgentRequestReceived => '已收到紧急请求！我们的团队将优先处理此事。';
 
   @override
   String get supportRequestSent =>
@@ -834,17 +831,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to 个人资料 > Subscription and select the 免费 plan to downgrade. Your Pro or 企业版 features will remain active until the end of your current billing period.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
       'Configure and preview your comprehensive 健康 summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => '包含章节';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => '过去3个月';
 
   @override
   String get yearToDate => 'Year to 日期';
@@ -853,14 +850,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get allTime => '全部 时间';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => '正在生成……';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => '正在发送……';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'PDF文件中将$producer列为制片人';
   }
 
   @override
@@ -873,14 +870,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get manageHealthWholeFamily => 'Manage 健康 for your whole 家庭 (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => '账户所有者';
 
   @override
   String get ownerProfile => 'Owner 个人资料';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age岁';
   }
 
   @override
@@ -892,7 +889,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reachedProLimit => 'You\'ve reached the 5-member 专业版 limit.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => '已达到上限';
 
   @override
   String get pleaseFillNameRelationship => 'Please fill in 姓名 and relationship';
@@ -912,7 +909,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return '您确定要将 $name 从您的家庭资料中移除吗？';
   }
 
   @override
@@ -929,7 +926,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fullNameLabel => 'Full 姓名';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => '亲属关系（例如：配偶、子女）';
 
   @override
   String get bloodTypeOptional => '血型 (optional)';
@@ -941,7 +938,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get upgradeYourCare => '升级 YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => '你正在保护整个圆圈。';
 
   @override
   String get proMemberThanks =>
@@ -984,7 +981,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dosage => '剂量';
 
   @override
-  String get unit => 'Unit';
+  String get unit => '单位';
 
   @override
   String get frequency => '频率';
@@ -993,30 +990,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get notes => '备注';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => '停药';
 
   @override
   String get failedToDiscontinueMedication => '失败 to discontinue medication.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => '用药信息已更新！';
 
   @override
   String get failedToUpdateMedication => '失败 to update medication.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted => '标记为“已完成”的用药';
 
   @override
   String get deleteMedication => '删除药物';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return '您确定要删除 $name 吗？';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => '已删除该药物';
 
   @override
   String get failedToDeleteMedication => 'Failed to 删除 medication.';
@@ -1036,16 +1033,16 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => '每日一次';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => '每天两次';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => '每天三次';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => '每天四次';
 
   @override
   String get everyOtherDay => 'Every 其他 Day';
@@ -1054,7 +1051,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get weekly => '每周';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => '视需要而定';
 
   @override
   String get custom => '自定义';
@@ -1073,13 +1070,13 @@ class AppLocalizationsZh extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted => '预约已标记为已完成';
 
   @override
   String get failedToUpdateAppointment => '失败 to update appointment.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => '预约已取消';
 
   @override
   String get failedToCancelAppointment => 'Failed to 取消 appointment.';
@@ -1092,7 +1089,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return '已改期至 $date $time';
   }
 
   @override
@@ -1107,7 +1104,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => '预约已删除';
 
   @override
   String get failedToDeleteAppointment => 'Failed to 删除 appointment.';
@@ -1126,19 +1123,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get medicalTermOrPhrase => '医学术语或短语';
 
   @override
-  String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+  String get medicalTermHint => '例如：“高血压”、“每日两次，随餐服用”';
 
   @override
   String get translating => '翻译中...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return '翻译 ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear => '您的翻译将显示在此处。';
 
   @override
   String get pleaseEnterTermToTranslate =>
@@ -1158,13 +1154,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get failedToSaveNotificationSetting => '保存通知设置失败';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => '主要特点';
 
   @override
-  String get producer => 'Producer';
+  String get producer => '制片人';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => '概念、设计与开发';
 
   @override
   String get updateAccountCredentials => '更新 your account credentials';
@@ -1226,7 +1222,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return '最后更新：版本 $version';
   }
 
   @override
@@ -1243,7 +1239,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => '资格与账户';
 
   @override
   String get tosSection2Para1 =>
@@ -1270,32 +1266,29 @@ class AppLocalizationsZh extends AppLocalizations {
       'In a medical e紧急 call your local 紧急 number (e.g. 911, 112) immediately. Do not rely on the Service for 紧急 response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => '服务的使用';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => '您同意不：';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 => '将本服务用于任何非法目的；';
 
   @override
-  String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+  String get tosSection4Bullet2 => '试图对该应用进行逆向工程、反编译或反汇编；';
 
   @override
-  String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+  String get tosSection4Bullet3 => '上传恶意、欺诈或侵犯知识产权的内容；';
 
   @override
   String get tosSection4Bullet4 =>
       'Interfere with the proper functioning of the Service or attempt to access data belonging to 其他 users;';
 
   @override
-  String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+  String get tosSection4Bullet5 => '利用本服务发送未经请求的通讯或垃圾信息。';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => '订阅与支付';
 
   @override
   String get tosSection5Para1 =>
@@ -1310,7 +1303,7 @@ class AppLocalizationsZh extends AppLocalizations {
       'We may change subscription fees upon reasonable notice. Fee changes will 不 apply to your current billing period.';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => '您的数据';
 
   @override
   String get tosSection6Para1 =>
@@ -1321,18 +1314,18 @@ class AppLocalizationsZh extends AppLocalizations {
       'You may 导出 your data at any 时间 via the in-app 导出 feature, and you may permanently 删除 your account and 全部 associated data via 设置 → 删除 Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => '免责声明';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      '本服务按“原样”和“可用”状态提供，不作任何形式的保证， 无论是明示还是默示，包括但不限于对适销性、特定用途的适用性或不侵权的默示担保。';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI 分诊 recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => '责任限制';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1340,7 +1333,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => '终止';
 
   @override
   String get tosSection9Para1 =>
@@ -1379,7 +1372,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get enterprise => '企业';
 
   @override
-  String get nA => 'N/A';
+  String get nA => '不适用';
 
   @override
   String get skip => '跳过';
@@ -1388,10 +1381,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get next => '下一步';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => '进入VitalSeker';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => '了解自己的身体。';
 
   @override
   String get onboardingDescription1 =>
@@ -1412,10 +1405,10 @@ class AppLocalizationsZh extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re 返回 online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => '登录您的 VitalSeker 账户';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => '正在登录...';
 
   @override
   String get emailRequired => '邮箱 is 必填';
@@ -1453,7 +1446,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get other => '其他';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => '正在创建账户...';
 
   @override
   String get joinVitalSeker => 'Join VitalSeker and take control of your 健康';
@@ -1465,19 +1458,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nameMinChars => '姓名 must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => '至少6个字符';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => '请包含至少一个大写字母';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase => '请包含至少一个小写字母';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => '请至少包含一个数字';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol => '请包含至少一个符号（!@#\$%^&*）';
 
   @override
   String get confirmPasswordRequired => 'Please 确认 your 密码';
@@ -1498,13 +1491,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get gender => '性别';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => '选择性别';
 
   @override
   String get bloodType => '血型';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => '选择血型';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1521,7 +1514,7 @@ class AppLocalizationsZh extends AppLocalizations {
       'Account created! Please check your 邮箱 to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => '用户';
 
   @override
   String get viewAll => '查看全部';
@@ -1563,11 +1556,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pastChecksAndVitals => 'Past checks & 生命体征';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => '刚才';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '$hours小时前';
   }
 
   @override
@@ -1578,11 +1571,11 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return '$days天前';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => '症状自查';
 
   @override
   String get severity => '严重程度';
@@ -1596,20 +1589,19 @@ class AppLocalizationsZh extends AppLocalizations {
       'Based on your s症状 here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => '紧迫性';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => '护理建议';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ 警示信号：';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => '建议：';
 
   @override
-  String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+  String get tapForFullAnalysis => '点击下方的“查看详细结果”以查看完整分析。';
 
   @override
   String triageErrorMessage(String error) {
@@ -1617,37 +1609,37 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => '全身不适';
 
   @override
   String get selfCareRecommended => 'Self-Care 推荐';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => '预约';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => '前往急诊科';
 
   @override
   String get seekEmergencyCare => 'Seek 紧急 Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider => '请咨询医疗保健专业人员';
 
   @override
-  String get mild => 'Mild';
+  String get mild => '温和';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => '中等';
 
   @override
-  String get significant => 'Significant';
+  String get significant => '显著的';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => '严重';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => '极端';
 
   @override
   String get triageResults => '分诊结果';
@@ -1658,19 +1650,19 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => '危险信号';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => '建议';
 
   @override
   String get possibleConditions => 'Possible 疾病';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => '后续问题';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => '正在保存...';
 
   @override
   String get seeDoctorSoon => 'See a 医生 Soon';
@@ -1694,7 +1686,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get escalateMedium1 => '症状 persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 => '疼痛加剧或变得难以忍受';
 
   @override
   String get escalateMedium3 => 'New red-flag 症状 appear';
@@ -1703,8 +1695,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get escalateHigh1 => '症状 rapidly worsen';
 
   @override
-  String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+  String get escalateHigh2 => '出现呼吸困难或胸闷';
 
   @override
   String get escalateHigh3 =>
@@ -1724,7 +1715,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get showQrCode => 'Show 二维码';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => '已停用';
 
   @override
   String get knownAllergies => 'Known 过敏';
@@ -1736,7 +1727,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chronicConditions => '慢性病';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => '保险';
 
   @override
   String get qrCode => '二维码';
@@ -1755,11 +1746,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get heightAndWeight => '身高 & 体重';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => '未设置';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count岁';
   }
 
   @override
@@ -1767,7 +1758,7 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count 过敏',
+      other: '$count Allergies',
       one: '$count Allergy',
     );
     return '$_temp0';
@@ -1778,7 +1769,7 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count 药物',
+      other: '$count Medications',
       one: '$count Medication',
     );
     return '$_temp0';
@@ -1792,7 +1783,7 @@ class AppLocalizationsZh extends AppLocalizations {
       'Point this at any QR reader to securely 分享 your v生命体征';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => '下载';
 
   @override
   String get share => '分享';
@@ -1808,14 +1799,14 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return '有效期为 ${minutes}h ${hours}m';
   }
 
   @override
   String get emergencySosTitle => '紧急SOS';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => '请继续按住……';
 
   @override
   String get nearbyHospitals => '附近 Hospitals';
@@ -1838,10 +1829,10 @@ class AppLocalizationsZh extends AppLocalizations {
       'SOS sends your GPS 位置 to your 紧急 contacts via SMS. Make sure your contacts are configured in your p个人资料';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => '发送';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS 失败';
 
   @override
   String get sosActive => 'SOS ACTIVE';
@@ -1857,14 +1848,14 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return '正在发送，预计耗时 $seconds……';
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => '重试';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => '关闭';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1883,13 +1874,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get liveLocation => 'Live 位置';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => '正在获取GPS坐标……';
 
   @override
   String get locationUnavailable => '位置 unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => '已通知相关联系人';
 
   @override
   String contactsNotifiedCount(int count) {
@@ -1907,7 +1898,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count 本月';
   }
 
   @override
@@ -1920,17 +1911,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchLogs => '搜索 logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => '绿色';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => '黄色';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => '网络';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return '严重程度：$score/10';
   }
 
   @override
@@ -1938,17 +1929,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return '身体部位：$regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return '时长：$duration';
   }
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'AI 推荐：$recommendation';
   }
 
   @override
@@ -1977,46 +1968,45 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => '趋势分析';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => '症状发生频率（4W）';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => '高';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => '平均';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => '低';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => '延长深度睡眠时间';
 
   @override
-  String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+  String get tipSleepBody => '本周后期，您的核心体温有所下降。建议将室内温度调低至65°F，以加速进入深度睡眠阶段。';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => '提前补充水分';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      '在下午的记录中检测到轻度脱水迹象。将每日饮水量的40%调整至上午10点前饮用，以稳定新陈代谢率。';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => '步频活动';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      '关节疼痛的加剧与运动强度的突然增加有关。在进行超过第2区的心肺训练前，请确保进行10分钟的动态热身。';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => '个性化关注';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights => '正在刷新您的 AI 洞察……';
 
   @override
   String get generateNewInsights => 'Generate New 洞察';
@@ -2025,7 +2015,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get symptoms => '症状';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => '平均严重程度';
 
   @override
   String get scoreChange => '得分 Change';
@@ -2075,8 +2065,7 @@ class AppLocalizationsZh extends AppLocalizations {
       'Blood pressure should be between 60-250 (s收缩压 and 40-150 (d舒张压';
 
   @override
-  String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+  String get vitalRangeHintTemperature => '水温应在30至45 °C之间';
 
   @override
   String get vitalRangeHintOxygen => '血液 oxygen should be between 50 and 100 %';
@@ -2114,7 +2103,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return '文本过长（最多 $max 个字符）。请缩短文本后重试。';
   }
 
   @override
@@ -2125,7 +2114,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get privacyPolicyTitle => '隐私 Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => '最后更新：2025年3月';
 
   @override
   String privacyIntro(String appName) {
@@ -2133,21 +2122,21 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '1. 数据收集';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: N姓名 邮箱 address, 电话 number, 日期 of birth, and gender. • 健康 Data: Blood type, a过敏 chronic conditions, m药物 vital signs, symptom logs, and 分诊 results. • 紧急 Contacts: Names, 电话 numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and s支持 • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our 健康 companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage => '2. 数据存储与加密';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• 二维码 Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '3. 符合《通用数据保护条例》（GDPR）的要求';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2155,7 +2144,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '4. 您的权利';
 
   @override
   String get privacyRightsBody =>
@@ -2178,19 +2167,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chooseFromGallery => '从相册选择';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => '拍张照片';
 
   @override
   String get removePhoto => '移除 Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => '头像已更新！';
 
   @override
   String get avatarUploadFailed => '失败 to upload avatar. Please try again.';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => '头像已删除。';
 
   @override
   String get avatarRemoveFailed => 'Failed to 移除 avatar. Please try again.';
@@ -2210,10 +2199,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => '个人信息';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => '测量';
 
   @override
   String get heightCm => '身高 (cm)';
@@ -2231,7 +2220,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get phoneNumber => '电话 Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => '例如：配偶、父母、兄弟姐妹';
 
   @override
   String get addAllergy => '添加 Allergy';
@@ -2262,8 +2251,7 @@ class AppLocalizationsZh extends AppLocalizations {
       'Your 健康 metrics are looking great! Keep it up.';
 
   @override
-  String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+  String get scoreDescriptionGood => '进展不错。有几个方面需要关注。';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2303,7 +2291,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get recommendedActions => '推荐 操作';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => '预约体检';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2317,18 +2305,17 @@ class AppLocalizationsZh extends AppLocalizations {
       'Track your blood pressure, heart rate, and 其他 key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => '运行症状检查';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI 分诊 to assess any 症状 you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => '改善睡眠质量';
 
   @override
-  String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+  String get actionImproveSleepDesc => '优质睡眠对身体恢复和免疫功能至关重要。';
 
   @override
   String get actionStayActive => 'Stay 活跃';
@@ -2342,12 +2329,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '$minutes分钟前';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '$weeks 周前';
   }
 
   @override
@@ -2385,7 +2372,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => '日志重要';
 
   @override
   String get vitalTypeLabel => 'VITAL TYPE';
@@ -2415,7 +2402,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return '$vitalType 已成功保存';
   }
 
   @override
@@ -2446,10 +2433,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      '无 readings found for the selected time period';
+      'No readings found for the selected time period';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '1 次阅读';
 
   @override
   String get average => '平均';
@@ -2464,7 +2451,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get latest => '最新';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => '阅读材料';
 
   @override
   String get value => '数值';
@@ -2474,7 +2461,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return '显示 $total 条记录中的第 20 条';
   }
 
   @override
@@ -2484,13 +2471,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get medicationNameLabel => 'Medication 姓名';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => '剂量';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => '单位';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => '频率';
 
   @override
   String get startDateLabel => 'Start 日期';
@@ -2502,24 +2489,24 @@ class AppLocalizationsZh extends AppLocalizations {
   String get endDateLabel => 'End 日期';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => '给药时间';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return '剂量 $number';
   }
 
   @override
   String get notesOptional => '备注 (o可选';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => '提醒事项';
 
   @override
   String get saveMedication => '保存 Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully => '药物已成功添加！';
 
   @override
   String get medicationAddFailed =>
@@ -2547,39 +2534,38 @@ class AppLocalizationsZh extends AppLocalizations {
   String get saveAppointment => '保存 Appointment';
 
   @override
-  String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+  String get appointmentScheduledSuccessfully => '预约已成功安排！';
 
   @override
   String get appointmentScheduleFailed =>
       '失败 to schedule appointment. Please try again.';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => '心脏病专家';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => '皮肤科医生';
 
   @override
-  String get specialtyEndocrinologist => 'Endocrinologist';
+  String get specialtyEndocrinologist => '内分泌科医生';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => '全科医学';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => '神经科医生';
 
   @override
-  String get specialtyOphthalmologist => 'Ophthalmologist';
+  String get specialtyOphthalmologist => '眼科医生';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => '骨科';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => '儿科医生';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => '精神科医生';
 
   @override
   String get specialtyOther => '其他';
@@ -2597,31 +2583,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String get addMedicalRecordTitle => '添加 Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => '标题';
 
   @override
   String get typeLabel => '类型';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => '实验室检测结果';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => '处方';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => '成像';
 
   @override
   String get recordTypeOther => '其他';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => '描述';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => '记录已更新！';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => '记录已添加！';
 
   @override
   String get recordUpdateFailed => '失败 to update record.';
@@ -2638,7 +2624,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => '记录已删除。';
 
   @override
   String get recordDeleteFailed => 'Failed to 删除 record.';
@@ -2659,11 +2645,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => '更多选项';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return '第 $current 步，共 $total 步';
   }
 
   @override
@@ -2701,46 +2687,46 @@ class AppLocalizationsZh extends AppLocalizations {
       'Describe any 其他 details 关于 your 症状 or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => '总体严重程度';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => '温和';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => '严重';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => '非常温和';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => '温和';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => '中等';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => '分散注意力';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => '严重';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => '难以忍受';
 
   @override
   String get durationToday => '今天 (started t今天';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => '1-3天';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => '4-7天';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => '1-2周';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => '超过2周';
 
   @override
   String get age => '年龄';
@@ -2749,19 +2735,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get ageHint => 'Enter your 年龄';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => '年';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => '生物性别';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => '例如：糖尿病、高血压、哮喘';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint => '例如：利辛普利 10 毫克，二甲双胍 500 毫克';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => '摘要';
 
   @override
   String get analyzeWithAi => 'AI分析';
@@ -2782,7 +2768,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get symptomCough => '咳嗽';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => '《短暂的呼吸》';
 
   @override
   String get symptomFatigue => '疲劳';
@@ -2794,40 +2780,40 @@ class AppLocalizationsZh extends AppLocalizations {
   String get symptomNausea => '恶心';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => '寒战';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => '肌肉酸痛';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => '失眠';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => '胸痛';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => '腹痛';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => '喉咙痛';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => '流鼻涕';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => '呕吐';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => '腹泻';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => '皮疹';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => '关节疼痛';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => '订单已被取消。';
 
   @override
   String get noPurchasesToRestore => '否 previous purchases found to r恢复';

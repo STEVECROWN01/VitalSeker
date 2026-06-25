@@ -21,7 +21,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get history => 'Historie';
 
   @override
-  String get triage => 'Triage';
+  String get triage => 'Třídění';
 
   @override
   String get insights => 'Přehledy';
@@ -54,37 +54,37 @@ class AppLocalizationsCs extends AppLocalizations {
   String get confirmPassword => 'Potvrdit Heslo';
 
   @override
-  String get createAccount => 'Create Account';
+  String get createAccount => 'Vytvořit účet';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'Ještě nemáte účet?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'Už máte účet?';
 
   @override
-  String get orContinueWith => 'or continue with';
+  String get orContinueWith => 'nebo pokračovat v';
 
   @override
-  String get continueWithGoogle => 'Continue with Google';
+  String get continueWithGoogle => 'Pokračovat přes Google';
 
   @override
-  String get continueWithApple => 'Continue with Apple';
+  String get continueWithApple => 'Pokračovat s Apple';
 
   @override
   String get forgotPassword => 'Forgot PHeslo';
 
   @override
-  String get goodMorning => 'Good morning';
+  String get goodMorning => 'Dobré ráno';
 
   @override
-  String get goodAfternoon => 'Good afternoon';
+  String get goodAfternoon => 'Dobré odpoledne';
 
   @override
-  String get goodEvening => 'Good evening';
+  String get goodEvening => 'Dobrý večer';
 
   @override
-  String get goodNight => 'Good night';
+  String get goodNight => 'Dobrou noc';
 
   @override
   String get healthScore => 'Zdraví Score';
@@ -105,7 +105,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get emergencySOS => 'SOS pohotovost';
 
   @override
-  String get recentChecks => 'Recent Checks';
+  String get recentChecks => 'Poslední kontroly';
 
   @override
   String get noSymptomsLogs => 'Ne Příznaky logs yet';
@@ -129,7 +129,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get spo2 => 'SpO2';
 
   @override
-  String get temperature => 'Temperature';
+  String get temperature => 'Teploty';
 
   @override
   String get weight => 'Váha';
@@ -156,16 +156,16 @@ class AppLocalizationsCs extends AppLocalizations {
   String get send => 'Odeslat';
 
   @override
-  String get newChat => 'New Chat';
+  String get newChat => 'Nový chat';
 
   @override
-  String get viewDetailedResults => 'View Detailed Results';
+  String get viewDetailedResults => 'Zobrazit podrobné výsledky';
 
   @override
   String get monitorAtHome => 'Monitor at Domů';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => 'Kdy postoupit záležitost na vyšší úroveň';
 
   @override
   String get saveToPassport => 'Uložit to Pas';
@@ -207,19 +207,19 @@ class AppLocalizationsCs extends AppLocalizations {
   String get selectLanguage => 'Select Jazyk';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'Vzhled';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'Tmavý režim';
 
   @override
-  String get account => 'Account';
+  String get account => 'Účet';
 
   @override
   String get privacyData => 'Soukromí & Data';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'Zabezpečení a úložiště';
 
   @override
   String get exportData => 'Exportovat Data';
@@ -252,16 +252,16 @@ class AppLocalizationsCs extends AppLocalizations {
   String get addFamilyMember => 'Přidat Rodina Member';
 
   @override
-  String get accountOwner => 'ACCOUNT OWNER';
+  String get accountOwner => 'VLASTNÍK ÚČTU';
 
   @override
   String get upgradeToPro => 'Vylepšit to Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'Chraňte celý kruh.';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'Další informace';
 
   @override
   String get medications => 'Léky';
@@ -270,7 +270,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get addMedication => 'Přidat Medication';
 
   @override
-  String get appointments => 'Appointments';
+  String get appointments => 'Termíny';
 
   @override
   String get addAppointment => 'Přidat Appointment';
@@ -288,7 +288,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get active => 'Aktivní';
 
   @override
-  String get discontinued => 'Discontinued';
+  String get discontinued => 'Vyřazeno z prodeje';
 
   @override
   String get save => 'Uložit';
@@ -321,16 +321,16 @@ class AppLocalizationsCs extends AppLocalizations {
   String get pressAndHold => 'Press and hold to send Pohotovost alert';
 
   @override
-  String get holdFor3Seconds => 'Hold for 3 seconds';
+  String get holdFor3Seconds => 'Vydržte 3 sekundy';
 
   @override
-  String get imSafeResolve => 'I\'m Safe - Resolve';
+  String get imSafeResolve => 'Jsem v bezpečí – Rozhodnutí';
 
   @override
   String get shareMyLocation => 'Sdílet My Lokace';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'Najít nemocnice v mém okolí';
 
   @override
   String get quickDial => 'Rychlý Vytočit';
@@ -361,7 +361,8 @@ class AppLocalizationsCs extends AppLocalizations {
   String get noHistoryYet => 'Ne Historie Yet';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere =>
+      'Zde se zobrazí vaše záznamy o příznacích';
 
   @override
   String get startFirstTriage => 'Začít Your First Triage';
@@ -377,7 +378,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Ne Přehledy generated yet. Check Zpět on Monday for your weekly AI Zdraví summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'Vygenerovat nyní';
 
   @override
   String get upgradeProInsights =>
@@ -393,13 +394,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get exportMedicalReport => 'Exportovat Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'Vytvořit PDF';
 
   @override
   String get sendByEmail => 'Send by E-mail';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview => 'Přehled o pacientovi a základní údaje';
 
   @override
   String get symptomsTriageLog => 'Příznaky & Triage Log';
@@ -408,19 +409,19 @@ class AppLocalizationsCs extends AppLocalizations {
   String get medicationsAllergies => 'Léky & Alergie';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'Souhrn analýzy umělé inteligence';
 
   @override
   String get dateRange => 'Datum Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => 'Posledních 30 dní';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'NÁHLED';
 
   @override
-  String get translate => 'Translate';
+  String get translate => 'Přeložit';
 
   @override
   String get translateMedicalTerms => 'Translate medical Podmínky';
@@ -434,21 +435,21 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String translationResult(Object lang) {
-    return 'Translation Result';
+    return 'Výsledek překladu';
   }
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'Vaše nastavení oznámení se ukládá do vašeho účtu. Nyní je k dispozici možnost přizpůsobení rozvrhu – klepnutím na libovolný rozvrh jej můžete změnit.';
 
   @override
-  String get triageReminders => 'Triage Reminders';
+  String get triageReminders => 'Připomenutí k třídění pacientů';
 
   @override
-  String get medicationReminders => 'Medication Reminders';
+  String get medicationReminders => 'Připomenutí užívání léků';
 
   @override
-  String get appointmentReminders => 'Appointment Reminders';
+  String get appointmentReminders => 'Upomínky na schůzky';
 
   @override
   String get vitalsLoggingReminders => 'Životní funkce Logging Reminders';
@@ -460,7 +461,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get weeklyReport => 'Týdně Report';
 
   @override
-  String get reminders => 'Reminders';
+  String get reminders => 'Připomenutí';
 
   @override
   String get insightsTips => 'Přehledy & Tips';
@@ -476,7 +477,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get deletePermanently => 'Smazat Permanently';
 
   @override
-  String get accountDeleted => 'Account deleted. Sorry to see you go.';
+  String get accountDeleted => 'Účet byl smazán. Je nám líto, že odcházíš.';
 
   @override
   String get sendEmergencySOS => 'Send SOS pohotovost?';
@@ -489,7 +490,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get sendSOS => 'Odeslat SOS';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'Opravdu se chcete odhlásit?';
 
   @override
   String get failedToSignOut => 'Chyba to sign out. Please try again.';
@@ -498,7 +499,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get vitalsLogged => 'Životní funkce Logged';
 
   @override
-  String get triageSessions => 'Triage Sessions';
+  String get triageSessions => 'Třídící sezení';
 
   @override
   String get daysActive => 'Days Aktivní';
@@ -507,7 +508,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'Odhlášení...';
 
   @override
   String get manageMedicalCredentials => 'Manage lékařský credentials';
@@ -524,10 +525,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'Upozornění a chytré připomínky';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'Dokumenty a obrazová data';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical Podmínky';
@@ -536,7 +537,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get emergencyMedicalCard => 'Pohotovost medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'Šifrování AES-256 je aktivní';
 
   @override
   String get downloadYourHealthData => 'Download your Zdraví data';
@@ -545,14 +546,14 @@ class AppLocalizationsCs extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pHeslo account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'Často kladené otázky a dokumentace';
 
   @override
   String get priorityProSupport => 'Priority Pro Podpora';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Verze $version';
   }
 
   @override
@@ -595,44 +596,44 @@ class AppLocalizationsCs extends AppLocalizations {
       'Failed to Smazat account. Please try again or contact sPodpora';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'Spravujte své předplatné';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently Odebrat your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'Ukončete aktuální relaci';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Tma';
 
   @override
-  String get light => 'Light';
+  String get light => 'Světlo';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'Výchozí nastavení systému';
 
   @override
-  String get subscription => 'Subscription';
+  String get subscription => 'Předplatné';
 
   @override
   String get restore => 'Obnovit';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'Vyberte si svůj tarif';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'Využijte plný potenciál VitalSekeru';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'Integrace plateb v aplikaci (RevenueCat / StoreKit) se právě připravuje. Změny tarifu se pro účely testování promítají přímo do vašeho účtu.';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'navždy';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/měsíc';
 
   @override
   String get freePlanFeature1 => '3 AI Triage sessions/month';
@@ -641,7 +642,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get freePlanFeature2 => 'Basic Zdraví Pas';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'Sdílení QR kódů';
 
   @override
   String get freePlanFeature4 => 'SOS pohotovost alerts';
@@ -668,7 +669,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get proPlanFeature6 => 'Priority Podpora';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 => 'Všechno v balíčku Pro';
 
   @override
   String get enterprisePlanFeature2 => 'Unlimited Rodina profiles';
@@ -677,22 +678,22 @@ class AppLocalizationsCs extends AppLocalizations {
   String get enterprisePlanFeature3 => 'Vlastní branding';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Přístup k API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Podpora';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'Záruka SLA';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'NEJLEPŠÍ POMĚR CENA/VÝKON';
 
   @override
-  String get currentPlan => 'Current Plan';
+  String get currentPlan => 'Aktuální plán';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Snížení ratingu';
 
   @override
   String upgradeToPlan(String plan) {
@@ -701,16 +702,16 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+      'Chcete-li změnit tarif, musíte být přihlášeni.';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'Chcete přejít na $plan?';
   }
 
   @override
   String get downgradeToFreeMessage =>
-      'You will lose access to Pro features at the end of your current billing period. Continue?';
+      'Na konci aktuálního zúčtovacího období ztratíte přístup k funkcím verze Pro. Chcete pokračovat?';
 
   @override
   String upgradeToPlanMessage(String plan) {
@@ -734,7 +735,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Chyba to update subscription. Please try again.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'Nákupy byly obnoveny.';
 
   @override
   String get failedToRestorePurchases => 'Failed to Obnovit purchases.';
@@ -753,7 +754,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'Často kladené otázky';
 
   @override
   String get contactSupport => 'Contact Podpora';
@@ -779,7 +780,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+      'Vyplňte prosím předmět i text zprávy.';
 
   @override
   String get subjectMinLength => 'Předmět must be at least 5 characters.';
@@ -793,7 +794,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'Obdrželi jsme naléhavou žádost! Náš tým ji vyřídí přednostně.';
 
   @override
   String get supportRequestSent =>
@@ -840,17 +841,17 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profil > Subscription and select the Zdarma plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
       'Configure and preview your comprehensive Zdraví summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'Zahrnout oddíly';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => 'Poslední 3 měsíce';
 
   @override
   String get yearToDate => 'Year to Datum';
@@ -859,14 +860,14 @@ class AppLocalizationsCs extends AppLocalizations {
   String get allTime => 'Vše Čas';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'Vytváření…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'Odesílání…';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'Soubor PDF obsahuje uvedení $producer jako producenta';
   }
 
   @override
@@ -880,14 +881,14 @@ class AppLocalizationsCs extends AppLocalizations {
       'Manage Zdraví for your whole Rodina (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'Vlastník účtu';
 
   @override
   String get ownerProfile => 'Owner Profil';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age let';
   }
 
   @override
@@ -896,10 +897,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get reachedProLimit => 'You\'ve reached the 5-member Pro limit.';
+  String get reachedProLimit => 'Dosáhli jste limitu 5 členů v kategorii Pro.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'Limit byl dosažen';
 
   @override
   String get pleaseFillNameRelationship =>
@@ -921,7 +922,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return 'Opravdu chcete odstranit $name ze svých rodinných profilů?';
   }
 
   @override
@@ -938,7 +939,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get fullNameLabel => 'Full Jméno';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => 'Vztah (např. manžel/manželka, dítě)';
 
   @override
   String get bloodTypeOptional => 'Krevní skupina (optional)';
@@ -950,7 +951,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get upgradeYourCare => 'Vylepšit YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'Chráníš celý kruh.';
 
   @override
   String get proMemberThanks =>
@@ -966,7 +967,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get manageSubscription => 'Manage Subscription';
+  String get manageSubscription => 'Správa předplatného';
 
   @override
   String get failedToLoadProfiles => 'Chyba to načíst profiles';
@@ -990,43 +991,43 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get dosage => 'Dosage';
+  String get dosage => 'Dávkování';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'Jednotka';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'Frekvence';
 
   @override
   String get notes => 'Poznámky';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'Léčba byla ukončena';
 
   @override
   String get failedToDiscontinueMedication =>
       'Chyba to discontinue medication.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'Aktualizace léků!';
 
   @override
   String get failedToUpdateMedication => 'Chyba to update medication.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted => 'Léčba označená jako dokončená';
 
   @override
   String get deleteMedication => 'Smazat Medication';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'Opravdu chcete odstranit $name?';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'Lék odstraněn';
 
   @override
   String get failedToDeleteMedication => 'Failed to Smazat medication.';
@@ -1035,10 +1036,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get editDetails => 'Upravit Details';
 
   @override
-  String get markComplete => 'Mark Complete';
+  String get markComplete => 'Označit jako dokončené';
 
   @override
-  String get discontinue => 'Discontinue';
+  String get discontinue => 'Ukončit';
 
   @override
   String nextDose(String time) {
@@ -1046,16 +1047,16 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => 'Jednou denně';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => 'Dvakrát denně';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => 'Třikrát denně';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => 'Čtyřikrát denně';
 
   @override
   String get everyOtherDay => 'Every Jiné Day';
@@ -1064,7 +1065,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get weekly => 'Týdně';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => 'podle potřeby';
 
   @override
   String get custom => 'Vlastní';
@@ -1083,13 +1084,13 @@ class AppLocalizationsCs extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted => 'Schůzka označena jako dokončená';
 
   @override
   String get failedToUpdateAppointment => 'Chyba to update appointment.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => 'Schůzka byla zrušena';
 
   @override
   String get failedToCancelAppointment => 'Failed to Zrušit appointment.';
@@ -1102,7 +1103,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return 'Přesunuto na $date v $time';
   }
 
   @override
@@ -1118,13 +1119,13 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => 'Schůzka byla smazána';
 
   @override
   String get failedToDeleteAppointment => 'Failed to Smazat appointment.';
 
   @override
-  String get reschedule => 'Reschedule';
+  String get reschedule => 'Změnit termín';
 
   @override
   String get cancelAppointment => 'Zrušit Appointment';
@@ -1138,18 +1139,18 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+      'např. „hypertenze“, „užívat dvakrát denně s jídlem“';
 
   @override
-  String get translating => 'Translating...';
+  String get translating => 'Překládá se...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return 'Překlad ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear => 'Váš překlad se zobrazí zde.';
 
   @override
   String get pleaseEnterTermToTranslate =>
@@ -1160,7 +1161,8 @@ class AppLocalizationsCs extends AppLocalizations {
       'Ne translation was returned. Please try a different term.';
 
   @override
-  String get translationFailed => 'Translation failed. Please try again.';
+  String get translationFailed =>
+      'Překlad se nezdařil. Zkuste to prosím znovu.';
 
   @override
   String get notificationSettings => 'Notification Nastavení';
@@ -1170,13 +1172,13 @@ class AppLocalizationsCs extends AppLocalizations {
       'Failed to Uložit notification setting';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => 'Hlavní vlastnosti';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'Producent';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => 'Koncepce, návrh a vývoj';
 
   @override
   String get updateAccountCredentials =>
@@ -1190,7 +1192,8 @@ class AppLocalizationsCs extends AppLocalizations {
       'VitalSeker is your AI-powered Zdraví companion that puts you in control of your Zdraví journey. With intelligent symptom tTriage a secure Zdraví pPas Pohotovost SOS alerts, and personalized weekly iPřehledy VitalSeker ensures you always have the information you need when it matters most. Built with cutting-edge AI technology and bank-grade security, your Zdraví data stays private and protected.';
 
   @override
-  String get featureAiTriageTitle => 'AI Symptom Triage';
+  String get featureAiTriageTitle =>
+      'Třídění příznaků pomocí umělé inteligence';
 
   @override
   String get featureAiTriageDesc =>
@@ -1243,7 +1246,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return 'Poslední aktualizace: Verze $version';
   }
 
   @override
@@ -1260,7 +1263,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => 'Podmínky účasti a účet';
 
   @override
   String get tosSection2Para1 =>
@@ -1287,21 +1290,22 @@ class AppLocalizationsCs extends AppLocalizations {
       'In a medical ePohotovost call your local Pohotovost number (e.g. 911, 112) immediately. Do not rely on the Service for Pohotovost response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => 'Využití služby';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => 'Souhlasíte, že nebudete:';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 =>
+      'využívat Službu k jakýmkoli protiprávním účelům;';
 
   @override
   String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+      'Pokusit se o reverzní inženýrství, dekompilaci nebo disasemblaci aplikace;';
 
   @override
   String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+      'Nahrávat obsah, který je škodlivý, podvodný nebo porušuje práva duševního vlastnictví;';
 
   @override
   String get tosSection4Bullet4 =>
@@ -1309,10 +1313,10 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+      'Službu nesmí být využívána k zasílání nevyžádaných zpráv nebo spamu.';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => 'Předplatné a platby';
 
   @override
   String get tosSection5Para1 =>
@@ -1327,7 +1331,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'We may change subscription fees upon reasonable notice. Fee changes will ne apply to your current billing period.';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => 'Vaše údaje';
 
   @override
   String get tosSection6Para1 =>
@@ -1338,18 +1342,18 @@ class AppLocalizationsCs extends AppLocalizations {
       'You may Exportovat your data at any Čas via the in-app Exportovat feature, and you may permanently Smazat your account and Vše associated data via Nastavení → Smazat Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => 'Prohlášení o vyloučení odpovědnosti';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      'SLUŽBA JE POSKYTOVÁNA „TAK, JAK JE“ A „PODLE DOSTUPNOSTI“, BEZ JAKÝCHKOLI ZÁRUK, AŤ JIŽ VÝSLOVNÝCH ČI MLČKY PŘEDPOKLÁDANÝCH, VČETNĚ, ALE NE VÝHRADNĚ, MLČKY PŘEDPOKLÁDANÝCH ZÁRUK OBCHODOVATELNOSTI, VHODNOSTI PRO URČITÝ ÚČEL NEBO NEPORUŠENÍ PRÁV TŘETÍCH STRAN.';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI Triage recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => 'Omezení odpovědnosti';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1357,7 +1361,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => 'Ukončení';
 
   @override
   String get tosSection9Para1 =>
@@ -1393,22 +1397,22 @@ class AppLocalizationsCs extends AppLocalizations {
   String get pro => 'Pro';
 
   @override
-  String get enterprise => 'Enterprise';
+  String get enterprise => 'Podnik';
 
   @override
-  String get nA => 'N/A';
+  String get nA => 'Neplatí';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Přeskočit';
 
   @override
   String get next => 'Další';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Vstupte do VitalSeker';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => 'Poznejte své tělo.';
 
   @override
   String get onboardingDescription1 =>
@@ -1429,10 +1433,10 @@ class AppLocalizationsCs extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re Zpět online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'Přihlaste se ke svému účtu VitalSeker';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'Přihlašuji se...';
 
   @override
   String get emailRequired => 'E-mail is Vyžadováno';
@@ -1470,7 +1474,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get other => 'Jiné';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => 'Vytváření účtu...';
 
   @override
   String get joinVitalSeker =>
@@ -1483,19 +1487,19 @@ class AppLocalizationsCs extends AppLocalizations {
   String get nameMinChars => 'Jméno must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => 'Minimálně 6 znaků';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => 'Zadejte alespoň jedno velké písmeno';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase => 'Zadejte alespoň jedno malé písmeno';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => 'Zadejte alespoň jedno číslo';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol => 'Zadejte alespoň jeden symbol (!@#\$%^&*)';
 
   @override
   String get confirmPasswordRequired => 'Please Potvrdit your Heslo';
@@ -1513,16 +1517,16 @@ class AppLocalizationsCs extends AppLocalizations {
   String get selectDateOfBirthHint => 'Select your Datum of birth';
 
   @override
-  String get gender => 'Gender';
+  String get gender => 'Pohlaví';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => 'Vyberte pohlaví';
 
   @override
   String get bloodType => 'Krevní skupina';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => 'Vyberte krevní skupinu';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1539,7 +1543,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Account created! Please check your E-mail to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => 'Uživatel';
 
   @override
   String get viewAll => 'View Vše';
@@ -1551,19 +1555,19 @@ class AppLocalizationsCs extends AppLocalizations {
   String get pullDownRetry => 'Pull down to Zkusit znovu';
 
   @override
-  String get goodCondition => 'Good condition';
+  String get goodCondition => 'V dobrém stavu';
 
   @override
-  String get fairCondition => 'Fair condition';
+  String get fairCondition => 'V dobrém stavu';
 
   @override
-  String get needsAttention => 'Needs attention';
+  String get needsAttention => 'Vyžaduje pozornost';
 
   @override
-  String get poorCondition => 'Poor condition';
+  String get poorCondition => 'Špatný stav';
 
   @override
-  String get critical => 'Critical';
+  String get critical => 'Kritické';
 
   @override
   String get overallHealthIndicator => 'Your overall Zdraví indicator';
@@ -1581,11 +1585,11 @@ class AppLocalizationsCs extends AppLocalizations {
   String get pastChecksAndVitals => 'Past checks & Životní funkce';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Právě teď';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '$hours hodin předtím';
   }
 
   @override
@@ -1596,14 +1600,14 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return 'před ${days}d';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => 'Kontrola příznaků';
 
   @override
-  String get severity => 'Severity';
+  String get severity => 'Závažnost';
 
   @override
   String get aiGreeting =>
@@ -1614,20 +1618,20 @@ class AppLocalizationsCs extends AppLocalizations {
       'Based on your sPříznaky here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => 'Naléhavost';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => 'Doporučení pro péči';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ Varovné signály:';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => 'Doporučení:';
 
   @override
   String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+      'Klikněte níže na „Zobrazit podrobné výsledky“, abyste si prohlédli kompletní analýzu.';
 
   @override
   String triageErrorMessage(String error) {
@@ -1635,40 +1639,41 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => 'Obecný pocit nepohody';
 
   @override
   String get selfCareRecommended => 'Self-Care Doporučeno';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => 'Domluvte si schůzku';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => 'Navštivte pohotovost';
 
   @override
   String get seekEmergencyCare => 'Seek Pohotovost Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider =>
+      'Obraťte se na zdravotnického pracovníka';
 
   @override
-  String get mild => 'Mild';
+  String get mild => 'Mírný';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => 'Střední';
 
   @override
-  String get significant => 'Significant';
+  String get significant => 'Významný';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => 'Závažné';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => 'Extrémní';
 
   @override
-  String get triageResults => 'Triage Results';
+  String get triageResults => 'Výsledky třídění pacientů';
 
   @override
   String urgencyScoreCaption(int score) {
@@ -1676,19 +1681,19 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => 'Varovné signály';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => 'Doporučení';
 
   @override
   String get possibleConditions => 'Possible Onemocnění';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => 'Doplňující otázky';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Ukládání...';
 
   @override
   String get seeDoctorSoon => 'See a Lékař Soon';
@@ -1713,7 +1718,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get escalateMedium1 => 'Příznaky persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 => 'Bolest se zesiluje nebo se stává neúnosnou';
 
   @override
   String get escalateMedium3 => 'New red-flag Příznaky appear';
@@ -1722,8 +1727,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get escalateHigh1 => 'Příznaky rapidly worsen';
 
   @override
-  String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+  String get escalateHigh2 => 'Objeví se potíže s dýcháním nebo tlak na hrudi';
 
   @override
   String get escalateHigh3 =>
@@ -1744,7 +1748,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get showQrCode => 'Show QR kód';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'Neaktivní';
 
   @override
   String get knownAllergies => 'Known Alergie';
@@ -1756,7 +1760,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get chronicConditions => 'Chronické onemocnění';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'Pojištění';
 
   @override
   String get qrCode => 'QR kód';
@@ -1775,11 +1779,11 @@ class AppLocalizationsCs extends AppLocalizations {
   String get heightAndWeight => 'Výška & Váha';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'Není nastaveno';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count let';
   }
 
   @override
@@ -1787,7 +1791,7 @@ class AppLocalizationsCs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Alergie',
+      other: '$count Allergies',
       one: '$count Allergy',
     );
     return '$_temp0';
@@ -1798,7 +1802,7 @@ class AppLocalizationsCs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Léky',
+      other: '$count Medications',
       one: '$count Medication',
     );
     return '$_temp0';
@@ -1812,7 +1816,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Point this at any QR reader to securely Sdílet your vŽivotní funkce';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'Stáhnout';
 
   @override
   String get share => 'Sdílet';
@@ -1828,14 +1832,14 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'Platí po dobu ${minutes}h ${hours}m';
   }
 
   @override
   String get emergencySosTitle => 'SOS pohotovost';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'Počkejte ještě chvilku...';
 
   @override
   String get nearbyHospitals => 'Blízké Hospitals';
@@ -1858,10 +1862,10 @@ class AppLocalizationsCs extends AppLocalizations {
       'SOS sends your GPS Lokace to your Pohotovost contacts via SMS. Make sure your contacts are configured in your pProfil';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'ODESLÁNÍ';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS se nezdařilo';
 
   @override
   String get sosActive => 'SOS ACTIVE';
@@ -1870,21 +1874,21 @@ class AppLocalizationsCs extends AppLocalizations {
   String get sendingEmergencyAlert => 'Sending Pohotovost Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'Upozornění se nepodařilo odeslat';
 
   @override
   String get emergencyAlertSent => 'Pohotovost Alert Sent';
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'Odesílání za $seconds…';
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'Zkus to znovu';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => 'Zavřít';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1903,13 +1907,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get liveLocation => 'Live Lokace';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => 'Načítání GPS souřadnic…';
 
   @override
   String get locationUnavailable => 'Lokace unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => 'Upozornění kontaktům';
 
   @override
   String contactsNotifiedCount(int count) {
@@ -1927,7 +1931,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count TENTO MĚSÍC';
   }
 
   @override
@@ -1940,17 +1944,17 @@ class AppLocalizationsCs extends AppLocalizations {
   String get searchLogs => 'Hledat logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => 'Zelená';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => 'Žlutá';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'Síť';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return 'Závažnost: $score/10';
   }
 
   @override
@@ -1958,21 +1962,21 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'Oblasti těla: $regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return 'Doba trvání: $duration';
   }
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'Doporučení AI: $recommendation';
   }
 
   @override
-  String get viewFullTriageResult => 'View Full Triage Result';
+  String get viewFullTriageResult => 'Zobrazit úplný výsledek triáže';
 
   @override
   String notesCaption(String notes) {
@@ -1986,7 +1990,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get weeklyBreakdown => 'Týdně Breakdown';
 
   @override
-  String get proAnalysis => 'Pro Analysis';
+  String get proAnalysis => 'Profesionální analýza';
 
   @override
   String get yourHealthThisWeek => 'Your Zdraví this week';
@@ -1997,46 +2001,47 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'Analýza trendů';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => 'ČETNOST PŘÍZNAKŮ (4W)';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => 'Vysoká';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'Průměr';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => 'Nízká';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => 'Prodloužit fázi hlubokého spánku';
 
   @override
   String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+      'Na konci tohoto týdne vám poklesla tělesná teplota. Zkuste udržovat v místnosti nižší teplotu (65°F), abyste urychlili nástup fází hlubokého spánku.';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => 'Hydratace před zátěží';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'V odpoledních záznamech byly zaznamenány známky mírné dehydratace. Přesuňte 40 % svého denního příjmu vody na dobu před 10. hodinou dopoledne, abyste stabilizovali rychlost metabolismu.';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'Rytmus činnosti';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      'Nárůsty bolesti kloubů souvisejí s náhlým zvýšením intenzity. Než přejdete k kardio cvičení nad zónu 2, nezapomeňte na 10minutovou dynamickou rozcvičku.';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => 'Individuální přístup';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights =>
+      'Aktualizace vašich poznatků o umělé inteligenci…';
 
   @override
   String get generateNewInsights => 'Generate New Přehledy';
@@ -2045,7 +2050,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get symptoms => 'Příznaky';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => 'Průměrná závažnost';
 
   @override
   String get scoreChange => 'Skóre Change';
@@ -2060,7 +2065,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String proPlanMonthly(double price) {
-    return 'Pro Plan - \$$price/mo';
+    return 'Pro Plan – \$$price/měsíc';
   }
 
   @override
@@ -2098,7 +2103,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+      'Tělesná teplota by měla být v rozmezí 30 až 45 °C';
 
   @override
   String get vitalRangeHintOxygen =>
@@ -2137,7 +2142,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return 'Text je příliš dlouhý (max. $max znaků). Zkraťte jej a zkuste to znovu.';
   }
 
   @override
@@ -2148,7 +2153,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get privacyPolicyTitle => 'Soukromí Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => 'Poslední aktualizace: březen 2025';
 
   @override
   String privacyIntro(String appName) {
@@ -2156,21 +2161,21 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '1. Shromažďování údajů';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: NJméno E-mail address, Telefon number, Datum of birth, and gender. • Zdraví Data: Blood type, aAlergie chronic conditions, mLéky vital signs, symptom logs, and Triage results. • Pohotovost Contacts: Names, Telefon numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sPodpora • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our Zdraví companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage => '2. Ukládání a šifrování dat';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• QR kód Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '3. Soulad s nařízením GDPR';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2178,7 +2183,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '4. Vaše práva';
 
   @override
   String get privacyRightsBody =>
@@ -2198,22 +2203,22 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get chooseFromGallery => 'Choose from Gallery';
+  String get chooseFromGallery => 'Vyberte si z galerie';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => 'Vyfoťte si fotku';
 
   @override
   String get removePhoto => 'Odebrat Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => 'Avatar byl aktualizován!';
 
   @override
   String get avatarUploadFailed => 'Chyba to upload avatar. Please try again.';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => 'Avatar byl odstraněn.';
 
   @override
   String get avatarRemoveFailed =>
@@ -2235,10 +2240,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => 'Osobní údaje';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => 'Rozměry';
 
   @override
   String get heightCm => 'Výška (cm)';
@@ -2256,7 +2261,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get phoneNumber => 'Telefon Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => 'např. manžel/manželka, rodič, sourozenec';
 
   @override
   String get addAllergy => 'Přidat Allergy';
@@ -2288,7 +2293,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+      'Dobrý pokrok. Několik oblastí by si zasloužilo větší pozornost.';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2319,7 +2324,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get noRiskFactors => 'Ne risk factors identified';
 
   @override
-  String get recentTriageResults => 'Recent Triage Results';
+  String get recentTriageResults => 'Nejnovější výsledky triáže';
 
   @override
   String get noTriageResults => 'Ne Triage results yet';
@@ -2328,7 +2333,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get recommendedActions => 'Doporučeno Akce';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => 'Domluvte si preventivní prohlídku';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2342,18 +2347,18 @@ class AppLocalizationsCs extends AppLocalizations {
       'Track your blood pressure, heart rate, and Jiné key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => 'Spustit kontrolu příznaků';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI Triage to assess any Příznaky you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => 'Zlepšete kvalitu spánku';
 
   @override
   String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+      'Kvalitní spánek je nezbytný pro regeneraci a správnou funkci imunitního systému.';
 
   @override
   String get actionStayActive => 'Stay Aktivní';
@@ -2367,12 +2372,12 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '$minutes minut předtím';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '$weeks před $weeks týdny';
   }
 
   @override
@@ -2386,7 +2391,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Start logging your vital signs to track your Zdraví over Čas';
 
   @override
-  String get logFirstVital => 'Log Your First Vital';
+  String get logFirstVital => 'Zaznamenejte svůj první životní údaj';
 
   @override
   String get day => 'Den';
@@ -2410,13 +2415,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => 'Záznamy o životně důležitých funkcích';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'TYP VITAL';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => 'HODNOTA';
 
   @override
   String get systolic => 'Systolický';
@@ -2440,7 +2445,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return '$vitalType byl úspěšně uložen';
   }
 
   @override
@@ -2471,16 +2476,16 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'Žádné readings found for the selected time period';
+      'No readings found for the selected time period';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '1 přečtení';
 
   @override
   String get average => 'Průměr';
 
   @override
-  String get min => 'Min';
+  String get min => 'Mám';
 
   @override
   String get max => 'Max';
@@ -2489,7 +2494,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get latest => 'Poslední';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => 'ČTENÍ';
 
   @override
   String get value => 'Hodnota';
@@ -2499,7 +2504,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return 'Zobrazuje se 20 z $total záznamů';
   }
 
   @override
@@ -2509,13 +2514,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get medicationNameLabel => 'Medication Jméno';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => 'Dávkování';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'Jednotka';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => 'Frekvence';
 
   @override
   String get startDateLabel => 'Start Datum';
@@ -2527,24 +2532,24 @@ class AppLocalizationsCs extends AppLocalizations {
   String get endDateLabel => 'End Datum';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => 'ČASY PODÁNÍ';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'Dávka $number';
   }
 
   @override
   String get notesOptional => 'Poznámky (oVolitelné';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => 'Připomenutí';
 
   @override
   String get saveMedication => 'Uložit Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully => 'Lék byl úspěšně přidán!';
 
   @override
   String get medicationAddFailed =>
@@ -2573,38 +2578,38 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+      'Schůzka byla úspěšně naplánována!';
 
   @override
   String get appointmentScheduleFailed =>
       'Chyba to schedule appointment. Please try again.';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => 'Kardiolog';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => 'Dermatolog';
 
   @override
-  String get specialtyEndocrinologist => 'Endocrinologist';
+  String get specialtyEndocrinologist => 'Endokrinolog';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => 'Všeobecné lékařství';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => 'Neurolog';
 
   @override
-  String get specialtyOphthalmologist => 'Ophthalmologist';
+  String get specialtyOphthalmologist => 'Oftalmolog';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => 'Ortopedický';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => 'Pediatr';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => 'Psychiatr';
 
   @override
   String get specialtyOther => 'Jiné';
@@ -2622,31 +2627,31 @@ class AppLocalizationsCs extends AppLocalizations {
   String get addMedicalRecordTitle => 'Přidat Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => 'Název';
 
   @override
   String get typeLabel => 'Typ';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => 'Výsledky laboratorních vyšetření';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => 'Předpisy';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => 'Zobrazování';
 
   @override
   String get recordTypeOther => 'Jiné';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => 'Popis';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => 'Záznam byl aktualizován!';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => 'Záznam byl přidán!';
 
   @override
   String get recordUpdateFailed => 'Chyba to update record.';
@@ -2663,7 +2668,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => 'Záznam byl smazán.';
 
   @override
   String get recordDeleteFailed => 'Failed to Smazat record.';
@@ -2684,11 +2689,11 @@ class AppLocalizationsCs extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => 'Další možnosti';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Krok $current z $total';
   }
 
   @override
@@ -2727,46 +2732,46 @@ class AppLocalizationsCs extends AppLocalizations {
       'Describe any Jiné details O aplikaci your Příznaky or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => 'Celková závažnost';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => 'Mírný';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => 'Závažné';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => 'Velmi mírné';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => 'Mírný';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => 'Střední';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => 'Rozptylující';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => 'Závažné';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => 'Nesnesitelné';
 
   @override
   String get durationToday => 'Dnes (started tDnes';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => '1–3 dny';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => '4–7 dní';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => '1–2 týdny';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => 'Více než 2 týdny';
 
   @override
   String get age => 'Věk';
@@ -2775,19 +2780,19 @@ class AppLocalizationsCs extends AppLocalizations {
   String get ageHint => 'Enter your Věk';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => 'roky';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => 'Biologické pohlaví';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => 'např. cukrovka, hypertenze, astma';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint => 'např. Lisinopril 10 mg, Metformin 500 mg';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => 'Shrnutí';
 
   @override
   String get analyzeWithAi => 'Analyzovat pomocí AI';
@@ -2796,7 +2801,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get back => 'Zpět';
 
   @override
-  String get triageFailed => 'Triage analysis failed. Please try again.';
+  String get triageFailed => 'Analýza třídění selhala. Zkuste to prosím znovu.';
 
   @override
   String get symptomFever => 'Horečka';
@@ -2808,7 +2813,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get symptomCough => 'Kašel';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => 'Krátký dech';
 
   @override
   String get symptomFatigue => 'Únava';
@@ -2820,40 +2825,40 @@ class AppLocalizationsCs extends AppLocalizations {
   String get symptomNausea => 'Nevolnost';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => 'Zimnice';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => 'Bolest svalů';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => 'Nespavost';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => 'Bolest na hrudi';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => 'Bolest břicha';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => 'Bolest v krku';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => 'Rýma';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => 'Zvracení';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => 'Průjem';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => 'Vyrážka';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => 'Bolesti kloubů';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => 'Nákup byl zrušen.';
 
   @override
   String get noPurchasesToRestore => 'Ne previous purchases found to rObnovit';

@@ -21,7 +21,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get history => 'Verlauf';
 
   @override
-  String get triage => 'Triage';
+  String get triage => 'Sortierung';
 
   @override
   String get insights => 'Einblicke';
@@ -699,7 +699,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get currentPlan => 'Aktueller Plan';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Herabstufung';
 
   @override
   String upgradeToPlan(String plan) {
@@ -849,7 +849,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Gehe zu Profil > Abonnement und wähle den Free-Plan, um ein Downgrade durchzuführen. Deine Pro- oder Enterprise-Funktionen bleiben bis zum Ende deiner aktuellen Abrechnungsperiode aktiv.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
@@ -1803,8 +1803,8 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergien',
-      one: '$count Allergie',
+      other: '$count Allergies',
+      one: '$count Allergy',
     );
     return '$_temp0';
   }
@@ -1814,8 +1814,8 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medikamente',
-      one: '$count Medikament',
+      other: '$count Medications',
+      one: '$count Medication',
     );
     return '$_temp0';
   }
@@ -1932,8 +1932,8 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Kontakte per SMS erreicht',
-      one: '$count Kontakt per SMS erreicht',
+      other: '$count contacts reached via SMS',
+      one: '$count contact reached via SMS',
     );
     return '$_temp0';
   }
@@ -2489,7 +2489,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'Keine Messungen für den gewählten Zeitraum gefunden';
+      'No readings found for the selected time period';
 
   @override
   String get singleReading => '1 Messung';
@@ -2498,7 +2498,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get average => 'Durchschnitt';
 
   @override
-  String get min => 'Min';
+  String get min => 'Ich habe';
 
   @override
   String get max => 'Max';

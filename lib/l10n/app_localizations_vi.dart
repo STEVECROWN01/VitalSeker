@@ -165,7 +165,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get monitorAtHome => 'Monitor at Trang chủ';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => 'Khi nào cần báo cáo lên cấp trên';
 
   @override
   String get saveToPassport => 'Lưu to Hộ chiếu';
@@ -219,7 +219,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get privacyData => 'Quyền riêng tư & Dữ liệu';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'Bảo mật & Lưu trữ';
 
   @override
   String get exportData => 'Xuất dữ liệu';
@@ -258,10 +258,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get upgradeToPro => 'Nâng cấp lên Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'Hãy bảo vệ toàn bộ vòng tròn.';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'Tìm hiểu thêm';
 
   @override
   String get medications => 'Thuốc';
@@ -330,10 +330,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get shareMyLocation => 'Chia sẻ vị trí của tôi';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'Tìm bệnh viện gần đây';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'Quay số nhanh';
 
   @override
   String get emergencyContacts => 'Liên hệ khẩn cấp';
@@ -361,7 +361,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get noHistoryYet => 'Chưa có lịch sử';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere =>
+      'Nhật ký triệu chứng của bạn sẽ hiển thị tại đây';
 
   @override
   String get startFirstTriage =>
@@ -378,14 +379,14 @@ class AppLocalizationsVi extends AppLocalizations {
       'Không Thông tin chi tiết generated yet. Check Quay lại on Monday for your weekly AI Sức khỏe summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'Tạo ngay';
 
   @override
   String get upgradeProInsights =>
       'Nâng cấp to Pro to unlock AI-powered weekly Sức khỏe iThông tin chi tiết';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Gói Pro Plan';
 
   @override
   String get viewAllPlans => 'View Tất cả plans';
@@ -394,13 +395,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get exportMedicalReport => 'Xuất Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'Tạo tệp PDF';
 
   @override
-  String get sendByEmail => 'Send by Email';
+  String get sendByEmail => 'Gửi qua email';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview => 'Tổng quan về bệnh nhân và các chỉ số sinh tồn';
 
   @override
   String get symptomsTriageLog => 'Triệu chứng & Phân loại Log';
@@ -409,16 +410,16 @@ class AppLocalizationsVi extends AppLocalizations {
   String get medicationsAllergies => 'Thuốc & Dị ứng';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'Tóm tắt phân tích AI';
 
   @override
   String get dateRange => 'Ngày Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => '30 ngày qua';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'XEM TRƯỚC';
 
   @override
   String get translate => 'Dịch';
@@ -430,8 +431,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get targetLanguage => 'Ngôn ngữ đích';
 
   @override
-  String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+  String get enterTextToTranslate => 'Nhập thuật ngữ hoặc cụm từ y tế cần dịch';
 
   @override
   String translationResult(Object lang) {
@@ -440,7 +440,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'Các tùy chọn thông báo của bạn đã được lưu vào tài khoản. Tính năng tùy chỉnh lịch trình hiện đã có sẵn — hãy nhấn vào bất kỳ lịch trình nào để thay đổi.';
 
   @override
   String get triageReminders => 'Nhắc nhở phân loại';
@@ -490,7 +490,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sendSOS => 'Gửi SOS';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'Bạn có chắc chắn muốn đăng xuất không?';
 
   @override
   String get failedToSignOut => 'Đăng xuất thất bại. Vui lòng thử lại.';
@@ -502,16 +502,16 @@ class AppLocalizationsVi extends AppLocalizations {
   String get triageSessions => 'Phân loại Sessions';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'Số ngày hoạt động';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'Đang đăng xuất...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials => 'Quản lý chứng chỉ y tế';
 
   @override
   String connectedMembers(num count) {
@@ -525,10 +525,10 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'Cảnh báo & lời nhắc thông minh';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'Tài liệu và hình ảnh';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical Điều khoản';
@@ -537,7 +537,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get emergencyMedicalCard => 'Khẩn cấp medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'Đang bật mã hóa AES-256';
 
   @override
   String get downloadYourHealthData => 'Download your Sức khỏe data';
@@ -546,14 +546,14 @@ class AppLocalizationsVi extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pMật khẩu account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'Câu hỏi thường gặp & tài liệu hướng dẫn';
 
   @override
   String get priorityProSupport => 'Hỗ trợ Pro ưu tiên';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Phiên bản $version';
   }
 
   @override
@@ -569,7 +569,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get confirmNewPassword => 'Xác nhận mật khẩu mới';
 
   @override
-  String get update => 'Update';
+  String get update => 'Cập nhật';
 
   @override
   String get passwordsDoNotMatch => 'Mật khẩu không khớp';
@@ -596,13 +596,13 @@ class AppLocalizationsVi extends AppLocalizations {
       'Xóa tài khoản thất bại. Vui lòng thử lại hoặc liên hệ hỗ trợ.';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'Quản lý gói đăng ký của bạn';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently Xóa your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'Kết thúc phiên làm việc hiện tại';
 
   @override
   String get dark => 'Tối';
@@ -620,20 +620,20 @@ class AppLocalizationsVi extends AppLocalizations {
   String get restore => 'Khôi phục';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'Chọn gói dịch vụ của bạn';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'Khám phá toàn bộ sức mạnh của VitalSeker';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'Việc tích hợp thanh toán trong ứng dụng (RevenueCat / StoreKit) hiện đang trong quá trình xử lý. Các thay đổi về gói dịch vụ sẽ được áp dụng trực tiếp vào tài khoản của bạn để thử nghiệm.';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'mãi mãi';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/tháng';
 
   @override
   String get freePlanFeature1 => '3 AI Phân loại sessions/month';
@@ -642,7 +642,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get freePlanFeature2 => 'Basic Sức khỏe Hộ chiếu';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'Chia sẻ mã QR';
 
   @override
   String get freePlanFeature4 => 'SOS khẩn cấp alerts';
@@ -669,31 +669,32 @@ class AppLocalizationsVi extends AppLocalizations {
   String get proPlanFeature6 => 'Priority Hỗ trợ';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 =>
+      'Tất cả các tính năng trong phiên bản Pro';
 
   @override
   String get enterprisePlanFeature2 => 'Unlimited Gia đình profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'Thiết kế thương hiệu theo yêu cầu';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Quyền truy cập API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Hỗ trợ';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'Bảo hành SLA';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'GIÁ TRỊ TỐT NHẤT';
 
   @override
   String get currentPlan => 'Gói hiện tại';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Hạ bậc';
 
   @override
   String upgradeToPlan(String plan) {
@@ -702,7 +703,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+      'Bạn phải đăng nhập để thay đổi gói dịch vụ.';
 
   @override
   String switchToPlan(String plan) {
@@ -711,11 +712,11 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get downgradeToFreeMessage =>
-      'You will lose access to Pro features at the end of your current billing period. Continue?';
+      'Bạn sẽ không còn quyền truy cập vào các tính năng Pro khi kết thúc kỳ thanh toán hiện tại. Bạn có muốn tiếp tục không?';
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return 'Thao tác này sẽ cập nhật gói đăng ký của bạn thành $plan. Trong môi trường sản xuất, thao tác này sẽ kích hoạt tính năng giới hạn truy cập của nền tảng; hiện tại, thay đổi này được áp dụng trực tiếp vào tài khoản của bạn để thử nghiệm.';
   }
 
   @override
@@ -732,10 +733,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'Không thể cập nhật đăng ký. Vui lòng thử lại.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'Các giao dịch mua hàng đã được khôi phục.';
 
   @override
   String get failedToRestorePurchases => 'Failed to Khôi phục purchases.';
@@ -754,25 +755,25 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'Các câu hỏi thường gặp';
 
   @override
   String get contactSupport => 'Contact Hỗ trợ';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'Chủ đề';
 
   @override
-  String get message => 'Message';
+  String get message => 'Thông điệp';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'Gửi';
 
   @override
   String get otherWaysToReachUs => 'Khác Ways to Reach Us';
 
   @override
-  String get emailUs => 'Email Us';
+  String get emailUs => 'Gửi email cho chúng tôi';
 
   @override
   String get supportRequestSaved =>
@@ -780,13 +781,13 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+      'Vui lòng điền cả tiêu đề và nội dung tin nhắn.';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength => 'Tiêu đề phải có ít nhất 5 ký tự.';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength => 'Tin nhắn phải có ít nhất 10 ký tự.';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -794,7 +795,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'Đã nhận được yêu cầu khẩn cấp! Đội ngũ của chúng tôi sẽ ưu tiên xử lý vấn đề này.';
 
   @override
   String get supportRequestSent =>
@@ -848,10 +849,10 @@ class AppLocalizationsVi extends AppLocalizations {
       'Configure and preview your comprehensive Sức khỏe summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'Bao gồm các phần';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => '3 tháng gần đây';
 
   @override
   String get yearToDate => 'Year to Ngày';
@@ -860,14 +861,14 @@ class AppLocalizationsVi extends AppLocalizations {
   String get allTime => 'Tất cả Giờ';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'Đang tạo…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'Đang gửi…';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'Tệp PDF có ghi tên $producer với tư cách là nhà sản xuất';
   }
 
   @override
@@ -881,26 +882,27 @@ class AppLocalizationsVi extends AppLocalizations {
       'Manage Sức khỏe for your whole Gia đình (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'Chủ tài khoản';
 
   @override
   String get ownerProfile => 'Owner Hồ sơ';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age tuổi';
   }
 
   @override
   String scoreValue(int score) {
-    return 'Score: $score';
+    return 'Điểm số: $score';
   }
 
   @override
-  String get reachedProLimit => 'You\'ve reached the 5-member Pro limit.';
+  String get reachedProLimit =>
+      'Bạn đã đạt đến giới hạn 5 thành viên của gói Pro.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'Đã đạt đến giới hạn';
 
   @override
   String get pleaseFillNameRelationship =>
@@ -922,7 +924,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return 'Bạn có chắc chắn muốn xóa $name khỏi hồ sơ gia đình của mình không?';
   }
 
   @override
@@ -939,7 +941,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get fullNameLabel => 'Full Tên';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => 'Mối quan hệ (ví dụ: vợ/chồng, con cái)';
 
   @override
   String get bloodTypeOptional => 'Nhóm máu (optional)';
@@ -951,7 +953,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get upgradeYourCare => 'Nâng cấp YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'Bạn đang bảo vệ toàn bộ vòng tròn.';
 
   @override
   String get proMemberThanks =>
@@ -970,7 +972,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get manageSubscription => 'Quản lý gói đăng ký';
 
   @override
-  String get failedToLoadProfiles => 'Failed to load profiles';
+  String get failedToLoadProfiles => 'Không tải được hồ sơ';
 
   @override
   String get searchMedications => 'Tìm kiếm medThuốc';
@@ -987,14 +989,14 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'Chỉnh sửa $name';
   }
 
   @override
   String get dosage => 'Liều lượng';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'Đơn vị';
 
   @override
   String get frequency => 'Tần suất';
@@ -1003,31 +1005,31 @@ class AppLocalizationsVi extends AppLocalizations {
   String get notes => 'Ghi chú';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'Ngừng dùng thuốc';
 
   @override
-  String get failedToDiscontinueMedication =>
-      'Failed to discontinue medication.';
+  String get failedToDiscontinueMedication => 'Không ngừng dùng thuốc.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'Danh sách thuốc đã được cập nhật!';
 
   @override
-  String get failedToUpdateMedication => 'Failed to update medication.';
+  String get failedToUpdateMedication => 'Không thể cập nhật thông tin thuốc.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted =>
+      'Thuốc đã được đánh dấu là đã dùng xong';
 
   @override
   String get deleteMedication => 'Xóa thuốc';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'Bạn có chắc chắn muốn xóa $name không?';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'Thuốc đã bị xóa';
 
   @override
   String get failedToDeleteMedication => 'Failed to Xóa medication.';
@@ -1047,28 +1049,28 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => 'Mỗi ngày một lần';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => 'Hai lần mỗi ngày';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => 'Ba lần mỗi ngày';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => 'Bốn lần mỗi ngày';
 
   @override
   String get everyOtherDay => 'Every Khác Day';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Hàng tuần';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => 'Khi cần thiết';
 
   @override
-  String get custom => 'Custom';
+  String get custom => 'Tùy chỉnh';
 
   @override
   String get all => 'Tất cả';
@@ -1084,13 +1086,14 @@ class AppLocalizationsVi extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted =>
+      'Cuộc hẹn đã được đánh dấu là đã hoàn thành';
 
   @override
-  String get failedToUpdateAppointment => 'Failed to update appointment.';
+  String get failedToUpdateAppointment => 'Không thể cập nhật lịch hẹn.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => 'Cuộc hẹn đã bị hủy';
 
   @override
   String get failedToCancelAppointment => 'Failed to Hủy appointment.';
@@ -1103,12 +1106,11 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return 'Đã dời lịch sang ngày $date lúc $time';
   }
 
   @override
-  String get failedToRescheduleAppointment =>
-      'Failed to reschedule appointment.';
+  String get failedToRescheduleAppointment => 'Không thể đổi lịch hẹn.';
 
   @override
   String get deleteAppointment => 'Xóa lịch hẹn';
@@ -1119,7 +1121,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => 'Lịch hẹn đã bị xóa';
 
   @override
   String get failedToDeleteAppointment => 'Failed to Xóa appointment.';
@@ -1139,22 +1141,22 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+      'ví dụ: \"tăng huyết áp\", \"uống hai lần mỗi ngày cùng với bữa ăn\"';
 
   @override
   String get translating => 'Đang dịch...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return 'Bản dịch ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear => 'Bản dịch của bạn sẽ xuất hiện tại đây.';
 
   @override
   String get pleaseEnterTermToTranslate =>
-      'Please enter a medical term or phrase to translate.';
+      'Vui lòng nhập một thuật ngữ hoặc cụm từ y tế để dịch.';
 
   @override
   String get noTranslationReturned =>
@@ -1171,16 +1173,17 @@ class AppLocalizationsVi extends AppLocalizations {
       'Lưu cài đặt thông báo thất bại';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => 'Các tính năng chính';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'Nhà sản xuất';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => 'Ý tưởng, Thiết kế & Phát triển';
 
   @override
-  String get updateAccountCredentials => 'Update your account credentials';
+  String get updateAccountCredentials =>
+      'Cập nhật thông tin đăng nhập tài khoản của bạn';
 
   @override
   String get legal => 'Legal';
@@ -1244,7 +1247,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return 'Cập nhật lần cuối: Phiên bản $version';
   }
 
   @override
@@ -1261,7 +1264,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => 'Điều kiện tham gia & Tài khoản';
 
   @override
   String get tosSection2Para1 =>
@@ -1288,21 +1291,22 @@ class AppLocalizationsVi extends AppLocalizations {
       'In a medical eKhẩn cấp call your local Khẩn cấp number (e.g. 911, 112) immediately. Do not rely on the Service for Khẩn cấp response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => 'Việc sử dụng Dịch vụ';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => 'Bạn đồng ý KHÔNG:';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 =>
+      'Sử dụng Dịch vụ cho bất kỳ mục đích bất hợp pháp nào;';
 
   @override
   String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+      'Cố gắng thực hiện kỹ thuật đảo ngược, giải biên hoặc giải mã ứng dụng;';
 
   @override
   String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+      'Tải lên nội dung có tính chất độc hại, lừa đảo hoặc vi phạm quyền sở hữu trí tuệ;';
 
   @override
   String get tosSection4Bullet4 =>
@@ -1310,10 +1314,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+      'Sử dụng Dịch vụ để gửi các thông điệp không được yêu cầu hoặc thư rác.';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => 'Đăng ký & Thanh toán';
 
   @override
   String get tosSection5Para1 =>
@@ -1325,10 +1329,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get tosSection5Para3 =>
-      'We may change subscription fees upon reasonable notice. Fee changes will not apply to your current billing period.';
+      'Chúng tôi có thể điều chỉnh phí đăng ký sau khi thông báo trước một khoảng thời gian hợp lý. Những thay đổi về phí sẽ không áp dụng cho kỳ thanh toán hiện tại của quý khách.';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => 'Dữ liệu của bạn';
 
   @override
   String get tosSection6Para1 =>
@@ -1339,18 +1343,18 @@ class AppLocalizationsVi extends AppLocalizations {
       'You may Xuất your data at any Giờ via the in-app Xuất feature, and you may permanently Xóa your account and Tất cả associated data via Cài đặt → Xóa Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => 'Lưu ý';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      'DỊCH VỤ ĐƯỢC CUNG CẤP “NGUYÊN TRẠNG” VÀ “THEO TÌNH TRẠNG CÓ SẴN” MÀ KHÔNG CÓ BẤT KỲ LOẠI BẢO HÀNH NÀO, dù là bảo đảm rõ ràng hay ngụ ý, bao gồm nhưng không giới hạn ở các bảo đảm ngụ ý về tính phù hợp để bán, tính phù hợp cho một mục đích cụ thể, hoặc không vi phạm quyền sở hữu trí tuệ.';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI Phân loại recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => 'Giới hạn trách nhiệm';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1358,7 +1362,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => 'Chấm dứt hợp đồng';
 
   @override
   String get tosSection9Para1 =>
@@ -1376,7 +1380,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'We may update these Điều khoản from Giờ to tGiờ We will notify you of material changes via the app or by eEmail Continued use of the Service after changes take effect constitutes acceptance of the revised TĐiều khoản';
 
   @override
-  String get tosSection11Title => 'Contact';
+  String get tosSection11Title => 'Liên hệ';
 
   @override
   String get tosSection11Para1 =>
@@ -1397,7 +1401,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get enterprise => 'Doanh nghiệp';
 
   @override
-  String get nA => 'N/A';
+  String get nA => 'Không áp dụng';
 
   @override
   String get skip => 'Bỏ qua';
@@ -1406,10 +1410,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get next => 'Tiếp theo';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Truy cập VitalSeker';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => 'Hãy hiểu rõ cơ thể mình.';
 
   @override
   String get onboardingDescription1 =>
@@ -1430,10 +1434,10 @@ class AppLocalizationsVi extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re Quay lại online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'Đăng nhập vào tài khoản VitalSeker của bạn';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'Đang đăng nhập...';
 
   @override
   String get emailRequired => 'Email is Bắt buộc';
@@ -1452,7 +1456,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String passwordResetSent(String email) {
-    return 'Password reset link sent to $email';
+    return 'Liên kết đặt lại mật khẩu đã được gửi đến $email';
   }
 
   @override
@@ -1471,7 +1475,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get other => 'Khác';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => 'Đang tạo tài khoản...';
 
   @override
   String get joinVitalSeker =>
@@ -1484,19 +1488,19 @@ class AppLocalizationsVi extends AppLocalizations {
   String get nameMinChars => 'Tên must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => 'Ít nhất 6 ký tự';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => 'Phải có ít nhất một chữ cái viết hoa';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase => 'Phải có ít nhất một chữ cái viết thường';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => 'Hãy nhập ít nhất một số';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol => 'Hãy nhập ít nhất một ký tự đặc biệt (!@#\$%^&*)';
 
   @override
   String get confirmPasswordRequired => 'Please Xác nhận your Mật khẩu';
@@ -1517,13 +1521,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get gender => 'Giới tính';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => 'Chọn giới tính';
 
   @override
   String get bloodType => 'Nhóm máu';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => 'Chọn nhóm máu';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1540,13 +1544,13 @@ class AppLocalizationsVi extends AppLocalizations {
       'Account created! Please check your Email to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => 'Người dùng';
 
   @override
   String get viewAll => 'Xem tất cả';
 
   @override
-  String get failedLoadRecentChecks => 'Failed to load recent checks';
+  String get failedLoadRecentChecks => 'Không thể tải các giao dịch gần đây';
 
   @override
   String get pullDownRetry => 'Pull down to Thử lại';
@@ -1576,17 +1580,17 @@ class AppLocalizationsVi extends AppLocalizations {
   String get aiPoweredTriage60s => 'AI-powered Phân loại in 60 seconds';
 
   @override
-  String get qrAndMedicalInfo => 'QR & medical info';
+  String get qrAndMedicalInfo => 'Mã QR và thông tin y tế';
 
   @override
   String get pastChecksAndVitals => 'Past checks & Chỉ số sinh tồn';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Vừa nãy';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '$hours giờ trước';
   }
 
   @override
@@ -1597,11 +1601,11 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return '$days ngày trước';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => 'Kiểm tra triệu chứng';
 
   @override
   String get severity => 'Mức độ';
@@ -1615,91 +1619,92 @@ class AppLocalizationsVi extends AppLocalizations {
       'Based on your sTriệu chứng here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => 'Tính cấp bách';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => 'Khuyến nghị về chăm sóc';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ Các dấu hiệu cảnh báo:';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => 'Các khuyến nghị:';
 
   @override
   String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+      'Nhấn vào “Xem kết quả chi tiết” bên dưới để xem phân tích đầy đủ.';
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $error';
+    return 'Xin lỗi, tôi đã gặp lỗi khi phân tích các triệu chứng của bạn. Vui lòng thử lại hoặc mô tả các triệu chứng của bạn theo cách khác.\n\nLỗi: $error';
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => 'Cảm giác khó chịu chung';
 
   @override
-  String get selfCareRecommended => 'Self-Care Recommended';
+  String get selfCareRecommended => 'Khuyến nghị chăm sóc bản thân';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => 'Đặt lịch hẹn';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => 'Đến phòng khám cấp cứu';
 
   @override
   String get seekEmergencyCare => 'Seek Khẩn cấp Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider =>
+      'Hãy tham khảo ý kiến của chuyên gia y tế';
 
   @override
-  String get mild => 'Mild';
+  String get mild => 'Nhẹ nhàng';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => 'Trung bình';
 
   @override
-  String get significant => 'Significant';
+  String get significant => 'Quan trọng';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => 'Nặng';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => 'Cực đoan';
 
   @override
   String get triageResults => 'Kết quả phân loại';
 
   @override
   String urgencyScoreCaption(int score) {
-    return 'Urgency Score: $score/100';
+    return 'Điểm mức độ khẩn cấp: $score/100';
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => 'Các dấu hiệu cảnh báo';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => 'Các khuyến nghị';
 
   @override
-  String get possibleConditions => 'Possible Conditions';
+  String get possibleConditions => 'Các điều kiện có thể xảy ra';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => 'Các câu hỏi tiếp theo';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Đang lưu...';
 
   @override
-  String get seeDoctorSoon => 'See a Doctor Soon';
+  String get seeDoctorSoon => 'Hãy đi khám bác sĩ càng sớm càng tốt';
 
   @override
   String get emergencyCareNow => 'Khẩn cấp Care Now';
 
   @override
   String get triageDisclaimer =>
-      'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+      'Đây không phải là chẩn đoán y tế. Hãy luôn tham khảo ý kiến của chuyên gia y tế để nhận được lời khuyên y tế phù hợp.';
 
   @override
   String get escalateLow1 => 'Triệu chứng worsen or spread to new body areas';
@@ -1714,7 +1719,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get escalateMedium1 => 'Triệu chứng persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 =>
+      'Cơn đau trở nên dữ dội hơn hoặc không thể kiểm soát được';
 
   @override
   String get escalateMedium3 => 'New red-flag Triệu chứng appear';
@@ -1724,7 +1730,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+      'Xuất hiện triệu chứng khó thở hoặc cảm giác tức ngực';
 
   @override
   String get escalateHigh3 =>
@@ -1735,7 +1741,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'Đừng tự lái xe — hãy nhờ người chở hoặc gọi xe cứu thương';
 
   @override
   String get escalateEmergency3 =>
@@ -1745,7 +1751,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get showQrCode => 'Show Mã QR';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'Không hoạt động';
 
   @override
   String get knownAllergies => 'Known Dị ứng';
@@ -1757,7 +1763,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get chronicConditions => 'Bệnh mãn tính';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'Bảo hiểm';
 
   @override
   String get qrCode => 'Mã QR';
@@ -1776,11 +1782,11 @@ class AppLocalizationsVi extends AppLocalizations {
   String get heightAndWeight => 'Chiều cao & Cân nặng';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'Chưa được thiết lập';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count tuổi';
   }
 
   @override
@@ -1813,7 +1819,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'Point this at any QR reader to securely Chia sẻ your vChỉ số sinh tồn';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'Tải xuống';
 
   @override
   String get share => 'Chia sẻ';
@@ -1825,27 +1831,27 @@ class AppLocalizationsVi extends AppLocalizations {
   String get generateQrCode => 'Generate Mã QR';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'Đã hết hạn';
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'Có hiệu lực trong ${minutes}h ${hours}m';
   }
 
   @override
   String get emergencySosTitle => 'SOS khẩn cấp';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'Hãy tiếp tục giữ...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'Các bệnh viện lân cận';
 
   @override
   String get allergies => 'Dị ứng';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'Điều kiện';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1859,10 +1865,10 @@ class AppLocalizationsVi extends AppLocalizations {
       'SOS sends your GPS Vị trí to your Khẩn cấp contacts via SMS. Make sure your contacts are configured in your pHồ sơ';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'GỬI';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS THẤT BẠI';
 
   @override
   String get sosActive => 'SOS ACTIVE';
@@ -1871,21 +1877,21 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sendingEmergencyAlert => 'Sending Khẩn cấp Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'Không thể gửi thông báo';
 
   @override
   String get emergencyAlertSent => 'Khẩn cấp Alert Sent';
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'Đang gửi trong $seconds…';
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'Thử lại';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => 'Bỏ qua';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1904,13 +1910,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get liveLocation => 'Live Vị trí';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => 'Đang xác định tọa độ GPS…';
 
   @override
   String get locationUnavailable => 'Vị trí unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => 'Đã thông báo cho các liên hệ';
 
   @override
   String contactsNotifiedCount(int count) {
@@ -1928,7 +1934,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count THÁNG NÀY';
   }
 
   @override
@@ -1941,17 +1947,17 @@ class AppLocalizationsVi extends AppLocalizations {
   String get searchLogs => 'Tìm kiếm logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => 'Màu xanh lá cây';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => 'Màu vàng';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'Mạng';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return 'Mức độ nghiêm trọng: $score/10';
   }
 
   @override
@@ -1959,12 +1965,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'Các vùng trên cơ thể: $regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return 'Thời lượng: $duration';
   }
 
   @override
@@ -1977,17 +1983,17 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String notesCaption(String notes) {
-    return 'Notes: $notes';
+    return 'Ghi chú: $notes';
   }
 
   @override
   String get export30DayReport => 'Xuất 30-day Report (PPro';
 
   @override
-  String get weeklyBreakdown => 'Weekly Breakdown';
+  String get weeklyBreakdown => 'Phân tích hàng tuần';
 
   @override
-  String get proAnalysis => 'Pro Analysis';
+  String get proAnalysis => 'Phân tích chuyên sâu';
 
   @override
   String get yourHealthThisWeek => 'Your Sức khỏe this week';
@@ -1998,46 +2004,47 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'Phân tích xu hướng';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => 'TẦN SUẤT XUẤT HIỆN TRIỆU CHỨNG (4W)';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => 'Cao';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'Trung bình';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => 'Thấp';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => 'Kéo dài giấc ngủ sâu';
 
   @override
   String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+      'Nhiệt độ cơ thể của bạn đã giảm vào cuối tuần này. Hãy thử duy trì nhiệt độ phòng mát hơn (65°F) để thúc đẩy quá trình chuyển sang các giai đoạn ngủ sâu.';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => 'Bổ sung nước ngay từ đầu';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'Các dấu hiệu mất nước nhẹ được phát hiện trong nhật ký buổi chiều. Hãy chuyển 40% lượng nước uống hàng ngày sang trước 10 giờ sáng để ổn định tốc độ trao đổi chất.';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'Hoạt động điều chỉnh nhịp độ';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      'Các cơn đau khớp đột ngột thường đi kèm với việc tăng cường độ tập luyện một cách đột ngột. Hãy đảm bảo thực hiện bài khởi động động trong 10 phút trước khi đẩy cường độ tập luyện vượt quá vùng 2 của bài tập tim mạch.';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => 'Tập trung vào nhu cầu cá nhân';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights =>
+      'Đang cập nhật các thông tin phân tích về AI của bạn…';
 
   @override
   String get generateNewInsights => 'Generate New Thông tin chi tiết';
@@ -2046,10 +2053,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get symptoms => 'Triệu chứng';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => 'Mức độ nghiêm trọng trung bình';
 
   @override
-  String get scoreChange => 'Score Change';
+  String get scoreChange => 'Thay đổi điểm số';
 
   @override
   String get checkBackMondayOrGenerate =>
@@ -2061,7 +2068,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String proPlanMonthly(double price) {
-    return 'Pro Plan - \$$price/mo';
+    return 'Pro Plan - \$$price/tháng';
   }
 
   @override
@@ -2073,12 +2080,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String couldNotLaunchCall(String phoneNumber) {
-    return 'Could not launch call to $phoneNumber';
+    return 'Không thể thực hiện cuộc gọi đến $phoneNumber';
   }
 
   @override
   String get medicalDisclaimer =>
-      'This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.';
+      'Thông tin này không phải là chẩn đoán y tế. VitalSeker không thể thay thế cho chuyên gia y tế có chuyên môn.';
 
   @override
   String get poweredByGlm => 'Powered by GLM-4';
@@ -2087,11 +2094,11 @@ class AppLocalizationsVi extends AppLocalizations {
   String get aiTriageIn90Seconds => 'AI-powered Phân loại in 90 seconds';
 
   @override
-  String get vitalValueOutOfRange => 'Value out of expected range';
+  String get vitalValueOutOfRange => 'Giá trị nằm ngoài phạm vi dự kiến';
 
   @override
   String get vitalRangeHintHeartRate =>
-      'Heart rate should be between 30 and 220 BPM';
+      'Nhịp tim nên nằm trong khoảng từ 30 đến 220 nhịp/phút';
 
   @override
   String get vitalRangeHintBloodPressure =>
@@ -2099,15 +2106,15 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+      'Nhiệt độ cơ thể nên nằm trong khoảng từ 30 đến 45 °C';
 
   @override
   String get vitalRangeHintOxygen =>
-      'Blood oxygen should be between 50 and 100 %';
+      'Nồng độ oxy trong máu nên nằm trong khoảng từ 50 đến 100 %';
 
   @override
   String get vitalRangeHintGlucose =>
-      'Blood glucose should be between 20 and 600 mg/dL';
+      'Lượng đường trong máu nên nằm trong khoảng từ 20 đến 600 mg/dL';
 
   @override
   String get vitalRangeHintWeight => 'Cân nặng should be between 2 and 500 kg';
@@ -2139,7 +2146,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return 'Văn bản quá dài (tối đa $max ký tự). Vui lòng rút gọn và thử lại.';
   }
 
   @override
@@ -2150,7 +2157,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get privacyPolicyTitle => 'Quyền riêng tư Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => 'Cập nhật lần cuối: Tháng 3 năm 2025';
 
   @override
   String privacyIntro(String appName) {
@@ -2158,21 +2165,21 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '1. Thu thập dữ liệu';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: NTên Email address, Điện thoại number, Ngày of birth, and gender. • Sức khỏe Data: Blood type, aDị ứng chronic conditions, mThuốc vital signs, symptom logs, and Phân loại results. • Khẩn cấp Contacts: Names, Điện thoại numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sHỗ trợ • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our Sức khỏe companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage => '2. Lưu trữ và mã hóa dữ liệu';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• Mã QR Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '3. Tuân thủ GDPR';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2180,14 +2187,14 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '4. Các quyền của bạn';
 
   @override
   String get privacyRightsBody =>
       'You have the following rights regarding your data: • Access: View Tất cả your personal and Sức khỏe data within the app or request a data eXuất • Correction: Chỉnh sửa your Hồ sơ information at any Giờ through Chỉnh sửa PHồ sơ • Deletion: Request account deletion through Cài đặt > Data & Quyền riêng tư > Xóa Account. • Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences. • Objection: Object to specific data processing activities by contacting our Data Protection Officer. • Withdrawal of Consent: You may withdraw consent at any Giờ without affecting the lawfulness of prior processing. To exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app Hỗ trợ feature.';
 
   @override
-  String get privacySectionContactUs => '5. Contact Us';
+  String get privacySectionContactUs => '5. Liên hệ với chúng tôi';
 
   @override
   String privacyContactBody(String producer) {
@@ -2203,19 +2210,20 @@ class AppLocalizationsVi extends AppLocalizations {
   String get chooseFromGallery => 'Chọn từ thư viện';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => 'Chụp ảnh';
 
   @override
   String get removePhoto => 'Xóa Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => 'Hình đại diện đã được cập nhật!';
 
   @override
-  String get avatarUploadFailed => 'Failed to upload avatar. Please try again.';
+  String get avatarUploadFailed =>
+      'Không tải được ảnh đại diện. Vui lòng thử lại.';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => 'Hình đại diện đã bị xóa.';
 
   @override
   String get avatarRemoveFailed => 'Failed to Xóa avatar. Please try again.';
@@ -2235,10 +2243,10 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => 'Thông tin cá nhân';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => 'Các số đo';
 
   @override
   String get heightCm => 'Chiều cao (cm)';
@@ -2256,7 +2264,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get phoneNumber => 'Điện thoại Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => 'ví dụ: Vợ/chồng, Cha mẹ, Anh chị em';
 
   @override
   String get addAllergy => 'Thêm Allergy';
@@ -2288,7 +2296,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+      'Tiến triển tốt. Vẫn còn một số lĩnh vực cần được chú ý.';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2296,14 +2304,14 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get scoreDescriptionLow =>
-      'Several areas need attention. Please consult a healthcare provider.';
+      'Có một số vấn đề cần được quan tâm. Vui lòng tham khảo ý kiến của chuyên gia y tế.';
 
   @override
   String get scoreDescriptionCritical =>
-      'Immediate attention recommended. Please seek medical advice.';
+      'Cần được chăm sóc y tế ngay lập tức. Vui lòng tham khảo ý kiến bác sĩ.';
 
   @override
-  String get riskFactors => 'Risk Factors';
+  String get riskFactors => 'Các yếu tố nguy cơ';
 
   @override
   String allergyCount(int count) {
@@ -2325,10 +2333,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get noTriageResults => 'Không Phân loại results yet';
 
   @override
-  String get recommendedActions => 'Recommended Actions';
+  String get recommendedActions => 'Các hành động được khuyến nghị';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => 'Đặt lịch khám sức khỏe';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2342,21 +2350,21 @@ class AppLocalizationsVi extends AppLocalizations {
       'Track your blood pressure, heart rate, and Khác key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => 'Thực hiện kiểm tra triệu chứng';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI Phân loại to assess any Triệu chứng you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => 'Cải thiện chất lượng giấc ngủ';
 
   @override
   String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+      'Giấc ngủ chất lượng là yếu tố thiết yếu cho quá trình phục hồi và chức năng miễn dịch.';
 
   @override
-  String get actionStayActive => 'Stay Active';
+  String get actionStayActive => 'Hãy luôn năng động';
 
   @override
   String get actionStayActiveDesc =>
@@ -2367,12 +2375,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '$minutes phút trước';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '$weeks tuần trước';
   }
 
   @override
@@ -2389,13 +2397,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get logFirstVital => 'Ghi nhận chỉ số đầu tiên để bắt đầu theo dõi';
 
   @override
-  String get day => 'Day';
+  String get day => 'Điều đó';
 
   @override
-  String get week => 'Week';
+  String get week => 'Tuần';
 
   @override
-  String get month => 'Month';
+  String get month => 'Tháng';
 
   @override
   String get noData => 'Không data';
@@ -2410,13 +2418,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => 'Nhật ký quan trọng';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'LOẠI QUAN TRỌNG';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => 'GIÁ TRỊ';
 
   @override
   String get systolic => 'Tâm thu';
@@ -2440,7 +2448,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return '$vitalType đã được lưu thành công';
   }
 
   @override
@@ -2474,32 +2482,32 @@ class AppLocalizationsVi extends AppLocalizations {
       'No readings found for the selected time period';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '1 lần đọc';
 
   @override
-  String get average => 'Average';
+  String get average => 'Trung bình';
 
   @override
-  String get min => 'Min';
+  String get min => 'Tôi';
 
   @override
   String get max => 'Max';
 
   @override
-  String get latest => 'Latest';
+  String get latest => 'Mới nhất';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => 'CÁC BÀI ĐỌC';
 
   @override
-  String get value => 'Value';
+  String get value => 'Giá trị';
 
   @override
-  String get source => 'Source';
+  String get source => 'Nguồn';
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return 'Hiển thị 20 trong số $total bài viết';
   }
 
   @override
@@ -2509,13 +2517,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get medicationNameLabel => 'Medication Tên';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => 'Liều lượng';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'Đơn vị';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => 'Tần số';
 
   @override
   String get startDateLabel => 'Start Ngày';
@@ -2527,24 +2535,25 @@ class AppLocalizationsVi extends AppLocalizations {
   String get endDateLabel => 'End Ngày';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => 'THỜI GIAN DÙNG THUỐC';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'Liều $number';
   }
 
   @override
   String get notesOptional => 'Ghi chú (oTùy chọn';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => 'Những điều cần lưu ý';
 
   @override
   String get saveMedication => 'Lưu Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully =>
+      'Thuốc đã được thêm vào thành công!';
 
   @override
   String get medicationAddFailed =>
@@ -2572,45 +2581,45 @@ class AppLocalizationsVi extends AppLocalizations {
   String get saveAppointment => 'Lưu Appointment';
 
   @override
-  String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+  String get appointmentScheduledSuccessfully => 'Đã đặt lịch hẹn thành công!';
 
   @override
   String get appointmentScheduleFailed =>
-      'Failed to schedule appointment. Please try again.';
+      'Không thể đặt lịch hẹn. Vui lòng thử lại.';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => 'Bác sĩ tim mạch';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => 'Bác sĩ da liễu';
 
   @override
-  String get specialtyEndocrinologist => 'Endocrinologist';
+  String get specialtyEndocrinologist => 'Bác sĩ nội tiết';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => 'Y học tổng quát';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => 'Bác sĩ thần kinh';
 
   @override
-  String get specialtyOphthalmologist => 'Ophthalmologist';
+  String get specialtyOphthalmologist => 'Bác sĩ nhãn khoa';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => 'Chỉnh hình';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => 'Bác sĩ nhi khoa';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => 'Bác sĩ tâm thần';
 
   @override
   String get specialtyOther => 'Khác';
 
   @override
-  String get recordsLoadFailed => 'Failed to load records. Please try again.';
+  String get recordsLoadFailed =>
+      'Không thể tải các bản ghi. Vui lòng thử lại.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2622,34 +2631,34 @@ class AppLocalizationsVi extends AppLocalizations {
   String get addMedicalRecordTitle => 'Thêm Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => 'Tiêu đề';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'Loại';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => 'Kết quả xét nghiệm';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => 'Hướng dẫn sử dụng';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => 'Chụp ảnh';
 
   @override
   String get recordTypeOther => 'Khác';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => 'Mô tả';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => 'Bản ghi đã được cập nhật!';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => 'Đã thêm bản ghi!';
 
   @override
-  String get recordUpdateFailed => 'Failed to update record.';
+  String get recordUpdateFailed => 'Không thể cập nhật bản ghi.';
 
   @override
   String get recordAddFailed => 'Failed to Thêm record.';
@@ -2663,7 +2672,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => 'Bản ghi đã bị xóa.';
 
   @override
   String get recordDeleteFailed => 'Failed to Xóa record.';
@@ -2684,11 +2693,11 @@ class AppLocalizationsVi extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => 'Các tùy chọn khác';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Bước $current trong số $total';
   }
 
   @override
@@ -2727,46 +2736,46 @@ class AppLocalizationsVi extends AppLocalizations {
       'Describe any Khác details Giới thiệu your Triệu chứng or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => 'Mức độ nghiêm trọng tổng thể';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => 'Nhẹ nhàng';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => 'Nặng';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => 'Rất nhẹ';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => 'Nhẹ nhàng';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => 'Trung bình';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => 'Gây xao nhãng';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => 'Nặng';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => 'Không thể chịu nổi';
 
   @override
   String get durationToday => 'Hôm nay (started tHôm nay';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => '1–3 ngày';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => '4–7 ngày';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => '1–2 tuần';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => 'Hơn 2 tuần';
 
   @override
   String get age => 'Tuổi';
@@ -2775,19 +2784,20 @@ class AppLocalizationsVi extends AppLocalizations {
   String get ageHint => 'Enter your Tuổi';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => 'năm';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => 'Giới tính sinh học';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint =>
+      'Ví dụ: Đái tháo đường, Tăng huyết áp, Hen suyễn';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint => 'ví dụ: Lisinopril 10mg, Metformin 500mg';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => 'Tóm tắt';
 
   @override
   String get analyzeWithAi => 'Phân tích bằng AI';
@@ -2808,7 +2818,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get symptomCough => 'Ho';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => 'Hơi thở ngắn';
 
   @override
   String get symptomFatigue => 'Mệt mỏi';
@@ -2820,40 +2830,40 @@ class AppLocalizationsVi extends AppLocalizations {
   String get symptomNausea => 'Buồn nôn';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => 'Sốt rét';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => 'Đau cơ';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => 'Mất ngủ';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => 'Đau ngực';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => 'Đau bụng';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => 'Đau họng';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => 'Chảy nước mũi';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => 'Nôn mửa';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => 'Tiêu chảy';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => 'Phát ban';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => 'Đau khớp';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => 'Giao dịch mua hàng đã bị hủy.';
 
   @override
   String get noPurchasesToRestore =>

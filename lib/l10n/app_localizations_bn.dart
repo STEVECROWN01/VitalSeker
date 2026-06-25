@@ -165,7 +165,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get monitorAtHome => 'Monitor at হোম';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => 'কখন উচ্চতর কর্তৃপক্ষের কাছে নেবেন';
 
   @override
   String get saveToPassport => 'সংরক্ষণ to পাসপোর্ট';
@@ -219,7 +219,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get privacyData => 'গোপনীয়তা ও ডেটা';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'নিরাপত্তা ও সংরক্ষণ';
 
   @override
   String get exportData => 'ডেটা রপ্তানি';
@@ -258,10 +258,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get upgradeToPro => 'Pro-তে আপগ্রেড করুন';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'পুরো বৃত্তটিকে রক্ষা করুন।';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'আরও জানুন';
 
   @override
   String get medications => 'ওষুধ';
@@ -330,10 +330,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get shareMyLocation => 'আমার অবস্থান শেয়ার করুন';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'আমার কাছাকাছি হাসপাতাল খুঁজুন';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'দ্রুত ডায়াল';
 
   @override
   String get emergencyContacts => 'জরুরী পরিচিতি';
@@ -362,7 +362,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get noHistoryYet => 'এখনও কোনো ইতিহাস নেই';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere => 'আপনার উপসর্গ লগগুলি এখানে প্রদর্শিত হবে';
 
   @override
   String get startFirstTriage =>
@@ -379,7 +379,7 @@ class AppLocalizationsBn extends AppLocalizations {
       'না অন্তর্দৃষ্টি generated yet. Check পিছনে on Monday for your weekly AI স্বাস্থ্য summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'এখন তৈরি করুন';
 
   @override
   String get upgradeProInsights =>
@@ -395,13 +395,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get exportMedicalReport => 'রপ্তানি Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'পিডিএফ তৈরি করুন';
 
   @override
   String get sendByEmail => 'Send by ইমেইল';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview => 'রোগীর সারসংক্ষেপ ও গুরুত্বপূর্ণ তথ্য';
 
   @override
   String get symptomsTriageLog => 'লক্ষণ & ট্রায়েজ Log';
@@ -410,16 +410,16 @@ class AppLocalizationsBn extends AppLocalizations {
   String get medicationsAllergies => 'ওষুধ & অ্যালার্জি';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'এআই বিশ্লেষণ সারসংক্ষেপ';
 
   @override
   String get dateRange => 'তারিখ Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => 'গত ৩০ দিন';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'আগাম প্রদর্শন';
 
   @override
   String get translate => 'অনুবাদ';
@@ -432,7 +432,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+      'অনুবাদের জন্য চিকিৎসা শব্দ বা বাক্যাংশ লিখুন';
 
   @override
   String translationResult(Object lang) {
@@ -441,7 +441,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'আপনার বিজ্ঞপ্তি পছন্দসমূহ আপনার অ্যাকাউন্টে সংরক্ষিত আছে। সময়সূচি কাস্টমাইজেশন এখন উপলব্ধ — যেকোনো সময়সূচিতে ট্যাপ করে সেটি পরিবর্তন করুন।';
 
   @override
   String get triageReminders => 'ট্রায়েজ রিমাইন্ডার';
@@ -492,7 +492,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get sendSOS => 'SOS পাঠান';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'আপনি কি নিশ্চিত যে আপনি সাইন আউট করতে চান?';
 
   @override
   String get failedToSignOut => 'সাইন আউট ব্যর্থ। আবার চেষ্টা করুন।';
@@ -504,16 +504,16 @@ class AppLocalizationsBn extends AppLocalizations {
   String get triageSessions => 'ট্রায়েজ Sessions';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'সক্রিয় দিন';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'বিদায় জানাচ্ছি...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials => 'চিকিৎসা সনদপত্র পরিচালনা করুন';
 
   @override
   String connectedMembers(num count) {
@@ -527,10 +527,10 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'অ্যালার্ট এবং স্মার্ট রিমাইন্ডার';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'দলিলপত্র ও চিত্রায়ন';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical শর্তাবলী';
@@ -539,7 +539,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get emergencyMedicalCard => 'জরুরি medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'AES-256 এনক্রিপশন সক্রিয়';
 
   @override
   String get downloadYourHealthData => 'Download your স্বাস্থ্য data';
@@ -548,14 +548,14 @@ class AppLocalizationsBn extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pপাসওয়ার্ড account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'প্রায়শই জিজ্ঞাসিত প্রশ্নাবলী ও নথিপত্র';
 
   @override
   String get priorityProSupport => 'অগ্রাধিকার Pro সমর্থন';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'সংস্করণ $version';
   }
 
   @override
@@ -571,7 +571,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get confirmNewPassword => 'নতুন পাসওয়ার্ড নিশ্চিত করুন';
 
   @override
-  String get update => 'Update';
+  String get update => 'আপডেট';
 
   @override
   String get passwordsDoNotMatch => 'পাসওয়ার্ড মেলে না';
@@ -598,13 +598,13 @@ class AppLocalizationsBn extends AppLocalizations {
       'অ্যাকাউন্ট মুছতে ব্যর্থ। আবার চেষ্টা করুন বা সমর্থনের সাথে যোগাযোগ করুন।';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'আপনার সাবস্ক্রিপশন পরিচালনা করুন';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently সরান your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'আপনার বর্তমান সেশন শেষ করুন';
 
   @override
   String get dark => 'গাঢ়';
@@ -622,20 +622,20 @@ class AppLocalizationsBn extends AppLocalizations {
   String get restore => 'পুনরুদ্ধার';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'আপনার প্ল্যান নির্বাচন করুন';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'VitalSeker-এর সম্পূর্ণ শক্তি উন্মোচন করুন';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'অ্যাপের মধ্যে পেমেন্ট ইন্টিগ্রেশন (RevenueCat / StoreKit) মুলতুবি রয়েছে। পরিকল্পনা পরিবর্তনগুলি পরীক্ষার জন্য সরাসরি আপনার অ্যাকাউন্টে প্রয়োগ করা হয়।';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'চিরতরে';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => 'প্রতি মাস';
 
   @override
   String get freePlanFeature1 => '3 AI ট্রায়েজ sessions/month';
@@ -644,7 +644,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get freePlanFeature2 => 'Basic স্বাস্থ্য পাসপোর্ট';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'কিউআর কোড শেয়ারিং';
 
   @override
   String get freePlanFeature4 => 'জরুরী SOS alerts';
@@ -677,25 +677,25 @@ class AppLocalizationsBn extends AppLocalizations {
   String get enterprisePlanFeature2 => 'Unlimited পরিবার profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'কাস্টম ব্র্যান্ডিং';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'এপিআই অ্যাক্সেস';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated সহায়তা';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'এসএলএ গ্যারান্টি';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'সেরা মূল্য';
 
   @override
   String get currentPlan => 'বর্তমান প্ল্যান';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'নিম্নগতি';
 
   @override
   String upgradeToPlan(String plan) {
@@ -704,11 +704,11 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+      'পরিকল্পনা পরিবর্তন করতে আপনাকে সাইন ইন করতে হবে।';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return '$plan-এ পরিবর্তন করবেন?';
   }
 
   @override
@@ -717,7 +717,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return 'এটি আপনার $plan সাবস্ক্রিপশন আপডেট করবে। প্রোডাকশনে এটি প্ল্যাটফর্ম পেওয়াল চালু করবে; আপাতত পরীক্ষার জন্য এই পরিবর্তন সরাসরি আপনার অ্যাকাউন্টে প্রয়োগ করা হয়েছে।';
   }
 
   @override
@@ -734,10 +734,10 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'সাবস্ক্রিপশন আপডেট করতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'ক্রয়গুলি পুনরুদ্ধার করা হয়েছে।';
 
   @override
   String get failedToRestorePurchases => 'Failed to পুনরুদ্ধার purchases.';
@@ -756,19 +756,19 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'প্রায়শই জিজ্ঞাসিত প্রশ্নাবলী';
 
   @override
   String get contactSupport => 'Contact সহায়তা';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'বিষয়';
 
   @override
-  String get message => 'Message';
+  String get message => 'বার্তা';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'জমা দিন';
 
   @override
   String get otherWaysToReachUs => 'অন্যান্য Ways to Reach Us';
@@ -782,13 +782,13 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+      'অনুগ্রহ করে বিষয় এবং বার্তা উভয়ই পূরণ করুন।';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength => 'বিষয় কমপক্ষে ৫টি অক্ষরের হতে হবে।';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength => 'বার্তাটি কমপক্ষে ১০টি অক্ষর হতে হবে।';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -796,7 +796,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'জরুরি অনুরোধ পাওয়া গেছে! আমাদের দল এটিকে অগ্রাধিকার দেবে।';
 
   @override
   String get supportRequestSent =>
@@ -850,10 +850,10 @@ class AppLocalizationsBn extends AppLocalizations {
       'Configure and preview your comprehensive স্বাস্থ্য summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'বিভাগসমূহ অন্তর্ভুক্ত করুন';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => 'গত ৩ মাস';
 
   @override
   String get yearToDate => 'Year to তারিখ';
@@ -862,14 +862,14 @@ class AppLocalizationsBn extends AppLocalizations {
   String get allTime => 'সব সময়';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'উৎপাদন হচ্ছে…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'প্রেরণ…';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'PDF-এ $producer এর প্রযোজক হিসেবে ক্রেডিট অন্তর্ভুক্ত রয়েছে।';
   }
 
   @override
@@ -883,26 +883,26 @@ class AppLocalizationsBn extends AppLocalizations {
       'Manage স্বাস্থ্য for your whole পরিবার (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'অ্যাকাউন্টের মালিক';
 
   @override
   String get ownerProfile => 'Owner প্রোফাইল';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age বছর';
   }
 
   @override
   String scoreValue(int score) {
-    return 'Score: $score';
+    return 'স্কোর: $score';
   }
 
   @override
   String get reachedProLimit => 'You\'ve reached the 5-member প্রো limit.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'সীমা পৌঁছেছে';
 
   @override
   String get pleaseFillNameRelationship =>
@@ -924,7 +924,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return 'আপনি কি নিশ্চিত যে আপনি আপনার পারিবারিক প্রোফাইল থেকে $name সরাতে চান?';
   }
 
   @override
@@ -941,7 +941,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get fullNameLabel => 'Full নাম';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => 'সম্পর্ক (যেমন: স্বামী/স্ত্রী, সন্তান)';
 
   @override
   String get bloodTypeOptional => 'রক্তের গ্রুপ (optional)';
@@ -953,7 +953,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get upgradeYourCare => 'আপগ্রেড YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'তুমি পুরো বৃত্তটিকে রক্ষা করছো।';
 
   @override
   String get proMemberThanks =>
@@ -972,7 +972,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get manageSubscription => 'আপনার সাবস্ক্রিপশন পরিচালনা করুন';
 
   @override
-  String get failedToLoadProfiles => 'Failed to load profiles';
+  String get failedToLoadProfiles => 'প্রোফাইল লোড করতে ব্যর্থ হয়েছে';
 
   @override
   String get searchMedications => 'অনুসন্ধান medওষুধ';
@@ -989,14 +989,14 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'সম্পাদনা $name';
   }
 
   @override
   String get dosage => 'মাত্রা';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'ইউনিট';
 
   @override
   String get frequency => 'ফ্রিকোয়েন্সি';
@@ -1005,31 +1005,30 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notes => 'নোট';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'ঔষধ বন্ধ করা হয়েছে';
 
   @override
-  String get failedToDiscontinueMedication =>
-      'Failed to discontinue medication.';
+  String get failedToDiscontinueMedication => 'ঔষধ বন্ধ করতে ব্যর্থ।';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'ঔষধ হালনাগাদ করা হয়েছে!';
 
   @override
-  String get failedToUpdateMedication => 'Failed to update medication.';
+  String get failedToUpdateMedication => 'ঔষধ আপডেট করতে ব্যর্থ।';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted => 'সম্পন্ন হিসেবে চিহ্নিত ওষুধ';
 
   @override
   String get deleteMedication => 'ওষুধ মুছুন';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'আপনি কি নিশ্চিত যে আপনি $name মুছতে চান?';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'ঔষধ মুছে ফেলা হয়েছে';
 
   @override
   String get failedToDeleteMedication => 'Failed to মুছুন medication.';
@@ -1045,32 +1044,32 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String nextDose(String time) {
-    return 'Next dose: $time';
+    return 'পরবর্তী ডোজ: $time';
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => 'প্রতিদিন একবার';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => 'প্রতিদিন দুইবার';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => 'প্রতিদিন তিনবার';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => 'প্রতিদিন চারবার';
 
   @override
   String get everyOtherDay => 'Every অন্যান্য Day';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'সাপ্তাহিক';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => 'প্রয়োজন অনুযায়ী';
 
   @override
-  String get custom => 'Custom';
+  String get custom => 'কাস্টম';
 
   @override
   String get all => 'সব';
@@ -1086,13 +1085,14 @@ class AppLocalizationsBn extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted => 'নিয়োগ সম্পন্ন হিসেবে চিহ্নিত';
 
   @override
-  String get failedToUpdateAppointment => 'Failed to update appointment.';
+  String get failedToUpdateAppointment =>
+      'অ্যাপয়েন্টমেন্ট আপডেট করতে ব্যর্থ হয়েছে।';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => 'অ্যাপয়েন্টমেন্ট বাতিল';
 
   @override
   String get failedToCancelAppointment => 'Failed to বাতিল appointment.';
@@ -1105,12 +1105,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return '$date তারিখে $time সময়ে পুনঃনির্ধারিত';
   }
 
   @override
   String get failedToRescheduleAppointment =>
-      'Failed to reschedule appointment.';
+      'অ্যাপয়েন্টমেন্ট পুনঃনির্ধারণ করতে ব্যর্থ।';
 
   @override
   String get deleteAppointment => 'অ্যাপয়েন্টমেন্ট মুছুন';
@@ -1121,7 +1121,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => 'নিয়োগ মুছে ফেলা হয়েছে';
 
   @override
   String get failedToDeleteAppointment => 'Failed to মুছুন appointment.';
@@ -1141,22 +1141,22 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+      'যেমন: \"উচ্চ রক্তচাপ\", \"প্রতিদিন খাবারসহ দুইবার গ্রহণ করুন\"';
 
   @override
   String get translating => 'অনুবাদ হচ্ছে...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return 'অনুবাদ ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear => 'আপনার অনুবাদ এখানে প্রদর্শিত হবে।';
 
   @override
   String get pleaseEnterTermToTranslate =>
-      'Please enter a medical term or phrase to translate.';
+      'অনুবাদের জন্য অনুগ্রহ করে একটি চিকিৎসা শব্দ বা বাক্যাংশ লিখুন।';
 
   @override
   String get noTranslationReturned =>
@@ -1173,16 +1173,17 @@ class AppLocalizationsBn extends AppLocalizations {
       'বিজ্ঞপ্তি সেটিং সংরক্ষণ করতে ব্যর্থ';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => 'প্রধান বৈশিষ্ট্যসমূহ';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'প্রযোজক';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => 'ধারণা, নকশা ও উন্নয়ন';
 
   @override
-  String get updateAccountCredentials => 'Update your account credentials';
+  String get updateAccountCredentials =>
+      'আপনার অ্যাকাউন্টের শংসাপত্র আপডেট করুন';
 
   @override
   String get legal => 'Legal';
@@ -1246,7 +1247,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return 'সর্বশেষ আপডেট: সংস্করণ $version';
   }
 
   @override
@@ -1263,7 +1264,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => 'যোগ্যতা ও অ্যাকাউন্ট';
 
   @override
   String get tosSection2Para1 =>
@@ -1290,21 +1291,22 @@ class AppLocalizationsBn extends AppLocalizations {
       'In a medical eজরুরি call your local জরুরি number (e.g. 911, 112) immediately. Do not rely on the Service for জরুরি response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => 'সেবার ব্যবহার';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => 'আপনি নিম্নলিখিত কাজগুলি করবেন না:';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 =>
+      'সেবাটি কোনো অবৈধ উদ্দেশ্যে ব্যবহার করবেন না;';
 
   @override
   String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+      'অ্যাপটিকে রিভার্স-ইঞ্জিনিয়ার, ডিকম্পাইল বা ডিসঅ্যাসেম্বল করার চেষ্টা করবেন না;';
 
   @override
   String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+      'ক্ষতিকর, প্রতারণামূলক বা বৌদ্ধিক সম্পত্তি অধিকার লঙ্ঘন করে এমন বিষয়বস্তু আপলোড করবেন না;';
 
   @override
   String get tosSection4Bullet4 =>
@@ -1312,10 +1314,10 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+      'সেবাটি ব্যবহার করে অনাকাঙ্ক্ষিত যোগাযোগ বা স্প্যাম পাঠান।';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => 'সাবস্ক্রিপশন ও পেমেন্ট';
 
   @override
   String get tosSection5Para1 =>
@@ -1327,10 +1329,10 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get tosSection5Para3 =>
-      'We may change subscription fees upon reasonable notice. Fee changes will not apply to your current billing period.';
+      'আমরা যথাযথ নোটিশ প্রদান করে সাবস্ক্রিপশন ফি পরিবর্তন করতে পারি। ফি পরিবর্তনগুলি আপনার বর্তমান বিলিং সময়সীমায় প্রযোজ্য হবে না।';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => 'আপনার ডেটা';
 
   @override
   String get tosSection6Para1 =>
@@ -1341,18 +1343,18 @@ class AppLocalizationsBn extends AppLocalizations {
       'You may রপ্তানি your data at any সময় via the in-app রপ্তানি feature, and you may permanently মুছুন your account and সব associated data via সেটিংস → মুছুন Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => 'দায়মুক্তি';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      'সেবাটি \"যেমন আছে\" এবং \"যেমন উপলব্ধ\" ভিত্তিতে কোনো ধরনের নিশ্চয়তা ছাড়াই প্রদান করা হয়, স্পষ্ট বা অন্তর্নিহিত যেকোনো ধরনের, যার মধ্যে অন্তর্ভুক্ত কিন্তু সীমাবদ্ধ নয় বিক্রয়যোগ্যতা, নির্দিষ্ট কোনো উদ্দেশ্যে উপযোগিতা, বা অ-লঙ্ঘনের অন্তর্নিহিত নিশ্চয়তা।';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI ট্রায়েজ recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => 'দায়ের সীমাবদ্ধতা';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1360,7 +1362,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => 'সমাপ্তি';
 
   @override
   String get tosSection9Para1 =>
@@ -1378,7 +1380,7 @@ class AppLocalizationsBn extends AppLocalizations {
       'We may update these শর্তাবলী from সময় to tসময় We will notify you of material changes via the app or by eইমেইল Continued use of the Service after changes take effect constitutes acceptance of the revised Tশর্তাবলী';
 
   @override
-  String get tosSection11Title => 'Contact';
+  String get tosSection11Title => 'যোগাযোগ করুন';
 
   @override
   String get tosSection11Para1 =>
@@ -1399,7 +1401,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get enterprise => 'এন্টারপ্রাইজ';
 
   @override
-  String get nA => 'N/A';
+  String get nA => 'প্রযোজ্য নয়';
 
   @override
   String get skip => 'এড়িয়ে যান';
@@ -1408,10 +1410,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get next => 'পরবর্তী';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'ভাইটালসেকারে প্রবেশ করুন';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => 'আপনার শরীরকে জানুন।';
 
   @override
   String get onboardingDescription1 =>
@@ -1432,10 +1434,10 @@ class AppLocalizationsBn extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re পিছনে online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'আপনার VitalSeker অ্যাকাউন্টে সাইন ইন করুন';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'সাইন ইন হচ্ছে...';
 
   @override
   String get emailRequired => 'ইমেইল is প্রয়োজনীয়';
@@ -1454,7 +1456,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String passwordResetSent(String email) {
-    return 'Password reset link sent to $email';
+    return 'পাসওয়ার্ড রিসেট লিঙ্ক $email-এ পাঠানো হয়েছে।';
   }
 
   @override
@@ -1473,7 +1475,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get other => 'অন্যান্য';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => 'অ্যাকাউন্ট তৈরি হচ্ছে...';
 
   @override
   String get joinVitalSeker =>
@@ -1486,19 +1488,21 @@ class AppLocalizationsBn extends AppLocalizations {
   String get nameMinChars => 'নাম must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => 'অন্তত ৬টি অক্ষর';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => 'অন্তত একটি বড় হাতের অক্ষর অন্তর্ভুক্ত করুন';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase =>
+      'কমপক্ষে একটি ছোট হাতের অক্ষর অন্তর্ভুক্ত করুন';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => 'কমপক্ষে একটি সংখ্যা অন্তর্ভুক্ত করুন';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol =>
+      'কমপক্ষে একটি চিহ্ন (!@#\$%^&*) অন্তর্ভুক্ত করুন।';
 
   @override
   String get confirmPasswordRequired => 'Please নিশ্চিত করুন your পাসওয়ার্ড';
@@ -1519,13 +1523,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get gender => 'লিঙ্গ';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => 'লিঙ্গ নির্বাচন করুন';
 
   @override
   String get bloodType => 'রক্তের গ্রুপ';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => 'রক্তের গ্রুপ নির্বাচন করুন';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1542,13 +1546,13 @@ class AppLocalizationsBn extends AppLocalizations {
       'Account created! Please check your ইমেইল to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => 'ব্যবহারকারী';
 
   @override
   String get viewAll => 'সব দেখুন';
 
   @override
-  String get failedLoadRecentChecks => 'Failed to load recent checks';
+  String get failedLoadRecentChecks => 'সাম্প্রতিক চেক লোড করতে ব্যর্থ হয়েছে';
 
   @override
   String get pullDownRetry => 'Pull down to পুনরায় চেষ্টা';
@@ -1578,17 +1582,17 @@ class AppLocalizationsBn extends AppLocalizations {
   String get aiPoweredTriage60s => 'AI-powered ট্রায়েজ in 60 seconds';
 
   @override
-  String get qrAndMedicalInfo => 'QR & medical info';
+  String get qrAndMedicalInfo => 'কিউআর ও চিকিৎসা তথ্য';
 
   @override
   String get pastChecksAndVitals => 'Past checks & ভাইটালস';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'এখনি';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '${hours}h আগে';
   }
 
   @override
@@ -1599,11 +1603,11 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return '$days দিন আগে';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => 'উপসর্গ পরীক্ষা';
 
   @override
   String get severity => 'তীব্রতা';
@@ -1617,91 +1621,92 @@ class AppLocalizationsBn extends AppLocalizations {
       'Based on your sলক্ষণ here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => 'জরুরি অবস্থা';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => 'যত্নের সুপারিশ';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ লাল পতাকা:';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => 'সুপারিশসমূহ:';
 
   @override
   String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+      'সম্পূর্ণ বিশ্লেষণের জন্য নিচের \"বিস্তারিত ফলাফল দেখুন\" এ ট্যাপ করুন।';
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $error';
+    return 'আমি দুঃখিত, আপনার উপসর্গ বিশ্লেষণ করার সময় একটি ত্রুটি দেখা দিয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন অথবা আপনার উপসর্গগুলো ভিন্নভাবে বর্ণনা করুন।\n\nত্রুটি: $error';
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => 'সাধারণ অস্বস্তি';
 
   @override
-  String get selfCareRecommended => 'Self-Care Recommended';
+  String get selfCareRecommended => 'নিজেকে যত্ন নেওয়া সুপারিশ করা হয়';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => 'অ্যাপয়েন্টমেন্ট নির্ধারণ করুন';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => 'জরুরি যত্নে যান';
 
   @override
   String get seekEmergencyCare => 'Seek জরুরি Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider =>
+      'স্বাস্থ্যসেবা প্রদানকারীর সাথে পরামর্শ করুন';
 
   @override
-  String get mild => 'Mild';
+  String get mild => 'মৃদু';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => 'মধ্যম';
 
   @override
-  String get significant => 'Significant';
+  String get significant => 'গুরুত্বপূর্ণ';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => 'গুরুতর';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => 'চরম';
 
   @override
   String get triageResults => 'ট্রায়েজ ফলাফল';
 
   @override
   String urgencyScoreCaption(int score) {
-    return 'Urgency Score: $score/100';
+    return 'জরুরি স্কোর: $score/100';
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => 'সতর্ক সংকেত';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => 'সুপারিশসমূহ';
 
   @override
-  String get possibleConditions => 'Possible Conditions';
+  String get possibleConditions => 'সম্ভাব্য শর্তাবলী';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => 'অনুসন্ধানমূলক প্রশ্নসমূহ';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'সংরক্ষণ হচ্ছে...';
 
   @override
-  String get seeDoctorSoon => 'See a Doctor Soon';
+  String get seeDoctorSoon => 'শীঘ্রই ডাক্তারের কাছে দেখান';
 
   @override
   String get emergencyCareNow => 'জরুরি Care Now';
 
   @override
   String get triageDisclaimer =>
-      'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+      'এটি কোনো চিকিৎসা নির্ণয় নয়। সঠিক চিকিৎসা পরামর্শের জন্য সর্বদা একজন স্বাস্থ্যসেবা পেশাদারের সাথে পরামর্শ করুন।';
 
   @override
   String get escalateLow1 => 'লক্ষণ worsen or spread to new body areas';
@@ -1716,7 +1721,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get escalateMedium1 => 'লক্ষণ persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 => 'ব্যথা তীব্র হয় বা অসহনীয় হয়ে ওঠে';
 
   @override
   String get escalateMedium3 => 'New red-flag লক্ষণ appear';
@@ -1725,8 +1730,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get escalateHigh1 => 'লক্ষণ rapidly worsen';
 
   @override
-  String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+  String get escalateHigh2 => 'শ্বাস নিতে কষ্ট বা বুকে আঁটসাঁট ভাব দেখা দেয়।';
 
   @override
   String get escalateHigh3 =>
@@ -1737,7 +1741,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'নিজে গাড়ি চালাবেন না — রাইড বা অ্যাম্বুলেন্স কল করুন';
 
   @override
   String get escalateEmergency3 =>
@@ -1747,7 +1751,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get showQrCode => 'Show QR কোড';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'অকার্যকর';
 
   @override
   String get knownAllergies => 'Known অ্যালার্জি';
@@ -1759,7 +1763,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get chronicConditions => 'দীর্ঘস্থায়ী অবস্থা';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'বীমা';
 
   @override
   String get qrCode => 'QR কোড';
@@ -1778,11 +1782,11 @@ class AppLocalizationsBn extends AppLocalizations {
   String get heightAndWeight => 'উচ্চতা & ওজন';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'সেট করা হয়নি';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count বছর বয়সী';
   }
 
   @override
@@ -1815,7 +1819,7 @@ class AppLocalizationsBn extends AppLocalizations {
       'Point this at any QR reader to securely শেয়ার your vভাইটালস';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'ডাউনলোড';
 
   @override
   String get share => 'শেয়ার';
@@ -1827,27 +1831,27 @@ class AppLocalizationsBn extends AppLocalizations {
   String get generateQrCode => 'Generate QR কোড';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'মেয়াদোত্তীর্ণ';
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return '${hours}h ${minutes}m এর জন্য বৈধ';
   }
 
   @override
   String get emergencySosTitle => 'জরুরী SOS';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'ধরে রাখো...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'নিকটস্থ হাসপাতালসমূহ';
 
   @override
   String get allergies => 'অ্যালার্জি';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'শর্তাবলী ও নিয়মাবলী';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1861,19 +1865,19 @@ class AppLocalizationsBn extends AppLocalizations {
       'SOS sends your GPS অবস্থান to your জরুরি contacts via SMS. Make sure your contacts are configured in your pপ্রোফাইল';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'প্রেরণ';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'এসওএস ব্যর্থ হয়েছে';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'এসওএস অ্যাক্টিভ';
 
   @override
   String get sendingEmergencyAlert => 'Sending জরুরি Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'অ্যালার্ট পাঠানো যায়নি';
 
   @override
   String get emergencyAlertSent => 'জরুরি Alert Sent';
@@ -1884,10 +1888,10 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'আবার চেষ্টা করুন';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => 'বাতিল করুন';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1906,13 +1910,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get liveLocation => 'Live অবস্থান';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => 'জিপিএস স্থানাংক সংগ্রহ করা হচ্ছে…';
 
   @override
   String get locationUnavailable => 'অবস্থান unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => 'যোগাযোগগুলিকে অবহিত করা হয়েছে';
 
   @override
   String contactsNotifiedCount(int count) {
@@ -1930,7 +1934,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return 'এই মাসে $count';
   }
 
   @override
@@ -1943,17 +1947,17 @@ class AppLocalizationsBn extends AppLocalizations {
   String get searchLogs => 'অনুসন্ধান logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => 'সবুজ';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => 'হলুদ';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'নেটওয়ার্ক';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return 'গুরুত্ব: $score/10';
   }
 
   @override
@@ -1966,7 +1970,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return 'দৈর্ঘ্য: $duration';
   }
 
   @override
@@ -1986,7 +1990,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get export30DayReport => 'রপ্তানি 30-day Report (Pপ্রো';
 
   @override
-  String get weeklyBreakdown => 'Weekly Breakdown';
+  String get weeklyBreakdown => 'সাপ্তাহিক বিভাজন';
 
   @override
   String get proAnalysis => 'প্রো Analysis';
@@ -2000,46 +2004,46 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'প্রবণতা বিশ্লেষণ';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => 'উপসর্গের ঘনত্ব (৪ সপ্তাহ)';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => 'উচ্চ';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'গড়';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => 'নিম্ন';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => 'গভীর ঘুম বাড়ান';
 
   @override
   String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+      'এই সপ্তাহের শেষের দিকে আপনার মূল তাপমাত্রা কমে গেছে। গভীর ঘুমের পর্যায় দ্রুত শুরু করার জন্য কক্ষের পরিবেশ ঠান্ডা (৬৫°ফারেনহাইট) রাখার চেষ্টা করুন।';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => 'সামনের দিক থেকে তরল সরবরাহ';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'দুপুরের লগগুলোতে হালকা ডিহাইড্রেশনের চিহ্ন পাওয়া গেছে। বিপাকীয় হার স্থিতিশীল করতে আপনার দৈনিক পানির গ্রহণের ৪০% সকাল ১০টার আগে গ্রহণ করুন।';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'গতিবিধি';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      'জয়েন্টের ব্যথায় হঠাৎ তীব্রতা বৃদ্ধি পাওয়া যায়। জোন ২ কার্ডিওর সীমা ছাড়িয়ে যাওয়ার আগে ১০ মিনিটের গতিশীল ওয়ার্ম-আপ নিশ্চিত করুন।';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => 'ব্যক্তিগতকৃত ফোকাস';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights => 'আপনার AI অন্তর্দৃষ্টি রিফ্রেশ করা হচ্ছে…';
 
   @override
   String get generateNewInsights => 'Generate New অন্তর্দৃষ্টি';
@@ -2048,10 +2052,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get symptoms => 'লক্ষণ';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => 'গড় তীব্রতা';
 
   @override
-  String get scoreChange => 'Score Change';
+  String get scoreChange => 'স্কোর পরিবর্তন';
 
   @override
   String get checkBackMondayOrGenerate =>
@@ -2075,12 +2079,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String couldNotLaunchCall(String phoneNumber) {
-    return 'Could not launch call to $phoneNumber';
+    return '$phoneNumber-এ কল চালু করা যায়নি।';
   }
 
   @override
   String get medicalDisclaimer =>
-      'This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.';
+      'এই তথ্য কোনো চিকিৎসা নির্ণয় গঠন করে না।  VitalSeker কোনো যোগ্য স্বাস্থ্যসেবা পেশাদারের বিকল্প নয়।';
 
   @override
   String get poweredByGlm => 'Powered by GLM-4';
@@ -2089,11 +2093,11 @@ class AppLocalizationsBn extends AppLocalizations {
   String get aiTriageIn90Seconds => 'AI-powered ট্রায়েজ in 90 seconds';
 
   @override
-  String get vitalValueOutOfRange => 'Value out of expected range';
+  String get vitalValueOutOfRange => 'প্রত্যাশিত পরিসরের বাইরে মান';
 
   @override
   String get vitalRangeHintHeartRate =>
-      'Heart rate should be between 30 and 220 BPM';
+      'হৃদস্পন্দন প্রতি মিনিটে ৩০ থেকে ২২০ বার পর্যন্ত থাকা উচিত।';
 
   @override
   String get vitalRangeHintBloodPressure =>
@@ -2101,15 +2105,15 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+      'শরীরের তাপমাত্রা ৩০°C থেকে ৪৫°C এর মধ্যে থাকা উচিত।';
 
   @override
   String get vitalRangeHintOxygen =>
-      'Blood oxygen should be between 50 and 100 %';
+      'রক্তে অক্সিজেন ৫০ থেকে ১০০ শতাংশের মধ্যে থাকা উচিত।';
 
   @override
   String get vitalRangeHintGlucose =>
-      'Blood glucose should be between 20 and 600 mg/dL';
+      'রক্তের গ্লুকোজ ২০ থেকে ৬০০ মিলিগ্রাম/ডেসিলিটারের মধ্যে থাকা উচিত।';
 
   @override
   String get vitalRangeHintWeight => 'ওজন should be between 2 and 500 kg';
@@ -2140,7 +2144,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return 'টেক্সট খুব দীর্ঘ (সর্বোচ্চ $max অক্ষর)। অনুগ্রহ করে সংক্ষিপ্ত করুন এবং আবার চেষ্টা করুন।';
   }
 
   @override
@@ -2151,7 +2155,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get privacyPolicyTitle => 'গোপনীয়তা Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => 'শেষ আপডেট: মার্চ ২০২৫';
 
   @override
   String privacyIntro(String appName) {
@@ -2159,21 +2163,21 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '১. তথ্য সংগ্রহ';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: Nনাম ইমেইল address, ফোন number, তারিখ of birth, and gender. • স্বাস্থ্য Data: Blood type, aঅ্যালার্জি chronic conditions, mওষুধ vital signs, symptom logs, and ট্রায়েজ results. • জরুরি Contacts: Names, ফোন numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sসহায়তা • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our স্বাস্থ্য companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage => '২. ডেটা সংরক্ষণ ও এনক্রিপশন';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• QR কোড Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '৩. জিডিপিআর সম্মতি';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2181,14 +2185,14 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '৪. আপনার অধিকার';
 
   @override
   String get privacyRightsBody =>
       'You have the following rights regarding your data: • Access: View সব your personal and স্বাস্থ্য data within the app or request a data eরপ্তানি • Correction: সম্পাদনা your প্রোফাইল information at any সময় through সম্পাদনা Pপ্রোফাইল • Deletion: Request account deletion through সেটিংস > Data & গোপনীয়তা > মুছুন Account. • Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences. • Objection: Object to specific data processing activities by contacting our Data Protection Officer. • Withdrawal of Consent: You may withdraw consent at any সময় without affecting the lawfulness of prior processing. To exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app সহায়তা feature.';
 
   @override
-  String get privacySectionContactUs => '5. Contact Us';
+  String get privacySectionContactUs => '৫. আমাদের সাথে যোগাযোগ করুন';
 
   @override
   String privacyContactBody(String producer) {
@@ -2204,19 +2208,20 @@ class AppLocalizationsBn extends AppLocalizations {
   String get chooseFromGallery => 'গ্যালারি থেকে বেছে নিন';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => 'একটি ছবি তুলুন';
 
   @override
   String get removePhoto => 'সরান Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => 'অ্যাভাটার আপডেট হয়েছে!';
 
   @override
-  String get avatarUploadFailed => 'Failed to upload avatar. Please try again.';
+  String get avatarUploadFailed =>
+      'অ্যাভাটার আপলোড করতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => 'অ্যাভাটার সরানো হয়েছে।';
 
   @override
   String get avatarRemoveFailed => 'Failed to সরান avatar. Please try again.';
@@ -2237,10 +2242,10 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => 'ব্যক্তিগত তথ্য';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => 'পরিমাপসমূহ';
 
   @override
   String get heightCm => 'উচ্চতা (cm)';
@@ -2258,7 +2263,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get phoneNumber => 'ফোন Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => 'যেমন: স্বামী/স্ত্রী, পিতা-মাতা, ভাইবোন';
 
   @override
   String get addAllergy => 'যোগ করুন Allergy';
@@ -2290,7 +2295,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+      'ভাল অগ্রগতি। কয়েকটি ক্ষেত্রে আরও মনোযোগ দেওয়া যেতে পারে।';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2298,14 +2303,14 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get scoreDescriptionLow =>
-      'Several areas need attention. Please consult a healthcare provider.';
+      'কয়েকটি ক্ষেত্রে মনোযোগ প্রয়োজন। অনুগ্রহ করে একজন স্বাস্থ্যসেবা প্রদানকারীর সাথে পরামর্শ করুন।';
 
   @override
   String get scoreDescriptionCritical =>
-      'Immediate attention recommended. Please seek medical advice.';
+      'তাত্ক্ষণিক মনোযোগের পরামর্শ দেওয়া হচ্ছে। দয়া করে চিকিৎসা পরামর্শ নিন।';
 
   @override
-  String get riskFactors => 'Risk Factors';
+  String get riskFactors => 'ঝুঁকিপূর্ণ কারণসমূহ';
 
   @override
   String allergyCount(int count) {
@@ -2327,10 +2332,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get noTriageResults => 'না ট্রায়েজ results yet';
 
   @override
-  String get recommendedActions => 'Recommended Actions';
+  String get recommendedActions => 'সুझाভিত পদক্ষেপসমূহ';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => 'একটি চেক-আপ নির্ধারণ করুন';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2344,21 +2349,21 @@ class AppLocalizationsBn extends AppLocalizations {
       'Track your blood pressure, heart rate, and অন্যান্য key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => 'উপসর্গ পরীক্ষা চালান';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI ট্রায়েজ to assess any লক্ষণ you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => 'ঘুমের গুণমান উন্নত করুন';
 
   @override
   String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+      'গুণগত মানের ঘুম পুনরুদ্ধার এবং রোগপ্রতিরোধ ক্ষমতায় অপরিহার্য।';
 
   @override
-  String get actionStayActive => 'Stay Active';
+  String get actionStayActive => 'সক্রিয় থাকুন';
 
   @override
   String get actionStayActiveDesc =>
@@ -2391,13 +2396,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get logFirstVital => 'ট্র্যাকিং শুরু করতে আপনার প্রথম ভাইটাল লগ করুন';
 
   @override
-  String get day => 'Day';
+  String get day => 'দিন';
 
   @override
-  String get week => 'Week';
+  String get week => 'সপ্তাহ';
 
   @override
-  String get month => 'Month';
+  String get month => 'মাস';
 
   @override
   String get noData => 'না data';
@@ -2412,13 +2417,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => 'লগ ভাইটাল';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'জরুরি ধরন';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => 'মূল্য';
 
   @override
   String get systolic => 'সিস্টোলিক';
@@ -2442,7 +2447,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return '$vitalType সফলভাবে সংরক্ষিত হয়েছে';
   }
 
   @override
@@ -2476,32 +2481,32 @@ class AppLocalizationsBn extends AppLocalizations {
       'No readings found for the selected time period';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '১টি পাঠ';
 
   @override
-  String get average => 'Average';
+  String get average => 'গড়';
 
   @override
-  String get min => 'Min';
+  String get min => 'আমি আছে';
 
   @override
-  String get max => 'Max';
+  String get max => 'সর্বোচ্চ';
 
   @override
-  String get latest => 'Latest';
+  String get latest => 'সর্বশেষ';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => 'পাঠ্যাংশসমূহ';
 
   @override
-  String get value => 'Value';
+  String get value => 'মূল্য';
 
   @override
-  String get source => 'Source';
+  String get source => 'উৎস';
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return '$total রিডিংয়ের মধ্যে ২০টি দেখাচ্ছে';
   }
 
   @override
@@ -2511,13 +2516,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get medicationNameLabel => 'Medication নাম';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => 'মাত্রা';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'ইউনিট';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => 'ফ্রিকোয়েন্সি';
 
   @override
   String get startDateLabel => 'Start তারিখ';
@@ -2529,24 +2534,24 @@ class AppLocalizationsBn extends AppLocalizations {
   String get endDateLabel => 'End তারিখ';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => 'ডোজের সময়';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'ডোজ $number';
   }
 
   @override
   String get notesOptional => 'নোট (oঐচ্ছিক';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => 'স্মরণিকা';
 
   @override
   String get saveMedication => 'সংরক্ষণ Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully => 'ঔষধ সফলভাবে যোগ করা হয়েছে!';
 
   @override
   String get medicationAddFailed =>
@@ -2575,44 +2580,45 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+      'অ্যাপয়েন্টমেন্ট সফলভাবে নির্ধারিত হয়েছে!';
 
   @override
   String get appointmentScheduleFailed =>
-      'Failed to schedule appointment. Please try again.';
+      'অ্যাপয়েন্টমেন্ট নির্ধারণে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => 'হৃদরোগ বিশেষজ্ঞ';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => 'ত্বক বিশেষজ্ঞ';
 
   @override
-  String get specialtyEndocrinologist => 'Endocrinologist';
+  String get specialtyEndocrinologist => 'অন্তঃস্রাব বিশেষজ্ঞ';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => 'সাধারণ চিকিৎসা';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => 'স্নায়ুবিশেষজ্ঞ';
 
   @override
-  String get specialtyOphthalmologist => 'Ophthalmologist';
+  String get specialtyOphthalmologist => 'চক্ষু বিশেষজ্ঞ';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => 'অর্থোপেডিক';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => 'শিশু বিশেষজ্ঞ';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => 'মানসবিজ্ঞানী';
 
   @override
   String get specialtyOther => 'অন্যান্য';
 
   @override
-  String get recordsLoadFailed => 'Failed to load records. Please try again.';
+  String get recordsLoadFailed =>
+      'রেকর্ড লোড করতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
   String get notAvailable => 'N/A';
@@ -2624,34 +2630,34 @@ class AppLocalizationsBn extends AppLocalizations {
   String get addMedicalRecordTitle => 'যোগ করুন Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => 'শিরোনাম';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'ধরন';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => 'ল্যাবের ফলাফল';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => 'প্রিসক্রিপশনসমূহ';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => 'ইমেজিং';
 
   @override
   String get recordTypeOther => 'অন্যান্য';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => 'বিবরণ';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => 'রেকর্ড আপডেট হয়েছে!';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => 'রেকর্ড যোগ করা হয়েছে!';
 
   @override
-  String get recordUpdateFailed => 'Failed to update record.';
+  String get recordUpdateFailed => 'রেকর্ড আপডেট করতে ব্যর্থ হয়েছে।';
 
   @override
   String get recordAddFailed => 'Failed to যোগ করুন record.';
@@ -2665,7 +2671,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => 'রেকর্ড মুছে ফেলা হয়েছে।';
 
   @override
   String get recordDeleteFailed => 'Failed to মুছুন record.';
@@ -2686,11 +2692,11 @@ class AppLocalizationsBn extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => 'আরও বিকল্প';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return '$total-এর $current ধাপ';
   }
 
   @override
@@ -2729,46 +2735,46 @@ class AppLocalizationsBn extends AppLocalizations {
       'Describe any অন্যান্য details সম্পর্কে your লক্ষণ or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => 'সামগ্রিক তীব্রতা';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => 'মৃদু';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => 'তীব্র';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => 'খুবই মৃদু';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => 'মৃদু';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => 'মধ্যম';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => 'বিচলিতকারী';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => 'তীব্র';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => 'অসহ্য';
 
   @override
   String get durationToday => 'আজ (started tআজ';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => '১-৩ দিন';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => '৪-৭ দিন';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => '১-২ সপ্তাহ';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => '২ সপ্তাহের বেশি';
 
   @override
   String get age => 'বয়স';
@@ -2777,19 +2783,20 @@ class AppLocalizationsBn extends AppLocalizations {
   String get ageHint => 'Enter your বয়স';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => 'বছর';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => 'জৈবিক লিঙ্গ';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => 'যেমন: ডায়াবেটিস, উচ্চ রক্তচাপ, হাঁপানি';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint =>
+      'যেমন: লিসিনোপ্রিল ১০ মিগ্রাম, মেটফর্মিন ৫০০ মিগ্রাম';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => 'সারসংক্ষেপ';
 
   @override
   String get analyzeWithAi => 'AI দিয়ে বিশ্লেষণ';
@@ -2810,7 +2817,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get symptomCough => 'কাশি';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => 'স্বল্প শ্বাস';
 
   @override
   String get symptomFatigue => 'ক্লান্তি';
@@ -2822,40 +2829,40 @@ class AppLocalizationsBn extends AppLocalizations {
   String get symptomNausea => 'বমি বমি ভাব';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => 'শিউরে ওঠা';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => 'পেশীর ব্যথা';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => 'অনিদ্রা';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => 'বুকের ব্যথা';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => 'পেটের ব্যথা';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => 'গলা ব্যথা';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => 'নাক দিয়ে পানি পড়া';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => 'বমি';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => 'ডায়রিয়া';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => 'র‍্যাশ';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => 'জয়েন্টের ব্যথা';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => 'ক্রয় বাতিল করা হয়েছে।';
 
   @override
   String get noPurchasesToRestore =>

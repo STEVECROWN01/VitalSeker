@@ -225,7 +225,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get exportData => 'Exporter les Données';
 
   @override
-  String get support => 'Support';
+  String get support => 'Assistance';
 
   @override
   String get helpCenter => 'Centre d\'Aide';
@@ -519,8 +519,8 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count membres connectés',
-      one: '$count membre connecté',
+      other: '$count connected members',
+      one: '$count connected member',
     );
     return '$_temp0';
   }
@@ -847,7 +847,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Allez dans Profil > Abonnement et sélectionnez le plan Free pour rétrograder. Vos fonctionnalités Pro ou Enterprise resteront actives jusqu\'à la fin de votre période de facturation actuelle.';
+      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
@@ -997,7 +997,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get dosage => 'Dosage';
+  String get dosage => 'Posologie';
 
   @override
   String get unit => 'Unité';
@@ -1006,7 +1006,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get frequency => 'Fréquence';
 
   @override
-  String get notes => 'Notes';
+  String get notes => 'Remarques';
 
   @override
   String get medicationDiscontinued => 'Médicament interrompu';
@@ -1405,7 +1405,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pro => 'Pro';
 
   @override
-  String get enterprise => 'Enterprise';
+  String get enterprise => 'Entreprise';
 
   @override
   String get nA => 'N/D';
@@ -1803,7 +1803,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count Allergies',
-      one: '$count Allergie',
+      one: '$count Allergy',
     );
     return '$_temp0';
   }
@@ -1813,8 +1813,8 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Médicaments',
-      one: '$count Médicament',
+      other: '$count Medications',
+      one: '$count Medication',
     );
     return '$_temp0';
   }
@@ -1933,8 +1933,8 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts atteints par SMS',
-      one: '$count contact atteint par SMS',
+      other: '$count contacts reached via SMS',
+      one: '$count contact reached via SMS',
     );
     return '$_temp0';
   }
@@ -2491,7 +2491,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'Aucune lecture trouvée pour la période sélectionnée';
+      'No readings found for the selected time period';
 
   @override
   String get singleReading => '1 mesure';
@@ -2500,7 +2500,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get average => 'Moyenne';
 
   @override
-  String get min => 'Min';
+  String get min => 'J\'ai';
 
   @override
   String get max => 'Max';
@@ -2529,7 +2529,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get medicationNameLabel => 'Nom du médicament';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => 'Posologie';
 
   @override
   String get unitLabel => 'Unité';
