@@ -165,17 +165,7 @@
   "vitalSekerPro": "VitalSeker Pro",
   "signingOut": "Signing out...",
   "manageMedicalCredentials": "Manage medical credentials",
-  "connectedMembers": "{count} connected member{s}",
-  "@connectedMembers": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      },
-      "s": {
-        "type": "String"
-      }
-    }
-  },
+  "connectedMembers": "{count, plural, =1{{count} connected member} other{{count} connected members}}",
   "alertsSmartReminders": "Alerts & smart reminders",
   "documentsImaging": "Documents & imaging",
   "translateMedicalTermsSubtitle": "Translate medical terms",

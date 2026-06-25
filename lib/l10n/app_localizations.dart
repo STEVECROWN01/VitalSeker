@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_am.dart';
 import 'app_localizations_ar.dart';
 import 'app_localizations_bn.dart';
 import 'app_localizations_cs.dart';
@@ -131,6 +132,7 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('am'),
     Locale('ar'),
     Locale('bn'),
     Locale('cs'),
@@ -1166,8 +1168,8 @@ abstract class AppLocalizations {
   /// No description provided for @connectedMembers.
   ///
   /// In en, this message translates to:
-  /// **'{count} connected member{s}'**
-  String connectedMembers(int count, String s);
+  /// **'{count, plural, =1{{count} connected member} other{{count} connected members}}'**
+  String connectedMembers(num count);
 
   /// No description provided for @alertsSmartReminders.
   ///
@@ -5321,6 +5323,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) => <String>[
+        'am',
         'ar',
         'bn',
         'cs',
@@ -5381,6 +5384,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
 
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'am':
+      return AppLocalizationsAm();
     case 'ar':
       return AppLocalizationsAr();
     case 'bn':

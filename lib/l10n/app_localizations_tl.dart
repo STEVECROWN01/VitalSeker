@@ -517,8 +517,14 @@ class AppLocalizationsTl extends AppLocalizations {
   String get manageMedicalCredentials => 'Manage medical credentials';
 
   @override
-  String connectedMembers(int count, String s) {
-    return '$count connected member$s';
+  String connectedMembers(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count connected members',
+      one: '$count connected member',
+    );
+    return '$_temp0';
   }
 
   @override

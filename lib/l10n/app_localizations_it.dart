@@ -333,7 +333,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get findHospitalsNearMe => 'Find Hospitals Near Me';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'Rapido Chiamata';
 
   @override
   String get emergencyContacts => 'Contatti di emergenza';
@@ -349,7 +349,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Aggiungi contacts in your Profilo Impostazioni';
 
   @override
-  String get noMedicalInfo => 'No medical information on file';
+  String get noMedicalInfo => 'Nessun medico informazione on file';
 
   @override
   String get updateProfileMedicalID =>
@@ -398,7 +398,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get generatePDF => 'Generate PDF';
 
   @override
-  String get sendByEmail => 'Send by Email';
+  String get sendByEmail => 'Invia by Email';
 
   @override
   String get patientOverview => 'Patient Overview & Vital Stats';
@@ -410,7 +410,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get medicationsAllergies => 'Farmaci & Allergie';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'IA Analysis Summary';
 
   @override
   String get dateRange => 'Data Range';
@@ -431,8 +431,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get targetLanguage => 'Lingua di destinazione';
 
   @override
-  String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+  String get enterTextToTranslate => 'Enter medico term or phrase to translate';
 
   @override
   String translationResult(Object lang) {
@@ -503,7 +502,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get triageSessions => 'Triage Sessions';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'Days Attivo';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
@@ -512,11 +511,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get signingOut => 'Signing out...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials => 'Manage medico credentials';
 
   @override
-  String connectedMembers(int count, String s) {
-    return '$count connected member$s';
+  String connectedMembers(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count connected members',
+      one: '$count connected member',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -564,7 +569,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get confirmNewPassword => 'Conferma nuova password';
 
   @override
-  String get update => 'Update';
+  String get update => 'Aggiorna';
 
   @override
   String get passwordsDoNotMatch => 'Le password non corrispondono';
@@ -670,7 +675,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get enterprisePlanFeature2 => 'Unlimited Famiglia profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'Personalizzato branding';
 
   @override
   String get enterprisePlanFeature4 => 'API access';
@@ -710,7 +715,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return 'Questa will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
   }
 
   @override
@@ -727,7 +732,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'Errore to update subscription. Please try again.';
 
   @override
   String get purchasesRestored => 'Purchases restored.';
@@ -755,13 +760,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get contactSupport => 'Contact Supporto';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'Oggetto';
 
   @override
-  String get message => 'Message';
+  String get message => 'Messaggio';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'Invia';
 
   @override
   String get otherWaysToReachUs => 'Altro Ways to Reach Us';
@@ -778,10 +783,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Please fill in both subject and message.';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength => 'Oggetto must be at least 5 characters.';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength => 'Messaggio must be at least 10 characters.';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -836,7 +841,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Go to Profilo > Subscription and select the Gratis plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
@@ -888,7 +893,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String scoreValue(int score) {
-    return 'Score: $score';
+    return 'Punteggio: $score';
   }
 
   @override
@@ -965,7 +970,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get manageSubscription => 'Gestisci abbonamento';
 
   @override
-  String get failedToLoadProfiles => 'Failed to load profiles';
+  String get failedToLoadProfiles => 'Errore to caricare profiles';
 
   @override
   String get searchMedications => 'Cerca medFarmaci';
@@ -982,7 +987,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'Modifica $name';
   }
 
   @override
@@ -1002,13 +1007,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get failedToDiscontinueMedication =>
-      'Failed to discontinue medication.';
+      'Errore to discontinue medication.';
 
   @override
   String get medicationUpdated => 'Medication updated!';
 
   @override
-  String get failedToUpdateMedication => 'Failed to update medication.';
+  String get failedToUpdateMedication => 'Errore to update medication.';
 
   @override
   String get medicationMarkedCompleted => 'Medication marked as completed';
@@ -1038,7 +1043,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String nextDose(String time) {
-    return 'Next dose: $time';
+    return 'Avanti dose: $time';
   }
 
   @override
@@ -1057,13 +1062,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get everyOtherDay => 'Every Altro Day';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Settimanale';
 
   @override
   String get asNeeded => 'As Needed';
 
   @override
-  String get custom => 'Custom';
+  String get custom => 'Personalizzato';
 
   @override
   String get all => 'Tutti';
@@ -1082,7 +1087,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get appointmentMarkedCompleted => 'Appointment marked as completed';
 
   @override
-  String get failedToUpdateAppointment => 'Failed to update appointment.';
+  String get failedToUpdateAppointment => 'Errore to update appointment.';
 
   @override
   String get appointmentCancelled => 'Appointment cancelled';
@@ -1103,7 +1108,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get failedToRescheduleAppointment =>
-      'Failed to reschedule appointment.';
+      'Errore to reschedule appointment.';
 
   @override
   String get deleteAppointment => 'Elimina appuntamento';
@@ -1149,11 +1154,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get pleaseEnterTermToTranslate =>
-      'Please enter a medical term or phrase to translate.';
+      'Please enter a medico term or phrase to translate.';
 
   @override
   String get noTranslationReturned =>
-      'No translation was returned. Please try a different term.';
+      'Nessun translation was returned. Please try a different term.';
 
   @override
   String get translationFailed => 'Traduzione fallita. Riprova.';
@@ -1175,7 +1180,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get conceptDesignDevelopment => 'Concept, Design & Development';
 
   @override
-  String get updateAccountCredentials => 'Update your account credentials';
+  String get updateAccountCredentials => 'Aggiorna your account credentials';
 
   @override
   String get legal => 'Legal';
@@ -1185,7 +1190,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'VitalSeker is your AI-powered Salute companion that puts you in control of your Salute journey. With intelligent symptom tTriage a secure Salute pPassaporto Emergenza SOS alerts, and personalized weekly iApprofondimenti VitalSeker ensures you always have the information you need when it matters most. Built with cutting-edge AI technology and bank-grade security, your Salute data stays private and protected.';
 
   @override
-  String get featureAiTriageTitle => 'AI Symptom Triage';
+  String get featureAiTriageTitle => 'IA Symptom Triage';
 
   @override
   String get featureAiTriageDesc =>
@@ -1319,7 +1324,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tosSection5Para3 =>
-      'We may change subscription fees upon reasonable notice. Fee changes will not apply to your current billing period.';
+      'We may change subscription fees upon reasonable notice. Fee changes will non apply to your current billing period.';
 
   @override
   String get tosSection6Title => 'Your Data';
@@ -1370,7 +1375,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'We may update these Termini from Ora to tOra We will notify you of material changes via the app or by eEmail Continued use of the Service after changes take effect constitutes acceptance of the revised TTermini';
 
   @override
-  String get tosSection11Title => 'Contact';
+  String get tosSection11Title => 'Contatto';
 
   @override
   String get tosSection11Para1 =>
@@ -1424,7 +1429,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re Indietro online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'Accedi in to your VitalSeker account';
 
   @override
   String get signingIn => 'Signing in...';
@@ -1540,7 +1545,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get viewAll => 'Vedi tutto';
 
   @override
-  String get failedLoadRecentChecks => 'Failed to load recent checks';
+  String get failedLoadRecentChecks => 'Errore to caricare recent checks';
 
   @override
   String get pullDownRetry => 'Pull down to Riprova';
@@ -1570,7 +1575,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get aiPoweredTriage60s => 'AI-powered Triage in 60 seconds';
 
   @override
-  String get qrAndMedicalInfo => 'QR & medical info';
+  String get qrAndMedicalInfo => 'QR & medico info';
 
   @override
   String get pastChecksAndVitals => 'Past checks & Parametri vitali';
@@ -1626,14 +1631,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $error';
+    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. Errore: $error';
   }
 
   @override
   String get generalDiscomfort => 'General discomfort';
 
   @override
-  String get selfCareRecommended => 'Self-Care Recommended';
+  String get selfCareRecommended => 'Self-Care Consigliate';
 
   @override
   String get scheduleAppointmentCare => 'Schedule an Appointment';
@@ -1667,7 +1672,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String urgencyScoreCaption(int score) {
-    return 'Urgency Score: $score/100';
+    return 'Urgency Punteggio: $score/100';
   }
 
   @override
@@ -1677,7 +1682,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get recommendations => 'Recommendations';
 
   @override
-  String get possibleConditions => 'Possible Conditions';
+  String get possibleConditions => 'Possible Condizioni';
 
   @override
   String get followUpQuestions => 'Follow-up Questions';
@@ -1686,14 +1691,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get saving => 'Saving...';
 
   @override
-  String get seeDoctorSoon => 'See a Doctor Soon';
+  String get seeDoctorSoon => 'See a Medico Soon';
 
   @override
   String get emergencyCareNow => 'Emergenza Care Now';
 
   @override
   String get triageDisclaimer =>
-      'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+      'Questa non è una diagnosi medica. Consulta sempre un professionista sanitario.';
 
   @override
   String get escalateLow1 => 'Sintomi worsen or spread to new body areas';
@@ -1702,7 +1707,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get escalateLow2 => 'Febbre rises above 39°C (102°F)';
 
   @override
-  String get escalateLow3 => 'No improvement after 48 hours of self-care';
+  String get escalateLow3 => 'Nessun improvement after 48 hours of self-care';
 
   @override
   String get escalateMedium1 => 'Sintomi persist beyond 3 days';
@@ -1729,7 +1734,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'Do non drive yourself — get a ride or ambulance';
 
   @override
   String get escalateEmergency3 =>
@@ -1782,7 +1787,7 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
+      other: '$count Allergie',
       one: '$count Allergy',
     );
     return '$_temp0';
@@ -1793,7 +1798,7 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
+      other: '$count Farmaci',
       one: '$count Medication',
     );
     return '$_temp0';
@@ -1819,7 +1824,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get generateQrCode => 'Generate Codice QR';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'Scaduto';
 
   @override
   String validFor(int hours, int minutes) {
@@ -1833,13 +1838,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get keepHolding => 'Keep holding...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'Vicini Hospitals';
 
   @override
   String get allergies => 'Allergie';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'Condizioni';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1865,7 +1870,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get sendingEmergencyAlert => 'Sending Emergenza Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'Allerta Could Not Be Sent';
 
   @override
   String get emergencyAlertSent => 'Emergenza Alert Sent';
@@ -1926,7 +1931,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get noLogsMatchFilters => 'No logs match your filters';
+  String get noLogsMatchFilters => 'Nessun logs match your filters';
 
   @override
   String get tryDifferentSearch => 'Try a different Cerca or fFiltra';
@@ -1963,7 +1968,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'IA Recommendation: $recommendation';
   }
 
   @override
@@ -1971,14 +1976,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String notesCaption(String notes) {
-    return 'Notes: $notes';
+    return 'Note: $notes';
   }
 
   @override
   String get export30DayReport => 'Esporta 30-day Report (PPro';
 
   @override
-  String get weeklyBreakdown => 'Weekly Breakdown';
+  String get weeklyBreakdown => 'Settimanale Breakdown';
 
   @override
   String get proAnalysis => 'Pro Analysis';
@@ -2018,7 +2023,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'Mild dehydration markers detected in  pomeriggio logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
 
   @override
   String get tipActivityTitle => 'Pacing activity';
@@ -2031,7 +2036,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get personalizedFocus => 'Personalized Focus';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights => 'Refreshing your IA insights…';
 
   @override
   String get generateNewInsights => 'Generate New Approfondimenti';
@@ -2043,7 +2048,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get avgSeverity => 'Avg Severity';
 
   @override
-  String get scoreChange => 'Score Change';
+  String get scoreChange => 'Punteggio Change';
 
   @override
   String get checkBackMondayOrGenerate =>
@@ -2067,12 +2072,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String couldNotLaunchCall(String phoneNumber) {
-    return 'Could not launch call to $phoneNumber';
+    return 'Could non launch call to $phoneNumber';
   }
 
   @override
   String get medicalDisclaimer =>
-      'This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.';
+      'Queste informazioni non costituiscono una diagnosi medica. VitalSeker non sostituisce un professionista sanitario qualificato.';
 
   @override
   String get poweredByGlm => 'Powered by GLM-4';
@@ -2081,11 +2086,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get aiTriageIn90Seconds => 'AI-powered Triage in 90 seconds';
 
   @override
-  String get vitalValueOutOfRange => 'Value out of expected range';
+  String get vitalValueOutOfRange => 'Valore out of expected range';
 
   @override
   String get vitalRangeHintHeartRate =>
-      'Heart rate should be between 30 and 220 BPM';
+      'Cuore rate should be between 30 and 220 BPM';
 
   @override
   String get vitalRangeHintBloodPressure =>
@@ -2097,11 +2102,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vitalRangeHintOxygen =>
-      'Blood oxygen should be between 50 and 100 %';
+      'Sangue oxygen should be between 50 and 100 %';
 
   @override
   String get vitalRangeHintGlucose =>
-      'Blood glucose should be between 20 and 600 mg/dL';
+      'Sangue glucose should be between 20 and 600 mg/dL';
 
   @override
   String get vitalRangeHintWeight => 'Peso should be between 2 and 500 kg';
@@ -2180,7 +2185,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'You have the following rights regarding your data: • Access: View Tutti your personal and Salute data within the app or request a data eEsporta • Correction: Modifica your Profilo information at any Ora through Modifica PProfilo • Deletion: Request account deletion through Impostazioni > Data & Privacy > Elimina Account. • Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences. • Objection: Object to specific data processing activities by contacting our Data Protection Officer. • Withdrawal of Consent: You may withdraw consent at any Ora without affecting the lawfulness of prior processing. To exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app Supporto feature.';
 
   @override
-  String get privacySectionContactUs => '5. Contact Us';
+  String get privacySectionContactUs => '5. Contatto Us';
 
   @override
   String privacyContactBody(String producer) {
@@ -2205,7 +2210,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get avatarUpdated => 'Avatar updated!';
 
   @override
-  String get avatarUploadFailed => 'Failed to upload avatar. Please try again.';
+  String get avatarUploadFailed => 'Errore to upload avatar. Please try again.';
 
   @override
   String get avatarRemoved => 'Avatar removed.';
@@ -2263,7 +2268,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get addCondition => 'Aggiungi Condition';
 
   @override
-  String get noConditionsAdded => 'No conditions added';
+  String get noConditionsAdded => 'Nessun conditions added';
 
   @override
   String get saveChanges => 'Salva Changes';
@@ -2283,7 +2288,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+      'Buon progress. A few areas could use attention.';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2291,14 +2296,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get scoreDescriptionLow =>
-      'Several areas need attention. Please consult a healthcare provider.';
+      'Several areas need attention. Please consult a sanitario provider.';
 
   @override
   String get scoreDescriptionCritical =>
-      'Immediate attention recommended. Please seek medical advice.';
+      'Immediate attention recommended. Please seek medico advice.';
 
   @override
-  String get riskFactors => 'Risk Factors';
+  String get riskFactors => 'Rischio Fattori';
 
   @override
   String allergyCount(int count) {
@@ -2311,7 +2316,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get noRiskFactors => 'No risk factors identified';
+  String get noRiskFactors => 'Nessun risk factors identified';
 
   @override
   String get recentTriageResults => 'Recent Triage Results';
@@ -2320,7 +2325,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get noTriageResults => 'No Triage results yet';
 
   @override
-  String get recommendedActions => 'Recommended Actions';
+  String get recommendedActions => 'Consigliate Azioni';
 
   @override
   String get actionScheduleCheckup => 'Schedule a Check-up';
@@ -2351,7 +2356,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quality sleep is essential for recovery and immune function.';
 
   @override
-  String get actionStayActive => 'Stay Active';
+  String get actionStayActive => 'Stay Attivo';
 
   @override
   String get actionStayActiveDesc =>
@@ -2384,16 +2389,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get logFirstVital => 'Registra il tuo primo parametro per iniziare';
 
   @override
-  String get day => 'Day';
+  String get day => 'Giorno';
 
   @override
-  String get week => 'Week';
+  String get week => 'Settimana';
 
   @override
-  String get month => 'Month';
+  String get month => 'Mese';
 
   @override
-  String get noData => 'No data';
+  String get noData => 'Nessun dato';
 
   @override
   String get trendUp => 'UP';
@@ -2461,18 +2466,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String noVitalTypeData(String vitalType) {
-    return 'No $vitalType Data';
+    return 'Nessun $vitalType Data';
   }
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Nessun readings found for the selected time period';
 
   @override
   String get singleReading => '1 reading';
 
   @override
-  String get average => 'Average';
+  String get average => 'Media';
 
   @override
   String get min => 'Min';
@@ -2481,16 +2486,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get max => 'Max';
 
   @override
-  String get latest => 'Latest';
+  String get latest => 'Ultimo';
 
   @override
   String get readingsLabel => 'READINGS';
 
   @override
-  String get value => 'Value';
+  String get value => 'Valore';
 
   @override
-  String get source => 'Source';
+  String get source => 'Fonte';
 
   @override
   String showingReadingsCount(int total) {
@@ -2572,7 +2577,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get appointmentScheduleFailed =>
-      'Failed to schedule appointment. Please try again.';
+      'Errore to schedule appointment. Please try again.';
 
   @override
   String get specialtyCardiologist => 'Cardiologist';
@@ -2605,7 +2610,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get specialtyOther => 'Altro';
 
   @override
-  String get recordsLoadFailed => 'Failed to load records. Please try again.';
+  String get recordsLoadFailed =>
+      'Errore to caricare records. Please try again.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2620,7 +2626,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get titleLabel => 'Title';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'Tipo';
 
   @override
   String get recordTypeLabResults => 'Lab Results';
@@ -2644,7 +2650,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get recordAdded => 'Record added!';
 
   @override
-  String get recordUpdateFailed => 'Failed to update record.';
+  String get recordUpdateFailed => 'Errore to update record.';
 
   @override
   String get recordAddFailed => 'Failed to Aggiungi record.';
@@ -2670,7 +2676,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get searchRecordsHint => 'Cerca records...';
 
   @override
-  String get noRecordsFound => 'No records found';
+  String get noRecordsFound => 'Nessun records found';
 
   @override
   String get tapToAddRecord => 'Tap + to Aggiungi a medical record';

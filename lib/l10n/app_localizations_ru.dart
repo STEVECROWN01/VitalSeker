@@ -333,7 +333,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get findHospitalsNearMe => 'Find Hospitals Near Me';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'Быстрый Набор';
 
   @override
   String get emergencyContacts => 'Экстренные контакты';
@@ -410,7 +410,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get medicationsAllergies => 'Лекарства & Аллергии';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'ИИ Analysis Summary';
 
   @override
   String get dateRange => 'Дата Range';
@@ -432,7 +432,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+      'Enter медицинский term or phrase to translate';
 
   @override
   String translationResult(Object lang) {
@@ -503,7 +503,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get triageSessions => 'Сортировка Sessions';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'Days Активный';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
@@ -512,11 +512,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get signingOut => 'Signing out...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials => 'Manage медицинский credentials';
 
   @override
-  String connectedMembers(int count, String s) {
-    return '$count connected member$s';
+  String connectedMembers(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count connected members',
+      one: '$count connected member',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -564,7 +570,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get confirmNewPassword => 'Подтвердите новый пароль';
 
   @override
-  String get update => 'Update';
+  String get update => 'Обновить';
 
   @override
   String get passwordsDoNotMatch => 'Пароли не совпадают';
@@ -670,7 +676,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get enterprisePlanFeature2 => 'Unlimited Семья profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'Другой branding';
 
   @override
   String get enterprisePlanFeature4 => 'API access';
@@ -710,7 +716,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return 'Эта will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
   }
 
   @override
@@ -727,7 +733,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'Ошибка to update subscription. Please try again.';
 
   @override
   String get purchasesRestored => 'Purchases restored.';
@@ -755,13 +761,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get contactSupport => 'Contact Поддержка';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'Тема';
 
   @override
-  String get message => 'Message';
+  String get message => 'Сообщение';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'Отправить';
 
   @override
   String get otherWaysToReachUs => 'Другое Ways to Reach Us';
@@ -778,10 +784,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Please fill in both subject and message.';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength => 'Тема must be at least 5 characters.';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength => 'Сообщение must be at least 10 characters.';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -836,7 +842,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Go to Профиль > Subscription and select the Бесплатно plan to downgrade. Your Pro or Предприятие features will remain active until the end of your current billing period.';
 
   @override
   String get exportConfigurePreview =>
@@ -888,7 +894,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String scoreValue(int score) {
-    return 'Score: $score';
+    return 'Балл: $score';
   }
 
   @override
@@ -965,7 +971,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get manageSubscription => 'Управление подпиской';
 
   @override
-  String get failedToLoadProfiles => 'Failed to load profiles';
+  String get failedToLoadProfiles => 'Ошибка to загрузить profiles';
 
   @override
   String get searchMedications => 'Поиск medЛекарства';
@@ -982,7 +988,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'Изменить $name';
   }
 
   @override
@@ -1002,13 +1008,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get failedToDiscontinueMedication =>
-      'Failed to discontinue medication.';
+      'Ошибка to discontinue medication.';
 
   @override
   String get medicationUpdated => 'Medication updated!';
 
   @override
-  String get failedToUpdateMedication => 'Failed to update medication.';
+  String get failedToUpdateMedication => 'Ошибка to update medication.';
 
   @override
   String get medicationMarkedCompleted => 'Medication marked as completed';
@@ -1038,7 +1044,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String nextDose(String time) {
-    return 'Next dose: $time';
+    return 'Далее dose: $time';
   }
 
   @override
@@ -1057,13 +1063,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get everyOtherDay => 'Every Другое Day';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Еженедельно';
 
   @override
   String get asNeeded => 'As Needed';
 
   @override
-  String get custom => 'Custom';
+  String get custom => 'Другой';
 
   @override
   String get all => 'Все';
@@ -1082,7 +1088,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appointmentMarkedCompleted => 'Appointment marked as completed';
 
   @override
-  String get failedToUpdateAppointment => 'Failed to update appointment.';
+  String get failedToUpdateAppointment => 'Ошибка to update appointment.';
 
   @override
   String get appointmentCancelled => 'Appointment cancelled';
@@ -1103,7 +1109,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get failedToRescheduleAppointment =>
-      'Failed to reschedule appointment.';
+      'Ошибка to reschedule appointment.';
 
   @override
   String get deleteAppointment => 'Удалить прием';
@@ -1149,7 +1155,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get pleaseEnterTermToTranslate =>
-      'Please enter a medical term or phrase to translate.';
+      'Please enter a медицинский term or phrase to translate.';
 
   @override
   String get noTranslationReturned =>
@@ -1175,7 +1181,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get conceptDesignDevelopment => 'Concept, Design & Development';
 
   @override
-  String get updateAccountCredentials => 'Update your account credentials';
+  String get updateAccountCredentials => 'Обновить your account credentials';
 
   @override
   String get legal => 'Legal';
@@ -1320,7 +1326,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tosSection5Para3 =>
-      'We may change subscription fees upon reasonable notice. Fee changes will not apply to your current billing period.';
+      'We may change subscription fees upon reasonable notice. Fee changes will не apply to your current billing period.';
 
   @override
   String get tosSection6Title => 'Your Data';
@@ -1371,7 +1377,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'We may update these Условия from Время to tВремя We will notify you of material changes via the app or by eЭл. почта Continued use of the Service after changes take effect constitutes acceptance of the revised TУсловия';
 
   @override
-  String get tosSection11Title => 'Contact';
+  String get tosSection11Title => 'Контакт';
 
   @override
   String get tosSection11Para1 =>
@@ -1447,7 +1453,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String passwordResetSent(String email) {
-    return 'Password reset link sent to $email';
+    return 'Пароль reset link sent to $email';
   }
 
   @override
@@ -1541,7 +1547,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get viewAll => 'Посмотреть все';
 
   @override
-  String get failedLoadRecentChecks => 'Failed to load recent checks';
+  String get failedLoadRecentChecks => 'Ошибка to загрузить recent checks';
 
   @override
   String get pullDownRetry => 'Pull down to Повторить';
@@ -1571,7 +1577,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get aiPoweredTriage60s => 'AI-powered Сортировка in 60 seconds';
 
   @override
-  String get qrAndMedicalInfo => 'QR & medical info';
+  String get qrAndMedicalInfo => 'QR & медицинский info';
 
   @override
   String get pastChecksAndVitals => 'Past checks & Жизненные показатели';
@@ -1627,14 +1633,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $error';
+    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. Ошибка: $error';
   }
 
   @override
   String get generalDiscomfort => 'General discomfort';
 
   @override
-  String get selfCareRecommended => 'Self-Care Recommended';
+  String get selfCareRecommended => 'Self-Care Рекомендуемые';
 
   @override
   String get scheduleAppointmentCare => 'Schedule an Appointment';
@@ -1668,7 +1674,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String urgencyScoreCaption(int score) {
-    return 'Urgency Score: $score/100';
+    return 'Urgency Балл: $score/100';
   }
 
   @override
@@ -1678,7 +1684,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get recommendations => 'Recommendations';
 
   @override
-  String get possibleConditions => 'Possible Conditions';
+  String get possibleConditions => 'Possible Заболевания';
 
   @override
   String get followUpQuestions => 'Follow-up Questions';
@@ -1687,14 +1693,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get saving => 'Saving...';
 
   @override
-  String get seeDoctorSoon => 'See a Doctor Soon';
+  String get seeDoctorSoon => 'See a Врач Soon';
 
   @override
   String get emergencyCareNow => 'Экстренная помощь Care Now';
 
   @override
   String get triageDisclaimer =>
-      'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+      'Это не медицинский диагноз. Всегда консультируйтесь с медицинским специалистом.';
 
   @override
   String get escalateLow1 => 'Симптомы worsen or spread to new body areas';
@@ -1731,7 +1737,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'Do не drive yourself — get a ride or ambulance';
 
   @override
   String get escalateEmergency3 =>
@@ -1784,7 +1790,7 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
+      other: '$count Аллергии',
       one: '$count Allergy',
     );
     return '$_temp0';
@@ -1795,7 +1801,7 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
+      other: '$count Лекарства',
       one: '$count Medication',
     );
     return '$_temp0';
@@ -1821,7 +1827,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get generateQrCode => 'Generate QR-код';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'Истёк';
 
   @override
   String validFor(int hours, int minutes) {
@@ -1835,13 +1841,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get keepHolding => 'Keep holding...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'Поблизости Hospitals';
 
   @override
   String get allergies => 'Аллергии';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'Заболевания';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1867,7 +1873,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sendingEmergencyAlert => 'Sending Экстренная помощь Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'Оповещение Could Not Be Sent';
 
   @override
   String get emergencyAlertSent => 'Экстренная помощь Alert Sent';
@@ -1965,7 +1971,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'ИИ Recommendation: $recommendation';
   }
 
   @override
@@ -1973,14 +1979,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String notesCaption(String notes) {
-    return 'Notes: $notes';
+    return 'Заметки: $notes';
   }
 
   @override
   String get export30DayReport => 'Экспорт 30-day Report (PPro';
 
   @override
-  String get weeklyBreakdown => 'Weekly Breakdown';
+  String get weeklyBreakdown => 'Еженедельно Breakdown';
 
   @override
   String get proAnalysis => 'Pro Analysis';
@@ -2033,7 +2039,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get personalizedFocus => 'Personalized Focus';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights => 'Refreshing your ИИ insights…';
 
   @override
   String get generateNewInsights => 'Generate New Аналитика';
@@ -2045,7 +2051,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get avgSeverity => 'Avg Severity';
 
   @override
-  String get scoreChange => 'Score Change';
+  String get scoreChange => 'Балл Change';
 
   @override
   String get checkBackMondayOrGenerate =>
@@ -2069,12 +2075,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String couldNotLaunchCall(String phoneNumber) {
-    return 'Could not launch call to $phoneNumber';
+    return 'Could не launch call to $phoneNumber';
   }
 
   @override
   String get medicalDisclaimer =>
-      'This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.';
+      'Эта информация не является медицинским диагнозом. VitalSeker не заменяет квалифицированного медицинского специалиста.';
 
   @override
   String get poweredByGlm => 'Powered by GLM-4';
@@ -2083,11 +2089,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get aiTriageIn90Seconds => 'AI-powered Сортировка in 90 seconds';
 
   @override
-  String get vitalValueOutOfRange => 'Value out of expected range';
+  String get vitalValueOutOfRange => 'Значение out of expected range';
 
   @override
   String get vitalRangeHintHeartRate =>
-      'Heart rate should be between 30 and 220 BPM';
+      'Сердце rate should be between 30 and 220 BPM';
 
   @override
   String get vitalRangeHintBloodPressure =>
@@ -2099,11 +2105,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get vitalRangeHintOxygen =>
-      'Blood oxygen should be between 50 and 100 %';
+      'Кровь oxygen should be between 50 and 100 %';
 
   @override
   String get vitalRangeHintGlucose =>
-      'Blood glucose should be between 20 and 600 mg/dL';
+      'Кровь glucose should be between 20 and 600 mg/dL';
 
   @override
   String get vitalRangeHintWeight => 'Вес should be between 2 and 500 kg';
@@ -2182,7 +2188,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'You have the following rights regarding your data: • Access: View Все your personal and Здоровье data within the app or request a data eЭкспорт • Correction: Изменить your Профиль information at any Время through Изменить PПрофиль • Deletion: Request account deletion through Настройки > Data & Конфиденциальность > Удалить Account. • Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences. • Objection: Object to specific data processing activities by contacting our Data Protection Officer. • Withdrawal of Consent: You may withdraw consent at any Время without affecting the lawfulness of prior processing. To exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app Поддержка feature.';
 
   @override
-  String get privacySectionContactUs => '5. Contact Us';
+  String get privacySectionContactUs => '5. Контакт Us';
 
   @override
   String privacyContactBody(String producer) {
@@ -2207,7 +2213,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get avatarUpdated => 'Avatar updated!';
 
   @override
-  String get avatarUploadFailed => 'Failed to upload avatar. Please try again.';
+  String get avatarUploadFailed => 'Ошибка to upload avatar. Please try again.';
 
   @override
   String get avatarRemoved => 'Avatar removed.';
@@ -2293,14 +2299,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get scoreDescriptionLow =>
-      'Several areas need attention. Please consult a healthcare provider.';
+      'Several areas need attention. Please consult a медицинский provider.';
 
   @override
   String get scoreDescriptionCritical =>
-      'Immediate attention recommended. Please seek medical advice.';
+      'Immediate attention recommended. Please seek медицинский advice.';
 
   @override
-  String get riskFactors => 'Risk Factors';
+  String get riskFactors => 'Риск Факторы';
 
   @override
   String allergyCount(int count) {
@@ -2322,7 +2328,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noTriageResults => 'Нет Сортировка results yet';
 
   @override
-  String get recommendedActions => 'Recommended Actions';
+  String get recommendedActions => 'Рекомендуемые Действия';
 
   @override
   String get actionScheduleCheckup => 'Schedule a Check-up';
@@ -2353,7 +2359,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Quality sleep is essential for recovery and immune function.';
 
   @override
-  String get actionStayActive => 'Stay Active';
+  String get actionStayActive => 'Stay Активный';
 
   @override
   String get actionStayActiveDesc =>
@@ -2387,13 +2393,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Запишите первый показатель, чтобы начать отслеживание';
 
   @override
-  String get day => 'Day';
+  String get day => 'День';
 
   @override
-  String get week => 'Week';
+  String get week => 'Неделя';
 
   @override
-  String get month => 'Month';
+  String get month => 'Месяц';
 
   @override
   String get noData => 'Нет data';
@@ -2469,31 +2475,31 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Нет readings found for the selected time period';
 
   @override
   String get singleReading => '1 reading';
 
   @override
-  String get average => 'Average';
+  String get average => 'Среднее';
 
   @override
-  String get min => 'Min';
+  String get min => 'Мин';
 
   @override
-  String get max => 'Max';
+  String get max => 'Макс';
 
   @override
-  String get latest => 'Latest';
+  String get latest => 'Последний';
 
   @override
   String get readingsLabel => 'READINGS';
 
   @override
-  String get value => 'Value';
+  String get value => 'Значение';
 
   @override
-  String get source => 'Source';
+  String get source => 'Источник';
 
   @override
   String showingReadingsCount(int total) {
@@ -2575,7 +2581,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get appointmentScheduleFailed =>
-      'Failed to schedule appointment. Please try again.';
+      'Ошибка to schedule appointment. Please try again.';
 
   @override
   String get specialtyCardiologist => 'Cardiologist';
@@ -2608,7 +2614,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get specialtyOther => 'Другое';
 
   @override
-  String get recordsLoadFailed => 'Failed to load records. Please try again.';
+  String get recordsLoadFailed =>
+      'Ошибка to загрузить records. Please try again.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2623,7 +2630,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get titleLabel => 'Title';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'Тип';
 
   @override
   String get recordTypeLabResults => 'Lab Results';
@@ -2647,7 +2654,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get recordAdded => 'Record added!';
 
   @override
-  String get recordUpdateFailed => 'Failed to update record.';
+  String get recordUpdateFailed => 'Ошибка to update record.';
 
   @override
   String get recordAddFailed => 'Failed to Добавить record.';

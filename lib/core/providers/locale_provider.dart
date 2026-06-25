@@ -47,6 +47,8 @@ const Map<String, Locale> languageLocales = {
   'Ukrainian': Locale('uk'),
   'Malay': Locale('ms'),
   'Burmese': Locale('my'),
+  // Amharic — language #41
+  'Amharic': Locale('am'),
 };
 
 /// Reverse map for getting the display name from a Locale.

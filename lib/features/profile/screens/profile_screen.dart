@@ -285,7 +285,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                       iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
                       label: l10n.familyProfiles,
-                      subtitle: l10n.connectedMembers(familyCount, familyCount == 1 ? '' : 's'),
+                      subtitle: l10n.connectedMembers(familyCount),
                       onTap: () => context.push(AppConfig.family),
                     ),
                     _MenuItem(
