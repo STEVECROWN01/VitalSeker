@@ -21,7 +21,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get history => 'Tarihi';
 
   @override
-  String get triage => 'Triage';
+  String get triage => 'Bambance-bambance';
 
   @override
   String get insights => 'Fahimta';
@@ -165,7 +165,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get monitorAtHome => 'Monitor at Gida';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => 'Lokacin da za a haɓaka';
 
   @override
   String get saveToPassport => 'Ajiye to  Fasfo';
@@ -219,7 +219,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get privacyData => 'Keɓantawa & Bayani';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'Tsaro & Ajiya';
 
   @override
   String get exportData => 'Fitar da bayanai';
@@ -258,10 +258,10 @@ class AppLocalizationsHa extends AppLocalizations {
   String get upgradeToPro => 'Inganta zuwa Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'Kare dukan da\'irar.';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'Ƙara Koyi';
 
   @override
   String get medications => 'Magunguna';
@@ -330,10 +330,10 @@ class AppLocalizationsHa extends AppLocalizations {
   String get shareMyLocation => 'Raba wurin da nake';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'Nemo Asibitoci Kusa da Ni';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'Kiran sauri da sauri';
 
   @override
   String get emergencyContacts => 'Tuntuɓar gaggawa';
@@ -361,7 +361,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get noHistoryYet => 'Babu tarihi har yanzu';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere => 'Alamomin alamun ku zasu bayyana anan';
 
   @override
   String get startFirstTriage => 'Fara triage na farko don ganin aiki anan';
@@ -377,14 +377,14 @@ class AppLocalizationsHa extends AppLocalizations {
       'A\'a Fahimta generated yet. Check Baya on Monday for your weekly AI Lafiya summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'Ƙirƙira Yanzu';
 
   @override
   String get upgradeProInsights =>
       'Girma to Pro to unlock AI-powered weekly Lafiya iFahimta';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Shirin Pro';
 
   @override
   String get viewAllPlans => 'View Duka plans';
@@ -393,13 +393,13 @@ class AppLocalizationsHa extends AppLocalizations {
   String get exportMedicalReport => 'Fitarwa Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'Ƙirƙirar PDF';
 
   @override
   String get sendByEmail => 'Send by Imel';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview => 'Bayanin haƙuri & Mahimman ƙididdiga';
 
   @override
   String get symptomsTriageLog => 'Alamun & Triage Log';
@@ -408,16 +408,16 @@ class AppLocalizationsHa extends AppLocalizations {
   String get medicationsAllergies => 'Magunguna & Maɗaukaki';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'AI Takaitacciyar Takaitawa';
 
   @override
   String get dateRange => 'Kwanan wata Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => 'Kwanaki 30 na ƙarshe';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'GABATARWA';
 
   @override
   String get translate => 'Fassara';
@@ -430,7 +430,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+      'Shigar da kalmar likita ko jumla don fassara';
 
   @override
   String translationResult(Object lang) {
@@ -439,7 +439,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'Ana ajiye abubuwan zaɓin sanarwar ku zuwa asusun ku.Ana samun gyare-gyaren jadawali yanzu - matsa kowane jadawalin don canza shi.';
 
   @override
   String get triageReminders => 'Tunatarwar triage';
@@ -489,7 +489,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get sendSOS => 'Aika SOS';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'Kun tabbata kuna son fita?';
 
   @override
   String get failedToSignOut => 'Ba a iya fita ba. Da fatan za a sake gwadawa.';
@@ -498,19 +498,19 @@ class AppLocalizationsHa extends AppLocalizations {
   String get vitalsLogged => 'Alamun rayuwa Logged';
 
   @override
-  String get triageSessions => 'Triage Sessions';
+  String get triageSessions => 'Zaurukan Bambance-bambance';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'Kwanaki Aiki';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'Ana fita...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials => 'Sarrafa bayanan likita';
 
   @override
   String connectedMembers(num count) {
@@ -524,10 +524,10 @@ class AppLocalizationsHa extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'Faɗakarwa & tunasarwa masu wayo';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'Takardu & Hoto';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical Sharudda';
@@ -536,7 +536,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get emergencyMedicalCard => 'Gaggawa medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'AES-256 boye-boye yana aiki';
 
   @override
   String get downloadYourHealthData => 'Download your Lafiya data';
@@ -545,14 +545,14 @@ class AppLocalizationsHa extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pKalmar sirri account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'FAQs & takardu';
 
   @override
   String get priorityProSupport => 'Gojo na Pro na fifiko';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Shafin $version';
   }
 
   @override
@@ -568,7 +568,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get confirmNewPassword => 'Tabbatar da sabuwar kalmar sirri';
 
   @override
-  String get update => 'Update';
+  String get update => 'Sabuntawa';
 
   @override
   String get passwordsDoNotMatch => 'Kalaman sirri ba su dace ba';
@@ -595,13 +595,13 @@ class AppLocalizationsHa extends AppLocalizations {
       'Ba a iya goge asusu ba. Da fatan za a sake gwadawa ko tuntuɓar gojo.';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'Sarrafa biyan kuɗin ku';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently Cire your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'Ƙare zaman ku na yanzu';
 
   @override
   String get dark => 'Duhu';
@@ -619,20 +619,20 @@ class AppLocalizationsHa extends AppLocalizations {
   String get restore => 'Maida';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'Zaɓi Shirinku';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'Buɗe cikakken ikon VitalSeker';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'Haɗin biyan kuɗi na cikin-app (RevenueCat / StoreKit) yana jiran.Ana amfani da canje-canjen tsare-tsare kai tsaye zuwa asusun ku don gwaji.';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'har abada';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/wata';
 
   @override
   String get freePlanFeature1 => '3 AI Triage sessions/month';
@@ -641,7 +641,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get freePlanFeature2 => 'Basic Lafiya  Fasfo';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'Raba lambar QR';
 
   @override
   String get freePlanFeature4 => 'SOS na gaggawa alerts';
@@ -668,31 +668,31 @@ class AppLocalizationsHa extends AppLocalizations {
   String get proPlanFeature6 => 'Priority Gojo';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 => 'Duk abin da ke cikin Pro';
 
   @override
   String get enterprisePlanFeature2 => 'Unlimited Iyali profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'Alamar al\'ada';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Samun damar API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Gojo';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'SLA garanti';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'MAFI KYAU';
 
   @override
   String get currentPlan => 'Shirin yanzu';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Rage darajar';
 
   @override
   String upgradeToPlan(String plan) {
@@ -701,20 +701,20 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+      'Dole ne a sanya ku don canza tsare-tsare.';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'Canja zuwa $plan?';
   }
 
   @override
   String get downgradeToFreeMessage =>
-      'You will lose access to Pro features at the end of your current billing period. Continue?';
+      'Za ku rasa damar yin amfani da abubuwan Pro a ƙarshen lokacin lissafin ku na yanzu.Ci gaba?';
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return 'Wannan zai sabunta biyan kuɗin ku zuwa $plan.A cikin samarwa wannan zai ƙaddamar da tsarin biyan kuɗi;don yanzu ana amfani da canjin kai tsaye zuwa asusun ku don gwaji.';
   }
 
   @override
@@ -731,10 +731,10 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'An kasa sabunta biyan kuɗi.Da fatan za a sake gwadawa.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'An dawo da sayayya.';
 
   @override
   String get failedToRestorePurchases => 'Failed to Maida purchases.';
@@ -753,19 +753,19 @@ class AppLocalizationsHa extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'Tambayoyin da ake yawan yi';
 
   @override
   String get contactSupport => 'Contact Gojo';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'Magana';
 
   @override
-  String get message => 'Message';
+  String get message => 'Sako';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'Sallama';
 
   @override
   String get otherWaysToReachUs => 'Sauran Ways to Reach Us';
@@ -779,13 +779,14 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+      'Da fatan za a cika duka jigo da saƙo.';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength =>
+      'Abin da ake magana dole ya zama aƙalla haruffa 5.';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength => 'Dole ne saƙo ya zama aƙalla haruffa 10.';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -793,7 +794,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'An karɓi buƙatar gaggawa!Ƙungiyarmu za ta ba da fifiko ga wannan.';
 
   @override
   String get supportRequestSent =>
@@ -847,10 +848,10 @@ class AppLocalizationsHa extends AppLocalizations {
       'Configure and preview your comprehensive Lafiya summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'Haɗa Sashe';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => 'Watanni 3 da suka gabata';
 
   @override
   String get yearToDate => 'Year to Kwanan wata';
@@ -859,10 +860,10 @@ class AppLocalizationsHa extends AppLocalizations {
   String get allTime => 'Duka Lokaci';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'Ƙirƙirar…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'Ana aikawa…';
 
   @override
   String pdfIncludesProducer(String producer) {

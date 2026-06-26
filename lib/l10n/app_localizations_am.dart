@@ -33,13 +33,13 @@ class AppLocalizationsAm extends AppLocalizations {
   String get welcomeBack => 'Welcome ተመለስ';
 
   @override
-  String get signIn => 'Sign In';
+  String get signIn => 'ይግቡ';
 
   @override
-  String get signUp => 'Sign Up';
+  String get signUp => 'ይመዝገቡ';
 
   @override
-  String get signOut => 'Sign Out';
+  String get signOut => 'ዘግተህ ውጣ';
 
   @override
   String get email => 'ኢሜል';
@@ -54,37 +54,37 @@ class AppLocalizationsAm extends AppLocalizations {
   String get confirmPassword => 'አረጋግጥ የይለፊ ቃል';
 
   @override
-  String get createAccount => 'Create Account';
+  String get createAccount => 'መለያ ፍጠር';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'መለያ የለህም?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'መለያ አለህ?';
 
   @override
-  String get orContinueWith => 'or continue with';
+  String get orContinueWith => 'ወይም ጋር ይቀጥሉ';
 
   @override
-  String get continueWithGoogle => 'Continue with Google';
+  String get continueWithGoogle => 'በGoogle ይቀጥሉ';
 
   @override
-  String get continueWithApple => 'Continue with Apple';
+  String get continueWithApple => 'በአፕል ይቀጥሉ';
 
   @override
   String get forgotPassword => 'Forgot የይለፊ ቃል?';
 
   @override
-  String get goodMorning => 'Good morning';
+  String get goodMorning => 'ምልካም እድል';
 
   @override
-  String get goodAfternoon => 'Good afternoon';
+  String get goodAfternoon => 'እንደምን አረፈድክ';
 
   @override
-  String get goodEvening => 'Good evening';
+  String get goodEvening => 'አንደምን አመሸህ';
 
   @override
-  String get goodNight => 'Good night';
+  String get goodNight => 'ደህና እደር';
 
   @override
   String get healthScore => 'ጤና ነጥብ';
@@ -102,10 +102,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get myHistory => 'My ታሪክ';
 
   @override
-  String get emergencySOS => 'EMERGENCY SOS';
+  String get emergencySOS => 'የአደጋ ጊዜ ኤስ.ኤስ';
 
   @override
-  String get recentChecks => 'Recent Checks';
+  String get recentChecks => 'የቅርብ ጊዜ ቼኮች';
 
   @override
   String get noSymptomsLogs => 'ምንም symptoms logs yet';
@@ -129,7 +129,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get spo2 => 'SpO2';
 
   @override
-  String get temperature => 'Temperature';
+  String get temperature => 'የሙቀት መጠን';
 
   @override
   String get weight => 'ክብደት';
@@ -144,10 +144,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get aiTriage => 'AI ትሪያጅ';
 
   @override
-  String get describeSymptoms => 'Describe your symptoms...';
+  String get describeSymptoms => 'ምልክቶችዎን ይግለጹ…';
 
   @override
-  String get analyzingSymptoms => 'Analyzing your symptoms';
+  String get analyzingSymptoms => 'ምልክቶችዎን በመተንተን ላይ';
 
   @override
   String get aiProcessing => 'AI is processing your health ውሂብ';
@@ -156,16 +156,16 @@ class AppLocalizationsAm extends AppLocalizations {
   String get send => 'ላክ';
 
   @override
-  String get newChat => 'New Chat';
+  String get newChat => 'አዲስ ውይይት';
 
   @override
-  String get viewDetailedResults => 'View Detailed Results';
+  String get viewDetailedResults => 'ዝርዝር ውጤቶችን ይመልከቱ';
 
   @override
   String get monitorAtHome => 'Monitor at መነሻ';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => 'መቼ እንደሚጨምር';
 
   @override
   String get saveToPassport => 'አስቀምጥ to ፓስፖርት';
@@ -207,19 +207,19 @@ class AppLocalizationsAm extends AppLocalizations {
   String get selectLanguage => 'Select ቋንቋ';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'መልክ';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'ጨለማ ሁነታ';
 
   @override
-  String get account => 'Account';
+  String get account => 'መለያ';
 
   @override
   String get privacyData => 'ግላዊነት & Data';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'ደህንነት እና ማከማቻ';
 
   @override
   String get exportData => 'ወደ ውጭ ላክ Data';
@@ -252,16 +252,16 @@ class AppLocalizationsAm extends AppLocalizations {
   String get addFamilyMember => 'ጨምር ቤተሰብ Member';
 
   @override
-  String get accountOwner => 'ACCOUNT OWNER';
+  String get accountOwner => 'የሂሳብ ባለቤት';
 
   @override
-  String get upgradeToPro => 'Upgrade to Pro';
+  String get upgradeToPro => 'ወደ ፕሮ አሻሽል።';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'መላውን ክበብ ይጠብቁ.';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'የበለጠ ተማር';
 
   @override
   String get medications => 'መድሃኒቶች';
@@ -270,7 +270,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get addMedication => 'ጨምር Medication';
 
   @override
-  String get appointments => 'Appointments';
+  String get appointments => 'ቀጠሮዎች';
 
   @override
   String get addAppointment => 'ጨምር Appointment';
@@ -288,7 +288,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get active => 'ንቁ';
 
   @override
-  String get discontinued => 'Discontinued';
+  String get discontinued => 'ተቋርጧል';
 
   @override
   String get save => 'አስቀምጥ';
@@ -318,19 +318,19 @@ class AppLocalizationsAm extends AppLocalizations {
   String get poweredBy => 'Powered by Keter Marketing';
 
   @override
-  String get pressAndHold => 'Press and hold to send emergency alert';
+  String get pressAndHold => 'የአደጋ ጊዜ ማንቂያ ለመላክ ተጭነው ይያዙ';
 
   @override
-  String get holdFor3Seconds => 'Hold for 3 seconds';
+  String get holdFor3Seconds => 'ለ 3 ሰከንዶች ያህል ይያዙ';
 
   @override
-  String get imSafeResolve => 'I\'m Safe - Resolve';
+  String get imSafeResolve => 'ደህና ነኝ - መፍታት';
 
   @override
   String get shareMyLocation => 'አጋራ My ቦታ';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'በአጠገቤ ሆስፒታሎችን ያግኙ';
 
   @override
   String get quickDial => 'ፈጣን ደውል';
@@ -360,7 +360,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get noHistoryYet => 'ምንም ታሪክ Yet';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere => 'የምልክትዎ ምዝግብ ማስታወሻዎች እዚህ ይታያሉ';
 
   @override
   String get startFirstTriage => 'ጀምር Your First ትሪያጅ';
@@ -376,29 +376,29 @@ class AppLocalizationsAm extends AppLocalizations {
       'ምንም insights generated yet. Check back on Monday for your weekly AI health summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'አሁን ይፍጠሩ';
 
   @override
   String get upgradeProInsights =>
-      'Upgrade to Pro to unlock AI-powered weekly health insights.';
+      'በ AI የተጎለበተ ሳምንታዊ የጤና ግንዛቤዎችን ለመክፈት ወደ ፕሮ ያሻሽሉ።';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'ፕሮ እቅድ';
 
   @override
-  String get viewAllPlans => 'View all plans';
+  String get viewAllPlans => 'ሁሉንም እቅዶች ይመልከቱ';
 
   @override
   String get exportMedicalReport => 'ወደ ውጭ ላክ ህክምና Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'ፒዲኤፍ ይፍጠሩ';
 
   @override
   String get sendByEmail => 'ላክ by ኢሜል';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview => 'የታካሚ አጠቃላይ እይታ እና ጠቃሚ ስታቲስቲክስ';
 
   @override
   String get symptomsTriageLog => 'ምልክቶች & ትሪያጅ Log';
@@ -407,19 +407,19 @@ class AppLocalizationsAm extends AppLocalizations {
   String get medicationsAllergies => 'መድሃኒቶች & አለርጂ';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'AI ትንታኔ ማጠቃለያ';
 
   @override
   String get dateRange => 'ቀን Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => 'ያለፉት 30 ቀናት';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'ቅድመ እይታ';
 
   @override
-  String get translate => 'Translate';
+  String get translate => 'ተርጉም።';
 
   @override
   String get translateMedicalTerms => 'Translate ህክምና terms';
@@ -432,21 +432,21 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String translationResult(Object lang) {
-    return 'Translation Result';
+    return 'የትርጉም ውጤት';
   }
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'የማሳወቂያ ምርጫዎችዎ ወደ መለያዎ ተቀምጠዋል።መርሐግብር ማበጀት አሁን ይገኛል - ለመቀየር ማንኛውንም መርሐግብር ይንኩ።';
 
   @override
   String get triageReminders => 'ትሪያጅ Reminders';
 
   @override
-  String get medicationReminders => 'Medication Reminders';
+  String get medicationReminders => 'የመድሃኒት ማሳሰቢያዎች';
 
   @override
-  String get appointmentReminders => 'Appointment Reminders';
+  String get appointmentReminders => 'የቀጠሮ አስታዋሾች';
 
   @override
   String get vitalsLoggingReminders => 'ህይወት ምልክቶች Logging Reminders';
@@ -458,7 +458,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get weeklyReport => 'ሳምንታዊ Report';
 
   @override
-  String get reminders => 'Reminders';
+  String get reminders => 'አስታዋሾች';
 
   @override
   String get insightsTips => 'ግንዛቤዎች & Tips';
@@ -474,7 +474,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get deletePermanently => 'ሰርዝ Permanently';
 
   @override
-  String get accountDeleted => 'Account deleted. Sorry to see you go.';
+  String get accountDeleted => 'መለያ ተሰርዟል።ስትሄድ በማየቴ ይቅርታ።';
 
   @override
   String get sendEmergencySOS => 'ላክ አደጋ SOS?';
@@ -487,7 +487,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get sendSOS => 'ላክ SOS';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'እርግጠኛ ነህ ዘግተህ መውጣት ትፈልጋለህ?';
 
   @override
   String get failedToSignOut => 'ወደቀ to sign out. Please try again.';
@@ -505,7 +505,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'በመውጣት ላይ...';
 
   @override
   String get manageMedicalCredentials => 'Manage ህክምና credentials';
@@ -522,10 +522,10 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'ማንቂያዎች እና ብልጥ አስታዋሾች';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'ሰነዶች እና ምስሎች';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate ህክምና terms';
@@ -534,23 +534,23 @@ class AppLocalizationsAm extends AppLocalizations {
   String get emergencyMedicalCard => 'አደጋ ህክምና card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'AES-256 ምስጠራ ገባሪ';
 
   @override
   String get downloadYourHealthData => 'አውርድ your health ውሂብ';
 
   @override
-  String get themePasswordAccount => 'Theme, password, account';
+  String get themePasswordAccount => 'ገጽታ፣ የይለፍ ቃል፣ መለያ';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'የሚጠየቁ ጥያቄዎች እና ሰነዶች';
 
   @override
-  String get priorityProSupport => 'Priority Pro support';
+  String get priorityProSupport => 'ቅድሚያ የሚሰጠው ፕሮ ድጋፍ';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'ስሪት $version';
   }
 
   @override
@@ -593,65 +593,65 @@ class AppLocalizationsAm extends AppLocalizations {
       'ወደቀ to delete account. Please try again or contact support.';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'የደንበኝነት ምዝገባዎን ያስተዳድሩ';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently remove your ውሂብ';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'የአሁኑን ክፍለ ጊዜዎን ያጠናቅቁ';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'ጨለማ';
 
   @override
-  String get light => 'Light';
+  String get light => 'ብርሃን';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'የስርዓት ነባሪ';
 
   @override
-  String get subscription => 'Subscription';
+  String get subscription => 'የደንበኝነት ምዝገባ';
 
   @override
-  String get restore => 'Restore';
+  String get restore => 'እነበረበት መልስ';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'እቅድዎን ይምረጡ';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'የVitalSekerን ሙሉ ኃይል ይክፈቱ';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'የውስጠ-መተግበሪያ ክፍያ ውህደት (RevenueCat / StoreKit) በመጠባበቅ ላይ ነው።የዕቅድ ለውጦች ለሙከራ በቀጥታ ወደ መለያዎ ይተገበራሉ።';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'ለዘላለም';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/ወር';
 
   @override
-  String get freePlanFeature1 => '3 AI triage sessions/month';
+  String get freePlanFeature1 => '3 AI የመለያ ክፍለ ጊዜዎች/ወር';
 
   @override
-  String get freePlanFeature2 => 'Basic health passport';
+  String get freePlanFeature2 => 'መሰረታዊ የጤና ፓስፖርት';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'የQR ኮድ ማጋራት።';
 
   @override
   String get freePlanFeature4 => 'አደጋ SOS alerts';
 
   @override
-  String get freePlanFeature5 => 'Single user profile';
+  String get freePlanFeature5 => 'ነጠላ የተጠቃሚ መገለጫ';
 
   @override
-  String get proPlanFeature1 => 'Unlimited AI triage sessions';
+  String get proPlanFeature1 => 'ያልተገደበ AI የመለያ ክፍለ ጊዜዎች';
 
   @override
-  String get proPlanFeature2 => 'Advanced health passport';
+  String get proPlanFeature2 => 'የላቀ የጤና ፓስፖርት';
 
   @override
   String get proPlanFeature3 => 'ሳምንታዊ AI insights';
@@ -660,55 +660,54 @@ class AppLocalizationsAm extends AppLocalizations {
   String get proPlanFeature4 => 'ቤተሰብ profiles (up to 5)';
 
   @override
-  String get proPlanFeature5 => 'PDF export with full history';
+  String get proPlanFeature5 => 'ፒዲኤፍ ወደ ውጭ መላክ ከሙሉ ታሪክ ጋር';
 
   @override
-  String get proPlanFeature6 => 'Priority support';
+  String get proPlanFeature6 => 'ቅድሚያ የሚሰጠው ድጋፍ';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 => 'ሁሉም ነገር በፕሮ';
 
   @override
-  String get enterprisePlanFeature2 => 'Unlimited family profiles';
+  String get enterprisePlanFeature2 => 'ያልተገደበ የቤተሰብ መገለጫዎች';
 
   @override
   String get enterprisePlanFeature3 => 'ብጁ branding';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'የኤፒአይ መዳረሻ';
 
   @override
-  String get enterprisePlanFeature5 => 'Dedicated support';
+  String get enterprisePlanFeature5 => 'የተሰጠ ድጋፍ';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'SLA ዋስትና';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'ምርጥ ዋጋ';
 
   @override
-  String get currentPlan => 'Current Plan';
+  String get currentPlan => 'የአሁኑ እቅድ';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'ዝቅ ማድረግ';
 
   @override
   String upgradeToPlan(String plan) {
-    return 'Upgrade to $plan';
+    return 'ወደ $plan አሻሽል።';
   }
 
   @override
-  String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+  String get mustBeSignedInToChangePlans => 'ዕቅዶችን ለመለወጥ በመለያ መግባት አለብህ።';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'ወደ $plan ይቀየር?';
   }
 
   @override
   String get downgradeToFreeMessage =>
-      'You will lose access to Pro features at the end of your current billing period. Continue?';
+      'አሁን ባለው የክፍያ ጊዜዎ መጨረሻ ላይ የፕሮ ባህሪያትን መዳረሻ ያጣሉ።ይቀጥል?';
 
   @override
   String upgradeToPlanMessage(String plan) {
@@ -732,7 +731,7 @@ class AppLocalizationsAm extends AppLocalizations {
       'ወደቀ to update subscription. Please try again.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'ግዢዎች ወደነበሩበት ተመልሰዋል።';
 
   @override
   String get failedToRestorePurchases => 'ወደቀ to restore purchases.';
@@ -750,7 +749,7 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'በተደጋጋሚ የሚጠየቁ ጥያቄዎች';
 
   @override
   String get contactSupport => 'አግኙ ድጋፍ';
@@ -772,11 +771,10 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get supportRequestSaved =>
-      'Your request is saved to your account and visible to our support team. We respond within 24 hours.';
+      'ጥያቄዎ ወደ መለያዎ ተቀምጧል እና ለድጋፍ ቡድናችን ይታያል።በ 24 ሰዓታት ውስጥ ምላሽ እንሰጣለን.';
 
   @override
-  String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+  String get pleaseFillSubjectMessage => 'እባክዎን ሁለቱንም ርዕሰ ጉዳይ እና መልእክት ይሙሉ።';
 
   @override
   String get subjectMinLength => 'ርዕሰ ጉዳይ must be at least 5 characters.';
@@ -785,12 +783,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get messageMinLength => 'መልዕክት must be at least 10 characters.';
 
   @override
-  String get mustBeSignedInToSubmitSupport =>
-      'You must be signed in to submit a support request.';
+  String get mustBeSignedInToSubmitSupport => 'የድጋፍ ጥያቄ ለማስገባት በመለያ መግባት አለብህ።';
 
   @override
-  String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+  String get urgentRequestReceived => 'አስቸኳይ ጥያቄ ደረሰ!ቡድናችን ለዚህ ቅድሚያ ይሰጣል.';
 
   @override
   String get supportRequestSent =>
@@ -819,21 +815,21 @@ class AppLocalizationsAm extends AppLocalizations {
       'አዎ. ሁሉም ውሂብ is encrypted end-to-end using AES-256 encryption. We comply with GDPR and HIPAA standards. Your health መረጃ is never shared with third parties without your explicit consent.';
 
   @override
-  String get faqQuestion3 => 'How do I share my health passport?';
+  String get faqQuestion3 => 'የጤና ፓስፖርቴን እንዴት ላካፍል እችላለሁ?';
 
   @override
   String get faqAnswer3 =>
       'Navigate to your ጤና ፓስፖርት from the bottom navigation bar. Tap the QR code icon to generate a shareable QR code that ጤና providers can scan to access your critical health መረጃ securely.';
 
   @override
-  String get faqQuestion4 => 'Can I add family members?';
+  String get faqQuestion4 => 'የቤተሰብ አባላትን ማከል እችላለሁ?';
 
   @override
   String get faqAnswer4 =>
       'አዎ! Pro subscribers can add up to 5 family member profiles, and ድርጅት subscribers have unlimited family profiles. Each family member gets their own health passport and triage capabilities.';
 
   @override
-  String get faqQuestion5 => 'How do I cancel my subscription?';
+  String get faqQuestion5 => 'እንዴት ነው የደንበኝነት ምዝገባዬን የምሰርዘው?';
 
   @override
   String get faqAnswer5 =>
@@ -841,13 +837,13 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get exportConfigurePreview =>
-      'Configure and preview your comprehensive health summary before generating a secure PDF.';
+      'ደህንነቱ የተጠበቀ ፒዲኤፍ ከማፍለቅዎ በፊት አጠቃላይ የጤና ማጠቃለያዎን ያዋቅሩ እና አስቀድመው ይመልከቱ።';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'ክፍሎችን ያካትቱ';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => 'ያለፉት 3 ወራት';
 
   @override
   String get yearToDate => 'Year to ቀን';
@@ -856,35 +852,34 @@ class AppLocalizationsAm extends AppLocalizations {
   String get allTime => 'ሁሉም ጊዜ';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'በማመንጨት ላይ…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'በመላክ ላይ…';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'ፒዲኤፍ $producer ክሬዲትን እንደ ፕሮዲዩሰር ያካትታል';
   }
 
   @override
-  String get proFeature => 'PRO FEATURE';
+  String get proFeature => 'PRO ባህሪ';
 
   @override
-  String get proActive => 'PRO ACTIVE';
+  String get proActive => 'PRO ንቁ';
 
   @override
-  String get manageHealthWholeFamily =>
-      'Manage health for your whole family (5 max)';
+  String get manageHealthWholeFamily => 'ለመላው ቤተሰብዎ ጤናን ያስተዳድሩ (5 ቢበዛ)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'የመለያ ባለቤት';
 
   @override
-  String get ownerProfile => 'Owner profile';
+  String get ownerProfile => 'የባለቤት መገለጫ';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age ዓመታት';
   }
 
   @override
@@ -893,18 +888,16 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get reachedProLimit => 'You\'ve reached the 5-member Pro limit.';
+  String get reachedProLimit => 'ባለ 5-አባላት የፕሮ ገደቡ ላይ ደርሰዋል።';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'ገደብ ደርሷል';
 
   @override
-  String get pleaseFillNameRelationship =>
-      'Please fill in name and relationship';
+  String get pleaseFillNameRelationship => 'እባክዎ ስም እና ግንኙነት ይሙሉ';
 
   @override
-  String get mustBeSignedInToAddFamily =>
-      'You must be signed in to add a family member';
+  String get mustBeSignedInToAddFamily => 'የቤተሰብ አባል ለመጨመር በመለያ መግባት አለብህ';
 
   @override
   String get familyMemberAdded => 'ቤተሰብ member added!';
@@ -917,7 +910,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return 'እርግጠኛ ነዎት $nameን ከቤተሰብዎ መገለጫዎች ማስወገድ ይፈልጋሉ?';
   }
 
   @override
@@ -934,7 +927,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get fullNameLabel => 'Full ስም';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => 'ግንኙነት (ለምሳሌ፣ የትዳር ጓደኛ፣ ልጅ)';
 
   @override
   String get bloodTypeOptional => 'ደም አይነት (optional)';
@@ -943,26 +936,26 @@ class AppLocalizationsAm extends AppLocalizations {
   String get removeMember => 'አስወግድ member';
 
   @override
-  String get upgradeYourCare => 'UPGRADE YOUR CARE';
+  String get upgradeYourCare => 'እንክብካቤዎን ያሻሽሉ።';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'መላውን ክበብ እየጠበቅክ ነው።';
 
   @override
   String get proMemberThanks =>
-      'Thanks for being a Pro member. You can monitor heart rate variability, sleep patterns, and AI-driven health risk assessments for up to 5 family members under a single subscription.';
+      'የፕሮ አባል ስለሆኑ እናመሰግናለን።በአንድ የደንበኝነት ምዝገባ ስር እስከ 5 ለሚደርሱ የቤተሰብ አባላት የልብ ምት መለዋወጥን፣ የእንቅልፍ ሁኔታን እና በ AI የሚመራ የጤና ስጋት ግምገማዎችን መከታተል ይችላሉ።';
 
   @override
   String get proUpsellBody =>
-      'With VitalSeker Pro, you can monitor heart rate variability, sleep patterns, and AI-driven health risk assessments for up to 5 family members under a single subscription.';
+      'በ VitalSeker Pro የልብ ምት መለዋወጥን፣ የእንቅልፍ ሁኔታን እና በ AI የሚመራ የጤና ስጋት ግምገማዎችን በአንድ የደንበኝነት ምዝገባ ስር እስከ 5 የሚደርሱ የቤተሰብ አባላትን መከታተል ይችላሉ።';
 
   @override
   String upgradeToProPrice(String price) {
-    return 'Upgrade to Pro — \$$price/mo';
+    return 'ወደ ፕሮ - \$$price/ወር ያልቁ';
   }
 
   @override
-  String get manageSubscription => 'Manage Subscription';
+  String get manageSubscription => 'የደንበኝነት ምዝገባን ያስተዳድሩ';
 
   @override
   String get failedToLoadProfiles => 'ወደቀ to ጫን profiles';
@@ -986,42 +979,42 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get dosage => 'Dosage';
+  String get dosage => 'የመድኃኒት መጠን';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'ክፍል';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'ድግግሞሽ';
 
   @override
   String get notes => 'ማስታወሻዎች';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'መድሃኒት ተቋርጧል';
 
   @override
   String get failedToDiscontinueMedication => 'ወደቀ to discontinue medication.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'መድሃኒት ዘምኗል!';
 
   @override
   String get failedToUpdateMedication => 'ወደቀ to update medication.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted => 'መድሃኒት እንደተጠናቀቀ ምልክት ተደርጎበታል';
 
   @override
   String get deleteMedication => 'ሰርዝ Medication';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'እርግጠኛ ነህ $name መሰረዝ ትፈልጋለህ?';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'መድሃኒት ተሰርዟል።';
 
   @override
   String get failedToDeleteMedication => 'ወደቀ to delete medication.';
@@ -1030,10 +1023,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get editDetails => 'አርትዕ Details';
 
   @override
-  String get markComplete => 'Mark Complete';
+  String get markComplete => 'ተጠናቋል';
 
   @override
-  String get discontinue => 'Discontinue';
+  String get discontinue => 'አቋርጥ';
 
   @override
   String nextDose(String time) {
@@ -1041,16 +1034,16 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => 'አንድ ጊዜ በየቀኑ';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => 'በቀን ሁለት ጊዜ';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => 'በየቀኑ ሶስት ጊዜ';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => 'በየቀኑ አራት ጊዜ';
 
   @override
   String get everyOtherDay => 'Every ሌላ ቀን';

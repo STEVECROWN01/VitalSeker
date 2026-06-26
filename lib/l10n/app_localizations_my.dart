@@ -12,7 +12,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get appName => 'VitalSeker';
 
   @override
-  String get tagline => 'Your AI Health Companion';
+  String get tagline => 'သင်၏ AI ကျန်းမာရေးအဖော်';
 
   @override
   String get home => 'ပင်မ';
@@ -54,43 +54,43 @@ class AppLocalizationsMy extends AppLocalizations {
   String get confirmPassword => 'အတည်ပြု စကားဝှက်';
 
   @override
-  String get createAccount => 'Create Account';
+  String get createAccount => 'အကောင့်ပြုလုပ်ပါ';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'အကောင့်မရှိဘူးလား။';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'အကောင့်ရှိပြီးသားလား။';
 
   @override
-  String get orContinueWith => 'or continue with';
+  String get orContinueWith => 'သို့မဟုတ် ဆက်လုပ်ပါ။';
 
   @override
-  String get continueWithGoogle => 'Continue with Google';
+  String get continueWithGoogle => 'Google ဖြင့် ဆက်လုပ်ပါ။';
 
   @override
-  String get continueWithApple => 'Continue with Apple';
+  String get continueWithApple => 'Apple နဲ့ ဆက်လုပ်ပါ။';
 
   @override
   String get forgotPassword => 'Forgot Pစကားဝှက်';
 
   @override
-  String get goodMorning => 'Good morning';
+  String get goodMorning => 'မင်္ဂလာနံနက်ခင်းပါ';
 
   @override
-  String get goodAfternoon => 'Good afternoon';
+  String get goodAfternoon => 'မင်္ဂလာနေ့လည်ခင်းပါ';
 
   @override
-  String get goodEvening => 'Good evening';
+  String get goodEvening => 'မင်္ဂလာညနေခင်းပါ';
 
   @override
-  String get goodNight => 'Good night';
+  String get goodNight => 'ကောင်းသောညပါ';
 
   @override
   String get healthScore => 'ကျန်းမာရေး Score';
 
   @override
-  String get quickActions => 'Quick Actions';
+  String get quickActions => 'အမြန်လုပ်ဆောင်မှုများ';
 
   @override
   String get checkSymptomsNow => 'Check လက္ခဏာများ Now';
@@ -105,13 +105,13 @@ class AppLocalizationsMy extends AppLocalizations {
   String get emergencySOS => 'အရေးပေါ် SOS';
 
   @override
-  String get recentChecks => 'Recent Checks';
+  String get recentChecks => 'လတ်တလော စစ်ဆေးမှုများ';
 
   @override
   String get noSymptomsLogs => 'မဟုတ် လက္ခဏာများ logs yet';
 
   @override
-  String get startTriage => 'Start Triage';
+  String get startTriage => 'Triage စတင်ပါ။';
 
   @override
   String get vitals => 'အသက်လက္ခဏာ';
@@ -129,16 +129,16 @@ class AppLocalizationsMy extends AppLocalizations {
   String get spo2 => 'SpO2';
 
   @override
-  String get temperature => 'Temperature';
+  String get temperature => 'အပူချိန်';
 
   @override
   String get weight => 'အလေးချိန်';
 
   @override
-  String get bloodGlucose => 'Blood Glucose';
+  String get bloodGlucose => 'သွေးဂလူးကို့စ်';
 
   @override
-  String get respiratoryRate => 'Respiratory Rate';
+  String get respiratoryRate => 'အသက်ရှူနှုန်း';
 
   @override
   String get aiTriage => 'AI Triage';
@@ -153,19 +153,19 @@ class AppLocalizationsMy extends AppLocalizations {
   String get aiProcessing => 'AI is processing your ကျန်းမာရေး data';
 
   @override
-  String get send => 'Send';
+  String get send => 'ပို့ပါ။';
 
   @override
-  String get newChat => 'New Chat';
+  String get newChat => 'Chat အသစ်';
 
   @override
-  String get viewDetailedResults => 'View Detailed Results';
+  String get viewDetailedResults => 'အသေးစိတ်ရလဒ်များကိုကြည့်ပါ။';
 
   @override
   String get monitorAtHome => 'Monitor at ပင်မ';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => 'ဘယ်အချိန်မှာ ပိုတိုးမလဲ။';
 
   @override
   String get saveToPassport => 'သိမ်းဆည်း to နိုင်ငံကူးလက်မှတ်';
@@ -207,19 +207,19 @@ class AppLocalizationsMy extends AppLocalizations {
   String get selectLanguage => 'Select ဘာသာစကား';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'အသွင်အပြင်';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'အမှောင်မုဒ်';
 
   @override
-  String get account => 'Account';
+  String get account => 'အကောင့်';
 
   @override
   String get privacyData => 'ကိုယ်ရေးအချက်အလက် & Data';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'လုံခြုံရေးနှင့် သိုလှောင်မှု';
 
   @override
   String get exportData => 'တင်ပို့ Data';
@@ -231,7 +231,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get helpCenter => 'အကူအညီ Center';
 
   @override
-  String get contactConcierge => 'Contact Concierge';
+  String get contactConcierge => 'Concierge ကိုဆက်သွယ်ပါ။';
 
   @override
   String get aboutVitalSeker => 'အကြောင်း VitalSeker';
@@ -243,7 +243,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get medicalID => 'ဆေးဘက်ဆိုင်ရာ ID';
 
   @override
-  String get medicalTranslation => 'Medical Translation';
+  String get medicalTranslation => 'ဆေးဘက်ဆိုင်ရာဘာသာပြန်';
 
   @override
   String get familyProfiles => 'မိသားစု Profiles';
@@ -252,16 +252,16 @@ class AppLocalizationsMy extends AppLocalizations {
   String get addFamilyMember => 'ထည့် မိသားစု Member';
 
   @override
-  String get accountOwner => 'ACCOUNT OWNER';
+  String get accountOwner => 'အကောင့်ပိုင်ရှင်';
 
   @override
   String get upgradeToPro => 'အဆင့်မြှင့် to Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'စက်ဝိုင်းတစ်ခုလုံးကို ကာကွယ်ပါ။';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'ပိုမိုသိရှိရန်';
 
   @override
   String get medications => 'ဆေးဝါးများ';
@@ -270,25 +270,25 @@ class AppLocalizationsMy extends AppLocalizations {
   String get addMedication => 'ထည့် Medication';
 
   @override
-  String get appointments => 'Appointments';
+  String get appointments => 'ချိန်းတယ်။';
 
   @override
   String get addAppointment => 'ထည့် Appointment';
 
   @override
-  String get upcoming => 'Upcoming';
+  String get upcoming => 'အရင်လို';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'ပြီးသွားပြီ';
 
   @override
-  String get cancelled => 'Cancelled';
+  String get cancelled => 'ဖျက်သိမ်းလိုက်သည်။';
 
   @override
-  String get active => 'Active';
+  String get active => 'လှုပ်လှုပ်ရှားရှား';
 
   @override
-  String get discontinued => 'Discontinued';
+  String get discontinued => 'ဆက်မလုပ်တော့ပါ။';
 
   @override
   String get save => 'သိမ်းဆည်း';
@@ -321,19 +321,19 @@ class AppLocalizationsMy extends AppLocalizations {
   String get pressAndHold => 'Press and hold to send အရေးပေါ် alert';
 
   @override
-  String get holdFor3Seconds => 'Hold for 3 seconds';
+  String get holdFor3Seconds => '3 စက္ကန့်ကြာအောင်ထားပါ။';
 
   @override
-  String get imSafeResolve => 'I\'m Safe - Resolve';
+  String get imSafeResolve => 'ငါ ဘေးကင်းပါတယ် - ဖြေရှင်းပါ။';
 
   @override
   String get shareMyLocation => 'မျှဝေ My နေရာ';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'ကျွန်ုပ်အနီးရှိ ဆေးရုံများကို ရှာဖွေပါ။';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'အမြန်ဖုန်းခေါ်ဆိုပါ။';
 
   @override
   String get emergencyContacts => 'အရေးပေါ် Contacts';
@@ -362,10 +362,11 @@ class AppLocalizationsMy extends AppLocalizations {
   String get noHistoryYet => 'မဟုတ် မှတ်တမ်း Yet';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere =>
+      'သင့်ရောဂါလက္ခဏာမှတ်တမ်းများ ဤနေရာတွင် ပေါ်လာပါမည်။';
 
   @override
-  String get startFirstTriage => 'Start Your First Triage';
+  String get startFirstTriage => 'သင်၏ပထမဆုံးစမ်းသပ်မှုကိုစတင်ပါ။';
 
   @override
   String get weeklyInsights => 'Weekly အသိပေးချက်';
@@ -378,14 +379,14 @@ class AppLocalizationsMy extends AppLocalizations {
       'မဟုတ် အသိပေးချက် generated yet. Check နောက်သို့ on Monday for your weekly AI ကျန်းမာရေး summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'ယခုထုတ်လုပ်ပါ။';
 
   @override
   String get upgradeProInsights =>
       'အဆင့်မြှင့် to Pro to unlock AI-powered weekly ကျန်းမာရေး iအသိပေးချက်';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'ပရိုအစီအစဉ်';
 
   @override
   String get viewAllPlans => 'View အားလုံး plans';
@@ -394,13 +395,14 @@ class AppLocalizationsMy extends AppLocalizations {
   String get exportMedicalReport => 'တင်ပို့ Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'PDF ကိုဖန်တီးပါ။';
 
   @override
   String get sendByEmail => 'Send by အီးမေးလ်';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview =>
+      'လူနာခြုံငုံသုံးသပ်ချက်နှင့် အရေးကြီးသော ကိန်းဂဏန်းများ';
 
   @override
   String get symptomsTriageLog => 'လက္ခဏာများ & Triage Log';
@@ -409,19 +411,19 @@ class AppLocalizationsMy extends AppLocalizations {
   String get medicationsAllergies => 'ဆေးဝါးများ & ဓာတ်မတည့်မှု';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'AI ခွဲခြမ်းစိတ်ဖြာမှု အကျဉ်းချုပ်';
 
   @override
   String get dateRange => 'ရက်စွဲ Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => 'နောက်ဆုံးရက် 30';
 
   @override
-  String get preview => 'PREVIEW';
+  String get preview => 'အစမ်းကြည့်ပါ။';
 
   @override
-  String get translate => 'Translate';
+  String get translate => 'ဘာသာပြန်ပါ။';
 
   @override
   String get translateMedicalTerms => 'Translate medical စည်းမျဉ်းများ';
@@ -431,25 +433,25 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+      'ဘာသာပြန်ရန် ဆေးဘက်ဆိုင်ရာ အသုံးအနှုန်း သို့မဟုတ် စကားစုကို ထည့်ပါ။';
 
   @override
   String translationResult(Object lang) {
-    return 'Translation Result';
+    return 'ဘာသာပြန်ရလဒ်';
   }
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'သင်၏ အကြောင်းကြားချက် ရွေးချယ်မှုများကို သင့်အကောင့်တွင် သိမ်းဆည်းထားသည်။အချိန်ဇယားစိတ်ကြိုက်ပြင်ဆင်ခြင်းကို ယခုရရှိနိုင်ပါပြီ — ၎င်းကိုပြောင်းလဲရန် မည်သည့်အချိန်ဇယားကိုနှိပ်ပါ။';
 
   @override
-  String get triageReminders => 'Triage Reminders';
+  String get triageReminders => 'Triage သတိပေးချက်များ';
 
   @override
-  String get medicationReminders => 'Medication Reminders';
+  String get medicationReminders => 'ဆေးဝါးသတိပေးချက်များ';
 
   @override
-  String get appointmentReminders => 'Appointment Reminders';
+  String get appointmentReminders => 'ချိန်းဆိုမှု သတိပေးချက်များ';
 
   @override
   String get vitalsLoggingReminders => 'အသက်လက္ခဏာ Logging Reminders';
@@ -458,10 +460,10 @@ class AppLocalizationsMy extends AppLocalizations {
   String get healthTips => 'ကျန်းမာရေး Tips';
 
   @override
-  String get weeklyReport => 'Weekly Report';
+  String get weeklyReport => 'အပတ်စဉ်အစီရင်ခံစာ';
 
   @override
-  String get reminders => 'Reminders';
+  String get reminders => 'သတိပေးချက်များ';
 
   @override
   String get insightsTips => 'အသိပေးချက် & Tips';
@@ -477,7 +479,8 @@ class AppLocalizationsMy extends AppLocalizations {
   String get deletePermanently => 'ဖျက် Permanently';
 
   @override
-  String get accountDeleted => 'Account deleted. Sorry to see you go.';
+  String get accountDeleted =>
+      'အကောင့်ဖျက်လိုက်ပါပြီ။သွားတွေ့တာ တောင်းပန်ပါတယ်။';
 
   @override
   String get sendEmergencySOS => 'Send အရေးပေါ် SOS?';
@@ -487,13 +490,13 @@ class AppLocalizationsMy extends AppLocalizations {
       'This will send an SMS with your live နေရာ to အားလုံး of your အရေးပေါ် contacts.';
 
   @override
-  String get sendSOS => 'Send SOS';
+  String get sendSOS => 'SOS ပို့ပါ။';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'ထွက်လိုသည်မှာ သေချာပါသလား။';
 
   @override
-  String get failedToSignOut => 'Failed to sign out. Please try again.';
+  String get failedToSignOut => 'ထွက်ရန် မအောင်မြင်ပါ။ထပ်စမ်းကြည့်ပါ။';
 
   @override
   String get vitalsLogged => 'အသက်လက္ခဏာ Logged';
@@ -502,16 +505,17 @@ class AppLocalizationsMy extends AppLocalizations {
   String get triageSessions => 'Triage Sessions';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'နေ့ရက်များ တက်ကြွသည်။';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'ထွက်နေသည်...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials =>
+      'ဆေးဘက်ဆိုင်ရာအထောက်အထားများကို စီမံခန့်ခွဲပါ။';
 
   @override
   String connectedMembers(num count) {
@@ -525,10 +529,11 @@ class AppLocalizationsMy extends AppLocalizations {
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders =>
+      'သတိပေးချက်များနှင့် စမတ်ကျသော သတိပေးချက်များ';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'စာရွက်စာတမ်းများနှင့် ပုံရိပ်ဖော်ခြင်း။';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical စည်းမျဉ်းများ';
@@ -537,7 +542,8 @@ class AppLocalizationsMy extends AppLocalizations {
   String get emergencyMedicalCard => 'အရေးပေါ် medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive =>
+      'AES-256 ကုဒ်ဝှက်ခြင်း လုပ်ဆောင်နေပါသည်။';
 
   @override
   String get downloadYourHealthData => 'Download your ကျန်းမာရေး data';
@@ -546,14 +552,14 @@ class AppLocalizationsMy extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pစကားဝှက် account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'FAQ များနှင့် စာရွက်စာတမ်းများ';
 
   @override
   String get priorityProSupport => 'Priority Pro ပံ့ပိုးမှု';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'ဗားရှင်း $version';
   }
 
   @override
@@ -569,10 +575,10 @@ class AppLocalizationsMy extends AppLocalizations {
   String get confirmNewPassword => 'အတည်ပြု New စကားဝှက်';
 
   @override
-  String get update => 'Update';
+  String get update => 'မွမ်းမံ';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'စကားဝှက်များ မတိုက်ဆိုင်ပါ။';
 
   @override
   String get passwordMinLength => 'စကားဝှက် must be at least 8 characters';
@@ -596,44 +602,44 @@ class AppLocalizationsMy extends AppLocalizations {
       'Failed to ဖျက် account. Please try again or contact sပံ့ပိုးမှု';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'သင်၏စာရင်းသွင်းမှုကို စီမံပါ။';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently ဖယ်ရှား your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'သင်၏လက်ရှိစက်ရှင်ကို အဆုံးသတ်ပါ။';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'အမှောင်';
 
   @override
-  String get light => 'Light';
+  String get light => 'အလင်း';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'စနစ် ပုံသေ';
 
   @override
-  String get subscription => 'Subscription';
+  String get subscription => 'စာရင်းသွင်းခြင်း။';
 
   @override
   String get restore => 'ပြန်လည်သိမ်းဆည်း';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'သင့်အစီအစဉ်ကို ရွေးချယ်ပါ။';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'VitalSeker ၏ စွမ်းအားအပြည့်ကို လော့ခ်ဖွင့်ပါ။';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'အက်ပ်အတွင်း ငွေပေးချေမှုပေါင်းစည်းခြင်း (RevenueCat / StoreKit) ကို ဆိုင်းငံ့ထားသည်။စမ်းသပ်ရန်အတွက် အစီအစဉ်အပြောင်းအလဲများကို သင့်အကောင့်သို့ တိုက်ရိုက်သက်ရောက်ပါသည်။';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'ထာဝရ';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/လ';
 
   @override
   String get freePlanFeature1 => '3 AI Triage sessions/month';
@@ -642,7 +648,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get freePlanFeature2 => 'Basic ကျန်းမာရေး နိုင်ငံကူးလက်မှတ်';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'QR ကုဒ်မျှဝေခြင်း။';
 
   @override
   String get freePlanFeature4 => 'အရေးပေါ် SOS alerts';
@@ -669,31 +675,31 @@ class AppLocalizationsMy extends AppLocalizations {
   String get proPlanFeature6 => 'Priority ပံ့ပိုးမှု';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 => 'Pro တွင်အရာအားလုံး';
 
   @override
   String get enterprisePlanFeature2 => 'Unlimited မိသားစု profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'စိတ်ကြိုက်တံဆိပ်တပ်ခြင်း။';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'API အသုံးပြုခွင့်';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated ပံ့ပိုးမှု';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'SLA အာမခံ';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'အကောင်းဆုံးတန်ဖိုး';
 
   @override
-  String get currentPlan => 'Current Plan';
+  String get currentPlan => 'လက်ရှိ အစီအစဉ်';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'အဆင့်နှိမ့်ချပါ။';
 
   @override
   String upgradeToPlan(String plan) {
@@ -706,7 +712,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return '$plan သို့ ပြောင်းမလား။';
   }
 
   @override
@@ -715,7 +721,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return '၎င်းသည် သင်၏ စာရင်းသွင်းမှုကို $plan သို့ အပ်ဒိတ်လုပ်ပါမည်။ထုတ်လုပ်မှုတွင် ၎င်းသည် ပလပ်ဖောင်း paywall ကို လွှင့်တင်မည်ဖြစ်သည်။ယခုပြောင်းလဲမှုကို စမ်းသပ်ရန်အတွက် သင့်အကောင့်သို့ တိုက်ရိုက်သက်ရောက်ပါသည်။';
   }
 
   @override
@@ -732,10 +738,10 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'စာရင်းသွင်းမှုကို အပ်ဒိတ်လုပ်ရန် မအောင်မြင်ပါ။ထပ်စမ်းကြည့်ပါ။';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'ဝယ်ယူမှုများကို ပြန်လည်ရယူခဲ့သည်။';
 
   @override
   String get failedToRestorePurchases =>
@@ -755,19 +761,19 @@ class AppLocalizationsMy extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'အမေးများသောမေးခွန်းများ';
 
   @override
   String get contactSupport => 'Contact ပံ့ပိုးမှု';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'ဘာသာရပ်';
 
   @override
-  String get message => 'Message';
+  String get message => 'မက်ဆေ့ချ်';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'တင်ပြပါ။';
 
   @override
   String get otherWaysToReachUs => 'အခြား Ways to Reach Us';
@@ -781,13 +787,15 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+      'ကျေးဇူးပြု၍ အကြောင်းအရာနှင့် မက်ဆေ့ချ် နှစ်ခုလုံးကို ဖြည့်စွက်ပါ။';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength =>
+      'အကြောင်းအရာသည် အနည်းဆုံး စာလုံး 5 လုံးရှိရမည်။';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength =>
+      'မက်ဆေ့ဂျ်သည် အနည်းဆုံး စာလုံး 10 လုံးရှိရမည်။';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -795,7 +803,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'အရေးပေါ်တောင်းဆိုမှုကို လက်ခံရရှိခဲ့သည်။ကျွန်တော်တို့အဖွဲ့က ဒါကို ဦးစားပေးလုပ်မယ်။';
 
   @override
   String get supportRequestSent =>
@@ -849,10 +857,10 @@ class AppLocalizationsMy extends AppLocalizations {
       'Configure and preview your comprehensive ကျန်းမာရေး summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'အပိုင်းများ ပါဝင်ပါသည်။';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => 'ပြီးခဲ့သည့် 3 လ';
 
   @override
   String get yearToDate => 'Year to ရက်စွဲ';
@@ -861,14 +869,14 @@ class AppLocalizationsMy extends AppLocalizations {
   String get allTime => 'အားလုံး အချိန်';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'ထုတ်လုပ်နေသည်...';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'ပို့နေသည်...';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'PDF တွင် ထုတ်လုပ်သူအဖြစ် $producer ခရက်ဒစ်ပါဝင်သည်။';
   }
 
   @override
@@ -882,26 +890,27 @@ class AppLocalizationsMy extends AppLocalizations {
       'Manage ကျန်းမာရေး for your whole မိသားစု (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'အကောင့်ပိုင်ရှင်';
 
   @override
   String get ownerProfile => 'Owner ပရိုဖိုင်';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age နှစ်';
   }
 
   @override
   String scoreValue(int score) {
-    return 'Score: $score';
+    return 'ရမှတ်- $score';
   }
 
   @override
-  String get reachedProLimit => 'You\'ve reached the 5-member Pro limit.';
+  String get reachedProLimit =>
+      'သင်သည် အဖွဲ့ဝင် 5 ဦးပါ Pro ကန့်သတ်ချက်သို့ ရောက်ရှိသွားပါပြီ။';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'ကန့်သတ်ချက်သို့ ရောက်ရှိခဲ့သည်။';
 
   @override
   String get pleaseFillNameRelationship =>
