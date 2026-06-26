@@ -519,8 +519,8 @@ class AppLocalizationsSw extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count wanachama waliounganishwa',
+      one: '$count mwanachama aliyeunganishwa',
     );
     return '$_temp0';
   }
@@ -842,7 +842,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Nenda kwa Wasifu > Usajili na uchague mpango wa Bila malipo wa kushusha kiwango. Vipengele vyako vya Pro au Enterprise vitaendelea kutumika hadi mwisho wa kipindi chako cha sasa cha bili.';
 
   @override
   String get exportConfigurePreview =>
@@ -1787,8 +1787,8 @@ class AppLocalizationsSw extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Mizio',
+      one: '$count Mzio',
     );
     return '$_temp0';
   }
@@ -1798,8 +1798,8 @@ class AppLocalizationsSw extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Dawa',
+      one: '$count Dawa',
     );
     return '$_temp0';
   }
@@ -1916,8 +1916,8 @@ class AppLocalizationsSw extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count mawasiliano yamearifiwa kupitia SMS',
+      one: '$count mawasiliano yamearifiwa kupitia SMS',
     );
     return '$_temp0';
   }
@@ -2471,7 +2471,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Hakuna usomaji uliopatikana kwa muda uliochaguliwa';
 
   @override
   String get singleReading => '1 kusoma';

@@ -522,8 +522,8 @@ class AppLocalizationsMy extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count ဟံတြှာယ်သိုလ် အမြပ်ᎏ',
+      one: '$count ဟံတြှာယ်သိုလ် အမြပ်',
     );
     return '$_temp0';
   }
@@ -850,7 +850,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'ပရိုဖိုင် > စာရင်းသွင်းမှုသို့ သွားပြီး အဆင့်နှိမ့်ရန် အခမဲ့ အစီအစဉ်ကို ရွေးချယ်ပါ။ သင်၏ Pro သို့မဟုတ် Enterprise အင်္ဂါရပ်များသည် သင့်လက်ရှိငွေပေးချေမှုကာလ ကုန်ဆုံးသည်အထိ ဆက်လက်အသက်ဝင်နေမည်ဖြစ်သည်။';
 
   @override
   String get exportConfigurePreview =>
@@ -1732,7 +1732,8 @@ class AppLocalizationsMy extends AppLocalizations {
   String get escalateMedium1 => 'လက္ခဏာများ persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 =>
+      'နာကျင်မှုသည် ပြင်းထန်လာသည် သို့မဟုတ် ထိန်းမရသောဖြစ်လာသည်။';
 
   @override
   String get escalateMedium3 => 'New red-flag လက္ခဏာများ appear';
@@ -1742,7 +1743,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+      'အသက်ရှူရခက်ခဲခြင်း သို့မဟုတ် ရင်ဘတ်တင်းကျပ်ခြင်း ဖြစ်ပေါ်လာသည်။';
 
   @override
   String get escalateHigh3 =>
@@ -1753,7 +1754,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'ကိုယ်တိုင်မမောင်းပါနှင့် - လူနာတင်ယာဉ်စီးပါ။';
 
   @override
   String get escalateEmergency3 =>
@@ -1763,7 +1764,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get showQrCode => 'Show QR ကုဒ်';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'မလှုပ်မရှား';
 
   @override
   String get knownAllergies => 'Known ဓာတ်မတည့်မှု';
@@ -1775,7 +1776,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get chronicConditions => 'နာတာရှည်ရောဂါများ';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'အာမခံ';
 
   @override
   String get qrCode => 'QR ကုဒ်';
@@ -1794,11 +1795,11 @@ class AppLocalizationsMy extends AppLocalizations {
   String get heightAndWeight => 'အရပ် & အလေးချိန်';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'မသတ်မှတ်ထားဘူး။';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count နှစ်';
   }
 
   @override
@@ -1806,8 +1807,8 @@ class AppLocalizationsMy extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count တိဝ့္လှိရ္',
+      one: '$count တိဝ့္လှိရ္',
     );
     return '$_temp0';
   }
@@ -1817,8 +1818,8 @@ class AppLocalizationsMy extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count ဟိံပြ',
+      one: '$count ဟိံပြ',
     );
     return '$_temp0';
   }
@@ -1831,7 +1832,7 @@ class AppLocalizationsMy extends AppLocalizations {
       'Point this at any QR reader to securely မျှဝေ your vအသက်လက္ခဏာ';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'ဒေါင်းလုဒ်လုပ်ပါ။';
 
   @override
   String get share => 'မျှဝေ';
@@ -1843,27 +1844,27 @@ class AppLocalizationsMy extends AppLocalizations {
   String get generateQrCode => 'Generate QR ကုဒ်';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'သက်တမ်းကုန်သွားပြီ';
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return '${hours}h ${minutes}m အတွက် အကျုံးဝင်သည်။';
   }
 
   @override
   String get emergencySosTitle => 'အရေးပေါ် SOS';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'ဆက်ကိုင်...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'နီးစပ်ရာဆေးရုံများ';
 
   @override
   String get allergies => 'ဓာတ်မတည့်မှု';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'အခြေအနေများ';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1877,26 +1878,26 @@ class AppLocalizationsMy extends AppLocalizations {
       'SOS sends your GPS နေရာ to your အရေးပေါ် contacts via SMS. Make sure your contacts are configured in your pပရိုဖိုင်';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'ပေးပို့ခြင်း။';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS မအောင်မြင်ပါ။';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS တက်ကြွနေပါသည်။';
 
   @override
   String get sendingEmergencyAlert => 'Sending အရေးပေါ် Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'သတိပေးချက် မပို့နိုင်ပါ။';
 
   @override
   String get emergencyAlertSent => 'အရေးပေါ် Alert Sent';
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return '$seconds ဖြင့် ပို့နေသည်...';
   }
 
   @override
@@ -1935,8 +1936,8 @@ class AppLocalizationsMy extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count contacts notified via SMS',
+      one: '$count contact notified via SMS',
     );
     return '$_temp0';
   }
@@ -2492,7 +2493,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'ရွေးချယ်ထားသည့်အချိန်ကာလအတွက် ဖတ်ရှုမှုမတွေ့ပါ။';
 
   @override
   String get singleReading => 'စာဖတ်ခြင်း ၁';

@@ -520,8 +520,8 @@ class AppLocalizationsBn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count সদস্য সংযুক্ত',
+      one: '$count সদস্য সংযুক্ত',
     );
     return '$_temp0';
   }
@@ -843,7 +843,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'প্রোফাইল > সাবস্ক্রিপশনে যান এবং ডাউনগ্রেড করতে ফ্রি প্ল্যান নির্বাচন করুন। আপনার প্রো বা এন্টারপ্রাইজ ফিচারগুলো আপনার বর্তমান বিলিং পর্বের শেষ পর্যন্ত সক্রিয় থাকবে।';
 
   @override
   String get exportConfigurePreview =>
@@ -1794,8 +1794,8 @@ class AppLocalizationsBn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count অ্যালার্জি',
+      one: '$count অ্যালার্জি',
     );
     return '$_temp0';
   }
@@ -1805,8 +1805,8 @@ class AppLocalizationsBn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count ওষুধ',
+      one: '$count ওষুধ',
     );
     return '$_temp0';
   }
@@ -1884,7 +1884,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return '$seconds পাঠানো হচ্ছে…';
   }
 
   @override
@@ -1923,8 +1923,8 @@ class AppLocalizationsBn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count পরিচিতিকে SMS এ জানানো হয়েছে',
+      one: '$count পরিচিতিকে SMS এ জানানো হয়েছে',
     );
     return '$_temp0';
   }
@@ -1965,7 +1965,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'শরীরের অঞ্চল: $regions';
   }
 
   @override
@@ -1975,7 +1975,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'এআই সুপারিশ: $recommendation';
   }
 
   @override
@@ -1983,7 +1983,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String notesCaption(String notes) {
-    return 'Notes: $notes';
+    return 'নোটস: $notes';
   }
 
   @override
@@ -2374,12 +2374,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return 'শূন্য থেকে শূন্য আগে $minutes';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return 'শূন্য থেকে শূন্য আগে $weeks';
   }
 
   @override
@@ -2478,7 +2478,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'নির্বাচিত সময়ের জন্য কোনো পাঠ পাওয়া যায়নি।';
 
   @override
   String get singleReading => '১টি পাঠ';

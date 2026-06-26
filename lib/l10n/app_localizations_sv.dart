@@ -519,8 +519,8 @@ class AppLocalizationsSv extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count anslutna medlemmar',
+      one: '$count ansluten medlem',
     );
     return '$_temp0';
   }
@@ -842,7 +842,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Gå till Profil > Abonnemang och välj gratisplanen för att byta till en lägre nivå. Dina Pro- eller Enterprise-funktioner kommer att förbli aktiva fram till slutet av din nuvarande faktureringsperiod.';
 
   @override
   String get exportConfigurePreview =>
@@ -1789,8 +1789,8 @@ class AppLocalizationsSv extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Allergier',
+      one: '$count Allergi',
     );
     return '$_temp0';
   }
@@ -1800,8 +1800,8 @@ class AppLocalizationsSv extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Läkemedel',
+      one: '$count Läkemedel',
     );
     return '$_temp0';
   }
@@ -1918,8 +1918,8 @@ class AppLocalizationsSv extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontakter informerade via SMS',
+      one: '$count kontakt informerad via SMS',
     );
     return '$_temp0';
   }
@@ -2474,7 +2474,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Inga mätvärden hittades för den valda tidsperioden';
 
   @override
   String get singleReading => '1 läsning';

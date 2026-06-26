@@ -515,8 +515,8 @@ class AppLocalizationsAm extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count ከጉነናያ አባዴይ',
+      one: '$count ከጉነናያ አባዴ',
     );
     return '$_temp0';
   }
@@ -833,7 +833,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'ወደ ፕሮፋይል> ደንበኝነት ምዝገባ ይሂዱ እና ለማውረድ ነፃ ዕቅድ ይምረጡ። የእርስዎ የፕሮ ወይም የድርጅት ባህሪያት እስከ አሁን የክፍያ ጊዜዎ መጨረሻ ድረስ ንቁ እንደሆኑ ይቆያሉ።';
 
   @override
   String get exportConfigurePreview =>
@@ -1764,8 +1764,8 @@ class AppLocalizationsAm extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count አለርጂዎች',
+      one: '$count አለርጂ',
     );
     return '$_temp0';
   }
@@ -1775,8 +1775,8 @@ class AppLocalizationsAm extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count መጅሳኒፍ፣',
+      one: '$count መጅሳኒፍ',
     );
     return '$_temp0';
   }
@@ -1893,8 +1893,8 @@ class AppLocalizationsAm extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count ጊንግስኚ በSMS ጀሳያገ',
+      one: '$count ጊንግስኚ በSMS ጀሳያገ',
     );
     return '$_temp0';
   }
@@ -2331,7 +2331,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get actionStayActiveDesc =>
-      'Regular exercise helps maintain cardiovascular health.';
+      'አዘውትሮ የአካል ብቃት እንቅስቃሴ የልብና የደም ሥር (cardiovascular) ጤንነትን ለመጠበቅ ይረዳል.';
 
   @override
   String get viewWeeklyInsights => 'View ሳምንታዊ ግንዛቤዎች';
@@ -2441,8 +2441,7 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => 'ለተመረጠው ጊዜ ምንም ንባቦች አልተገኙም።';
 
   @override
   String get singleReading => '1 ንባብ';

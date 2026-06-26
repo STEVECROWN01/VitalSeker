@@ -519,8 +519,8 @@ class AppLocalizationsYo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count ọmọ ẹgbẹ́ tó so',
+      one: '$count ọmọ ẹgbẹ́ tó so',
     );
     return '$_temp0';
   }
@@ -846,7 +846,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Lọ si Profaili> Ṣiṣe alabapin ko si yan ero Ọfẹ lati dinku. Awọn ẹya Pro tabi Idawọlẹ rẹ yoo wa lọwọ titi di opin akoko isanwo lọwọlọwọ rẹ.';
 
   @override
   String get exportConfigurePreview =>
@@ -1788,8 +1788,8 @@ class AppLocalizationsYo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Àlẹ́sẹ́',
+      one: '$count Àlẹ́sẹ́',
     );
     return '$_temp0';
   }
@@ -1799,8 +1799,8 @@ class AppLocalizationsYo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Oogun',
+      one: '$count Oogun',
     );
     return '$_temp0';
   }
@@ -1917,8 +1917,8 @@ class AppLocalizationsYo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count ìbáraṣọkọ́ tó fi SMS ráǹṣẹ́',
+      one: '$count ìbáraṣọkọ́ tó fi SMS ráǹṣẹ́',
     );
     return '$_temp0';
   }
@@ -2470,8 +2470,7 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => 'Ko si awọn iwe kika fun akoko ti o yan';
 
   @override
   String get singleReading => '1 kika';

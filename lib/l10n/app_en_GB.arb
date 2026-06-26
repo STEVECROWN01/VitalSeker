@@ -824,7 +824,7 @@
   "acquiringGps": "Acquiring GPS coordinates…",
   "locationUnavailable": "Location unavailable",
   "contactsNotified": "Contacts Notified",
-  "contactsNotifiedCount": "{count, plural, =1{{count} contact reached via SMS} other{{count} contacts reached via SMS}}",
+  "contactsNotifiedCount": "{count, plural, =1{{count} contact notified via SMS} other{{count} contacts notified via SMS}}",
   "@contactsNotifiedCount": {
     "placeholders": {
       "count": {

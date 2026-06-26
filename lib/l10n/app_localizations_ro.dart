@@ -522,8 +522,8 @@ class AppLocalizationsRo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count membri conectați',
+      one: '$count membru conectat',
     );
     return '$_temp0';
   }
@@ -847,7 +847,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Accesați Profil > Abonament și selectați planul gratuit pentru a trece la un plan inferior. Funcțiile planurilor Pro sau Enterprise vor rămâne active până la sfârșitul perioadei de facturare curente.';
 
   @override
   String get exportConfigurePreview =>
@@ -1804,8 +1804,8 @@ class AppLocalizationsRo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alergii',
+      one: '$count Alergie',
     );
     return '$_temp0';
   }
@@ -1815,8 +1815,8 @@ class AppLocalizationsRo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Medicamente',
+      one: '$count Medicament',
     );
     return '$_temp0';
   }
@@ -1933,8 +1933,8 @@ class AppLocalizationsRo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count contacte notificate prin SMS',
+      one: '$count contact notificat prin SMS',
     );
     return '$_temp0';
   }
@@ -2489,7 +2489,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Nu s-au găsit date pentru perioada selectată';
 
   @override
   String get singleReading => '1 lectură';

@@ -519,8 +519,8 @@ class AppLocalizationsMs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count ahli disambung',
+      one: '$count ahli disambung',
     );
     return '$_temp0';
   }
@@ -842,7 +842,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Pergi ke Profil > Langganan dan pilih pelan Percuma untuk menurunkan taraf. Ciri Pro atau Perusahaan anda akan kekal aktif sehingga tamat tempoh pengebilan semasa anda.';
 
   @override
   String get exportConfigurePreview =>
@@ -1108,7 +1108,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get failedToRescheduleAppointment =>
-      'Failed to reschedule appointment.';
+      'Gagal menjadualkan semula janji temu.';
 
   @override
   String get deleteAppointment => 'Padam Appointment';
@@ -1791,8 +1791,8 @@ class AppLocalizationsMs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alahan',
+      one: '$count Alahan',
     );
     return '$_temp0';
   }
@@ -1802,8 +1802,8 @@ class AppLocalizationsMs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Ubat',
+      one: '$count Ubat',
     );
     return '$_temp0';
   }
@@ -1920,8 +1920,8 @@ class AppLocalizationsMs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontak dimaklumkan melalui SMS',
+      one: '$count kontak dimaklumkan melalui SMS',
     );
     return '$_temp0';
   }
@@ -1947,7 +1947,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get filterGreen => 'hijau';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => 'kuning';
 
   @override
   String get filterRed => 'merah';
@@ -2001,7 +2001,7 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'Analisis Trend';
 
   @override
   String get symptomFrequency4w => 'KEKERAPAN GEJALA (4W)';
@@ -2027,7 +2027,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'Penanda dehidrasi ringan dikesan dalam log petang. Alihkan 40% daripada pengambilan air harian anda kepada sebelum 10 PAGI untuk menstabilkan kadar metabolisme.';
 
   @override
   String get tipActivityTitle => 'Aktiviti pacing';
@@ -2474,7 +2474,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Tiada bacaan ditemui untuk tempoh masa yang dipilih';
 
   @override
   String get singleReading => '1 bacaan';

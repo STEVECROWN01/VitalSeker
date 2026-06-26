@@ -516,8 +516,8 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count 接続メンバー',
+      one: '$count 接続メンバー',
     );
     return '$_temp0';
   }
@@ -833,7 +833,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      '「プロフィール」＞「サブスクリプション」に移動し、「無料プラン」を選択してプランをダウングレードしてください。ProまたはEnterpriseの機能は、現在の請求期間が終了するまで引き続きご利用いただけます。';
 
   @override
   String get exportConfigurePreview =>
@@ -1760,8 +1760,8 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count アレルギー',
+      one: '$count アレルギー',
     );
     return '$_temp0';
   }
@@ -1771,8 +1771,8 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count 薬',
+      one: '$count 薬',
     );
     return '$_temp0';
   }
@@ -1889,8 +1889,8 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count 件の連絡先にSMSで通知',
+      one: '$count 件の連絡先にSMSで通知',
     );
     return '$_temp0';
   }
@@ -2437,8 +2437,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => '選択した期間に該当する測定値が見つかりませんでした';
 
   @override
   String get singleReading => '1回の閲覧';

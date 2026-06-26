@@ -520,8 +520,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count pripojených členov',
+      one: '$count pripojený člen',
     );
     return '$_temp0';
   }
@@ -843,7 +843,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Prejdite do časti Profil > Predplatné a vyberte bezplatný balík, ak chcete prejsť na nižší balík. Funkcie balíkov Pro alebo Enterprise zostanú aktívne až do konca vášho aktuálneho zúčtovacieho obdobia.';
 
   @override
   String get exportConfigurePreview =>
@@ -1798,8 +1798,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alergií',
+      one: '$count Alergia',
     );
     return '$_temp0';
   }
@@ -1809,8 +1809,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Liekov',
+      one: '$count Liek',
     );
     return '$_temp0';
   }
@@ -1927,8 +1927,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontaktov informovaných SMS',
+      one: '$count kontakt informovaný SMS',
     );
     return '$_temp0';
   }
@@ -2484,7 +2484,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Pre vybrané časové obdobie neboli nájdené žiadne namerané hodnoty';
 
   @override
   String get singleReading => '1 prečítanie';

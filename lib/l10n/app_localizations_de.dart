@@ -523,8 +523,8 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count verbundene Mitglieder',
+      one: '$count verbundenes Mitglied',
     );
     return '$_temp0';
   }
@@ -849,7 +849,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Gehen Sie zu „Profil“ > „Abonnement“ und wählen Sie den kostenlosen Tarif aus, um auf diesen umzusteigen. Ihre Pro- oder Enterprise-Funktionen bleiben bis zum Ende Ihres aktuellen Abrechnungszeitraums aktiv.';
 
   @override
   String get exportConfigurePreview =>
@@ -1803,8 +1803,8 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Allergien',
+      one: '$count Allergie',
     );
     return '$_temp0';
   }
@@ -1814,8 +1814,8 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Medikamente',
+      one: '$count Medikament',
     );
     return '$_temp0';
   }
@@ -1932,8 +1932,8 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count Kontakte per SMS benachrichtigt',
+      one: '$count Kontakt per SMS benachrichtigt',
     );
     return '$_temp0';
   }
@@ -2489,7 +2489,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Für den ausgewählten Zeitraum wurden keine Messwerte gefunden';
 
   @override
   String get singleReading => '1 Messung';

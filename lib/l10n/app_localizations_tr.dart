@@ -519,8 +519,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count bağlı üye',
+      one: '$count bağlı üye',
     );
     return '$_temp0';
   }
@@ -841,7 +841,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Profil > Abonelik bölümüne gidin ve planınızı düşürmek için Ücretsiz planı seçin. Pro veya Enterprise özellikleriniz, mevcut fatura döneminizin sonuna kadar aktif kalacaktır.';
 
   @override
   String get exportConfigurePreview =>
@@ -1789,8 +1789,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alerji',
+      one: '$count Alerji',
     );
     return '$_temp0';
   }
@@ -1800,8 +1800,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count İlaç',
+      one: '$count İlaç',
     );
     return '$_temp0';
   }
@@ -1918,8 +1918,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kişi SMS ile bilgilendirildi',
+      one: '$count kişi SMS ile bilgilendirildi',
     );
     return '$_temp0';
   }
@@ -2474,7 +2474,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Seçilen zaman aralığı için herhangi bir okuma bulunamadı';
 
   @override
   String get singleReading => '1 okuma';

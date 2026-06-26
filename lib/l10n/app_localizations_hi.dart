@@ -519,8 +519,8 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count सदस्य जुड़े हुए',
+      one: '$count सदस्य जुड़ा हुआ',
     );
     return '$_temp0';
   }
@@ -555,7 +555,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'संस्करण $version';
   }
 
   @override
@@ -842,7 +842,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'प्रोफ़ाइल > सदस्यता पर जाएँ और डाउनग्रेड करने के लिए मुफ़्त योजना चुनें। आपकी Pro या Enterprise सुविधाएँ आपकी वर्तमान बिलिंग अवधि के अंत तक सक्रिय रहेंगी।';
 
   @override
   String get exportConfigurePreview =>
@@ -1585,7 +1585,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return 'शून्य से शून्य $hours';
   }
 
   @override
@@ -1787,8 +1787,8 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count एलर्जी',
+      one: '$count एलर्जी',
     );
     return '$_temp0';
   }
@@ -1798,8 +1798,8 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count दवाएं',
+      one: '$count दवा',
     );
     return '$_temp0';
   }
@@ -1877,7 +1877,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return '$seconds भेज रहा हूँ…';
   }
 
   @override
@@ -1916,8 +1916,8 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count संपर्कों को SMS द्वारा सूचित किया गया',
+      one: '$count संपर्क को SMS द्वारा सूचित किया गया',
     );
     return '$_temp0';
   }
@@ -1958,7 +1958,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'शरीर के क्षेत्र: $regions';
   }
 
   @override
@@ -2366,12 +2366,12 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return 'शून्य से शून्य पहले $minutes';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return 'शून्य से शून्य पहले $weeks';
   }
 
   @override
@@ -2471,7 +2471,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'चुनी गई समय अवधि के लिए कोई रीडिंग नहीं मिली।';
 
   @override
   String get singleReading => '1 पठन';
@@ -2499,7 +2499,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return '$total रीडिंग्स में से 20 दिखा रहा है';
   }
 
   @override
@@ -2531,7 +2531,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'डोज़ ज़ीरो ज़ीरो $number';
   }
 
   @override
@@ -2688,7 +2688,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return '$total का चरण $current';
   }
 
   @override

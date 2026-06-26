@@ -516,8 +516,8 @@ class AppLocalizationsHe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count חברים מחוברים',
+      one: '$count חבר מחובר',
     );
     return '$_temp0';
   }
@@ -837,7 +837,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'עבור אל פרופיל > מנוי ובחר בתוכנית החינמית לשדרוג לאחור. תכונות ה-Pro או Enterprise שלך ​​יישארו פעילות עד תום תקופת החיוב הנוכחית שלך.';
 
   @override
   String get exportConfigurePreview =>
@@ -1779,8 +1779,8 @@ class AppLocalizationsHe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count אלרגיות',
+      one: '$count אלרגיה',
     );
     return '$_temp0';
   }
@@ -1790,8 +1790,8 @@ class AppLocalizationsHe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count תרופות',
+      one: '$count תרופה',
     );
     return '$_temp0';
   }
@@ -1908,8 +1908,8 @@ class AppLocalizationsHe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count אנשי קשר עודכנו ב-SMS',
+      one: '$count איש קשר עודכן ב-SMS',
     );
     return '$_temp0';
   }
@@ -2459,8 +2459,7 @@ class AppLocalizationsHe extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => 'לא נמצאו קריאות עבור פרק הזמן שנבחר';
 
   @override
   String get singleReading => 'קריאה אחת';
@@ -2520,7 +2519,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'מינון $number';
   }
 
   @override

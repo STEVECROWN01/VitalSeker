@@ -517,8 +517,8 @@ class AppLocalizationsHa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count membobi da aka haɗa',
+      one: '$count memba da aka haɗa',
     );
     return '$_temp0';
   }
@@ -841,7 +841,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Je zuwa Profile> Biyan kuɗi kuma zaɓi shirin Kyauta don rage darajar. Fasalolin Pro ko Kasuwancin ku za su ci gaba da aiki har zuwa ƙarshen lokacin lissafin ku na yanzu.';
 
   @override
   String get exportConfigurePreview =>
@@ -1687,17 +1687,17 @@ class AppLocalizationsHa extends AppLocalizations {
   String get followUpQuestions => 'Shawarwari';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Ana ajiyewa...';
 
   @override
-  String get seeDoctorSoon => 'See a Doctor Soon';
+  String get seeDoctorSoon => 'Ga Likita nan ba da jimawa ba';
 
   @override
   String get emergencyCareNow => 'Gaggawa Care Now';
 
   @override
   String get triageDisclaimer =>
-      'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+      'Wannan ba ganewar asibiti bane. Koyaushe tuntuɓi ƙwararrun kiwon lafiya don ingantaccen shawarar likita.';
 
   @override
   String get escalateLow1 => 'Alamun worsen or spread to new body areas';
@@ -1712,7 +1712,8 @@ class AppLocalizationsHa extends AppLocalizations {
   String get escalateMedium1 => 'Alamun persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 =>
+      'Ciwo yana ƙaruwa ko kuma ya zama ba a iya sarrafa shi';
 
   @override
   String get escalateMedium3 => 'New red-flag Alamun appear';
@@ -1721,8 +1722,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get escalateHigh1 => 'Alamun rapidly worsen';
 
   @override
-  String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+  String get escalateHigh2 => 'Wahalar numfashi ko matse kirji na tasowa';
 
   @override
   String get escalateHigh3 =>
@@ -1733,7 +1733,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'Kada ku tuƙi kanku - sami hawa ko motar asibiti';
 
   @override
   String get escalateEmergency3 =>
@@ -1743,7 +1743,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get showQrCode => 'Show Lambar QR';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'Mara aiki';
 
   @override
   String get knownAllergies => 'Known Maɗaukaki';
@@ -1755,7 +1755,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get chronicConditions => 'Cututtukan dawwama';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'Inshora';
 
   @override
   String get qrCode => 'Lambar QR';
@@ -1774,11 +1774,11 @@ class AppLocalizationsHa extends AppLocalizations {
   String get heightAndWeight => 'Tsawo & Nauyi';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'Ba a saita ba';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count shekara';
   }
 
   @override
@@ -1786,8 +1786,8 @@ class AppLocalizationsHa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Maɗaukaki',
+      one: '$count Maɗaukaki',
     );
     return '$_temp0';
   }
@@ -1797,8 +1797,8 @@ class AppLocalizationsHa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Magunguna',
+      one: '$count Magani',
     );
     return '$_temp0';
   }
@@ -1811,7 +1811,7 @@ class AppLocalizationsHa extends AppLocalizations {
       'Point this at any QR reader to securely Raba your vAlamun rayuwa';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'SAUKARWA';
 
   @override
   String get share => 'Raba';
@@ -1823,27 +1823,27 @@ class AppLocalizationsHa extends AppLocalizations {
   String get generateQrCode => 'Generate Lambar QR';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'Karewa';
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'Yana aiki don ${hours}h ${minutes}m';
   }
 
   @override
   String get emergencySosTitle => 'SOS na gaggawa';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'Ci gaba da rike...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'Asibitoci dake kusa';
 
   @override
   String get allergies => 'Maƙarƙashiya';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'Sharuɗɗa';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1857,19 +1857,19 @@ class AppLocalizationsHa extends AppLocalizations {
       'SOS sends your GPS Wuri to your Gaggawa contacts via SMS. Make sure your contacts are configured in your pFayil';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'AIKA';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS ta gaza';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AIKI';
 
   @override
   String get sendingEmergencyAlert => 'Sending Gaggawa Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'An kasa Aiko Fadakarwa';
 
   @override
   String get emergencyAlertSent => 'Gaggawa Alert Sent';
@@ -1915,8 +1915,8 @@ class AppLocalizationsHa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count lambobi aka sanar da SMS',
+      one: '$count lamba aka sanar da SMS',
     );
     return '$_temp0';
   }
@@ -2470,7 +2470,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Ba a sami karatu don lokacin da aka zaɓa ba';
 
   @override
   String get singleReading => '1 karatu';

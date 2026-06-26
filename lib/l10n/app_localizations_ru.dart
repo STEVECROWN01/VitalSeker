@@ -522,8 +522,8 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count подключенных участников',
+      one: '$count подключенный участник',
     );
     return '$_temp0';
   }
@@ -846,7 +846,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Перейдите в раздел «Профиль» > «Подписка» и выберите тарифный план «Бесплатный», чтобы перейти на более низкий тариф. Ваши функции тарифных планов «Pro» или «Enterprise» будут оставаться активными до конца текущего расчетного периода.';
 
   @override
   String get exportConfigurePreview =>
@@ -1798,8 +1798,8 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Аллергий',
+      one: '$count Аллергия',
     );
     return '$_temp0';
   }
@@ -1809,8 +1809,8 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Лекарств',
+      one: '$count Лекарство',
     );
     return '$_temp0';
   }
@@ -1927,8 +1927,8 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count контактов уведомлено по SMS',
+      one: '$count контакт уведомлен по SMS',
     );
     return '$_temp0';
   }
@@ -2483,8 +2483,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => 'Данные за выбранный период не найдены';
 
   @override
   String get singleReading => '1 просмотр';

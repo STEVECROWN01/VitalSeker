@@ -525,8 +525,8 @@ class AppLocalizationsTl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count mga kasapi na kumonekta',
+      one: '$count kasapi na kumonekta',
     );
     return '$_temp0';
   }
@@ -853,7 +853,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Pumunta sa Profile > Subscription at piliin ang Libreng planong i-downgrade. Mananatiling aktibo ang iyong mga feature sa Pro o Enterprise hanggang sa katapusan ng iyong kasalukuyang panahon ng pagsingil.';
 
   @override
   String get exportConfigurePreview =>
@@ -1810,8 +1810,8 @@ class AppLocalizationsTl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Mga Alerhiya',
+      one: '$count Alerhiya',
     );
     return '$_temp0';
   }
@@ -1821,8 +1821,8 @@ class AppLocalizationsTl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Mga Gamot',
+      one: '$count Gamot',
     );
     return '$_temp0';
   }
@@ -1939,8 +1939,8 @@ class AppLocalizationsTl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count mga kontak naipaabot sa SMS',
+      one: '$count kontak naipaabot sa SMS',
     );
     return '$_temp0';
   }
@@ -2497,7 +2497,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Walang nakitang pagbabasa para sa napiling yugto ng panahon';
 
   @override
   String get singleReading => '1 pagbabasa';
@@ -2867,7 +2867,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get symptomSoreThroat => 'Sakit sa lalamunan';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => 'Tumutulong sipon';
 
   @override
   String get symptomVomiting => 'Pagsusuka';

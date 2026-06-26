@@ -520,8 +520,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count anggota terhubung',
+      one: '$count anggota terhubung',
     );
     return '$_temp0';
   }
@@ -846,7 +846,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Buka Profil > Langganan, lalu pilih paket Gratis untuk menurunkan tingkat langganan. Fitur-fitur Pro atau Enterprise Anda akan tetap aktif hingga akhir periode penagihan saat ini.';
 
   @override
   String get exportConfigurePreview =>
@@ -1799,8 +1799,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alergi',
+      one: '$count Alergi',
     );
     return '$_temp0';
   }
@@ -1810,8 +1810,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Obat',
+      one: '$count Obat',
     );
     return '$_temp0';
   }
@@ -1928,8 +1928,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontak diberitahu via SMS',
+      one: '$count kontak diberitahu via SMS',
     );
     return '$_temp0';
   }
@@ -2485,7 +2485,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Tidak ditemukan data untuk periode waktu yang dipilih';
 
   @override
   String get singleReading => '1 bacaan';
@@ -2703,7 +2703,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Langkah $current dari $total';
   }
 
   @override

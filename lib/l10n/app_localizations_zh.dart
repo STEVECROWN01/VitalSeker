@@ -515,8 +515,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count 已连接成员',
+      one: '$count 已连接成员',
     );
     return '$_temp0';
   }
@@ -831,7 +831,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      '请前往“个人资料”>“订阅”，然后选择“免费套餐”进行降级。您的 Pro 或 Enterprise 功能将保持有效，直至当前计费周期结束。';
 
   @override
   String get exportConfigurePreview =>
@@ -1758,8 +1758,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count 过敏',
+      one: '$count 过敏',
     );
     return '$_temp0';
   }
@@ -1769,8 +1769,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count 药物',
+      one: '$count 药物',
     );
     return '$_temp0';
   }
@@ -1887,8 +1887,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count 个联系人通过短信通知',
+      one: '$count 个联系人通过短信通知',
     );
     return '$_temp0';
   }
@@ -2432,8 +2432,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => '未找到所选时间段内的读数';
 
   @override
   String get singleReading => '1 次阅读';
