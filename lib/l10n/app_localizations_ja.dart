@@ -1837,7 +1837,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sosFailed => 'SOS 失敗';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS アクティブ';
 
   @override
   String get sendingEmergencyAlert => 'Sending 緊急 Alert';
@@ -2380,10 +2380,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get logVitalTitle => 'ログ・バイタル';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'バイタルタイプ';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => '価値';
 
   @override
   String get systolic => '収縮期';

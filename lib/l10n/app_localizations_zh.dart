@@ -2375,7 +2375,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get logVitalTitle => '日志重要';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => '生命类型';
 
   @override
   String get valueLabel => 'VALUE';

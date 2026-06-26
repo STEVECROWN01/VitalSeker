@@ -386,7 +386,7 @@ class AppLocalizationsHu extends AppLocalizations {
       'Frissítés to Pro to unlock AI-powered weekly Egészség iElemzések';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Pro terv';
 
   @override
   String get viewAllPlans => 'View Összes plans';
@@ -1185,7 +1185,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get keyFeatures => 'Főbb jellemzők';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'Termelő';
 
   @override
   String get conceptDesignDevelopment => 'Koncepció, tervezés és fejlesztés';
@@ -1882,7 +1882,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get sosFailed => 'SOS-hiba';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTÍV';
 
   @override
   String get sendingEmergencyAlert => 'Sending Vészhelyzet Alert';

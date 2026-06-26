@@ -714,7 +714,7 @@
   "trendDown": "DOWN",
   "trendStable": "STABLE",
   "logVitalTitle": "日志重要",
-  "vitalTypeLabel": "VITAL TYPE",
+  "vitalTypeLabel": "生命类型",
   "valueLabel": "VALUE",
   "systolic": "收缩压",
   "diastolic": "舒张压",

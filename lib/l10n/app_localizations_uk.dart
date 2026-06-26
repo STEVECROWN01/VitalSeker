@@ -1875,7 +1875,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get sosFailed => 'SOS НЕ ВДАЛОСЯ';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS АКТИВНИЙ';
 
   @override
   String get sendingEmergencyAlert => 'Sending  Невідкладна допомога Alert';

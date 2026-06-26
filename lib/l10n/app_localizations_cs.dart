@@ -141,7 +141,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get respiratoryRate => 'Respiratory Tep';
 
   @override
-  String get aiTriage => 'AI Triage';
+  String get aiTriage => 'Třídění AI';
 
   @override
   String get describeSymptoms => 'Describe your symPříznaky';
@@ -385,7 +385,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Vylepšit to Pro to unlock AI-powered weekly Zdraví iPřehledy';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Pro plán';
 
   @override
   String get viewAllPlans => 'View Vše plans';
@@ -1868,7 +1868,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get sosFailed => 'SOS se nezdařilo';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIVNÍ';
 
   @override
   String get sendingEmergencyAlert => 'Sending Pohotovost Alert';

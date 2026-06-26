@@ -153,7 +153,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get aiProcessing => 'AI is processing your Helse data';
 
   @override
-  String get send => 'Send';
+  String get send => 'Sende';
 
   @override
   String get newChat => 'Ny chat';
@@ -1402,13 +1402,13 @@ class AppLocalizationsNo extends AppLocalizations {
   String get nA => 'Ikke relevant';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Hopp over';
 
   @override
   String get next => 'Neste';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Gå inn på VitalSeker';
 
   @override
   String get onboardingTitle1 => 'Lær å kjenne kroppen din.';
@@ -1868,7 +1868,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get sosFailed => 'SOS MISLYKTES';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIV';
 
   @override
   String get sendingEmergencyAlert => 'Sending Nødsituasjon Alert';
@@ -2487,7 +2487,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get min => 'I';
 
   @override
-  String get max => 'Max';
+  String get max => 'Maks';
 
   @override
   String get latest => 'Siste nytt';

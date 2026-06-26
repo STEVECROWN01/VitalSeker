@@ -42,7 +42,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get signOut => 'Đăng xuất';
 
   @override
-  String get email => 'Email';
+  String get email => 'E-mail';
 
   @override
   String get password => 'Mật khẩu';
@@ -1871,7 +1871,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sosFailed => 'SOS THẤT BẠI';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS HOẠT ĐỘNG';
 
   @override
   String get sendingEmergencyAlert => 'Sending Khẩn cấp Alert';
@@ -2491,7 +2491,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get min => 'Tôi';
 
   @override
-  String get max => 'Max';
+  String get max => 'Tối đa';
 
   @override
   String get latest => 'Mới nhất';

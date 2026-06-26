@@ -388,7 +388,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Улучшить to Pro to unlock AI-powered weekly Здоровье iАналитика';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Профессиональный план';
 
   @override
   String get viewAllPlans => 'View Все plans';
@@ -1875,7 +1875,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sosFailed => 'SOS — ОШИБКА';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS АКТИВ';
 
   @override
   String get sendingEmergencyAlert => 'Sending Экстренная помощь Alert';

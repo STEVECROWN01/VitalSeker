@@ -386,7 +386,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Ulepsz to Pro to unlock AI-powered weekly Zdrowie iWnioski';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Plan profesjonalny';
 
   @override
   String get viewAllPlans => 'View Wszystkie plans';

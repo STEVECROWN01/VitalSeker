@@ -554,7 +554,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Version$version';
   }
 
   @override
@@ -2503,7 +2503,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get min => 'J\'ai';
 
   @override
-  String get max => 'Max';
+  String get max => 'Max.';
 
   @override
   String get latest => 'Dernier';
@@ -2646,7 +2646,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get titleLabel => 'Titre';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'Taper';
 
   @override
   String get recordTypeLabResults => 'Résultats de laboratoire';

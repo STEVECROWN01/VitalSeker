@@ -558,7 +558,7 @@
   "sosTip": "SOS sends your GPS الموقع to your طوارئ contacts via SMS. Make sure your contacts are configured in your pالملف الشخصي",
   "sendingCaps": "الإرسال",
   "sosFailed": "فشل إرسال إشارة SOS",
-  "sosActive": "SOS ACTIVE",
+  "sosActive": "SOS نشطة",
   "sendingEmergencyAlert": "Sending طوارئ Alert",
   "alertCouldNotBeSent": "تنبيه Could Not Be Sent",
   "emergencyAlertSent": "طوارئ Alert Sent",

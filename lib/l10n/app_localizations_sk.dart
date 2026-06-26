@@ -141,7 +141,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get respiratoryRate => 'Frekvencia dýchania';
 
   @override
-  String get aiTriage => 'AI Triage';
+  String get aiTriage => 'Triedenie AI';
 
   @override
   String get describeSymptoms => 'Describe your symPríznaky';
@@ -386,7 +386,7 @@ class AppLocalizationsSk extends AppLocalizations {
       'Vylepšiť to Pro to unlock AI-powered weekly Zdravie iPrehľady';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Pro plán';
 
   @override
   String get viewAllPlans => 'View Všetko plans';
@@ -1875,7 +1875,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get sosFailed => 'SOS sa nepodarilo';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTÍVNE';
 
   @override
   String get sendingEmergencyAlert => 'Sending Pohotovosť Alert';

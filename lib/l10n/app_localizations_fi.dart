@@ -1872,7 +1872,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get sosFailed => 'SOS epäonnistui';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIIVINEN';
 
   @override
   String get sendingEmergencyAlert => 'Sending Hätätilanne Alert';
@@ -2014,7 +2014,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get chartHigh => 'Korkea';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'Keskim';
 
   @override
   String get chartLow => 'Alhainen';

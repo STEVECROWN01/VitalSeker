@@ -213,7 +213,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get darkMode => 'Donkere modus';
 
   @override
-  String get account => 'Account';
+  String get account => 'Rekening';
 
   @override
   String get privacyData => 'Privacy & gegevens';
@@ -386,7 +386,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Upgrade to Pro to unlock AI-powered weekly Gezondheid iInzichten';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Pro-plan';
 
   @override
   String get viewAllPlans => 'View Alle plans';
@@ -1870,7 +1870,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get sosFailed => 'SOS MISLUKT';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS ACTIEF';
 
   @override
   String get sendingEmergencyAlert => 'Sending Noodgeval Alert';
@@ -2418,7 +2418,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => 'Logboek van vitaal belang';
 
   @override
   String get vitalTypeLabel => 'VITAL-TYPE';

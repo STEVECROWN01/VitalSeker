@@ -15,7 +15,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tagline => 'Il tuo compagno di salute IA';
 
   @override
-  String get home => 'Home';
+  String get home => 'Casa';
 
   @override
   String get history => 'Cronologia';
@@ -681,7 +681,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get enterprisePlanFeature3 => 'Personalizzato branding';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Accesso all\'API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Supporto';
@@ -1873,7 +1873,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get sosFailed => 'SOS NON RIUSCITO';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS ATTIVO';
 
   @override
   String get sendingEmergencyAlert => 'Sending Emergenza Alert';
@@ -2493,7 +2493,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get min => 'Ho';
 
   @override
-  String get max => 'Max';
+  String get max => 'Massimo';
 
   @override
   String get latest => 'Ultimo';

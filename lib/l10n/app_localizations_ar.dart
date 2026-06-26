@@ -1859,7 +1859,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sosFailed => 'فشل إرسال إشارة SOS';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS نشطة';
 
   @override
   String get sendingEmergencyAlert => 'Sending طوارئ Alert';

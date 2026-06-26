@@ -232,7 +232,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get helpCenter => 'Ajutor Center';
 
   @override
-  String get contactConcierge => 'Contact Concierge';
+  String get contactConcierge => 'Contactați concierge';
 
   @override
   String get aboutVitalSeker => 'Despre VitalSeker';
@@ -1881,7 +1881,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get sosFailed => 'SOS EȘUAT';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS ACTIV';
 
   @override
   String get sendingEmergencyAlert => 'Sending Urgență Alert';

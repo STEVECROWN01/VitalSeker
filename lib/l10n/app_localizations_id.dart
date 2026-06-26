@@ -42,7 +42,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get signOut => 'Keluar';
 
   @override
-  String get email => 'Email';
+  String get email => 'E-mail';
 
   @override
   String get password => 'Kata Sandi';
@@ -387,7 +387,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Upgrade to Pro to unlock AI-powered weekly Kesehatan iWawasan';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Rencana Pro';
 
   @override
   String get viewAllPlans => 'View Semua plans';
@@ -994,14 +994,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'Sunting $name';
   }
 
   @override
   String get dosage => 'Dosis';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'Satuan';
 
   @override
   String get frequency => 'Frekuensi';
@@ -1876,7 +1876,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get sosFailed => 'SOS GAGAL';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIF';
 
   @override
   String get sendingEmergencyAlert => 'Sending Darurat Alert';
@@ -2497,7 +2497,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get min => 'Saya punya';
 
   @override
-  String get max => 'Max';
+  String get max => 'Maks';
 
   @override
   String get latest => 'Terbaru';
@@ -2526,7 +2526,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get dosageLabel => 'Dosis';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'Satuan';
 
   @override
   String get frequencyLabel => 'Frekuensi';

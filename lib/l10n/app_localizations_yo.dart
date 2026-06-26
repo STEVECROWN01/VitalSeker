@@ -2827,7 +2827,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get symptomMuscleAche => 'Isan Ache';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => 'Airorun';
 
   @override
   String get symptomChestPain => 'Ìrora àyà';

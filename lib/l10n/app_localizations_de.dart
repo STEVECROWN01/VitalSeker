@@ -225,7 +225,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get exportData => 'Daten exportieren';
 
   @override
-  String get support => 'Support';
+  String get support => 'Unterstützung';
 
   @override
   String get helpCenter => 'Hilfezentrum';

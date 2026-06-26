@@ -153,7 +153,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get aiProcessing => 'AI is processing your Sundhed data';
 
   @override
-  String get send => 'Send';
+  String get send => 'Sende';
 
   @override
   String get newChat => 'Ny chat';
@@ -225,7 +225,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get exportData => 'Eksporter Data';
 
   @override
-  String get support => 'Support';
+  String get support => 'Støtte';
 
   @override
   String get helpCenter => 'Hjælp Center';
@@ -1405,7 +1405,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get nA => 'Ikke relevant';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Springe';
 
   @override
   String get next => 'Næste';
@@ -1871,7 +1871,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get sosFailed => 'SOS mislykkedes';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIV';
 
   @override
   String get sendingEmergencyAlert => 'Sending Nødsituation Alert';
@@ -2490,7 +2490,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get min => 'Jeg har';
 
   @override
-  String get max => 'Max';
+  String get max => 'Maks';
 
   @override
   String get latest => 'Seneste';

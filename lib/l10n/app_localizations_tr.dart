@@ -386,7 +386,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Yükselt to Pro to unlock AI-powered weekly Sağlık iİçgörüler';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Profesyonel Plan';
 
   @override
   String get viewAllPlans => 'View Tümü plans';
@@ -1866,7 +1866,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get sosFailed => 'SOS HATASI';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTİF';
 
   @override
   String get sendingEmergencyAlert => 'Sending Acil durum Alert';

@@ -225,7 +225,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get exportData => 'Exportera Data';
 
   @override
-  String get support => 'Support';
+  String get support => 'Stöd';
 
   @override
   String get helpCenter => 'Hjälp Center';
@@ -1866,7 +1866,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get sosFailed => 'SOS misslyckades';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIV';
 
   @override
   String get sendingEmergencyAlert => 'Sending Nödläge Alert';
