@@ -2881,4 +2881,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'Aucun achat précédent à restaurer.';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Echec de la finalisation de l\'introduction. Verifiez votre connexion et reessayez.';
+
+  @override
+  String get fieldRequired => 'Ce champ est obligatoire';
+
+  @override
+  String get somethingWentWrong =>
+      'Quelque chose s\'est mal passé. Veuillez réessayer.';
+
+  @override
+  String get securitySettingsOnThisPage =>
+      'Les paramètres de sécurité sont sur cette page';
 }

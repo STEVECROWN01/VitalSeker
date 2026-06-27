@@ -584,7 +584,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pAdgangskode Please try again.';
+      'Det lykkedes ikke at opdatere adgangskoden. Prøv venligst igen.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -595,7 +595,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Slet account. Please try again or contact sSupport';
+      'Det lykkedes ikke at slette kontoen. Prøv igen, eller kontakt supporten.';
 
   @override
   String get manageYourSubscription => 'Administrer dit abonnement';
@@ -740,7 +740,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get purchasesRestored => 'Købene er blevet gendannet.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Gendan purchases.';
+  String get failedToRestorePurchases => 'Det lykkedes ikke at gendanne køb.';
 
   @override
   String get contactSalesEnterprise =>
@@ -803,7 +803,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Support request. Please try again or E-mail support@vitalseker.com.';
+      'Det lykkedes ikke at indsende supportanmodningen. Prøv venligst igen, eller send en e-mail til support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -917,7 +917,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Tilføj Familie member. Please try again.';
+      'Det lykkedes ikke at tilføje et familiemedlem. Prøv venligst igen.';
 
   @override
   String get removeFamilyMember => 'Fjern Familie Member';
@@ -935,7 +935,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Fjern Familie member. Please try again.';
+      'Det lykkedes ikke at fjerne familiemedlemmet. Prøv venligst igen.';
 
   @override
   String get fullNameLabel => 'Full Navn';
@@ -1033,7 +1033,8 @@ class AppLocalizationsDa extends AppLocalizations {
   String get medicationDeleted => 'Medicin slettet';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Slet medication.';
+  String get failedToDeleteMedication =>
+      'Det lykkedes ikke at slette medicinen.';
 
   @override
   String get editDetails => 'Rediger Details';
@@ -1097,7 +1098,8 @@ class AppLocalizationsDa extends AppLocalizations {
   String get appointmentCancelled => 'Aftalen er aflyst';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Annuller appointment.';
+  String get failedToCancelAppointment =>
+      'Det lykkedes ikke at aflyse aftalen.';
 
   @override
   String get selectNewDate => 'Select new Dato';
@@ -1126,7 +1128,8 @@ class AppLocalizationsDa extends AppLocalizations {
   String get appointmentDeleted => 'Aftalen er slettet';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Slet appointment.';
+  String get failedToDeleteAppointment =>
+      'Det lykkedes ikke at slette aftalen.';
 
   @override
   String get reschedule => 'Ændre tidspunkt';
@@ -1173,7 +1176,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Gem notification setting';
+      'Det lykkedes ikke at gemme notifikationsindstillingen';
 
   @override
   String get keyFeatures => 'Vigtigste funktioner';
@@ -1930,7 +1933,7 @@ class AppLocalizationsDa extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Historik';
+  String get failedLoadHistory => 'Det lykkedes ikke at indlæse historikken';
 
   @override
   String thisMonthCount(int count) {
@@ -2224,14 +2227,15 @@ class AppLocalizationsDa extends AppLocalizations {
   String get avatarRemoved => 'Avatar fjernet.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Fjern avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'Det lykkedes ikke at fjerne avataren. Prøv venligst igen.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'Det lykkedes ikke at opdatere profilen. Prøv igen.';
 
   @override
   String get editProfileTitle => 'Rediger Profil';
@@ -2383,7 +2387,7 @@ class AppLocalizationsDa extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Livsværdier';
+  String get failedToLoadVitals => 'Det lykkedes ikke at indlæse vitale tegn';
 
   @override
   String get noVitalsYet => 'Nej Livsværdier Yet';
@@ -2451,7 +2455,8 @@ class AppLocalizationsDa extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Gem vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Det lykkedes ikke at gemme vital. Prøv venligst igen.';
 
   @override
   String get vitalsHistoryTitle => 'Livsværdier Historik';
@@ -2555,7 +2560,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Tilføj medication. Please try again.';
+      'Det lykkedes ikke at tilføje medicinen. Prøv venligst igen.';
 
   @override
   String get addAppointmentTitle => 'Tilføj Appointment';
@@ -2659,7 +2664,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get recordUpdateFailed => 'Det lykkedes ikke at opdatere posten.';
 
   @override
-  String get recordAddFailed => 'Failed to Tilføj record.';
+  String get recordAddFailed => 'Det lykkedes ikke at tilføje posten.';
 
   @override
   String get deleteRecordTitle => 'Slet Record';
@@ -2673,7 +2678,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get recordDeleted => 'Posten er slettet.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Slet record.';
+  String get recordDeleteFailed => 'Det lykkedes ikke at slette posten.';
 
   @override
   String get medicalRecordsTitle => 'Journaler';
@@ -2864,4 +2869,17 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'Nej previous purchases found to rGendan';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

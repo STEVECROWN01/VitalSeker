@@ -9,6 +9,7 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/database_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -66,8 +67,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           final db = DatabaseService();
           await db.completeOnboarding(user.id);
           ref.invalidate(userProfileProvider);
+          // Wait for the provider to refresh so the router redirect sees the
+          // updated onboarding_completed=true. Without this, the router may
+          // bounce the user back to onboarding (redirect loop).
+          await ref.read(userProfileProvider.future);
         } catch (e) {
-          debugPrint('Failed to mark onboarding complete: $e');
+          if (!mounted) return;
+          // Surface the failure — don't navigate to dashboard if the DB write
+          // failed, or the router will bounce the user back to onboarding
+          // (isOnboardingCompletedProvider still returns false).
+          final l10n = AppLocalizations.of(context)!;
+          AppSnackBar.error(context, l10n.failedToCompleteOnboarding);
+          return;
         }
       }
 

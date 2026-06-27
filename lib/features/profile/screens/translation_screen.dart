@@ -66,21 +66,16 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
     'Bengali': 'BN',
     'Urdu': 'UR',
     // Note: Swahili, Hausa, Yoruba, Igbo, Tagalog are NOT supported by
-    // DeepL as of 2025. They're intentionally omitted from this map; the
-    // edge function returns the original text with a note for these.
-    'Swahili': 'SW',
-    'Hausa': 'HA',
-    'Yoruba': 'YO',
-    'Igbo': 'IG',
-    'Tagalog': 'TL',
+    // DeepL as of 2025. They're intentionally omitted from this map and
+    // from the _languages list below to prevent users from selecting a
+    // language that will return an error.
   };
 
   static const List<String> _languages = [
-    'French', 'Spanish', 'Arabic', 'Swahili', 'German',
+    'French', 'Spanish', 'Arabic', 'German',
     'Portuguese', 'Chinese', 'Japanese', 'Italian', 'Dutch',
     'Polish', 'Russian', 'Korean', 'Turkish', 'Indonesian',
     'Thai', 'Vietnamese', 'Hindi', 'Bengali', 'Urdu',
-    'Hausa', 'Yoruba', 'Igbo', 'Tagalog',
   ];
 
   @override

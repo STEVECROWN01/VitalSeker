@@ -739,7 +739,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get purchasesRestored => 'خریداریاں بحال کر دی گئیں۔';
 
   @override
-  String get failedToRestorePurchases => 'Failed to بحال کریں purchases.';
+  String get failedToRestorePurchases => 'خریداریوں کو بحال کرنے میں ناکام۔';
 
   @override
   String get contactSalesEnterprise => 'Contact sales for custom ادارہ شرائط';
@@ -802,7 +802,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit معاونت request. Please try again or ای میل support@vitalseker.com.';
+      'سپورٹ کی درخواست جمع کروانے میں ناکام۔ براہِ کرم دوبارہ کوشش کریں یا support@vitalseker.com پر ای میل کریں۔';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -915,7 +915,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to شامل کریں خاندان member. Please try again.';
+      'خاندان کا رکن شامل کرنے میں ناکام۔ براہ کرم دوبارہ کوشش کریں۔';
 
   @override
   String get removeFamilyMember => 'خاندان کا ممبر ہٹائیں';
@@ -933,7 +933,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to ہٹائیں خاندان member. Please try again.';
+      'خاندان کے رکن کو ہٹانے میں ناکام۔ براہِ کرم دوبارہ کوشش کریں۔';
 
   @override
   String get fullNameLabel => 'Full نام';
@@ -1029,7 +1029,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get medicationDeleted => 'دوا حذف شدہ';
 
   @override
-  String get failedToDeleteMedication => 'Failed to حذف کریں medication.';
+  String get failedToDeleteMedication => 'دوا حذف کرنے میں ناکام۔';
 
   @override
   String get editDetails => 'تفصیلات میں ترمیم';
@@ -1092,7 +1092,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get appointmentCancelled => 'ملاقات منسوخ';
 
   @override
-  String get failedToCancelAppointment => 'Failed to منسوخ appointment.';
+  String get failedToCancelAppointment => 'ملاقات منسوخ کرنے میں ناکام۔';
 
   @override
   String get selectNewDate => 'Select new تاریخ';
@@ -1121,7 +1121,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get appointmentDeleted => 'ملاقات حذف کر دی گئی';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to حذف کریں appointment.';
+  String get failedToDeleteAppointment => 'ملاقات حذف کرنے میں ناکام۔';
 
   @override
   String get reschedule => 'دوبارہ شیڈول';
@@ -1923,7 +1923,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load تاریخ';
+  String get failedLoadHistory => 'تاریخ لوڈ کرنے میں ناکام';
 
   @override
   String thisMonthCount(int count) {
@@ -2216,14 +2216,15 @@ class AppLocalizationsUr extends AppLocalizations {
   String get avatarRemoved => 'اوتار ہٹا دیا گیا۔';
 
   @override
-  String get avatarRemoveFailed => 'Failed to ہٹائیں avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'اوتار ہٹانے میں ناکام۔ براہِ کرم دوبارہ کوشش کریں۔';
 
   @override
   String get profileUpdatedSuccessfully => 'پروفائل updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pپروفائل Please try again.';
+      'پروفائل اپ ڈیٹ کرنے میں ناکام۔ براہ کرم دوبارہ کوشش کریں۔';
 
   @override
   String get editProfileTitle => 'ترمیم پروفائل';
@@ -2375,7 +2376,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load اہم علامات';
+  String get failedToLoadVitals => 'حیاتیاتی اعداد و شمار لوڈ کرنے میں ناکام';
 
   @override
   String get noVitalsYet => 'ابھی تک کوئی اہم علامات لاگ نہیں';
@@ -2444,7 +2445,8 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to محفوظ کریں vital. Please try again.';
+  String get vitalSaveFailed =>
+      'اہم محفوظ کرنے میں ناکام۔ براہِ کرم دوبارہ کوشش کریں۔';
 
   @override
   String get vitalsHistoryTitle => 'اہم علامات تاریخ';
@@ -2549,7 +2551,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to شامل کریں medication. Please try again.';
+      'دوا شامل کرنے میں ناکام۔ براہِ کرم دوبارہ کوشش کریں۔';
 
   @override
   String get addAppointmentTitle => 'شامل کریں Appointment';
@@ -2654,7 +2656,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recordUpdateFailed => 'ریکارڈ اپ ڈیٹ کرنے میں ناکام۔';
 
   @override
-  String get recordAddFailed => 'Failed to شامل کریں record.';
+  String get recordAddFailed => 'ریکارڈ شامل کرنے میں ناکام۔';
 
   @override
   String get deleteRecordTitle => 'حذف کریں Record';
@@ -2668,7 +2670,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recordDeleted => 'ریکارڈ حذف کر دیا گیا۔';
 
   @override
-  String get recordDeleteFailed => 'Failed to حذف کریں record.';
+  String get recordDeleteFailed => 'ریکارڈ حذف کرنے میں ناکام۔';
 
   @override
   String get medicalRecordsTitle => 'طبی ریکارڈ';
@@ -2799,7 +2801,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get back => 'واپس';
 
   @override
-  String get triageFailed => 'ٹرائج analysis failed. Please try again.';
+  String get triageFailed =>
+      'ٹریاژ تجزیہ ناکام ہو گیا۔ براہِ کرم دوبارہ کوشش کریں۔';
 
   @override
   String get symptomFever => 'بخار';
@@ -2861,4 +2864,17 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'نہیں previous purchases found to rبحال کریں';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

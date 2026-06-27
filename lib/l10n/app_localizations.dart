@@ -5310,6 +5310,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No previous purchases found to restore.'**
   String get noPurchasesToRestore;
+
+  /// No description provided for @failedToCompleteOnboarding.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to complete onboarding. Please check your connection and try again.'**
+  String get failedToCompleteOnboarding;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get fieldRequired;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get somethingWentWrong;
+
+  /// No description provided for @securitySettingsOnThisPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Security settings are on this page'**
+  String get securitySettingsOnThisPage;
 }
 
 class _AppLocalizationsDelegate

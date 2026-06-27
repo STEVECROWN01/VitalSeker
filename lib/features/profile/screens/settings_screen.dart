@@ -111,7 +111,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   );
                   return;
                 }
-                if (newPasswordController.text.length < 6) {
+                if (newPasswordController.text.length < 8) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(l10n.passwordMinLength)),
                   );
@@ -471,7 +471,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   iconFg: AppColors.error(isDark),
                   label: l10n.securityStorage,
                   subtitle: l10n.aes256EncryptionActive,
-                  onTap: () => context.push(AppConfig.privacyPolicy),
+                  onTap: () => AppSnackBar.info(context, l10n.securitySettingsOnThisPage),
                 ),
                 _SettingsTile(
                   icon: Icons.download_outlined,

@@ -740,7 +740,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get purchasesRestored => 'Compras restauradas.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Restaurar purchases.';
+  String get failedToRestorePurchases =>
+      'Não foi possível restaurar as compras.';
 
   @override
   String get contactSalesEnterprise =>
@@ -804,7 +805,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Suporte request. Please try again or E-mail support@vitalseker.com.';
+      'Não foi possível enviar o pedido de assistência. Por favor, tente novamente ou envie um e-mail para support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -917,7 +918,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Adicionar Família member. Please try again.';
+      'Não foi possível adicionar o membro da família. Por favor, tente novamente.';
 
   @override
   String get removeFamilyMember => 'Remover membro da família';
@@ -935,7 +936,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Remover Família member. Please try again.';
+      'Não foi possível remover o membro da família. Por favor, tente novamente.';
 
   @override
   String get fullNameLabel => 'Full Nome';
@@ -1033,7 +1034,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get medicationDeleted => 'Medicação eliminada';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Excluir medication.';
+  String get failedToDeleteMedication =>
+      'Não foi possível eliminar o medicamento.';
 
   @override
   String get editDetails => 'Editar detalhes';
@@ -1096,7 +1098,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appointmentCancelled => 'Consulta cancelada';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Cancelar appointment.';
+  String get failedToCancelAppointment =>
+      'Não foi possível cancelar a marcação.';
 
   @override
   String get selectNewDate => 'Select new Data';
@@ -1125,7 +1128,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appointmentDeleted => 'Marcação eliminada';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Excluir appointment.';
+  String get failedToDeleteAppointment =>
+      'Não foi possível eliminar o compromisso.';
 
   @override
   String get reschedule => 'Reagendar';
@@ -1927,7 +1931,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Histórico';
+  String get failedLoadHistory => 'Não foi possível carregar o histórico';
 
   @override
   String thisMonthCount(int count) {
@@ -2222,14 +2226,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get avatarRemoveFailed =>
-      'Failed to Remover avatar. Please try again.';
+      'Não foi possível remover o avatar. Por favor, tente novamente.';
 
   @override
   String get profileUpdatedSuccessfully => 'Perfil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pPerfil Please try again.';
+      'Não foi possível atualizar o perfil. Por favor, tente novamente.';
 
   @override
   String get editProfileTitle => 'Editar Perfil';
@@ -2381,7 +2385,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Sinais vitais';
+  String get failedToLoadVitals => 'Não foi possível carregar os sinais vitais';
 
   @override
   String get noVitalsYet => 'Sem sinais vitais registrados';
@@ -2450,7 +2454,8 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Guardar vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Não foi possível guardar os dados essenciais. Por favor, tente novamente.';
 
   @override
   String get vitalsHistoryTitle => 'Sinais vitais Histórico';
@@ -2555,7 +2560,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Adicionar medication. Please try again.';
+      'Não foi possível adicionar o medicamento. Por favor, tente novamente.';
 
   @override
   String get addAppointmentTitle => 'Adicionar Appointment';
@@ -2660,7 +2665,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get recordUpdateFailed => 'Falha ao atualizar registro.';
 
   @override
-  String get recordAddFailed => 'Failed to Adicionar record.';
+  String get recordAddFailed => 'Não foi possível adicionar o registo.';
 
   @override
   String get deleteRecordTitle => 'Excluir Record';
@@ -2674,7 +2679,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get recordDeleted => 'Registro excluído.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Excluir record.';
+  String get recordDeleteFailed => 'Não foi possível eliminar o registo.';
 
   @override
   String get medicalRecordsTitle => 'Registros médicos';
@@ -2805,7 +2810,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get back => 'Voltar';
 
   @override
-  String get triageFailed => 'Triagem analysis failed. Please try again.';
+  String get triageFailed =>
+      'A análise de triagem falhou. Por favor, tente novamente.';
 
   @override
   String get symptomFever => 'Febre';
@@ -2867,4 +2873,17 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Não previous purchases found to rRestaurar';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

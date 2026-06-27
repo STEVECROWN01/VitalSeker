@@ -985,6 +985,110 @@ class _PreviewDocument extends StatelessWidget {
   String get _patientDob => previewData['patient']?['date_of_birth'] ?? '—';
   int get _vitalScore => previewData['health_passport']?['vital_score'] ?? 0;
 
+  /// Symptom history entries returned by the export-pdf edge function
+  /// (each entry has `date`, `symptoms`, `severity`, `triage_result`,
+  /// `recommendation`). Returns an empty list when no data is available
+  /// so the preview can show a localized empty placeholder instead of the
+  /// previous hardcoded "Tension Headache" / "Mild Fatigue" mock rows.
+  List<Map<String, dynamic>> get _symptomHistory {
+    final raw = previewData['symptom_history'];
+    if (raw is! List) return const [];
+    return raw
+        .whereType<Map<String, dynamic>>()
+        .toList(growable: false);
+  }
+
+  /// Format an ISO timestamp ("2024-10-12T..." ) as a short "MMM DD" label
+  /// for the preview table. Falls back to '—' on parse failure.
+  static const _shortMonths = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  ];
+
+  String _formatPreviewDate(dynamic value) {
+    if (value == null) return '—';
+    if (value is! String) return '—';
+    final dt = DateTime.tryParse(value);
+    if (dt == null) return '—';
+    final m = (dt.month >= 1 && dt.month <= 12) ? _shortMonths[dt.month - 1] : '—';
+    return '$m ${dt.day.toString().padLeft(2, '0')}';
+  }
+
+  /// Render the `symptoms` field (a List<String> in the DB schema, but the
+  /// edge function may also return a single String) as a comma-separated
+  /// label. Falls back to '—'.
+  String _formatSymptoms(dynamic value) {
+    if (value == null) return '—';
+    if (value is List) {
+      final items = value.whereType<String>().where((s) => s.isNotEmpty).toList();
+      return items.isEmpty ? '—' : items.join(', ');
+    }
+    if (value is String) return value.isEmpty ? '—' : value;
+    return '—';
+  }
+
+  /// Map the triage result to a short label. The edge function returns
+  /// either a structured TriageResult (Map with `urgencyLevel` /
+  /// `urgency_level` / `seekCare`) or a plain string. We pick the most
+  /// informative available field and fall back to '—'.
+  String _triageLabel(dynamic triageResult) {
+    final level = _extractUrgencyLevel(triageResult);
+    switch (level) {
+      case 'low':
+        return l10n.selfCareRecommended;
+      case 'medium':
+        return l10n.scheduleAppointmentCare;
+      case 'high':
+        return l10n.visitUrgentCare;
+      case 'emergency':
+        return l10n.seekEmergencyCare;
+      default:
+        return '—';
+    }
+  }
+
+  /// Color for the triage label, mirroring the urgency palette used
+  /// elsewhere in the app.
+  Color _triageColor(dynamic triageResult) {
+    final level = _extractUrgencyLevel(triageResult);
+    switch (level) {
+      case 'low':
+        return const Color(0xFF2B6953);
+      case 'medium':
+        return const Color(0xFF005F46);
+      case 'high':
+        return const Color(0xFFB45309);
+      case 'emergency':
+        return const Color(0xFFB91C1C);
+      default:
+        return const Color(0xFF2B6953);
+    }
+  }
+
+  /// Normalize various triage urgency representations to one of
+  /// `low`/`medium`/`high`/`emergency`. Returns null when unknown.
+  String? _extractUrgencyLevel(dynamic triageResult) {
+    String? raw;
+    if (triageResult is String) {
+      raw = triageResult;
+    } else if (triageResult is Map) {
+      raw = (triageResult['urgencyLevel'] ??
+              triageResult['urgency_level'] ??
+              triageResult['seekCare'])
+          ?.toString();
+    }
+    if (raw == null || raw.isEmpty) return null;
+    final lower = raw.toLowerCase();
+    if (lower.contains('emergency') || lower.contains('red')) return 'emergency';
+    if (lower.contains('high') || lower.contains('yellow') ||
+        lower.contains('urgent')) return 'high';
+    if (lower.contains('medium') || lower.contains('appointment')) return 'medium';
+    if (lower.contains('low') || lower.contains('green') ||
+        lower.contains('self-care') || lower.contains('self_care') ||
+        lower.contains('routine')) return 'low';
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -1314,19 +1418,28 @@ class _PreviewDocument extends StatelessWidget {
                         ],
                       ),
                     ),
-                    _PreviewSymptomRow(
-                      date: 'Oct 12',
-                      symptom: 'Tension Headache',
-                      triage: 'Routine',
-                      triageColor: const Color(0xFF2B6953),
-                    ),
-                    _PreviewSymptomRow(
-                      date: 'Oct 14',
-                      symptom: 'Mild Fatigue',
-                      triage: 'Observation',
-                      triageColor: const Color(0xFF005F46),
-                      shaded: true,
-                    ),
+                    // Symptom rows — render from real preview data when
+                    // available; otherwise show a single localized empty
+                    // placeholder row instead of the previous hardcoded
+                    // "Tension Headache" / "Mild Fatigue" mock entries.
+                    if (_symptomHistory.isEmpty)
+                      _PreviewSymptomRow(
+                        date: '—',
+                        symptom: l10n.noSymptomsLogs,
+                        triage: '—',
+                        triageColor: const Color(0xFF2B6953),
+                      )
+                    else
+                      ..._symptomHistory.take(2).toList().asMap().entries.map((entry) {
+                        final log = entry.value;
+                        return _PreviewSymptomRow(
+                          date: _formatPreviewDate(log['date']),
+                          symptom: _formatSymptoms(log['symptoms']),
+                          triage: _triageLabel(log['triage_result']),
+                          triageColor: _triageColor(log['triage_result']),
+                          shaded: entry.key.isOdd,
+                        );
+                      }),
                   ],
                 ),
               ),

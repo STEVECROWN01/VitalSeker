@@ -490,7 +490,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get areYouSureSignOut => 'እርግጠኛ ነህ ዘግተህ መውጣት ትፈልጋለህ?';
 
   @override
-  String get failedToSignOut => 'ወደቀ to sign out. Please try again.';
+  String get failedToSignOut => 'መውጣት አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get vitalsLogged => 'ህይወት ምልክቶች Logged';
@@ -578,8 +578,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get passwordUpdatedSuccessfully => 'የይለፊ ቃል updated successfully';
 
   @override
-  String get failedToUpdatePassword =>
-      'ወደቀ to update password. Please try again.';
+  String get failedToUpdatePassword => 'የይለፍ ቃል ማዘመን አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get deleteAccountIrreversible =>
@@ -590,7 +589,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'ወደቀ to delete account. Please try again or contact support.';
+      'መለያ መሰረዝ አልተሳካም።እባክዎ እንደገና ይሞክሩ ወይም ድጋፍን ያግኙ።';
 
   @override
   String get manageYourSubscription => 'የደንበኝነት ምዝገባዎን ያስተዳድሩ';
@@ -728,7 +727,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'ወደቀ to update subscription. Please try again.';
+      'የደንበኝነት ምዝገባን ማዘመን አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get purchasesRestored => 'ግዢዎች ወደነበሩበት ተመልሰዋል።';
@@ -794,7 +793,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'ወደቀ to submit support request. Please try again or email support@vitalseker.com.';
+      'የድጋፍ ጥያቄ ማቅረብ አልተሳካም።እባክዎ እንደገና ይሞክሩ ወይም support@vitalseker.com ኢሜይል ያድርጉ።';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -903,7 +902,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get familyMemberAdded => 'ቤተሰብ member added!';
 
   @override
-  String get failedToAddFamily => 'ወደቀ to add family member. Please try again.';
+  String get failedToAddFamily => 'የቤተሰብ አባል ማከል አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get removeFamilyMember => 'አስወግድ ቤተሰብ Member';
@@ -920,8 +919,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get familyMemberRemoved => 'ቤተሰብ member removed';
 
   @override
-  String get failedToRemoveFamily =>
-      'ወደቀ to remove family member. Please try again.';
+  String get failedToRemoveFamily => 'የቤተሰብ አባልን ማስወገድ አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get fullNameLabel => 'Full ስም';
@@ -1611,7 +1609,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. ስህተት: $error';
+    return 'ይቅርታ፣ ምልክቶችህን በመተንተን ላይ ስህተት አጋጥሞኛል።እባክዎ እንደገና ይሞክሩ ወይም ምልክቶችዎን በተለየ መንገድ ይግለጹ።\n\nስህተት፡ $error';
   }
 
   @override
@@ -2185,19 +2183,19 @@ class AppLocalizationsAm extends AppLocalizations {
   String get avatarUpdated => 'አምሳያ ዘምኗል!';
 
   @override
-  String get avatarUploadFailed => 'ወደቀ to upload avatar. Please try again.';
+  String get avatarUploadFailed => 'አምሳያ መስቀል አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get avatarRemoved => 'አምሳያ ተወግዷል።';
 
   @override
-  String get avatarRemoveFailed => 'ወደቀ to remove avatar. Please try again.';
+  String get avatarRemoveFailed => 'አምሳያውን ማስወገድ አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get profileUpdatedSuccessfully => 'መገለጫ updated successfully!';
 
   @override
-  String get profileUpdateFailed => 'ወደቀ to update profile. Please try again.';
+  String get profileUpdateFailed => 'መገለጫን ማዘመን አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get editProfileTitle => 'አርትዕ መገለጫ';
@@ -2415,7 +2413,7 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'ወደቀ to አስቀምጥ vital. Please try again.';
+  String get vitalSaveFailed => 'አስፈላጊ ማስቀመጥ አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get vitalsHistoryTitle => 'ህይወት ምልክቶች ታሪክ';
@@ -2517,7 +2515,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get medicationAddedSuccessfully => 'መድሃኒት በተሳካ ሁኔታ ታክሏል!';
 
   @override
-  String get medicationAddFailed => 'ወደቀ to add medication. Please try again.';
+  String get medicationAddFailed => 'መድሃኒት ማከል አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get addAppointmentTitle => 'ጨምር Appointment';
@@ -2544,8 +2542,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get appointmentScheduledSuccessfully => 'ቀጠሮ በተሳካ ሁኔታ ተይዟል!';
 
   @override
-  String get appointmentScheduleFailed =>
-      'ወደቀ to schedule appointment. Please try again.';
+  String get appointmentScheduleFailed => 'ቀጠሮ ማስያዝ አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get specialtyCardiologist => 'የልብ ሐኪም';
@@ -2578,7 +2575,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get specialtyOther => 'ሌላ';
 
   @override
-  String get recordsLoadFailed => 'ወደቀ to ጫን records. Please try again.';
+  String get recordsLoadFailed => 'መዝገቦችን መጫን አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get notAvailable => 'N/A';
@@ -2762,7 +2759,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get back => 'ተመለስ';
 
   @override
-  String get triageFailed => 'ትሪያጅ analysis failed. Please try again.';
+  String get triageFailed => 'የመለያየት ትንተና አልተሳካም።እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get symptomFever => 'ትኩሳት';
@@ -2823,4 +2820,17 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'ምንም previous purchases found to restore.';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

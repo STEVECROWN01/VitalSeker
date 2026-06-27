@@ -737,7 +737,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get purchasesRestored => 'การซื้อคืนแล้ว';
 
   @override
-  String get failedToRestorePurchases => 'Failed to กู้คืน purchases.';
+  String get failedToRestorePurchases => 'ไม่สามารถกู้คืนการซื้อได้';
 
   @override
   String get contactSalesEnterprise =>
@@ -800,7 +800,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit สนับสนุน request. Please try again or อีเมล support@vitalseker.com.';
+      'ไม่สามารถส่งคำขอความช่วยเหลือได้ กรุณาลองอีกครั้งหรือส่งอีเมลไปที่ support@vitalseker.com';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -913,7 +913,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to เพิ่ม ครอบครัว member. Please try again.';
+      'ไม่สามารถเพิ่มสมาชิกในครอบครัวได้ กรุณาลองอีกครั้ง';
 
   @override
   String get removeFamilyMember => 'ลบสมาชิกครอบครัว';
@@ -931,7 +931,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to ลบ ครอบครัว member. Please try again.';
+      'ไม่สามารถลบสมาชิกในครอบครัวได้ กรุณาลองอีกครั้ง';
 
   @override
   String get fullNameLabel => 'Full ชื่อ';
@@ -1027,7 +1027,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get medicationDeleted => 'ยาถูกลบ';
 
   @override
-  String get failedToDeleteMedication => 'Failed to ลบ medication.';
+  String get failedToDeleteMedication => 'ไม่สามารถลบยาได้';
 
   @override
   String get editDetails => 'แก้ไขรายละเอียด';
@@ -1091,7 +1091,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get appointmentCancelled => 'ยกเลิกการนัดหมาย';
 
   @override
-  String get failedToCancelAppointment => 'Failed to ยกเลิก appointment.';
+  String get failedToCancelAppointment => 'ไม่สามารถยกเลิกนัดหมายได้';
 
   @override
   String get selectNewDate => 'Select new วันที่';
@@ -1120,7 +1120,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get appointmentDeleted => 'การนัดหมายถูกลบ';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to ลบ appointment.';
+  String get failedToDeleteAppointment => 'ไม่สามารถลบการนัดหมายได้';
 
   @override
   String get reschedule => 'นัดใหม่';
@@ -1920,7 +1920,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load ประวัติ';
+  String get failedLoadHistory => 'ไม่สามารถโหลดประวัติได้';
 
   @override
   String thisMonthCount(int count) {
@@ -2214,14 +2214,14 @@ class AppLocalizationsTh extends AppLocalizations {
   String get avatarRemoved => 'อวตารถูกลบแล้ว';
 
   @override
-  String get avatarRemoveFailed => 'Failed to ลบ avatar. Please try again.';
+  String get avatarRemoveFailed => 'ไม่สามารถลบอวาตาร์ได้ กรุณาลองอีกครั้ง';
 
   @override
   String get profileUpdatedSuccessfully => 'โปรไฟล์ updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pโปรไฟล์ Please try again.';
+      'ไม่สามารถอัปเดตโปรไฟล์ได้ กรุณาลองอีกครั้ง';
 
   @override
   String get editProfileTitle => 'แก้ไข โปรไฟล์';
@@ -2373,7 +2373,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load สัญญาณชีพ';
+  String get failedToLoadVitals => 'ไม่สามารถโหลดข้อมูลสำคัญได้';
 
   @override
   String get noVitalsYet => 'ยังไม่มีสัญญาณชีพที่บันทึก';
@@ -2441,7 +2441,8 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to บันทึก vital. Please try again.';
+  String get vitalSaveFailed =>
+      'ไม่สามารถบันทึกข้อมูลสำคัญได้ กรุณาลองอีกครั้ง';
 
   @override
   String get vitalsHistoryTitle => 'สัญญาณชีพ ประวัติ';
@@ -2543,8 +2544,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get medicationAddedSuccessfully => 'เพิ่มยาสำเร็จแล้ว!';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to เพิ่ม medication. Please try again.';
+  String get medicationAddFailed => 'ไม่สามารถเพิ่มยาได้ กรุณาลองอีกครั้ง';
 
   @override
   String get addAppointmentTitle => 'เพิ่ม Appointment';
@@ -2648,7 +2648,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get recordUpdateFailed => 'ไม่สามารถอัปเดตบันทึกได้';
 
   @override
-  String get recordAddFailed => 'Failed to เพิ่ม record.';
+  String get recordAddFailed => 'ไม่สามารถเพิ่มบันทึกได้';
 
   @override
   String get deleteRecordTitle => 'ลบ Record';
@@ -2662,7 +2662,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get recordDeleted => 'บันทึกถูกลบแล้ว';
 
   @override
-  String get recordDeleteFailed => 'Failed to ลบ record.';
+  String get recordDeleteFailed => 'ไม่สามารถลบข้อมูลได้';
 
   @override
   String get medicalRecordsTitle => 'บันทึกทางการแพทย์';
@@ -2792,7 +2792,8 @@ class AppLocalizationsTh extends AppLocalizations {
   String get back => 'ย้อนกลับ';
 
   @override
-  String get triageFailed => 'การคัดกรอง analysis failed. Please try again.';
+  String get triageFailed =>
+      'การวิเคราะห์การคัดแยกผู้ป่วยล้มเหลว กรุณาลองอีกครั้ง';
 
   @override
   String get symptomFever => 'ไข้';
@@ -2853,4 +2854,17 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'ไม่ previous purchases found to rกู้คืน';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

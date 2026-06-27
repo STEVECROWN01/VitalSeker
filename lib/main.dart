@@ -10,6 +10,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
+import 'core/services/offline_cache_service.dart';
 import 'core/services/supabase_service.dart';
 import 'core/router/app_router.dart';
 import 'core/providers/theme_provider.dart';
@@ -29,6 +30,11 @@ void main() async {
   // "Mode Hors-Ligne — Triage de base et passeport complet accessibles sans
   // internet"). Hive caches the health passport + symptom history locally.
   await Hive.initFlutter();
+
+  // Open all Hive boxes for offline caching (passport, symptom logs, profile,
+  // pending triage queue, vitals). Without this call, OfflineCacheService
+  // methods silently no-op because the boxes are never opened.
+  await OfflineCacheService().initialize();
 
   // Initialize OneSignal for push notifications (per Cahier des Charges
   // Section 3: "Notifications — OneSignal — Push notifications, rappels,

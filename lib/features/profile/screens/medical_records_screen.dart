@@ -6,6 +6,7 @@ import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 enum RecordType { all, labResults, prescriptions, imaging, other }
 
@@ -216,7 +217,10 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
               onPressed: isSaving
                   ? null
                   : () async {
-                      if (titleController.text.trim().isEmpty) return;
+                      if (titleController.text.trim().isEmpty) {
+                        AppSnackBar.error(context, l10n.fieldRequired);
+                        return;
+                      }
                       final user = ref.read(currentUserProvider);
                       if (user == null) return;
 
@@ -528,6 +532,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                       ),
                     ),
 
+                  const SliverToBoxAdapter(child: MedicalDisclaimerBanner(compact: true)),
                   const SliverToBoxAdapter(child: SizedBox(height: 80)),
                 ],
               ),

@@ -584,7 +584,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pSalasana Please try again.';
+      'Salasanan päivittäminen epäonnistui. Yritä uudelleen.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -595,7 +595,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Poista account. Please try again or contact sTuki';
+      'Tilin poistaminen epäonnistui. Yritä uudelleen tai ota yhteyttä tukeen.';
 
   @override
   String get manageYourSubscription => 'Hallinnoi tilaustasi';
@@ -740,7 +740,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get purchasesRestored => 'Ostokset on palautettu.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Palauta purchases.';
+  String get failedToRestorePurchases => 'Ostosten palauttaminen epäonnistui.';
 
   @override
   String get contactSalesEnterprise => 'Contact sales for custom Yritys Ehdot';
@@ -804,7 +804,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Tuki request. Please try again or Sähköposti support@vitalseker.com.';
+      'Tukipyyntöä ei voitu lähettää. Yritä uudelleen tai lähetä sähköpostia osoitteeseen support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -917,7 +917,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Lisää Perhe member. Please try again.';
+      'Perheenjäsenen lisääminen epäonnistui. Yritä uudelleen.';
 
   @override
   String get removeFamilyMember => 'Poista Perhe Member';
@@ -935,7 +935,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Poista Perhe member. Please try again.';
+      'Perheenjäsenen poistaminen epäonnistui. Yritä uudelleen.';
 
   @override
   String get fullNameLabel => 'Full Nimi';
@@ -1033,7 +1033,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get medicationDeleted => 'Lääke poistettu';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Poista medication.';
+  String get failedToDeleteMedication => 'Lääkkeen poistaminen epäonnistui.';
 
   @override
   String get editDetails => 'Muokkaa Details';
@@ -1097,7 +1097,8 @@ class AppLocalizationsFi extends AppLocalizations {
   String get appointmentCancelled => 'Tapaaminen peruutettu';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Peruuta appointment.';
+  String get failedToCancelAppointment =>
+      'Ajanvarauksen peruuttaminen epäonnistui.';
 
   @override
   String get selectNewDate => 'Select new Päivä';
@@ -1126,7 +1127,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get appointmentDeleted => 'Tapaaminen poistettu';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Poista appointment.';
+  String get failedToDeleteAppointment => 'Tapaamisen poistaminen epäonnistui.';
 
   @override
   String get reschedule => 'Siirrä ajankohtaa';
@@ -1172,7 +1173,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Tallenna notification setting';
+      'Ilmoitusasetusten tallennus epäonnistui';
 
   @override
   String get keyFeatures => 'Tärkeimmät ominaisuudet';
@@ -1931,7 +1932,7 @@ class AppLocalizationsFi extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Historia';
+  String get failedLoadHistory => 'Historiaa ei voitu ladata';
 
   @override
   String thisMonthCount(int count) {
@@ -2226,14 +2227,15 @@ class AppLocalizationsFi extends AppLocalizations {
   String get avatarRemoved => 'Avatar on poistettu.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Poista avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'Avatarin poistaminen epäonnistui. Yritä uudelleen.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profiili updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfiili Please try again.';
+      'Profiilin päivittäminen epäonnistui. Yritä uudelleen.';
 
   @override
   String get editProfileTitle => 'Muokkaa Profiili';
@@ -2385,7 +2387,7 @@ class AppLocalizationsFi extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Elinkummit';
+  String get failedToLoadVitals => 'Elintoimintojen tietoja ei voitu ladata';
 
   @override
   String get noVitalsYet => 'Ei Elinkummit Yet';
@@ -2453,7 +2455,8 @@ class AppLocalizationsFi extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Tallenna vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Tärkeiden tietojen tallennus epäonnistui. Yritä uudelleen.';
 
   @override
   String get vitalsHistoryTitle => 'Elinkummit Historia';
@@ -2557,7 +2560,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Lisää medication. Please try again.';
+      'Lääkkeen lisääminen epäonnistui. Yritä uudelleen.';
 
   @override
   String get addAppointmentTitle => 'Lisää Appointment';
@@ -2662,7 +2665,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get recordUpdateFailed => 'Tietueen päivittäminen epäonnistui.';
 
   @override
-  String get recordAddFailed => 'Failed to Lisää record.';
+  String get recordAddFailed => 'Tietueen lisääminen epäonnistui.';
 
   @override
   String get deleteRecordTitle => 'Poista Record';
@@ -2676,7 +2679,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get recordDeleted => 'Tietue poistettu.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Poista record.';
+  String get recordDeleteFailed => 'Tietuetta ei voitu poistaa.';
 
   @override
   String get medicalRecordsTitle => 'Potilastiedot';
@@ -2867,4 +2870,17 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'Ei previous purchases found to rPalauta';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

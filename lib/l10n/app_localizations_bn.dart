@@ -740,7 +740,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get purchasesRestored => 'ক্রয়গুলি পুনরুদ্ধার করা হয়েছে।';
 
   @override
-  String get failedToRestorePurchases => 'Failed to পুনরুদ্ধার purchases.';
+  String get failedToRestorePurchases =>
+      'ক্রয়গুলি পুনরুদ্ধার করতে ব্যর্থ হয়েছে।';
 
   @override
   String get contactSalesEnterprise =>
@@ -804,7 +805,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit সহায়তা request. Please try again or ইমেইল support@vitalseker.com.';
+      'সমর্থন অনুরোধ জমা দিতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন অথবা support@vitalseker.com-এ ইমেইল করুন।';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -917,7 +918,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to যোগ করুন পরিবার member. Please try again.';
+      'পরিবারের সদস্য যোগ করতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
   String get removeFamilyMember => 'পরিবারের সদস্য সরান';
@@ -935,7 +936,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to সরান পরিবার member. Please try again.';
+      'পরিবারের সদস্য অপসারণে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
   String get fullNameLabel => 'Full নাম';
@@ -1031,7 +1032,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get medicationDeleted => 'ঔষধ মুছে ফেলা হয়েছে';
 
   @override
-  String get failedToDeleteMedication => 'Failed to মুছুন medication.';
+  String get failedToDeleteMedication => 'ঔষধ মুছে ফেলাতে ব্যর্থ হয়েছে।';
 
   @override
   String get editDetails => 'বিস্তারিত সম্পাদনা';
@@ -1095,7 +1096,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get appointmentCancelled => 'অ্যাপয়েন্টমেন্ট বাতিল';
 
   @override
-  String get failedToCancelAppointment => 'Failed to বাতিল appointment.';
+  String get failedToCancelAppointment =>
+      'অ্যাপয়েন্টমেন্ট বাতিল করতে ব্যর্থ হয়েছে।';
 
   @override
   String get selectNewDate => 'Select new তারিখ';
@@ -1124,7 +1126,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get appointmentDeleted => 'নিয়োগ মুছে ফেলা হয়েছে';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to মুছুন appointment.';
+  String get failedToDeleteAppointment => 'অ্যাপয়েন্টমেন্ট মুছে ফেলা যায়নি।';
 
   @override
   String get reschedule => 'পুনঃনির্ধারণ';
@@ -1930,7 +1932,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load ইতিহাস';
+  String get failedLoadHistory => 'ইতিহাস লোড করতে ব্যর্থ হয়েছে';
 
   @override
   String thisMonthCount(int count) {
@@ -2224,14 +2226,15 @@ class AppLocalizationsBn extends AppLocalizations {
   String get avatarRemoved => 'অ্যাভাটার সরানো হয়েছে।';
 
   @override
-  String get avatarRemoveFailed => 'Failed to সরান avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'অ্যাভাটার মুছে ফেলা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
   String get profileUpdatedSuccessfully => 'প্রোফাইল updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pপ্রোফাইল Please try again.';
+      'প্রোফাইল আপডেট করতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
   String get editProfileTitle => 'সম্পাদনা প্রোফাইল';
@@ -2383,7 +2386,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load ভাইটালস';
+  String get failedToLoadVitals => 'ভিটালস লোড করতে ব্যর্থ';
 
   @override
   String get noVitalsYet => 'এখনও কোনো ভাইটাল লগ করা হয়নি';
@@ -2451,7 +2454,8 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to সংরক্ষণ vital. Please try again.';
+  String get vitalSaveFailed =>
+      'গুরুত্বপূর্ণ সংরক্ষণ করতে ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
   String get vitalsHistoryTitle => 'ভাইটালস ইতিহাস';
@@ -2555,7 +2559,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to যোগ করুন medication. Please try again.';
+      'ঔষধ যোগ করতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
   String get addAppointmentTitle => 'যোগ করুন Appointment';
@@ -2660,7 +2664,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get recordUpdateFailed => 'রেকর্ড আপডেট করতে ব্যর্থ হয়েছে।';
 
   @override
-  String get recordAddFailed => 'Failed to যোগ করুন record.';
+  String get recordAddFailed => 'রেকর্ড যোগ করতে ব্যর্থ হয়েছে।';
 
   @override
   String get deleteRecordTitle => 'মুছুন Record';
@@ -2674,7 +2678,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get recordDeleted => 'রেকর্ড মুছে ফেলা হয়েছে।';
 
   @override
-  String get recordDeleteFailed => 'Failed to মুছুন record.';
+  String get recordDeleteFailed => 'রেকর্ড মুছে ফেলা যায়নি।';
 
   @override
   String get medicalRecordsTitle => 'চিকিৎসা রেকর্ড';
@@ -2805,7 +2809,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get back => 'পিছনে';
 
   @override
-  String get triageFailed => 'ট্রায়েজ analysis failed. Please try again.';
+  String get triageFailed =>
+      'ট্রিয়াজ বিশ্লেষণ ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
 
   @override
   String get symptomFever => 'জ্বর';
@@ -2867,4 +2872,17 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'না previous purchases found to rপুনরুদ্ধার';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

@@ -733,13 +733,14 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Mislukt to update subscription. Please try again.';
+      'Het bijwerken van het abonnement is mislukt. Probeer het nog eens.';
 
   @override
   String get purchasesRestored => 'Aankopen zijn hersteld.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Herstellen purchases.';
+  String get failedToRestorePurchases =>
+      'Het herstellen van aankopen is mislukt.';
 
   @override
   String get contactSalesEnterprise =>
@@ -803,7 +804,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Ondersteuning request. Please try again or E-mail support@vitalseker.com.';
+      'Het indienen van het ondersteuningsverzoek is mislukt. Probeer het nog eens of stuur een e-mail naar support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -917,7 +918,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Toevoegen Familie member. Please try again.';
+      'Het toevoegen van het gezinslid is mislukt. Probeer het nog eens.';
 
   @override
   String get removeFamilyMember => 'Familielid verwijderen';
@@ -935,7 +936,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Verwijderen Familie member. Please try again.';
+      'Het verwijderen van het gezinslid is mislukt. Probeer het nog eens.';
 
   @override
   String get fullNameLabel => 'Full Naam';
@@ -1033,7 +1034,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get medicationDeleted => 'Medicatie verwijderd';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Verwijderen medication.';
+  String get failedToDeleteMedication =>
+      'Het verwijderen van het medicijn is mislukt.';
 
   @override
   String get editDetails => 'Details bewerken';
@@ -1096,7 +1098,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get appointmentCancelled => 'Afspraak geannuleerd';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Annuleren appointment.';
+  String get failedToCancelAppointment =>
+      'Het is niet gelukt om de afspraak te annuleren.';
 
   @override
   String get selectNewDate => 'Select new Datum';
@@ -1125,7 +1128,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get appointmentDeleted => 'Afspraak verwijderd';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Verwijderen appointment.';
+  String get failedToDeleteAppointment =>
+      'Het verwijderen van de afspraak is mislukt.';
 
   @override
   String get reschedule => 'Verzetten';
@@ -1637,7 +1641,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. Fout: $error';
+    return 'Het spijt me, er is een fout opgetreden bij het analyseren van uw symptomen. Probeer het nog eens of beschrijf uw symptomen op een andere manier.\n\nFout: $error';
   }
 
   @override
@@ -1929,7 +1933,7 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Geschiedenis';
+  String get failedLoadHistory => 'Het laden van de geschiedenis is mislukt';
 
   @override
   String thisMonthCount(int count) {
@@ -2217,21 +2221,21 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get avatarUploadFailed =>
-      'Mislukt to upload avatar. Please try again.';
+      'Het uploaden van de avatar is mislukt. Probeer het nog eens.';
 
   @override
   String get avatarRemoved => 'Avatar verwijderd.';
 
   @override
   String get avatarRemoveFailed =>
-      'Failed to Verwijderen avatar. Please try again.';
+      'Het verwijderen van de avatar is mislukt. Probeer het nog eens.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profiel updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfiel Please try again.';
+      'Het bijwerken van het profiel is mislukt. Probeer het nog eens.';
 
   @override
   String get editProfileTitle => 'Bewerken Profiel';
@@ -2384,7 +2388,8 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Vitale waarden';
+  String get failedToLoadVitals =>
+      'Het laden van de vitale functies is mislukt';
 
   @override
   String get noVitalsYet => 'Nog geen vitale waarden vastgelegd';
@@ -2452,7 +2457,8 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Opslaan vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Het opslaan van de essentiële gegevens is mislukt. Probeer het nog eens.';
 
   @override
   String get vitalsHistoryTitle => 'Vitale waarden Geschiedenis';
@@ -2557,7 +2563,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Toevoegen medication. Please try again.';
+      'Het toevoegen van het medicijn is mislukt. Probeer het nog eens.';
 
   @override
   String get addAppointmentTitle => 'Toevoegen Appointment';
@@ -2586,7 +2592,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get appointmentScheduleFailed =>
-      'Mislukt to schedule appointment. Please try again.';
+      'Het is niet gelukt om een afspraak in te plannen. Probeer het nog eens.';
 
   @override
   String get specialtyCardiologist => 'Cardioloog';
@@ -2619,7 +2625,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get specialtyOther => 'Anders';
 
   @override
-  String get recordsLoadFailed => 'Mislukt to laden records. Please try again.';
+  String get recordsLoadFailed =>
+      'Het laden van de records is mislukt. Probeer het nog eens.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2661,7 +2668,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get recordUpdateFailed => 'Mislukt to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to Toevoegen record.';
+  String get recordAddFailed => 'Het toevoegen van het record is mislukt.';
 
   @override
   String get deleteRecordTitle => 'Verwijderen Record';
@@ -2675,7 +2682,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get recordDeleted => 'Record verwijderd.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Verwijderen record.';
+  String get recordDeleteFailed => 'Het verwijderen van het record is mislukt.';
 
   @override
   String get medicalRecordsTitle => 'Medische dossiers';
@@ -2868,4 +2875,17 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Nee previous purchases found to rHerstellen';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

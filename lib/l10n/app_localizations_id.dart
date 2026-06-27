@@ -741,7 +741,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get purchasesRestored => 'Pembelian telah dipulihkan.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Pulihkan purchases.';
+  String get failedToRestorePurchases => 'Gagal memulihkan pembelian.';
 
   @override
   String get contactSalesEnterprise =>
@@ -807,7 +807,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Dukungan request. Please try again or Email support@vitalseker.com.';
+      'Permintaan bantuan gagal dikirim. Silakan coba lagi atau kirim email ke support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -921,7 +921,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Tambah Keluarga member. Please try again.';
+      'Gagal menambahkan anggota keluarga. Silakan coba lagi.';
 
   @override
   String get removeFamilyMember => 'Hapus Anggota Keluarga';
@@ -939,7 +939,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Hapus Keluarga member. Please try again.';
+      'Gagal menghapus anggota keluarga. Silakan coba lagi.';
 
   @override
   String get fullNameLabel => 'Full Nama';
@@ -1037,7 +1037,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get medicationDeleted => 'Obat dihapus';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Hapus medication.';
+  String get failedToDeleteMedication => 'Gagal menghapus obat.';
 
   @override
   String get editDetails => 'Edit Detail';
@@ -1101,7 +1101,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get appointmentCancelled => 'Janji temu dibatalkan';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Batal appointment.';
+  String get failedToCancelAppointment => 'Gagal membatalkan janji temu.';
 
   @override
   String get selectNewDate => 'Select new Tanggal';
@@ -1130,7 +1130,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get appointmentDeleted => 'Janji temu telah dihapus';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Hapus appointment.';
+  String get failedToDeleteAppointment => 'Gagal menghapus janji temu.';
 
   @override
   String get reschedule => 'Jadwalkan Ulang';
@@ -1935,7 +1935,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Riwayat';
+  String get failedLoadHistory => 'Gagal memuat riwayat';
 
   @override
   String thisMonthCount(int count) {
@@ -2229,14 +2229,14 @@ class AppLocalizationsId extends AppLocalizations {
   String get avatarRemoved => 'Avatar telah dihapus.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Hapus avatar. Please try again.';
+  String get avatarRemoveFailed => 'Gagal menghapus avatar. Silakan coba lagi.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'Gagal memperbarui profil. Silakan coba lagi.';
 
   @override
   String get editProfileTitle => 'Edit Profil';
@@ -2389,7 +2389,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Tanda vital';
+  String get failedToLoadVitals => 'Gagal memuat data tanda-tanda vital';
 
   @override
   String get noVitalsYet => 'Belum ada tanda vital yang dicatat';
@@ -2458,7 +2458,8 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Simpan vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Gagal menyimpan data penting. Silakan coba lagi.';
 
   @override
   String get vitalsHistoryTitle => 'Tanda vital Riwayat';
@@ -2563,7 +2564,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Tambah medication. Please try again.';
+      'Gagal menambahkan obat. Silakan coba lagi.';
 
   @override
   String get addAppointmentTitle => 'Tambah Appointment';
@@ -2667,7 +2668,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get recordUpdateFailed => 'Gagal memperbarui catatan.';
 
   @override
-  String get recordAddFailed => 'Failed to Tambah record.';
+  String get recordAddFailed => 'Gagal menambahkan catatan.';
 
   @override
   String get deleteRecordTitle => 'Hapus Record';
@@ -2681,7 +2682,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get recordDeleted => 'Catatan telah dihapus.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Hapus record.';
+  String get recordDeleteFailed => 'Gagal menghapus catatan.';
 
   @override
   String get medicalRecordsTitle => 'Rekam medis';
@@ -2872,4 +2873,17 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Tidak previous purchases found to rPulihkan';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

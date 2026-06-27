@@ -494,7 +494,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get areYouSureSignOut => 'Je, una uhakika unataka kuondoka?';
 
   @override
-  String get failedToSignOut => 'Imeshindikana to sign out. Please try again.';
+  String get failedToSignOut => 'Umeshindwa kutoka. Tafadhali jaribu tena.';
 
   @override
   String get vitalsLogged => 'Ishara muhimu Logged';
@@ -584,7 +584,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pNenosiri Please try again.';
+      'Imeshindwa kusasisha nenosiri. Tafadhali jaribu tena.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -595,7 +595,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Futa account. Please try again or contact sMsaada';
+      'Haikuweza kufuta akaunti. Tafadhali jaribu tena au wasiliana na usaidizi.';
 
   @override
   String get manageYourSubscription => 'Dhibiti usajili wako';
@@ -734,13 +734,13 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Imeshindikana to update subscription. Please try again.';
+      'Imeshindwa kusasisha usajili. Tafadhali jaribu tena.';
 
   @override
   String get purchasesRestored => 'Ununuzi umerejeshwa.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Rejesha purchases.';
+  String get failedToRestorePurchases => 'Imeshindwa kurejesha manunuzi.';
 
   @override
   String get contactSalesEnterprise =>
@@ -803,7 +803,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Msaada request. Please try again or Barua pepe support@vitalseker.com.';
+      'Imeshindwa kuwasilisha ombi la usaidizi. Tafadhali jaribu tena au tuma barua pepe kwa support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -916,7 +916,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Ongeza Familia member. Please try again.';
+      'Imeshindwa kuongeza mwanachama wa familia. Tafadhali jaribu tena.';
 
   @override
   String get removeFamilyMember => 'Ondoa Familia Member';
@@ -934,7 +934,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Ondoa Familia member. Please try again.';
+      'Imeshindwa kuondoa mwanachama wa familia. Tafadhali jaribu tena.';
 
   @override
   String get fullNameLabel => 'Full Jina';
@@ -1031,7 +1031,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get medicationDeleted => 'Dawa imefutwa';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Futa medication.';
+  String get failedToDeleteMedication => 'Imeshindwa kufuta dawa.';
 
   @override
   String get editDetails => 'Hariri Details';
@@ -1096,7 +1096,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get appointmentCancelled => 'Uteuzi umeghairiwa';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Ghairi appointment.';
+  String get failedToCancelAppointment => 'Imeshindwa kufuta miadi.';
 
   @override
   String get selectNewDate => 'Select new Tarehe';
@@ -1125,7 +1125,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get appointmentDeleted => 'Uteuzi umefutwa';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Futa appointment.';
+  String get failedToDeleteAppointment => 'Imeshindwa kufuta miadi.';
 
   @override
   String get reschedule => 'Panga upya';
@@ -1171,7 +1171,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Hifadhi notification setting';
+      'Imeshindwa kuhifadhi mipangilio ya arifa';
 
   @override
   String get keyFeatures => 'Sifa Muhimu';
@@ -1632,7 +1632,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. Hitilafu: $error';
+    return 'Samahani, nimekumbana na hitilafu nikichambua dalili zako. Tafadhali jaribu tena au elezea dalili zako kwa njia tofauti.\n\nHitilafu: $error';
   }
 
   @override
@@ -1923,7 +1923,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Historia';
+  String get failedLoadHistory => 'Imeshindwa kupakia historia';
 
   @override
   String thisMonthCount(int count) {
@@ -2211,20 +2211,21 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get avatarUploadFailed =>
-      'Imeshindikana to upload avatar. Please try again.';
+      'Imeshindwa kupakia picha ya wasifu. Tafadhali jaribu tena.';
 
   @override
   String get avatarRemoved => 'Avatar imeondolewa.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Ondoa avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'Imeshindwa kuondoa avatari. Tafadhali jaribu tena.';
 
   @override
   String get profileUpdatedSuccessfully => 'Wasifu updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pWasifu Please try again.';
+      'Imeshindwa kusasisha wasifu. Tafadhali jaribu tena.';
 
   @override
   String get editProfileTitle => 'Hariri Wasifu';
@@ -2376,7 +2377,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Ishara muhimu';
+  String get failedToLoadVitals => 'Imeshindwa kupakia taarifa za msingi';
 
   @override
   String get noVitalsYet => 'Hapana Ishara muhimu Yet';
@@ -2444,7 +2445,8 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Hifadhi vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Imeshindwa kuhifadhi muhimu. Tafadhali jaribu tena.';
 
   @override
   String get vitalsHistoryTitle => 'Ishara muhimu Historia';
@@ -2548,7 +2550,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Ongeza medication. Please try again.';
+      'Imeshindwa kuongeza dawa. Tafadhali jaribu tena.';
 
   @override
   String get addAppointmentTitle => 'Ongeza Appointment';
@@ -2577,7 +2579,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get appointmentScheduleFailed =>
-      'Imeshindikana to schedule appointment. Please try again.';
+      'Imeshindwa kupanga miadi. Tafadhali jaribu tena.';
 
   @override
   String get specialtyCardiologist => 'Daktari wa moyo';
@@ -2611,7 +2613,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get recordsLoadFailed =>
-      'Imeshindikana to pakia records. Please try again.';
+      'Imeshindwa kupakia rekodi. Tafadhali jaribu tena.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2653,7 +2655,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get recordUpdateFailed => 'Imeshindikana to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to Ongeza record.';
+  String get recordAddFailed => 'Imeshindwa kuongeza rekodi.';
 
   @override
   String get deleteRecordTitle => 'Futa Record';
@@ -2667,7 +2669,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get recordDeleted => 'Rekodi imefutwa.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Futa record.';
+  String get recordDeleteFailed => 'Imeshindwa kufuta rekodi.';
 
   @override
   String get medicalRecordsTitle => 'Rekodi za matibabu';
@@ -2860,4 +2862,17 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Hapana previous purchases found to rRejesha';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

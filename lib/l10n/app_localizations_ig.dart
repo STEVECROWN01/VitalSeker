@@ -737,7 +737,7 @@ class AppLocalizationsIg extends AppLocalizations {
   String get purchasesRestored => 'eweghachiri azụrụ ahịa.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Weghachi purchases.';
+  String get failedToRestorePurchases => 'Enweghị ike iweghachite ihe e zụrụ.';
 
   @override
   String get contactSalesEnterprise => 'Contact sales for custom Ụlọ ọrụ Usoro';
@@ -801,7 +801,7 @@ class AppLocalizationsIg extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Nkwado request. Please try again or Email support@vitalseker.com.';
+      'Enweghị ike izipu arịrịọ nkwado. Biko gbalịa ọzọ ma ọ bụ zitere email na support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -914,7 +914,7 @@ class AppLocalizationsIg extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Tinye Ezinụlọ member. Please try again.';
+      'Ọ dịghị agbakwunye onye ezinụlọ. Biko gbalịa ọzọ.';
 
   @override
   String get removeFamilyMember => 'Wepu Onye Ezinụlọ';
@@ -932,7 +932,7 @@ class AppLocalizationsIg extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Wepu Ezinụlọ member. Please try again.';
+      'Ọ gaghị ekwe omume iwepụ onye ezinụlọ. Biko gbalịa ọzọ.';
 
   @override
   String get fullNameLabel => 'Full Aha';
@@ -1028,7 +1028,7 @@ class AppLocalizationsIg extends AppLocalizations {
   String get medicationDeleted => 'ehichapụrụ ọgwụ';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Hichapụ medication.';
+  String get failedToDeleteMedication => 'Ọ gaghị ekwe omume ihichapụ ọgwụ.';
 
   @override
   String get editDetails => 'Dezie nkọwa';
@@ -1091,7 +1091,7 @@ class AppLocalizationsIg extends AppLocalizations {
   String get appointmentCancelled => 'Akagbuola ọkwa';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Kagbuo appointment.';
+  String get failedToCancelAppointment => 'Enweghị ike ịkwụsị nnọkọ.';
 
   @override
   String get selectNewDate => 'Select new Ụbọchị';
@@ -1120,7 +1120,7 @@ class AppLocalizationsIg extends AppLocalizations {
   String get appointmentDeleted => 'ehichapụrụ ọkwa';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Hichapụ appointment.';
+  String get failedToDeleteAppointment => 'Enweghị ike ihichapụ nnọchite.';
 
   @override
   String get reschedule => 'Tegharịa';
@@ -1922,7 +1922,7 @@ class AppLocalizationsIg extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Akụkọ ihe mere eme';
+  String get failedLoadHistory => 'Enweghị ike ibudata akụkọ ihe mere eme';
 
   @override
   String thisMonthCount(int count) {
@@ -2215,14 +2215,14 @@ class AppLocalizationsIg extends AppLocalizations {
   String get avatarRemoved => 'Ewepụrụ avatar.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Wepu avatar. Please try again.';
+  String get avatarRemoveFailed => 'Enweghị ike iwepụ avatar. Biko gbalịa ọzọ.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profail updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfail Please try again.';
+      'Enweghị ike imelite profaịlụ. Biko gbalịa ọzọ.';
 
   @override
   String get editProfileTitle => 'Dezie Profail';
@@ -2374,7 +2374,7 @@ class AppLocalizationsIg extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Ihe dị mkpa';
+  String get failedToLoadVitals => 'Enweghị ike ibudata data ndụ';
 
   @override
   String get noVitalsYet => 'Ọ dịghị ihe dị mkpa edebere';
@@ -2442,7 +2442,8 @@ class AppLocalizationsIg extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Chekwa vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Enweghị ike ịchekwa ihe dị mkpa. Biko gbalịa ọzọ.';
 
   @override
   String get vitalsHistoryTitle => 'Ihe dị mkpa Akụkọ ihe mere eme';
@@ -2544,8 +2545,7 @@ class AppLocalizationsIg extends AppLocalizations {
   String get medicationAddedSuccessfully => 'Agbakwunyere ọgwụ nke ọma!';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to Tinye medication. Please try again.';
+  String get medicationAddFailed => 'Enweghị ike itinye ọgwụ. Biko gbalịa ọzọ.';
 
   @override
   String get addAppointmentTitle => 'Tinye Appointment';
@@ -2648,7 +2648,7 @@ class AppLocalizationsIg extends AppLocalizations {
   String get recordUpdateFailed => 'Imelite ndekọ agaghị eme.';
 
   @override
-  String get recordAddFailed => 'Failed to Tinye record.';
+  String get recordAddFailed => 'Enweghị ike itinye ndekọ.';
 
   @override
   String get deleteRecordTitle => 'Hichapụ Record';
@@ -2662,7 +2662,7 @@ class AppLocalizationsIg extends AppLocalizations {
   String get recordDeleted => 'ehichapụrụ ndekọ.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Hichapụ record.';
+  String get recordDeleteFailed => 'Enweghị ike ihichapụ ndekọ.';
 
   @override
   String get medicalRecordsTitle => 'Ihe ndekọ ahụike';
@@ -2854,4 +2854,17 @@ class AppLocalizationsIg extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Mba previous purchases found to rWeghachi';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

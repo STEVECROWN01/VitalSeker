@@ -155,7 +155,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                   fontSize: 15,
                   color: AppColors.textPrimary(isDark),
                 ),
-                validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
+                validator: (v) => v == null || v.trim().isEmpty ? l10n.fieldRequired : null,
               ),
               const SizedBox(height: 16),
 

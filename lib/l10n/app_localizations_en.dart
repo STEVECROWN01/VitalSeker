@@ -2855,6 +2855,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'No previous purchases found to restore.';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).

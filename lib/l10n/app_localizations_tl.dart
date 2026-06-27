@@ -748,7 +748,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get purchasesRestored => 'Na-restore ang mga pagbili.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Ibalik purchases.';
+  String get failedToRestorePurchases => 'Hindi naibalik ang mga binili.';
 
   @override
   String get contactSalesEnterprise =>
@@ -814,7 +814,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Suporta request. Please try again or Email support@vitalseker.com.';
+      'Hindi naipadala ang kahilingan para sa suporta. Mangyaring subukang muli o mag-email sa support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -928,7 +928,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Idagdag Pamilya member. Please try again.';
+      'Hindi nagawa idagdag ang miyembro ng pamilya. Mangyaring subukan muli.';
 
   @override
   String get removeFamilyMember => 'Tanggalin ang Miyembro ng Pamilya';
@@ -946,7 +946,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Alisin Pamilya member. Please try again.';
+      'Hindi natanggal ang miyembro ng pamilya. Mangyaring subukan muli.';
 
   @override
   String get fullNameLabel => 'Full Pangalan';
@@ -1043,7 +1043,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get medicationDeleted => 'Tinanggal ang gamot';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Tanggalin medication.';
+  String get failedToDeleteMedication => 'Hindi natanggal ang gamot.';
 
   @override
   String get editDetails => 'I-edit ang mga Detalye';
@@ -1108,7 +1108,8 @@ class AppLocalizationsTl extends AppLocalizations {
   String get appointmentCancelled => 'Kinansela ang appointment';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Kanselahin appointment.';
+  String get failedToCancelAppointment =>
+      'Hindi nagawa kanselahin ang appointment.';
 
   @override
   String get selectNewDate => 'Select new Petsa';
@@ -1137,7 +1138,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get appointmentDeleted => 'Tinanggal ang appointment';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Tanggalin appointment.';
+  String get failedToDeleteAppointment => 'Hindi matanggal ang appointment.';
 
   @override
   String get reschedule => 'I-schedule muli';
@@ -1946,7 +1947,7 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Kasaysayan';
+  String get failedLoadHistory => 'Hindi na-load ang kasaysayan';
 
   @override
   String thisMonthCount(int count) {
@@ -2241,7 +2242,8 @@ class AppLocalizationsTl extends AppLocalizations {
   String get avatarRemoved => 'Inalis ang avatar.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Alisin avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'Hindi natanggal ang avatar. Mangyaring subukan muli.';
 
   @override
   String get profileUpdatedSuccessfully =>
@@ -2249,7 +2251,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfile Please try again.';
+      'Hindi na-update ang profile. Mangyaring subukan muli.';
 
   @override
   String get editProfileTitle => 'I-edit Profile';
@@ -2401,7 +2403,7 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Mga vital sign';
+  String get failedToLoadVitals => 'Hindi na-load ang mga vital sign.';
 
   @override
   String get noVitalsYet => 'Wala pang naitalang vital';
@@ -2470,7 +2472,8 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to I-save vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Hindi naisave ang mahalagang datos. Mangyaring subukan muli.';
 
   @override
   String get vitalsHistoryTitle => 'Mga vital sign Kasaysayan';
@@ -2575,7 +2578,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Idagdag medication. Please try again.';
+      'Hindi nagawa idagdag ang gamot. Mangyaring subukan muli.';
 
   @override
   String get addAppointmentTitle => 'Idagdag Appointment';
@@ -2680,7 +2683,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get recordUpdateFailed => 'Nabigong i-update ang tala.';
 
   @override
-  String get recordAddFailed => 'Failed to Idagdag record.';
+  String get recordAddFailed => 'Hindi naidagdag ang talaan.';
 
   @override
   String get deleteRecordTitle => 'Tanggalin Record';
@@ -2694,7 +2697,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get recordDeleted => 'Tinanggal ang record.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Tanggalin record.';
+  String get recordDeleteFailed => 'Hindi nagawa burahin ang tala.';
 
   @override
   String get medicalRecordsTitle => 'Mga rekord medikal';
@@ -2887,4 +2890,17 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Hindi previous purchases found to rIbalik';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

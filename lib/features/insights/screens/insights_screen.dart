@@ -11,6 +11,7 @@ import '../../../core/providers/subscription_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 /// Weekly Insights screen — redesigned to match the Google Stitch UI design.
 ///
@@ -148,6 +149,7 @@ class InsightsScreen extends ConsumerWidget {
                                 ))
                             .toList(),
                       ),
+                      const MedicalDisclaimerBanner(compact: true),
                       const SizedBox(height: 80),
                     ],
                   ),

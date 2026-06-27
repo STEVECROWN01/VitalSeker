@@ -737,7 +737,8 @@ class AppLocalizationsHa extends AppLocalizations {
   String get purchasesRestored => 'An dawo da sayayya.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Maida purchases.';
+  String get failedToRestorePurchases =>
+      'An gaza dawo da abubuwan da aka saya.';
 
   @override
   String get contactSalesEnterprise =>
@@ -802,7 +803,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Gojo request. Please try again or Imel support@vitalseker.com.';
+      'An gaza tura buƙatar tallafi. Don Allah ku sake gwadawa ko ku aiko imel zuwa support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -915,7 +916,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Ƙara Iyali member. Please try again.';
+      'Ba a sami nasarar ƙara memban iyali ba. Don Allah ku sake gwadawa.';
 
   @override
   String get removeFamilyMember => 'Cire memba na iyali';
@@ -933,7 +934,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Cire Iyali member. Please try again.';
+      'An gaza cire memba na iyali. Don Allah ku sake gwadawa.';
 
   @override
   String get fullNameLabel => 'Full Suna';
@@ -1029,7 +1030,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get medicationDeleted => 'An share magani';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Goge medication.';
+  String get failedToDeleteMedication => 'Ba a iya goge magani ba.';
 
   @override
   String get editDetails => 'Gyara bayanai';
@@ -1093,7 +1094,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get appointmentCancelled => 'An soke alƙawari';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Soke appointment.';
+  String get failedToCancelAppointment => 'Ba a yi nasarar soke alƙawari ba.';
 
   @override
   String get selectNewDate => 'Select new Kwanan wata';
@@ -1121,7 +1122,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get appointmentDeleted => 'An share alƙawari';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Goge appointment.';
+  String get failedToDeleteAppointment => 'Ba a iya goge alƙawari ba.';
 
   @override
   String get reschedule => 'Sake tsara';
@@ -1922,7 +1923,7 @@ class AppLocalizationsHa extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Tarihi';
+  String get failedLoadHistory => 'An gaza loda tarihin';
 
   @override
   String thisMonthCount(int count) {
@@ -2216,13 +2217,15 @@ class AppLocalizationsHa extends AppLocalizations {
   String get avatarRemoved => 'An cire Avatar.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Cire avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'An gaza cire avatar. Don Allah ku sake gwadawa.';
 
   @override
   String get profileUpdatedSuccessfully => 'Fayil updated successfully!';
 
   @override
-  String get profileUpdateFailed => 'Failed to update pFayil Please try again.';
+  String get profileUpdateFailed =>
+      'Ba a sabunta bayanin martaba ba. Don Allah ku sake gwadawa.';
 
   @override
   String get editProfileTitle => 'Gyara Fayil';
@@ -2374,7 +2377,7 @@ class AppLocalizationsHa extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Alamun rayuwa';
+  String get failedToLoadVitals => 'An gaza ɗorawa bayanan rayuwa';
 
   @override
   String get noVitalsYet => 'Babu alamomin jiki da aka rubuta har yanzu';
@@ -2443,7 +2446,8 @@ class AppLocalizationsHa extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Ajiye vital. Please try again.';
+  String get vitalSaveFailed =>
+      'An kasa adana muhimmin bayanai. Don Allah ku sake gwadawa.';
 
   @override
   String get vitalsHistoryTitle => 'Alamun rayuwa Tarihi';
@@ -2547,7 +2551,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Ƙara medication. Please try again.';
+      'An gaza ƙara magani. Don Allah ku sake gwadawa.';
 
   @override
   String get addAppointmentTitle => 'Ƙara Appointment';
@@ -2652,7 +2656,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get recordUpdateFailed => 'An kasa sabunta rikodin.';
 
   @override
-  String get recordAddFailed => 'Failed to Ƙara record.';
+  String get recordAddFailed => 'Ba a iya ƙara rikodi ba.';
 
   @override
   String get deleteRecordTitle => 'Goge Record';
@@ -2666,7 +2670,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get recordDeleted => 'An share rikodin.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Goge record.';
+  String get recordDeleteFailed => 'Ba a iya goge rikodin.';
 
   @override
   String get medicalRecordsTitle => 'Rikodin likita';
@@ -2856,4 +2860,17 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'A\'a previous purchases found to rMaida';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

@@ -221,7 +221,10 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
       ),
       body: appointmentsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) {
+          debugPrint('Appointments load error: $e');
+          return Center(child: Text(l10n.somethingWentWrong));
+        },
         data: (appointments) {
           final filtered = _applyFilters(appointments);
 

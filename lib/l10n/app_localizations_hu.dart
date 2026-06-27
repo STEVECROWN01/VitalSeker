@@ -586,7 +586,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pJelszó Please try again.';
+      'A jelszó frissítése nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -597,7 +597,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Törlés account. Please try again or contact sTámogatás';
+      'A fiók törlése nem sikerült. Kérjük, próbálja meg újra, vagy vegye fel a kapcsolatot az ügyfélszolgálattal.';
 
   @override
   String get manageYourSubscription => 'Előfizetés kezelése';
@@ -743,7 +743,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get purchasesRestored => 'A vásárlások helyreállítva.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Visszaállítás purchases.';
+  String get failedToRestorePurchases =>
+      'A vásárlások visszaállítása nem sikerült.';
 
   @override
   String get contactSalesEnterprise =>
@@ -809,7 +810,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Támogatás request. Please try again or Email support@vitalseker.com.';
+      'A támogatási kérelem elküldése nem sikerült. Kérjük, próbálja meg újra, vagy küldjön e-mailt a support@vitalseker.com címre.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -922,7 +923,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Hozzáadás Család member. Please try again.';
+      'A családtag hozzáadása nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get removeFamilyMember => 'Eltávolítás Család Member';
@@ -940,7 +941,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Eltávolítás Család member. Please try again.';
+      'A családtag eltávolítása nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get fullNameLabel => 'Full Név';
@@ -1039,7 +1040,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get medicationDeleted => 'A gyógyszer törölve';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Törlés medication.';
+  String get failedToDeleteMedication => 'A gyógyszer törlése nem sikerült.';
 
   @override
   String get editDetails => 'Szerkesztés Details';
@@ -1103,7 +1104,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get appointmentCancelled => 'A találkozó elmarad';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Mégse appointment.';
+  String get failedToCancelAppointment =>
+      'Nem sikerült lemondani a találkozót.';
 
   @override
   String get selectNewDate => 'Select new Dátum';
@@ -1132,7 +1134,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get appointmentDeleted => 'A találkozó törölve';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Törlés appointment.';
+  String get failedToDeleteAppointment => 'A találkozó törlése nem sikerült.';
 
   @override
   String get reschedule => 'Időpont módosítása';
@@ -1179,7 +1181,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Mentés notification setting';
+      'Nem sikerült elmenteni az értesítési beállításokat';
 
   @override
   String get keyFeatures => 'Főbb jellemzők';
@@ -1941,7 +1943,7 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Előzmények';
+  String get failedLoadHistory => 'A előzmények betöltése nem sikerült';
 
   @override
   String thisMonthCount(int count) {
@@ -2237,14 +2239,14 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get avatarRemoveFailed =>
-      'Failed to Eltávolítás avatar. Please try again.';
+      'Az avatar eltávolítása nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'A profil frissítése nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get editProfileTitle => 'Szerkesztés Profil';
@@ -2396,7 +2398,7 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Életfunkciók';
+  String get failedToLoadVitals => 'A vitális adatok betöltése nem sikerült';
 
   @override
   String get noVitalsYet => 'Nem Életfunkciók Yet';
@@ -2464,7 +2466,8 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Mentés vital. Please try again.';
+  String get vitalSaveFailed =>
+      'A „vital” mentése nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get vitalsHistoryTitle => 'Életfunkciók Előzmények';
@@ -2569,7 +2572,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Hozzáadás medication. Please try again.';
+      'A gyógyszer hozzáadása nem sikerült. Kérjük, próbálja meg újra.';
 
   @override
   String get addAppointmentTitle => 'Hozzáadás Appointment';
@@ -2674,7 +2677,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get recordUpdateFailed => 'A rekord frissítése nem sikerült.';
 
   @override
-  String get recordAddFailed => 'Failed to Hozzáadás record.';
+  String get recordAddFailed => 'A rekord hozzáadása nem sikerült.';
 
   @override
   String get deleteRecordTitle => 'Törlés Record';
@@ -2688,7 +2691,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get recordDeleted => 'A rekord törölve.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Törlés record.';
+  String get recordDeleteFailed => 'A rekord törlése nem sikerült.';
 
   @override
   String get medicalRecordsTitle => 'Orvosi nyilvántartások';
@@ -2881,4 +2884,17 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Nem previous purchases found to rVisszaállítás';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

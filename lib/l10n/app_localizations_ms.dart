@@ -583,7 +583,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pKata laluan Please try again.';
+      'Gagal mengemas kini kata laluan. Sila cuba lagi.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -594,7 +594,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Padam account. Please try again or contact sSokongan';
+      'Gagal memadam akaun. Sila cuba lagi atau hubungi sokongan.';
 
   @override
   String get manageYourSubscription => 'Urus langganan anda';
@@ -739,7 +739,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get purchasesRestored => 'Pembelian dipulihkan.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Pulihkan purchases.';
+  String get failedToRestorePurchases => 'Gagal memulihkan pembelian.';
 
   @override
   String get contactSalesEnterprise =>
@@ -803,7 +803,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Sokongan request. Please try again or E-mel support@vitalseker.com.';
+      'Gagal menghantar permintaan sokongan. Sila cuba lagi atau emel ke support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -916,7 +916,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Tambah Keluarga member. Please try again.';
+      'Gagal menambah ahli keluarga. Sila cuba lagi.';
 
   @override
   String get removeFamilyMember => 'Buang Keluarga Member';
@@ -934,7 +934,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Buang Keluarga member. Please try again.';
+      'Gagal membuang ahli keluarga. Sila cuba lagi.';
 
   @override
   String get fullNameLabel => 'Full Nama';
@@ -1030,7 +1030,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get medicationDeleted => 'Ubat dipadamkan';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Padam medication.';
+  String get failedToDeleteMedication => 'Gagal memadam ubat.';
 
   @override
   String get editDetails => 'Sunting Details';
@@ -1093,7 +1093,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get appointmentCancelled => 'Janji temu dibatalkan';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Batal appointment.';
+  String get failedToCancelAppointment => 'Gagal membatalkan temu janji.';
 
   @override
   String get selectNewDate => 'Select new Tarikh';
@@ -1122,7 +1122,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get appointmentDeleted => 'Janji temu dipadamkan';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Padam appointment.';
+  String get failedToDeleteAppointment => 'Gagal memadam janji temu.';
 
   @override
   String get reschedule => 'Jadual semula';
@@ -1169,7 +1169,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Simpan notification setting';
+      'Gagal menyimpan tetapan pemberitahuan';
 
   @override
   String get keyFeatures => 'Ciri-ciri Utama';
@@ -1927,7 +1927,7 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Sejarah';
+  String get failedLoadHistory => 'Gagal memuatkan sejarah';
 
   @override
   String thisMonthCount(int count) {
@@ -2220,14 +2220,14 @@ class AppLocalizationsMs extends AppLocalizations {
   String get avatarRemoved => 'Avatar dialih keluar.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Buang avatar. Please try again.';
+  String get avatarRemoveFailed => 'Gagal membuang avatar. Sila cuba lagi.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'Gagal mengemas kini profil. Sila cuba lagi.';
 
   @override
   String get editProfileTitle => 'Sunting Profil';
@@ -2379,7 +2379,7 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Tanda vital';
+  String get failedToLoadVitals => 'Gagal memuatkan data penting';
 
   @override
   String get noVitalsYet => 'Tidak Tanda vital Yet';
@@ -2447,7 +2447,7 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Simpan vital. Please try again.';
+  String get vitalSaveFailed => 'Gagal menyimpan data penting. Sila cuba lagi.';
 
   @override
   String get vitalsHistoryTitle => 'Tanda vital Sejarah';
@@ -2550,8 +2550,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get medicationAddedSuccessfully => 'Ubat ditambah dengan jayanya!';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to Tambah medication. Please try again.';
+  String get medicationAddFailed => 'Gagal menambah ubat. Sila cuba lagi.';
 
   @override
   String get addAppointmentTitle => 'Tambah Appointment';
@@ -2655,7 +2654,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get recordUpdateFailed => 'Gagal mengemas kini rekod.';
 
   @override
-  String get recordAddFailed => 'Failed to Tambah record.';
+  String get recordAddFailed => 'Gagal menambah rekod.';
 
   @override
   String get deleteRecordTitle => 'Padam Record';
@@ -2669,7 +2668,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get recordDeleted => 'Rekod dipadamkan.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Padam record.';
+  String get recordDeleteFailed => 'Gagal memadam rekod.';
 
   @override
   String get medicalRecordsTitle => 'Rekod perubatan';
@@ -2861,4 +2860,17 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Tidak previous purchases found to rPulihkan';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

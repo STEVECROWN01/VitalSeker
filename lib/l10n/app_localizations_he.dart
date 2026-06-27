@@ -491,7 +491,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get areYouSureSignOut => 'האם אתה בטוח שאתה רוצה לצאת?';
 
   @override
-  String get failedToSignOut => 'שגיאה to sign out. Please try again.';
+  String get failedToSignOut => 'לא הצלחת לצאת מהמערכת. אנא נסה שוב.';
 
   @override
   String get vitalsLogged => 'סימנים חיוניים Logged';
@@ -579,8 +579,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get passwordUpdatedSuccessfully => 'סיסמה updated successfully';
 
   @override
-  String get failedToUpdatePassword =>
-      'Failed to update pסיסמה Please try again.';
+  String get failedToUpdatePassword => 'לא הצליח לעדכן את הסיסמה. אנא נסה שוב.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -591,7 +590,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to מחק account. Please try again or contact sתמיכה';
+      'לא הצליחו למחוק את החשבון. אנא נסה שוב או פנה לתמיכה.';
 
   @override
   String get manageYourSubscription => 'נהל את המנוי שלך';
@@ -730,13 +729,13 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'שגיאה to update subscription. Please try again.';
+      'לא הצליח לעדכן את המנוי. אנא נסה שוב.';
 
   @override
   String get purchasesRestored => 'הרכישות שוחזרו.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to שחזור purchases.';
+  String get failedToRestorePurchases => 'לא הצליחו לשחזר את הרכישות.';
 
   @override
   String get contactSalesEnterprise => 'Contact sales for custom ארגון תנאים';
@@ -798,7 +797,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit תמיכה request. Please try again or אימייל support@vitalseker.com.';
+      'לא הצלחנו לשלוח את בקשת התמיכה. אנא נסה שוב או שלח דוא\"ל לכתובת support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -909,8 +908,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get familyMemberAdded => 'משפחה member added!';
 
   @override
-  String get failedToAddFamily =>
-      'Failed to הוסף משפחה member. Please try again.';
+  String get failedToAddFamily => 'לא הצליחו להוסיף בן משפחה. אנא נסה שוב.';
 
   @override
   String get removeFamilyMember => 'הסר משפחה Member';
@@ -928,7 +926,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to הסר משפחה member. Please try again.';
+      'לא הצלחנו להסיר את בן המשפחה. אנא נסה שוב.';
 
   @override
   String get fullNameLabel => 'Full שם';
@@ -1025,7 +1023,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get medicationDeleted => 'התרופה נמחקה';
 
   @override
-  String get failedToDeleteMedication => 'Failed to מחק medication.';
+  String get failedToDeleteMedication => 'לא הצליח למחוק את התרופה.';
 
   @override
   String get editDetails => 'ערוך Details';
@@ -1088,7 +1086,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get appointmentCancelled => 'הפגישה בוטלה';
 
   @override
-  String get failedToCancelAppointment => 'Failed to ביטול appointment.';
+  String get failedToCancelAppointment => 'לא הצלחתי לבטל את התור.';
 
   @override
   String get selectNewDate => 'Select new תאריך';
@@ -1117,7 +1115,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get appointmentDeleted => 'המינוי נמחק';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to מחק appointment.';
+  String get failedToDeleteAppointment => 'לא הצליח למחוק את הפגישה.';
 
   @override
   String get reschedule => 'תזמון מחדש';
@@ -1163,7 +1161,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to שמור notification setting';
+      'לא הצליח לשמור את הגדרת ההתראות';
 
   @override
   String get keyFeatures => 'תכונות מפתח';
@@ -1624,7 +1622,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. שגיאה: $error';
+    return 'אני מצטער, נתקלתי בשגיאה בעת ניתוח התסמינים שלך. אנא נסה שוב או תאר את התסמינים שלך בצורה אחרת.\n\nשגיאה: $error';
   }
 
   @override
@@ -1915,7 +1913,7 @@ class AppLocalizationsHe extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load היסטוריה';
+  String get failedLoadHistory => 'לא הצליח לטעון את ההיסטוריה';
 
   @override
   String thisMonthCount(int count) {
@@ -2200,20 +2198,21 @@ class AppLocalizationsHe extends AppLocalizations {
   String get avatarUpdated => 'אווטאר עודכן!';
 
   @override
-  String get avatarUploadFailed => 'שגיאה to upload avatar. Please try again.';
+  String get avatarUploadFailed =>
+      'לא הצליח להעלות את תמונת הפרופיל. אנא נסה שוב.';
 
   @override
   String get avatarRemoved => 'האווטאר הוסר.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to הסר avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'לא הצלחנו להסיר את התמונה הפרופיל. אנא נסה שוב.';
 
   @override
   String get profileUpdatedSuccessfully => 'פרופיל updated successfully!';
 
   @override
-  String get profileUpdateFailed =>
-      'Failed to update pפרופיל Please try again.';
+  String get profileUpdateFailed => 'לא הצליח לעדכן את הפרופיל. אנא נסה שוב.';
 
   @override
   String get editProfileTitle => 'ערוך פרופיל';
@@ -2365,7 +2364,7 @@ class AppLocalizationsHe extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load סימנים חיוניים';
+  String get failedToLoadVitals => 'לא הצליחו לטעון את נתוני המדדים החיוניים';
 
   @override
   String get noVitalsYet => 'לא סימנים חיוניים Yet';
@@ -2433,7 +2432,8 @@ class AppLocalizationsHe extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to שמור vital. Please try again.';
+  String get vitalSaveFailed =>
+      'לא הצליח לשמור את הנתונים החיוניים. אנא נסה שוב.';
 
   @override
   String get vitalsHistoryTitle => 'סימנים חיוניים היסטוריה';
@@ -2535,8 +2535,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get medicationAddedSuccessfully => 'התרופה נוספה בהצלחה!';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to הוסף medication. Please try again.';
+  String get medicationAddFailed => 'לא הצליחו להוסיף את התרופה. אנא נסה שוב.';
 
   @override
   String get addAppointmentTitle => 'הוסף Appointment';
@@ -2563,8 +2562,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get appointmentScheduledSuccessfully => 'פגישה נקבעה בהצלחה!';
 
   @override
-  String get appointmentScheduleFailed =>
-      'שגיאה to schedule appointment. Please try again.';
+  String get appointmentScheduleFailed => 'לא הצליחו לקבוע תור. אנא נסה שוב.';
 
   @override
   String get specialtyCardiologist => 'קרדיולוג';
@@ -2597,7 +2595,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get specialtyOther => 'אחר';
 
   @override
-  String get recordsLoadFailed => 'שגיאה to טען records. Please try again.';
+  String get recordsLoadFailed => 'לא הצליחו לטעון את הרשומות. אנא נסה שוב.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2639,7 +2637,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get recordUpdateFailed => 'שגיאה to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to הוסף record.';
+  String get recordAddFailed => 'לא הצליח להוסיף רשומה.';
 
   @override
   String get deleteRecordTitle => 'מחק Record';
@@ -2653,7 +2651,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get recordDeleted => 'הרשומה נמחקה.';
 
   @override
-  String get recordDeleteFailed => 'Failed to מחק record.';
+  String get recordDeleteFailed => 'לא הצליח למחוק את הרשומה.';
 
   @override
   String get medicalRecordsTitle => 'רשומות רפואיות';
@@ -2782,7 +2780,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get back => 'חזור';
 
   @override
-  String get triageFailed => 'מיון analysis failed. Please try again.';
+  String get triageFailed => 'ניתוח המיון נכשל. אנא נסה שוב.';
 
   @override
   String get symptomFever => 'חום';
@@ -2843,4 +2841,17 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'לא previous purchases found to rשחזור';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

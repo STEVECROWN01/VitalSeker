@@ -588,7 +588,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pစကားဝှက် Please try again.';
+      'စကားဝှက်ကို အပ်ဒိတ်လုပ်ရန် မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ။';
 
   @override
   String get deleteAccountIrreversible =>
@@ -599,7 +599,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to ဖျက် account. Please try again or contact sပံ့ပိုးမှု';
+      'အကောင့်ဖျက်ရန် မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ သို့မဟုတ် အထောက်အပံ့ဌာနသို့ ဆက်သွယ်ပါ။';
 
   @override
   String get manageYourSubscription => 'သင်၏စာရင်းသွင်းမှုကို စီမံပါ။';
@@ -745,7 +745,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get failedToRestorePurchases =>
-      'Failed to ပြန်လည်သိမ်းဆည်း purchases.';
+      'ဝယ်ယူမှုများကို ပြန်လည်ထူထောင်ရာတွင် မအောင်မြင်ပါ။';
 
   @override
   String get contactSalesEnterprise =>
@@ -811,7 +811,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit ပံ့ပိုးမှု request. Please try again or အီးမေးလ် support@vitalseker.com.';
+      'ထောက်ခံမှု တောင်းဆိုမှုကို တင်ပို့၍ မရပါ။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ သို့မဟုတ် support@vitalseker.com သို့ အီးမေးလ်ပို့ပါ။';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -925,7 +925,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to ထည့် မိသားစု member. Please try again.';
+      'မိသားစုဝင် ထည့်သွင်းရန် မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ။';
 
   @override
   String get removeFamilyMember => 'ဖယ်ရှား မိသားစု Member';
@@ -943,7 +943,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to ဖယ်ရှား မိသားစု member. Please try again.';
+      'မိသားစုအဖွဲ့ဝင်ကို ဖယ်ရှား၍ မရပါ။ ထပ်မံကြိုးစားပါ။';
 
   @override
   String get fullNameLabel => 'Full အမည်';
@@ -1041,7 +1041,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get medicationDeleted => 'ဆေးဖျက်လိုက်ပြီ။';
 
   @override
-  String get failedToDeleteMedication => 'Failed to ဖျက် medication.';
+  String get failedToDeleteMedication => 'ဆေးကို ဖျက်၍ မရပါ။';
 
   @override
   String get editDetails => 'တည်းဖြတ် Details';
@@ -1106,7 +1106,8 @@ class AppLocalizationsMy extends AppLocalizations {
   String get appointmentCancelled => 'ချိန်းဆိုမှုကို ပယ်ဖျက်ခဲ့သည်။';
 
   @override
-  String get failedToCancelAppointment => 'Failed to မလုပ်တော့ appointment.';
+  String get failedToCancelAppointment =>
+      'ချိန်းဆိုမှုကို ဖျက်ရန် မအောင်မြင်ပါ။';
 
   @override
   String get selectNewDate => 'Select new ရက်စွဲ';
@@ -1135,7 +1136,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get appointmentDeleted => 'ချိန်းဆိုမှုကို ဖျက်လိုက်ပါပြီ။';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to ဖျက် appointment.';
+  String get failedToDeleteAppointment => 'ချိန်းချိန် ဖျက်ရန် မအောင်မြင်ပါ။';
 
   @override
   String get reschedule => 'အချိန်ဇယားဆွဲပါ။';
@@ -1184,7 +1185,7 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to သိမ်းဆည်း notification setting';
+      'အသိပေးချက်ဆက်တင် သိမ်းဆည်းရာတွင် မအောင်မြင်ပါ။';
 
   @override
   String get keyFeatures => 'အဓိကအင်္ဂါရပ်များ';
@@ -1943,7 +1944,7 @@ class AppLocalizationsMy extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load မှတ်တမ်း';
+  String get failedLoadHistory => 'သမိုင်းမှတ်တမ်းကို မတင်နိုင်ခဲ့ပါ';
 
   @override
   String thisMonthCount(int count) {
@@ -2239,14 +2240,14 @@ class AppLocalizationsMy extends AppLocalizations {
 
   @override
   String get avatarRemoveFailed =>
-      'Failed to ဖယ်ရှား avatar. Please try again.';
+      'အာဗတာ ဖယ်ရှားရန် မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ။';
 
   @override
   String get profileUpdatedSuccessfully => 'ပရိုဖိုင် updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pပရိုဖိုင် Please try again.';
+      'ပရိုဖိုင်ကို အပ်ဒိတ်လုပ်ရန် မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ။';
 
   @override
   String get editProfileTitle => 'တည်းဖြတ် ပရိုဖိုင်';
@@ -2398,7 +2399,8 @@ class AppLocalizationsMy extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load အသက်လက္ခဏာ';
+  String get failedToLoadVitals =>
+      'အသက်ရှုဆိုင်ရာ အချက်အလက်များ မတင်နိုင်ခဲ့ပါ';
 
   @override
   String get noVitalsYet => 'မဟုတ် အသက်လက္ခဏာ Yet';
@@ -2466,7 +2468,8 @@ class AppLocalizationsMy extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to သိမ်းဆည်း vital. Please try again.';
+  String get vitalSaveFailed =>
+      'အရေးကြီးသောဒေတာကို သိမ်းဆည်းရန် မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ။';
 
   @override
   String get vitalsHistoryTitle => 'အသက်လက္ခဏာ မှတ်တမ်း';
@@ -2570,8 +2573,7 @@ class AppLocalizationsMy extends AppLocalizations {
       'ဆေးကို အောင်မြင်စွာ ထည့်လိုက်သည် ။';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to ထည့် medication. Please try again.';
+  String get medicationAddFailed => 'ဆေးထည့်ရန် မအောင်မြင်ပါ။ ထပ်မံကြိုးစားပါ။';
 
   @override
   String get addAppointmentTitle => 'ထည့် Appointment';
@@ -2676,7 +2678,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get recordUpdateFailed => 'မှတ်တမ်းကို အပ်ဒိတ်လုပ်ရန် မအောင်မြင်ပါ။';
 
   @override
-  String get recordAddFailed => 'Failed to ထည့် record.';
+  String get recordAddFailed => 'မှတ်တမ်းထည့်သွင်းရန် မအောင်မြင်ပါ။';
 
   @override
   String get deleteRecordTitle => 'ဖျက် Record';
@@ -2690,7 +2692,7 @@ class AppLocalizationsMy extends AppLocalizations {
   String get recordDeleted => 'မှတ်တမ်းကို ဖျက်လိုက်ပါပြီ။';
 
   @override
-  String get recordDeleteFailed => 'Failed to ဖျက် record.';
+  String get recordDeleteFailed => 'မှတ်တမ်း ဖျက်ရန် မအောင်မြင်ပါ။';
 
   @override
   String get medicalRecordsTitle => 'ဆေးဘက်ဆိုင်ရာမှတ်တမ်းများ';
@@ -2883,4 +2885,17 @@ class AppLocalizationsMy extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'မဟုတ် previous purchases found to rပြန်လည်သိမ်းဆည်း';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

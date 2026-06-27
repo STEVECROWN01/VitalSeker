@@ -493,7 +493,8 @@ class AppLocalizationsCs extends AppLocalizations {
   String get areYouSureSignOut => 'Opravdu se chcete odhlásit?';
 
   @override
-  String get failedToSignOut => 'Chyba to sign out. Please try again.';
+  String get failedToSignOut =>
+      'Odhlášení se nezdařilo. Zkuste to prosím znovu.';
 
   @override
   String get vitalsLogged => 'Životní funkce Logged';
@@ -582,7 +583,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pHeslo Please try again.';
+      'Aktualizace hesla se nezdařila. Zkuste to prosím znovu.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -593,7 +594,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Smazat account. Please try again or contact sPodpora';
+      'Odstranění účtu se nezdařilo. Zkuste to prosím znovu nebo se obraťte na podporu.';
 
   @override
   String get manageYourSubscription => 'Spravujte své předplatné';
@@ -732,13 +733,13 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Chyba to update subscription. Please try again.';
+      'Aktualizaci předplatného se nepodařilo provést. Zkuste to prosím znovu.';
 
   @override
   String get purchasesRestored => 'Nákupy byly obnoveny.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Obnovit purchases.';
+  String get failedToRestorePurchases => 'Obnovení nákupů se nezdařilo.';
 
   @override
   String get contactSalesEnterprise =>
@@ -802,7 +803,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Podpora request. Please try again or E-mail support@vitalseker.com.';
+      'Odeslání žádosti o podporu se nezdařilo. Zkuste to prosím znovu nebo pošlete e-mail na adresu support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -915,7 +916,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Přidat Rodina member. Please try again.';
+      'Přidání člena rodiny se nezdařilo. Zkuste to prosím znovu.';
 
   @override
   String get removeFamilyMember => 'Odebrat Rodina Member';
@@ -933,7 +934,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Odebrat Rodina member. Please try again.';
+      'Odstranění člena rodiny se nezdařilo. Zkuste to prosím znovu.';
 
   @override
   String get fullNameLabel => 'Full Jméno';
@@ -1030,7 +1031,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get medicationDeleted => 'Lék odstraněn';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Smazat medication.';
+  String get failedToDeleteMedication => 'Odstranění léku se nezdařilo.';
 
   @override
   String get editDetails => 'Upravit Details';
@@ -1093,7 +1094,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get appointmentCancelled => 'Schůzka byla zrušena';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Zrušit appointment.';
+  String get failedToCancelAppointment => 'Zrušení schůzky se nezdařilo.';
 
   @override
   String get selectNewDate => 'Select new Datum';
@@ -1122,7 +1123,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get appointmentDeleted => 'Schůzka byla smazána';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Smazat appointment.';
+  String get failedToDeleteAppointment => 'Odstranění schůzky se nezdařilo.';
 
   @override
   String get reschedule => 'Změnit termín';
@@ -1169,7 +1170,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Uložit notification setting';
+      'Nepodařilo se uložit nastavení oznámení';
 
   @override
   String get keyFeatures => 'Hlavní vlastnosti';
@@ -1635,7 +1636,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. Chyba: $error';
+    return 'Omlouvám se, při analýze vašich příznaků došlo k chybě. Zkuste to prosím znovu nebo popište své příznaky jinak.\n\nChyba: $error';
   }
 
   @override
@@ -1927,7 +1928,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Historie';
+  String get failedLoadHistory => 'Nepodařilo se načíst historii';
 
   @override
   String thisMonthCount(int count) {
@@ -2215,21 +2216,22 @@ class AppLocalizationsCs extends AppLocalizations {
   String get avatarUpdated => 'Avatar byl aktualizován!';
 
   @override
-  String get avatarUploadFailed => 'Chyba to upload avatar. Please try again.';
+  String get avatarUploadFailed =>
+      'Nahrání avatara se nezdařilo. Zkuste to prosím znovu.';
 
   @override
   String get avatarRemoved => 'Avatar byl odstraněn.';
 
   @override
   String get avatarRemoveFailed =>
-      'Failed to Odebrat avatar. Please try again.';
+      'Odstranění avatara se nezdařilo. Zkuste to prosím znovu.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'Aktualizaci profilu se nepodařilo provést. Zkuste to prosím znovu.';
 
   @override
   String get editProfileTitle => 'Upravit Profil';
@@ -2381,7 +2383,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Životní funkce';
+  String get failedToLoadVitals => 'Nepodařilo se načíst životní funkce';
 
   @override
   String get noVitalsYet => 'Ne Životní funkce Yet';
@@ -2449,7 +2451,8 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Uložit vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Uložení důležitých údajů se nezdařilo. Zkuste to prosím znovu.';
 
   @override
   String get vitalsHistoryTitle => 'Životní funkce Historie';
@@ -2553,7 +2556,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Přidat medication. Please try again.';
+      'Nepodařilo se přidat lék. Zkuste to prosím znovu.';
 
   @override
   String get addAppointmentTitle => 'Přidat Appointment';
@@ -2582,7 +2585,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get appointmentScheduleFailed =>
-      'Chyba to schedule appointment. Please try again.';
+      'Naplánování schůzky se nezdařilo. Zkuste to prosím znovu.';
 
   @override
   String get specialtyCardiologist => 'Kardiolog';
@@ -2615,7 +2618,8 @@ class AppLocalizationsCs extends AppLocalizations {
   String get specialtyOther => 'Jiné';
 
   @override
-  String get recordsLoadFailed => 'Chyba to načíst records. Please try again.';
+  String get recordsLoadFailed =>
+      'Načtení záznamů se nezdařilo. Zkuste to prosím znovu.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2657,7 +2661,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get recordUpdateFailed => 'Chyba to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to Přidat record.';
+  String get recordAddFailed => 'Nepodařilo se přidat záznam.';
 
   @override
   String get deleteRecordTitle => 'Smazat Record';
@@ -2671,7 +2675,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get recordDeleted => 'Záznam byl smazán.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Smazat record.';
+  String get recordDeleteFailed => 'Odstranění záznamu se nezdařilo.';
 
   @override
   String get medicalRecordsTitle => 'Zdravotní záznamy';
@@ -2862,4 +2866,17 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'Ne previous purchases found to rObnovit';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

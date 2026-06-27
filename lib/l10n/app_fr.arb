@@ -855,5 +855,9 @@
   "years": "{age} ans",
   "yearsOld": "{count} ans",
   "yesterdayLabel": "Ouiterday",
-  "yourHealthThisWeek": "Votre health this week"
+  "yourHealthThisWeek": "Votre health this week",
+  "failedToCompleteOnboarding": "Echec de la finalisation de l'introduction. Verifiez votre connexion et reessayez.",
+  "fieldRequired": "Ce champ est obligatoire",
+  "somethingWentWrong": "Quelque chose s'est mal passé. Veuillez réessayer.",
+  "securitySettingsOnThisPage": "Les paramètres de sécurité sont sur cette page"
 }
