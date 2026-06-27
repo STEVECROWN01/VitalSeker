@@ -153,7 +153,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get aiProcessing => 'AI is processing your Helse data';
 
   @override
-  String get send => 'Send';
+  String get send => 'Sende';
 
   @override
   String get newChat => 'Ny chat';
@@ -520,8 +520,8 @@ class AppLocalizationsNo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count tilkoblede medlemmer',
+      one: '$count tilkoblet medlem',
     );
     return '$_temp0';
   }
@@ -843,7 +843,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Gå til Profil > Abonnement og velg Gratis-abonnementet for å nedgradere. Pro- eller Enterprise-funksjonene dine vil forbli aktive frem til slutten av den nåværende faktureringsperioden.';
 
   @override
   String get exportConfigurePreview =>
@@ -1402,13 +1402,13 @@ class AppLocalizationsNo extends AppLocalizations {
   String get nA => 'Ikke relevant';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Hopp over';
 
   @override
   String get next => 'Neste';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Gå inn på VitalSeker';
 
   @override
   String get onboardingTitle1 => 'Lær å kjenne kroppen din.';
@@ -1791,8 +1791,8 @@ class AppLocalizationsNo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Allergier',
+      one: '$count Allergi',
     );
     return '$_temp0';
   }
@@ -1802,8 +1802,8 @@ class AppLocalizationsNo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Legemidler',
+      one: '$count Legemiddel',
     );
     return '$_temp0';
   }
@@ -1868,7 +1868,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get sosFailed => 'SOS MISLYKTES';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIV';
 
   @override
   String get sendingEmergencyAlert => 'Sending Nødsituasjon Alert';
@@ -1920,8 +1920,8 @@ class AppLocalizationsNo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontakter informert via SMS',
+      one: '$count kontakt informert via SMS',
     );
     return '$_temp0';
   }
@@ -2475,7 +2475,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Det ble ikke funnet noen målinger for den valgte tidsperioden';
 
   @override
   String get singleReading => '1 lesning';
@@ -2487,7 +2487,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get min => 'I';
 
   @override
-  String get max => 'Max';
+  String get max => 'Maks';
 
   @override
   String get latest => 'Siste nytt';

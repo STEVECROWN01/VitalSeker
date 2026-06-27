@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/medication.dart';
 import '../../../core/providers/medications_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 class AddMedicationScreen extends ConsumerStatefulWidget {
   const AddMedicationScreen({super.key});
@@ -98,6 +100,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
 
   Future<void> _saveMedication() async {
     if (!_formKey.currentState!.validate()) return;
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() => _isSaving = true);
     try {
@@ -118,11 +121,11 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
           );
 
       if (mounted) {
-        AppSnackBar.success(context, 'Medication added successfully!');
+        AppSnackBar.success(context, l10n.medicationAddedSuccessfully);
         context.pop();
       }
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to add medication. Please try again.', e);
+      if (mounted) AppSnackBar.errorFromException(context, l10n.medicationAddFailed, e);
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
@@ -139,10 +142,11 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Medication'),
+        title: Text(l10n.addMedicationTitle),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -155,7 +159,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  labelText: 'Medication Name',
+                  labelText: l10n.medicationNameLabel,
                   labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                   prefixIcon: const Icon(Icons.medication_outlined),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -179,7 +183,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                       controller: _dosageController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelText: 'Dosage',
+                        labelText: l10n.dosageLabel,
                         labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                         prefixIcon: const Icon(Icons.straighten),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -198,7 +202,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                     child: DropdownButtonFormField<String>(
                       value: _unit,
                       decoration: InputDecoration(
-                        labelText: 'Unit',
+                        labelText: l10n.unitLabel,
                         labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
@@ -219,7 +223,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
               DropdownButtonFormField<MedicationFrequency>(
                 value: _frequency,
                 decoration: InputDecoration(
-                  labelText: 'Frequency',
+                  labelText: l10n.frequencyLabel,
                   labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                   prefixIcon: const Icon(Icons.repeat),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -246,7 +250,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
 
               // Start Date
               _DateField(
-                label: 'Start Date',
+                label: l10n.startDateLabel,
                 date: _startDate,
                 isDark: isDark,
                 onTap: _selectStartDate,
@@ -262,7 +266,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                     activeColor: AppColors.primary(isDark),
                   ),
                   Text(
-                    'Set end date',
+                    l10n.setEndDate,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
@@ -274,7 +278,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
               if (_hasEndDate) ...[
                 const SizedBox(height: 4),
                 _DateField(
-                  label: 'End Date',
+                  label: l10n.endDateLabel,
                   date: _endDate ?? _startDate.add(const Duration(days: 30)),
                   isDark: isDark,
                   onTap: _selectEndDate,
@@ -285,7 +289,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
               // Dose times
               if (_requiredDoseTimes > 0) ...[
                 Text(
-                  'DOSE TIMES',
+                  l10n.doseTimesLabel,
                   style: TextStyle(
                     fontFamily: 'DMSans',
                     fontSize: 11,
@@ -319,7 +323,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                             ),
                             const SizedBox(width: 12),
                             Text(
-                              'Dose ${index + 1}',
+                              l10n.doseNumber(index + 1),
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
@@ -356,7 +360,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                 controller: _notesController,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  labelText: 'Notes (optional)',
+                  labelText: l10n.notesOptional,
                   labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                   prefixIcon: const Padding(
                     padding: EdgeInsets.only(bottom: 48),
@@ -393,7 +397,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Reminders',
+                        l10n.remindersLabel,
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 15,
@@ -430,9 +434,9 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                           height: 24,
                           child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                         )
-                      : const Text(
-                          'Save Medication',
-                          style: TextStyle(
+                      : Text(
+                          l10n.saveMedication,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -440,6 +444,8 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                         ),
                 ),
               ),
+              const SizedBox(height: 16),
+              const MedicalDisclaimerBanner(compact: true),
               const SizedBox(height: 40),
             ],
           ),

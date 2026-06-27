@@ -520,8 +520,8 @@ class AppLocalizationsFi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count yhdistettyä jäsentä',
+      one: '$count yhdistetty jäsen',
     );
     return '$_temp0';
   }
@@ -843,7 +843,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Siirry kohtaan Profiili > Tilaus ja valitse Ilmainen-paketti, jos haluat vaihtaa alempaan pakettiin. Pro- tai Enterprise-ominaisuudet pysyvät käytössä nykyisen laskutuskauden loppuun asti.';
 
   @override
   String get exportConfigurePreview =>
@@ -1795,8 +1795,8 @@ class AppLocalizationsFi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Allergiat',
+      one: '$count Allergia',
     );
     return '$_temp0';
   }
@@ -1806,8 +1806,8 @@ class AppLocalizationsFi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Lääkkeet',
+      one: '$count Lääke',
     );
     return '$_temp0';
   }
@@ -1872,7 +1872,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get sosFailed => 'SOS epäonnistui';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIIVINEN';
 
   @override
   String get sendingEmergencyAlert => 'Sending Hätätilanne Alert';
@@ -1924,8 +1924,8 @@ class AppLocalizationsFi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count yhteyshenkilöä tiedotettu tekstiviestillä',
+      one: '$count yhteyshenkilö tiedotettu tekstiviestillä',
     );
     return '$_temp0';
   }
@@ -2014,7 +2014,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get chartHigh => 'Korkea';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'Keskim';
 
   @override
   String get chartLow => 'Alhainen';
@@ -2480,7 +2480,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Valitulta ajanjaksolta ei löytynyt lukemia';
 
   @override
   String get singleReading => '1 lukukerta';

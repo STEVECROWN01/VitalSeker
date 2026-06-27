@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/symptom_log.dart';
 import '../../../core/providers/health_passport_provider.dart';
@@ -10,6 +11,7 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/urgency_badge.dart';
 import '../../../shared/widgets/vital_score_ring.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 class HealthScreen extends ConsumerStatefulWidget {
   const HealthScreen({super.key});
@@ -25,14 +27,15 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
     final vitalScore = ref.watch(vitalScoreProvider);
     final profileAsync = ref.watch(userProfileProvider);
     final symptomLogsAsync = ref.watch(symptomLogsProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Health'),
+        title: Text(l10n.healthTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.insights_outlined),
-            tooltip: 'Weekly Insights',
+            tooltip: l10n.weeklyInsightsTooltip,
             onPressed: () => context.push(AppConfig.insights),
           ),
         ],
@@ -63,7 +66,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                     child: Column(
                       children: [
                         Text(
-                          'Your Health Score',
+                          l10n.yourHealthScore,
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -79,7 +82,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          _scoreDescription(vitalScore),
+                          _scoreDescription(vitalScore, l10n),
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 13,
@@ -108,7 +111,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                           color: AppColors.urgencyMedium, size: 20),
                       const SizedBox(width: 8),
                       Text(
-                        'Risk Factors',
+                        l10n.riskFactors,
                         style: TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 18,
@@ -125,14 +128,14 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
 
                       if (profile?.allergies.isNotEmpty ?? false) {
                         riskFactors.add({
-                          'label': '${profile!.allergies.length} Allerg${profile.allergies.length == 1 ? 'y' : 'ies'}',
+                          'label': l10n.allergyCount(profile!.allergies.length),
                           'color': AppColors.urgencyHigh,
                           'icon': Icons.warning_amber,
                         });
                       }
                       if (profile?.chronicConditions.isNotEmpty ?? false) {
                         riskFactors.add({
-                          'label': '${profile!.chronicConditions.length} Chronic Condition${profile.chronicConditions.length == 1 ? '' : 's'}',
+                          'label': l10n.chronicConditionCount(profile!.chronicConditions.length),
                           'color': AppColors.urgencyMedium,
                           'icon': Icons.medical_information,
                         });
@@ -153,7 +156,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                                   color: AppColors.urgencyLow, size: 20),
                               const SizedBox(width: 12),
                               Text(
-                                'No risk factors identified',
+                                l10n.noRiskFactors,
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 14,
@@ -227,7 +230,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                           size: 20),
                       const SizedBox(width: 8),
                       Text(
-                        'Recent Triage Results',
+                        l10n.recentTriageResults,
                         style: TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 18,
@@ -257,7 +260,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                                   color: AppColors.textHint(isDark)),
                               const SizedBox(height: 12),
                               Text(
-                                'No triage results yet',
+                                l10n.noTriageResults,
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 14,
@@ -268,7 +271,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                               TextButton.icon(
                                 onPressed: () => context.push(AppConfig.triage),
                                 icon: const Icon(Icons.add, size: 18),
-                                label: const Text('Start Triage'),
+                                label: Text(l10n.startTriage),
                                 style: TextButton.styleFrom(
                                   foregroundColor: AppColors.primary(isDark),
                                 ),
@@ -314,7 +317,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                           color: isDark ? AppColors.darkInfo : AppColors.lightInfo, size: 20),
                       const SizedBox(width: 8),
                       Text(
-                        'Recommended Actions',
+                        l10n.recommendedActions,
                         style: TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 18,
@@ -325,7 +328,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  ..._buildRecommendedActions(isDark, vitalScore),
+                  ..._buildRecommendedActions(isDark, vitalScore, l10n),
                 ],
               ),
             ),
@@ -343,7 +346,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                 child: OutlinedButton.icon(
                   onPressed: () => context.push(AppConfig.insights),
                   icon: const Icon(Icons.insights_outlined),
-                  label: const Text('View Weekly Insights'),
+                  label: Text(l10n.viewWeeklyInsights),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary(isDark),
                     side: BorderSide(
@@ -363,28 +366,38 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
             ),
           ),
 
+          const SliverToBoxAdapter(child: SizedBox(height: 28)),
+
+          // ── Medical Disclaimer (per Cahier des Charges Section 7) ──
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: MedicalDisclaimerBanner(),
+            ),
+          ),
+
           const SliverToBoxAdapter(child: SizedBox(height: 80)),
         ],
       ),
     );
   }
 
-  String _scoreDescription(int score) {
-    if (score >= 80) return 'Your health metrics are looking great! Keep it up.';
-    if (score >= 60) return 'Good progress. A few areas could use attention.';
-    if (score >= 40) return 'Some health metrics need improvement. Consider our recommendations.';
-    if (score >= 20) return 'Several areas need attention. Please consult a healthcare provider.';
-    return 'Immediate attention recommended. Please seek medical advice.';
+  String _scoreDescription(int score, AppLocalizations l10n) {
+    if (score >= 80) return l10n.scoreDescriptionGreat;
+    if (score >= 60) return l10n.scoreDescriptionGood;
+    if (score >= 40) return l10n.scoreDescriptionModerate;
+    if (score >= 20) return l10n.scoreDescriptionLow;
+    return l10n.scoreDescriptionCritical;
   }
 
-  List<Widget> _buildRecommendedActions(bool isDark, int vitalScore) {
+  List<Widget> _buildRecommendedActions(bool isDark, int vitalScore, AppLocalizations l10n) {
     final actions = <Map<String, dynamic>>[];
 
     if (vitalScore < 60) {
       actions.add({
         'icon': Icons.local_hospital_outlined,
-        'title': 'Schedule a Check-up',
-        'description': 'Your health score suggests it\'s time for a medical review.',
+        'title': l10n.actionScheduleCheckup,
+        'description': l10n.actionScheduleCheckupDesc,
         'color': AppColors.urgencyMedium,
       });
     }
@@ -392,30 +405,29 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
     actions.addAll([
       {
         'icon': Icons.monitor_heart_outlined,
-        'title': 'Log Your Vitals',
-        'description': 'Track your blood pressure, heart rate, and other key metrics.',
+        'title': l10n.actionLogVitals,
+        'description': l10n.actionLogVitalsDesc,
         'color': AppColors.primary(isDark),
       },
       {
         'icon': Icons.psychology_outlined,
-        'title': 'Run a Symptom Check',
-        'description': 'Use AI triage to assess any symptoms you\'re experiencing.',
+        'title': l10n.actionRunSymptomCheck,
+        'description': l10n.actionRunSymptomCheckDesc,
         'color': AppColors.secondary(isDark),
       },
       {
         'icon': Icons.nightlight_outlined,
-        'title': 'Improve Sleep Quality',
-        'description': 'Quality sleep is essential for recovery and immune function.',
+        'title': l10n.actionImproveSleep,
+        'description': l10n.actionImproveSleepDesc,
         'color': isDark ? AppColors.darkInfo : AppColors.lightInfo,
       },
       {
         'icon': Icons.fitness_center_outlined,
-        'title': 'Stay Active',
-        'description': 'Regular exercise helps maintain cardiovascular health.',
+        'title': l10n.actionStayActive,
+        'description': l10n.actionStayActiveDesc,
         'color': AppColors.urgencyLow,
       },
     ]);
-
     return actions.map((action) {
       final color = action['color'] as Color;
       return Padding(
@@ -483,8 +495,9 @@ class _TriageResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final urgencyLevel = log.triageResult?.urgencyLevel ?? 'medium';
-    final timeAgo = _formatTimeAgo(log.loggedAt);
+    final timeAgo = _formatTimeAgo(log.loggedAt, l10n);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
@@ -576,12 +589,12 @@ class _TriageResultCard extends StatelessWidget {
     }
   }
 
-  String _formatTimeAgo(DateTime dt) {
+  String _formatTimeAgo(DateTime dt, AppLocalizations l10n) {
     final diff = DateTime.now().difference(dt);
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inHours < 1) return '${diff.inMinutes}m ago';
-    if (diff.inDays < 1) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
-    return '${(diff.inDays / 7).floor()}w ago';
+    if (diff.inMinutes < 1) return l10n.justNow;
+    if (diff.inHours < 1) return l10n.minutesAgo(diff.inMinutes);
+    if (diff.inDays < 1) return l10n.hoursAgo(diff.inHours);
+    if (diff.inDays < 7) return l10n.daysAgo(diff.inDays);
+    return l10n.weeksAgo((diff.inDays / 7).floor());
   }
 }

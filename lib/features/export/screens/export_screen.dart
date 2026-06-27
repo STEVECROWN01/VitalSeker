@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -8,10 +9,12 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/health_passport_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 /// PDF Export screen — redesigned to match the Google Stitch UI design.
 ///
@@ -113,6 +116,17 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 
   Future<void> _exportPdf({required bool viaEmail}) async {
     final l10n = AppLocalizations.of(context)!;
+
+    // Pro-gating: PDF export is a Pro-only feature per Cahier des Charges
+    // Section 2.5 ("Export PDF médecin (Pro) — Aperçu rapport, envoi par email").
+    final isPro = ref.read(isProUserProvider);
+    if (!isPro) {
+      if (!mounted) return;
+      AppSnackBar.error(context, l10n.exportProOnly);
+      context.push(AppConfig.subscription);
+      return;
+    }
+
     setState(() => viaEmail ? _isEmailing = true : _isExporting = true);
     try {
       final passport = ref.read(healthPassportProvider).valueOrNull;
@@ -394,6 +408,8 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                           setState(() => _includeAiSummary = v),
                       l10n: l10n,
                     ),
+                    const SizedBox(height: 16),
+                    const MedicalDisclaimerBanner(compact: true),
                     const SizedBox(height: 16),
                     // Action buttons
                     _ActionButtons(
@@ -960,8 +976,13 @@ class _PreviewDocument extends StatelessWidget {
     required this.l10n,
   });
 
-  String get _patientName => previewData['patient']?['name'] ?? 'Alexander Sterling';
-  String get _patientDob => previewData['patient']?['date_of_birth'] ?? '14 May 1985 (38)';
+  // Previously these getters returned mock data ('Alexander Sterling',
+  // '14 May 1985 (38)') when no real data was loaded — a user with no
+  // passport would see a fake patient profile in the live preview, which
+  // was misleading. Now they return a localized "—" placeholder until the
+  // real data is fetched via the exportPdf edge function call.
+  String get _patientName => previewData['patient']?['name'] ?? '—';
+  String get _patientDob => previewData['patient']?['date_of_birth'] ?? '—';
   int get _vitalScore => previewData['health_passport']?['vital_score'] ?? 0;
 
   @override
@@ -1082,7 +1103,9 @@ class _PreviewDocument extends StatelessWidget {
                     const SizedBox(height: 6),
                     _PreviewInfoRow(
                       label: 'Primary Care Physician',
-                      value: 'Dr. Sarah Jenkins',
+                      // Use real physician name from data if available,
+                      // otherwise "—" (was hardcoded 'Dr. Sarah Jenkins').
+                      value: previewData['patient']?['primary_care_physician'] ?? '—',
                     ),
                     const SizedBox(height: 6),
                     _PreviewInfoRow(

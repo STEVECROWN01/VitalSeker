@@ -141,7 +141,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get respiratoryRate => 'Respiratory Tep';
 
   @override
-  String get aiTriage => 'AI Triage';
+  String get aiTriage => 'Třídění AI';
 
   @override
   String get describeSymptoms => 'Describe your symPříznaky';
@@ -385,7 +385,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Vylepšit to Pro to unlock AI-powered weekly Zdraví iPřehledy';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Pro plán';
 
   @override
   String get viewAllPlans => 'View Vše plans';
@@ -518,8 +518,8 @@ class AppLocalizationsCs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count připojených členů',
+      one: '$count připojený člen',
     );
     return '$_temp0';
   }
@@ -841,7 +841,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Přejděte do části Profil > Předplatné a vyberte tarif Free, na který chcete přejít. Funkce tarifů Pro a Enterprise zůstanou aktivní až do konce aktuálního zúčtovacího období.';
 
   @override
   String get exportConfigurePreview =>
@@ -1791,8 +1791,8 @@ class AppLocalizationsCs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alergií',
+      one: '$count Alergie',
     );
     return '$_temp0';
   }
@@ -1802,8 +1802,8 @@ class AppLocalizationsCs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Léků',
+      one: '$count Lék',
     );
     return '$_temp0';
   }
@@ -1868,7 +1868,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get sosFailed => 'SOS se nezdařilo';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIVNÍ';
 
   @override
   String get sendingEmergencyAlert => 'Sending Pohotovost Alert';
@@ -1920,8 +1920,8 @@ class AppLocalizationsCs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontaktů informováno přes SMS',
+      one: '$count kontakt informován přes SMS',
     );
     return '$_temp0';
   }
@@ -2476,7 +2476,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Pro vybrané časové období nebyly nalezeny žádné údaje';
 
   @override
   String get singleReading => '1 přečtení';

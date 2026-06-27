@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -160,25 +160,26 @@ class InsightsScreen extends ConsumerWidget {
     );
   }
 
-  /// Build a 4-point symptom-frequency series (most recent week last).
-  /// Pads with deterministic synthetic points if fewer than 4 weeks of data.
+  /// Build a symptom-frequency series (most recent week last).
+  ///
+  /// PREVIOUSLY this method padded the series with fabricated "synthetic"
+  /// data points when fewer than 4 weeks of data existed — a user with only
+  /// 1 week of real data saw a 4-week curve where 3 of the 4 points were
+  /// fabricated, with no visual indication that those weeks were synthetic.
+  ///
+  /// NOW: returns only the real data points. The chart renders fewer bars
+  /// (or a single bar) when there's less data, which is honest.
   List<_WeekPoint> _buildSymptomSeries(List<WeeklyInsight> insights) {
     // Sort ascending by weekStart so W1 = oldest, W4 = newest.
     final sorted = [...insights]
       ..sort((a, b) => a.weekStart.compareTo(b.weekStart));
     final points = sorted.map((i) => i.trendAnalysis.symptomFrequency.toDouble()).toList();
-    while (points.length < 4) {
-      // Pad at the front with a deterministic synthetic value derived from
-      // the earliest known point so the curve has 4 visible data points.
-      final base = points.isEmpty ? 5.0 : points.first;
-      final synthetic = (base * 1.2 + points.length).clamp(1.0, 30.0);
-      points.insert(0, synthetic);
-    }
     // Keep only the last 4 weeks (most recent 4 data points).
     final last4 = points.length > 4 ? points.sublist(points.length - 4) : points;
+    // Use dynamic labels based on actual count (W1, W2, W3, W4) — but only
+    // for the weeks we actually have data for.
     return last4.asMap().entries.map((e) {
-      const labels = ['W1', 'W2', 'W3', 'W4'];
-      return _WeekPoint(label: labels[e.key], value: e.value);
+      return _WeekPoint(label: 'W${e.key + 1}', value: e.value);
     }).toList();
   }
 }
@@ -915,12 +916,12 @@ class _TipCard extends StatelessWidget {
 // 5. Generate New Insights — full-width gradient CTA
 // ═══════════════════════════════════════════════════════════════════════════
 
-class _GenerateInsightsCta extends StatelessWidget {
+class _GenerateInsightsCta extends ConsumerWidget {
   final bool isDark;
   const _GenerateInsightsCta({required this.isDark});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     return SizedBox(
       width: double.infinity,
@@ -928,11 +929,10 @@ class _GenerateInsightsCta extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () {
-            // Re-fetch insights. The edge function is admin/CRON-triggered,
-            // so we just invalidate the local provider to refresh from the DB.
-            // Showing a snackbar so the user gets feedback that the request
-            // has been registered.
+          onTap: () async {
+            // Actually refresh the insights provider. Previously this only
+            // showed a snackbar and never called ref.invalidate — making the
+            // "Generate New Insights" button a complete no-op.
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -948,6 +948,17 @@ class _GenerateInsightsCta extends StatelessWidget {
                 duration: const Duration(seconds: 2),
               ),
             );
+            // Attempt to invoke the weekly-insights edge function. Failures
+            // are tolerated (the function may be CRON-only); we still refresh
+            // the local provider so any newly-persisted rows surface.
+            try {
+              await EdgeFunctionService().generateWeeklyInsights();
+            } catch (_) {
+              // Expected — the function may be CRON-gated. Continue.
+            }
+            if (context.mounted) {
+              ref.invalidate(weeklyInsightsProvider);
+            }
           },
           child: Ink(
             decoration: BoxDecoration(

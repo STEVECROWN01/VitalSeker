@@ -30,8 +30,14 @@ supabase link --project-ref umncqfyzphvxtosddyae
 
 ### Step 4: Deploy Each Edge Function
 ```bash
-# AI Triage Function (requires ANTHROPIC_API_KEY)
+# AI Triage Function (requires GLM_GATEWAY_SECRET + GLM_GATEWAY_URL)
+# Note: The project uses z.ai GLM-4-plus (substituted for Anthropic Claude per
+# project owner's instruction). Set GLM_GATEWAY_SECRET and GLM_GATEWAY_URL.
 supabase functions deploy vitalseker-triage
+
+# Medical Translation Function (requires DEEPL_API_KEY — free dev tier offers
+# 1M characters/month). Uses DeepL API for medical term translation.
+supabase functions deploy translate
 
 # QR Code Generation Function (requires QR_ENCRYPTION_KEY)
 supabase functions deploy generate-qr
@@ -39,11 +45,14 @@ supabase functions deploy generate-qr
 # PDF Export Function
 supabase functions deploy export-pdf
 
-# Weekly Insights Function (requires ANTHROPIC_API_KEY + CRON_SECRET)
+# Weekly Insights Function (requires GLM_GATEWAY_SECRET + GLM_GATEWAY_URL + CRON_SECRET)
 supabase functions deploy weekly-insights
 
 # SOS Alert Function (requires TWILIO credentials)
 supabase functions deploy sos-alert
+
+# Account Deletion Function (required by GDPR / right to be forgotten)
+supabase functions deploy delete-account
 ```
 
 ### Step 5: Set Environment Secrets
@@ -52,8 +61,17 @@ supabase functions deploy sos-alert
 > Do NOT reuse the service-role key as an encryption key.
 
 ```bash
-# AI / SMS secrets
-supabase secrets set ANTHROPIC_API_KEY=your_anthropic_api_key
+# AI secrets — z.ai GLM gateway (substituted for Anthropic per project owner)
+supabase secrets set GLM_GATEWAY_SECRET=your_glm_gateway_secret
+supabase secrets set GLM_GATEWAY_URL=https://your-glm-gateway-url
+# Optional: override the built-in triage system prompt
+supabase secrets set TRIAGE_SYSTEM_PROMPT="your custom system prompt"
+
+# Translation secrets — DeepL API (free dev tier: 1M chars/month)
+# Get a free key at https://www.deepl.com/pro-api
+supabase secrets set DEEPL_API_KEY=your_deepl_api_key
+
+# SMS secrets — Twilio (for SOS alert messages)
 supabase secrets set TWILIO_ACCOUNT_SID=your_twilio_account_sid
 supabase secrets set TWILIO_AUTH_TOKEN=your_twilio_auth_token
 supabase secrets set TWILIO_PHONE_NUMBER=your_twilio_phone_number
@@ -68,10 +86,33 @@ supabase secrets set SUPABASE_SERVICE_KEY=your_service_role_jwt
 supabase secrets set CRON_SECRET=your_generated_cron_secret
 
 # QR token encryption key — dedicated AES-256 key (NOT the service key).
-# Generate a strong 32-byte random value:
+# Generate a strong 32-byte base64 value:
 #   openssl rand -base64 32
 supabase secrets set QR_ENCRYPTION_KEY=your_generated_qr_key
 ```
+
+### Step 5b: Set Client-Side Secrets (Flutter .env)
+
+These secrets are loaded by the Flutter app at runtime. Set them in your
+`.env` file (gitignored — never commit) or via `--dart-define` for CI/CD:
+
+```bash
+# Sentry (crash monitoring)
+SENTRY_DSN=https://your_sentry_dsn@sentry.io/123
+
+# OneSignal (push notifications)
+ONESIGNAL_APP_ID=your-onesignal-app-id
+
+# PostHog (analytics)
+POSTHOG_API_KEY=phc_your_posthog_api_key
+POSTHOG_HOST=https://us.i.posthog.com
+
+# RevenueCat (in-app purchases)
+REVENUECAT_API_KEY=appl_your_revenuecat_key
+```
+
+All of these are optional in development — the app runs in no-op mode
+without them. They MUST be set for production deployment.
 
 ### Step 6: Configure CRON for Weekly Insights
 In the Supabase Dashboard → Database → Cron Jobs, add a schedule that invokes

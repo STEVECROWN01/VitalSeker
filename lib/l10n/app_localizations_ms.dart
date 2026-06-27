@@ -12,7 +12,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get appName => 'VitalSeker';
 
   @override
-  String get tagline => 'Your AI Health Companion';
+  String get tagline => 'Rakan Kesihatan AI anda';
 
   @override
   String get home => 'Utama';
@@ -54,43 +54,43 @@ class AppLocalizationsMs extends AppLocalizations {
   String get confirmPassword => 'Sahkan Kata laluan';
 
   @override
-  String get createAccount => 'Create Account';
+  String get createAccount => 'Buat Akaun';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'Tiada akaun?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'Sudah mempunyai akaun?';
 
   @override
-  String get orContinueWith => 'or continue with';
+  String get orContinueWith => 'atau teruskan dengan';
 
   @override
-  String get continueWithGoogle => 'Continue with Google';
+  String get continueWithGoogle => 'Teruskan dengan Google';
 
   @override
-  String get continueWithApple => 'Continue with Apple';
+  String get continueWithApple => 'Teruskan dengan Apple';
 
   @override
   String get forgotPassword => 'Forgot PKata laluan';
 
   @override
-  String get goodMorning => 'Good morning';
+  String get goodMorning => 'selamat pagi';
 
   @override
-  String get goodAfternoon => 'Good afternoon';
+  String get goodAfternoon => 'selamat petang';
 
   @override
-  String get goodEvening => 'Good evening';
+  String get goodEvening => 'selamat petang';
 
   @override
-  String get goodNight => 'Good night';
+  String get goodNight => 'selamat malam';
 
   @override
   String get healthScore => 'Kesihatan Score';
 
   @override
-  String get quickActions => 'Quick Actions';
+  String get quickActions => 'Tindakan Pantas';
 
   @override
   String get checkSymptomsNow => 'Check Gejala Now';
@@ -105,13 +105,13 @@ class AppLocalizationsMs extends AppLocalizations {
   String get emergencySOS => 'SOS Kecemasan';
 
   @override
-  String get recentChecks => 'Recent Checks';
+  String get recentChecks => 'Cek Terkini';
 
   @override
   String get noSymptomsLogs => 'Tidak Gejala logs yet';
 
   @override
-  String get startTriage => 'Start Triage';
+  String get startTriage => 'Mulakan Triage';
 
   @override
   String get vitals => 'Tanda vital';
@@ -129,19 +129,19 @@ class AppLocalizationsMs extends AppLocalizations {
   String get spo2 => 'SpO2';
 
   @override
-  String get temperature => 'Temperature';
+  String get temperature => 'Suhu';
 
   @override
   String get weight => 'Berat';
 
   @override
-  String get bloodGlucose => 'Blood Glucose';
+  String get bloodGlucose => 'Glukosa Darah';
 
   @override
-  String get respiratoryRate => 'Respiratory Rate';
+  String get respiratoryRate => 'Kadar Pernafasan';
 
   @override
-  String get aiTriage => 'AI Triage';
+  String get aiTriage => 'Triage AI';
 
   @override
   String get describeSymptoms => 'Describe your symGejala';
@@ -153,19 +153,19 @@ class AppLocalizationsMs extends AppLocalizations {
   String get aiProcessing => 'AI is processing your Kesihatan data';
 
   @override
-  String get send => 'Send';
+  String get send => 'Hantar';
 
   @override
-  String get newChat => 'New Chat';
+  String get newChat => 'Sembang Baharu';
 
   @override
-  String get viewDetailedResults => 'View Detailed Results';
+  String get viewDetailedResults => 'Lihat Keputusan Terperinci';
 
   @override
   String get monitorAtHome => 'Monitor at Utama';
 
   @override
-  String get whenToEscalate => 'When to escalate';
+  String get whenToEscalate => 'Bila hendak meningkat';
 
   @override
   String get saveToPassport => 'Simpan to Pasport';
@@ -207,19 +207,19 @@ class AppLocalizationsMs extends AppLocalizations {
   String get selectLanguage => 'Select Bahasa';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'Penampilan';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'Mod Gelap';
 
   @override
-  String get account => 'Account';
+  String get account => 'Akaun';
 
   @override
   String get privacyData => 'Privasi & Data';
 
   @override
-  String get securityStorage => 'Security & Storage';
+  String get securityStorage => 'Keselamatan & Storan';
 
   @override
   String get exportData => 'Eksport Data';
@@ -231,7 +231,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get helpCenter => 'Bantuan Center';
 
   @override
-  String get contactConcierge => 'Contact Concierge';
+  String get contactConcierge => 'Hubungi Concierge';
 
   @override
   String get aboutVitalSeker => 'Tentang VitalSeker';
@@ -243,7 +243,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get medicalID => 'ID Perubatan';
 
   @override
-  String get medicalTranslation => 'Medical Translation';
+  String get medicalTranslation => 'Terjemahan Perubatan';
 
   @override
   String get familyProfiles => 'Keluarga Profiles';
@@ -252,16 +252,16 @@ class AppLocalizationsMs extends AppLocalizations {
   String get addFamilyMember => 'Tambah Keluarga Member';
 
   @override
-  String get accountOwner => 'ACCOUNT OWNER';
+  String get accountOwner => 'PEMILIK AKAUN';
 
   @override
   String get upgradeToPro => 'Naik taraf to Pro';
 
   @override
-  String get protectWholeCircle => 'Protect the whole circle.';
+  String get protectWholeCircle => 'Lindungi seluruh bulatan.';
 
   @override
-  String get learnMore => 'Learn More';
+  String get learnMore => 'Ketahui Lebih Lanjut';
 
   @override
   String get medications => 'Ubat';
@@ -270,25 +270,25 @@ class AppLocalizationsMs extends AppLocalizations {
   String get addMedication => 'Tambah Medication';
 
   @override
-  String get appointments => 'Appointments';
+  String get appointments => 'Temujanji';
 
   @override
   String get addAppointment => 'Tambah Appointment';
 
   @override
-  String get upcoming => 'Upcoming';
+  String get upcoming => 'Akan datang';
 
   @override
-  String get completed => 'Completed';
+  String get completed => 'Selesai';
 
   @override
-  String get cancelled => 'Cancelled';
+  String get cancelled => 'Dibatalkan';
 
   @override
-  String get active => 'Active';
+  String get active => 'Aktif';
 
   @override
-  String get discontinued => 'Discontinued';
+  String get discontinued => 'Dihentikan';
 
   @override
   String get save => 'Simpan';
@@ -321,19 +321,19 @@ class AppLocalizationsMs extends AppLocalizations {
   String get pressAndHold => 'Press and hold to send Kecemasan alert';
 
   @override
-  String get holdFor3Seconds => 'Hold for 3 seconds';
+  String get holdFor3Seconds => 'Tahan selama 3 saat';
 
   @override
-  String get imSafeResolve => 'I\'m Safe - Resolve';
+  String get imSafeResolve => 'Saya Selamat - Selesaikan';
 
   @override
   String get shareMyLocation => 'Kongsi My Lokasi';
 
   @override
-  String get findHospitalsNearMe => 'Find Hospitals Near Me';
+  String get findHospitalsNearMe => 'Cari Hospital Berdekatan Saya';
 
   @override
-  String get quickDial => 'Quick Dial';
+  String get quickDial => 'Dail Pantas';
 
   @override
   String get emergencyContacts => 'Kecemasan Contacts';
@@ -361,10 +361,11 @@ class AppLocalizationsMs extends AppLocalizations {
   String get noHistoryYet => 'Tidak Sejarah Yet';
 
   @override
-  String get symptomLogsAppearHere => 'Your symptom logs will appear here';
+  String get symptomLogsAppearHere =>
+      'Log simptom anda akan dipaparkan di sini';
 
   @override
-  String get startFirstTriage => 'Start Your First Triage';
+  String get startFirstTriage => 'Mulakan Triage Pertama Anda';
 
   @override
   String get weeklyInsights => 'Weekly Wawasan';
@@ -377,14 +378,14 @@ class AppLocalizationsMs extends AppLocalizations {
       'Tidak Wawasan generated yet. Check Kembali on Monday for your weekly AI Kesihatan summary.';
 
   @override
-  String get generateNow => 'Generate Now';
+  String get generateNow => 'Jana Sekarang';
 
   @override
   String get upgradeProInsights =>
       'Naik taraf to Pro to unlock AI-powered weekly Kesihatan iWawasan';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Pelan Pro';
 
   @override
   String get viewAllPlans => 'View Semua plans';
@@ -393,13 +394,14 @@ class AppLocalizationsMs extends AppLocalizations {
   String get exportMedicalReport => 'Eksport Medical Report';
 
   @override
-  String get generatePDF => 'Generate PDF';
+  String get generatePDF => 'Hasilkan PDF';
 
   @override
   String get sendByEmail => 'Send by E-mel';
 
   @override
-  String get patientOverview => 'Patient Overview & Vital Stats';
+  String get patientOverview =>
+      'Gambaran Keseluruhan Pesakit & Statistik Penting';
 
   @override
   String get symptomsTriageLog => 'Gejala & Triage Log';
@@ -408,19 +410,19 @@ class AppLocalizationsMs extends AppLocalizations {
   String get medicationsAllergies => 'Ubat & Alahan';
 
   @override
-  String get aiAnalysisSummary => 'AI Analysis Summary';
+  String get aiAnalysisSummary => 'Ringkasan Analisis AI';
 
   @override
   String get dateRange => 'Tarikh Range';
 
   @override
-  String get last30Days => 'Last 30 Days';
+  String get last30Days => '30 Hari Terakhir';
 
   @override
   String get preview => 'PREVIEW';
 
   @override
-  String get translate => 'Translate';
+  String get translate => 'Terjemah';
 
   @override
   String get translateMedicalTerms => 'Translate medical Terma';
@@ -430,25 +432,25 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get enterTextToTranslate =>
-      'Enter medical term or phrase to translate';
+      'Masukkan istilah atau frasa perubatan untuk diterjemahkan';
 
   @override
   String translationResult(Object lang) {
-    return 'Translation Result';
+    return 'Hasil Terjemahan';
   }
 
   @override
   String get notificationPreferences =>
-      'Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.';
+      'Pilihan pemberitahuan anda disimpan ke akaun anda.Penyesuaian jadual kini tersedia — ketik mana-mana jadual untuk menukarnya.';
 
   @override
-  String get triageReminders => 'Triage Reminders';
+  String get triageReminders => 'Peringatan Triage';
 
   @override
-  String get medicationReminders => 'Medication Reminders';
+  String get medicationReminders => 'Peringatan Ubat';
 
   @override
-  String get appointmentReminders => 'Appointment Reminders';
+  String get appointmentReminders => 'Peringatan Pelantikan';
 
   @override
   String get vitalsLoggingReminders => 'Tanda vital Logging Reminders';
@@ -457,10 +459,10 @@ class AppLocalizationsMs extends AppLocalizations {
   String get healthTips => 'Kesihatan Tips';
 
   @override
-  String get weeklyReport => 'Weekly Report';
+  String get weeklyReport => 'Laporan Mingguan';
 
   @override
-  String get reminders => 'Reminders';
+  String get reminders => 'Peringatan';
 
   @override
   String get insightsTips => 'Wawasan & Tips';
@@ -476,7 +478,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get deletePermanently => 'Padam Permanently';
 
   @override
-  String get accountDeleted => 'Account deleted. Sorry to see you go.';
+  String get accountDeleted => 'Akaun dipadamkan.Kesian tengok awak pergi.';
 
   @override
   String get sendEmergencySOS => 'Send SOS Kecemasan?';
@@ -486,48 +488,48 @@ class AppLocalizationsMs extends AppLocalizations {
       'This will send an SMS with your live Lokasi to Semua of your Kecemasan contacts.';
 
   @override
-  String get sendSOS => 'Send SOS';
+  String get sendSOS => 'Hantar SOS';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'Adakah anda pasti mahu log keluar?';
 
   @override
-  String get failedToSignOut => 'Failed to sign out. Please try again.';
+  String get failedToSignOut => 'Gagal log keluar.Sila cuba lagi.';
 
   @override
   String get vitalsLogged => 'Tanda vital Logged';
 
   @override
-  String get triageSessions => 'Triage Sessions';
+  String get triageSessions => 'Sesi Triage';
 
   @override
-  String get daysActive => 'Days Active';
+  String get daysActive => 'Hari Aktif';
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'Melog keluar...';
 
   @override
-  String get manageMedicalCredentials => 'Manage medical credentials';
+  String get manageMedicalCredentials => 'Menguruskan kelayakan perubatan';
 
   @override
   String connectedMembers(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count ahli disambung',
+      one: '$count ahli disambung',
     );
     return '$_temp0';
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'Makluman & peringatan pintar';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'Dokumen & pengimejan';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical Terma';
@@ -536,7 +538,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get emergencyMedicalCard => 'Kecemasan medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'Penyulitan AES-256 aktif';
 
   @override
   String get downloadYourHealthData => 'Download your Kesihatan data';
@@ -545,14 +547,14 @@ class AppLocalizationsMs extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pKata laluan account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation => 'Soalan Lazim & dokumentasi';
 
   @override
   String get priorityProSupport => 'Priority Pro Sokongan';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Versi $version';
   }
 
   @override
@@ -568,10 +570,10 @@ class AppLocalizationsMs extends AppLocalizations {
   String get confirmNewPassword => 'Sahkan New Kata laluan';
 
   @override
-  String get update => 'Update';
+  String get update => 'Kemas kini';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
+  String get passwordsDoNotMatch => 'Kata laluan tidak sepadan';
 
   @override
   String get passwordMinLength => 'Kata laluan must be at least 8 characters';
@@ -595,44 +597,44 @@ class AppLocalizationsMs extends AppLocalizations {
       'Failed to Padam account. Please try again or contact sSokongan';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'Urus langganan anda';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently Buang your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'Tamatkan sesi semasa anda';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Gelap';
 
   @override
-  String get light => 'Light';
+  String get light => 'Cahaya';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'Sistem lalai';
 
   @override
-  String get subscription => 'Subscription';
+  String get subscription => 'Langganan';
 
   @override
   String get restore => 'Pulihkan';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'Pilih Pelan Anda';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'Buka kunci kuasa penuh VitalSeker';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'Penyepaduan pembayaran dalam apl (RevenueCat / StoreKit) belum selesai.Perubahan rancangan digunakan terus pada akaun anda untuk ujian.';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'selama-lamanya';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/bulan';
 
   @override
   String get freePlanFeature1 => '3 AI Triage sessions/month';
@@ -641,7 +643,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get freePlanFeature2 => 'Basic Kesihatan Pasport';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'Perkongsian kod QR';
 
   @override
   String get freePlanFeature4 => 'SOS Kecemasan alerts';
@@ -668,31 +670,31 @@ class AppLocalizationsMs extends AppLocalizations {
   String get proPlanFeature6 => 'Priority Sokongan';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 => 'Semuanya dalam Pro';
 
   @override
   String get enterprisePlanFeature2 => 'Unlimited Keluarga profiles';
 
   @override
-  String get enterprisePlanFeature3 => 'Custom branding';
+  String get enterprisePlanFeature3 => 'Penjenamaan tersuai';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Akses API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Sokongan';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'Jaminan SLA';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'NILAI TERBAIK';
 
   @override
-  String get currentPlan => 'Current Plan';
+  String get currentPlan => 'Rancangan Semasa';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Turun taraf';
 
   @override
   String upgradeToPlan(String plan) {
@@ -701,20 +703,20 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+      'Anda mesti log masuk untuk menukar rancangan.';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'Tukar kepada $plan?';
   }
 
   @override
   String get downgradeToFreeMessage =>
-      'You will lose access to Pro features at the end of your current billing period. Continue?';
+      'Anda akan kehilangan akses kepada ciri Pro pada penghujung tempoh pengebilan semasa anda.teruskan?';
 
   @override
   String upgradeToPlanMessage(String plan) {
-    return 'This will update your subscription to $plan. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.';
+    return 'Ini akan mengemas kini langganan anda kepada $plan.Dalam pengeluaran ini akan melancarkan paywall platform;buat masa ini perubahan digunakan terus pada akaun anda untuk ujian.';
   }
 
   @override
@@ -731,10 +733,10 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Failed to update subscription. Please try again.';
+      'Gagal mengemas kini langganan.Sila cuba lagi.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'Pembelian dipulihkan.';
 
   @override
   String get failedToRestorePurchases => 'Failed to Pulihkan purchases.';
@@ -753,19 +755,19 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'Soalan Lazim';
 
   @override
   String get contactSupport => 'Contact Sokongan';
 
   @override
-  String get subject => 'Subject';
+  String get subject => 'Subjek';
 
   @override
-  String get message => 'Message';
+  String get message => 'Mesej';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'Hantar';
 
   @override
   String get otherWaysToReachUs => 'Lain Ways to Reach Us';
@@ -779,13 +781,13 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+      'Sila isikan kedua-dua subjek dan mesej.';
 
   @override
-  String get subjectMinLength => 'Subject must be at least 5 characters.';
+  String get subjectMinLength => 'Subjek mestilah sekurang-kurangnya 5 aksara.';
 
   @override
-  String get messageMinLength => 'Message must be at least 10 characters.';
+  String get messageMinLength => 'Mesej mestilah sekurang-kurangnya 10 aksara.';
 
   @override
   String get mustBeSignedInToSubmitSupport =>
@@ -793,7 +795,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'Permintaan segera diterima!Pasukan kami akan mengutamakan ini.';
 
   @override
   String get supportRequestSent =>
@@ -840,17 +842,17 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Pergi ke Profil > Langganan dan pilih pelan Percuma untuk menurunkan taraf. Ciri Pro atau Perusahaan anda akan kekal aktif sehingga tamat tempoh pengebilan semasa anda.';
 
   @override
   String get exportConfigurePreview =>
       'Configure and preview your comprehensive Kesihatan summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'Sertakan Bahagian';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => '3 Bulan lepas';
 
   @override
   String get yearToDate => 'Year to Tarikh';
@@ -859,14 +861,14 @@ class AppLocalizationsMs extends AppLocalizations {
   String get allTime => 'Semua Masa';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'Menjana…';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'Menghantar…';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'PDF termasuk kredit $producer sebagai pengeluar';
   }
 
   @override
@@ -880,26 +882,26 @@ class AppLocalizationsMs extends AppLocalizations {
       'Manage Kesihatan for your whole Keluarga (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'Pemilik Akaun';
 
   @override
   String get ownerProfile => 'Owner Profil';
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age tahun';
   }
 
   @override
   String scoreValue(int score) {
-    return 'Score: $score';
+    return 'Markah: $score';
   }
 
   @override
-  String get reachedProLimit => 'You\'ve reached the 5-member Pro limit.';
+  String get reachedProLimit => 'Anda telah mencapai had Pro 5 ahli.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'Had dicapai';
 
   @override
   String get pleaseFillNameRelationship =>
@@ -921,7 +923,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return 'Adakah anda pasti mahu mengalih keluar $name daripada profil keluarga anda?';
   }
 
   @override
@@ -938,7 +940,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get fullNameLabel => 'Full Nama';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => 'Perhubungan (cth., Pasangan, Anak)';
 
   @override
   String get bloodTypeOptional => 'Jenis darah (optional)';
@@ -950,7 +952,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get upgradeYourCare => 'Naik taraf YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'Anda melindungi seluruh kalangan.';
 
   @override
   String get proMemberThanks =>
@@ -966,10 +968,10 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get manageSubscription => 'Manage Subscription';
+  String get manageSubscription => 'Urus Langganan';
 
   @override
-  String get failedToLoadProfiles => 'Failed to load profiles';
+  String get failedToLoadProfiles => 'Gagal memuatkan profil';
 
   @override
   String get searchMedications => 'Cari medUbat';
@@ -990,43 +992,42 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get dosage => 'Dosage';
+  String get dosage => 'Dos';
 
   @override
   String get unit => 'Unit';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'Kekerapan';
 
   @override
   String get notes => 'Nota';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'Ubat dihentikan';
 
   @override
-  String get failedToDiscontinueMedication =>
-      'Failed to discontinue medication.';
+  String get failedToDiscontinueMedication => 'Gagal menghentikan ubat.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'Ubat dikemas kini!';
 
   @override
-  String get failedToUpdateMedication => 'Failed to update medication.';
+  String get failedToUpdateMedication => 'Gagal mengemas kini ubat.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted => 'Ubat ditanda sebagai selesai';
 
   @override
   String get deleteMedication => 'Padam Medication';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'Adakah anda pasti mahu memadamkan $name?';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'Ubat dipadamkan';
 
   @override
   String get failedToDeleteMedication => 'Failed to Padam medication.';
@@ -1035,39 +1036,39 @@ class AppLocalizationsMs extends AppLocalizations {
   String get editDetails => 'Sunting Details';
 
   @override
-  String get markComplete => 'Mark Complete';
+  String get markComplete => 'Tandakan Selesai';
 
   @override
-  String get discontinue => 'Discontinue';
+  String get discontinue => 'hentikan';
 
   @override
   String nextDose(String time) {
-    return 'Next dose: $time';
+    return 'Dos seterusnya: $time';
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => 'Sekali Setiap Hari';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => 'Dua Kali Setiap Hari';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => 'Tiga Kali Setiap Hari';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => 'Empat Kali Setiap Hari';
 
   @override
   String get everyOtherDay => 'Every Lain Day';
 
   @override
-  String get weekly => 'Weekly';
+  String get weekly => 'Mingguan';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => 'Seperti yang Diperlukan';
 
   @override
-  String get custom => 'Custom';
+  String get custom => 'Adat';
 
   @override
   String get all => 'Semua';
@@ -1083,13 +1084,13 @@ class AppLocalizationsMs extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted => 'Pelantikan ditanda sebagai selesai';
 
   @override
-  String get failedToUpdateAppointment => 'Failed to update appointment.';
+  String get failedToUpdateAppointment => 'Gagal mengemas kini janji temu.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => 'Janji temu dibatalkan';
 
   @override
   String get failedToCancelAppointment => 'Failed to Batal appointment.';
@@ -1102,12 +1103,12 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return 'Dijadualkan semula kepada $date pada $time';
   }
 
   @override
   String get failedToRescheduleAppointment =>
-      'Failed to reschedule appointment.';
+      'Gagal menjadualkan semula janji temu.';
 
   @override
   String get deleteAppointment => 'Padam Appointment';
@@ -1118,13 +1119,13 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => 'Janji temu dipadamkan';
 
   @override
   String get failedToDeleteAppointment => 'Failed to Padam appointment.';
 
   @override
-  String get reschedule => 'Reschedule';
+  String get reschedule => 'Jadual semula';
 
   @override
   String get cancelAppointment => 'Batal Appointment';
@@ -1134,33 +1135,34 @@ class AppLocalizationsMs extends AppLocalizations {
       'Translate medical Terma and phrases into your preferred lBahasa Useful for travel, consultations, and discussing care with non-English-speaking providers.';
 
   @override
-  String get medicalTermOrPhrase => 'Medical term or phrase';
+  String get medicalTermOrPhrase => 'Istilah atau frasa perubatan';
 
   @override
   String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+      'cth.\"hipertensi\", \"ambil dua kali sehari dengan makanan\"';
 
   @override
-  String get translating => 'Translating...';
+  String get translating => 'Menterjemah...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return 'Terjemahan ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear =>
+      'Terjemahan anda akan dipaparkan di sini.';
 
   @override
   String get pleaseEnterTermToTranslate =>
-      'Please enter a medical term or phrase to translate.';
+      'Sila masukkan istilah atau frasa perubatan untuk diterjemahkan.';
 
   @override
   String get noTranslationReturned =>
       'Tidak translation was returned. Please try a different term.';
 
   @override
-  String get translationFailed => 'Translation failed. Please try again.';
+  String get translationFailed => 'Terjemahan gagal.Sila cuba lagi.';
 
   @override
   String get notificationSettings => 'Notification Tetapan';
@@ -1170,16 +1172,16 @@ class AppLocalizationsMs extends AppLocalizations {
       'Failed to Simpan notification setting';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => 'Ciri-ciri Utama';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'Penerbit';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => 'Konsep, Reka Bentuk & Pembangunan';
 
   @override
-  String get updateAccountCredentials => 'Update your account credentials';
+  String get updateAccountCredentials => 'Kemas kini kelayakan akaun anda';
 
   @override
   String get legal => 'Legal';
@@ -1189,7 +1191,7 @@ class AppLocalizationsMs extends AppLocalizations {
       'VitalSeker is your AI-powered Kesihatan companion that puts you in control of your Kesihatan journey. With intelligent symptom tTriage a secure Kesihatan pPasport Kecemasan SOS alerts, and personalized weekly iWawasan VitalSeker ensures you always have the information you need when it matters most. Built with cutting-edge AI technology and bank-grade security, your Kesihatan data stays private and protected.';
 
   @override
-  String get featureAiTriageTitle => 'AI Symptom Triage';
+  String get featureAiTriageTitle => 'Triage Gejala AI';
 
   @override
   String get featureAiTriageDesc =>
@@ -1243,7 +1245,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return 'Kemas kini terakhir: Versi $version';
   }
 
   @override
@@ -1260,7 +1262,7 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => 'Kelayakan & Akaun';
 
   @override
   String get tosSection2Para1 =>
@@ -1287,21 +1289,22 @@ class AppLocalizationsMs extends AppLocalizations {
       'In a medical eKecemasan call your local Kecemasan number (e.g. 911, 112) immediately. Do not rely on the Service for Kecemasan response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => 'Penggunaan Perkhidmatan';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => 'Anda bersetuju TIDAK untuk:';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 =>
+      'Gunakan Perkhidmatan untuk sebarang tujuan yang menyalahi undang-undang;';
 
   @override
   String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+      'Cuba untuk merekayasa balik, menyahhimpun atau menyahhimpun apl;';
 
   @override
   String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+      'Muat naik kandungan yang berniat jahat, menipu atau melanggar hak harta intelek;';
 
   @override
   String get tosSection4Bullet4 =>
@@ -1309,10 +1312,10 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+      'Gunakan Perkhidmatan untuk menghantar komunikasi atau spam yang tidak diminta.';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => 'Langganan & Pembayaran';
 
   @override
   String get tosSection5Para1 =>
@@ -1324,10 +1327,10 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get tosSection5Para3 =>
-      'We may change subscription fees upon reasonable notice. Fee changes will not apply to your current billing period.';
+      'Kami mungkin menukar yuran langganan atas notis yang munasabah.Perubahan yuran tidak akan dikenakan pada tempoh pengebilan semasa anda.';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => 'Data Anda';
 
   @override
   String get tosSection6Para1 =>
@@ -1338,18 +1341,18 @@ class AppLocalizationsMs extends AppLocalizations {
       'You may Eksport your data at any Masa via the in-app Eksport feature, and you may permanently Padam your account and Semua associated data via Tetapan → Padam Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => 'Penafian';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      'PERKHIDMATAN DISEDIAKAN \"SEBAGAIMANA ADANYA\" DAN \"SEBAGAIMANA TERSEDIA\" TANPA SEBARANG JENIS WARANTI, SAMA ADA NYATA MAUPUN TERSIRAT, TERMASUK TETAPI TIDAK TERHAD KEPADA WARANTI TERSIRAT KEBOLEHPERDAGANGAN, KESESUAIAN UNTUK TUJUAN TERTENTU, ATAU TANPA PELANGGARAN.';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI Triage recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => 'Had Liabiliti';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1357,7 +1360,7 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => 'Penamatan';
 
   @override
   String get tosSection9Para1 =>
@@ -1375,7 +1378,7 @@ class AppLocalizationsMs extends AppLocalizations {
       'We may update these Terma from Masa to tMasa We will notify you of material changes via the app or by eE-mel Continued use of the Service after changes take effect constitutes acceptance of the revised TTerma';
 
   @override
-  String get tosSection11Title => 'Contact';
+  String get tosSection11Title => 'Kenalan';
 
   @override
   String get tosSection11Para1 =>
@@ -1396,19 +1399,19 @@ class AppLocalizationsMs extends AppLocalizations {
   String get enterprise => 'Perusahaan';
 
   @override
-  String get nA => 'N/A';
+  String get nA => 'T/A';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Langkau';
 
   @override
   String get next => 'Seterusnya';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Masukkan VitalSeker';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => 'Kenali badan anda.';
 
   @override
   String get onboardingDescription1 =>
@@ -1429,10 +1432,10 @@ class AppLocalizationsMs extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re Kembali online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'Log masuk ke akaun VitalSeker anda';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'Melog masuk...';
 
   @override
   String get emailRequired => 'E-mel is Diperlukan';
@@ -1451,7 +1454,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String passwordResetSent(String email) {
-    return 'Password reset link sent to $email';
+    return 'Pautan tetapan semula kata laluan dihantar ke $email';
   }
 
   @override
@@ -1470,7 +1473,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get other => 'Lain';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => 'Mencipta akaun...';
 
   @override
   String get joinVitalSeker =>
@@ -1483,19 +1486,20 @@ class AppLocalizationsMs extends AppLocalizations {
   String get nameMinChars => 'Nama must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => 'Sekurang-kurangnya 6 aksara';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => 'Sertakan sekurang-kurangnya satu huruf besar';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase => 'Sertakan sekurang-kurangnya satu huruf kecil';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => 'Sertakan sekurang-kurangnya satu nombor';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol =>
+      'Sertakan sekurang-kurangnya satu simbol (!@#\$%^&*)';
 
   @override
   String get confirmPasswordRequired => 'Please Sahkan your Kata laluan';
@@ -1513,16 +1517,16 @@ class AppLocalizationsMs extends AppLocalizations {
   String get selectDateOfBirthHint => 'Select your Tarikh of birth';
 
   @override
-  String get gender => 'Gender';
+  String get gender => 'Jantina';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => 'Pilih jantina';
 
   @override
   String get bloodType => 'Jenis darah';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => 'Pilih jenis darah';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1539,31 +1543,31 @@ class AppLocalizationsMs extends AppLocalizations {
       'Account created! Please check your E-mel to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => 'pengguna';
 
   @override
   String get viewAll => 'View Semua';
 
   @override
-  String get failedLoadRecentChecks => 'Failed to load recent checks';
+  String get failedLoadRecentChecks => 'Gagal memuatkan semakan baru-baru ini';
 
   @override
   String get pullDownRetry => 'Pull down to Cuba semula';
 
   @override
-  String get goodCondition => 'Good condition';
+  String get goodCondition => 'keadaan baik';
 
   @override
-  String get fairCondition => 'Fair condition';
+  String get fairCondition => 'Keadaan yang adil';
 
   @override
-  String get needsAttention => 'Needs attention';
+  String get needsAttention => 'Perlu perhatian';
 
   @override
-  String get poorCondition => 'Poor condition';
+  String get poorCondition => 'Keadaan yang teruk';
 
   @override
-  String get critical => 'Critical';
+  String get critical => 'kritikal';
 
   @override
   String get overallHealthIndicator => 'Your overall Kesihatan indicator';
@@ -1575,17 +1579,17 @@ class AppLocalizationsMs extends AppLocalizations {
   String get aiPoweredTriage60s => 'AI-powered Triage in 60 seconds';
 
   @override
-  String get qrAndMedicalInfo => 'QR & medical info';
+  String get qrAndMedicalInfo => 'QR & maklumat perubatan';
 
   @override
   String get pastChecksAndVitals => 'Past checks & Tanda vital';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'tadi';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '${hours}h lalu';
   }
 
   @override
@@ -1596,14 +1600,14 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return '${days}d lalu';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => 'Pemeriksaan simptom';
 
   @override
-  String get severity => 'Severity';
+  String get severity => 'Keterukan';
 
   @override
   String get aiGreeting =>
@@ -1614,91 +1618,91 @@ class AppLocalizationsMs extends AppLocalizations {
       'Based on your sGejala here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => 'Terdesak';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => 'Cadangan penjagaan';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ Bendera merah:';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => 'Cadangan:';
 
   @override
   String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+      'Ketik \"Lihat Keputusan Terperinci\" di bawah untuk analisis penuh.';
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: $error';
+    return 'Saya minta maaf, saya mengalami ralat menganalisis gejala anda.Sila cuba lagi atau huraikan gejala anda secara berbeza.\n\nRalat: $error';
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => 'Ketidakselesaan umum';
 
   @override
-  String get selfCareRecommended => 'Self-Care Recommended';
+  String get selfCareRecommended => 'Penjagaan Diri Disyorkan';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => 'Jadualkan Janji Temu';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => 'Lawati Urgent Care';
 
   @override
   String get seekEmergencyCare => 'Seek Kecemasan Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider => 'Rujuk Penyedia Penjagaan Kesihatan';
 
   @override
-  String get mild => 'Mild';
+  String get mild => 'Ringan';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => 'Sederhana';
 
   @override
-  String get significant => 'Significant';
+  String get significant => 'Ketara';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => 'Teruk';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => 'melampau';
 
   @override
-  String get triageResults => 'Triage Results';
+  String get triageResults => 'Keputusan Triage';
 
   @override
   String urgencyScoreCaption(int score) {
-    return 'Urgency Score: $score/100';
+    return 'Skor Kecemasan: $score/100';
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => 'Bendera Merah';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => 'Cadangan';
 
   @override
-  String get possibleConditions => 'Possible Conditions';
+  String get possibleConditions => 'Keadaan yang Mungkin';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => 'Soalan Susulan';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Menyimpan...';
 
   @override
-  String get seeDoctorSoon => 'See a Doctor Soon';
+  String get seeDoctorSoon => 'Jumpa Doktor Segera';
 
   @override
   String get emergencyCareNow => 'Kecemasan Care Now';
 
   @override
   String get triageDisclaimer =>
-      'This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.';
+      'Ini bukan diagnosis perubatan.Sentiasa berunding dengan profesional penjagaan kesihatan untuk mendapatkan nasihat perubatan yang betul.';
 
   @override
   String get escalateLow1 => 'Gejala worsen or spread to new body areas';
@@ -1713,7 +1717,8 @@ class AppLocalizationsMs extends AppLocalizations {
   String get escalateMedium1 => 'Gejala persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 =>
+      'Sakit bertambah kuat atau menjadi tidak terurus';
 
   @override
   String get escalateMedium3 => 'New red-flag Gejala appear';
@@ -1722,8 +1727,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get escalateHigh1 => 'Gejala rapidly worsen';
 
   @override
-  String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+  String get escalateHigh2 => 'Kesukaran bernafas atau sesak dada berkembang';
 
   @override
   String get escalateHigh3 =>
@@ -1734,7 +1738,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get escalateEmergency2 =>
-      'Do not drive yourself — get a ride or ambulance';
+      'Jangan memandu sendiri — dapatkan perjalanan atau ambulans';
 
   @override
   String get escalateEmergency3 =>
@@ -1744,7 +1748,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get showQrCode => 'Show Kod QR';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'Tidak aktif';
 
   @override
   String get knownAllergies => 'Known Alahan';
@@ -1756,7 +1760,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get chronicConditions => 'Penyakit kronik';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'Insurans';
 
   @override
   String get qrCode => 'Kod QR';
@@ -1775,11 +1779,11 @@ class AppLocalizationsMs extends AppLocalizations {
   String get heightAndWeight => 'Tinggi & Berat';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'Tidak ditetapkan';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return '$count tahun';
   }
 
   @override
@@ -1787,8 +1791,8 @@ class AppLocalizationsMs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alahan',
+      one: '$count Alahan',
     );
     return '$_temp0';
   }
@@ -1798,8 +1802,8 @@ class AppLocalizationsMs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Ubat',
+      one: '$count Ubat',
     );
     return '$_temp0';
   }
@@ -1812,7 +1816,7 @@ class AppLocalizationsMs extends AppLocalizations {
       'Point this at any QR reader to securely Kongsi your vTanda vital';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'MUAT TURUN';
 
   @override
   String get share => 'Kongsi';
@@ -1824,27 +1828,27 @@ class AppLocalizationsMs extends AppLocalizations {
   String get generateQrCode => 'Generate Kod QR';
 
   @override
-  String get expired => 'Expired';
+  String get expired => 'Tamat tempoh';
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'Sah untuk ${hours}h ${minutes}m';
   }
 
   @override
   String get emergencySosTitle => 'SOS Kecemasan';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'Terus pegang...';
 
   @override
-  String get nearbyHospitals => 'Nearby Hospitals';
+  String get nearbyHospitals => 'Hospital Berdekatan';
 
   @override
   String get allergies => 'Alahan';
 
   @override
-  String get conditions => 'Conditions';
+  String get conditions => 'syarat';
 
   @override
   String get noMedicalInfoPrefix =>
@@ -1858,33 +1862,33 @@ class AppLocalizationsMs extends AppLocalizations {
       'SOS sends your GPS Lokasi to your Kecemasan contacts via SMS. Make sure your contacts are configured in your pProfil';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'MENGHANTAR';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS GAGAL';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIF';
 
   @override
   String get sendingEmergencyAlert => 'Sending Kecemasan Alert';
 
   @override
-  String get alertCouldNotBeSent => 'Alert Could Not Be Sent';
+  String get alertCouldNotBeSent => 'Makluman Tidak Dapat Dihantar';
 
   @override
   String get emergencyAlertSent => 'Kecemasan Alert Sent';
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'Menghantar masuk $seconds…';
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'Cuba Lagi';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => 'Tolak';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1903,21 +1907,21 @@ class AppLocalizationsMs extends AppLocalizations {
   String get liveLocation => 'Live Lokasi';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => 'Memperoleh koordinat GPS…';
 
   @override
   String get locationUnavailable => 'Lokasi unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => 'Kenalan Dimaklumkan';
 
   @override
   String contactsNotifiedCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontak dimaklumkan melalui SMS',
+      one: '$count kontak dimaklumkan melalui SMS',
     );
     return '$_temp0';
   }
@@ -1927,7 +1931,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count BULAN INI';
   }
 
   @override
@@ -1940,17 +1944,17 @@ class AppLocalizationsMs extends AppLocalizations {
   String get searchLogs => 'Cari logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => 'hijau';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => 'kuning';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'merah';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return 'Keterukan: $score/10';
   }
 
   @override
@@ -1958,35 +1962,35 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'Kawasan Badan: $regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return 'Tempoh: $duration';
   }
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'Syor AI: $recommendation';
   }
 
   @override
-  String get viewFullTriageResult => 'View Full Triage Result';
+  String get viewFullTriageResult => 'Lihat Keputusan Triage Penuh';
 
   @override
   String notesCaption(String notes) {
-    return 'Notes: $notes';
+    return 'Nota: $notes';
   }
 
   @override
   String get export30DayReport => 'Eksport 30-day Report (PPro';
 
   @override
-  String get weeklyBreakdown => 'Weekly Breakdown';
+  String get weeklyBreakdown => 'Pecahan Mingguan';
 
   @override
-  String get proAnalysis => 'Pro Analysis';
+  String get proAnalysis => 'Analisis Pro';
 
   @override
   String get yourHealthThisWeek => 'Your Kesihatan this week';
@@ -1997,46 +2001,46 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'Analisis Trend';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => 'KEKERAPAN GEJALA (4W)';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => 'tinggi';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'Purata';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => 'rendah';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => 'Panjangkan tidur nyenyak';
 
   @override
   String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+      'Suhu teras anda turun lewat minggu ini.Cuba kekalkan persekitaran bilik yang lebih sejuk (65°F) untuk mempercepatkan permulaan fasa tidur nyenyak.';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => 'Penghidratan beban hadapan';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'Penanda dehidrasi ringan dikesan dalam log petang. Alihkan 40% daripada pengambilan air harian anda kepada sebelum 10 PAGI untuk menstabilkan kadar metabolisme.';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'Aktiviti pacing';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      'Pancang dalam sakit sendi berkait rapat dengan peningkatan intensiti mendadak.Pastikan pemanasan dinamik selama 10 minit sebelum menolak kardio zon 2.';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => 'Fokus Peribadi';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights => 'Menyegarkan semula cerapan AI anda…';
 
   @override
   String get generateNewInsights => 'Generate New Wawasan';
@@ -2045,10 +2049,10 @@ class AppLocalizationsMs extends AppLocalizations {
   String get symptoms => 'Gejala';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => 'Purata Keterukan';
 
   @override
-  String get scoreChange => 'Score Change';
+  String get scoreChange => 'Perubahan Skor';
 
   @override
   String get checkBackMondayOrGenerate =>
@@ -2060,7 +2064,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String proPlanMonthly(double price) {
-    return 'Pro Plan - \$$price/mo';
+    return 'Pelan Pro - \$$price/bln';
   }
 
   @override
@@ -2072,12 +2076,12 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String couldNotLaunchCall(String phoneNumber) {
-    return 'Could not launch call to $phoneNumber';
+    return 'Tidak dapat melancarkan panggilan ke $phoneNumber';
   }
 
   @override
   String get medicalDisclaimer =>
-      'This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.';
+      'Maklumat ini tidak membentuk diagnosis perubatan.VitalSeker tidak menggantikan profesional penjagaan kesihatan yang berkelayakan.';
 
   @override
   String get poweredByGlm => 'Powered by GLM-4';
@@ -2086,11 +2090,11 @@ class AppLocalizationsMs extends AppLocalizations {
   String get aiTriageIn90Seconds => 'AI-powered Triage in 90 seconds';
 
   @override
-  String get vitalValueOutOfRange => 'Value out of expected range';
+  String get vitalValueOutOfRange => 'Nilai di luar julat yang dijangkakan';
 
   @override
   String get vitalRangeHintHeartRate =>
-      'Heart rate should be between 30 and 220 BPM';
+      'Kadar denyutan jantung hendaklah antara 30 dan 220 BPM';
 
   @override
   String get vitalRangeHintBloodPressure =>
@@ -2098,15 +2102,15 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+      'Suhu badan hendaklah antara 30 dan 45 °C';
 
   @override
   String get vitalRangeHintOxygen =>
-      'Blood oxygen should be between 50 and 100 %';
+      'Oksigen darah hendaklah antara 50 dan 100%';
 
   @override
   String get vitalRangeHintGlucose =>
-      'Blood glucose should be between 20 and 600 mg/dL';
+      'Glukosa darah hendaklah antara 20 dan 600 mg/dL';
 
   @override
   String get vitalRangeHintWeight => 'Berat should be between 2 and 500 kg';
@@ -2137,7 +2141,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return 'Teks terlalu panjang (maks $max aksara).Sila pendekkan dan cuba lagi.';
   }
 
   @override
@@ -2148,7 +2152,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get privacyPolicyTitle => 'Privasi Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => 'Kemas kini terakhir: Mac 2025';
 
   @override
   String privacyIntro(String appName) {
@@ -2156,21 +2160,21 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '1. Pengumpulan Data';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: NNama E-mel address, Telefon number, Tarikh of birth, and gender. • Kesihatan Data: Blood type, aAlahan chronic conditions, mUbat vital signs, symptom logs, and Triage results. • Kecemasan Contacts: Names, Telefon numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sSokongan • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our Kesihatan companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage => '2. Penyimpanan dan Penyulitan Data';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• Kod QR Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '3. Pematuhan GDPR';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2178,14 +2182,14 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '4. Hak Anda';
 
   @override
   String get privacyRightsBody =>
       'You have the following rights regarding your data: • Access: View Semua your personal and Kesihatan data within the app or request a data eEksport • Correction: Sunting your Profil information at any Masa through Sunting PProfil • Deletion: Request account deletion through Tetapan > Data & Privasi > Padam Account. • Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences. • Objection: Object to specific data processing activities by contacting our Data Protection Officer. • Withdrawal of Consent: You may withdraw consent at any Masa without affecting the lawfulness of prior processing. To exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app Sokongan feature.';
 
   @override
-  String get privacySectionContactUs => '5. Contact Us';
+  String get privacySectionContactUs => '5. Hubungi Kami';
 
   @override
   String privacyContactBody(String producer) {
@@ -2198,22 +2202,22 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get chooseFromGallery => 'Choose from Gallery';
+  String get chooseFromGallery => 'Pilih daripada Galeri';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => 'Ambil Foto';
 
   @override
   String get removePhoto => 'Buang Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => 'Avatar dikemas kini!';
 
   @override
-  String get avatarUploadFailed => 'Failed to upload avatar. Please try again.';
+  String get avatarUploadFailed => 'Gagal memuat naik avatar.Sila cuba lagi.';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => 'Avatar dialih keluar.';
 
   @override
   String get avatarRemoveFailed => 'Failed to Buang avatar. Please try again.';
@@ -2234,10 +2238,10 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => 'Maklumat Peribadi';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => 'Pengukuran';
 
   @override
   String get heightCm => 'Tinggi (cm)';
@@ -2255,7 +2259,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get phoneNumber => 'Telefon Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => 'cth.Pasangan, Ibu Bapa, Adik Beradik';
 
   @override
   String get addAllergy => 'Tambah Allergy';
@@ -2287,7 +2291,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+      'Kemajuan yang baik.Beberapa kawasan boleh menggunakan perhatian.';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2295,14 +2299,14 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get scoreDescriptionLow =>
-      'Several areas need attention. Please consult a healthcare provider.';
+      'Beberapa kawasan memerlukan perhatian.Sila berunding dengan pembekal penjagaan kesihatan.';
 
   @override
   String get scoreDescriptionCritical =>
-      'Immediate attention recommended. Please seek medical advice.';
+      'Perhatian segera disyorkan.Sila dapatkan nasihat perubatan.';
 
   @override
-  String get riskFactors => 'Risk Factors';
+  String get riskFactors => 'Faktor Risiko';
 
   @override
   String allergyCount(int count) {
@@ -2318,16 +2322,16 @@ class AppLocalizationsMs extends AppLocalizations {
   String get noRiskFactors => 'Tidak risk factors identified';
 
   @override
-  String get recentTriageResults => 'Recent Triage Results';
+  String get recentTriageResults => 'Keputusan Triage Terkini';
 
   @override
   String get noTriageResults => 'Tidak Triage results yet';
 
   @override
-  String get recommendedActions => 'Recommended Actions';
+  String get recommendedActions => 'Tindakan yang Disyorkan';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => 'Jadualkan Pemeriksaan';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2341,21 +2345,21 @@ class AppLocalizationsMs extends AppLocalizations {
       'Track your blood pressure, heart rate, and Lain key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => 'Jalankan Pemeriksaan Gejala';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI Triage to assess any Gejala you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => 'Tingkatkan Kualiti Tidur';
 
   @override
   String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+      'Tidur yang berkualiti adalah penting untuk pemulihan dan fungsi imun.';
 
   @override
-  String get actionStayActive => 'Stay Active';
+  String get actionStayActive => 'Kekal Aktif';
 
   @override
   String get actionStayActiveDesc =>
@@ -2366,12 +2370,12 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '${minutes}m yang lalu';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '${weeks}w lalu';
   }
 
   @override
@@ -2385,16 +2389,16 @@ class AppLocalizationsMs extends AppLocalizations {
       'Start logging your vital signs to track your Kesihatan over Masa';
 
   @override
-  String get logFirstVital => 'Log Your First Vital';
+  String get logFirstVital => 'Log Vital Pertama Anda';
 
   @override
-  String get day => 'Day';
+  String get day => 'Hari';
 
   @override
-  String get week => 'Week';
+  String get week => 'Minggu';
 
   @override
-  String get month => 'Month';
+  String get month => 'bulan';
 
   @override
   String get noData => 'Tidak data';
@@ -2412,10 +2416,10 @@ class AppLocalizationsMs extends AppLocalizations {
   String get logVitalTitle => 'Log Vital';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'JENIS VITAL';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => 'NILAI';
 
   @override
   String get systolic => 'Sistolik';
@@ -2439,7 +2443,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return '$vitalType berjaya disimpan';
   }
 
   @override
@@ -2470,35 +2474,35 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Tiada bacaan ditemui untuk tempoh masa yang dipilih';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '1 bacaan';
 
   @override
-  String get average => 'Average';
+  String get average => 'Purata';
 
   @override
   String get min => 'Min';
 
   @override
-  String get max => 'Max';
+  String get max => 'Maks';
 
   @override
-  String get latest => 'Latest';
+  String get latest => 'Terkini';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => 'BACAAN';
 
   @override
-  String get value => 'Value';
+  String get value => 'Nilai';
 
   @override
-  String get source => 'Source';
+  String get source => 'Sumber';
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return 'Menunjukkan 20 daripada bacaan $total';
   }
 
   @override
@@ -2508,13 +2512,13 @@ class AppLocalizationsMs extends AppLocalizations {
   String get medicationNameLabel => 'Medication Nama';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => 'Dos';
 
   @override
   String get unitLabel => 'Unit';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => 'Kekerapan';
 
   @override
   String get startDateLabel => 'Start Tarikh';
@@ -2526,24 +2530,24 @@ class AppLocalizationsMs extends AppLocalizations {
   String get endDateLabel => 'End Tarikh';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => 'MASA DOSE';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'Dos $number';
   }
 
   @override
   String get notesOptional => 'Nota (oPilihan';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => 'Peringatan';
 
   @override
   String get saveMedication => 'Simpan Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully => 'Ubat ditambah dengan jayanya!';
 
   @override
   String get medicationAddFailed =>
@@ -2572,44 +2576,44 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+      'Temu janji berjaya dijadualkan!';
 
   @override
   String get appointmentScheduleFailed =>
-      'Failed to schedule appointment. Please try again.';
+      'Gagal menjadualkan janji temu.Sila cuba lagi.';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => 'Pakar Kardiologi';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => 'Pakar dermatologi';
 
   @override
-  String get specialtyEndocrinologist => 'Endocrinologist';
+  String get specialtyEndocrinologist => 'Ahli endokrinologi';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => 'Amalan Am';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => 'Pakar neurologi';
 
   @override
-  String get specialtyOphthalmologist => 'Ophthalmologist';
+  String get specialtyOphthalmologist => 'Pakar oftalmologi';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => 'Ortopedik';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => 'Pakar Pediatrik';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => 'Pakar psikiatri';
 
   @override
   String get specialtyOther => 'Lain';
 
   @override
-  String get recordsLoadFailed => 'Failed to load records. Please try again.';
+  String get recordsLoadFailed => 'Gagal memuatkan rekod.Sila cuba lagi.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2621,34 +2625,34 @@ class AppLocalizationsMs extends AppLocalizations {
   String get addMedicalRecordTitle => 'Tambah Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => 'Tajuk';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'taip';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => 'Keputusan Makmal';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => 'preskripsi';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => 'Pengimejan';
 
   @override
   String get recordTypeOther => 'Lain';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => 'Penerangan';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => 'Rekod dikemas kini!';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => 'Rekod ditambah!';
 
   @override
-  String get recordUpdateFailed => 'Failed to update record.';
+  String get recordUpdateFailed => 'Gagal mengemas kini rekod.';
 
   @override
   String get recordAddFailed => 'Failed to Tambah record.';
@@ -2662,7 +2666,7 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => 'Rekod dipadamkan.';
 
   @override
   String get recordDeleteFailed => 'Failed to Padam record.';
@@ -2683,11 +2687,11 @@ class AppLocalizationsMs extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => 'Lebih banyak pilihan';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Langkah $current daripada $total';
   }
 
   @override
@@ -2726,46 +2730,46 @@ class AppLocalizationsMs extends AppLocalizations {
       'Describe any Lain details Tentang your Gejala or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => 'Keseluruhan Keterukan';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => 'Ringan';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => 'Teruk';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => 'Sangat Ringan';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => 'Ringan';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => 'Sederhana';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => 'Mengganggu';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => 'Teruk';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => 'Tak tertanggung';
 
   @override
   String get durationToday => 'Hari ini (started tHari ini';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => '1-3 hari';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => '4-7 hari';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => '1-2 minggu';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => 'Lebih 2 minggu';
 
   @override
   String get age => 'Umur';
@@ -2774,19 +2778,19 @@ class AppLocalizationsMs extends AppLocalizations {
   String get ageHint => 'Enter your Umur';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => 'tahun';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => 'Seks Biologi';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => 'cth.Diabetes, Hipertensi, Asma';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint => 'cth.Lisinopril 10mg, Metformin 500mg';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => 'Ringkasan';
 
   @override
   String get analyzeWithAi => 'Analisis dengan AI';
@@ -2795,7 +2799,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get back => 'Kembali';
 
   @override
-  String get triageFailed => 'Triage analysis failed. Please try again.';
+  String get triageFailed => 'Analisis triage gagal.Sila cuba lagi.';
 
   @override
   String get symptomFever => 'Demam';
@@ -2807,7 +2811,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get symptomCough => 'Batuk';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => 'Nafas Pendek';
 
   @override
   String get symptomFatigue => 'Keletihan';
@@ -2819,40 +2823,40 @@ class AppLocalizationsMs extends AppLocalizations {
   String get symptomNausea => 'Mual';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => 'menggigil';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => 'Sakit Otot';
 
   @override
   String get symptomInsomnia => 'Insomnia';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => 'Sakit Dada';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => 'Sakit Perut';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => 'Sakit Tekak';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => 'Hidung Berair';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => 'muntah-muntah';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => 'Cirit birit';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => 'Ruam';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => 'Sakit Sendi';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => 'Pembelian telah dibatalkan.';
 
   @override
   String get noPurchasesToRestore =>

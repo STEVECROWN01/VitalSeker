@@ -26,6 +26,23 @@ extension MedicationFrequencyX on MedicationFrequency {
       case MedicationFrequency.custom: return 'Custom';
     }
   }
+
+  /// The snake_case string used in the DB and JSON serialization.
+  /// Use this instead of `.name` (which returns camelCase) when writing
+  /// to the database, so the value matches what `Medication.fromJson`
+  /// expects.
+  String get jsonValue {
+    switch (this) {
+      case MedicationFrequency.onceDaily: return 'once_daily';
+      case MedicationFrequency.twiceDaily: return 'twice_daily';
+      case MedicationFrequency.threeTimesDaily: return 'three_times_daily';
+      case MedicationFrequency.fourTimesDaily: return 'four_times_daily';
+      case MedicationFrequency.everyOtherDay: return 'every_other_day';
+      case MedicationFrequency.weekly: return 'weekly';
+      case MedicationFrequency.asNeeded: return 'as_needed';
+      case MedicationFrequency.custom: return 'custom';
+    }
+  }
 }
 
 enum MedicationStatus {

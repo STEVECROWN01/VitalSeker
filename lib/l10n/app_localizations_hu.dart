@@ -386,7 +386,7 @@ class AppLocalizationsHu extends AppLocalizations {
       'Frissítés to Pro to unlock AI-powered weekly Egészség iElemzések';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Pro terv';
 
   @override
   String get viewAllPlans => 'View Összes plans';
@@ -522,8 +522,8 @@ class AppLocalizationsHu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count csatlakozott tag',
+      one: '$count csatlakozott tag',
     );
     return '$_temp0';
   }
@@ -848,7 +848,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Lépjen a Profil > Előfizetés menüpontra, és válassza ki az Ingyenes csomagot az alacsonyabb csomagra való váltáshoz. A Pro vagy Enterprise csomag funkciói a jelenlegi számlázási időszak végéig aktívak maradnak.';
 
   @override
   String get exportConfigurePreview =>
@@ -1185,7 +1185,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get keyFeatures => 'Főbb jellemzők';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'Termelő';
 
   @override
   String get conceptDesignDevelopment => 'Koncepció, tervezés és fejlesztés';
@@ -1805,8 +1805,8 @@ class AppLocalizationsHu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Allergia',
+      one: '$count Allergia',
     );
     return '$_temp0';
   }
@@ -1816,8 +1816,8 @@ class AppLocalizationsHu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Gyógyszer',
+      one: '$count Gyógyszer',
     );
     return '$_temp0';
   }
@@ -1882,7 +1882,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get sosFailed => 'SOS-hiba';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTÍV';
 
   @override
   String get sendingEmergencyAlert => 'Sending Vészhelyzet Alert';
@@ -1934,8 +1934,8 @@ class AppLocalizationsHu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kapcsolat értesítve SMS-ben',
+      one: '$count kapcsolat értesítve SMS-ben',
     );
     return '$_temp0';
   }
@@ -2491,7 +2491,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'A kiválasztott időszakra vonatkozóan nem találtak mérési eredményeket';
 
   @override
   String get singleReading => '1 olvasás';

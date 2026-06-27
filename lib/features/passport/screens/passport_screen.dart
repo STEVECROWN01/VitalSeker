@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -10,6 +10,7 @@ import '../../../core/providers/medications_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 import '../../../shared/widgets/vital_score_ring.dart';
 
 class PassportScreen extends ConsumerWidget {
@@ -399,6 +400,9 @@ class PassportScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
+
+                const SizedBox(height: 16),
+                const MedicalDisclaimerBanner(),
 
                 // ── Footer ──
                 const SizedBox(height: 24),

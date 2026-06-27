@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -285,7 +285,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                       iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
                       label: l10n.familyProfiles,
-                      subtitle: l10n.connectedMembers(familyCount, familyCount == 1 ? '' : 's'),
+                      subtitle: l10n.connectedMembers(familyCount),
                       onTap: () => context.push(AppConfig.family),
                     ),
                     _MenuItem(
@@ -295,7 +295,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           ? AppColors.darkOnSurface
                           : AppColors.primary(isDark),
                       label: l10n.language,
-                      subtitle: 'English (US)',
+                      // Reflect the actual selected locale (was hardcoded 'English (US)').
+                      subtitle: localeToLanguageName(ref.watch(localeProvider)),
                       onTap: () {
                         showModalBottomSheet(
                           context: context,

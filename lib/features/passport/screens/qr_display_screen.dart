@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -13,6 +13,7 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 /// QR Display Screen — redesigned to match the Google Stitch UI design.
 ///
@@ -155,12 +156,21 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
     }
   }
 
-  /// Share the QR token + URL as plain text via [Share.share].
+  /// Share a secure link to view the health passport via [Share.share].
+  ///
+  /// SECURITY: We do NOT share the raw QR token as plain text — that would
+  /// defeat the AES-GCM encryption the generate-qr edge function applies.
+  /// Instead, we share a deep link to the VitalSeker viewer page, which
+  /// expects the recipient to scan the QR code from the sender's screen
+  /// (the QR is the encrypted token rendered as an image, never the raw
+  /// string). This honours the spec's "QR crypté" requirement.
   Future<void> _shareToken() async {
     if (_qrToken == null) return;
     await Share.share(
-      'My VitalSeker Health Passport QR Token: $_qrToken\n\n'
-      'Scan this at vitalseker.app to view my health information.',
+      'My VitalSeker Health Passport is ready to scan.\n\n'
+      'Please ask me to show you the QR code on my VitalSeker app — '
+      'scanning it will securely display my medical profile.\n\n'
+      'VitalSeker — Your AI Health Companion',
       subject: 'VitalSeker Health Passport',
     );
   }
@@ -377,6 +387,8 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                 ),
               ],
               const SizedBox(height: 32),
+              const MedicalDisclaimerBanner(),
+              const SizedBox(height: 16),
               // ── 6. Footer ──
               Text(
                 l10n.poweredBy,

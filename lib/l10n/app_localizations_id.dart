@@ -42,7 +42,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get signOut => 'Keluar';
 
   @override
-  String get email => 'Email';
+  String get email => 'E-mail';
 
   @override
   String get password => 'Kata Sandi';
@@ -387,7 +387,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Upgrade to Pro to unlock AI-powered weekly Kesehatan iWawasan';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Rencana Pro';
 
   @override
   String get viewAllPlans => 'View Semua plans';
@@ -520,8 +520,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count anggota terhubung',
+      one: '$count anggota terhubung',
     );
     return '$_temp0';
   }
@@ -846,7 +846,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Buka Profil > Langganan, lalu pilih paket Gratis untuk menurunkan tingkat langganan. Fitur-fitur Pro atau Enterprise Anda akan tetap aktif hingga akhir periode penagihan saat ini.';
 
   @override
   String get exportConfigurePreview =>
@@ -994,14 +994,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'Sunting $name';
   }
 
   @override
   String get dosage => 'Dosis';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'Satuan';
 
   @override
   String get frequency => 'Frekuensi';
@@ -1799,8 +1799,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alergi',
+      one: '$count Alergi',
     );
     return '$_temp0';
   }
@@ -1810,8 +1810,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Obat',
+      one: '$count Obat',
     );
     return '$_temp0';
   }
@@ -1876,7 +1876,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get sosFailed => 'SOS GAGAL';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIF';
 
   @override
   String get sendingEmergencyAlert => 'Sending Darurat Alert';
@@ -1928,8 +1928,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontak diberitahu via SMS',
+      one: '$count kontak diberitahu via SMS',
     );
     return '$_temp0';
   }
@@ -2485,7 +2485,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Tidak ditemukan data untuk periode waktu yang dipilih';
 
   @override
   String get singleReading => '1 bacaan';
@@ -2497,7 +2497,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get min => 'Saya punya';
 
   @override
-  String get max => 'Max';
+  String get max => 'Maks';
 
   @override
   String get latest => 'Terbaru';
@@ -2526,7 +2526,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get dosageLabel => 'Dosis';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'Satuan';
 
   @override
   String get frequencyLabel => 'Frekuensi';
@@ -2703,7 +2703,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Langkah $current dari $total';
   }
 
   @override

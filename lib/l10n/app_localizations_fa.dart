@@ -517,8 +517,8 @@ class AppLocalizationsFa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count اعضای متصل',
+      one: '$count عضو متصل',
     );
     return '$_temp0';
   }
@@ -837,7 +837,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'به پروفایل > اشتراک بروید و طرح رایگان را برای ارتدادادن انتخاب کنید. ویژگی‌های Pro یا Enterprise شما تا پایان دوره صورتحساب فعلی‌تان فعال خواهند ماند.';
 
   @override
   String get exportConfigurePreview =>
@@ -1785,8 +1785,8 @@ class AppLocalizationsFa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count حساسیت‌ها',
+      one: '$count حساسیت',
     );
     return '$_temp0';
   }
@@ -1796,8 +1796,8 @@ class AppLocalizationsFa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count داروها',
+      one: '$count دارو',
     );
     return '$_temp0';
   }
@@ -1875,7 +1875,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'ارسال $seconds…';
   }
 
   @override
@@ -1914,8 +1914,8 @@ class AppLocalizationsFa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count مخاطب از طریق SMS مطلع شدند',
+      one: '$count مخاطب از طریق SMS مطلع شد',
     );
     return '$_temp0';
   }
@@ -2368,7 +2368,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return 'صفر تا صفر پیش $weeks';
   }
 
   @override
@@ -2467,7 +2467,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'هیچ خوانشی برای بازه زمانی انتخاب‌شده یافت نشد';
 
   @override
   String get singleReading => '۱ خوانش';

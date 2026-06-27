@@ -1,41 +1,27 @@
 {
   "@@locale": "en_GB",
-
   "appName": "VitalSeker",
   "tagline": "Your AI Health Companion",
-  "poweredBy": "Powered by Keter Marketing",
-
-  "navHome": "Home",
-  "navHistory": "History",
-  "navTriage": "Triage",
-  "navInsights": "Insights",
-  "navPassport": "Passport",
-
+  "home": "Home",
+  "history": "History",
+  "triage": "Sorting",
+  "insights": "Insights",
+  "passport": "Passport",
   "welcomeBack": "Welcome Back",
   "signIn": "Sign In",
-  "createAccount": "Create Account",
+  "signUp": "Sign Up",
   "signOut": "Sign Out",
   "email": "Email",
   "password": "Password",
   "fullName": "Full Name",
   "confirmPassword": "Confirm Password",
-  "currentPassword": "Current Password",
-  "newPassword": "New Password",
-  "confirmNewPassword": "Confirm New Password",
-  "changePassword": "Change Password",
-  "forgotPassword": "Forgotten Password?",
+  "createAccount": "Create Account",
   "dontHaveAccount": "Don't have an account?",
   "alreadyHaveAccount": "Already have an account?",
+  "orContinueWith": "or continue with",
   "continueWithGoogle": "Continue with Google",
   "continueWithApple": "Continue with Apple",
-  "orContinueWith": "Or continue with",
-  "signOutConfirm": "Are you sure you want to sign out?",
-  "failedToSignOut": "Failed to sign out. Please try again.",
-  "passwordsDoNotMatch": "Passwords do not match",
-  "passwordTooShort": "Password must be at least 6 characters",
-  "passwordUpdated": "Password updated successfully",
-  "failedToUpdatePassword": "Failed to update password. Please try again.",
-
+  "forgotPassword": "Forgot Password?",
   "goodMorning": "Good morning",
   "goodAfternoon": "Good afternoon",
   "goodEvening": "Good evening",
@@ -43,65 +29,36 @@
   "healthScore": "Health Score",
   "quickActions": "Quick Actions",
   "checkSymptomsNow": "Check Symptoms Now",
-  "emergencySOS": "Emergency SOS",
+  "healthPassport": "Health Passport",
+  "myHistory": "My History",
+  "emergencySOS": "EMERGENCY SOS",
   "recentChecks": "Recent Checks",
-  "noSymptomsLogsYet": "No symptom logs yet",
-  "viewAll": "View All",
-  "startFirstTriage": "Start your first triage to see activity here",
-  "failedToLoadRecentChecks": "Failed to load recent checks",
-  "pullDownToRetry": "Pull down to retry",
-  "yourOverallHealthIndicator": "Your overall health indicator",
-  "tapForWeeklyInsights": "Tap for weekly insights",
-  "goodCondition": "Good condition",
-  "fairCondition": "Fair condition",
-  "needsAttention": "Needs attention",
-  "poorCondition": "Poor condition",
-  "critical": "Critical",
-
+  "noSymptomsLogs": "No symptoms logs yet",
+  "startTriage": "Start Triage",
   "vitals": "Vitals",
   "logVitals": "Log Vitals",
-  "logVital": "Log Vital",
   "heartRate": "Heart Rate",
   "bloodPressure": "Blood Pressure",
   "spo2": "SpO2",
-  "temperature": "Temperature",
+  "temperature": "Temperatures",
   "weight": "Weight",
   "bloodGlucose": "Blood Glucose",
   "respiratoryRate": "Respiratory Rate",
-  "vitalsHistory": "Vitals History",
-  "systolic": "Systolic",
-  "diastolic": "Diastolic",
-  "bpm": "bpm",
-  "mmHg": "mmHg",
-  "percent": "%",
-  "celsius": "°C",
-  "fahrenheit": "°F",
-  "kg": "kg",
-  "lbs": "lbs",
-  "mgDl": "mmol/L",
-  "noVitalsYet": "No vitals logged yet",
-  "logFirstVital": "Log your first vital sign to start tracking",
-
   "aiTriage": "AI Triage",
   "describeSymptoms": "Describe your symptoms...",
-  "analyzingSymptoms": "Analysing your symptoms",
+  "analyzingSymptoms": "Analyzing your symptoms",
+  "aiProcessing": "AI is processing your health data",
   "send": "Send",
   "newChat": "New Chat",
-  "triageResults": "Triage Results",
-  "startTriage": "Start Triage",
   "viewDetailedResults": "View Detailed Results",
-  "viewFullTriageResult": "View Full Triage Result",
+  "monitorAtHome": "Monitor at Home",
+  "whenToEscalate": "When to escalate",
+  "saveToPassport": "Save to Passport",
   "shareResult": "Share Result",
-  "selfCare": "Self Care",
-  "seeDoctor": "See Doctor",
-  "emergencyCare": "Emergency Care",
-  "callEmergency": "Call Emergency",
-
   "profile": "Profile",
   "settings": "Settings",
   "editProfile": "Edit Profile",
   "notifications": "Notifications",
-  "notificationSettings": "Notification Settings",
   "helpSupport": "Help & Support",
   "about": "About",
   "privacyPolicy": "Privacy Policy",
@@ -111,165 +68,1224 @@
   "selectLanguage": "Select Language",
   "appearance": "Appearance",
   "darkMode": "Dark Mode",
-  "light": "Light",
-  "dark": "Dark",
-  "systemDefault": "System default",
   "account": "Account",
   "privacyData": "Privacy & Data",
+  "securityStorage": "Security & Storage",
+  "exportData": "Export Data",
   "support": "Support",
   "helpCenter": "Help Centre",
-  "faqsAndDocs": "FAQs & documentation",
-  "contactConcierge": "Contact Concierge",
-  "priorityProSupport": "Priority Pro support",
+  "contactConcierge": "Contact the Concierge",
   "aboutVitalSeker": "About VitalSeker",
-  "endYourSession": "End your current session",
-  "medicalCredentials": "Manage medical credentials",
-  "updateCredentials": "Update your account credentials",
-  "aesEncryptionActive": "AES-256 encryption active",
-  "exportData": "Export Data",
-  "downloadHealthData": "Download your health data",
-  "permanentlyRemoveData": "Permanently remove your data",
-  "vitalSekerPro": "VitalSeker Pro",
-  "manageSubscription": "Manage your subscription",
+  "medicalRecords": "Medical Records",
+  "medicalID": "Medical ID",
+  "medicalTranslation": "Medical Translation",
+  "familyProfiles": "Family Profiles",
+  "addFamilyMember": "Add Family Member",
+  "accountOwner": "ACCOUNT OWNER",
   "upgradeToPro": "Upgrade to Pro",
-
-  "pressAndHoldSOS": "Press and hold to send emergency alert",
-  "holdFor3Seconds": "Hold for 3 seconds",
-  "imSafeResolve": "I'm Safe - Resolve",
-  "sendEmergencySOSConfirm": "Send Emergency SOS?",
-  "sendSOS": "Send SOS",
-  "shareMyLocation": "Share My Location",
-  "sosResolved": "SOS resolved - you are safe",
-  "sosSent": "SOS alert sent successfully",
-  "sosCancelled": "SOS cancelled",
-  "failedToSendSOS": "Failed to send SOS. Please try again.",
-
+  "protectWholeCircle": "Protect the whole circle.",
+  "learnMore": "Learn More",
   "medications": "Medications",
   "addMedication": "Add Medication",
-  "active": "Active",
-  "completed": "Completed",
-  "discontinued": "Discontinued",
-  "discontinue": "Discontinue",
-  "deleteMedication": "Delete Medication",
-  "editMedication": "Edit Medication",
-  "markComplete": "Mark Complete",
-  "dosage": "Dosage",
-  "frequency": "Frequency",
-  "startDate": "Start Date",
-  "endDate": "End Date",
-  "notes": "Notes",
-  "noMedicationsYet": "No medications yet",
-  "addFirstMedication": "Add your first medication to start tracking",
-
   "appointments": "Appointments",
   "addAppointment": "Add Appointment",
   "upcoming": "Upcoming",
+  "completed": "Completed",
   "cancelled": "Cancelled",
-  "cancelAppointment": "Cancel Appointment",
-  "deleteAppointment": "Delete Appointment",
-  "reschedule": "Reschedule",
-  "doctorName": "Doctor Name",
-  "location": "Location",
-  "date": "Date",
-  "time": "Time",
-  "reason": "Reason",
-  "noAppointmentsYet": "No appointments yet",
-  "addFirstAppointment": "Add your first appointment to start tracking",
-
-  "familyProfiles": "Family Profiles",
-  "addFamilyMember": "Add Family Member",
-  "accountOwner": "Account Owner",
-  "removeFamilyMember": "Remove Family Member",
-  "relationship": "Relationship",
-  "noFamilyMembersYet": "No family members yet",
-  "connectedMembers": "connected member(s)",
-
-  "commonSave": "Save",
-  "commonCancel": "Cancel",
-  "commonDelete": "Delete",
-  "commonEdit": "Edit",
-  "commonAdd": "Add",
-  "commonClose": "Close",
-  "commonRetry": "Retry",
-  "commonTryAgain": "Try Again",
-  "commonLoading": "Loading...",
-  "commonConfirm": "Confirm",
-  "commonUpdate": "Update",
-  "commonRestore": "Restore",
-  "commonRemove": "Remove",
-  "commonError": "Error",
-  "commonSuccess": "Success",
-  "commonDeletePermanently": "Delete Permanently",
-
-  "healthPassport": "Health Passport",
-  "healthPassportQR": "Health Passport QR",
-  "generateQRCode": "Generate QR Code",
-  "qrCode": "QR Code",
-  "medicalID": "Medical ID",
-  "medicalRecords": "Medical Records",
-  "editRecord": "Edit Record",
-  "deleteRecord": "Delete Record",
-  "prescriptions": "Prescriptions",
-  "labResults": "Lab Results",
-  "imaging": "Imaging",
-  "other": "Other",
-  "editDetails": "Edit Details",
-  "exportPDF": "Export PDF",
-  "takeAPhoto": "Take a Photo",
-  "chooseFromGallery": "Choose from Gallery",
-  "bloodType": "Blood Type",
-  "allergies": "Allergies",
-  "chronicConditions": "Chronic Conditions",
+  "active": "Active",
+  "discontinued": "Discontinued",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "add": "Add",
+  "close": "Close",
+  "retry": "Retry",
+  "loading": "Loading...",
+  "poweredBy": "Powered by Keter Marketing",
+  "pressAndHold": "Press and hold to send emergency alert",
+  "holdFor3Seconds": "Hold for 3 seconds",
+  "imSafeResolve": "I'm Safe - Resolve",
+  "shareMyLocation": "Share My Location",
+  "findHospitalsNearMe": "Find Hospitals Near Me",
+  "quickDial": "Quick Dial",
   "emergencyContacts": "Emergency Contacts",
-  "dateOfBirth": "Date of Birth",
-  "gender": "Gender",
-  "height": "Height",
-  "phone": "Phone",
-
-  "insights": "Insights",
+  "medicalIDSection": "Medical ID",
+  "noEmergencyContacts": "No emergency contacts configured",
+  "addContactsInProfile": "Add contacts in your profile settings",
+  "noMedicalInfo": "No medical information on file",
+  "updateProfileMedicalID": "Update your profile to add medical ID data",
+  "symptomHistory": "Symptom History",
+  "noHistoryYet": "No History Yet",
+  "symptomLogsAppearHere": "Your symptom logs will appear here",
+  "startFirstTriage": "Start Your First Triage",
   "weeklyInsights": "Weekly Insights",
-  "viewWeeklyInsights": "View Weekly Insights",
-  "healthTips": "Health Tips",
-  "reminders": "Reminders",
+  "noInsightsYet": "No Insights Yet",
+  "checkBackMonday": "No insights generated yet. Check back on Monday for your weekly AI health summary.",
+  "generateNow": "Generate Now",
+  "upgradeProInsights": "Upgrade to Pro to unlock AI-powered weekly health insights.",
+  "proPlan": "Pro Plan",
+  "viewAllPlans": "View all plans",
+  "exportMedicalReport": "Export Medical Report",
+  "generatePDF": "Generate PDF",
+  "sendByEmail": "Send by Email",
+  "patientOverview": "Patient Overview & Vital Stats",
+  "symptomsTriageLog": "Symptoms & Triage Log",
+  "medicationsAllergies": "Medications & Allergies",
+  "aiAnalysisSummary": "AI Analysis Summary",
+  "dateRange": "Date Range",
+  "last30Days": "Last 30 Days",
+  "preview": "PREVIEW",
+  "translate": "Translate",
+  "translateMedicalTerms": "Translate medical terms",
+  "targetLanguage": "Target Language",
+  "enterTextToTranslate": "Enter medical term or phrase to translate",
+  "translationResult": "Translation Result",
+  "notificationPreferences": "Your notification preferences are saved to your account. Schedule customization is now available — tap any schedule to change it.",
   "triageReminders": "Triage Reminders",
   "medicationReminders": "Medication Reminders",
   "appointmentReminders": "Appointment Reminders",
   "vitalsLoggingReminders": "Vitals Logging Reminders",
+  "healthTips": "Health Tips",
   "weeklyReport": "Weekly Report",
-
-  "history": "History",
-  "symptomHistory": "Symptom History",
-  "noHistoryYet": "No history yet",
-  "severity": "Severity",
-
+  "reminders": "Reminders",
+  "insightsTips": "Insights & Tips",
+  "thisActionIrreversible": "This action is irreversible. All your data will be permanently deleted.",
+  "typeEmailToConfirm": "Type your email to confirm:",
+  "deletePermanently": "Delete Permanently",
+  "accountDeleted": "Account deleted. Sorry to see you go.",
+  "sendEmergencySOS": "Send Emergency SOS?",
+  "sosMessageBody": "This will send an SMS with your live location to all of your emergency contacts.",
+  "sendSOS": "Send SOS",
+  "areYouSureSignOut": "Are you sure you want to sign out?",
+  "failedToSignOut": "Failed to sign out. Please try again.",
+  "vitalsLogged": "Vitals Logged",
+  "triageSessions": "Triage Sessions",
+  "daysActive": "Days Active",
+  "vitalSekerPro": "VitalSeker Pro",
+  "signingOut": "Signing out...",
+  "manageMedicalCredentials": "Manage medical credentials",
+  "connectedMembers": "{count, plural, =1{{count} connected member} other{{count} connected members}}",
+  "alertsSmartReminders": "Alerts & smart reminders",
+  "documentsImaging": "Documents & imaging",
+  "translateMedicalTermsSubtitle": "Translate medical terms",
+  "emergencyMedicalCard": "Emergency medical card",
+  "aes256EncryptionActive": "AES-256 encryption active",
+  "downloadYourHealthData": "Download your health data",
+  "themePasswordAccount": "Theme, password, account",
+  "faqsDocumentation": "FAQs & documentation",
+  "priorityProSupport": "Priority Pro support",
+  "aboutVitalSekerVersion": "Version {version}",
+  "@aboutVitalSekerVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changePassword": "Change Password",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+  "confirmNewPassword": "Confirm New Password",
+  "update": "Update",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "passwordMinLength": "Password must be at least 8 characters",
+  "passwordUpdatedSuccessfully": "Password updated successfully",
+  "failedToUpdatePassword": "Failed to update password. Please try again.",
+  "deleteAccountIrreversible": "This action is irreversible. All your data — vitals, medications, appointments, symptom logs, family profiles, and health passport — will be permanently deleted.",
+  "emailDoesNotMatch": "Email does not match.",
+  "failedToDeleteAccount": "Failed to delete account. Please try again or contact support.",
+  "manageYourSubscription": "Manage your subscription",
+  "permanentlyRemoveYourData": "Permanently remove your data",
+  "endYourCurrentSession": "End your current session",
+  "dark": "Dark",
+  "light": "Light",
+  "systemDefault": "System default",
   "subscription": "Subscription",
+  "restore": "Restore",
+  "chooseYourPlan": "Choose Your Plan",
+  "unlockFullPower": "Unlock the full power of VitalSeker",
+  "paymentIntegrationPending": "In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.",
+  "forever": "forever",
+  "perMonth": "/month",
+  "freePlanFeature1": "3 AI triage sessions/month",
+  "freePlanFeature2": "Basic health passport",
+  "freePlanFeature3": "QR code sharing",
+  "freePlanFeature4": "Emergency SOS alerts",
+  "freePlanFeature5": "Single user profile",
+  "proPlanFeature1": "Unlimited AI triage sessions",
+  "proPlanFeature2": "Advanced health passport",
+  "proPlanFeature3": "Weekly AI insights",
+  "proPlanFeature4": "Family profiles (up to 5)",
+  "proPlanFeature5": "PDF export with full history",
+  "proPlanFeature6": "Priority support",
+  "enterprisePlanFeature1": "Everything in Pro",
+  "enterprisePlanFeature2": "Unlimited family profiles",
+  "enterprisePlanFeature3": "Custom branding",
+  "enterprisePlanFeature4": "API access",
+  "enterprisePlanFeature5": "Dedicated support",
+  "enterprisePlanFeature6": "SLA guarantee",
+  "bestValue": "BEST VALUE",
   "currentPlan": "Current Plan",
-  "switchPlanConfirm": "Switch to {planName}?",
-  "contactSalesForEnterprise": "Contact sales for custom Enterprise terms",
+  "downgrade": "Downgrade",
+  "upgradeToPlan": "Upgrade to {plan}",
+  "@upgradeToPlan": {
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "mustBeSignedInToChangePlans": "You must be signed in to change plans.",
+  "switchToPlan": "Switch to {plan}?",
+  "@switchToPlan": {
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "downgradeToFreeMessage": "You will lose access to Pro features at the end of your current billing period. Continue?",
+  "upgradeToPlanMessage": "This will update your subscription to {plan}. In production this would launch the platform paywall; for now the change is applied directly to your account for testing.",
+  "@upgradeToPlanMessage": {
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "confirm": "Confirm",
+  "downgradedToFree": "Downgraded to Free. Pro access ends at the next billing period.",
+  "welcomeToPlan": "Welcome to {plan}! All features unlocked.",
+  "@welcomeToPlan": {
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToUpdateSubscription": "Failed to update subscription. Please try again.",
+  "purchasesRestored": "Purchases restored.",
+  "failedToRestorePurchases": "Failed to restore purchases.",
+  "contactSalesEnterprise": "Contact sales for custom Enterprise terms",
+  "emailSalesEnterprise": "Email sales@vitalseker.com for enterprise pricing.",
+  "poweredByProducer": "Powered by {producer}",
+  "@poweredByProducer": {
+    "placeholders": {
+      "producer": {
+        "type": "String"
+      }
+    }
+  },
+  "frequentlyAskedQuestions": "Frequently Asked Questions",
+  "contactSupport": "Contact Support",
+  "subject": "Subject",
+  "message": "Message",
+  "submit": "Submit",
+  "otherWaysToReachUs": "Other Ways to Reach Us",
+  "emailUs": "Email Us",
+  "supportRequestSaved": "Your request is saved to your account and visible to our support team. We respond within 24 hours.",
+  "pleaseFillSubjectMessage": "Please fill in both subject and message.",
+  "subjectMinLength": "Subject must be at least 5 characters.",
+  "messageMinLength": "Message must be at least 10 characters.",
+  "mustBeSignedInToSubmitSupport": "You must be signed in to submit a support request.",
+  "urgentRequestReceived": "Urgent request received! Our team will prioritize this.",
+  "supportRequestSent": "Support request sent! We'll respond within 24 hours.",
+  "failedToSubmitSupport": "Failed to submit support request. Please try again or email support@vitalseker.com.",
+  "couldNotOpenEmailClient": "Could not open email client. Please email support@vitalseker.com manually.",
+  "faqQuestion1": "How does the AI symptom triage work?",
+  "faqAnswer1": "Our AI analyses your reported symptoms against a comprehensive medical database to provide urgency-based recommendations. It categorizes your condition into Low, Medium, High, or Emergency urgency levels and suggests appropriate next steps.",
+  "faqQuestion2": "Is my health data secure?",
+  "faqAnswer2": "Yes. All data is encrypted end-to-end using AES-256 encryption. We comply with GDPR and HIPAA standards. Your health information is never shared with third parties without your explicit consent.",
+  "faqQuestion3": "How do I share my health passport?",
+  "faqAnswer3": "Navigate to your Health Passport from the bottom navigation bar. Tap the QR code icon to generate a shareable QR code that healthcare providers can scan to access your critical health information securely.",
+  "faqQuestion4": "Can I add family members?",
+  "faqAnswer4": "Yes! Pro subscribers can add up to 5 family member profiles, and Enterprise subscribers have unlimited family profiles. Each family member gets their own health passport and triage capabilities.",
+  "faqQuestion5": "How do I cancel my subscription?",
+  "faqAnswer5": "Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.",
+  "exportConfigurePreview": "Configure and preview your comprehensive health summary before generating a secure PDF.",
+  "includeSections": "Include Sections",
+  "last3Months": "Last 3 Months",
+  "yearToDate": "Year to Date",
+  "allTime": "All Time",
+  "generating": "Generating…",
+  "sending": "Sending…",
+  "pdfIncludesProducer": "PDF includes {producer} credit as producer",
+  "@pdfIncludesProducer": {
+    "placeholders": {
+      "producer": {
+        "type": "String"
+      }
+    }
+  },
+  "proFeature": "PRO FEATURE",
+  "proActive": "PRO ACTIVE",
+  "manageHealthWholeFamily": "Manage health for your whole family (5 max)",
+  "accountOwnerDefault": "Account Owner",
+  "ownerProfile": "Owner profile",
+  "years": "{age} years",
+  "@years": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreValue": "Score: {score}",
+  "@scoreValue": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "reachedProLimit": "You've reached the 5-member Pro limit.",
+  "limitReached": "Limit reached",
+  "pleaseFillNameRelationship": "Please fill in name and relationship",
+  "mustBeSignedInToAddFamily": "You must be signed in to add a family member",
+  "familyMemberAdded": "Family member added!",
+  "failedToAddFamily": "Failed to add family member. Please try again.",
+  "removeFamilyMember": "Remove Family Member",
+  "removeFamilyMemberConfirm": "Are you sure you want to remove {name} from your family profiles?",
+  "@removeFamilyMemberConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "remove": "Remove",
+  "familyMemberRemoved": "Family member removed",
+  "failedToRemoveFamily": "Failed to remove family member. Please try again.",
+  "fullNameLabel": "Full Name",
+  "relationshipExample": "Relationship (e.g., Spouse, Child)",
+  "bloodTypeOptional": "Blood Type (optional)",
+  "removeMember": "Remove member",
+  "upgradeYourCare": "UPGRADE YOUR CARE",
+  "protectingWholeCircle": "You're protecting the whole circle.",
+  "proMemberThanks": "Thanks for being a Pro member. You can monitor heart rate variability, sleep patterns, and AI-driven health risk assessments for up to 5 family members under a single subscription.",
+  "proUpsellBody": "With VitalSeker Pro, you can monitor heart rate variability, sleep patterns, and AI-driven health risk assessments for up to 5 family members under a single subscription.",
+  "upgradeToProPrice": "Upgrade to Pro — ${price}/mo",
+  "@upgradeToProPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "manageSubscription": "Manage Subscription",
+  "failedToLoadProfiles": "Failed to load profiles",
+  "searchMedications": "Search medications...",
+  "noMedicationsMatchSearch": "No medications match your search",
+  "noMedicationsYet": "No Medications Yet",
+  "addMedicationsTrack": "Add your medications to track dosages,\nfrequency, and adherence",
+  "editMedicationName": "Edit {name}",
+  "@editMedicationName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dosage": "Dosage",
+  "unit": "Unit",
+  "frequency": "Frequency",
+  "notes": "Notes",
+  "medicationDiscontinued": "Medication discontinued",
+  "failedToDiscontinueMedication": "Failed to discontinue medication.",
+  "medicationUpdated": "Medication updated!",
+  "failedToUpdateMedication": "Failed to update medication.",
+  "medicationMarkedCompleted": "Medication marked as completed",
+  "deleteMedication": "Delete Medication",
+  "deleteMedicationConfirm": "Are you sure you want to delete {name}?",
+  "@deleteMedicationConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "medicationDeleted": "Medication deleted",
+  "failedToDeleteMedication": "Failed to delete medication.",
+  "editDetails": "Edit Details",
+  "markComplete": "Mark Complete",
+  "discontinue": "Discontinue",
+  "nextDose": "Next dose: {time}",
+  "@nextDose": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "onceDaily": "Once Daily",
+  "twiceDaily": "Twice Daily",
+  "threeTimesDaily": "Three Times Daily",
+  "fourTimesDaily": "Four Times Daily",
+  "everyOtherDay": "Every Other Day",
+  "weekly": "Weekly",
+  "asNeeded": "As Needed",
+  "custom": "Custom",
+  "all": "All",
+  "noAppointmentsMatchFilter": "No appointments match the filter",
+  "noAppointmentsYet": "No Appointments Yet",
+  "scheduleFirstAppointment": "Schedule your first appointment to\nkeep track of visits",
+  "appointmentMarkedCompleted": "Appointment marked as completed",
+  "failedToUpdateAppointment": "Failed to update appointment.",
+  "appointmentCancelled": "Appointment cancelled",
+  "failedToCancelAppointment": "Failed to cancel appointment.",
+  "selectNewDate": "Select new date",
+  "selectNewTime": "Select new time",
+  "rescheduledTo": "Rescheduled to {date} at {time}",
+  "@rescheduledTo": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToRescheduleAppointment": "Failed to reschedule appointment.",
+  "deleteAppointment": "Delete Appointment",
+  "deleteAppointmentConfirm": "Are you sure you want to delete the appointment with {doctor}?",
+  "@deleteAppointmentConfirm": {
+    "placeholders": {
+      "doctor": {
+        "type": "String"
+      }
+    }
+  },
+  "appointmentDeleted": "Appointment deleted",
+  "failedToDeleteAppointment": "Failed to delete appointment.",
+  "reschedule": "Reschedule",
+  "cancelAppointment": "Cancel Appointment",
+  "medicalTranslationIntro": "Translate medical terms and phrases into your preferred language. Useful for travel, consultations, and discussing care with non-English-speaking providers.",
+  "medicalTermOrPhrase": "Medical term or phrase",
+  "medicalTermHint": "e.g. \"hypertension\", \"take twice daily with food\"",
+  "translating": "Translating...",
+  "translationTargetLanguage": "Translation ({lang})",
+  "@translationTargetLanguage": {
+    "placeholders": {
+      "lang": {
+        "type": "String"
+      }
+    }
+  },
+  "translationWillAppear": "Your translation will appear here.",
+  "pleaseEnterTermToTranslate": "Please enter a medical term or phrase to translate.",
+  "noTranslationReturned": "No translation was returned. Please try a different term.",
+  "translationFailed": "Translation failed. Please try again.",
+  "notificationSettings": "Notification Settings",
+  "failedToSaveNotificationSetting": "Failed to save notification setting",
+  "keyFeatures": "Key Features",
+  "producer": "Producer",
+  "conceptDesignDevelopment": "Concept, Design & Development",
+  "updateAccountCredentials": "Update your account credentials",
+  "legal": "Legal",
+  "aboutVitalSekerBody": "VitalSeker is your AI-powered health companion that puts you in control of your health journey. With intelligent symptom triage, a secure health passport, emergency SOS alerts, and personalized weekly insights, VitalSeker ensures you always have the information you need when it matters most. Built with cutting-edge AI technology and bank-grade security, your health data stays private and protected.",
+  "featureAiTriageTitle": "AI Symptom Triage",
+  "featureAiTriageDesc": "Get instant AI-powered health recommendations",
+  "featureHealthPassportTitle": "Health Passport",
+  "featureHealthPassportDesc": "Carry your encrypted health profile everywhere",
+  "featureQrSharingTitle": "QR Code Sharing",
+  "featureQrSharingDesc": "Share health info securely with any provider",
+  "featureEmergencySosTitle": "Emergency SOS",
+  "featureEmergencySosDesc": "One-tap alerts with GPS location sharing",
+  "featureWeeklyInsightsTitle": "Weekly Insights",
+  "featureWeeklyInsightsDesc": "AI-generated health summaries (Pro)",
+  "featureFamilyProfilesTitle": "Family Profiles",
+  "featureFamilyProfilesDesc": "Manage health for your entire family",
+  "featurePdfExportTitle": "Export PDF",
+  "featurePdfExportDesc": "Generate and share health reports",
+  "termsOfServiceTitle": "{appName} Terms of Service",
+  "@termsOfServiceTitle": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "lastUpdatedVersion": "Last updated: Version {version}",
+  "@lastUpdatedVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "tosSection1Title": "Acceptance of Terms",
+  "tosSection1Para1": "By creating an account, accessing, or using the {appName} mobile application (\"the Service\"), you agree to be bound by these Terms of Service (\"Terms\"). If you do not agree to these Terms, you must not access or use the Service.",
+  "@tosSection1Para1": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "tosSection1Para2": "The Service is provided by {producer} (\"we\", \"us\", or \"our\"). These Terms form a legally binding agreement between you and us.",
+  "@tosSection1Para2": {
+    "placeholders": {
+      "producer": {
+        "type": "String"
+      }
+    }
+  },
+  "tosSection2Title": "Eligibility & Account",
+  "tosSection2Para1": "You must be at least 13 years old to use the Service. If you are under 18, you represent that your parent or legal guardian has read and agreed to these Terms on your behalf.",
+  "tosSection2Para2": "You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. Notify us immediately of any unauthorized use of your account.",
+  "tosSection3Title": "Health Information — Not Medical Advice",
+  "tosSection3Para1": "{appName} is a health companion application intended for informational and organizational purposes only. The Service is NOT a medical device and does not provide medical advice, diagnosis, or treatment recommendations.",
+  "@tosSection3Para1": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "tosSection3Para2": "The AI triage feature provides general guidance based on the symptoms you report. It is not a substitute for professional medical judgement. Always seek the advice of a qualified healthcare provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay seeking it because of something you read in this Service.",
+  "tosSection3Para3": "In a medical emergency, call your local emergency number (e.g. 911, 112) immediately. Do not rely on the Service for emergency response.",
+  "tosSection4Title": "Use of the Service",
+  "tosSection4Intro": "You agree NOT to:",
+  "tosSection4Bullet1": "Use the Service for any unlawful purpose;",
+  "tosSection4Bullet2": "Attempt to reverse-engineer, decompile, or disassemble the app;",
+  "tosSection4Bullet3": "Upload content that is malicious, fraudulent, or violates intellectual property rights;",
+  "tosSection4Bullet4": "Interfere with the proper functioning of the Service or attempt to access data belonging to other users;",
+  "tosSection4Bullet5": "Use the Service to send unsolicited communications or spam.",
+  "tosSection5Title": "Subscriptions & Payments",
+  "tosSection5Para1": "Certain features of the Service require a paid subscription (\"Pro\" or \"Enterprise\" plan). Subscription fees are billed monthly through the platform application store (Apple App Store or Google Play Store) subject to their respective terms.",
+  "tosSection5Para2": "Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current billing period. You can manage or cancel your subscription at any time through your platform's account settings.",
+  "tosSection5Para3": "We may change subscription fees upon reasonable notice. Fee changes will not apply to your current billing period.",
+  "tosSection6Title": "Your Data",
+  "tosSection6Para1": "You retain ownership of the health data you submit to the Service. Our use of your data is described in our Privacy Policy, which is incorporated into these Terms by reference.",
+  "tosSection6Para2": "You may export your data at any time via the in-app Export feature, and you may permanently delete your account and all associated data via Settings → Delete Account.",
+  "tosSection7Title": "Disclaimers",
+  "tosSection7Para1": "THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.",
+  "tosSection7Para2": "We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI triage recommendations will be accurate or appropriate for your specific situation.",
+  "tosSection8Title": "Limitation of Liability",
+  "tosSection8Para1": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL {producer} BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF DATA, ARISING OUT OF OR RELATED TO YOUR USE OF (OR INABILITY TO USE) THE SERVICE, WHETHER BASED ON WARRANTY, CONTRACT, TORT, OR ANY OTHER LEGAL THEORY.",
+  "@tosSection8Para1": {
+    "placeholders": {
+      "producer": {
+        "type": "String"
+      }
+    }
+  },
+  "tosSection9Title": "Termination",
+  "tosSection9Para1": "You may stop using the Service and delete your account at any time via Settings. We may suspend or terminate your access to the Service if you violate these Terms or if we reasonably believe we are required to do so by law.",
+  "tosSection9Para2": "Upon termination, all licences granted to you will end, and your data will be deleted in accordance with our Privacy Policy.",
+  "tosSection10Title": "Changes to These Terms",
+  "tosSection10Para1": "We may update these Terms from time to time. We will notify you of material changes via the app or by email. Continued use of the Service after changes take effect constitutes acceptance of the revised Terms.",
+  "tosSection11Title": "Contact",
+  "tosSection11Para1": "Questions about these Terms? Contact us at support@vitalseker.com.",
+  "tosCopyright": "© {year} {producer}. All rights reserved. Version {version}.",
+  "@tosCopyright": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      },
+      "producer": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "free": "Free",
   "pro": "Pro",
   "enterprise": "Enterprise",
-
-  "medicalTranslation": "Medical Translation",
-  "translate": "Translate",
-  "translating": "Translating...",
-  "medicalTermOrPhrase": "Medical term or phrase",
-  "targetLanguage": "Target language",
-  "translationResult": "Translation ({lang})",
-  "yourTranslationWillAppearHere": "Your translation will appear here.",
-  "translationFailed": "Translation failed. Please try again.",
-
-  "onboarding": "Onboarding",
-  "getStarted": "Get Started",
-  "skip": "Skip",
+  "nA": "Not applicable",
+  "skip": "Ship",
   "next": "Next",
-
-  "deleteAccountWarning": "This action is irreversible. All your data — vitals, medications, appointments, symptom logs, family profiles, and health passport — will be permanently deleted.",
-  "typeEmailToConfirm": "Type your email to confirm:",
-  "emailDoesNotMatch": "Email does not match.",
-  "accountDeleted": "Account deleted. Sorry to see you go.",
-  "failedToDeleteAccount": "Failed to delete account. Please try again or contact support.",
-  "profileUpdated": "Profile updated successfully!",
-  "failedToUpdateProfile": "Failed to update profile. Please try again.",
-  "failedToSaveNotificationSetting": "Failed to save notification setting"
+  "enterVitalSeker": "Enter VitalSeker",
+  "onboardingTitle1": "Know your body.",
+  "onboardingDescription1": "Check any symptom and get reliable medical insights in seconds.",
+  "onboardingTitle2": "Your health, always with you.",
+  "onboardingDescription2": "Store your full medical profile, records, and digital insurance cards in one secure, encrypted vault.",
+  "onboardingTitle3": "Works everywhere.\nEven offline.",
+  "onboardingDescription3": "Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you're back online.",
+  "signInSubtitle": "Sign in to your VitalSeker account",
+  "signingIn": "Signing in...",
+  "emailRequired": "Email is required",
+  "enterValidEmail": "Enter a valid email",
+  "enterValidEmailAddress": "Enter a valid email address",
+  "passwordRequired": "Password is required",
+  "enterEmailFirst": "Please enter your email address first.",
+  "passwordResetSent": "Password reset link sent to {email}",
+  "@passwordResetSent": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "google": "Google",
+  "apple": "Apple",
+  "male": "Male",
+  "female": "Female",
+  "other": "Other",
+  "creatingAccount": "Creating account...",
+  "joinVitalSeker": "Join VitalSeker and take control of your health",
+  "nameRequired": "Name is required",
+  "nameMinChars": "Name must be at least 2 characters",
+  "atLeast6Chars": "At least 6 characters",
+  "includeUppercase": "Include at least one uppercase letter",
+  "includeLowercase": "Include at least one lowercase letter",
+  "includeNumber": "Include at least one number",
+  "includeSymbol": "Include at least one symbol (!@#$%^&*)",
+  "confirmPasswordRequired": "Please confirm your password",
+  "optionalDetails": "Optional details",
+  "dateOfBirth": "Date of Birth",
+  "selectDateOfBirth": "Select Date of Birth",
+  "selectDateOfBirthHint": "Select your date of birth",
+  "gender": "Gender",
+  "selectGender": "Select gender",
+  "bloodType": "Blood Type",
+  "selectBloodType": "Select blood type",
+  "iAgreeTo": "I agree to the ",
+  "andText": " and ",
+  "acceptTermsRequired": "Please accept the Terms of Service and Privacy Policy to continue.",
+  "accountCreatedVerifyEmail": "Account created! Please check your email to verify your account.",
+  "userFallback": "User",
+  "viewAll": "View All",
+  "failedLoadRecentChecks": "Failed to load recent checks",
+  "pullDownRetry": "Pull down to retry",
+  "goodCondition": "Good condition",
+  "fairCondition": "Fair condition",
+  "needsAttention": "Needs attention",
+  "poorCondition": "Poor condition",
+  "critical": "Critical",
+  "overallHealthIndicator": "Your overall health indicator",
+  "tapForWeeklyInsights": "Tap for weekly insights",
+  "aiPoweredTriage60s": "AI-powered triage in 60 seconds",
+  "qrAndMedicalInfo": "QR & medical info",
+  "pastChecksAndVitals": "Past checks & vitals",
+  "justNow": "Just now",
+  "hoursAgo": "{hours}h ago",
+  "@hoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "todayLabel": "Today",
+  "yesterdayLabel": "Yesterday",
+  "daysAgo": "{days}d ago",
+  "@daysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "symptomCheck": "Symptom check",
+  "severity": "Severity",
+  "aiGreeting": "Hello! I'm VitalSeker AI. How are you feeling today? Describe your symptoms and I'll help assess your condition.",
+  "triageAssessmentIntro": "Based on your symptoms, here's my assessment:",
+  "urgencyLabel": "Urgency",
+  "careRecommendationLabel": "Care recommendation",
+  "redFlagsLabel": "⚠️ Red flags:",
+  "recommendationsLabel": "Recommendations:",
+  "tapForFullAnalysis": "Tap \"View Detailed Results\" below for the full analysis.",
+  "triageErrorMessage": "I'm sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently.\n\nError: {error}",
+  "@triageErrorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "generalDiscomfort": "General discomfort",
+  "selfCareRecommended": "Self-Care Recommended",
+  "scheduleAppointmentCare": "Schedule an Appointment",
+  "visitUrgentCare": "Visit Urgent Care",
+  "seekEmergencyCare": "Seek Emergency Care",
+  "consultHealthcareProvider": "Consult a Healthcare Provider",
+  "mild": "Mild",
+  "moderate": "Moderate",
+  "significant": "Significant",
+  "severeLabel": "Severe",
+  "extreme": "Extreme",
+  "triageResults": "Triage Results",
+  "urgencyScoreCaption": "Urgency Score: {score}/100",
+  "@urgencyScoreCaption": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "redFlags": "Red Flags",
+  "recommendations": "Recommendations",
+  "possibleConditions": "Possible Conditions",
+  "followUpQuestions": "Follow-up Questions",
+  "saving": "Saving...",
+  "seeDoctorSoon": "See a Doctor Soon",
+  "emergencyCareNow": "Emergency Care Now",
+  "triageDisclaimer": "This is not a medical diagnosis. Always consult a healthcare professional for proper medical advice.",
+  "escalateLow1": "Symptoms worsen or spread to new body areas",
+  "escalateLow2": "Fever rises above 39°C (102°F)",
+  "escalateLow3": "No improvement after 48 hours of self-care",
+  "escalateMedium1": "Symptoms persist beyond 3 days",
+  "escalateMedium2": "Pain intensifies or becomes unmanageable",
+  "escalateMedium3": "New red-flag symptoms appear",
+  "escalateHigh1": "Symptoms rapidly worsen",
+  "escalateHigh2": "Difficulty breathing or chest tightness develops",
+  "escalateHigh3": "High fever (>39°C) that doesn't respond to medication",
+  "escalateEmergency1": "Call emergency services immediately",
+  "escalateEmergency2": "Do not drive yourself — get a ride or ambulance",
+  "escalateEmergency3": "Bring this triage result and any medications you take",
+  "showQrCode": "Show QR Code",
+  "inactive": "Inactive",
+  "knownAllergies": "Known Allergies",
+  "currentMedications": "Current Medications",
+  "chronicConditions": "Chronic Conditions",
+  "insurance": "Insurance",
+  "qrCode": "QR Code",
+  "exportPdf": "Export PDF",
+  "noHealthPassportYet": "No Health Passport Yet",
+  "completeFirstTriage": "Complete your first triage to generate\nyour health passport",
+  "heightAndWeight": "Height & Weight",
+  "notSet": "Not set",
+  "yearsOld": "{count} years old",
+  "@yearsOld": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "allergiesCount": "{count, plural, =1{{count} Allergy} other{{count} Allergies}}",
+  "@allergiesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "medicationsCount": "{count, plural, =1{{count} Medication} other{{count} Medications}}",
+  "@medicationsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "healthPassportQr": "Health Passport QR",
+  "pointQrReader": "Point this at any QR reader to securely share your vitals.",
+  "download": "Download",
+  "share": "SHARE",
+  "noQrCodeGenerated": "No QR Code Generated",
+  "generateQrCode": "Generate QR Code",
+  "expired": "Expired",
+  "validFor": "Valid for {hours}h {minutes}m",
+  "@validFor": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "emergencySosTitle": "Emergency SOS",
+  "keepHolding": "Keep holding...",
+  "nearbyHospitals": "Nearby Hospitals",
+  "allergies": "Allergies",
+  "conditions": "Terms and Conditions",
+  "noMedicalInfoPrefix": "No medical information on file. Update your profile to ",
+  "addMedicalIdData": "add medical ID data",
+  "sosTip": "SOS sends your GPS location to your emergency contacts via SMS. Make sure your contacts are configured in your profile.",
+  "sendingCaps": "SENDING",
+  "sosFailed": "SOS FAILED",
+  "sosActive": "SOS ACTIVE",
+  "sendingEmergencyAlert": "Sending Emergency Alert",
+  "alertCouldNotBeSent": "Alert Could Not Be Sent",
+  "emergencyAlertSent": "Emergency Alert Sent",
+  "sendingIn": "Sending in {seconds}…",
+  "@sendingIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "tryAgain": "Try Again",
+  "dismiss": "Dismiss",
+  "euEmergency": "EU Emergency",
+  "usEmergency": "US Emergency",
+  "samuEmergency": "SAMU (FR)",
+  "opensMapsHospitals": "Opens your maps app with emergency hospitals nearby",
+  "liveLocation": "Live Location",
+  "acquiringGps": "Acquiring GPS coordinates…",
+  "locationUnavailable": "Location unavailable",
+  "contactsNotified": "Contacts Notified",
+  "contactsNotifiedCount": "{count, plural, =1{{count} contact notified via SMS} other{{count} contacts notified via SMS}}",
+  "@contactsNotifiedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "failedLoadHistory": "Failed to load history",
+  "thisMonthCount": "{count} THIS MONTH",
+  "@thisMonthCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noLogsMatchFilters": "No logs match your filters",
+  "tryDifferentSearch": "Try a different search or filter.",
+  "searchLogs": "Search logs...",
+  "filterGreen": "Green",
+  "filterYellow": "Yellow",
+  "filterRed": "Network",
+  "severityCaption": "Severity: {score}/10",
+  "@severityCaption": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "allSymptoms": "All Symptoms",
+  "bodyRegionsCaption": "Body Regions: {regions}",
+  "@bodyRegionsCaption": {
+    "placeholders": {
+      "regions": {
+        "type": "String"
+      }
+    }
+  },
+  "durationCaption": "Duration: {duration}",
+  "@durationCaption": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "aiRecommendationCaption": "AI Recommendation: {recommendation}",
+  "@aiRecommendationCaption": {
+    "placeholders": {
+      "recommendation": {
+        "type": "String"
+      }
+    }
+  },
+  "viewFullTriageResult": "View Full Triage Result",
+  "notesCaption": "Notes: {notes}",
+  "@notesCaption": {
+    "placeholders": {
+      "notes": {
+        "type": "String"
+      }
+    }
+  },
+  "export30DayReport": "Export 30-day Report (Pro)",
+  "weeklyBreakdown": "Weekly Breakdown",
+  "proAnalysis": "Pro Analysis",
+  "yourHealthThisWeek": "Your health this week",
+  "scoreChangePts": "{change} pts",
+  "@scoreChangePts": {
+    "placeholders": {
+      "change": {
+        "type": "int"
+      }
+    }
+  },
+  "trendAnalysis": "Trend Analysis",
+  "symptomFrequency4w": "SYMPTOM FREQUENCY (4W)",
+  "chartHigh": "High",
+  "chartAvg": "Avg",
+  "chartLow": "Low",
+  "tipSleepTitle": "Extend deep sleep",
+  "tipSleepBody": "Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.",
+  "tipHydrationTitle": "Front-load hydration",
+  "tipHydrationBody": "Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.",
+  "tipActivityTitle": "Pacing activity",
+  "tipActivityBody": "Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.",
+  "personalizedFocus": "Personalized Focus",
+  "refreshingAiInsights": "Refreshing your AI insights…",
+  "generateNewInsights": "Generate New Insights",
+  "symptoms": "Symptoms",
+  "avgSeverity": "Avg Severity",
+  "scoreChange": "Score Change",
+  "checkBackMondayOrGenerate": "No insights generated yet. Check back on Monday for your weekly AI health summary, or tap below to generate one now.",
+  "upgradeProInsightsFull": "Upgrade to Pro to unlock AI-powered weekly health insights. Get personalized recommendations and trend analysis every Monday.",
+  "proPlanMonthly": "Pro Plan - ${price}/mo",
+  "@proPlanMonthly": {
+    "placeholders": {
+      "price": {
+        "type": "double"
+      }
+    }
+  },
+  "weeklyInsightsUnlimitedTriage": "Weekly insights, unlimited triage",
+  "couldNotLoadInsights": "Could not load insights",
+  "couldNotLaunchCall": "Could not launch call to {phoneNumber}",
+  "@couldNotLaunchCall": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "medicalDisclaimer": "This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.",
+  "poweredByGlm": "Powered by GLM-4",
+  "aiTriageIn90Seconds": "AI-powered triage in 90 seconds",
+  "vitalValueOutOfRange": "Value out of expected range",
+  "vitalRangeHintHeartRate": "Heart rate should be between 30 and 220 BPM",
+  "vitalRangeHintBloodPressure": "Blood pressure should be between 60-250 (systolic) and 40-150 (diastolic)",
+  "vitalRangeHintTemperature": "Body temperature should be between 30 and 45 °C",
+  "vitalRangeHintOxygen": "Blood oxygen should be between 50 and 100 %",
+  "vitalRangeHintGlucose": "Blood glucose should be between 20 and 600 mg/dL",
+  "vitalRangeHintWeight": "Weight should be between 2 and 500 kg",
+  "vitalRangeHintHeight": "Height should be between 30 and 250 cm",
+  "familyProfilesProOnly": "Family Profiles is a Pro feature. Upgrade to add family members.",
+  "exportProOnly": "PDF Export is a Pro feature. Upgrade to generate reports.",
+  "triageLimitReached": "You have reached your free monthly triage limit (3). Upgrade to Pro for unlimited triages.",
+  "monthlyTriageLimit": "3 triages per month (Free plan)",
+  "viewQrCode": "View QR Code",
+  "shareMedicalId": "Share Medical ID",
+  "translationTooLong": "Text is too long (max {max} characters). Please shorten and try again.",
+  "@translationTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "profileFieldsSaveFailed": "Account created, but optional profile fields (date of birth, gender, blood type) couldn't be saved. You can edit them later in Profile > Edit Profile.",
+  "privacyPolicyTitle": "Privacy Policy",
+  "privacyLastUpdated": "Last updated: March 2025",
+  "privacyIntro": "At {appName}, your privacy is paramount. This Privacy Policy explains how we collect, use, store, and protect your personal and health-related data. By using our services, you agree to the practises described below.",
+  "@privacyIntro": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "privacySectionDataCollection": "1. Data Collection",
+  "privacyDataCollectionBody": "We collect the following categories of data:\n\n• Personal Information: Name, email address, phone number, date of birth, and gender.\n• Health Data: Blood type, allergies, chronic conditions, medications, vital signs, symptom logs, and triage results.\n• Emergency Contacts: Names, phone numbers, and relationships of your designated contacts.\n• Device Data: Device type, operating system, and app version for compatibility and support.\n• Usage Data: Feature interactions and anonymized analytics to improve our services.\n\nWe only collect data that is necessary for providing our health companion services. You have full control over what information you provide.",
+  "privacySectionDataStorage": "2. Data Storage & Encryption",
+  "privacyDataStorageBody": "Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• QR Code Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centres with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.",
+  "privacySectionGdpr": "3. GDPR Compliance",
+  "privacyGdprBody": "{appName} is fully compliant with the General Data Protection Regulation (GDPR):\n\n• Lawful Basis: We process your data based on your explicit consent and contractual necessity.\n• Data Minimization: We only collect and process data that is strictly necessary.\n• Purpose Limitation: Your data is used only for the purposes for which it was collected.\n• Right to Access: You can request a complete copy of your personal data at any time.\n• Right to Rectification: You can update or correct your data through the app settings.\n• Right to Erasure: You can request complete deletion of your account and data.\n• Right to Portability: You can export your data in a machine-readable format.\n• Data Processing Agreements: All third-party processors have signed DPAs.\n• Cross-Border Transfers: Data is processed within the EU/EEA unless explicit consent is given otherwise.",
+  "@privacyGdprBody": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "privacySectionYourRights": "4. Your Rights",
+  "privacyRightsBody": "You have the following rights regarding your data:\n\n• Access: View all your personal and health data within the app or request a data export.\n• Correction: Edit your profile information at any time through Edit Profile.\n• Deletion: Request account deletion through Settings > Data & Privacy > Delete Account.\n• Restriction: Limit how certain data is processed by adjusting your notification and sharing preferences.\n• Objection: Object to specific data processing activities by contacting our Data Protection Officer.\n• Withdrawal of Consent: You may withdraw consent at any time without affecting the lawfulness of prior processing.\n\nTo exercise any of these rights, contact us at privacy@vitalseker.com or through the in-app support feature.",
+  "privacySectionContactUs": "5. Contact Us",
+  "privacyContactBody": "If you have any questions or concerns about this Privacy Policy or our data practises, please contact us:\n\n• Email: privacy@vitalseker.com\n• Support: support@vitalseker.com\n• Data Protection Officer: dpo@vitalseker.com\n• Address: {producer}, Data Protection Office\n\nWe aim to respond to all privacy-related inquiries within 30 days.",
+  "@privacyContactBody": {
+    "placeholders": {
+      "producer": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyCopyright": "© 2025 {producer}. All rights reserved.",
+  "@privacyCopyright": {
+    "placeholders": {
+      "producer": {
+        "type": "String"
+      }
+    }
+  },
+  "chooseFromGallery": "Choose from Gallery",
+  "takePhoto": "Take a Photo",
+  "removePhoto": "Remove Photo",
+  "avatarUpdated": "Avatar updated!",
+  "avatarUploadFailed": "Failed to upload avatar. Please try again.",
+  "avatarRemoved": "Avatar removed.",
+  "avatarRemoveFailed": "Failed to remove avatar. Please try again.",
+  "profileUpdatedSuccessfully": "Profile updated successfully!",
+  "profileUpdateFailed": "Failed to update profile. Please try again.",
+  "editProfileTitle": "Edit Profile",
+  "errorPrefix": "Error: {error}",
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "personalInformation": "Personal Information",
+  "measurements": "Measurements",
+  "heightCm": "Height (cm)",
+  "weightKg": "Weight (kg)",
+  "emergencyContactSection": "Emergency Contact",
+  "contactName": "Contact Name",
+  "phoneNumber": "Phone Number",
+  "relationshipHint": "e.g. Spouse, Parent, Sibling",
+  "addAllergy": "Add Allergy",
+  "noAllergiesAdded": "No allergies added",
+  "addCondition": "Add Condition",
+  "noConditionsAdded": "No conditions added",
+  "saveChanges": "Save Changes",
+  "healthTitle": "Health",
+  "weeklyInsightsTooltip": "Weekly Insights",
+  "yourHealthScore": "Your Health Score",
+  "scoreDescriptionGreat": "Your health metrics are looking great! Keep it up.",
+  "scoreDescriptionGood": "Good progress. A few areas could use attention.",
+  "scoreDescriptionModerate": "Some health metrics need improvement. Consider our recommendations.",
+  "scoreDescriptionLow": "Several areas need attention. Please consult a healthcare provider.",
+  "scoreDescriptionCritical": "Immediate attention recommended. Please seek medical advice.",
+  "riskFactors": "Risk Factors",
+  "allergyCount": "{count} Allergies",
+  "@allergyCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chronicConditionCount": "{count} Chronic Conditions",
+  "@chronicConditionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noRiskFactors": "No risk factors identified",
+  "recentTriageResults": "Recent Triage Results",
+  "noTriageResults": "No triage results yet",
+  "recommendedActions": "Recommended Actions",
+  "actionScheduleCheckup": "Schedule a Check-up",
+  "actionScheduleCheckupDesc": "Your health score suggests it's time for a medical review.",
+  "actionLogVitals": "Log Your Vitals",
+  "actionLogVitalsDesc": "Track your blood pressure, heart rate, and other key metrics.",
+  "actionRunSymptomCheck": "Run a Symptom Check",
+  "actionRunSymptomCheckDesc": "Use AI triage to assess any symptoms you're experiencing.",
+  "actionImproveSleep": "Improve Sleep Quality",
+  "actionImproveSleepDesc": "Quality sleep is essential for recovery and immune function.",
+  "actionStayActive": "Stay Active",
+  "actionStayActiveDesc": "Regular exercise helps maintain cardiovascular health.",
+  "viewWeeklyInsights": "View Weekly Insights",
+  "minutesAgo": "{minutes}m ago",
+  "@minutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "weeksAgo": "{weeks} weeks ago",
+  "@weeksAgo": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToLoadVitals": "Failed to load vitals",
+  "noVitalsYet": "No Vitals Yet",
+  "startLoggingVitalsPrompt": "Start logging your vital signs to track your health over time",
+  "logFirstVital": "Log Your First Vital",
+  "day": "Day",
+  "week": "Week",
+  "month": "Month",
+  "noData": "No data",
+  "trendUp": "UP",
+  "trendDown": "DOWN",
+  "trendStable": "STABLE",
+  "logVitalTitle": "Log Vital",
+  "vitalTypeLabel": "VITAL TYPE",
+  "valueLabel": "VALUE",
+  "systolic": "Systolic",
+  "diastolic": "Diastolic",
+  "dateTimeLabel": "DATE & TIME",
+  "notesOptionalLabel": "NOTES (OPTIONAL)",
+  "notesHint": "Add any notes about this reading...",
+  "saveVitalType": "Save {vitalType}",
+  "@saveVitalType": {
+    "placeholders": {
+      "vitalType": {
+        "type": "String"
+      }
+    }
+  },
+  "vitalSavedSuccessfully": "{vitalType} saved successfully",
+  "@vitalSavedSuccessfully": {
+    "placeholders": {
+      "vitalType": {
+        "type": "String"
+      }
+    }
+  },
+  "vitalSaveFailed": "Failed to save vital. Please try again.",
+  "vitalsHistoryTitle": "Vitals History",
+  "range7Days": "7D",
+  "range1Month": "1M",
+  "range3Months": "3M",
+  "range6Months": "6M",
+  "range1Year": "1Y",
+  "noVitalTypeData": "No {vitalType} Data",
+  "@noVitalTypeData": {
+    "placeholders": {
+      "vitalType": {
+        "type": "String"
+      }
+    }
+  },
+  "noReadingsForPeriod": "No readings found for the selected time period",
+  "singleReading": "1 reading",
+  "average": "Average",
+  "min": "I",
+  "max": "Max",
+  "latest": "Latest",
+  "readingsLabel": "READINGS",
+  "value": "Value",
+  "source": "Source",
+  "showingReadingsCount": "Showing 20 of {total} readings",
+  "@showingReadingsCount": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "addMedicationTitle": "Add Medication",
+  "medicationNameLabel": "Medication Name",
+  "dosageLabel": "Dosage",
+  "unitLabel": "Unit",
+  "frequencyLabel": "Frequency",
+  "startDateLabel": "Start Date",
+  "setEndDate": "Set end date",
+  "endDateLabel": "End Date",
+  "doseTimesLabel": "DOSE TIMES",
+  "doseNumber": "Dose {number}",
+  "@doseNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "notesOptional": "Notes (optional)",
+  "remindersLabel": "Reminders",
+  "saveMedication": "Save Medication",
+  "medicationAddedSuccessfully": "Medication added successfully!",
+  "medicationAddFailed": "Failed to add medication. Please try again.",
+  "addAppointmentTitle": "Add Appointment",
+  "doctorNameLabel": "Doctor Name",
+  "specialtyLabel": "Specialty",
+  "selectSpecialtyHint": "Select specialty",
+  "locationOptional": "Location / Address (optional)",
+  "reminderLabel": "Reminder",
+  "saveAppointment": "Save Appointment",
+  "appointmentScheduledSuccessfully": "Appointment scheduled successfully!",
+  "appointmentScheduleFailed": "Failed to schedule appointment. Please try again.",
+  "specialtyCardiologist": "Cardiologist",
+  "specialtyDermatologist": "Dermatologist",
+  "specialtyEndocrinologist": "Endocrinologist",
+  "specialtyGeneralPractice": "General Practise",
+  "specialtyNeurologist": "Neurologist",
+  "specialtyOphthalmologist": "Ophthalmologist",
+  "specialtyOrthopedic": "Orthopedic",
+  "specialtyPediatrician": "Pediatrician",
+  "specialtyPsychiatrist": "Psychiatrist",
+  "specialtyOther": "Other",
+  "recordsLoadFailed": "Failed to load records. Please try again.",
+  "notAvailable": "N/A",
+  "editRecordTitle": "Edit Record",
+  "addMedicalRecordTitle": "Add Medical Record",
+  "titleLabel": "Title",
+  "typeLabel": "Type",
+  "recordTypeLabResults": "Lab Results",
+  "recordTypePrescriptions": "Prescriptions",
+  "recordTypeImaging": "Imaging",
+  "recordTypeOther": "Other",
+  "descriptionLabel": "Description",
+  "recordUpdated": "Record updated!",
+  "recordAdded": "Record added!",
+  "recordUpdateFailed": "Failed to update record.",
+  "recordAddFailed": "Failed to add record.",
+  "deleteRecordTitle": "Delete Record",
+  "deleteRecordConfirm": "Are you sure you want to delete \"{title}\"? This cannot be undone.",
+  "@deleteRecordConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "recordDeleted": "Record deleted.",
+  "recordDeleteFailed": "Failed to delete record.",
+  "medicalRecordsTitle": "Medical Records",
+  "searchRecordsHint": "Search records...",
+  "noRecordsFound": "No records found",
+  "tapToAddRecord": "Tap + to add a medical record",
+  "untitled": "Untitled",
+  "moreOptions": "More options",
+  "triageStepOf": "Step {current} of {total}",
+  "triageQ1Title": "What are your main symptoms today?",
+  "triageQ1Subtitle": "Select all that apply. This helps our AI analyse your condition accurately.",
+  "triageQ2Title": "How long have you had these symptoms?",
+  "triageQ2Subtitle": "Select the option that best describes when your symptoms started.",
+  "triageQ3Title": "What is your age and biological sex?",
+  "triageQ3Subtitle": "This information helps calibrate the triage assessment.",
+  "triageQ4Title": "Any known conditions or medications?",
+  "triageQ4Subtitle": "Pre-filled from your profile. Edit if needed.",
+  "triageQ5Title": "Any additional notes?",
+  "triageQ5Subtitle": "Describe any other details about your symptoms or situation.",
+  "triageSeverityLabel": "Overall Severity",
+  "triageSeverityMild": "Mild",
+  "triageSeveritySevere": "Severe",
+  "severityVeryMild": "Very Mild",
+  "severityMild": "Mild",
+  "severityModerate": "Moderate",
+  "severityDistracting": "Distracting",
+  "severitySevere": "Severe",
+  "severityUnbearable": "Unbearable",
+  "durationToday": "Today (started today)",
+  "duration1To3Days": "1-3 days",
+  "duration4To7Days": "4-7 days",
+  "duration1To2Weeks": "1-2 weeks",
+  "durationMoreThan2Weeks": "More than 2 weeks",
+  "age": "Age",
+  "ageHint": "Enter your age",
+  "yearsSuffix": "years",
+  "biologicalSex": "Biological Sex",
+  "conditionsHint": "e.g. Diabetes, Hypertension, Asthma",
+  "medicationsHint": "e.g. Lisinopril 10mg, Metformin 500mg",
+  "triageSummary": "Summary",
+  "analyzeWithAi": "Analyse with AI",
+  "back": "Back",
+  "triageFailed": "Triage analysis failed. Please try again.",
+  "symptomFever": "Fever",
+  "symptomHeadache": "Headache",
+  "symptomCough": "Cough",
+  "symptomShortnessOfBreath": "Short Breath",
+  "symptomFatigue": "Fatigue",
+  "symptomDizziness": "Dizziness",
+  "symptomNausea": "Nausea",
+  "symptomChills": "Chills",
+  "symptomMuscleAche": "Muscle ache",
+  "symptomInsomnia": "Insomnia",
+  "symptomChestPain": "Chest Pain",
+  "symptomAbdominalPain": "Abdominal Pain",
+  "symptomSoreThroat": "Sore Throat",
+  "symptomRunnyNose": "Runny Nose",
+  "symptomVomiting": "Vomiting",
+  "symptomDiarrhea": "Diarrhea",
+  "symptomRash": "Rash",
+  "symptomJointPain": "Joint Pain",
+  "purchaseCancelled": "Purchase was cancelled.",
+  "noPurchasesToRestore": "No previous purchases found to restore."
 }

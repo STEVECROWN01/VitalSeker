@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/vital.dart';
 import '../providers/auth_provider.dart';
 import '../services/database_service.dart';
+import 'user_profile_provider.dart';
 
 final vitalsProvider = AsyncNotifierProvider<VitalsNotifier, List<Vital>>(VitalsNotifier.new);
 
@@ -10,7 +11,7 @@ class VitalsNotifier extends AsyncNotifier<List<Vital>> {
   Future<List<Vital>> build() async {
     final user = ref.watch(currentUserProvider);
     if (user == null) return [];
-    final db = DatabaseService();
+    final db = ref.read(databaseServiceProvider);
     final data = await db.getVitals(user.id);
     return data.map((e) => Vital.fromJson(e)).toList();
   }
@@ -30,7 +31,7 @@ class VitalsNotifier extends AsyncNotifier<List<Vital>> {
       createdAt: now,
     );
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.insertVital(vital.toJson());
       ref.invalidateSelf();
     } catch (e) {
@@ -40,7 +41,7 @@ class VitalsNotifier extends AsyncNotifier<List<Vital>> {
 
   Future<void> deleteVital(String vitalId) async {
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.deleteVital(vitalId);
       ref.invalidateSelf();
     } catch (e) {

@@ -386,7 +386,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Ulepsz to Pro to unlock AI-powered weekly Zdrowie iWnioski';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Plan profesjonalny';
 
   @override
   String get viewAllPlans => 'View Wszystkie plans';
@@ -522,8 +522,8 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count połączonych członków',
+      one: '$count połączony członek',
     );
     return '$_temp0';
   }
@@ -846,7 +846,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Przejdź do sekcji „Profil” > „Subskrypcja” i wybierz plan „Free”, aby przejść na niższy poziom. Funkcje planu Pro lub Enterprise pozostaną aktywne do końca bieżącego okresu rozliczeniowego.';
 
   @override
   String get exportConfigurePreview =>
@@ -1797,8 +1797,8 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alergii',
+      one: '$count Alergia',
     );
     return '$_temp0';
   }
@@ -1808,8 +1808,8 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Leków',
+      one: '$count Lek',
     );
     return '$_temp0';
   }
@@ -1926,8 +1926,8 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontaktów powiadomionych SMS-em',
+      one: '$count kontakt powiadomiony SMS-em',
     );
     return '$_temp0';
   }
@@ -2483,7 +2483,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Nie znaleziono odczytów dla wybranego okresu';
 
   @override
   String get singleReading => '1 odczyt';

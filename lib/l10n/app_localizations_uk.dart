@@ -522,8 +522,8 @@ class AppLocalizationsUk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count підключених учасників',
+      one: '$count підключений учасник',
     );
     return '$_temp0';
   }
@@ -845,7 +845,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Перейдіть у розділ «Профіль» > «Підписка» та виберіть безкоштовний тариф, щоб перейти на нижчий рівень. Функції тарифів «Pro» або «Enterprise» залишатимуться активними до кінця поточного розрахункового періоду.';
 
   @override
   String get exportConfigurePreview =>
@@ -1798,8 +1798,8 @@ class AppLocalizationsUk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Алергій',
+      one: '$count Алергія',
     );
     return '$_temp0';
   }
@@ -1809,8 +1809,8 @@ class AppLocalizationsUk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Ліків',
+      one: '$count Ліки',
     );
     return '$_temp0';
   }
@@ -1875,7 +1875,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get sosFailed => 'SOS НЕ ВДАЛОСЯ';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS АКТИВНИЙ';
 
   @override
   String get sendingEmergencyAlert => 'Sending  Невідкладна допомога Alert';
@@ -1927,8 +1927,8 @@ class AppLocalizationsUk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count контактів повідомлено через SMS',
+      one: '$count контакт повідомлений через SMS',
     );
     return '$_temp0';
   }
@@ -2484,8 +2484,7 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => 'Не знайдено даних за вибраний період часу';
 
   @override
   String get singleReading => '1 перегляд';

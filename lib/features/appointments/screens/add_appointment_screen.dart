@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/providers/appointments_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
@@ -57,6 +58,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
 
   Future<void> _saveAppointment() async {
     if (!_formKey.currentState!.validate()) return;
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() => _isSaving = true);
     try {
@@ -78,13 +80,40 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
           );
 
       if (mounted) {
-        AppSnackBar.success(context, 'Appointment scheduled successfully!');
+        AppSnackBar.success(context, l10n.appointmentScheduledSuccessfully);
         context.pop();
       }
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to schedule appointment. Please try again.', e);
+      if (mounted) AppSnackBar.errorFromException(context, l10n.appointmentScheduleFailed, e);
     } finally {
       if (mounted) setState(() => _isSaving = false);
+    }
+  }
+
+  String _specialtyLabel(AppLocalizations l10n, String specialty) {
+    switch (specialty) {
+      case 'Cardiologist':
+        return l10n.specialtyCardiologist;
+      case 'Dermatologist':
+        return l10n.specialtyDermatologist;
+      case 'Endocrinologist':
+        return l10n.specialtyEndocrinologist;
+      case 'General Practice':
+        return l10n.specialtyGeneralPractice;
+      case 'Neurologist':
+        return l10n.specialtyNeurologist;
+      case 'Ophthalmologist':
+        return l10n.specialtyOphthalmologist;
+      case 'Orthopedic':
+        return l10n.specialtyOrthopedic;
+      case 'Pediatrician':
+        return l10n.specialtyPediatrician;
+      case 'Psychiatrist':
+        return l10n.specialtyPsychiatrist;
+      case 'Other':
+        return l10n.specialtyOther;
+      default:
+        return specialty;
     }
   }
 
@@ -99,10 +128,11 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Appointment'),
+        title: Text(l10n.addAppointmentTitle),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -115,7 +145,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
               TextFormField(
                 controller: _doctorNameController,
                 decoration: InputDecoration(
-                  labelText: 'Doctor Name',
+                  labelText: l10n.doctorNameLabel,
                   labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                   prefixIcon: const Icon(Icons.person_outline),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -133,7 +163,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
               DropdownButtonFormField<String>(
                 value: _specialty,
                 decoration: InputDecoration(
-                  labelText: 'Specialty',
+                  labelText: l10n.specialtyLabel,
                   labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                   prefixIcon: const Icon(Icons.local_hospital_outlined),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -144,7 +174,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                   color: AppColors.textPrimary(isDark),
                 ),
                 hint: Text(
-                  'Select specialty',
+                  l10n.selectSpecialtyHint,
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 15,
@@ -154,7 +184,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 items: _specialties
                     .map((s) => DropdownMenuItem(
                           value: s,
-                          child: Text(s),
+                          child: Text(_specialtyLabel(l10n, s)),
                         ))
                     .toList(),
                 onChanged: (v) => setState(() => _specialty = v),
@@ -265,7 +295,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
               TextFormField(
                 controller: _locationController,
                 decoration: InputDecoration(
-                  labelText: 'Location / Address (optional)',
+                  labelText: l10n.locationOptional,
                   labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                   prefixIcon: const Icon(Icons.location_on_outlined),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -283,7 +313,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                 controller: _notesController,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  labelText: 'Notes (optional)',
+                  labelText: l10n.notesOptional,
                   labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
                   prefixIcon: const Padding(
                     padding: EdgeInsets.only(bottom: 48),
@@ -320,7 +350,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Reminder',
+                        l10n.reminderLabel,
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 15,
@@ -357,9 +387,9 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
                           height: 24,
                           child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                         )
-                      : const Text(
-                          'Save Appointment',
-                          style: TextStyle(
+                      : Text(
+                          l10n.saveAppointment,
+                          style: const TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 16,
                             fontWeight: FontWeight.w600,

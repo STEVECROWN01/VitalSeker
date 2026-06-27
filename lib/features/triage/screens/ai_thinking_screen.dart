@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 
@@ -137,7 +138,7 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
               const SizedBox(height: 24),
               _buildDataStream(isDark),
               const Spacer(flex: 3),
-              _buildFooter(isDark),
+              _buildFooter(isDark, context),
               const SizedBox(height: 24),
             ],
           ),
@@ -328,13 +329,14 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
   }
 
   // ── Footer disclaimer (DM Sans 12px w700, opacity 70%) ──────────────
-  Widget _buildFooter(bool isDark) {
+  Widget _buildFooter(bool isDark, BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: Opacity(
         opacity: 0.70,
         child: Text(
-          'This is health information only, not a medical diagnosis.',
+          l10n.medicalDisclaimer,
           textAlign: TextAlign.center,
           style: AppTextStyles.labelSmall.copyWith(
             fontSize: 12,

@@ -519,8 +519,8 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count membres connectés',
+      one: '$count membre connecté',
     );
     return '$_temp0';
   }
@@ -554,7 +554,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Version$version';
   }
 
   @override
@@ -847,7 +847,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Rendez-vous dans Profil > Abonnement et sélectionnez la formule gratuite pour passer à une formule inférieure. Vos fonctionnalités Pro ou Enterprise resteront actives jusqu\'à la fin de votre période de facturation en cours.';
 
   @override
   String get exportConfigurePreview =>
@@ -1803,7 +1803,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count Allergies',
-      one: '$count Allergy',
+      one: '$count Allergie',
     );
     return '$_temp0';
   }
@@ -1813,8 +1813,8 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Médicaments',
+      one: '$count Médicament',
     );
     return '$_temp0';
   }
@@ -1933,8 +1933,8 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count contacts notifiés par SMS',
+      one: '$count contact notifié par SMS',
     );
     return '$_temp0';
   }
@@ -2491,7 +2491,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Aucune mesure n\'a été trouvée pour la période sélectionnée.';
 
   @override
   String get singleReading => '1 mesure';
@@ -2503,7 +2503,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get min => 'J\'ai';
 
   @override
-  String get max => 'Max';
+  String get max => 'Max.';
 
   @override
   String get latest => 'Dernier';
@@ -2646,7 +2646,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get titleLabel => 'Titre';
 
   @override
-  String get typeLabel => 'Type';
+  String get typeLabel => 'Taper';
 
   @override
   String get recordTypeLabResults => 'Résultats de laboratoire';

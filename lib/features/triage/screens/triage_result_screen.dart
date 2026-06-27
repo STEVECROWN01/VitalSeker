@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../core/providers/auth_provider.dart';
@@ -64,9 +64,15 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final triage =
         widget.triageData['triage'] as Map<String, dynamic>? ?? widget.triageData;
-    final urgencyLevel = triage['urgency_level'] as String? ?? 'medium';
-    final urgencyScore = triage['urgency_score'] as int? ?? 50;
-    final seekCare = triage['seek_care'] as String? ?? 'schedule-appointment';
+    final urgencyLevel = triage['urgency_level'] as String? ??
+        triage['urgency'] as String? ?? 'medium';
+    // JSON numbers may decode as int or double — use num?.toInt() to be safe.
+    final urgencyScore = (triage['urgency_score'] as num?)?.toInt() ?? 50;
+    final seekCare = triage['seek_care'] as String? ??
+        (urgencyLevel == 'red' || urgencyLevel == 'emergency' ? 'emergency'
+        : urgencyLevel == 'yellow' || urgencyLevel == 'medium' ? 'urgent-care'
+        : urgencyLevel == 'green' || urgencyLevel == 'low' ? 'self-care'
+        : 'schedule-appointment');
     final recommendations =
         (triage['recommendations'] as List<dynamic>? ?? []).cast<String>();
     final redFlags =
@@ -237,8 +243,12 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
               ),
               const SizedBox(height: 8),
               ...possibleConditions.map((condition) {
-                final c = condition as Map<String, dynamic>;
-                final probability = c['probability'] as String? ?? 'low';
+                // Defensive cast: the AI may return either Map or bare String.
+                // The defensive path on line ~89 handles both; this must too.
+                final c = condition is Map<String, dynamic>
+                    ? condition
+                    : <String, dynamic>{'name': condition.toString()};
+                final probability = (c['probability'] ?? 'low').toString();
                 return Card(
                   child: ListTile(
                     leading: Icon(
@@ -423,7 +433,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
 
       final triage = widget.triageData['triage'] as Map<String, dynamic>? ??
           widget.triageData;
-      final urgencyScore = (triage['urgency_score'] as int?) ?? 50;
+      final urgencyScore = (triage['urgency_score'] as num?)?.toInt() ?? 50;
       // urgency_score: 0–100, higher = more urgent.
       // vital_score:   0–100, higher = better health.
       // delta is clamped to [−15, +10] so a single triage session never swings

@@ -523,8 +523,8 @@ class AppLocalizationsEl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count συνδεδεμένα μέλη',
+      one: '$count συνδεδεμένο μέλος',
     );
     return '$_temp0';
   }
@@ -849,7 +849,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Μεταβείτε στο «Προφίλ» > «Συνδρομή» και επιλέξτε το πακέτο «Δωρεάν» για να κάνετε υποβάθμιση. Οι λειτουργίες του πακέτου Pro ή Enterprise θα παραμείνουν ενεργές μέχρι το τέλος της τρέχουσας περιόδου χρέωσης.';
 
   @override
   String get exportConfigurePreview =>
@@ -1803,8 +1803,8 @@ class AppLocalizationsEl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Αλλεργίες',
+      one: '$count Αλλεργία',
     );
     return '$_temp0';
   }
@@ -1814,8 +1814,8 @@ class AppLocalizationsEl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Φάρμακα',
+      one: '$count Φάρμακο',
     );
     return '$_temp0';
   }
@@ -1933,8 +1933,8 @@ class AppLocalizationsEl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count επαφές ενημερώθηκαν μέσω SMS',
+      one: '$count επαφή ενημερώθηκε μέσω SMS',
     );
     return '$_temp0';
   }
@@ -2491,7 +2491,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Δεν βρέθηκαν μετρήσεις για την επιλεγμένη χρονική περίοδο';
 
   @override
   String get singleReading => '1 ανάγνωση';

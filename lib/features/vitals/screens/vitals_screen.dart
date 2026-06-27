@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/vital.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 class VitalsScreen extends ConsumerStatefulWidget {
   const VitalsScreen({super.key});
@@ -26,6 +28,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final vitalsAsync = ref.watch(vitalsProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Vitals')),
@@ -41,7 +44,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                 Icon(Icons.error_outline, size: 64, color: AppColors.urgencyEmergency),
                 const SizedBox(height: 16),
                 Text(
-                  'Failed to load vitals',
+                  l10n.failedToLoadVitals,
                   style: TextStyle(
                     fontFamily: 'ClashDisplay',
                     fontSize: 18,
@@ -86,7 +89,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'No Vitals Yet',
+                          l10n.noVitalsYet,
                           style: TextStyle(
                             fontFamily: 'ClashDisplay',
                             fontSize: 22,
@@ -96,7 +99,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Start logging your vital signs to track\nyour health over time',
+                          l10n.startLoggingVitalsPrompt,
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
@@ -109,9 +112,9 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                         ElevatedButton.icon(
                           onPressed: () => context.push(AppConfig.addVital),
                           icon: const Icon(Icons.add, size: 20),
-                          label: const Text(
-                            'Log Your First Vital',
-                            style: TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600),
+                          label: Text(
+                            l10n.logFirstVital,
+                            style: const TextStyle(fontFamily: 'Outfit', fontWeight: FontWeight.w600),
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary(isDark),
@@ -141,17 +144,17 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                     child: Row(
                       children: [
                         _SegmentButton(
-                          label: 'Day',
+                          label: l10n.day,
                           isSelected: _selectedSegment == 0,
                           onTap: () => setState(() => _selectedSegment = 0),
                         ),
                         _SegmentButton(
-                          label: 'Week',
+                          label: l10n.week,
                           isSelected: _selectedSegment == 1,
                           onTap: () => setState(() => _selectedSegment = 1),
                         ),
                         _SegmentButton(
-                          label: 'Month',
+                          label: l10n.month,
                           isSelected: _selectedSegment == 2,
                           onTap: () => setState(() => _selectedSegment = 2),
                         ),
@@ -165,8 +168,17 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                    itemCount: VitalType.values.length,
+                    itemCount: VitalType.values.length + 1,
                     itemBuilder: (context, index) {
+                      if (index == VitalType.values.length) {
+                        // Medical disclaimer as the last item in the vitals
+                        // list, per Cahier des Charges Section 7. The extra
+                        // bottom padding clears the FAB.
+                        return const Padding(
+                          padding: EdgeInsets.only(top: 4, bottom: 80),
+                          child: MedicalDisclaimerBanner(),
+                        );
+                      }
                       final type = VitalType.values[index];
                       return _VitalTypeCard(
                         vitalType: type,
@@ -254,6 +266,7 @@ class _VitalTypeCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final latestVital = ref.watch(latestVitalProvider(vitalType));
     final typeVitals = ref.watch(vitalsByTypeProvider(vitalType));
 
@@ -327,7 +340,7 @@ class _VitalTypeCard extends ConsumerWidget {
                     const SizedBox(height: 2),
                     if (latestVital != null)
                       Text(
-                        _formatTimestamp(latestVital.recordedAt),
+                        _formatTimestamp(latestVital.recordedAt, l10n),
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 12,
@@ -336,7 +349,7 @@ class _VitalTypeCard extends ConsumerWidget {
                       )
                     else
                       Text(
-                        'No data',
+                        l10n.noData,
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 12,
@@ -411,13 +424,13 @@ class _VitalTypeCard extends ConsumerWidget {
     );
   }
 
-  String _formatTimestamp(DateTime dt) {
+  String _formatTimestamp(DateTime dt, AppLocalizations l10n) {
     final now = DateTime.now();
     final diff = now.difference(dt);
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inHours < 1) return '${diff.inMinutes}m ago';
-    if (diff.inDays < 1) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) return l10n.justNow;
+    if (diff.inHours < 1) return l10n.minutesAgo(diff.inMinutes);
+    if (diff.inDays < 1) return l10n.hoursAgo(diff.inHours);
+    if (diff.inDays < 7) return l10n.daysAgo(diff.inDays);
     return '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
   }
 }
@@ -431,6 +444,7 @@ class _TrendBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     IconData icon;
     Color badgeColor;
     String label;
@@ -439,17 +453,17 @@ class _TrendBadge extends StatelessWidget {
       case 'up':
         icon = Icons.trending_up;
         badgeColor = AppColors.urgencyMedium;
-        label = 'UP';
+        label = l10n.trendUp;
         break;
       case 'down':
         icon = Icons.trending_down;
         badgeColor = isDark ? AppColors.darkInfo : AppColors.lightInfo;
-        label = 'DOWN';
+        label = l10n.trendDown;
         break;
       default:
         icon = Icons.trending_flat;
         badgeColor = AppColors.urgencyLow;
-        label = 'STABLE';
+        label = l10n.trendStable;
     }
 
     return Container(

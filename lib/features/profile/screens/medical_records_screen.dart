@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
@@ -35,7 +36,11 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
 
   Future<void> _loadRecords() async {
     final user = ref.read(currentUserProvider);
-    if (user == null) return;
+    if (user == null) {
+      // Avoid infinite spinner if user is somehow null (signed out mid-screen).
+      if (mounted) setState(() => _isLoading = false);
+      return;
+    }
     try {
       final db = ref.read(databaseServiceProvider);
       final records = await db.getMedicalRecords(user.id);
@@ -48,7 +53,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        AppSnackBar.errorFromException(context, 'Failed to load records. Please try again.', e);
+        AppSnackBar.errorFromException(context, AppLocalizations.of(context)!.recordsLoadFailed, e);
       }
     }
   }
@@ -103,7 +108,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
   }
 
   String _formatDate(String? dateStr) {
-    if (dateStr == null) return 'N/A';
+    if (dateStr == null) return AppLocalizations.of(context)!.notAvailable;
     try {
       final date = DateTime.parse(dateStr);
       return '${date.day}/${date.month}/${date.year}';
@@ -122,6 +127,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
 
   void _showRecordDialog({Map<String, dynamic>? record}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final isEditing = record != null;
     final titleController = TextEditingController(text: record?['title'] as String? ?? '');
     final descController = TextEditingController(text: record?['description'] as String? ?? '');
@@ -135,32 +141,32 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: Text(isEditing ? 'Edit Record' : 'Add Medical Record', style: const TextStyle(fontFamily: 'ClashDisplay')),
+          title: Text(isEditing ? l10n.editRecordTitle : l10n.addMedicalRecordTitle, style: const TextStyle(fontFamily: 'ClashDisplay')),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: titleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Title',
-                    prefixIcon: Icon(Icons.title),
+                  decoration: InputDecoration(
+                    labelText: l10n.titleLabel,
+                    prefixIcon: const Icon(Icons.title),
                   ),
                   style: const TextStyle(fontFamily: 'Inter'),
                 ),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
                   value: selectedType,
-                  decoration: const InputDecoration(
-                    labelText: 'Type',
-                    prefixIcon: Icon(Icons.category_outlined),
+                  decoration: InputDecoration(
+                    labelText: l10n.typeLabel,
+                    prefixIcon: const Icon(Icons.category_outlined),
                   ),
                   style: const TextStyle(fontFamily: 'Inter'),
-                  items: const [
-                    DropdownMenuItem(value: 'labResults', child: Text('Lab Results')),
-                    DropdownMenuItem(value: 'prescriptions', child: Text('Prescriptions')),
-                    DropdownMenuItem(value: 'imaging', child: Text('Imaging')),
-                    DropdownMenuItem(value: 'other', child: Text('Other')),
+                  items: [
+                    DropdownMenuItem(value: 'labResults', child: Text(l10n.recordTypeLabResults)),
+                    DropdownMenuItem(value: 'prescriptions', child: Text(l10n.recordTypePrescriptions)),
+                    DropdownMenuItem(value: 'imaging', child: Text(l10n.recordTypeImaging)),
+                    DropdownMenuItem(value: 'other', child: Text(l10n.recordTypeOther)),
                   ],
                   onChanged: (v) {
                     if (v != null) setDialogState(() => selectedType = v);
@@ -192,8 +198,8 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                 TextField(
                   controller: descController,
                   maxLines: 3,
-                  decoration: const InputDecoration(
-                    labelText: 'Description',
+                  decoration: InputDecoration(
+                    labelText: l10n.descriptionLabel,
                     alignLabelWithHint: true,
                   ),
                   style: const TextStyle(fontFamily: 'Inter'),
@@ -204,7 +210,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
           actions: [
             TextButton(
               onPressed: isSaving ? null : () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             ElevatedButton(
               onPressed: isSaving
@@ -235,7 +241,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                           _loadRecords();
                           AppSnackBar.success(
                             context,
-                            isEditing ? 'Record updated!' : 'Record added!',
+                            isEditing ? l10n.recordUpdated : l10n.recordAdded,
                           );
                         }
                       } catch (e) {
@@ -243,7 +249,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                           setDialogState(() => isSaving = false);
                           AppSnackBar.errorFromException(
                             context,
-                            isEditing ? 'Failed to update record.' : 'Failed to add record.',
+                            isEditing ? l10n.recordUpdateFailed : l10n.recordAddFailed,
                             e,
                           );
                         }
@@ -252,7 +258,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
               style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary(isDark)),
               child: isSaving
                   ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                  : Text(isEditing ? 'Save' : 'Add', style: const TextStyle(color: Colors.white)),
+                  : Text(isEditing ? l10n.save : l10n.add, style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -261,18 +267,19 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
   }
 
   Future<void> _deleteRecord(Map<String, dynamic> record) async {
+    final l10n = AppLocalizations.of(context)!;
     final title = record['title'] as String? ?? 'this record';
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete Record'),
-        content: Text('Are you sure you want to delete "$title"? This cannot be undone.'),
+        title: Text(l10n.deleteRecordTitle),
+        content: Text(l10n.deleteRecordConfirm(title)),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: FilledButton.styleFrom(backgroundColor: AppColors.urgencyEmergency),
-            child: const Text('Delete'),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -283,14 +290,15 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
       final db = ref.read(databaseServiceProvider);
       await db.deleteMedicalRecord(record['id'] as String);
       _loadRecords();
-      if (mounted) AppSnackBar.success(context, 'Record deleted.');
+      if (mounted) AppSnackBar.success(context, l10n.recordDeleted);
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to delete record.', e);
+      if (mounted) AppSnackBar.errorFromException(context, l10n.recordDeleteFailed, e);
     }
   }
 
   void _showRecordMenu(Map<String, dynamic> record) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       backgroundColor: AppColors.surface(isDark),
@@ -303,7 +311,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
           children: [
             ListTile(
               leading: Icon(Icons.edit_outlined, color: AppColors.primary(isDark)),
-              title: const Text('Edit Record'),
+              title: Text(l10n.editRecordTitle),
               onTap: () {
                 Navigator.pop(ctx);
                 _showEditRecordDialog(record);
@@ -311,7 +319,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.delete_outline, color: AppColors.urgencyEmergency),
-              title: const Text('Delete Record', style: TextStyle(color: AppColors.urgencyEmergency)),
+              title: Text(l10n.deleteRecordTitle, style: const TextStyle(color: AppColors.urgencyEmergency)),
               onTap: () {
                 Navigator.pop(ctx);
                 _deleteRecord(record);
@@ -326,10 +334,11 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final filtered = _filteredRecords;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Medical Records')),
+      appBar: AppBar(title: Text(l10n.medicalRecordsTitle)),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
@@ -344,7 +353,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                         controller: _searchController,
                         onChanged: (_) => setState(() {}),
                         decoration: InputDecoration(
-                          hintText: 'Search records...',
+                          hintText: l10n.searchRecordsHint,
                           hintStyle: TextStyle(
                             fontFamily: 'Inter',
                             color: AppColors.textHint(isDark),
@@ -421,7 +430,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'No records found',
+                              l10n.noRecordsFound,
                               style: TextStyle(
                                 fontFamily: 'ClashDisplay',
                                 fontSize: 18,
@@ -431,7 +440,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Tap + to add a medical record',
+                              l10n.tapToAddRecord,
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
@@ -464,7 +473,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                     child: Icon(_typeIcon(type), color: _typeColor(type), size: 22),
                                   ),
                                   title: Text(
-                                    record['title'] ?? 'Untitled',
+                                    record['title'] ?? l10n.untitled,
                                     style: const TextStyle(
                                       fontFamily: 'Inter',
                                       fontWeight: FontWeight.w600,
@@ -503,7 +512,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                       IconButton(
                                         icon: const Icon(Icons.more_vert, size: 18),
                                         onPressed: () => _showRecordMenu(record),
-                                        tooltip: 'More options',
+                                        tooltip: l10n.moreOptions,
                                       ),
                                     ],
                                   ),
@@ -532,17 +541,18 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
   }
 
   String _typeLabel(RecordType type) {
+    final l10n = AppLocalizations.of(context)!;
     switch (type) {
       case RecordType.all:
-        return 'All';
+        return l10n.all;
       case RecordType.labResults:
-        return 'Lab Results';
+        return l10n.recordTypeLabResults;
       case RecordType.prescriptions:
-        return 'Prescriptions';
+        return l10n.recordTypePrescriptions;
       case RecordType.imaging:
-        return 'Imaging';
+        return l10n.recordTypeImaging;
       case RecordType.other:
-        return 'Other';
+        return l10n.recordTypeOther;
     }
   }
 }

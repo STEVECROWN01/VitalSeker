@@ -13,11 +13,27 @@ dependencies:
   # Localization
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   # Supabase
   supabase_flutter: ^2.6.0
-  
+
+  # Crash Monitoring (per Cahier des Charges Section 3)
+  sentry_flutter: ^8.9.0
+
+  # Push Notifications (per Cahier des Charges Section 3: OneSignal)
+  onesignal_flutter: ^5.2.0
+
+  # Analytics (per Cahier des Charges Section 3: PostHog)
+  posthog_flutter: ^4.0.0
+
+  # In-App Purchases (per Cahier des Charges Section 3: RevenueCat)
+  purchases_flutter: ^8.0.0
+
+  # Offline Storage (per Cahier des Charges Section 2.3: Mode Hors-Ligne)
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
   # State Management
   flutter_riverpod: ^2.5.1
   

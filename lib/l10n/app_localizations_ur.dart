@@ -519,8 +519,8 @@ class AppLocalizationsUr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count ارکان منسلک',
+      one: '$count رکن منسلک',
     );
     return '$_temp0';
   }
@@ -841,7 +841,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'پروفائل > سبسکرپشن پر جائیں اور ڈاون گریڈ کرنے کے لیے مفت پلان منتخب کریں۔ آپ کی پرو یا انٹرپرائز خصوصیات آپ کی موجودہ بلنگ مدت کے اختتام تک فعال رہیں گی۔';
 
   @override
   String get exportConfigurePreview =>
@@ -1787,8 +1787,8 @@ class AppLocalizationsUr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count الرجیاں',
+      one: '$count الرجی',
     );
     return '$_temp0';
   }
@@ -1798,8 +1798,8 @@ class AppLocalizationsUr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count ادویات',
+      one: '$count دواء',
     );
     return '$_temp0';
   }
@@ -1916,8 +1916,8 @@ class AppLocalizationsUr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count رابطوں کو SMS کی ذریعے مطلع کیا گیا',
+      one: '$count رابطہ کو SMS کی ذریعے مطلع کیا گیا',
     );
     return '$_temp0';
   }
@@ -2471,7 +2471,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'منتخب شدہ وقت کے لیے کوئی ریڈنگز نہیں ملیں۔';
 
   @override
   String get singleReading => '1 مطالعہ';

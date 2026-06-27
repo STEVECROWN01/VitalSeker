@@ -491,7 +491,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get sendSOS => 'Tuma SOS';
 
   @override
-  String get areYouSureSignOut => 'Are you sure you want to sign out?';
+  String get areYouSureSignOut => 'Je, una uhakika unataka kuondoka?';
 
   @override
   String get failedToSignOut => 'Imeshindikana to sign out. Please try again.';
@@ -500,7 +500,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get vitalsLogged => 'Ishara muhimu Logged';
 
   @override
-  String get triageSessions => 'Triage Sessions';
+  String get triageSessions => 'Vikao vya Triage';
 
   @override
   String get daysActive => 'Days Hai';
@@ -509,7 +509,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
-  String get signingOut => 'Signing out...';
+  String get signingOut => 'Unaondoka...';
 
   @override
   String get manageMedicalCredentials => 'Manage matibabu credentials';
@@ -519,17 +519,17 @@ class AppLocalizationsSw extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count wanachama waliounganishwa',
+      one: '$count mwanachama aliyeunganishwa',
     );
     return '$_temp0';
   }
 
   @override
-  String get alertsSmartReminders => 'Alerts & smart reminders';
+  String get alertsSmartReminders => 'Arifa na vikumbusho mahiri';
 
   @override
-  String get documentsImaging => 'Documents & imaging';
+  String get documentsImaging => 'Nyaraka na picha';
 
   @override
   String get translateMedicalTermsSubtitle => 'Translate medical Masharti';
@@ -538,7 +538,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get emergencyMedicalCard => 'Dharura medical card';
 
   @override
-  String get aes256EncryptionActive => 'AES-256 encryption active';
+  String get aes256EncryptionActive => 'Usimbaji fiche wa AES-256 unatumika';
 
   @override
   String get downloadYourHealthData => 'Download your Afya data';
@@ -547,14 +547,15 @@ class AppLocalizationsSw extends AppLocalizations {
   String get themePasswordAccount => 'Theme, pNenosiri account';
 
   @override
-  String get faqsDocumentation => 'FAQs & documentation';
+  String get faqsDocumentation =>
+      'Maswali Yanayoulizwa Mara kwa Mara na nyaraka';
 
   @override
   String get priorityProSupport => 'Priority Pro Msaada';
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'Toleo la $version';
   }
 
   @override
@@ -597,44 +598,44 @@ class AppLocalizationsSw extends AppLocalizations {
       'Failed to Futa account. Please try again or contact sMsaada';
 
   @override
-  String get manageYourSubscription => 'Manage your subscription';
+  String get manageYourSubscription => 'Dhibiti usajili wako';
 
   @override
   String get permanentlyRemoveYourData => 'Permanently Ondoa your data';
 
   @override
-  String get endYourCurrentSession => 'End your current session';
+  String get endYourCurrentSession => 'Maliza kipindi chako cha sasa';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Giza';
 
   @override
-  String get light => 'Light';
+  String get light => 'Mwanga';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'Chaguomsingi ya mfumo';
 
   @override
-  String get subscription => 'Subscription';
+  String get subscription => 'Usajili';
 
   @override
   String get restore => 'Rejesha';
 
   @override
-  String get chooseYourPlan => 'Choose Your Plan';
+  String get chooseYourPlan => 'Chagua Mpango Wako';
 
   @override
-  String get unlockFullPower => 'Unlock the full power of VitalSeker';
+  String get unlockFullPower => 'Fungua uwezo kamili wa VitalSeker';
 
   @override
   String get paymentIntegrationPending =>
-      'In-app payment integration (RevenueCat / StoreKit) is pending. Plan changes are applied directly to your account for testing.';
+      'Ujumuishaji wa malipo ya ndani ya programu (RevenueCat / StoreKit) unasubiri.Mabadiliko ya mpango yanatumika moja kwa moja kwenye akaunti yako kwa majaribio.';
 
   @override
-  String get forever => 'forever';
+  String get forever => 'milele';
 
   @override
-  String get perMonth => '/month';
+  String get perMonth => '/mwezi';
 
   @override
   String get freePlanFeature1 => '3 AI Triage sessions/month';
@@ -643,7 +644,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get freePlanFeature2 => 'Basic Afya Pasipoti';
 
   @override
-  String get freePlanFeature3 => 'QR code sharing';
+  String get freePlanFeature3 => 'Kushiriki msimbo wa QR';
 
   @override
   String get freePlanFeature4 => 'SOS ya dharura alerts';
@@ -670,7 +671,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get proPlanFeature6 => 'Priority Msaada';
 
   @override
-  String get enterprisePlanFeature1 => 'Everything in Pro';
+  String get enterprisePlanFeature1 => 'Kila kitu katika Pro';
 
   @override
   String get enterprisePlanFeature2 => 'Unlimited Familia profiles';
@@ -679,22 +680,22 @@ class AppLocalizationsSw extends AppLocalizations {
   String get enterprisePlanFeature3 => 'Maalum branding';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Ufikiaji wa API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Msaada';
 
   @override
-  String get enterprisePlanFeature6 => 'SLA guarantee';
+  String get enterprisePlanFeature6 => 'dhamana ya SLA';
 
   @override
-  String get bestValue => 'BEST VALUE';
+  String get bestValue => 'THAMANI BORA';
 
   @override
-  String get currentPlan => 'Current Plan';
+  String get currentPlan => 'Mpango wa Sasa';
 
   @override
-  String get downgrade => 'Downgrade';
+  String get downgrade => 'Punguza kiwango';
 
   @override
   String upgradeToPlan(String plan) {
@@ -703,16 +704,16 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get mustBeSignedInToChangePlans =>
-      'You must be signed in to change plans.';
+      'Lazima uwe umeingia ili kubadilisha mipango.';
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'ungependa kubadilisha hadi $plan?';
   }
 
   @override
   String get downgradeToFreeMessage =>
-      'You will lose access to Pro features at the end of your current billing period. Continue?';
+      'Utapoteza uwezo wa kufikia vipengele vya Pro mwishoni mwa kipindi chako cha sasa cha bili.Ungependa kuendelea?';
 
   @override
   String upgradeToPlanMessage(String plan) {
@@ -736,7 +737,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'Imeshindikana to update subscription. Please try again.';
 
   @override
-  String get purchasesRestored => 'Purchases restored.';
+  String get purchasesRestored => 'Ununuzi umerejeshwa.';
 
   @override
   String get failedToRestorePurchases => 'Failed to Rejesha purchases.';
@@ -755,7 +756,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+  String get frequentlyAskedQuestions => 'Maswali Yanayoulizwa Mara Kwa Mara';
 
   @override
   String get contactSupport => 'Contact Msaada';
@@ -780,8 +781,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'Your request is saved to your account and visible to our Msaada team. We respond within 24 hours.';
 
   @override
-  String get pleaseFillSubjectMessage =>
-      'Please fill in both subject and message.';
+  String get pleaseFillSubjectMessage => 'Tafadhali jaza mada na ujumbe.';
 
   @override
   String get subjectMinLength => 'Mada must be at least 5 characters.';
@@ -795,7 +795,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get urgentRequestReceived =>
-      'Urgent request received! Our team will prioritize this.';
+      'Ombi la dharura limepokelewa!Timu yetu itatoa kipaumbele kwa hili.';
 
   @override
   String get supportRequestSent =>
@@ -842,17 +842,17 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Nenda kwa Wasifu > Usajili na uchague mpango wa Bila malipo wa kushusha kiwango. Vipengele vyako vya Pro au Enterprise vitaendelea kutumika hadi mwisho wa kipindi chako cha sasa cha bili.';
 
   @override
   String get exportConfigurePreview =>
       'Configure and preview your comprehensive Afya summary before generating a secure PDF.';
 
   @override
-  String get includeSections => 'Include Sections';
+  String get includeSections => 'Jumuisha Sehemu';
 
   @override
-  String get last3Months => 'Last 3 Months';
+  String get last3Months => 'Miezi 3 iliyopita';
 
   @override
   String get yearToDate => 'Year to Tarehe';
@@ -861,14 +861,14 @@ class AppLocalizationsSw extends AppLocalizations {
   String get allTime => 'Wote Wakati';
 
   @override
-  String get generating => 'Generating…';
+  String get generating => 'Inazalisha...';
 
   @override
-  String get sending => 'Sending…';
+  String get sending => 'Inatuma...';
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'PDF inajumuisha mkopo wa $producer kama mtayarishaji';
   }
 
   @override
@@ -882,14 +882,14 @@ class AppLocalizationsSw extends AppLocalizations {
       'Manage Afya for your whole Familia (5 max)';
 
   @override
-  String get accountOwnerDefault => 'Account Owner';
+  String get accountOwnerDefault => 'Mmiliki wa Akaunti';
 
   @override
   String get ownerProfile => 'Owner Wasifu';
 
   @override
   String years(int age) {
-    return '$age years';
+    return 'Miaka $age';
   }
 
   @override
@@ -898,10 +898,10 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get reachedProLimit => 'You\'ve reached the 5-member Pro limit.';
+  String get reachedProLimit => 'Umefikia kikomo cha watu 5 cha Pro.';
 
   @override
-  String get limitReached => 'Limit reached';
+  String get limitReached => 'Kikomo kimefikiwa';
 
   @override
   String get pleaseFillNameRelationship =>
@@ -923,7 +923,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String removeFamilyMemberConfirm(String name) {
-    return 'Are you sure you want to remove $name from your family profiles?';
+    return 'Je, una uhakika unataka kuondoa $name kutoka kwa wasifu wa familia yako?';
   }
 
   @override
@@ -940,7 +940,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get fullNameLabel => 'Full Jina';
 
   @override
-  String get relationshipExample => 'Relationship (e.g., Spouse, Child)';
+  String get relationshipExample => 'Uhusiano (k.m., Mwenzi, Mtoto)';
 
   @override
   String get bloodTypeOptional => 'Aina ya damu (optional)';
@@ -952,7 +952,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get upgradeYourCare => 'Boresha YOUR CARE';
 
   @override
-  String get protectingWholeCircle => 'You\'re protecting the whole circle.';
+  String get protectingWholeCircle => 'Unalinda mduara mzima.';
 
   @override
   String get proMemberThanks =>
@@ -968,7 +968,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get manageSubscription => 'Manage Subscription';
+  String get manageSubscription => 'Dhibiti Usajili';
 
   @override
   String get failedToLoadProfiles => 'Imeshindikana to pakia profiles';
@@ -992,43 +992,43 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get dosage => 'Dosage';
+  String get dosage => 'Kipimo';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'Kitengo';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'Mzunguko';
 
   @override
   String get notes => 'Maelezo';
 
   @override
-  String get medicationDiscontinued => 'Medication discontinued';
+  String get medicationDiscontinued => 'Dawa imekoma';
 
   @override
   String get failedToDiscontinueMedication =>
       'Imeshindikana to discontinue medication.';
 
   @override
-  String get medicationUpdated => 'Medication updated!';
+  String get medicationUpdated => 'Dawa imesasishwa!';
 
   @override
   String get failedToUpdateMedication => 'Imeshindikana to update medication.';
 
   @override
-  String get medicationMarkedCompleted => 'Medication marked as completed';
+  String get medicationMarkedCompleted => 'Dawa imetiwa alama kuwa imekamilika';
 
   @override
   String get deleteMedication => 'Futa Medication';
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'Je, una uhakika unataka kufuta $name?';
   }
 
   @override
-  String get medicationDeleted => 'Medication deleted';
+  String get medicationDeleted => 'Dawa imefutwa';
 
   @override
   String get failedToDeleteMedication => 'Failed to Futa medication.';
@@ -1037,10 +1037,10 @@ class AppLocalizationsSw extends AppLocalizations {
   String get editDetails => 'Hariri Details';
 
   @override
-  String get markComplete => 'Mark Complete';
+  String get markComplete => 'Weka alama kuwa umekamilika';
 
   @override
-  String get discontinue => 'Discontinue';
+  String get discontinue => 'Acha kuendelea';
 
   @override
   String nextDose(String time) {
@@ -1048,16 +1048,16 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get onceDaily => 'Once Daily';
+  String get onceDaily => 'Mara Moja Kila Siku';
 
   @override
-  String get twiceDaily => 'Twice Daily';
+  String get twiceDaily => 'Mara Mbili Kila Siku';
 
   @override
-  String get threeTimesDaily => 'Three Times Daily';
+  String get threeTimesDaily => 'Mara tatu kwa siku';
 
   @override
-  String get fourTimesDaily => 'Four Times Daily';
+  String get fourTimesDaily => 'Mara Nne Kila Siku';
 
   @override
   String get everyOtherDay => 'Every Nyingine Day';
@@ -1066,7 +1066,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get weekly => 'Kila wiki';
 
   @override
-  String get asNeeded => 'As Needed';
+  String get asNeeded => 'Kama Inahitajika';
 
   @override
   String get custom => 'Maalum';
@@ -1085,14 +1085,15 @@ class AppLocalizationsSw extends AppLocalizations {
       'Schedule your first appointment to keep track of visits';
 
   @override
-  String get appointmentMarkedCompleted => 'Appointment marked as completed';
+  String get appointmentMarkedCompleted =>
+      'Uteuzi umetiwa alama kuwa umekamilika';
 
   @override
   String get failedToUpdateAppointment =>
       'Imeshindikana to update appointment.';
 
   @override
-  String get appointmentCancelled => 'Appointment cancelled';
+  String get appointmentCancelled => 'Uteuzi umeghairiwa';
 
   @override
   String get failedToCancelAppointment => 'Failed to Ghairi appointment.';
@@ -1105,7 +1106,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String rescheduledTo(String date, String time) {
-    return 'Rescheduled to $date at $time';
+    return 'Imeratibiwa upya kuwa $date saa $time';
   }
 
   @override
@@ -1121,13 +1122,13 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get appointmentDeleted => 'Appointment deleted';
+  String get appointmentDeleted => 'Uteuzi umefutwa';
 
   @override
   String get failedToDeleteAppointment => 'Failed to Futa appointment.';
 
   @override
-  String get reschedule => 'Reschedule';
+  String get reschedule => 'Panga upya';
 
   @override
   String get cancelAppointment => 'Ghairi Appointment';
@@ -1141,18 +1142,18 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get medicalTermHint =>
-      'e.g. \"hypertension\", \"take twice daily with food\"';
+      'k.m. \"shinikizo la damu\", \"chukua mara mbili kwa siku na chakula\"';
 
   @override
-  String get translating => 'Translating...';
+  String get translating => 'Inatafsiri...';
 
   @override
   String translationTargetLanguage(String lang) {
-    return 'Translation ($lang)';
+    return 'Tafsiri ($lang)';
   }
 
   @override
-  String get translationWillAppear => 'Your translation will appear here.';
+  String get translationWillAppear => 'Tafsiri yako itaonekana hapa.';
 
   @override
   String get pleaseEnterTermToTranslate =>
@@ -1163,7 +1164,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'Hapana translation was returned. Please try a different term.';
 
   @override
-  String get translationFailed => 'Translation failed. Please try again.';
+  String get translationFailed => 'Tafsiri imeshindwa. Tafadhali jaribu tena.';
 
   @override
   String get notificationSettings => 'Notification Mipangilio';
@@ -1173,13 +1174,13 @@ class AppLocalizationsSw extends AppLocalizations {
       'Failed to Hifadhi notification setting';
 
   @override
-  String get keyFeatures => 'Key Features';
+  String get keyFeatures => 'Sifa Muhimu';
 
   @override
-  String get producer => 'Producer';
+  String get producer => 'Mtayarishaji';
 
   @override
-  String get conceptDesignDevelopment => 'Concept, Design & Development';
+  String get conceptDesignDevelopment => 'Dhana, Ubunifu na Maendeleo';
 
   @override
   String get updateAccountCredentials => 'Sasisha your account credentials';
@@ -1192,7 +1193,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'VitalSeker is your AI-powered Afya companion that puts you in control of your Afya journey. With intelligent symptom tTriage a secure Afya pPasipoti Dharura SOS alerts, and personalized weekly iMwongozo VitalSeker ensures you always have the information you need when it matters most. Built with cutting-edge AI technology and bank-grade security, your Afya data stays private and protected.';
 
   @override
-  String get featureAiTriageTitle => 'AI Symptom Triage';
+  String get featureAiTriageTitle => 'Udhibiti wa Dalili za AI';
 
   @override
   String get featureAiTriageDesc =>
@@ -1243,7 +1244,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String lastUpdatedVersion(String version) {
-    return 'Last updated: Version $version';
+    return 'Ilisasishwa mwisho: Toleo la $version';
   }
 
   @override
@@ -1260,7 +1261,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get tosSection2Title => 'Eligibility & Account';
+  String get tosSection2Title => 'Masharti na Akaunti';
 
   @override
   String get tosSection2Para1 =>
@@ -1287,21 +1288,22 @@ class AppLocalizationsSw extends AppLocalizations {
       'In a medical eDharura call your local Dharura number (e.g. 911, 112) immediately. Do not rely on the Service for Dharura response.';
 
   @override
-  String get tosSection4Title => 'Use of the Service';
+  String get tosSection4Title => 'Matumizi ya Huduma';
 
   @override
-  String get tosSection4Intro => 'You agree NOT to:';
+  String get tosSection4Intro => 'Unakubali KUTOTOA:';
 
   @override
-  String get tosSection4Bullet1 => 'Use the Service for any unlawful purpose;';
+  String get tosSection4Bullet1 =>
+      'Tumia Huduma kwa madhumuni yoyote yasiyo halali;';
 
   @override
   String get tosSection4Bullet2 =>
-      'Attempt to reverse-engineer, decompile, or disassemble the app;';
+      'Jaribio la kubadilisha-uhandisi, kutenganisha, au kutenganisha programu;';
 
   @override
   String get tosSection4Bullet3 =>
-      'Upload content that is malicious, fraudulent, or violates intellectual property rights;';
+      'Pakia maudhui ambayo ni hasidi, ulaghai, au yanayokiuka haki za uvumbuzi;';
 
   @override
   String get tosSection4Bullet4 =>
@@ -1309,10 +1311,10 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get tosSection4Bullet5 =>
-      'Use the Service to send unsolicited communications or spam.';
+      'Tumia Huduma kutuma mawasiliano au barua taka zisizoombwa.';
 
   @override
-  String get tosSection5Title => 'Subscriptions & Payments';
+  String get tosSection5Title => 'Usajili na Malipo';
 
   @override
   String get tosSection5Para1 =>
@@ -1327,7 +1329,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'We may change subscription fees upon reasonable notice. Fee changes will sio apply to your current billing period.';
 
   @override
-  String get tosSection6Title => 'Your Data';
+  String get tosSection6Title => 'Data yako';
 
   @override
   String get tosSection6Para1 =>
@@ -1338,18 +1340,18 @@ class AppLocalizationsSw extends AppLocalizations {
       'You may Hamisha your data at any Wakati via the in-app Hamisha feature, and you may permanently Futa your account and Wote associated data via Mipangilio → Futa Account.';
 
   @override
-  String get tosSection7Title => 'Disclaimers';
+  String get tosSection7Title => 'Kanusho';
 
   @override
   String get tosSection7Para1 =>
-      'THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.';
+      'HUDUMA HUTOLEWA \"KAMA ILIVYO\" NA \"INAVYOPATIKANA\" BILA DHAMANA YA AINA YOYOTE, YA WAZI AU INAYODHANISHWA, PAMOJA NA LAKINI SIO KIKOMO CHA DHAMANA ILIYOHUSISHWA, KUFAA KWA KUSUDI FULANI, AU MTUKUFU.';
 
   @override
   String get tosSection7Para2 =>
       'We do not warrant that the Service will be uninterrupted, error-free, or secure, or that the AI Triage recommendations will be accurate or appropriate for your specific situation.';
 
   @override
-  String get tosSection8Title => 'Limitation of Liability';
+  String get tosSection8Title => 'Ukomo wa Dhima';
 
   @override
   String tosSection8Para1(String producer) {
@@ -1357,7 +1359,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get tosSection9Title => 'Termination';
+  String get tosSection9Title => 'Kukomesha';
 
   @override
   String get tosSection9Para1 =>
@@ -1399,16 +1401,16 @@ class AppLocalizationsSw extends AppLocalizations {
   String get nA => 'N/A';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Ruka';
 
   @override
   String get next => 'Inayofuata';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Ingiza VitalSeker';
 
   @override
-  String get onboardingTitle1 => 'Know your body.';
+  String get onboardingTitle1 => 'Jua mwili wako.';
 
   @override
   String get onboardingDescription1 =>
@@ -1429,10 +1431,10 @@ class AppLocalizationsSw extends AppLocalizations {
       'Supported in 40+ languages and counting. Your data stays with you, syncing automatically the moment you\'re Nyuma online.';
 
   @override
-  String get signInSubtitle => 'Sign in to your VitalSeker account';
+  String get signInSubtitle => 'Ingia katika akaunti yako ya VitalSeker';
 
   @override
-  String get signingIn => 'Signing in...';
+  String get signingIn => 'Inaingia...';
 
   @override
   String get emailRequired => 'Barua pepe is Inahitajika';
@@ -1470,7 +1472,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get other => 'Nyingine';
 
   @override
-  String get creatingAccount => 'Creating account...';
+  String get creatingAccount => 'Inafungua akaunti...';
 
   @override
   String get joinVitalSeker => 'Join VitalSeker and take control of your Afya';
@@ -1482,19 +1484,19 @@ class AppLocalizationsSw extends AppLocalizations {
   String get nameMinChars => 'Jina must be at least 2 characters';
 
   @override
-  String get atLeast6Chars => 'At least 6 characters';
+  String get atLeast6Chars => 'Angalau herufi 6';
 
   @override
-  String get includeUppercase => 'Include at least one uppercase letter';
+  String get includeUppercase => 'Jumuisha angalau herufi kubwa moja';
 
   @override
-  String get includeLowercase => 'Include at least one lowercase letter';
+  String get includeLowercase => 'Jumuisha angalau herufi ndogo moja';
 
   @override
-  String get includeNumber => 'Include at least one number';
+  String get includeNumber => 'Jumuisha angalau nambari moja';
 
   @override
-  String get includeSymbol => 'Include at least one symbol (!@#\$%^&*)';
+  String get includeSymbol => 'Jumuisha angalau ishara moja (!@#\$%^&*)';
 
   @override
   String get confirmPasswordRequired => 'Please Thibitisha your Nenosiri';
@@ -1512,16 +1514,16 @@ class AppLocalizationsSw extends AppLocalizations {
   String get selectDateOfBirthHint => 'Select your Tarehe of birth';
 
   @override
-  String get gender => 'Gender';
+  String get gender => 'Jinsia';
 
   @override
-  String get selectGender => 'Select gender';
+  String get selectGender => 'Chagua jinsia';
 
   @override
   String get bloodType => 'Aina ya damu';
 
   @override
-  String get selectBloodType => 'Select blood type';
+  String get selectBloodType => 'Chagua aina ya damu';
 
   @override
   String get iAgreeTo => 'I agree to the';
@@ -1538,7 +1540,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'Account created! Please check your Barua pepe to verify your account.';
 
   @override
-  String get userFallback => 'User';
+  String get userFallback => 'Mtumiaji';
 
   @override
   String get viewAll => 'View Wote';
@@ -1550,19 +1552,19 @@ class AppLocalizationsSw extends AppLocalizations {
   String get pullDownRetry => 'Pull down to Jaribu tena';
 
   @override
-  String get goodCondition => 'Good condition';
+  String get goodCondition => 'Hali nzuri';
 
   @override
-  String get fairCondition => 'Fair condition';
+  String get fairCondition => 'Hali ya haki';
 
   @override
-  String get needsAttention => 'Needs attention';
+  String get needsAttention => 'Inahitaji umakini';
 
   @override
-  String get poorCondition => 'Poor condition';
+  String get poorCondition => 'Hali mbaya';
 
   @override
-  String get critical => 'Critical';
+  String get critical => 'Muhimu';
 
   @override
   String get overallHealthIndicator => 'Your overall Afya indicator';
@@ -1580,11 +1582,11 @@ class AppLocalizationsSw extends AppLocalizations {
   String get pastChecksAndVitals => 'Past checks & Ishara muhimu';
 
   @override
-  String get justNow => 'Just now';
+  String get justNow => 'Sasa hivi';
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return '${hours}h iliyopita';
   }
 
   @override
@@ -1595,14 +1597,14 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return '${days}d iliyopita';
   }
 
   @override
-  String get symptomCheck => 'Symptom check';
+  String get symptomCheck => 'Uchunguzi wa dalili';
 
   @override
-  String get severity => 'Severity';
+  String get severity => 'Ukali';
 
   @override
   String get aiGreeting =>
@@ -1613,20 +1615,20 @@ class AppLocalizationsSw extends AppLocalizations {
       'Based on your sDalili here\'s my assessment:';
 
   @override
-  String get urgencyLabel => 'Urgency';
+  String get urgencyLabel => 'Uharaka';
 
   @override
-  String get careRecommendationLabel => 'Care recommendation';
+  String get careRecommendationLabel => 'Mapendekezo ya utunzaji';
 
   @override
-  String get redFlagsLabel => '⚠️ Red flags:';
+  String get redFlagsLabel => '⚠️ Bendera nyekundu:';
 
   @override
-  String get recommendationsLabel => 'Recommendations:';
+  String get recommendationsLabel => 'Mapendekezo:';
 
   @override
   String get tapForFullAnalysis =>
-      'Tap \"View Detailed Results\" below for the full analysis.';
+      'Gusa \"Angalia Matokeo ya Kina\" hapa chini kwa uchambuzi kamili.';
 
   @override
   String triageErrorMessage(String error) {
@@ -1634,40 +1636,40 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get generalDiscomfort => 'General discomfort';
+  String get generalDiscomfort => 'Usumbufu wa jumla';
 
   @override
   String get selfCareRecommended => 'Self-Care Inashauriwa';
 
   @override
-  String get scheduleAppointmentCare => 'Schedule an Appointment';
+  String get scheduleAppointmentCare => 'Panga Uteuzi';
 
   @override
-  String get visitUrgentCare => 'Visit Urgent Care';
+  String get visitUrgentCare => 'Tembelea Huduma ya Haraka';
 
   @override
   String get seekEmergencyCare => 'Seek Dharura Care';
 
   @override
-  String get consultHealthcareProvider => 'Consult a Healthcare Provider';
+  String get consultHealthcareProvider => 'Wasiliana na Mtoa Huduma ya Afya';
 
   @override
-  String get mild => 'Mild';
+  String get mild => 'Mpole';
 
   @override
-  String get moderate => 'Moderate';
+  String get moderate => 'Wastani';
 
   @override
-  String get significant => 'Significant';
+  String get significant => 'Muhimu';
 
   @override
-  String get severeLabel => 'Severe';
+  String get severeLabel => 'Mkali';
 
   @override
-  String get extreme => 'Extreme';
+  String get extreme => 'Uliokithiri';
 
   @override
-  String get triageResults => 'Triage Results';
+  String get triageResults => 'Matokeo ya Triage';
 
   @override
   String urgencyScoreCaption(int score) {
@@ -1675,19 +1677,19 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get redFlags => 'Red Flags';
+  String get redFlags => 'Bendera Nyekundu';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => 'Mapendekezo';
 
   @override
   String get possibleConditions => 'Possible Magonjwa';
 
   @override
-  String get followUpQuestions => 'Follow-up Questions';
+  String get followUpQuestions => 'Maswali ya Ufuatiliaji';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Inahifadhi...';
 
   @override
   String get seeDoctorSoon => 'See a Daktari Soon';
@@ -1712,7 +1714,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get escalateMedium1 => 'Dalili persist beyond 3 days';
 
   @override
-  String get escalateMedium2 => 'Pain intensifies or becomes unmanageable';
+  String get escalateMedium2 => 'Maumivu yanazidi au hayawezi kudhibitiwa';
 
   @override
   String get escalateMedium3 => 'New red-flag Dalili appear';
@@ -1721,8 +1723,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get escalateHigh1 => 'Dalili rapidly worsen';
 
   @override
-  String get escalateHigh2 =>
-      'Difficulty breathing or chest tightness develops';
+  String get escalateHigh2 => 'Ugumu wa kupumua au kukazwa kwa kifua kunakua';
 
   @override
   String get escalateHigh3 =>
@@ -1743,7 +1744,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get showQrCode => 'Show Msimbo wa QR';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'Isiyotumika';
 
   @override
   String get knownAllergies => 'Known Mzio';
@@ -1755,7 +1756,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get chronicConditions => 'Magonjwa sugu';
 
   @override
-  String get insurance => 'Insurance';
+  String get insurance => 'Bima';
 
   @override
   String get qrCode => 'Msimbo wa QR';
@@ -1774,11 +1775,11 @@ class AppLocalizationsSw extends AppLocalizations {
   String get heightAndWeight => 'Urefu & Uzito';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'Haijawekwa';
 
   @override
   String yearsOld(int count) {
-    return '$count years old';
+    return 'Umri wa miaka $count';
   }
 
   @override
@@ -1786,8 +1787,8 @@ class AppLocalizationsSw extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Mizio',
+      one: '$count Mzio',
     );
     return '$_temp0';
   }
@@ -1797,8 +1798,8 @@ class AppLocalizationsSw extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Dawa',
+      one: '$count Dawa',
     );
     return '$_temp0';
   }
@@ -1811,7 +1812,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'Point this at any QR reader to securely Shiriki your vIshara muhimu';
 
   @override
-  String get download => 'DOWNLOAD';
+  String get download => 'PAKUA';
 
   @override
   String get share => 'Shiriki';
@@ -1827,14 +1828,14 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'Inatumika kwa ${hours}h ${minutes}m';
   }
 
   @override
   String get emergencySosTitle => 'SOS ya dharura';
 
   @override
-  String get keepHolding => 'Keep holding...';
+  String get keepHolding => 'Endelea kushikilia...';
 
   @override
   String get nearbyHospitals => 'Karibu Hospitals';
@@ -1857,10 +1858,10 @@ class AppLocalizationsSw extends AppLocalizations {
       'SOS sends your GPS Eneo to your Dharura contacts via SMS. Make sure your contacts are configured in your pWasifu';
 
   @override
-  String get sendingCaps => 'SENDING';
+  String get sendingCaps => 'KUTUMA';
 
   @override
-  String get sosFailed => 'SOS FAILED';
+  String get sosFailed => 'SOS IMESHINDWA';
 
   @override
   String get sosActive => 'SOS ACTIVE';
@@ -1876,14 +1877,14 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'Inatuma kwa $seconds...';
   }
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'Jaribu Tena';
 
   @override
-  String get dismiss => 'Dismiss';
+  String get dismiss => 'Ondoa';
 
   @override
   String get euEmergency => 'EU Emergency';
@@ -1902,21 +1903,21 @@ class AppLocalizationsSw extends AppLocalizations {
   String get liveLocation => 'Live Eneo';
 
   @override
-  String get acquiringGps => 'Acquiring GPS coordinates…';
+  String get acquiringGps => 'Inapata viwianishi vya GPS...';
 
   @override
   String get locationUnavailable => 'Eneo unavailable';
 
   @override
-  String get contactsNotified => 'Contacts Notified';
+  String get contactsNotified => 'Anwani Zimearifiwa';
 
   @override
   String contactsNotifiedCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count mawasiliano yamearifiwa kupitia SMS',
+      one: '$count mawasiliano yamearifiwa kupitia SMS',
     );
     return '$_temp0';
   }
@@ -1926,7 +1927,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String thisMonthCount(int count) {
-    return '$count THIS MONTH';
+    return '$count MWEZI HUU';
   }
 
   @override
@@ -1939,17 +1940,17 @@ class AppLocalizationsSw extends AppLocalizations {
   String get searchLogs => 'Tafuta logs...';
 
   @override
-  String get filterGreen => 'Green';
+  String get filterGreen => 'Kijani';
 
   @override
-  String get filterYellow => 'Yellow';
+  String get filterYellow => 'Njano';
 
   @override
-  String get filterRed => 'Red';
+  String get filterRed => 'Nyekundu';
 
   @override
   String severityCaption(int score) {
-    return 'Severity: $score/10';
+    return 'Ukali: $score/10';
   }
 
   @override
@@ -1957,21 +1958,21 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'Mikoa ya Mwili: $regions';
   }
 
   @override
   String durationCaption(String duration) {
-    return 'Duration: $duration';
+    return 'Muda: $duration';
   }
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'Mapendekezo ya AI: $recommendation';
   }
 
   @override
-  String get viewFullTriageResult => 'View Full Triage Result';
+  String get viewFullTriageResult => 'Tazama Matokeo Kamili ya Majaribio';
 
   @override
   String notesCaption(String notes) {
@@ -1985,7 +1986,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get weeklyBreakdown => 'Kila wiki Breakdown';
 
   @override
-  String get proAnalysis => 'Pro Analysis';
+  String get proAnalysis => 'Uchambuzi wa Pro';
 
   @override
   String get yourHealthThisWeek => 'Your Afya this week';
@@ -1996,46 +1997,46 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get trendAnalysis => 'Trend Analysis';
+  String get trendAnalysis => 'Uchambuzi wa Mwenendo';
 
   @override
-  String get symptomFrequency4w => 'SYMPTOM FREQUENCY (4W)';
+  String get symptomFrequency4w => 'MAZUNGUKO YA DALILI (4W)';
 
   @override
-  String get chartHigh => 'High';
+  String get chartHigh => 'Juu';
 
   @override
-  String get chartAvg => 'Avg';
+  String get chartAvg => 'Wastani';
 
   @override
-  String get chartLow => 'Low';
+  String get chartLow => 'Chini';
 
   @override
-  String get tipSleepTitle => 'Extend deep sleep';
+  String get tipSleepTitle => 'Panua usingizi mzito';
 
   @override
   String get tipSleepBody =>
-      'Your core temperature dropped late this week. Try maintaining a cooler room environment (65°F) to accelerate onset of deep sleep phases.';
+      'Halijoto yako kuu ilipungua mwishoni mwa wiki hii. Jaribu kudumisha hali ya chumba baridi (65°F) ili kuharakisha kuanza kwa awamu za usingizi mzito.';
 
   @override
-  String get tipHydrationTitle => 'Front-load hydration';
+  String get tipHydrationTitle => 'Uingizaji hewa wa mzigo wa mbele';
 
   @override
   String get tipHydrationBody =>
-      'Mild dehydration markers detected in afternoon logs. Shift 40% of your daily water intake to before 10 AM to stabilize metabolic rate.';
+      'Alama za upungufu wa maji mwilini zimegunduliwa kwenye kumbukumbu za mchana. Badilisha 40% ya maji yako ya kila siku hadi kabla ya 10 AM ili kuimarisha kasi ya kimetaboliki.';
 
   @override
-  String get tipActivityTitle => 'Pacing activity';
+  String get tipActivityTitle => 'Shughuli ya kasi';
 
   @override
   String get tipActivityBody =>
-      'Spikes in joint pain correlate with abrupt intensity increases. Ensure a 10-minute dynamic warm-up before pushing past zone 2 cardio.';
+      'Miiba katika maumivu ya viungo inahusiana na kuongezeka kwa ghafla. Hakikisha hali ya joto ya dakika 10 kabla ya kusukuma cardio ya zone 2.';
 
   @override
-  String get personalizedFocus => 'Personalized Focus';
+  String get personalizedFocus => 'Mkazo Uliobinafsishwa';
 
   @override
-  String get refreshingAiInsights => 'Refreshing your AI insights…';
+  String get refreshingAiInsights => 'Inaonyesha upya maarifa yako ya AI...';
 
   @override
   String get generateNewInsights => 'Generate New Mwongozo';
@@ -2044,7 +2045,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get symptoms => 'Dalili';
 
   @override
-  String get avgSeverity => 'Avg Severity';
+  String get avgSeverity => 'Ukali wa Wastani';
 
   @override
   String get scoreChange => 'Alama Change';
@@ -2059,7 +2060,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String proPlanMonthly(double price) {
-    return 'Pro Plan - \$$price/mo';
+    return 'Mpango wa Pro - \$$price/mo';
   }
 
   @override
@@ -2097,7 +2098,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get vitalRangeHintTemperature =>
-      'Body temperature should be between 30 and 45 °C';
+      'Joto la mwili linapaswa kuwa kati ya 30 na 45 ° C';
 
   @override
   String get vitalRangeHintOxygen =>
@@ -2136,7 +2137,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String translationTooLong(int max) {
-    return 'Text is too long (max $max characters). Please shorten and try again.';
+    return 'Maandishi ni marefu sana (zaidi ya herufi $max). Tafadhali fupisha na ujaribu tena.';
   }
 
   @override
@@ -2147,7 +2148,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get privacyPolicyTitle => 'Faragha Policy';
 
   @override
-  String get privacyLastUpdated => 'Last updated: March 2025';
+  String get privacyLastUpdated => 'Ilisasishwa mwisho: Machi 2025';
 
   @override
   String privacyIntro(String appName) {
@@ -2155,21 +2156,21 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get privacySectionDataCollection => '1. Data Collection';
+  String get privacySectionDataCollection => '1. Ukusanyaji wa Data';
 
   @override
   String get privacyDataCollectionBody =>
       'We collect the following categories of data: • Personal Information: NJina Barua pepe address, Simu number, Tarehe of birth, and gender. • Afya Data: Blood type, aMzio chronic conditions, mDawa vital signs, symptom logs, and Triage results. • Dharura Contacts: Names, Simu numbers, and relationships of your designated contacts. • Device Data: Device type, operating system, and app version for compatibility and sMsaada • Usage Data: Feature interactions and anonymized analytics to improve our services. We only collect data that is necessary for providing our Afya companion services. You have full control over what information you provide.';
 
   @override
-  String get privacySectionDataStorage => '2. Data Storage & Encryption';
+  String get privacySectionDataStorage => '2. Hifadhi ya Data & Usimbaji fiche';
 
   @override
   String get privacyDataStorageBody =>
       'Your data is stored using industry-leading security measures:\n\n• Encryption at Rest: All data stored in our databases is encrypted using AES-256 encryption.\n• Encryption in Transit: All data transmitted between your device and our servers uses TLS 1.3 encryption.\n• Health Passport: Your health passport data is encrypted with a unique key derived from your credentials.\n• Msimbo wa QR Sharing: Shared health data via QR codes is encrypted and time-limited.\n• Infrastructure: Our servers are hosted in SOC 2 Type II certified data centers with 24/7 monitoring.\n\nWe do not store payment card information. All payment processing is handled by certified third-party providers.';
 
   @override
-  String get privacySectionGdpr => '3. GDPR Compliance';
+  String get privacySectionGdpr => '3. Kuzingatia GDPR';
 
   @override
   String privacyGdprBody(String appName) {
@@ -2177,7 +2178,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get privacySectionYourRights => '4. Your Rights';
+  String get privacySectionYourRights => '4. Haki zako';
 
   @override
   String get privacyRightsBody =>
@@ -2197,23 +2198,23 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get chooseFromGallery => 'Choose from Gallery';
+  String get chooseFromGallery => 'Chagua kutoka kwenye Matunzio';
 
   @override
-  String get takePhoto => 'Take a Photo';
+  String get takePhoto => 'Piga Picha';
 
   @override
   String get removePhoto => 'Ondoa Photo';
 
   @override
-  String get avatarUpdated => 'Avatar updated!';
+  String get avatarUpdated => 'Avatar imesasishwa!';
 
   @override
   String get avatarUploadFailed =>
       'Imeshindikana to upload avatar. Please try again.';
 
   @override
-  String get avatarRemoved => 'Avatar removed.';
+  String get avatarRemoved => 'Avatar imeondolewa.';
 
   @override
   String get avatarRemoveFailed => 'Failed to Ondoa avatar. Please try again.';
@@ -2234,10 +2235,10 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get personalInformation => 'Personal Information';
+  String get personalInformation => 'Taarifa za Kibinafsi';
 
   @override
-  String get measurements => 'Measurements';
+  String get measurements => 'Vipimo';
 
   @override
   String get heightCm => 'Urefu (cm)';
@@ -2255,7 +2256,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get phoneNumber => 'Simu Number';
 
   @override
-  String get relationshipHint => 'e.g. Spouse, Parent, Sibling';
+  String get relationshipHint => 'k.m. Mke, Mzazi, Ndugu';
 
   @override
   String get addAllergy => 'Ongeza Allergy';
@@ -2287,7 +2288,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get scoreDescriptionGood =>
-      'Good progress. A few areas could use attention.';
+      'Maendeleo mazuri. Maeneo machache yanaweza kutumia umakini.';
 
   @override
   String get scoreDescriptionModerate =>
@@ -2318,7 +2319,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get noRiskFactors => 'Hapana risk factors identified';
 
   @override
-  String get recentTriageResults => 'Recent Triage Results';
+  String get recentTriageResults => 'Matokeo ya Jaribio la Hivi Punde';
 
   @override
   String get noTriageResults => 'Hapana Triage results yet';
@@ -2327,7 +2328,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get recommendedActions => 'Inashauriwa Vitendo';
 
   @override
-  String get actionScheduleCheckup => 'Schedule a Check-up';
+  String get actionScheduleCheckup => 'Panga Ukaguzi';
 
   @override
   String get actionScheduleCheckupDesc =>
@@ -2341,18 +2342,18 @@ class AppLocalizationsSw extends AppLocalizations {
       'Track your blood pressure, heart rate, and Nyingine key metrics.';
 
   @override
-  String get actionRunSymptomCheck => 'Run a Symptom Check';
+  String get actionRunSymptomCheck => 'Fanya Ukaguzi wa Dalili';
 
   @override
   String get actionRunSymptomCheckDesc =>
       'Use AI Triage to assess any Dalili you\'re experiencing.';
 
   @override
-  String get actionImproveSleep => 'Improve Sleep Quality';
+  String get actionImproveSleep => 'Boresha Ubora wa Usingizi';
 
   @override
   String get actionImproveSleepDesc =>
-      'Quality sleep is essential for recovery and immune function.';
+      'Usingizi wa ubora ni muhimu kwa kupona na kazi ya kinga.';
 
   @override
   String get actionStayActive => 'Stay Hai';
@@ -2366,12 +2367,12 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return '${minutes}m iliyopita';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return '${weeks}w zilizopita';
   }
 
   @override
@@ -2385,7 +2386,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'Start logging your vital signs to track your Afya over Wakati';
 
   @override
-  String get logFirstVital => 'Log Your First Vital';
+  String get logFirstVital => 'Ingia Muhimu Wako wa Kwanza';
 
   @override
   String get day => 'Siku';
@@ -2409,10 +2410,10 @@ class AppLocalizationsSw extends AppLocalizations {
   String get trendStable => 'STABLE';
 
   @override
-  String get logVitalTitle => 'Log Vital';
+  String get logVitalTitle => 'Ingia Muhimu';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'AINA MUHIMU';
 
   @override
   String get valueLabel => 'VALUE';
@@ -2439,7 +2440,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return '$vitalType imehifadhiwa';
   }
 
   @override
@@ -2470,10 +2471,10 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Hakuna usomaji uliopatikana kwa muda uliochaguliwa';
 
   @override
-  String get singleReading => '1 reading';
+  String get singleReading => '1 kusoma';
 
   @override
   String get average => 'Wastani';
@@ -2488,7 +2489,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get latest => 'Mpya';
 
   @override
-  String get readingsLabel => 'READINGS';
+  String get readingsLabel => 'MASOMO';
 
   @override
   String get value => 'Thamani';
@@ -2498,7 +2499,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return 'Inaonyesha 20 za usomaji wa $total';
   }
 
   @override
@@ -2508,13 +2509,13 @@ class AppLocalizationsSw extends AppLocalizations {
   String get medicationNameLabel => 'Medication Jina';
 
   @override
-  String get dosageLabel => 'Dosage';
+  String get dosageLabel => 'Kipimo';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'Kitengo';
 
   @override
-  String get frequencyLabel => 'Frequency';
+  String get frequencyLabel => 'Mzunguko';
 
   @override
   String get startDateLabel => 'Start Tarehe';
@@ -2526,24 +2527,24 @@ class AppLocalizationsSw extends AppLocalizations {
   String get endDateLabel => 'End Tarehe';
 
   @override
-  String get doseTimesLabel => 'DOSE TIMES';
+  String get doseTimesLabel => 'DOZI WAKATI';
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'Kiwango cha $number';
   }
 
   @override
   String get notesOptional => 'Maelezo (oHiari';
 
   @override
-  String get remindersLabel => 'Reminders';
+  String get remindersLabel => 'Vikumbusho';
 
   @override
   String get saveMedication => 'Hifadhi Medication';
 
   @override
-  String get medicationAddedSuccessfully => 'Medication added successfully!';
+  String get medicationAddedSuccessfully => 'Dawa imeongezwa kwa mafanikio!';
 
   @override
   String get medicationAddFailed =>
@@ -2572,38 +2573,38 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get appointmentScheduledSuccessfully =>
-      'Appointment scheduled successfully!';
+      'Uteuzi umeratibiwa kwa mafanikio!';
 
   @override
   String get appointmentScheduleFailed =>
       'Imeshindikana to schedule appointment. Please try again.';
 
   @override
-  String get specialtyCardiologist => 'Cardiologist';
+  String get specialtyCardiologist => 'Daktari wa moyo';
 
   @override
-  String get specialtyDermatologist => 'Dermatologist';
+  String get specialtyDermatologist => 'Daktari wa ngozi';
 
   @override
   String get specialtyEndocrinologist => 'Endocrinologist';
 
   @override
-  String get specialtyGeneralPractice => 'General Practice';
+  String get specialtyGeneralPractice => 'Mazoezi ya Jumla';
 
   @override
-  String get specialtyNeurologist => 'Neurologist';
+  String get specialtyNeurologist => 'Daktari wa neva';
 
   @override
   String get specialtyOphthalmologist => 'Ophthalmologist';
 
   @override
-  String get specialtyOrthopedic => 'Orthopedic';
+  String get specialtyOrthopedic => 'Mtaalamu wa Mifupa';
 
   @override
-  String get specialtyPediatrician => 'Pediatrician';
+  String get specialtyPediatrician => 'Daktari wa watoto';
 
   @override
-  String get specialtyPsychiatrist => 'Psychiatrist';
+  String get specialtyPsychiatrist => 'Daktari wa magonjwa ya akili';
 
   @override
   String get specialtyOther => 'Nyingine';
@@ -2622,31 +2623,31 @@ class AppLocalizationsSw extends AppLocalizations {
   String get addMedicalRecordTitle => 'Ongeza Medical Record';
 
   @override
-  String get titleLabel => 'Title';
+  String get titleLabel => 'Kichwa';
 
   @override
   String get typeLabel => 'Aina';
 
   @override
-  String get recordTypeLabResults => 'Lab Results';
+  String get recordTypeLabResults => 'Matokeo ya Maabara';
 
   @override
-  String get recordTypePrescriptions => 'Prescriptions';
+  String get recordTypePrescriptions => 'Maagizo';
 
   @override
-  String get recordTypeImaging => 'Imaging';
+  String get recordTypeImaging => 'Kupiga picha';
 
   @override
   String get recordTypeOther => 'Nyingine';
 
   @override
-  String get descriptionLabel => 'Description';
+  String get descriptionLabel => 'Maelezo';
 
   @override
-  String get recordUpdated => 'Record updated!';
+  String get recordUpdated => 'Rekodi imesasishwa!';
 
   @override
-  String get recordAdded => 'Record added!';
+  String get recordAdded => 'Rekodi imeongezwa!';
 
   @override
   String get recordUpdateFailed => 'Imeshindikana to update record.';
@@ -2663,7 +2664,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get recordDeleted => 'Record deleted.';
+  String get recordDeleted => 'Rekodi imefutwa.';
 
   @override
   String get recordDeleteFailed => 'Failed to Futa record.';
@@ -2684,11 +2685,11 @@ class AppLocalizationsSw extends AppLocalizations {
   String get untitled => 'Untitled';
 
   @override
-  String get moreOptions => 'More options';
+  String get moreOptions => 'Chaguo zaidi';
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Hatua ya $current ya $total';
   }
 
   @override
@@ -2727,46 +2728,46 @@ class AppLocalizationsSw extends AppLocalizations {
       'Describe any Nyingine details Kuhusu your Dalili or situation.';
 
   @override
-  String get triageSeverityLabel => 'Overall Severity';
+  String get triageSeverityLabel => 'Ukali wa Jumla';
 
   @override
-  String get triageSeverityMild => 'Mild';
+  String get triageSeverityMild => 'Mpole';
 
   @override
-  String get triageSeveritySevere => 'Severe';
+  String get triageSeveritySevere => 'Mkali';
 
   @override
-  String get severityVeryMild => 'Very Mild';
+  String get severityVeryMild => 'Mpole Sana';
 
   @override
-  String get severityMild => 'Mild';
+  String get severityMild => 'Mpole';
 
   @override
-  String get severityModerate => 'Moderate';
+  String get severityModerate => 'Wastani';
 
   @override
-  String get severityDistracting => 'Distracting';
+  String get severityDistracting => 'Kuvuruga';
 
   @override
-  String get severitySevere => 'Severe';
+  String get severitySevere => 'Mkali';
 
   @override
-  String get severityUnbearable => 'Unbearable';
+  String get severityUnbearable => 'Isiyovumilika';
 
   @override
   String get durationToday => 'Leo (started tLeo';
 
   @override
-  String get duration1To3Days => '1-3 days';
+  String get duration1To3Days => 'Siku 1-3';
 
   @override
-  String get duration4To7Days => '4-7 days';
+  String get duration4To7Days => 'Siku 4-7';
 
   @override
-  String get duration1To2Weeks => '1-2 weeks';
+  String get duration1To2Weeks => 'Wiki 1-2';
 
   @override
-  String get durationMoreThan2Weeks => 'More than 2 weeks';
+  String get durationMoreThan2Weeks => 'Zaidi ya wiki 2';
 
   @override
   String get age => 'Umri';
@@ -2775,19 +2776,19 @@ class AppLocalizationsSw extends AppLocalizations {
   String get ageHint => 'Enter your Umri';
 
   @override
-  String get yearsSuffix => 'years';
+  String get yearsSuffix => 'miaka';
 
   @override
-  String get biologicalSex => 'Biological Sex';
+  String get biologicalSex => 'Jinsia ya Kibiolojia';
 
   @override
-  String get conditionsHint => 'e.g. Diabetes, Hypertension, Asthma';
+  String get conditionsHint => 'k.m. Kisukari, Shinikizo la damu, Pumu';
 
   @override
-  String get medicationsHint => 'e.g. Lisinopril 10mg, Metformin 500mg';
+  String get medicationsHint => 'k.m. Lisinopril 10mg, Metformin 500mg';
 
   @override
-  String get triageSummary => 'Summary';
+  String get triageSummary => 'Muhtasari';
 
   @override
   String get analyzeWithAi => 'Chambua kwa AI';
@@ -2796,7 +2797,8 @@ class AppLocalizationsSw extends AppLocalizations {
   String get back => 'Nyuma';
 
   @override
-  String get triageFailed => 'Triage analysis failed. Please try again.';
+  String get triageFailed =>
+      'Uchambuzi wa majaribio umeshindwa. Tafadhali jaribu tena.';
 
   @override
   String get symptomFever => 'Homa';
@@ -2808,7 +2810,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get symptomCough => 'Kikohozi';
 
   @override
-  String get symptomShortnessOfBreath => 'Short Breath';
+  String get symptomShortnessOfBreath => 'Pumzi Fupi';
 
   @override
   String get symptomFatigue => 'Uchovu';
@@ -2820,40 +2822,40 @@ class AppLocalizationsSw extends AppLocalizations {
   String get symptomNausea => 'Kichefuchefu';
 
   @override
-  String get symptomChills => 'Chills';
+  String get symptomChills => 'Baridi';
 
   @override
-  String get symptomMuscleAche => 'Muscle Ache';
+  String get symptomMuscleAche => 'Maumivu ya Misuli';
 
   @override
-  String get symptomInsomnia => 'Insomnia';
+  String get symptomInsomnia => 'Kukosa usingizi';
 
   @override
-  String get symptomChestPain => 'Chest Pain';
+  String get symptomChestPain => 'Maumivu ya Kifua';
 
   @override
-  String get symptomAbdominalPain => 'Abdominal Pain';
+  String get symptomAbdominalPain => 'Maumivu ya Tumbo';
 
   @override
-  String get symptomSoreThroat => 'Sore Throat';
+  String get symptomSoreThroat => 'Koo Kuuma';
 
   @override
-  String get symptomRunnyNose => 'Runny Nose';
+  String get symptomRunnyNose => 'Pua ya Runny';
 
   @override
-  String get symptomVomiting => 'Vomiting';
+  String get symptomVomiting => 'Kutapika';
 
   @override
-  String get symptomDiarrhea => 'Diarrhea';
+  String get symptomDiarrhea => 'Kuhara';
 
   @override
-  String get symptomRash => 'Rash';
+  String get symptomRash => 'Upele';
 
   @override
-  String get symptomJointPain => 'Joint Pain';
+  String get symptomJointPain => 'Maumivu ya Viungo';
 
   @override
-  String get purchaseCancelled => 'Purchase was cancelled.';
+  String get purchaseCancelled => 'Ununuzi umeghairiwa.';
 
   @override
   String get noPurchasesToRestore =>

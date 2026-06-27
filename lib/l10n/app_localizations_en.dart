@@ -4768,8 +4768,8 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count contacts notified via SMS',
+      one: '$count contact notified via SMS',
     );
     return '$_temp0';
   }

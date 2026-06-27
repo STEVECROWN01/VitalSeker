@@ -518,8 +518,8 @@ class AppLocalizationsTh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count สมาชิกที่เชื่อมต่อ',
+      one: '$count สมาชิกที่เชื่อมต่อ',
     );
     return '$_temp0';
   }
@@ -839,7 +839,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'ไปที่โปรไฟล์ > การสมัครสมาชิก และเลือกแผนฟรีเพื่อลดระดับ. คุณสมบัติ Pro หรือ Enterprise ของคุณจะยังคงใช้งานได้จนถึงสิ้นสุดรอบการเรียกเก็บเงินปัจจุบันของคุณ.';
 
   @override
   String get exportConfigurePreview =>
@@ -865,7 +865,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String pdfIncludesProducer(String producer) {
-    return 'PDF includes $producer credit as producer';
+    return 'ไฟล์ PDF รวมเครดิต $producer ในฐานะผู้ผลิต';
   }
 
   @override
@@ -886,7 +886,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String years(int age) {
-    return '$age years';
+    return '$age ปี';
   }
 
   @override
@@ -985,7 +985,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'แก้ไข $name';
   }
 
   @override
@@ -1020,7 +1020,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String deleteMedicationConfirm(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'คุณแน่ใจหรือไม่ว่าคุณต้องการลบ $name?';
   }
 
   @override
@@ -1583,7 +1583,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return 'ศูนย์ถึงศูนย์ $hours';
   }
 
   @override
@@ -1594,7 +1594,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String daysAgo(int days) {
-    return '${days}d ago';
+    return 'ศูนย์ถึงศูนย์ $days';
   }
 
   @override
@@ -1784,8 +1784,8 @@ class AppLocalizationsTh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count ภูมิแพ้',
+      one: '$count ภูมิแพ้',
     );
     return '$_temp0';
   }
@@ -1795,8 +1795,8 @@ class AppLocalizationsTh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count ยา',
+      one: '$count ยา',
     );
     return '$_temp0';
   }
@@ -1825,7 +1825,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String validFor(int hours, int minutes) {
-    return 'Valid for ${hours}h ${minutes}m';
+    return 'ใช้ได้สำหรับ ${hours}h ${minutes}m';
   }
 
   @override
@@ -1874,7 +1874,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'กำลังส่ง $seconds...';
   }
 
   @override
@@ -1913,8 +1913,8 @@ class AppLocalizationsTh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count รายชื่อติดต่อที่แจ้งผ่าน SMS',
+      one: '$count รายชื่อติดต่อที่แจ้งผ่าน SMS',
     );
     return '$_temp0';
   }
@@ -2364,12 +2364,12 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return 'จากศูนย์ถึงศูนย์ในอดีต $minutes';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return 'จากศูนย์ถึงศูนย์ในอดีต $weeks';
   }
 
   @override
@@ -2437,7 +2437,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String vitalSavedSuccessfully(String vitalType) {
-    return '$vitalType saved successfully';
+    return '$vitalType บันทึกสำเร็จ';
   }
 
   @override
@@ -2467,8 +2467,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => 'ไม่พบการอ่านค่าสำหรับช่วงเวลาที่เลือก';
 
   @override
   String get singleReading => '1 อ่าน';
@@ -2496,7 +2495,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return 'แสดง 20 จากค่าการอ่าน $total';
   }
 
   @override

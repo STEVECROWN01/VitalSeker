@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/models/vital.dart';
@@ -34,14 +35,57 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
 
   bool get _isBloodPressure => _selectedType == VitalType.bloodPressure;
 
+  /// Per-type validation ranges. Prevents garbage data like 99999 BPM or
+  /// 5°C body temperature from being persisted to the DB.
+  ///
+  /// Ranges are inclusive; values outside trigger a snackbar and block save.
+  (double, double) get _rangeFor {
+    switch (_selectedType) {
+      case VitalType.heartRate:
+        return (30, 220);  // BPM
+      case VitalType.respiratoryRate:
+        return (8, 60);    // breaths per minute
+      case VitalType.bloodPressure:
+        return (60, 250);  // systolic; diastolic separately 40-150
+      case VitalType.temperature:
+        return (30, 45);   // °C
+      case VitalType.spO2:
+        return (50, 100);  // %
+      case VitalType.bloodGlucose:
+        return (20, 600);  // mg/dL
+      case VitalType.weight:
+        return (2, 500);   // kg
+    }
+  }
+
+  String? _validationError() {
+    final l10n = AppLocalizations.of(context)!;
+    if (_isBloodPressure) {
+      final sys = double.tryParse(_systolicController.text);
+      final dia = double.tryParse(_diastolicController.text);
+      if (sys == null || dia == null) return null;  // handled by _isValid
+      if (sys < 60 || sys > 250) return l10n.vitalRangeHintBloodPressure;
+      if (dia < 40 || dia > 150) return l10n.vitalRangeHintBloodPressure;
+      if (sys <= dia) return l10n.vitalValueOutOfRange;
+      return null;
+    }
+    final val = double.tryParse(_valueController.text);
+    if (val == null) return null;  // handled by _isValid
+    final (min, max) = _rangeFor;
+    if (val < min || val > max) {
+      return l10n.vitalValueOutOfRange;
+    }
+    return null;
+  }
+
   bool get _isValid {
     if (_isBloodPressure) {
       final sys = double.tryParse(_systolicController.text);
       final dia = double.tryParse(_diastolicController.text);
-      return sys != null && dia != null && sys > 0 && dia > 0;
+      return sys != null && dia != null && sys > 0 && dia > 0 && _validationError() == null;
     }
     final val = double.tryParse(_valueController.text);
-    return val != null && val > 0;
+    return val != null && val > 0 && _validationError() == null;
   }
 
   Future<void> _pickDate() async {
@@ -83,7 +127,16 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
   }
 
   Future<void> _saveVital() async {
-    if (!_isValid) return;
+    // Show the validation error message when invalid (was silently returning).
+    final err = _validationError();
+    if (err != null) {
+      AppSnackBar.error(context, err);
+      return;
+    }
+    if (!_isValid) {
+      AppSnackBar.error(context, AppLocalizations.of(context)!.vitalValueOutOfRange);
+      return;
+    }
     setState(() => _isSaving = true);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -106,11 +159,11 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
       }
 
       if (mounted) {
-        AppSnackBar.success(context, '${_selectedType.displayName} saved successfully');
+        AppSnackBar.success(context, AppLocalizations.of(context)!.vitalSavedSuccessfully(_selectedType.displayName));
         context.pop();
       }
     } catch (e) {
-      if (mounted) AppSnackBar.errorFromException(context, 'Failed to save vital. Please try again.', e);
+      if (mounted) AppSnackBar.errorFromException(context, AppLocalizations.of(context)!.vitalSaveFailed, e);
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
@@ -119,9 +172,10 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Log Vital')),
+      appBar: AppBar(title: Text(l10n.logVitalTitle)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: Column(
@@ -129,7 +183,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
           children: [
             // Vital Type Selector
             Text(
-              'VITAL TYPE',
+              l10n.vitalTypeLabel,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -201,7 +255,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
 
             // Value Input Section
             Text(
-              'VALUE',
+              l10n.valueLabel,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -222,7 +276,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                       keyboardType: const TextInputType.numberWithOptions(decimal: false),
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        labelText: 'Systolic',
+                        labelText: l10n.systolic,
                         labelStyle: const TextStyle(fontFamily: 'Inter'),
                         suffixText: _selectedType.unit,
                         suffixStyle: TextStyle(
@@ -243,7 +297,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                       keyboardType: const TextInputType.numberWithOptions(decimal: false),
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        labelText: 'Diastolic',
+                        labelText: l10n.diastolic,
                         labelStyle: const TextStyle(fontFamily: 'Inter'),
                         suffixText: _selectedType.unit,
                         suffixStyle: TextStyle(
@@ -287,7 +341,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
 
             // Date/Time Picker
             Text(
-              'DATE & TIME',
+              l10n.dateTimeLabel,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -364,7 +418,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
 
             // Notes
             Text(
-              'NOTES (OPTIONAL)',
+              l10n.notesOptionalLabel,
               style: TextStyle(
                 fontFamily: 'DMSans',
                 fontSize: 11,
@@ -378,7 +432,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
               controller: _notesController,
               maxLines: 3,
               decoration: InputDecoration(
-                hintText: 'Add any notes about this reading...',
+                hintText: l10n.notesHint,
                 hintStyle: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 14,
@@ -417,7 +471,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
                           const Icon(Icons.check_circle_outline, size: 20),
                           const SizedBox(width: 8),
                           Text(
-                            'Save ${_selectedType.displayName}',
+                            l10n.saveVitalType(_selectedType.displayName),
                             style: const TextStyle(
                               fontFamily: 'Outfit',
                               fontSize: 16,

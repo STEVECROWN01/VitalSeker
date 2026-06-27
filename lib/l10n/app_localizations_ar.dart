@@ -515,8 +515,8 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count أعضاء متصلون',
+      one: '$count عضو متصل',
     );
     return '$_temp0';
   }
@@ -836,7 +836,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'انتقل إلى «الملف الشخصي» > «الاشتراك» واختر «الخطة المجانية» لتغيير خطتك إلى خطة أدنى. وستظل ميزات خطة «Pro» أو «Enterprise» نشطة حتى نهاية فترة الفوترة الحالية.';
 
   @override
   String get exportConfigurePreview =>
@@ -1782,8 +1782,8 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count حساسيات',
+      one: '$count حساسية',
     );
     return '$_temp0';
   }
@@ -1793,8 +1793,8 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count أدوية',
+      one: '$count دواء',
     );
     return '$_temp0';
   }
@@ -1859,7 +1859,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sosFailed => 'فشل إرسال إشارة SOS';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS نشطة';
 
   @override
   String get sendingEmergencyAlert => 'Sending طوارئ Alert';
@@ -1872,7 +1872,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'إرسال $seconds…';
   }
 
   @override
@@ -1911,8 +1911,8 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count جهات اتصال تم إبلاغها عبر SMS',
+      one: '$count جهة اتصال تم إبلاغها عبر SMS',
     );
     return '$_temp0';
   }
@@ -2465,7 +2465,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'لم يتم العثور على أي قراءات للفترة الزمنية المحددة';
 
   @override
   String get singleReading => '1 قراءة';

@@ -42,7 +42,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get signOut => 'Đăng xuất';
 
   @override
-  String get email => 'Email';
+  String get email => 'E-mail';
 
   @override
   String get password => 'Mật khẩu';
@@ -518,8 +518,8 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count thành viên kết nối',
+      one: '$count thành viên kết nối',
     );
     return '$_temp0';
   }
@@ -707,7 +707,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'Chuyển sang $plan?';
   }
 
   @override
@@ -842,7 +842,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Vào mục Hồ sơ > Gói đăng ký và chọn gói Miễn phí để hạ cấp. Các tính năng của gói Pro hoặc Enterprise sẽ vẫn hoạt động cho đến khi kết thúc kỳ thanh toán hiện tại.';
 
   @override
   String get exportConfigurePreview =>
@@ -1045,7 +1045,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String nextDose(String time) {
-    return 'Next dose: $time';
+    return 'Liều tiếp theo: $time';
   }
 
   @override
@@ -1794,8 +1794,8 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Dị ứng',
+      one: '$count Dị ứng',
     );
     return '$_temp0';
   }
@@ -1805,8 +1805,8 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Thuốc',
+      one: '$count Thuốc',
     );
     return '$_temp0';
   }
@@ -1871,7 +1871,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sosFailed => 'SOS THẤT BẠI';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS HOẠT ĐỘNG';
 
   @override
   String get sendingEmergencyAlert => 'Sending Khẩn cấp Alert';
@@ -1923,8 +1923,8 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count liên hệ đã được thông báo qua SMS',
+      one: '$count liên hệ đã được thông báo qua SMS',
     );
     return '$_temp0';
   }
@@ -1975,7 +1975,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'Đề xuất của AI: $recommendation';
   }
 
   @override
@@ -2479,7 +2479,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Không tìm thấy dữ liệu đo nào cho khoảng thời gian đã chọn';
 
   @override
   String get singleReading => '1 lần đọc';
@@ -2491,7 +2491,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get min => 'Tôi';
 
   @override
-  String get max => 'Max';
+  String get max => 'Tối đa';
 
   @override
   String get latest => 'Mới nhất';

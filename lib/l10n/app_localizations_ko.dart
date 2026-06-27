@@ -515,8 +515,8 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count 연결된 멤버',
+      one: '$count 연결된 멤버',
     );
     return '$_temp0';
   }
@@ -831,7 +831,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      '‘프로필’ > ‘구독’으로 이동하여 ‘무료 요금제’를 선택하면 요금제를 하향 조정할 수 있습니다. Pro 또는 Enterprise 요금제의 기능은 현재 청구 기간이 끝날 때까지 계속 이용 가능합니다.';
 
   @override
   String get exportConfigurePreview =>
@@ -1758,8 +1758,8 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count 알레르기',
+      one: '$count 알레르기',
     );
     return '$_temp0';
   }
@@ -1769,8 +1769,8 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count 약물',
+      one: '$count 약물',
     );
     return '$_temp0';
   }
@@ -1835,7 +1835,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sosFailed => 'SOS 실패';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS 활성';
 
   @override
   String get sendingEmergencyAlert => 'Sending 응급 Alert';
@@ -1887,8 +1887,8 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count 연락처에 SMS로 알림',
+      one: '$count 연락처에 SMS로 알림',
     );
     return '$_temp0';
   }
@@ -2377,10 +2377,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get logVitalTitle => '중요 로그';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => '활력 유형';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => '값';
 
   @override
   String get systolic => '수축기';
@@ -2434,8 +2434,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => '선택한 기간에 해당하는 측정값이 없습니다.';
 
   @override
   String get singleReading => '1회 읽기';

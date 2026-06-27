@@ -15,7 +15,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tagline => 'Il tuo compagno di salute IA';
 
   @override
-  String get home => 'Home';
+  String get home => 'Casa';
 
   @override
   String get history => 'Cronologia';
@@ -519,8 +519,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count membri connessi',
+      one: '$count membro connesso',
     );
     return '$_temp0';
   }
@@ -681,7 +681,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get enterprisePlanFeature3 => 'Personalizzato branding';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Accesso all\'API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Supporto';
@@ -844,7 +844,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Vai su Profilo > Abbonamento e seleziona il piano gratuito per passare a un piano inferiore. Le funzionalità del piano Pro o Enterprise rimarranno attive fino alla fine del periodo di fatturazione in corso.';
 
   @override
   String get exportConfigurePreview =>
@@ -1796,8 +1796,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Allergie',
+      one: '$count Allergia',
     );
     return '$_temp0';
   }
@@ -1807,8 +1807,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Farmaci',
+      one: '$count Farmaco',
     );
     return '$_temp0';
   }
@@ -1873,7 +1873,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get sosFailed => 'SOS NON RIUSCITO';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS ATTIVO';
 
   @override
   String get sendingEmergencyAlert => 'Sending Emergenza Alert';
@@ -1925,8 +1925,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count contatti notificati via SMS',
+      one: '$count contatto notificato via SMS',
     );
     return '$_temp0';
   }
@@ -2481,7 +2481,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Non sono stati trovati dati relativi al periodo selezionato';
 
   @override
   String get singleReading => '1 lettura';
@@ -2493,7 +2493,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get min => 'Ho';
 
   @override
-  String get max => 'Max';
+  String get max => 'Massimo';
 
   @override
   String get latest => 'Ultimo';

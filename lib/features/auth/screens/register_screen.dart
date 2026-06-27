@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
@@ -8,6 +8,7 @@ import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/auth_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/loading_overlay.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -206,8 +207,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 // Refresh cached profile so onboarding/dashboard see the new values.
                 ref.invalidate(userProfileProvider);
               } catch (e) {
-                // Non-fatal: profile can be edited later. Log for debugging.
-                debugPrint('Failed to persist optional profile fields: $e');
+                // Surface the failure to the user (was previously silent).
+                // The account IS created, but the optional fields (DOB,
+                // gender, blood type) weren't saved. The user can edit them
+                // later via Edit Profile, but they should know about it.
+                if (mounted) {
+                  AppSnackBar.error(
+                    context,
+                    AppLocalizations.of(context)!.profileFieldsSaveFailed,
+                  );
+                }
               }
             }
           }
@@ -343,10 +352,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                     ),
                     validator: (value) {
+                      // Stronger password policy per modern auth best practices.
+                      // Was: 6 chars + uppercase + digit (no lowercase, no symbol,
+                      // no length-8 floor). 'A1aaaa' passed. Now: 8 chars minimum,
+                      // mix of cases, digit, and symbol.
                       if (value == null || value.isEmpty) return l10n.passwordRequired;
-                      if (value.length < 6) return l10n.passwordMinLength;
+                      if (value.length < 8) return l10n.passwordMinLength;
                       if (!value.contains(RegExp(r'[A-Z]'))) return l10n.includeUppercase;
+                      if (!value.contains(RegExp(r'[a-z]'))) return l10n.includeLowercase;
                       if (!value.contains(RegExp(r'[0-9]'))) return l10n.includeNumber;
+                      if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>_]'))) return l10n.includeSymbol;
                       return null;
                     },
                   ),

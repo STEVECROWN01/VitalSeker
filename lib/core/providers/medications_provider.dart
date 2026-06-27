@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/medication.dart';
 import '../providers/auth_provider.dart';
 import '../services/database_service.dart';
+import 'user_profile_provider.dart';
 
 final medicationsProvider = AsyncNotifierProvider<MedicationsNotifier, List<Medication>>(MedicationsNotifier.new);
 
@@ -10,7 +11,7 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
   Future<List<Medication>> build() async {
     final user = ref.watch(currentUserProvider);
     if (user == null) return [];
-    final db = DatabaseService();
+    final db = ref.read(databaseServiceProvider);
     final data = await db.getMedications(user.id);
     return data.map((e) => Medication.fromJson(e)).toList();
   }
@@ -45,7 +46,7 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
       updatedAt: now,
     );
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.insertMedication(medication.toJson());
       ref.invalidateSelf();
     } catch (e) {
@@ -55,7 +56,7 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
 
   Future<void> updateMedicationStatus(String medicationId, MedicationStatus status) async {
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.updateMedication(medicationId, {'status': status.name});
       ref.invalidateSelf();
     } catch (e) {
@@ -77,11 +78,13 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
     required bool remindersEnabled,
   }) async {
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.updateMedication(medicationId, {
         'dosage': dosage,
         'unit': unit,
-        'frequency': frequency.name,
+        // Use jsonValue (snake_case) instead of .name (camelCase) so the DB
+        // value matches what Medication.fromJson expects.
+        'frequency': frequency.jsonValue,
         'times': times,
         'end_date': endDate?.toIso8601String().split('T')[0],
         'notes': notes,
@@ -95,7 +98,7 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
 
   Future<void> deleteMedication(String medicationId) async {
     try {
-      final db = DatabaseService();
+      final db = ref.read(databaseServiceProvider);
       await db.deleteMedication(medicationId);
       ref.invalidateSelf();
     } catch (e) {
