@@ -24,6 +24,13 @@ subprojects {
         project.tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
             compilerOptions {
                 jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+                // Kotlin 2.2.0 dropped support for language version 1.6.
+                // Force all subprojects (Flutter plugins like sentry_flutter 8.14.2,
+                // purchases_flutter 8.11.0, posthog_flutter 4.11.0, share_plus 9.0.0,
+                // sign_in_with_apple 6.1.4, package_info_plus 9.0.1) to compile
+                // with language version 1.9, which they all support.
+                languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_9)
+                apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_9)
             }
         }
     }
