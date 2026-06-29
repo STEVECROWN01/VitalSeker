@@ -41,6 +41,21 @@ android {
     }
 }
 
+// Force-downgrade androidx libraries that pulled in minAgpVersion 8.9.1 requirements
+// via transitive dependencies. We pin to versions that work with AGP 8.7.0 to avoid
+// needing to download Gradle 8.11.1 (which fails on hosts that can't resolve
+// services.gradle.org).
+configurations.all {
+    resolutionStrategy {
+        force("androidx.browser:browser:1.8.0")
+        force("androidx.activity:activity:1.9.3")
+        force("androidx.activity:activity-ktx:1.9.3")
+        force("androidx.core:core:1.13.1")
+        force("androidx.core:core-ktx:1.13.1")
+        force("androidx.navigationevent:navigationevent-android:1.0.1")
+    }
+}
+
 flutter {
     source = "../.."
 }
