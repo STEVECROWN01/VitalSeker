@@ -88,8 +88,15 @@ class PassportScreen extends ConsumerWidget {
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.favorite_rounded,
-                                  color: Colors.white, size: 22),
+                              const Image(
+                                image: AssetImage(
+                                  'assets/images/branding/app_logo.png',
+                                ),
+                                width: 22,
+                                height: 22,
+                                fit: BoxFit.contain,
+                                gaplessPlayback: true,
+                              ),
                               const SizedBox(width: 8),
                               Text(
                                 'VitalSeker',

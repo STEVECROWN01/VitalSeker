@@ -161,7 +161,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 48),
-                  // Logo — green-only brand gradient (ForestDark → VitalGreen).
+                  // Logo — VitalSeker brand logo on green-only gradient.
                   Center(
                     child: Container(
                       width: 72,
@@ -177,7 +177,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ],
                       ),
-                      child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 36),
+                      child: const Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Image(
+                          image: AssetImage(
+                            'assets/images/branding/app_logo.png',
+                          ),
+                          fit: BoxFit.contain,
+                          gaplessPlayback: true,
+                        ),
+                      ),
                     ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
                   ),
                   const SizedBox(height: 24),

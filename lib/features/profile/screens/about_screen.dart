@@ -30,7 +30,16 @@ class AboutScreen extends StatelessWidget {
                       gradient: AppColors.brandGradient,
                       borderRadius: BorderRadius.circular(24),
                     ),
-                    child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 40),
+                    child: const Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Image(
+                        image: AssetImage(
+                          'assets/images/branding/app_logo.png',
+                        ),
+                        fit: BoxFit.contain,
+                        gaplessPlayback: true,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(

@@ -7,6 +7,7 @@ import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/brand_logo.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -101,36 +102,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                           ),
                         ],
                       ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          // Heart icon (base)
-                          const Icon(
-                            Icons.favorite_rounded,
-                            color: Colors.white,
-                            size: 42,
+                      child: const Padding(
+                        padding: EdgeInsets.all(14),
+                        child: Image(
+                          image: AssetImage(
+                            'assets/images/branding/app_logo.png',
                           ),
-                          // Medical cross overlay (small, bottom-right)
-                          Positioned(
-                            bottom: 18,
-                            right: 18,
-                            child: Container(
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.add,
-                                  color: AppColors.lightPrimary,
-                                  size: 14,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                          fit: BoxFit.contain,
+                          gaplessPlayback: true,
+                        ),
                       ),
                     ).animate().scale(
                           duration: 600.ms,

@@ -267,8 +267,15 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.favorite_rounded,
-                                color: AppColors.primary(isDark), size: 20),
+                            const Image(
+                              image: AssetImage(
+                                'assets/images/branding/app_logo.png',
+                              ),
+                              width: 20,
+                              height: 20,
+                              fit: BoxFit.contain,
+                              gaplessPlayback: true,
+                            ),
                             const SizedBox(width: 6),
                             Text(
                               'VitalSeker',

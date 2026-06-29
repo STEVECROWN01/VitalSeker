@@ -81,6 +81,7 @@ flutter:
   assets:
     - .env
     - assets/images/
+    - assets/images/branding/
     - assets/fonts/
     - assets/design/
   
