@@ -854,5 +854,9 @@
   "symptomRash": "Udslæt",
   "symptomJointPain": "Ledsmerter",
   "purchaseCancelled": "Købet blev annulleret.",
-  "noPurchasesToRestore": "Nej previous purchases found to rGendan"
+  "noPurchasesToRestore": "Nej previous purchases found to rGendan",
+  "failedToCompleteOnboarding": "Det mislykkedes at fuldføre onboarding. Tjek din forbindelse, og prøv igen.",
+  "fieldRequired": "Dette felt er obligatorisk",
+  "securitySettingsOnThisPage": "Sikkerhedsindstillinger findes på denne side",
+  "somethingWentWrong": "Noget gik galt. Prøv igen."
 }

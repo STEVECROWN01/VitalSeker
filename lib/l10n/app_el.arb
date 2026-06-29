@@ -854,5 +854,9 @@
   "symptomRash": "Εξάνθημα",
   "symptomJointPain": "Πόνος στις αρθρώσεις",
   "purchaseCancelled": "Η αγορά ακυρώθηκε.",
-  "noPurchasesToRestore": "Όχι previous purchases found to rΕπαναφορά"
+  "noPurchasesToRestore": "Όχι previous purchases found to rΕπαναφορά",
+  "failedToCompleteOnboarding": "Η ολοκλήρωση της εισαγωγής απέτυχε. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.",
+  "fieldRequired": "Αυτό το πεδίο είναι υποχρεωτικό",
+  "securitySettingsOnThisPage": "Οι ρυθμίσεις ασφαλείας βρίσκονται σε αυτή τη σελίδα",
+  "somethingWentWrong": "Κάτι πήγε στραβά. Δοκιμάστε ξανά."
 }

@@ -854,5 +854,9 @@
   "symptomRash": "Upele",
   "symptomJointPain": "Maumivu ya Viungo",
   "purchaseCancelled": "Ununuzi umeghairiwa.",
-  "noPurchasesToRestore": "Hapana previous purchases found to rRejesha"
+  "noPurchasesToRestore": "Hapana previous purchases found to rRejesha",
+  "failedToCompleteOnboarding": "Imeshindikana kukamilisha utambulisho. Tafadhali angalia muunganisho wako na ujaribu tena.",
+  "fieldRequired": "Sehemu hii inahitajika",
+  "securitySettingsOnThisPage": "Mipangilio ya usalazi iko kwenye ukurasa huu",
+  "somethingWentWrong": "Hitu kimetokea. Tafadhali jaribu tena."
 }

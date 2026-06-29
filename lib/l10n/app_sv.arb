@@ -854,5 +854,9 @@
   "symptomRash": "Utslag",
   "symptomJointPain": "Ledsmärta",
   "purchaseCancelled": "Köpet har avbrutits.",
-  "noPurchasesToRestore": "Nej previous purchases found to rÅterställ"
+  "noPurchasesToRestore": "Nej previous purchases found to rÅterställ",
+  "failedToCompleteOnboarding": "Det gick inte att slutföra introduktionen. Kontrollera din anslutning och försök igen.",
+  "fieldRequired": "Detta fält är obligatoriskt",
+  "securitySettingsOnThisPage": "Säkerhetsinställningar finns på den här sidan",
+  "somethingWentWrong": "Något gick fel. Försök igen."
 }

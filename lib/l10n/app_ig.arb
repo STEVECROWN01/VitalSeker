@@ -854,5 +854,9 @@
   "symptomRash": "Ihe ọkụ ọkụ",
   "symptomJointPain": "Mgbu nkwonkwo",
   "purchaseCancelled": "A kagburu ịzụrụ ya.",
-  "noPurchasesToRestore": "Mba previous purchases found to rWeghachi"
+  "noPurchasesToRestore": "Mba previous purchases found to rWeghachi",
+  "failedToCompleteOnboarding": "Ọ dịghị ike imecha mmalite. Biko lelee njikọ gị wee nwalee ọzọ.",
+  "fieldRequired": "Achọrọ mpaghara a",
+  "securitySettingsOnThisPage": "Ntọala nchekwa dị na peeji a",
+  "somethingWentWrong": "Ihe adịghị mma. Biko nwalee ọzọ."
 }

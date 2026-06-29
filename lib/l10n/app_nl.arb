@@ -854,5 +854,9 @@
   "symptomRash": "Huiduitslag",
   "symptomJointPain": "Gewrichtspijn",
   "purchaseCancelled": "De aankoop is geannuleerd.",
-  "noPurchasesToRestore": "Nee previous purchases found to rHerstellen"
+  "noPurchasesToRestore": "Nee previous purchases found to rHerstellen",
+  "failedToCompleteOnboarding": "Onboarding kon niet worden voltooid. Controleer uw verbinding en probeer het opnieuw.",
+  "fieldRequired": "Dit veld is verplicht",
+  "securitySettingsOnThisPage": "Beveiligingsinstellingen staan op deze pagina",
+  "somethingWentWrong": "Er is iets misgegaan. Probeer het opnieuw."
 }

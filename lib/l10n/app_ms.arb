@@ -854,5 +854,9 @@
   "symptomRash": "Ruam",
   "symptomJointPain": "Sakit Sendi",
   "purchaseCancelled": "Pembelian telah dibatalkan.",
-  "noPurchasesToRestore": "Tidak previous purchases found to rPulihkan"
+  "noPurchasesToRestore": "Tidak previous purchases found to rPulihkan",
+  "failedToCompleteOnboarding": "Gagal melengkapkan onboarding. Sila semak sambungan anda dan cuba lagi.",
+  "fieldRequired": "Medan ini diperlukan",
+  "securitySettingsOnThisPage": "Tetapan keselamatan berada di halaman ini",
+  "somethingWentWrong": "Sesuatu tidak kena. Sila cuba lagi."
 }

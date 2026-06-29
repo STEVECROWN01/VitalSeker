@@ -854,5 +854,9 @@
   "symptomRash": "Rashi",
   "symptomJointPain": "Ciwon Haɗuwa",
   "purchaseCancelled": "An soke siyayya",
-  "noPurchasesToRestore": "A'a previous purchases found to rMaida"
+  "noPurchasesToRestore": "A'a previous purchases found to rMaida",
+  "failedToCompleteOnboarding": "Ba a kammala gabatarwa ba. Da fatan za a bincika haɗin ku kuma a sake gwadawa.",
+  "fieldRequired": "Wannan filin ana buƙata",
+  "securitySettingsOnThisPage": "Tsaron saituna suna kan wannan shafin",
+  "somethingWentWrong": "Wani abu ya same matsala. Da fatan za a sake gwadawa."
 }

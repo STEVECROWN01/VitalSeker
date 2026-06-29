@@ -854,5 +854,9 @@
   "symptomRash": "ผื่น",
   "symptomJointPain": "ปวดข้อ",
   "purchaseCancelled": "การซื้อถูกยกเลิก",
-  "noPurchasesToRestore": "ไม่ previous purchases found to rกู้คืน"
+  "noPurchasesToRestore": "ไม่ previous purchases found to rกู้คืน",
+  "failedToCompleteOnboarding": "ไม่สามารถเสร็จสิ้นการเริ่มต้นใช้งานได้ กรุณาตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง",
+  "fieldRequired": "ต้องระบุฟิลด์นี้",
+  "securitySettingsOnThisPage": "การตั้งค่าความปลอดภัยอยู่ในหน้านี้",
+  "somethingWentWrong": "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
 }

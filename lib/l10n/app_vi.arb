@@ -854,5 +854,9 @@
   "symptomRash": "Phát ban",
   "symptomJointPain": "Đau khớp",
   "purchaseCancelled": "Giao dịch mua hàng đã bị hủy.",
-  "noPurchasesToRestore": "Không previous purchases found to rKhôi phục"
+  "noPurchasesToRestore": "Không previous purchases found to rKhôi phục",
+  "failedToCompleteOnboarding": "Không thể hoàn tất giới thiệu. Vui lòng kiểm tra kết nối và thử lại.",
+  "fieldRequired": "Trường này là bắt buộc",
+  "securitySettingsOnThisPage": "Cài đặt bảo mật nằm trên trang này",
+  "somethingWentWrong": "Đã xảy ra lỗi. Vui lòng thử lại."
 }

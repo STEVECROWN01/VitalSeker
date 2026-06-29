@@ -854,5 +854,9 @@
   "symptomRash": "Vyrážka",
   "symptomJointPain": "Bolesti kloubů",
   "purchaseCancelled": "Nákup byl zrušen.",
-  "noPurchasesToRestore": "Ne previous purchases found to rObnovit"
+  "noPurchasesToRestore": "Ne previous purchases found to rObnovit",
+  "failedToCompleteOnboarding": "Nepodařilo se dokončit registraci. Zkontrolujte připojení a zkuste to znovu.",
+  "fieldRequired": "Toto pole je povinné",
+  "securitySettingsOnThisPage": "Nastavení zabezpečení jsou na této stránce",
+  "somethingWentWrong": "Něco se pokazilo. Zkuste to znovu."
 }

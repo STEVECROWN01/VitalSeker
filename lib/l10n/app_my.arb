@@ -854,5 +854,9 @@
   "symptomRash": "အဖု",
   "symptomJointPain": "အဆစ်နာခြင်း။",
   "purchaseCancelled": "ဝယ်ယူမှုကို ပယ်ဖျက်ခဲ့သည်။",
-  "noPurchasesToRestore": "မဟုတ် previous purchases found to rပြန်လည်သိမ်းဆည်း"
+  "noPurchasesToRestore": "မဟုတ် previous purchases found to rပြန်လည်သိမ်းဆည်း",
+  "failedToCompleteOnboarding": "မိတ်ဆက်ခြင်း ပြီးမြောက်ရန် မအောင်မြင်ပါ။ ကျေးဇူးပြု၍ သင့်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ပြန်လည်ကြိုးစားကြည့်ပါ။",
+  "fieldRequired": "ဤနယ်ပယ်သည် မဖြစ်မနေ လိုအပ်သည်",
+  "securitySettingsOnThisPage": "လုံခြုံရေး ဆက်တင်များသည် ဤစာမျက်နှာတွင် ရှိသည်",
+  "somethingWentWrong": "တစ်ခုခု မှားယွင်းသွားသည်။ ကျေးဇူးပြု၍ ပြန်လည်ကြိုးစားကြည့်ပါ။"
 }

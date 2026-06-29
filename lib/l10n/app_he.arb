@@ -854,5 +854,9 @@
   "symptomRash": "פְּרִיחָה",
   "symptomJointPain": "כאבי מפרקים",
   "purchaseCancelled": "הרכישה בוטלה.",
-  "noPurchasesToRestore": "לא previous purchases found to rשחזור"
+  "noPurchasesToRestore": "לא previous purchases found to rשחזור",
+  "failedToCompleteOnboarding": "השלמת ההיכרות נכשלה. נא בדוק את החיבור שלך ונסה שוב.",
+  "fieldRequired": "שדה זה נדרש",
+  "securitySettingsOnThisPage": "הגדרות האבטחה נמצאות בעמוד זה",
+  "somethingWentWrong": "משהו השתבש. נא נסה שוב."
 }

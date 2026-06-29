@@ -854,5 +854,9 @@
   "symptomRash": "Висип",
   "symptomJointPain": "Біль у суглобах",
   "purchaseCancelled": "Покупка була скасована.",
-  "noPurchasesToRestore": "Ні previous purchases found to rВідновити"
+  "noPurchasesToRestore": "Ні previous purchases found to rВідновити",
+  "failedToCompleteOnboarding": "Не вдалося завершити реєстрацію. Перевірте підключення та спробуйте ще раз.",
+  "fieldRequired": "Це поле обов'язкове",
+  "securitySettingsOnThisPage": "Налаштування безпеки знаходяться на цій сторінці",
+  "somethingWentWrong": "Щось пішло не так. Спробуйте ще раз."
 }

@@ -854,5 +854,9 @@
   "symptomRash": "دانے",
   "symptomJointPain": "جوڑوں کا درد",
   "purchaseCancelled": "خرید منسوخ کر دی گئی۔",
-  "noPurchasesToRestore": "نہیں previous purchases found to rبحال کریں"
+  "noPurchasesToRestore": "نہیں previous purchases found to rبحال کریں",
+  "failedToCompleteOnboarding": "تعارف مکمل کرنے میں ناکام۔ براہ کرم اپنا کنکشن چیک کریں اور دوبارہ کوشش کریں۔",
+  "fieldRequired": "یہ خانہ لازمی ہے",
+  "securitySettingsOnThisPage": "سیکیورٹی سیٹنگز اس صفحے پر ہیں",
+  "somethingWentWrong": "کوئی چیزی غلط ہو گئی۔ براہ کرم دوبارہ کوشش کریں۔"
 }

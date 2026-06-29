@@ -854,5 +854,9 @@
   "symptomRash": "Sisu",
   "symptomJointPain": "Apapọ Irora",
   "purchaseCancelled": "Ti fagile rira.",
-  "noPurchasesToRestore": "Bẹ́ẹ̀kọ́ previous purchases found to rDá padà"
+  "noPurchasesToRestore": "Bẹ́ẹ̀kọ́ previous purchases found to rDá padà",
+  "failedToCompleteOnboarding": "Kò ṣeé ṣe láti parí ìfilọ́lẹ̀. Jọ̀wọ yẹ ìdarapọ̀ rẹ kí o sì gbiyànjú lẹ́ẹ̀kan si.",
+  "fieldRequired": "A nílò̀ pápà yìí",
+  "securitySettingsOnThisPage": "Àwọn ètò aàbọ̀ wà lórí ojú ewé yìí",
+  "somethingWentWrong": "Nnkan ṣẹlẹ̀. Jọ̀wọ gbiyànjú lẹ́ẹ̀kan si."
 }

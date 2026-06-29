@@ -854,5 +854,9 @@
   "symptomRash": "Сыпь",
   "symptomJointPain": "Боль в суставах",
   "purchaseCancelled": "Покупка была отменена.",
-  "noPurchasesToRestore": "Нет previous purchases found to rВосстановить"
+  "noPurchasesToRestore": "Нет previous purchases found to rВосстановить",
+  "failedToCompleteOnboarding": "Не удалось завершить регистрацию. Проверьте подключение и попробуйте снова.",
+  "fieldRequired": "Это поле обязательно",
+  "securitySettingsOnThisPage": "Настройки безопасности находятся на этой странице",
+  "somethingWentWrong": "Что-то пошло не так. Попробуйте снова."
 }

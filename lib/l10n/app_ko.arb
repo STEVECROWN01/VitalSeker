@@ -854,5 +854,9 @@
   "symptomRash": "발진",
   "symptomJointPain": "관절통",
   "purchaseCancelled": "구매가 취소되었습니다.",
-  "noPurchasesToRestore": "아니오 previous purchases found to r복원"
+  "noPurchasesToRestore": "아니오 previous purchases found to r복원",
+  "failedToCompleteOnboarding": "온보딩을 완료하지 못했습니다. 연결을 확인하고 다시 시도해 주세요.",
+  "fieldRequired": "이 필드는 필수 항목입니다",
+  "securitySettingsOnThisPage": "보안 설정이 이 페이지에 있습니다",
+  "somethingWentWrong": "문제가 발생했습니다. 다시 시도해 주세요."
 }

@@ -855,5 +855,9 @@
   "symptomJointPain": "Dolor articular",
   "purchaseCancelled": "La compra fue cancelada.",
   "noPurchasesToRestore": "No previous purchases found to rRestaurar",
-  "@@locale": "es"
+  "@@locale": "es",
+  "failedToCompleteOnboarding": "No se pudo completar la incorporación. Compruebe su conexión e inténtelo de nuevo.",
+  "fieldRequired": "Este campo es obligatorio",
+  "securitySettingsOnThisPage": "La configuración de seguridad está en esta página",
+  "somethingWentWrong": "Algo salió mal. Inténtelo de nuevo."
 }

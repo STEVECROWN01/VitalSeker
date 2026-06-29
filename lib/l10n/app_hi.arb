@@ -854,5 +854,9 @@
   "symptomRash": "रैशे",
   "symptomJointPain": "संयुक्त दर्द",
   "purchaseCancelled": "खरीद रद्द कर दी गई।",
-  "noPurchasesToRestore": "नहीं previous purchases found to rपुनर्स्थापित"
+  "noPurchasesToRestore": "नहीं previous purchases found to rपुनर्स्थापित",
+  "failedToCompleteOnboarding": "ऑनबोर्डिंग पूर्ण करने में विफल। कृपया अपना कनेक्शन जांचें और पुनः प्रयास करें।",
+  "fieldRequired": "यह फ़ील्ड आवश्यक है",
+  "securitySettingsOnThisPage": "सुरक्षा सेटिंग्स इस पृष्ठ पर हैं",
+  "somethingWentWrong": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।"
 }

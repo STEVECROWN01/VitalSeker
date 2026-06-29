@@ -854,5 +854,9 @@
   "symptomRash": "Eruzione cutanea",
   "symptomJointPain": "Dolori articolari",
   "purchaseCancelled": "L'acquisto è stato annullato.",
-  "noPurchasesToRestore": "No previous purchases found to rRipristina"
+  "noPurchasesToRestore": "No previous purchases found to rRipristina",
+  "failedToCompleteOnboarding": "Impossibile completare l'onboarding. Controlla la connessione e riprova.",
+  "fieldRequired": "Questo campo è obbligatorio",
+  "securitySettingsOnThisPage": "Le impostazioni di sicurezza sono su questa pagina",
+  "somethingWentWrong": "Si è verificato un errore. Riprova."
 }

@@ -854,5 +854,9 @@
   "symptomRash": "発疹",
   "symptomJointPain": "関節痛",
   "purchaseCancelled": "購入がキャンセルされました。",
-  "noPurchasesToRestore": "いいえ previous purchases found to r復元"
+  "noPurchasesToRestore": "いいえ previous purchases found to r復元",
+  "failedToCompleteOnboarding": "オンボーディングを完了できませんでした。接続を確認して、もう一度お試しください。",
+  "fieldRequired": "この項目は必須です",
+  "securitySettingsOnThisPage": "セキュリティ設定はこのページにあります",
+  "somethingWentWrong": "エラーが発生しました。もう一度お試しください。"
 }

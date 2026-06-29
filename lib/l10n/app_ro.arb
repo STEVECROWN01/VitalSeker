@@ -854,5 +854,9 @@
   "symptomRash": "Erupție cutanată",
   "symptomJointPain": "Dureri articulare",
   "purchaseCancelled": "Achiziția a fost anulată.",
-  "noPurchasesToRestore": "Nu previous purchases found to rRestabilire"
+  "noPurchasesToRestore": "Nu previous purchases found to rRestabilire",
+  "failedToCompleteOnboarding": "Finalizarea onboarding-ului a eșuat. Verificați conexiunea și încercați din nou.",
+  "fieldRequired": "Acest câmp este obligatoriu",
+  "securitySettingsOnThisPage": "Setările de securitate sunt pe această pagină",
+  "somethingWentWrong": "Ceva a mers prost. Încercați din nou."
 }

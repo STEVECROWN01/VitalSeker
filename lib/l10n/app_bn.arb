@@ -854,5 +854,9 @@
   "symptomRash": "র‍্যাশ",
   "symptomJointPain": "জয়েন্টের ব্যথা",
   "purchaseCancelled": "ক্রয় বাতিল করা হয়েছে।",
-  "noPurchasesToRestore": "না previous purchases found to rপুনরুদ্ধার"
+  "noPurchasesToRestore": "না previous purchases found to rপুনরুদ্ধার",
+  "failedToCompleteOnboarding": "অনবোর্ডিং সম্পূর্ণ করতে ব্যর্থ। অনুগ্রহ করে আপনার সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন।",
+  "fieldRequired": "এই ক্ষেত্রটি প্রয়োজন",
+  "securitySettingsOnThisPage": "নিরাপত্তা সেটিংস এই পৃষ্ঠায় রয়েছে",
+  "somethingWentWrong": "কিছু ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
 }

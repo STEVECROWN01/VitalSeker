@@ -854,5 +854,9 @@
   "symptomRash": "Bőrkiütés",
   "symptomJointPain": "Ízületi fájdalom",
   "purchaseCancelled": "A vásárlás törlésre került.",
-  "noPurchasesToRestore": "Nem previous purchases found to rVisszaállítás"
+  "noPurchasesToRestore": "Nem previous purchases found to rVisszaállítás",
+  "failedToCompleteOnboarding": "Nem sikerült befejezni a bevezetést. Ellenőrizze a kapcsolatot, és próbálja újra.",
+  "fieldRequired": "Ez a mező kötelező",
+  "securitySettingsOnThisPage": "A biztonsági beállítások ezen az oldalon találhatók",
+  "somethingWentWrong": "Valami hiba történt. Próbálja újra."
 }

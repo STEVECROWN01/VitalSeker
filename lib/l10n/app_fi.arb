@@ -854,5 +854,9 @@
   "symptomRash": "Ihottuma",
   "symptomJointPain": "Nivelkipu",
   "purchaseCancelled": "Ostos peruutettiin.",
-  "noPurchasesToRestore": "Ei previous purchases found to rPalauta"
+  "noPurchasesToRestore": "Ei previous purchases found to rPalauta",
+  "failedToCompleteOnboarding": "Esittelyä ei voitu suorittaa loppuun. Tarkista yhteytesi ja yritä uudelleen.",
+  "fieldRequired": "Tämä kenttä on pakollinen",
+  "securitySettingsOnThisPage": "Turvallisuusasetukset ovat tällä sivulla",
+  "somethingWentWrong": "Jokin meni pieleen. Yritä uudelleen."
 }

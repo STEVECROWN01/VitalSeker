@@ -854,5 +854,9 @@
   "symptomRash": "Döküntü",
   "symptomJointPain": "Eklem Ağrısı",
   "purchaseCancelled": "Satın alma işlemi iptal edildi.",
-  "noPurchasesToRestore": "Hayır previous purchases found to rGeri yükle"
+  "noPurchasesToRestore": "Hayır previous purchases found to rGeri yükle",
+  "failedToCompleteOnboarding": "Onboarding tamamlanamadı. Lütfen bağlantınızı kontrol edin ve tekrar deneyin.",
+  "fieldRequired": "Bu alan zorunludur",
+  "securitySettingsOnThisPage": "Güvenlik ayarları bu sayfada",
+  "somethingWentWrong": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
 }

@@ -855,5 +855,9 @@
   "symptomJointPain": "Gelenkschmerzen",
   "purchaseCancelled": "Kauf wurde abgebrochen.",
   "noPurchasesToRestore": "Nein previous purchases found to rWiederherstellen",
-  "@@locale": "de"
+  "@@locale": "de",
+  "failedToCompleteOnboarding": "Onboarding konnte nicht abgeschlossen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+  "fieldRequired": "Dieses Feld ist erforderlich",
+  "securitySettingsOnThisPage": "Sicherheitseinstellungen befinden sich auf dieser Seite",
+  "somethingWentWrong": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
 }

@@ -854,5 +854,9 @@
   "symptomRash": "الطفح الجلدي",
   "symptomJointPain": "آلام المفاصل",
   "purchaseCancelled": "تم إلغاء عملية الشراء.",
-  "noPurchasesToRestore": "لا previous purchases found to rاستعادة"
+  "noPurchasesToRestore": "لا previous purchases found to rاستعادة",
+  "failedToCompleteOnboarding": "تعذر إكمال التهيئة. يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
+  "fieldRequired": "هذا الحقل مطلوب",
+  "securitySettingsOnThisPage": "إعدادات الأمان موجودة على هذه الصفحة",
+  "somethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
 }
