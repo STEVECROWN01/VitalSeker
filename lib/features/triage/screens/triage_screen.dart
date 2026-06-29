@@ -5,8 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/locale_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
+import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
+import '../../../core/services/offline_cache_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
@@ -139,6 +142,27 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
   }
 
   Future<void> _runTriage() async {
+    final l10n = AppLocalizations.of(context)!;
+
+    // ── Free-tier 3 triages/month limit (per Cahier des Charges Section 3):
+    // "GRATUIT — 3 triages/mois". Pro users have unlimited triages.
+    final isPro = ref.read(isProUserProvider);
+    if (!isPro) {
+      final symptomLogs = ref.read(symptomLogsProvider).valueOrNull ?? [];
+      // Count logs from this calendar month
+      final now = DateTime.now();
+      final monthStart = DateTime(now.year, now.month, 1);
+      final monthCount = symptomLogs.where((log) {
+        return log.loggedAt.isAfter(monthStart) || log.loggedAt.isAtSameMomentAs(monthStart);
+      }).length;
+      if (monthCount >= 3) {
+        AppSnackBar.error(context, l10n.triageLimitReached);
+        // Navigate to subscription screen so the user can upgrade
+        context.push(AppConfig.subscription);
+        return;
+      }
+    }
+
     setState(() => _isProcessing = true);
 
     // Show the AI thinking overlay
@@ -171,10 +195,23 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
     } catch (e) {
       if (!mounted) return;
       Navigator.of(context).pop(); // Close AI thinking overlay
-      AppSnackBar.errorFromException(
+
+      // ── Offline queue (per Cahier des Charges Section 2.3: "Mode Hors-Ligne")
+      // If the network is down, queue the triage request for later submission.
+      final l10n = AppLocalizations.of(context)!;
+      final notes = _notesController.text.trim().isEmpty ? null : _notesController.text.trim();
+
+      // Queue the request for retry when network returns
+      await OfflineCacheService().queueTriageRequest(
+        symptoms: _selectedSymptoms.toList(),
+        severity: _severity,
+        duration: _duration,
+        notes: notes,
+      );
+
+      AppSnackBar.error(
         context,
-        AppLocalizations.of(context)!.triageFailed,
-        e,
+        l10n.triageFailed,
       );
     } finally {
       if (mounted) setState(() => _isProcessing = false);

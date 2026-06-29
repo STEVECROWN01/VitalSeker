@@ -669,8 +669,18 @@ class _OwnerCard extends StatelessWidget {
   String _ageLine() {
     final parts = <String>[];
     if (dateOfBirth != null) {
-      final age = DateTime.now().year - dateOfBirth!.year;
-      parts.add(l10n.years(age));
+      // Correct age calculation — accounts for whether the birthday has
+      // occurred this year. The previous `now.year - dob.year` was wrong by
+      // up to 1 year for anyone whose birthday hasn't happened yet this year.
+      final now = DateTime.now();
+      final dob = dateOfBirth!;
+      int age = now.year - dob.year;
+      if (now.month < dob.month || (now.month == dob.month && now.day < dob.day)) {
+        age--;
+      }
+      if (age >= 0) {
+        parts.add(l10n.years(age));
+      }
     }
     if (gender != null && gender!.isNotEmpty) {
       parts.add(_capitalize(gender!));

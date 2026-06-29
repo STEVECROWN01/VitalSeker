@@ -130,9 +130,9 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
               const Spacer(flex: 3),
               _buildCluster(isDark),
               const SizedBox(height: 40),
-              _buildHeadline(isDark),
+              _buildHeadline(isDark, context),
               const SizedBox(height: 8),
-              _buildSubtitle(isDark),
+              _buildSubtitle(isDark, context),
               const SizedBox(height: 32),
               _buildProgressBar(isDark),
               const SizedBox(height: 24),
@@ -223,7 +223,8 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
   }
 
   // ── Headline + animated trailing dots ────────────────────────────────
-  Widget _buildHeadline(bool isDark) {
+  Widget _buildHeadline(bool isDark, BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // Pre-computed strings for 0..3 trailing dots (padded so the text width
     // doesn't jump as dots appear/disappear).
     const dotChars = ['   ', '.  ', '.. ', '...'];
@@ -237,7 +238,7 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
           text: TextSpan(
             children: [
               TextSpan(
-                text: 'Analyzing your symptoms',
+                text: l10n.analyzingSymptoms,
                 style: AppTextStyles.subheading1.copyWith(
                   fontSize: 24,
                   color: AppColors.textPrimary(isDark),
@@ -257,9 +258,10 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
     );
   }
 
-  Widget _buildSubtitle(bool isDark) {
+  Widget _buildSubtitle(bool isDark, BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Text(
-      'AI is processing your health data',
+      l10n.aiProcessing,
       textAlign: TextAlign.center,
       style: AppTextStyles.bodyLarge.copyWith(
         color: AppColors.textSecondary(isDark),

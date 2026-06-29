@@ -169,7 +169,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                   fontSize: 15,
                   color: AppColors.textPrimary(isDark),
                 ),
-                validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
+                validator: (v) => v == null || v.trim().isEmpty ? l10n.fieldRequired : null,
               ),
               const SizedBox(height: 16),
 
@@ -193,7 +193,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                         fontSize: 15,
                         color: AppColors.textPrimary(isDark),
                       ),
-                      validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
+                      validator: (v) => v == null || v.trim().isEmpty ? l10n.fieldRequired : null,
                     ),
                   ),
                   const SizedBox(width: 12),

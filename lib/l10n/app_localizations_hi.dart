@@ -519,8 +519,8 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count सदस्य जुड़े हुए',
+      one: '$count सदस्य जुड़ा हुआ',
     );
     return '$_temp0';
   }
@@ -555,7 +555,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String aboutVitalSekerVersion(String version) {
-    return 'Version $version';
+    return 'संस्करण $version';
   }
 
   @override
@@ -734,13 +734,13 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'विफल to update subscription. Please try again.';
+      'सब्सक्रिप्शन अपडेट करने में असफल रहा। कृपया फिर से प्रयास करें।';
 
   @override
   String get purchasesRestored => 'खरीद बहाल।';
 
   @override
-  String get failedToRestorePurchases => 'Failed to पुनर्स्थापित purchases.';
+  String get failedToRestorePurchases => 'खरीदारी पुनर्स्थापित करने में विफल।';
 
   @override
   String get contactSalesEnterprise =>
@@ -803,7 +803,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit समर्थन request. Please try again or ईमेल support@vitalseker.com.';
+      'सहायता अनुरोध सबमिट करने में विफल। कृपया फिर से प्रयास करें या support@vitalseker.com पर ईमेल करें।';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -842,7 +842,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'प्रोफ़ाइल > सदस्यता पर जाएँ और डाउनग्रेड करने के लिए मुफ़्त योजना चुनें। आपकी Pro या Enterprise सुविधाएँ आपकी वर्तमान बिलिंग अवधि के अंत तक सक्रिय रहेंगी।';
 
   @override
   String get exportConfigurePreview =>
@@ -916,7 +916,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to जोड़ें परिवार member. Please try again.';
+      'परिवार का सदस्य जोड़ने में असफल रहा। कृपया फिर से प्रयास करें।';
 
   @override
   String get removeFamilyMember => 'परिवार का सदस्य हटाएं';
@@ -934,7 +934,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to हटाएं परिवार member. Please try again.';
+      'परिवार के सदस्य को हटाने में असफल रहा। कृपया फिर से प्रयास करें।';
 
   @override
   String get fullNameLabel => 'Full नाम';
@@ -1030,7 +1030,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get medicationDeleted => 'दवा हटा दी गई';
 
   @override
-  String get failedToDeleteMedication => 'Failed to हटाएं medication.';
+  String get failedToDeleteMedication => 'दवा हटाने में विफल।';
 
   @override
   String get editDetails => 'विवरण संपादित करें';
@@ -1094,7 +1094,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get appointmentCancelled => 'अपॉइंटमेंट रद्द';
 
   @override
-  String get failedToCancelAppointment => 'Failed to रद्द करें appointment.';
+  String get failedToCancelAppointment => 'अपॉइंटमेंट रद्द करने में असफल।';
 
   @override
   String get selectNewDate => 'Select new तारीख';
@@ -1122,7 +1122,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get appointmentDeleted => 'नियुक्ति हटा दी गई';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to हटाएं appointment.';
+  String get failedToDeleteAppointment => 'अपॉइंटमेंट हटाने में असफल।';
 
   @override
   String get reschedule => 'पुनर्निर्धारित करें';
@@ -1585,7 +1585,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String hoursAgo(int hours) {
-    return '${hours}h ago';
+    return 'शून्य से शून्य $hours';
   }
 
   @override
@@ -1631,7 +1631,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. त्रुटि: $error';
+    return 'क्षमा करें, आपके लक्षणों का विश्लेषण करते समय एक त्रुटि आ गई। कृपया फिर से प्रयास करें या अपने लक्षणों का वर्णन किसी अन्य तरीके से करें।\n\nत्रुटि: $error';
   }
 
   @override
@@ -1787,8 +1787,8 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count एलर्जी',
+      one: '$count एलर्जी',
     );
     return '$_temp0';
   }
@@ -1798,8 +1798,8 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count दवाएं',
+      one: '$count दवा',
     );
     return '$_temp0';
   }
@@ -1877,7 +1877,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return '$seconds भेज रहा हूँ…';
   }
 
   @override
@@ -1916,14 +1916,14 @@ class AppLocalizationsHi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count संपर्कों को SMS द्वारा सूचित किया गया',
+      one: '$count संपर्क को SMS द्वारा सूचित किया गया',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load इतिहास';
+  String get failedLoadHistory => 'इतिहास लोड करने में विफल';
 
   @override
   String thisMonthCount(int count) {
@@ -1958,7 +1958,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String bodyRegionsCaption(String regions) {
-    return 'Body Regions: $regions';
+    return 'शरीर के क्षेत्र: $regions';
   }
 
   @override
@@ -2210,20 +2210,22 @@ class AppLocalizationsHi extends AppLocalizations {
   String get avatarUpdated => 'अवतार अपडेट हो गया!';
 
   @override
-  String get avatarUploadFailed => 'विफल to upload avatar. Please try again.';
+  String get avatarUploadFailed =>
+      'अवतार अपलोड करने में असफल रहा। कृपया फिर से प्रयास करें।';
 
   @override
   String get avatarRemoved => 'अवतार हटा दिया गया।';
 
   @override
-  String get avatarRemoveFailed => 'Failed to हटाएं avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'अवतार हटाने में असफल रहा। कृपया फिर से प्रयास करें।';
 
   @override
   String get profileUpdatedSuccessfully => 'प्रोफ़ाइल updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pप्रोफ़ाइल Please try again.';
+      'प्रोफ़ाइल अपडेट करने में असफल रहा। कृपया फिर से प्रयास करें।';
 
   @override
   String get editProfileTitle => 'संपादित करें प्रोफ़ाइल';
@@ -2366,16 +2368,16 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String minutesAgo(int minutes) {
-    return '${minutes}m ago';
+    return 'शून्य से शून्य पहले $minutes';
   }
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return 'शून्य से शून्य पहले $weeks';
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load महत्वपूर्ण संकेत';
+  String get failedToLoadVitals => 'जीवन-संकेत लोड करने में विफल';
 
   @override
   String get noVitalsYet => 'अभी तक कोई महत्वपूर्ण संकेत लॉग नहीं';
@@ -2444,7 +2446,8 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to सहेजें vital. Please try again.';
+  String get vitalSaveFailed =>
+      'महत्वपूर्ण सहेजने में विफल। कृपया फिर से प्रयास करें।';
 
   @override
   String get vitalsHistoryTitle => 'महत्वपूर्ण संकेत इतिहास';
@@ -2471,7 +2474,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'चुनी गई समय अवधि के लिए कोई रीडिंग नहीं मिली।';
 
   @override
   String get singleReading => '1 पठन';
@@ -2499,7 +2502,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String showingReadingsCount(int total) {
-    return 'Showing 20 of $total readings';
+    return '$total रीडिंग्स में से 20 दिखा रहा है';
   }
 
   @override
@@ -2531,7 +2534,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String doseNumber(int number) {
-    return 'Dose $number';
+    return 'डोज़ ज़ीरो ज़ीरो $number';
   }
 
   @override
@@ -2548,7 +2551,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to जोड़ें medication. Please try again.';
+      'दवा जोड़ने में असफल रहा। कृपया फिर से प्रयास करें।';
 
   @override
   String get addAppointmentTitle => 'जोड़ें Appointment';
@@ -2577,7 +2580,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get appointmentScheduleFailed =>
-      'विफल to schedule appointment. Please try again.';
+      'अपॉइंटमेंट शेड्यूल करने में असफल रहा। कृपया फिर से प्रयास करें।';
 
   @override
   String get specialtyCardiologist => 'हृदय रोग विशेषज्ञ';
@@ -2610,7 +2613,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get specialtyOther => 'अन्य';
 
   @override
-  String get recordsLoadFailed => 'विफल to लोड records. Please try again.';
+  String get recordsLoadFailed =>
+      'रिकॉर्ड लोड करने में असफल रहा। कृपया फिर से प्रयास करें।';
 
   @override
   String get notAvailable => 'N/A';
@@ -2652,7 +2656,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get recordUpdateFailed => 'विफल to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to जोड़ें record.';
+  String get recordAddFailed => 'रिकॉर्ड जोड़ने में विफल।';
 
   @override
   String get deleteRecordTitle => 'हटाएं Record';
@@ -2666,7 +2670,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get recordDeleted => 'रिकॉर्ड हटा दिया गया।';
 
   @override
-  String get recordDeleteFailed => 'Failed to हटाएं record.';
+  String get recordDeleteFailed => 'रिकॉर्ड हटाने में विफल।';
 
   @override
   String get medicalRecordsTitle => 'चिकित्सा रिकॉर्ड';
@@ -2688,7 +2692,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return '$total का चरण $current';
   }
 
   @override
@@ -2797,7 +2801,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get back => 'वापस';
 
   @override
-  String get triageFailed => 'ट्रायज analysis failed. Please try again.';
+  String get triageFailed =>
+      'ट्राइएज विश्लेषण विफल हो गया। कृपया फिर से प्रयास करें।';
 
   @override
   String get symptomFever => 'बुखार';
@@ -2859,4 +2864,17 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'नहीं previous purchases found to rपुनर्स्थापित';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

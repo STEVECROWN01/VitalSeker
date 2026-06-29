@@ -523,8 +523,8 @@ class AppLocalizationsEl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count συνδεδεμένα μέλη',
+      one: '$count συνδεδεμένο μέλος',
     );
     return '$_temp0';
   }
@@ -587,7 +587,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pΚωδικός Please try again.';
+      'Η ενημέρωση του κωδικού πρόσβασης απέτυχε. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -598,7 +598,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Διαγραφή account. Please try again or contact sΥποστήριξη';
+      'Δεν κατέστη δυνατή η διαγραφή του λογαριασμού. Παρακαλώ δοκιμάστε ξανά ή επικοινωνήστε με την υποστήριξη.';
 
   @override
   String get manageYourSubscription => 'Διαχείριση της συνδρομής σας';
@@ -744,7 +744,8 @@ class AppLocalizationsEl extends AppLocalizations {
   String get purchasesRestored => 'Οι αγορές αποκαταστάθηκαν.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Επαναφορά purchases.';
+  String get failedToRestorePurchases =>
+      'Δεν κατέστη δυνατή η επαναφορά των αγορών.';
 
   @override
   String get contactSalesEnterprise =>
@@ -810,7 +811,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Υποστήριξη request. Please try again or Email support@vitalseker.com.';
+      'Δεν κατέστη δυνατή η υποβολή του αιτήματος υποστήριξης. Παρακαλούμε δοκιμάστε ξανά ή στείλτε email στη διεύθυνση support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -849,7 +850,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Μεταβείτε στο «Προφίλ» > «Συνδρομή» και επιλέξτε το πακέτο «Δωρεάν» για να κάνετε υποβάθμιση. Οι λειτουργίες του πακέτου Pro ή Enterprise θα παραμείνουν ενεργές μέχρι το τέλος της τρέχουσας περιόδου χρέωσης.';
 
   @override
   String get exportConfigurePreview =>
@@ -923,7 +924,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Προσθήκη Οικογένεια member. Please try again.';
+      'Δεν κατέστη δυνατή η προσθήκη μέλους της οικογένειας. Παρακαλώ, δοκιμάστε ξανά.';
 
   @override
   String get removeFamilyMember => 'Αφαίρεση Οικογένεια Member';
@@ -941,7 +942,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Αφαίρεση Οικογένεια member. Please try again.';
+      'Δεν κατέστη δυνατή η διαγραφή του μέλους της οικογένειας. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
   String get fullNameLabel => 'Full Όνομα';
@@ -1040,7 +1041,8 @@ class AppLocalizationsEl extends AppLocalizations {
   String get medicationDeleted => 'Το φάρμακο διαγράφηκε';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Διαγραφή medication.';
+  String get failedToDeleteMedication =>
+      'Δεν κατέστη δυνατή η διαγραφή του φαρμάκου.';
 
   @override
   String get editDetails => 'Επεξεργασία Details';
@@ -1105,7 +1107,8 @@ class AppLocalizationsEl extends AppLocalizations {
   String get appointmentCancelled => 'Το ραντεβού ακυρώθηκε';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Ακύρωση appointment.';
+  String get failedToCancelAppointment =>
+      'Δεν κατέστη δυνατή η ακύρωση του ραντεβού.';
 
   @override
   String get selectNewDate => 'Select new Ημερομηνία';
@@ -1134,7 +1137,8 @@ class AppLocalizationsEl extends AppLocalizations {
   String get appointmentDeleted => 'Το ραντεβού διαγράφηκε';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Διαγραφή appointment.';
+  String get failedToDeleteAppointment =>
+      'Δεν κατέστη δυνατή η διαγραφή του ραντεβού.';
 
   @override
   String get reschedule => 'Αλλαγή ημερομηνίας';
@@ -1181,7 +1185,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Αποθήκευση notification setting';
+      'Δεν κατέστη δυνατή η αποθήκευση της ρύθμισης ειδοποιήσεων';
 
   @override
   String get keyFeatures => 'Βασικά χαρακτηριστικά';
@@ -1803,8 +1807,8 @@ class AppLocalizationsEl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Αλλεργίες',
+      one: '$count Αλλεργία',
     );
     return '$_temp0';
   }
@@ -1814,8 +1818,8 @@ class AppLocalizationsEl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Φάρμακα',
+      one: '$count Φάρμακο',
     );
     return '$_temp0';
   }
@@ -1933,14 +1937,14 @@ class AppLocalizationsEl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count επαφές ενημερώθηκαν μέσω SMS',
+      one: '$count επαφή ενημερώθηκε μέσω SMS',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Ιστορικό';
+  String get failedLoadHistory => 'Δεν κατέστη δυνατή η φόρτωση του ιστορικού';
 
   @override
   String thisMonthCount(int count) {
@@ -2237,14 +2241,14 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get avatarRemoveFailed =>
-      'Failed to Αφαίρεση avatar. Please try again.';
+      'Δεν κατέστη δυνατή η διαγραφή του προφίλ. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
   String get profileUpdatedSuccessfully => 'Προφίλ updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pΠροφίλ Please try again.';
+      'Δεν κατέστη δυνατή η ενημέρωση του προφίλ. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
   String get editProfileTitle => 'Επεξεργασία Προφίλ';
@@ -2396,7 +2400,7 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Ζωτικά σημεία';
+  String get failedToLoadVitals => 'Αποτυχία φόρτωσης των ζωτικών ενδείξεων';
 
   @override
   String get noVitalsYet => 'Όχι Ζωτικά σημεία Yet';
@@ -2464,7 +2468,8 @@ class AppLocalizationsEl extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Αποθήκευση vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Δεν κατέστη δυνατή η αποθήκευση των βασικών στοιχείων. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
   String get vitalsHistoryTitle => 'Ζωτικά σημεία Ιστορικό';
@@ -2491,7 +2496,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Δεν βρέθηκαν μετρήσεις για την επιλεγμένη χρονική περίοδο';
 
   @override
   String get singleReading => '1 ανάγνωση';
@@ -2569,7 +2574,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Προσθήκη medication. Please try again.';
+      'Δεν κατέστη δυνατή η προσθήκη φαρμάκου. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
   String get addAppointmentTitle => 'Προσθήκη Appointment';
@@ -2675,7 +2680,7 @@ class AppLocalizationsEl extends AppLocalizations {
       'Δεν κατέστη δυνατή η ενημέρωση της εγγραφής.';
 
   @override
-  String get recordAddFailed => 'Failed to Προσθήκη record.';
+  String get recordAddFailed => 'Δεν κατέστη δυνατή η προσθήκη εγγραφής.';
 
   @override
   String get deleteRecordTitle => 'Διαγραφή Record';
@@ -2689,7 +2694,8 @@ class AppLocalizationsEl extends AppLocalizations {
   String get recordDeleted => 'Η εγγραφή διαγράφηκε.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Διαγραφή record.';
+  String get recordDeleteFailed =>
+      'Δεν κατέστη δυνατή η διαγραφή της εγγραφής.';
 
   @override
   String get medicalRecordsTitle => 'Ιατρικά αρχεία';
@@ -2819,7 +2825,8 @@ class AppLocalizationsEl extends AppLocalizations {
   String get back => 'Πίσω';
 
   @override
-  String get triageFailed => 'Διαλογή analysis failed. Please try again.';
+  String get triageFailed =>
+      'Η ανάλυση διαλογής απέτυχε. Παρακαλώ δοκιμάστε ξανά.';
 
   @override
   String get symptomFever => 'Πυρετός';
@@ -2881,4 +2888,17 @@ class AppLocalizationsEl extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Όχι previous purchases found to rΕπαναφορά';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

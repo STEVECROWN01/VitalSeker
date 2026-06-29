@@ -515,8 +515,8 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count 연결된 멤버',
+      one: '$count 연결된 멤버',
     );
     return '$_temp0';
   }
@@ -725,14 +725,13 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get failedToUpdateSubscription =>
-      '실패 to update subscription. Please try again.';
+  String get failedToUpdateSubscription => '구독 업데이트에 실패했습니다. 다시 시도해 주세요.';
 
   @override
   String get purchasesRestored => '구매 내역이 복원되었습니다.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to 복원 purchases.';
+  String get failedToRestorePurchases => '구매 내역을 복원하지 못했습니다.';
 
   @override
   String get contactSalesEnterprise => 'Contact sales for custom 기업 약관';
@@ -792,7 +791,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit 지원 request. Please try again or 이메일 support@vitalseker.com.';
+      '지원 요청을 제출하지 못했습니다. 다시 시도해 주시거나 support@vitalseker.com으로 이메일을 보내 주십시오.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -831,7 +830,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      '‘프로필’ > ‘구독’으로 이동하여 ‘무료 요금제’를 선택하면 요금제를 하향 조정할 수 있습니다. Pro 또는 Enterprise 요금제의 기능은 현재 청구 기간이 끝날 때까지 계속 이용 가능합니다.';
 
   @override
   String get exportConfigurePreview =>
@@ -902,7 +901,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get familyMemberAdded => '가족 member added!';
 
   @override
-  String get failedToAddFamily => 'Failed to 추가 가족 member. Please try again.';
+  String get failedToAddFamily => '가족 구성원 추가에 실패했습니다. 다시 시도해 주세요.';
 
   @override
   String get removeFamilyMember => '가족 제거';
@@ -919,8 +918,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get familyMemberRemoved => '가족 member removed';
 
   @override
-  String get failedToRemoveFamily =>
-      'Failed to 제거 가족 member. Please try again.';
+  String get failedToRemoveFamily => '가족 구성원을 삭제하지 못했습니다. 다시 시도해 주세요.';
 
   @override
   String get fullNameLabel => 'Full 이름';
@@ -1016,7 +1014,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get medicationDeleted => '약물 삭제됨';
 
   @override
-  String get failedToDeleteMedication => 'Failed to 삭제 medication.';
+  String get failedToDeleteMedication => '약물 삭제에 실패했습니다.';
 
   @override
   String get editDetails => '세부 정보 편집';
@@ -1079,7 +1077,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get appointmentCancelled => '예약 취소됨';
 
   @override
-  String get failedToCancelAppointment => 'Failed to 취소 appointment.';
+  String get failedToCancelAppointment => '예약 취소에 실패했습니다.';
 
   @override
   String get selectNewDate => 'Select new 날짜';
@@ -1107,7 +1105,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get appointmentDeleted => '예약이 삭제되었습니다';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to 삭제 appointment.';
+  String get failedToDeleteAppointment => '일정을 삭제하지 못했습니다.';
 
   @override
   String get reschedule => '일정 변경';
@@ -1605,7 +1603,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. 오류: $error';
+    return '죄송합니다. 귀하의 증상을 분석하는 과정에서 오류가 발생했습니다. 다시 시도해 주시거나 증상을 다른 방식으로 설명해 주세요.\n\n오류: $error';
   }
 
   @override
@@ -1758,8 +1756,8 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count 알레르기',
+      one: '$count 알레르기',
     );
     return '$_temp0';
   }
@@ -1769,8 +1767,8 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count 약물',
+      one: '$count 약물',
     );
     return '$_temp0';
   }
@@ -1835,7 +1833,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sosFailed => 'SOS 실패';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS 활성';
 
   @override
   String get sendingEmergencyAlert => 'Sending 응급 Alert';
@@ -1887,14 +1885,14 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count 연락처에 SMS로 알림',
+      one: '$count 연락처에 SMS로 알림',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load 기록';
+  String get failedLoadHistory => '기록을 불러오지 못했습니다';
 
   @override
   String thisMonthCount(int count) {
@@ -2178,19 +2176,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get avatarUpdated => '아바타가 업데이트되었습니다!';
 
   @override
-  String get avatarUploadFailed => '실패 to upload avatar. Please try again.';
+  String get avatarUploadFailed => '아바타 업로드에 실패했습니다. 다시 시도해 주세요.';
 
   @override
   String get avatarRemoved => '아바타가 삭제되었습니다.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to 제거 avatar. Please try again.';
+  String get avatarRemoveFailed => '아바타를 삭제하지 못했습니다. 다시 시도해 주세요.';
 
   @override
   String get profileUpdatedSuccessfully => '프로필 updated successfully!';
 
   @override
-  String get profileUpdateFailed => 'Failed to update p프로필 Please try again.';
+  String get profileUpdateFailed => '프로필 업데이트에 실패했습니다. 다시 시도해 주세요.';
 
   @override
   String get editProfileTitle => '편집 프로필';
@@ -2340,7 +2338,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load 활력 징후';
+  String get failedToLoadVitals => '생체 신호 데이터를 불러오지 못했습니다.';
 
   @override
   String get noVitalsYet => '아직 기록된 활력 징후가 없습니다';
@@ -2377,10 +2375,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get logVitalTitle => '중요 로그';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => '활력 유형';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => '값';
 
   @override
   String get systolic => '수축기';
@@ -2408,7 +2406,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to 저장 vital. Please try again.';
+  String get vitalSaveFailed => 'vital을 저장하지 못했습니다. 다시 시도해 주세요.';
 
   @override
   String get vitalsHistoryTitle => '활력 징후 기록';
@@ -2434,8 +2432,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => '선택한 기간에 해당하는 측정값이 없습니다.';
 
   @override
   String get singleReading => '1회 읽기';
@@ -2511,8 +2508,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get medicationAddedSuccessfully => '약물이 성공적으로 추가되었습니다!';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to 추가 medication. Please try again.';
+  String get medicationAddFailed => '약물 추가에 실패했습니다. 다시 시도해 주세요.';
 
   @override
   String get addAppointmentTitle => '추가 Appointment';
@@ -2539,8 +2535,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get appointmentScheduledSuccessfully => '예약이 성공적으로 완료되었습니다!';
 
   @override
-  String get appointmentScheduleFailed =>
-      '실패 to schedule appointment. Please try again.';
+  String get appointmentScheduleFailed => '예약 일정을 잡지 못했습니다. 다시 시도해 주세요.';
 
   @override
   String get specialtyCardiologist => '심장내과 전문의';
@@ -2573,7 +2568,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get specialtyOther => '기타';
 
   @override
-  String get recordsLoadFailed => '실패 to 불러오기 records. Please try again.';
+  String get recordsLoadFailed => '레코드를 불러오는 데 실패했습니다. 다시 시도해 주세요.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2615,7 +2610,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get recordUpdateFailed => '실패 to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to 추가 record.';
+  String get recordAddFailed => '레코드 추가에 실패했습니다.';
 
   @override
   String get deleteRecordTitle => '삭제 Record';
@@ -2629,7 +2624,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get recordDeleted => '기록이 삭제되었습니다.';
 
   @override
-  String get recordDeleteFailed => 'Failed to 삭제 record.';
+  String get recordDeleteFailed => '레코드를 삭제하지 못했습니다.';
 
   @override
   String get medicalRecordsTitle => '의료 기록';
@@ -2758,7 +2753,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get back => '뒤로';
 
   @override
-  String get triageFailed => '분류 analysis failed. Please try again.';
+  String get triageFailed => '트라이아지 분석에 실패했습니다. 다시 시도해 주십시오.';
 
   @override
   String get symptomFever => '발열';
@@ -2819,4 +2814,17 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => '아니오 previous purchases found to r복원';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

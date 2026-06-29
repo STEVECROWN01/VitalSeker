@@ -516,8 +516,8 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count 接続メンバー',
+      one: '$count 接続メンバー',
     );
     return '$_temp0';
   }
@@ -726,14 +726,13 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get failedToUpdateSubscription =>
-      '失敗 to update subscription. Please try again.';
+  String get failedToUpdateSubscription => 'サブスクリプションの更新に失敗しました。もう一度お試しください。';
 
   @override
   String get purchasesRestored => '購入履歴が復元されました。';
 
   @override
-  String get failedToRestorePurchases => 'Failed to 復元 purchases.';
+  String get failedToRestorePurchases => '購入履歴の復元に失敗しました。';
 
   @override
   String get contactSalesEnterprise => 'Contact sales for custom エンタープライズ 利用規約';
@@ -794,7 +793,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit サポート request. Please try again or メール support@vitalseker.com.';
+      'サポートリクエストの送信に失敗しました。もう一度お試しいただくか、support@vitalseker.com までメールでお問い合わせください。';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -833,7 +832,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      '「プロフィール」＞「サブスクリプション」に移動し、「無料プラン」を選択してプランをダウングレードしてください。ProまたはEnterpriseの機能は、現在の請求期間が終了するまで引き続きご利用いただけます。';
 
   @override
   String get exportConfigurePreview =>
@@ -904,7 +903,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get familyMemberAdded => '家族 member added!';
 
   @override
-  String get failedToAddFamily => 'Failed to 追加 家族 member. Please try again.';
+  String get failedToAddFamily => '家族の追加に失敗しました。もう一度お試しください。';
 
   @override
   String get removeFamilyMember => '家族を削除';
@@ -921,8 +920,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get familyMemberRemoved => '家族 member removed';
 
   @override
-  String get failedToRemoveFamily =>
-      'Failed to 削除 家族 member. Please try again.';
+  String get failedToRemoveFamily => '家族の削除に失敗しました。もう一度お試しください。';
 
   @override
   String get fullNameLabel => 'Full 名前';
@@ -1018,7 +1016,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get medicationDeleted => '薬が削除されました';
 
   @override
-  String get failedToDeleteMedication => 'Failed to 削除 medication.';
+  String get failedToDeleteMedication => '薬の削除に失敗しました。';
 
   @override
   String get editDetails => '詳細を編集';
@@ -1081,7 +1079,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get appointmentCancelled => '予約がキャンセルされました';
 
   @override
-  String get failedToCancelAppointment => 'Failed to キャンセル appointment.';
+  String get failedToCancelAppointment => '予約のキャンセルに失敗しました。';
 
   @override
   String get selectNewDate => 'Select new 日付';
@@ -1109,7 +1107,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get appointmentDeleted => '予約が削除されました';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to 削除 appointment.';
+  String get failedToDeleteAppointment => '予定の削除に失敗しました。';
 
   @override
   String get reschedule => '再予約';
@@ -1607,7 +1605,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. エラー: $error';
+    return '申し訳ありませんが、症状の分析中にエラーが発生しました。もう一度お試しいただくか、症状を別の表現で説明してください。\n\nエラー：$error';
   }
 
   @override
@@ -1760,8 +1758,8 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count アレルギー',
+      one: '$count アレルギー',
     );
     return '$_temp0';
   }
@@ -1771,8 +1769,8 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count 薬',
+      one: '$count 薬',
     );
     return '$_temp0';
   }
@@ -1837,7 +1835,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sosFailed => 'SOS 失敗';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS アクティブ';
 
   @override
   String get sendingEmergencyAlert => 'Sending 緊急 Alert';
@@ -1889,14 +1887,14 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count 件の連絡先にSMSで通知',
+      one: '$count 件の連絡先にSMSで通知',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load 履歴';
+  String get failedLoadHistory => '履歴の読み込みに失敗しました';
 
   @override
   String thisMonthCount(int count) {
@@ -2180,20 +2178,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get avatarUpdated => 'アバターが更新されました！';
 
   @override
-  String get avatarUploadFailed => '失敗 to upload avatar. Please try again.';
+  String get avatarUploadFailed => 'アバターのアップロードに失敗しました。もう一度お試しください。';
 
   @override
   String get avatarRemoved => 'アバターが削除されました。';
 
   @override
-  String get avatarRemoveFailed => 'Failed to 削除 avatar. Please try again.';
+  String get avatarRemoveFailed => 'アバターの削除に失敗しました。もう一度お試しください。';
 
   @override
   String get profileUpdatedSuccessfully => 'プロフィール updated successfully!';
 
   @override
-  String get profileUpdateFailed =>
-      'Failed to update pプロフィール Please try again.';
+  String get profileUpdateFailed => 'プロフィールの更新に失敗しました。もう一度お試しください。';
 
   @override
   String get editProfileTitle => '編集 プロフィール';
@@ -2343,7 +2340,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load バイタル';
+  String get failedToLoadVitals => 'バイタルサインの読み込みに失敗しました';
 
   @override
   String get noVitalsYet => 'バイタル記録はまだありません';
@@ -2380,10 +2377,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get logVitalTitle => 'ログ・バイタル';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => 'バイタルタイプ';
 
   @override
-  String get valueLabel => 'VALUE';
+  String get valueLabel => '価値';
 
   @override
   String get systolic => '収縮期';
@@ -2411,7 +2408,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to 保存 vital. Please try again.';
+  String get vitalSaveFailed => 'vital の保存に失敗しました。もう一度お試しください。';
 
   @override
   String get vitalsHistoryTitle => 'バイタル 履歴';
@@ -2437,8 +2434,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => '選択した期間に該当する測定値が見つかりませんでした';
 
   @override
   String get singleReading => '1回の閲覧';
@@ -2514,8 +2510,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get medicationAddedSuccessfully => '薬の追加に成功しました！';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to 追加 medication. Please try again.';
+  String get medicationAddFailed => '薬の追加に失敗しました。もう一度お試しください。';
 
   @override
   String get addAppointmentTitle => '追加 Appointment';
@@ -2542,8 +2537,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get appointmentScheduledSuccessfully => '予約が正常に完了しました！';
 
   @override
-  String get appointmentScheduleFailed =>
-      '失敗 to schedule appointment. Please try again.';
+  String get appointmentScheduleFailed => '予約の登録に失敗しました。もう一度お試しください。';
 
   @override
   String get specialtyCardiologist => '循環器科医';
@@ -2576,7 +2570,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get specialtyOther => 'その他';
 
   @override
-  String get recordsLoadFailed => '失敗 to 読み込み records. Please try again.';
+  String get recordsLoadFailed => 'レコードの読み込みに失敗しました。もう一度お試しください。';
 
   @override
   String get notAvailable => 'N/A';
@@ -2618,7 +2612,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get recordUpdateFailed => '失敗 to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to 追加 record.';
+  String get recordAddFailed => 'レコードの追加に失敗しました。';
 
   @override
   String get deleteRecordTitle => '削除 Record';
@@ -2632,7 +2626,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get recordDeleted => 'レコードが削除されました。';
 
   @override
-  String get recordDeleteFailed => 'Failed to 削除 record.';
+  String get recordDeleteFailed => 'レコードの削除に失敗しました。';
 
   @override
   String get medicalRecordsTitle => 'カルテ';
@@ -2761,7 +2755,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get back => '戻る';
 
   @override
-  String get triageFailed => 'トリアージ analysis failed. Please try again.';
+  String get triageFailed => 'トリアージ分析に失敗しました。もう一度お試しください。';
 
   @override
   String get symptomFever => '発熱';
@@ -2822,4 +2816,17 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'いいえ previous purchases found to r復元';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

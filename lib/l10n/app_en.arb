@@ -1287,5 +1287,9 @@
   "symptomRash": "Rash",
   "symptomJointPain": "Joint Pain",
   "purchaseCancelled": "Purchase was cancelled.",
-  "noPurchasesToRestore": "No previous purchases found to restore."
+  "noPurchasesToRestore": "No previous purchases found to restore.",
+  "failedToCompleteOnboarding": "Failed to complete onboarding. Please check your connection and try again.",
+  "fieldRequired": "This field is required",
+  "somethingWentWrong": "Something went wrong. Please try again.",
+  "securitySettingsOnThisPage": "Security settings are on this page"
 }

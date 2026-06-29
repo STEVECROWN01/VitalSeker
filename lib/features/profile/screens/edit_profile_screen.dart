@@ -442,7 +442,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               prefixIcon: Icon(Icons.person_outline),
                             ),
                             style: const TextStyle(fontFamily: 'Inter'),
-                            validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
+                            validator: (v) => v == null || v.trim().isEmpty ? l10n.fieldRequired : null,
                           ),
                           const SizedBox(height: 16),
                           TextFormField(

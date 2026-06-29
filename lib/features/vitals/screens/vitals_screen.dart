@@ -31,7 +31,7 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Vitals')),
+      appBar: AppBar(title: Text(l10n.vitals)),
       body: RefreshIndicator(
         onRefresh: _handleRefresh,
         color: AppColors.primary(isDark),

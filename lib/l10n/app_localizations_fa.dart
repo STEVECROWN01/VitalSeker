@@ -492,7 +492,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get areYouSureSignOut => 'مطمئنید که می‌خواهید از سیستم خارج شوید؟';
 
   @override
-  String get failedToSignOut => 'خطا to sign out. Please try again.';
+  String get failedToSignOut => 'خروج ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get vitalsLogged => 'علائم حیاتی Logged';
@@ -517,8 +517,8 @@ class AppLocalizationsFa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count اعضای متصل',
+      one: '$count عضو متصل',
     );
     return '$_temp0';
   }
@@ -581,7 +581,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pرمز عبور Please try again.';
+      'به‌روزرسانی رمز عبور ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -592,7 +592,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to حذف account. Please try again or contact sپشتیبانی';
+      'حذف حساب کاربری ناموفق بود. لطفاً دوباره تلاش کنید یا با پشتیبانی تماس بگیرید.';
 
   @override
   String get manageYourSubscription => 'مدیریت اشتراک شما';
@@ -730,13 +730,13 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'خطا to update subscription. Please try again.';
+      'به‌روزرسانی اشتراک ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get purchasesRestored => 'خریدها بازیابی شدند.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to بازیابی purchases.';
+  String get failedToRestorePurchases => 'بازیابی خریدها ناموفق بود.';
 
   @override
   String get contactSalesEnterprise => 'Contact sales for custom سازمانی شرایط';
@@ -798,7 +798,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit پشتیبانی request. Please try again or ایمیل support@vitalseker.com.';
+      'ارسال درخواست پشتیبانی ناموفق بود. لطفاً دوباره تلاش کنید یا به support@vitalseker.com ایمیل بزنید.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -837,7 +837,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'به پروفایل > اشتراک بروید و طرح رایگان را برای ارتدادادن انتخاب کنید. ویژگی‌های Pro یا Enterprise شما تا پایان دوره صورتحساب فعلی‌تان فعال خواهند ماند.';
 
   @override
   String get exportConfigurePreview =>
@@ -911,7 +911,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to افزودن خانواده member. Please try again.';
+      'افزودن عضو خانواده ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get removeFamilyMember => 'حذف خانواده Member';
@@ -929,7 +929,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to حذف خانواده member. Please try again.';
+      'حذف عضو خانواده ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get fullNameLabel => 'Full نام';
@@ -1026,7 +1026,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get medicationDeleted => 'دارو حذف شد';
 
   @override
-  String get failedToDeleteMedication => 'Failed to حذف medication.';
+  String get failedToDeleteMedication => 'حذف دارو ناموفق بود.';
 
   @override
   String get editDetails => 'ویرایش Details';
@@ -1090,7 +1090,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get appointmentCancelled => 'ملاقات لغو شد';
 
   @override
-  String get failedToCancelAppointment => 'Failed to لغو appointment.';
+  String get failedToCancelAppointment => 'لغو قرار ملاقات ناموفق بود.';
 
   @override
   String get selectNewDate => 'Select new تاریخ';
@@ -1118,7 +1118,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get appointmentDeleted => 'قرار ملاقات حذف شد';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to حذف appointment.';
+  String get failedToDeleteAppointment => 'حذف قرار ملاقات ناموفق بود.';
 
   @override
   String get reschedule => 'تعیین مجدد زمان';
@@ -1165,7 +1165,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to ذخیره notification setting';
+      'ذخیرهٔ تنظیمات اعلان با موفقیت انجام نشد';
 
   @override
   String get keyFeatures => 'ویژگی‌های کلیدی';
@@ -1628,7 +1628,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. خطا: $error';
+    return 'متأسفم، هنگام تحلیل علائم شما خطایی رخ داد. لطفاً دوباره تلاش کنید یا علائم خود را به شکل دیگری توصیف کنید.\n\nخطا: $error';
   }
 
   @override
@@ -1785,8 +1785,8 @@ class AppLocalizationsFa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count حساسیت‌ها',
+      one: '$count حساسیت',
     );
     return '$_temp0';
   }
@@ -1796,8 +1796,8 @@ class AppLocalizationsFa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count داروها',
+      one: '$count دارو',
     );
     return '$_temp0';
   }
@@ -1875,7 +1875,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String sendingIn(int seconds) {
-    return 'Sending in $seconds…';
+    return 'ارسال $seconds…';
   }
 
   @override
@@ -1914,14 +1914,14 @@ class AppLocalizationsFa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count مخاطب از طریق SMS مطلع شدند',
+      one: '$count مخاطب از طریق SMS مطلع شد',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load تاریخچه';
+  String get failedLoadHistory => 'بارگذاری تاریخچه ناموفق بود';
 
   @override
   String thisMonthCount(int count) {
@@ -2207,20 +2207,22 @@ class AppLocalizationsFa extends AppLocalizations {
   String get avatarUpdated => 'آواتار به‌روزرسانی شد!';
 
   @override
-  String get avatarUploadFailed => 'خطا to upload avatar. Please try again.';
+  String get avatarUploadFailed =>
+      'بارگذاری آواتار ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get avatarRemoved => 'آواتار حذف شد.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to حذف avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'حذف آواتار ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get profileUpdatedSuccessfully => 'پروفایل updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pپروفایل Please try again.';
+      'به‌روزرسانی پروفایل ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get editProfileTitle => 'ویرایش پروفایل';
@@ -2368,11 +2370,11 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String weeksAgo(int weeks) {
-    return '${weeks}w ago';
+    return 'صفر تا صفر پیش $weeks';
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load علائم حیاتی';
+  String get failedToLoadVitals => 'بارگذاری اطلاعات حیاتی ناموفق بود';
 
   @override
   String get noVitalsYet => 'خیر علائم حیاتی Yet';
@@ -2440,7 +2442,8 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to ذخیره vital. Please try again.';
+  String get vitalSaveFailed =>
+      'ذخیره حیاتی ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get vitalsHistoryTitle => 'علائم حیاتی تاریخچه';
@@ -2467,7 +2470,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'هیچ خوانشی برای بازه زمانی انتخاب‌شده یافت نشد';
 
   @override
   String get singleReading => '۱ خوانش';
@@ -2544,7 +2547,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to افزودن medication. Please try again.';
+      'افزودن دارو ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get addAppointmentTitle => 'افزودن Appointment';
@@ -2573,7 +2576,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get appointmentScheduleFailed =>
-      'خطا to schedule appointment. Please try again.';
+      'امکان برنامه‌ریزی قرار ملاقات فراهم نشد. لطفاً دوباره تلاش کنید.';
 
   @override
   String get specialtyCardiologist => 'متخصص قلب';
@@ -2606,7 +2609,8 @@ class AppLocalizationsFa extends AppLocalizations {
   String get specialtyOther => 'سایر';
 
   @override
-  String get recordsLoadFailed => 'خطا to بارگذاری records. Please try again.';
+  String get recordsLoadFailed =>
+      'بارگذاری سوابق ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2648,7 +2652,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get recordUpdateFailed => 'خطا to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to افزودن record.';
+  String get recordAddFailed => 'افزودن رکورد ناموفق بود.';
 
   @override
   String get deleteRecordTitle => 'حذف Record';
@@ -2662,7 +2666,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get recordDeleted => 'رکورد حذف شد.';
 
   @override
-  String get recordDeleteFailed => 'Failed to حذف record.';
+  String get recordDeleteFailed => 'حذف رکورد ناموفق بود.';
 
   @override
   String get medicalRecordsTitle => 'پرونده پزشکی';
@@ -2793,7 +2797,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get back => 'بازگشت';
 
   @override
-  String get triageFailed => 'تریاژ analysis failed. Please try again.';
+  String get triageFailed => 'تحلیل تریاژ ناموفق بود. لطفاً دوباره تلاش کنید.';
 
   @override
   String get symptomFever => 'تب';
@@ -2854,4 +2858,17 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'خیر previous purchases found to rبازیابی';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

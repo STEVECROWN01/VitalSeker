@@ -141,7 +141,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get respiratoryRate => 'Frekvencia dýchania';
 
   @override
-  String get aiTriage => 'AI Triage';
+  String get aiTriage => 'Triedenie AI';
 
   @override
   String get describeSymptoms => 'Describe your symPríznaky';
@@ -386,7 +386,7 @@ class AppLocalizationsSk extends AppLocalizations {
       'Vylepšiť to Pro to unlock AI-powered weekly Zdravie iPrehľady';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Pro plán';
 
   @override
   String get viewAllPlans => 'View Všetko plans';
@@ -520,8 +520,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count pripojených členov',
+      one: '$count pripojený člen',
     );
     return '$_temp0';
   }
@@ -584,7 +584,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pHeslo Please try again.';
+      'Aktualizácia hesla sa nepodarila. Skúste to prosím znova.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -595,7 +595,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Odstrániť account. Please try again or contact sPodpora';
+      'Odstránenie účtu sa nepodarilo. Skúste to prosím znova alebo kontaktujte podporu.';
 
   @override
   String get manageYourSubscription => 'Spravujte svoje predplatné';
@@ -740,7 +740,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get purchasesRestored => 'Nákupy boli obnovené.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Obnoviť purchases.';
+  String get failedToRestorePurchases => 'Obnovenie nákupov sa nepodarilo.';
 
   @override
   String get contactSalesEnterprise =>
@@ -804,7 +804,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Podpora request. Please try again or E-mail support@vitalseker.com.';
+      'Nepodarilo sa odoslať žiadosť o podporu. Skúste to prosím znova alebo pošlite e-mail na adresu support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -843,7 +843,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Prejdite do časti Profil > Predplatné a vyberte bezplatný balík, ak chcete prejsť na nižší balík. Funkcie balíkov Pro alebo Enterprise zostanú aktívne až do konca vášho aktuálneho zúčtovacieho obdobia.';
 
   @override
   String get exportConfigurePreview =>
@@ -917,7 +917,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Pridať Rodina member. Please try again.';
+      'Pridanie člena rodiny sa nepodarilo. Skúste to prosím znova.';
 
   @override
   String get removeFamilyMember => 'Odstrániť Rodina Member';
@@ -935,7 +935,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Odstrániť Rodina member. Please try again.';
+      'Odstránenie člena rodiny sa nepodarilo. Skúste to prosím znova.';
 
   @override
   String get fullNameLabel => 'Full Meno';
@@ -1032,7 +1032,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get medicationDeleted => 'Liečivo bolo odstránené';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Odstrániť medication.';
+  String get failedToDeleteMedication => 'Odstránenie lieku sa nepodarilo.';
 
   @override
   String get editDetails => 'Upraviť Details';
@@ -1096,7 +1096,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get appointmentCancelled => 'Schôdzka bola zrušená';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Zrušiť appointment.';
+  String get failedToCancelAppointment => 'Zrušenie schôdzky sa nepodarilo.';
 
   @override
   String get selectNewDate => 'Select new Dátum';
@@ -1125,7 +1125,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get appointmentDeleted => 'Termín bol vymazaný';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Odstrániť appointment.';
+  String get failedToDeleteAppointment => 'Odstránenie schôdzky sa nepodarilo.';
 
   @override
   String get reschedule => 'Zmeniť termín';
@@ -1172,7 +1172,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Uložiť notification setting';
+      'Nepodarilo sa uložiť nastavenie upozornení';
 
   @override
   String get keyFeatures => 'Kľúčové vlastnosti';
@@ -1798,8 +1798,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alergií',
+      one: '$count Alergia',
     );
     return '$_temp0';
   }
@@ -1809,8 +1809,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Liekov',
+      one: '$count Liek',
     );
     return '$_temp0';
   }
@@ -1875,7 +1875,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get sosFailed => 'SOS sa nepodarilo';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTÍVNE';
 
   @override
   String get sendingEmergencyAlert => 'Sending Pohotovosť Alert';
@@ -1927,14 +1927,14 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontaktov informovaných SMS',
+      one: '$count kontakt informovaný SMS',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load História';
+  String get failedLoadHistory => 'Nepodarilo sa načítať históriu';
 
   @override
   String thisMonthCount(int count) {
@@ -2230,14 +2230,14 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get avatarRemoveFailed =>
-      'Failed to Odstrániť avatar. Please try again.';
+      'Odstránenie avatara sa nepodarilo. Skúste to prosím znova.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'Aktualizácia profilu sa nepodarila. Skúste to prosím znova.';
 
   @override
   String get editProfileTitle => 'Upraviť Profil';
@@ -2389,7 +2389,7 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Životné funkcie';
+  String get failedToLoadVitals => 'Nepodarilo sa načítať životné funkcie';
 
   @override
   String get noVitalsYet => 'Nie Životné funkcie Yet';
@@ -2457,7 +2457,8 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Uložiť vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Uloženie dôležitých údajov sa nepodarilo. Skúste to prosím znova.';
 
   @override
   String get vitalsHistoryTitle => 'Životné funkcie História';
@@ -2484,7 +2485,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Pre vybrané časové obdobie neboli nájdené žiadne namerané hodnoty';
 
   @override
   String get singleReading => '1 prečítanie';
@@ -2561,7 +2562,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Pridať medication. Please try again.';
+      'Pridanie lieku sa nepodarilo. Skúste to prosím znova.';
 
   @override
   String get addAppointmentTitle => 'Pridať Appointment';
@@ -2666,7 +2667,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get recordUpdateFailed => 'Aktualizácia záznamu sa nepodarila.';
 
   @override
-  String get recordAddFailed => 'Failed to Pridať record.';
+  String get recordAddFailed => 'Pridanie záznamu sa nepodarilo.';
 
   @override
   String get deleteRecordTitle => 'Odstrániť Record';
@@ -2680,7 +2681,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get recordDeleted => 'Záznam bol vymazaný.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Odstrániť record.';
+  String get recordDeleteFailed => 'Odstránenie záznamu sa nepodarilo.';
 
   @override
   String get medicalRecordsTitle => 'Zdravotné záznamy';
@@ -2872,4 +2873,17 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'Nie previous purchases found to rObnoviť';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

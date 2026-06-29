@@ -20,13 +20,17 @@ class _MedicalIdScreenState extends ConsumerState<MedicalIdScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final profileAsync = ref.watch(userProfileProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Medical ID')),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) {
+          debugPrint('Medical ID load error: $e');
+          return Center(child: Text(l10n.somethingWentWrong));
+        },
         data: (profile) {
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),

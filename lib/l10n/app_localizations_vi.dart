@@ -42,7 +42,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get signOut => 'Đăng xuất';
 
   @override
-  String get email => 'Email';
+  String get email => 'E-mail';
 
   @override
   String get password => 'Mật khẩu';
@@ -518,8 +518,8 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count thành viên kết nối',
+      one: '$count thành viên kết nối',
     );
     return '$_temp0';
   }
@@ -707,7 +707,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String switchToPlan(String plan) {
-    return 'Switch to $plan?';
+    return 'Chuyển sang $plan?';
   }
 
   @override
@@ -739,7 +739,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get purchasesRestored => 'Các giao dịch mua hàng đã được khôi phục.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Khôi phục purchases.';
+  String get failedToRestorePurchases =>
+      'Không thể khôi phục các giao dịch mua.';
 
   @override
   String get contactSalesEnterprise =>
@@ -803,7 +804,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Hỗ trợ request. Please try again or Email support@vitalseker.com.';
+      'Không gửi được yêu cầu hỗ trợ. Vui lòng thử lại hoặc gửi email đến support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -842,7 +843,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Vào mục Hồ sơ > Gói đăng ký và chọn gói Miễn phí để hạ cấp. Các tính năng của gói Pro hoặc Enterprise sẽ vẫn hoạt động cho đến khi kết thúc kỳ thanh toán hiện tại.';
 
   @override
   String get exportConfigurePreview =>
@@ -917,7 +918,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Thêm Gia đình member. Please try again.';
+      'Không thể thêm thành viên gia đình. Vui lòng thử lại.';
 
   @override
   String get removeFamilyMember => 'Xóa thành viên gia đình';
@@ -935,7 +936,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Xóa Gia đình member. Please try again.';
+      'Không thể xóa thành viên gia đình. Vui lòng thử lại.';
 
   @override
   String get fullNameLabel => 'Full Tên';
@@ -1032,7 +1033,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get medicationDeleted => 'Thuốc đã bị xóa';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Xóa medication.';
+  String get failedToDeleteMedication => 'Không thể xóa thông tin thuốc.';
 
   @override
   String get editDetails => 'Chỉnh sửa chi tiết';
@@ -1045,7 +1046,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String nextDose(String time) {
-    return 'Next dose: $time';
+    return 'Liều tiếp theo: $time';
   }
 
   @override
@@ -1096,7 +1097,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get appointmentCancelled => 'Cuộc hẹn đã bị hủy';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Hủy appointment.';
+  String get failedToCancelAppointment => 'Không thể hủy cuộc hẹn.';
 
   @override
   String get selectNewDate => 'Select new Ngày';
@@ -1124,7 +1125,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get appointmentDeleted => 'Lịch hẹn đã bị xóa';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Xóa appointment.';
+  String get failedToDeleteAppointment => 'Không thể xóa cuộc hẹn.';
 
   @override
   String get reschedule => 'Dời lịch';
@@ -1794,8 +1795,8 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Dị ứng',
+      one: '$count Dị ứng',
     );
     return '$_temp0';
   }
@@ -1805,8 +1806,8 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Thuốc',
+      one: '$count Thuốc',
     );
     return '$_temp0';
   }
@@ -1871,7 +1872,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sosFailed => 'SOS THẤT BẠI';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS HOẠT ĐỘNG';
 
   @override
   String get sendingEmergencyAlert => 'Sending Khẩn cấp Alert';
@@ -1923,14 +1924,14 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count liên hệ đã được thông báo qua SMS',
+      one: '$count liên hệ đã được thông báo qua SMS',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Lịch sử';
+  String get failedLoadHistory => 'Không thể tải lịch sử';
 
   @override
   String thisMonthCount(int count) {
@@ -1975,7 +1976,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String aiRecommendationCaption(String recommendation) {
-    return 'AI Recommendation: $recommendation';
+    return 'Đề xuất của AI: $recommendation';
   }
 
   @override
@@ -2226,13 +2227,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String get avatarRemoved => 'Hình đại diện đã bị xóa.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Xóa avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'Không thể xóa ảnh đại diện. Vui lòng thử lại.';
 
   @override
   String get profileUpdatedSuccessfully => 'Hồ sơ updated successfully!';
 
   @override
-  String get profileUpdateFailed => 'Failed to update pHồ sơ Please try again.';
+  String get profileUpdateFailed =>
+      'Không thể cập nhật hồ sơ. Vui lòng thử lại.';
 
   @override
   String get editProfileTitle => 'Chỉnh sửa Hồ sơ';
@@ -2384,7 +2387,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Chỉ số sinh tồn';
+  String get failedToLoadVitals => 'Không tải được các chỉ số sinh tồn';
 
   @override
   String get noVitalsYet => 'Chưa có chỉ số được ghi nhận';
@@ -2452,7 +2455,8 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Lưu vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Không thể lưu dữ liệu quan trọng. Vui lòng thử lại.';
 
   @override
   String get vitalsHistoryTitle => 'Chỉ số sinh tồn Lịch sử';
@@ -2479,7 +2483,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Không tìm thấy dữ liệu đo nào cho khoảng thời gian đã chọn';
 
   @override
   String get singleReading => '1 lần đọc';
@@ -2491,7 +2495,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get min => 'Tôi';
 
   @override
-  String get max => 'Max';
+  String get max => 'Tối đa';
 
   @override
   String get latest => 'Mới nhất';
@@ -2556,8 +2560,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'Thuốc đã được thêm vào thành công!';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to Thêm medication. Please try again.';
+  String get medicationAddFailed => 'Không thể thêm thuốc. Vui lòng thử lại.';
 
   @override
   String get addAppointmentTitle => 'Thêm Appointment';
@@ -2661,7 +2664,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get recordUpdateFailed => 'Không thể cập nhật bản ghi.';
 
   @override
-  String get recordAddFailed => 'Failed to Thêm record.';
+  String get recordAddFailed => 'Không thể thêm bản ghi.';
 
   @override
   String get deleteRecordTitle => 'Xóa Record';
@@ -2675,7 +2678,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get recordDeleted => 'Bản ghi đã bị xóa.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Xóa record.';
+  String get recordDeleteFailed => 'Không thể xóa bản ghi.';
 
   @override
   String get medicalRecordsTitle => 'Hồ sơ y tế';
@@ -2806,7 +2809,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get back => 'Quay lại';
 
   @override
-  String get triageFailed => 'Phân loại analysis failed. Please try again.';
+  String get triageFailed =>
+      'Phân tích phân loại đã thất bại. Vui lòng thử lại.';
 
   @override
   String get symptomFever => 'Sốt';
@@ -2868,4 +2872,17 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Không previous purchases found to rKhôi phục';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

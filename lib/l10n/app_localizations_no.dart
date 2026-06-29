@@ -153,7 +153,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get aiProcessing => 'AI is processing your Helse data';
 
   @override
-  String get send => 'Send';
+  String get send => 'Sende';
 
   @override
   String get newChat => 'Ny chat';
@@ -520,8 +520,8 @@ class AppLocalizationsNo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count tilkoblede medlemmer',
+      one: '$count tilkoblet medlem',
     );
     return '$_temp0';
   }
@@ -584,7 +584,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pPassord Please try again.';
+      'Det gikk ikke å oppdatere passordet. Prøv på nytt.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -595,7 +595,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Slett account. Please try again or contact sStøtte';
+      'Det gikk ikke å slette kontoen. Prøv på nytt, eller kontakt kundestøtte.';
 
   @override
   String get manageYourSubscription => 'Administrer abonnementet ditt';
@@ -740,7 +740,8 @@ class AppLocalizationsNo extends AppLocalizations {
   String get purchasesRestored => 'Kjøpene er gjenopprettet.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Gjenopprett purchases.';
+  String get failedToRestorePurchases =>
+      'Det gikk ikke å gjenopprette kjøpene.';
 
   @override
   String get contactSalesEnterprise =>
@@ -804,7 +805,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Støtte request. Please try again or E-post support@vitalseker.com.';
+      'Det gikk ikke å sende inn supportforespørselen. Prøv på nytt, eller send en e-post til support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -843,7 +844,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Gå til Profil > Abonnement og velg Gratis-abonnementet for å nedgradere. Pro- eller Enterprise-funksjonene dine vil forbli aktive frem til slutten av den nåværende faktureringsperioden.';
 
   @override
   String get exportConfigurePreview =>
@@ -918,7 +919,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Legg til Familie member. Please try again.';
+      'Det gikk ikke å legge til familiemedlem. Prøv på nytt.';
 
   @override
   String get removeFamilyMember => 'Fjern Familie Member';
@@ -936,7 +937,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Fjern Familie member. Please try again.';
+      'Det gikk ikke å fjerne familiemedlemmet. Prøv på nytt.';
 
   @override
   String get fullNameLabel => 'Full Navn';
@@ -1033,7 +1034,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get medicationDeleted => 'Medisin slettet';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Slett medication.';
+  String get failedToDeleteMedication => 'Det gikk ikke å slette medisinen.';
 
   @override
   String get editDetails => 'Rediger Details';
@@ -1096,7 +1097,8 @@ class AppLocalizationsNo extends AppLocalizations {
   String get appointmentCancelled => 'Avtalen er avlyst';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Avbryt appointment.';
+  String get failedToCancelAppointment =>
+      'Det lyktes ikke å avbestille avtalen.';
 
   @override
   String get selectNewDate => 'Select new Dato';
@@ -1125,7 +1127,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get appointmentDeleted => 'Avtalen er slettet';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Slett appointment.';
+  String get failedToDeleteAppointment => 'Det gikk ikke å slette avtalen.';
 
   @override
   String get reschedule => 'Endre tidspunkt';
@@ -1171,7 +1173,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Lagre notification setting';
+      'Det gikk ikke å lagre varslingsinnstillingen';
 
   @override
   String get keyFeatures => 'Viktige funksjoner';
@@ -1402,13 +1404,13 @@ class AppLocalizationsNo extends AppLocalizations {
   String get nA => 'Ikke relevant';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Hopp over';
 
   @override
   String get next => 'Neste';
 
   @override
-  String get enterVitalSeker => 'Enter VitalSeker';
+  String get enterVitalSeker => 'Gå inn på VitalSeker';
 
   @override
   String get onboardingTitle1 => 'Lær å kjenne kroppen din.';
@@ -1791,8 +1793,8 @@ class AppLocalizationsNo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Allergier',
+      one: '$count Allergi',
     );
     return '$_temp0';
   }
@@ -1802,8 +1804,8 @@ class AppLocalizationsNo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Legemidler',
+      one: '$count Legemiddel',
     );
     return '$_temp0';
   }
@@ -1868,7 +1870,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get sosFailed => 'SOS MISLYKTES';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIV';
 
   @override
   String get sendingEmergencyAlert => 'Sending Nødsituasjon Alert';
@@ -1920,14 +1922,14 @@ class AppLocalizationsNo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontakter informert via SMS',
+      one: '$count kontakt informert via SMS',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Historikk';
+  String get failedLoadHistory => 'Det gikk ikke å laste inn historikken';
 
   @override
   String thisMonthCount(int count) {
@@ -2221,14 +2223,15 @@ class AppLocalizationsNo extends AppLocalizations {
   String get avatarRemoved => 'Avatar fjernet.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Fjern avatar. Please try again.';
+  String get avatarRemoveFailed =>
+      'Det gikk ikke å fjerne avataren. Prøv på nytt.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'Det gikk ikke å oppdatere profilen. Prøv på nytt.';
 
   @override
   String get editProfileTitle => 'Rediger Profil';
@@ -2380,7 +2383,7 @@ class AppLocalizationsNo extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Vitalverdier';
+  String get failedToLoadVitals => 'Kunne ikke laste inn vitale tegn';
 
   @override
   String get noVitalsYet => 'Nei Vitalverdier Yet';
@@ -2448,7 +2451,7 @@ class AppLocalizationsNo extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Lagre vital. Please try again.';
+  String get vitalSaveFailed => 'Det gikk ikke å lagre vital. Prøv på nytt.';
 
   @override
   String get vitalsHistoryTitle => 'Vitalverdier Historikk';
@@ -2475,7 +2478,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Det ble ikke funnet noen målinger for den valgte tidsperioden';
 
   @override
   String get singleReading => '1 lesning';
@@ -2487,7 +2490,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get min => 'I';
 
   @override
-  String get max => 'Max';
+  String get max => 'Maks';
 
   @override
   String get latest => 'Siste nytt';
@@ -2552,7 +2555,7 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Legg til medication. Please try again.';
+      'Det gikk ikke å legge til medisinen. Prøv på nytt.';
 
   @override
   String get addAppointmentTitle => 'Legg til Appointment';
@@ -2656,7 +2659,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get recordUpdateFailed => 'Det gikk ikke å oppdatere posten.';
 
   @override
-  String get recordAddFailed => 'Failed to Legg til record.';
+  String get recordAddFailed => 'Det gikk ikke å legge til posten.';
 
   @override
   String get deleteRecordTitle => 'Slett Record';
@@ -2670,7 +2673,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get recordDeleted => 'Oppføringen er slettet.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Slett record.';
+  String get recordDeleteFailed => 'Det gikk ikke å slette posten.';
 
   @override
   String get medicalRecordsTitle => 'Medisinske journaler';
@@ -2862,4 +2865,17 @@ class AppLocalizationsNo extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Nei previous purchases found to rGjenopprett';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

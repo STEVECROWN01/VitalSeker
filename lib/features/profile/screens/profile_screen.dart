@@ -82,7 +82,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       ),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')), // ignore: hardcoded_l10n - error display includes dynamic exception text
+        error: (e, _) {
+          debugPrint('Profile load error: $e');
+          return Center(child: Text(l10n.somethingWentWrong));
+        },
         data: (profile) {
           final name = profile?.fullName ?? 'User';
           final email = profile?.email ?? '';
@@ -316,7 +319,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     ),
                                   ),
                                 ),
-                                ...['English (US)', 'English (UK)', 'French', 'Spanish', 'Portuguese', 'German', 'Italian', 'Dutch', 'Arabic', 'Swahili', 'Hausa', 'Yoruba', 'Igbo', 'Chinese', 'Japanese', 'Korean', 'Hindi', 'Bengali', 'Urdu', 'Turkish', 'Russian', 'Polish', 'Vietnamese', 'Thai', 'Indonesian', 'Tagalog'].map((lang) => ListTile(
+                                ...languageLocales.keys.map((lang) => ListTile(
                                   title: Text(lang, style: const TextStyle(fontFamily: 'Inter')),
                                   trailing: ref.watch(localeProvider).languageCode == (languageLocales[lang]?.languageCode ?? 'en')
                                       ? Icon(Icons.check, color: AppColors.primary(isDark))

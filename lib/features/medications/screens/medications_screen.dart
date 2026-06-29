@@ -7,6 +7,7 @@ import '../../../core/models/medication.dart';
 import '../../../core/providers/medications_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 class MedicationsScreen extends ConsumerStatefulWidget {
   const MedicationsScreen({super.key});
@@ -120,7 +121,10 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
               onPressed: isSaving
                   ? null
                   : () async {
-                      if (dosageController.text.trim().isEmpty) return;
+                      if (dosageController.text.trim().isEmpty) {
+                        AppSnackBar.error(context, l10n.fieldRequired);
+                        return;
+                      }
                       setDialogState(() => isSaving = true);
                       try {
                         await ref.read(medicationsProvider.notifier).updateMedicationDetails(
@@ -313,7 +317,10 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
       ),
       body: medicationsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) {
+          debugPrint('Medications load error: $e');
+          return Center(child: Text(l10n.somethingWentWrong));
+        },
         data: (medications) {
           final filtered = _applyFilters(medications);
 
@@ -397,7 +404,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                             ),
                           )
                         : ListView.builder(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
                             itemCount: filtered.length,
                             itemBuilder: (context, index) {
                               final medication = filtered[index];
@@ -409,6 +416,11 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                               );
                             },
                           ),
+              ),
+              // Medical disclaimer (per Cahier des Charges §7)
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 80),
+                child: MedicalDisclaimerBanner(compact: true),
               ),
             ],
           );

@@ -515,8 +515,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count 已连接成员',
+      one: '$count 已连接成员',
     );
     return '$_temp0';
   }
@@ -725,14 +725,13 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get failedToUpdateSubscription =>
-      '失败 to update subscription. Please try again.';
+  String get failedToUpdateSubscription => '订阅更新失败。请重试。';
 
   @override
   String get purchasesRestored => '已恢复购买功能。';
 
   @override
-  String get failedToRestorePurchases => 'Failed to 恢复 purchases.';
+  String get failedToRestorePurchases => '无法恢复已购买的内容。';
 
   @override
   String get contactSalesEnterprise => 'Contact sales for custom 企业版 条款';
@@ -792,7 +791,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit 支持 request. Please try again or 邮箱 support@vitalseker.com.';
+      '提交支持请求失败。请重试，或发送电子邮件至 support@vitalseker.com。';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -831,7 +830,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      '请前往“个人资料”>“订阅”，然后选择“免费套餐”进行降级。您的 Pro 或 Enterprise 功能将保持有效，直至当前计费周期结束。';
 
   @override
   String get exportConfigurePreview =>
@@ -902,7 +901,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get familyMemberAdded => '家庭 member added!';
 
   @override
-  String get failedToAddFamily => 'Failed to 添加 家庭 member. Please try again.';
+  String get failedToAddFamily => '添加家庭成员失败。请重试。';
 
   @override
   String get removeFamilyMember => '移除家庭成员';
@@ -919,8 +918,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get familyMemberRemoved => '家庭 member removed';
 
   @override
-  String get failedToRemoveFamily =>
-      'Failed to 移除 家庭 member. Please try again.';
+  String get failedToRemoveFamily => '无法删除家庭成员。请重试。';
 
   @override
   String get fullNameLabel => 'Full 姓名';
@@ -1016,7 +1014,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get medicationDeleted => '已删除该药物';
 
   @override
-  String get failedToDeleteMedication => 'Failed to 删除 medication.';
+  String get failedToDeleteMedication => '无法删除该药物。';
 
   @override
   String get editDetails => '编辑详情';
@@ -1079,7 +1077,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appointmentCancelled => '预约已取消';
 
   @override
-  String get failedToCancelAppointment => 'Failed to 取消 appointment.';
+  String get failedToCancelAppointment => '无法取消预约。';
 
   @override
   String get selectNewDate => 'Select new 日期';
@@ -1107,7 +1105,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appointmentDeleted => '预约已删除';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to 删除 appointment.';
+  String get failedToDeleteAppointment => '无法删除该预约。';
 
   @override
   String get reschedule => '重新安排';
@@ -1605,7 +1603,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. 错误: $error';
+    return '很抱歉，在分析您的症状时遇到错误。请重试或换种方式描述您的症状。\n\n错误：$error';
   }
 
   @override
@@ -1758,8 +1756,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count 过敏',
+      one: '$count 过敏',
     );
     return '$_temp0';
   }
@@ -1769,8 +1767,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count 药物',
+      one: '$count 药物',
     );
     return '$_temp0';
   }
@@ -1887,14 +1885,14 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count 个联系人通过短信通知',
+      one: '$count 个联系人通过短信通知',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load 历史';
+  String get failedLoadHistory => '无法加载历史记录';
 
   @override
   String thisMonthCount(int count) {
@@ -2176,19 +2174,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get avatarUpdated => '头像已更新！';
 
   @override
-  String get avatarUploadFailed => '失败 to upload avatar. Please try again.';
+  String get avatarUploadFailed => '上传头像失败。请重试。';
 
   @override
   String get avatarRemoved => '头像已删除。';
 
   @override
-  String get avatarRemoveFailed => 'Failed to 移除 avatar. Please try again.';
+  String get avatarRemoveFailed => '无法删除头像。请重试。';
 
   @override
   String get profileUpdatedSuccessfully => '个人资料 updated successfully!';
 
   @override
-  String get profileUpdateFailed => 'Failed to update p个人资料 Please try again.';
+  String get profileUpdateFailed => '更新个人资料失败。请重试。';
 
   @override
   String get editProfileTitle => '编辑 个人资料';
@@ -2338,7 +2336,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load 生命体征';
+  String get failedToLoadVitals => '无法加载生命体征数据';
 
   @override
   String get noVitalsYet => '暂无生命体征记录';
@@ -2375,7 +2373,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get logVitalTitle => '日志重要';
 
   @override
-  String get vitalTypeLabel => 'VITAL TYPE';
+  String get vitalTypeLabel => '生命类型';
 
   @override
   String get valueLabel => 'VALUE';
@@ -2406,7 +2404,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to 保存 vital. Please try again.';
+  String get vitalSaveFailed => '无法保存重要数据。请重试。';
 
   @override
   String get vitalsHistoryTitle => '生命体征 历史';
@@ -2432,8 +2430,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+  String get noReadingsForPeriod => '未找到所选时间段内的读数';
 
   @override
   String get singleReading => '1 次阅读';
@@ -2509,8 +2506,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get medicationAddedSuccessfully => '药物已成功添加！';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to 添加 medication. Please try again.';
+  String get medicationAddFailed => '添加药物失败。请重试。';
 
   @override
   String get addAppointmentTitle => '添加 Appointment';
@@ -2537,8 +2533,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appointmentScheduledSuccessfully => '预约已成功安排！';
 
   @override
-  String get appointmentScheduleFailed =>
-      '失败 to schedule appointment. Please try again.';
+  String get appointmentScheduleFailed => '预约失败。请重试。';
 
   @override
   String get specialtyCardiologist => '心脏病专家';
@@ -2571,7 +2566,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get specialtyOther => '其他';
 
   @override
-  String get recordsLoadFailed => '失败 to 加载 records. Please try again.';
+  String get recordsLoadFailed => '无法加载记录。请重试。';
 
   @override
   String get notAvailable => 'N/A';
@@ -2613,7 +2608,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get recordUpdateFailed => '失败 to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to 添加 record.';
+  String get recordAddFailed => '添加记录失败。';
 
   @override
   String get deleteRecordTitle => '删除 Record';
@@ -2627,7 +2622,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get recordDeleted => '记录已删除。';
 
   @override
-  String get recordDeleteFailed => 'Failed to 删除 record.';
+  String get recordDeleteFailed => '删除记录失败。';
 
   @override
   String get medicalRecordsTitle => '病历';
@@ -2756,7 +2751,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get back => '返回';
 
   @override
-  String get triageFailed => '分诊 analysis failed. Please try again.';
+  String get triageFailed => '分流分析失败。请重试。';
 
   @override
   String get symptomFever => '发烧';
@@ -2817,4 +2812,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => '否 previous purchases found to r恢复';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

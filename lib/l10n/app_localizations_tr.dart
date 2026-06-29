@@ -386,7 +386,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Yükselt to Pro to unlock AI-powered weekly Sağlık iİçgörüler';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Profesyonel Plan';
 
   @override
   String get viewAllPlans => 'View Tümü plans';
@@ -519,8 +519,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count bağlı üye',
+      one: '$count bağlı üye',
     );
     return '$_temp0';
   }
@@ -732,13 +732,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Başarısız to update subscription. Please try again.';
+      'Abonelik güncellenemedi. Lütfen tekrar deneyin.';
 
   @override
   String get purchasesRestored => 'Satın alımlar geri yüklendi.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Geri yükle purchases.';
+  String get failedToRestorePurchases => 'Satın alınanlar geri yüklenemedi.';
 
   @override
   String get contactSalesEnterprise =>
@@ -802,7 +802,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Destek request. Please try again or E-posta support@vitalseker.com.';
+      'Destek talebi gönderilemedi. Lütfen tekrar deneyin veya support@vitalseker.com adresine e-posta gönderin.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -841,7 +841,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Profil > Abonelik bölümüne gidin ve planınızı düşürmek için Ücretsiz planı seçin. Pro veya Enterprise özellikleriniz, mevcut fatura döneminizin sonuna kadar aktif kalacaktır.';
 
   @override
   String get exportConfigurePreview =>
@@ -914,7 +914,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Ekle Aile member. Please try again.';
+      'Aile üyesi eklenemedi. Lütfen tekrar deneyin.';
 
   @override
   String get removeFamilyMember => 'Aile üyesini kaldır';
@@ -932,7 +932,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Kaldır Aile member. Please try again.';
+      'Aile üyesini silme işlemi başarısız oldu. Lütfen tekrar deneyin.';
 
   @override
   String get fullNameLabel => 'Full Ad';
@@ -1030,7 +1030,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get medicationDeleted => 'İlaç silindi';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Sil medication.';
+  String get failedToDeleteMedication => 'İlaç silinemedi.';
 
   @override
   String get editDetails => 'Detayları düzenle';
@@ -1095,7 +1095,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get appointmentCancelled => 'Randevu iptal edildi';
 
   @override
-  String get failedToCancelAppointment => 'Failed to İptal appointment.';
+  String get failedToCancelAppointment => 'Randevu iptal edilemedi.';
 
   @override
   String get selectNewDate => 'Select new Tarih';
@@ -1124,7 +1124,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get appointmentDeleted => 'Randevu silindi';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Sil appointment.';
+  String get failedToDeleteAppointment => 'Randevu silinemedi.';
 
   @override
   String get reschedule => 'Yeniden planla';
@@ -1632,7 +1632,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. Hata: $error';
+    return 'Üzgünüm, belirtilerinizi analiz ederken bir hata oluştu. Lütfen tekrar deneyin veya belirtilerinizi farklı bir şekilde açıklayın.\n\nHata: $error';
   }
 
   @override
@@ -1789,8 +1789,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alerji',
+      one: '$count Alerji',
     );
     return '$_temp0';
   }
@@ -1800,8 +1800,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count İlaç',
+      one: '$count İlaç',
     );
     return '$_temp0';
   }
@@ -1866,7 +1866,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get sosFailed => 'SOS HATASI';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTİF';
 
   @override
   String get sendingEmergencyAlert => 'Sending Acil durum Alert';
@@ -1918,14 +1918,14 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kişi SMS ile bilgilendirildi',
+      one: '$count kişi SMS ile bilgilendirildi',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Geçmiş';
+  String get failedLoadHistory => 'Geçmiş yüklenemedi';
 
   @override
   String thisMonthCount(int count) {
@@ -2212,21 +2212,20 @@ class AppLocalizationsTr extends AppLocalizations {
   String get avatarUpdated => 'Avatar güncellendi!';
 
   @override
-  String get avatarUploadFailed =>
-      'Başarısız to upload avatar. Please try again.';
+  String get avatarUploadFailed => 'Avatar yüklenemedi. Lütfen tekrar deneyin.';
 
   @override
   String get avatarRemoved => 'Avatar kaldırıldı.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Kaldır avatar. Please try again.';
+  String get avatarRemoveFailed => 'Avatar silinemedi. Lütfen tekrar deneyin.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'Profil güncellenemedi. Lütfen tekrar deneyin.';
 
   @override
   String get editProfileTitle => 'Düzenle Profil';
@@ -2378,7 +2377,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Yaşamsal belirtiler';
+  String get failedToLoadVitals => 'Yaşam belirtileri yüklenemedi';
 
   @override
   String get noVitalsYet => 'Henüz yaşamsal belirti kaydedilmedi';
@@ -2447,7 +2446,8 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Kaydet vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Önemli veriler kaydedilemedi. Lütfen tekrar deneyin.';
 
   @override
   String get vitalsHistoryTitle => 'Yaşamsal belirtiler Geçmiş';
@@ -2474,7 +2474,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Seçilen zaman aralığı için herhangi bir okuma bulunamadı';
 
   @override
   String get singleReading => '1 okuma';
@@ -2550,8 +2550,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get medicationAddedSuccessfully => 'İlaç başarıyla eklendi!';
 
   @override
-  String get medicationAddFailed =>
-      'Failed to Ekle medication. Please try again.';
+  String get medicationAddFailed => 'İlaç eklenemedi. Lütfen tekrar deneyin.';
 
   @override
   String get addAppointmentTitle => 'Ekle Appointment';
@@ -2579,7 +2578,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get appointmentScheduleFailed =>
-      'Başarısız to schedule appointment. Please try again.';
+      'Randevu planlanamadı. Lütfen tekrar deneyin.';
 
   @override
   String get specialtyCardiologist => 'Kardiyolog';
@@ -2613,7 +2612,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get recordsLoadFailed =>
-      'Başarısız to yükle records. Please try again.';
+      'Kayıtlar yüklenemedi. Lütfen tekrar deneyin.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2655,7 +2654,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get recordUpdateFailed => 'Başarısız to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to Ekle record.';
+  String get recordAddFailed => 'Kayıt eklenemedi.';
 
   @override
   String get deleteRecordTitle => 'Sil Record';
@@ -2669,7 +2668,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get recordDeleted => 'Kayıt silindi.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Sil record.';
+  String get recordDeleteFailed => 'Kayıt silinemedi.';
 
   @override
   String get medicalRecordsTitle => 'Tıbbi kayıtlar';
@@ -2799,7 +2798,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get back => 'Geri';
 
   @override
-  String get triageFailed => 'Triyaj analysis failed. Please try again.';
+  String get triageFailed =>
+      'Triage analizi başarısız oldu. Lütfen tekrar deneyin.';
 
   @override
   String get symptomFever => 'Ateş';
@@ -2861,4 +2861,17 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Hayır previous purchases found to rGeri yükle';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

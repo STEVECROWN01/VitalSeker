@@ -2855,6 +2855,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noPurchasesToRestore => 'No previous purchases found to restore.';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -4768,8 +4781,8 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count contacts notified via SMS',
+      one: '$count contact notified via SMS',
     );
     return '$_temp0';
   }

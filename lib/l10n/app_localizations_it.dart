@@ -15,7 +15,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tagline => 'Il tuo compagno di salute IA';
 
   @override
-  String get home => 'Home';
+  String get home => 'Casa';
 
   @override
   String get history => 'Cronologia';
@@ -519,8 +519,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count membri connessi',
+      one: '$count membro connesso',
     );
     return '$_temp0';
   }
@@ -681,7 +681,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get enterprisePlanFeature3 => 'Personalizzato branding';
 
   @override
-  String get enterprisePlanFeature4 => 'API access';
+  String get enterprisePlanFeature4 => 'Accesso all\'API';
 
   @override
   String get enterprisePlanFeature5 => 'Dedicated Supporto';
@@ -735,13 +735,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get failedToUpdateSubscription =>
-      'Errore to update subscription. Please try again.';
+      'Impossibile aggiornare l\'abbonamento. Riprovare.';
 
   @override
   String get purchasesRestored => 'Gli acquisti sono stati ripristinati.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Ripristina purchases.';
+  String get failedToRestorePurchases =>
+      'Impossibile ripristinare gli acquisti.';
 
   @override
   String get contactSalesEnterprise =>
@@ -805,7 +806,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Supporto request. Please try again or Email support@vitalseker.com.';
+      'Impossibile inviare la richiesta di assistenza. Riprova oppure invia un’e-mail all’indirizzo support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -844,7 +845,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Vai su Profilo > Abbonamento e seleziona il piano gratuito per passare a un piano inferiore. Le funzionalità del piano Pro o Enterprise rimarranno attive fino alla fine del periodo di fatturazione in corso.';
 
   @override
   String get exportConfigurePreview =>
@@ -919,7 +920,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Aggiungi Famiglia member. Please try again.';
+      'Impossibile aggiungere il membro della famiglia. Riprovare.';
 
   @override
   String get removeFamilyMember => 'Rimuovi membro famiglia';
@@ -937,7 +938,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Rimuovi Famiglia member. Please try again.';
+      'Impossibile rimuovere il membro della famiglia. Riprovare.';
 
   @override
   String get fullNameLabel => 'Full Nome';
@@ -1036,7 +1037,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get medicationDeleted => 'Farmaco eliminato';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Elimina medication.';
+  String get failedToDeleteMedication => 'Impossibile eliminare il farmaco.';
 
   @override
   String get editDetails => 'Modifica dettagli';
@@ -1100,7 +1101,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get appointmentCancelled => 'Appuntamento annullato';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Annulla appointment.';
+  String get failedToCancelAppointment =>
+      'Non è stato possibile annullare l\'appuntamento.';
 
   @override
   String get selectNewDate => 'Select new Data';
@@ -1129,7 +1131,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get appointmentDeleted => 'Appuntamento cancellato';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Elimina appointment.';
+  String get failedToDeleteAppointment =>
+      'Impossibile eliminare l\'appuntamento.';
 
   @override
   String get reschedule => 'Riprogramma';
@@ -1639,7 +1642,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String triageErrorMessage(String error) {
-    return 'I\'m sorry, I encountered an error analyzing your symptoms. Please try again or describe your symptoms differently. Errore: $error';
+    return 'Mi dispiace, si è verificato un errore durante l\'analisi dei tuoi sintomi. Prova di nuovo oppure descrivi i tuoi sintomi in modo diverso.\n\nErrore: $error';
   }
 
   @override
@@ -1796,8 +1799,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Allergie',
+      one: '$count Allergia',
     );
     return '$_temp0';
   }
@@ -1807,8 +1810,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Farmaci',
+      one: '$count Farmaco',
     );
     return '$_temp0';
   }
@@ -1873,7 +1876,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get sosFailed => 'SOS NON RIUSCITO';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS ATTIVO';
 
   @override
   String get sendingEmergencyAlert => 'Sending Emergenza Alert';
@@ -1925,14 +1928,14 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count contatti notificati via SMS',
+      one: '$count contatto notificato via SMS',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Cronologia';
+  String get failedLoadHistory => 'Impossibile caricare la cronologia';
 
   @override
   String thisMonthCount(int count) {
@@ -2220,21 +2223,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get avatarUpdated => 'Avatar aggiornato!';
 
   @override
-  String get avatarUploadFailed => 'Errore to upload avatar. Please try again.';
+  String get avatarUploadFailed => 'Impossibile caricare l\'avatar. Riprova.';
 
   @override
   String get avatarRemoved => 'Avatar rimosso.';
 
   @override
-  String get avatarRemoveFailed =>
-      'Failed to Rimuovi avatar. Please try again.';
+  String get avatarRemoveFailed => 'Impossibile rimuovere l\'avatar. Riprova.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profilo updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfilo Please try again.';
+      'Impossibile aggiornare il profilo. Riprovare.';
 
   @override
   String get editProfileTitle => 'Modifica Profilo';
@@ -2386,7 +2388,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Parametri vitali';
+  String get failedToLoadVitals => 'Impossibile caricare i parametri vitali';
 
   @override
   String get noVitalsYet => 'Nessun parametro registrato';
@@ -2454,7 +2456,8 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Salva vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Impossibile salvare i dati essenziali. Riprovare.';
 
   @override
   String get vitalsHistoryTitle => 'Parametri vitali Cronologia';
@@ -2481,7 +2484,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Non sono stati trovati dati relativi al periodo selezionato';
 
   @override
   String get singleReading => '1 lettura';
@@ -2493,7 +2496,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get min => 'Ho';
 
   @override
-  String get max => 'Max';
+  String get max => 'Massimo';
 
   @override
   String get latest => 'Ultimo';
@@ -2559,7 +2562,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Aggiungi medication. Please try again.';
+      'Impossibile aggiungere il farmaco. Riprovare.';
 
   @override
   String get addAppointmentTitle => 'Aggiungi Appointment';
@@ -2588,7 +2591,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get appointmentScheduleFailed =>
-      'Errore to schedule appointment. Please try again.';
+      'Impossibile fissare l\'appuntamento. Riprovare.';
 
   @override
   String get specialtyCardiologist => 'Cardiologo';
@@ -2621,8 +2624,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get specialtyOther => 'Altro';
 
   @override
-  String get recordsLoadFailed =>
-      'Errore to caricare records. Please try again.';
+  String get recordsLoadFailed => 'Impossibile caricare i record. Riprovare.';
 
   @override
   String get notAvailable => 'N/A';
@@ -2664,7 +2666,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get recordUpdateFailed => 'Errore to update record.';
 
   @override
-  String get recordAddFailed => 'Failed to Aggiungi record.';
+  String get recordAddFailed => 'Impossibile aggiungere il record.';
 
   @override
   String get deleteRecordTitle => 'Elimina Record';
@@ -2678,7 +2680,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get recordDeleted => 'Record eliminato.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Elimina record.';
+  String get recordDeleteFailed => 'Impossibile eliminare il record.';
 
   @override
   String get medicalRecordsTitle => 'Cartelle cliniche';
@@ -2871,4 +2873,17 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'No previous purchases found to rRipristina';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

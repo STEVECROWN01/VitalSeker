@@ -42,7 +42,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get signOut => 'Keluar';
 
   @override
-  String get email => 'Email';
+  String get email => 'E-mail';
 
   @override
   String get password => 'Kata Sandi';
@@ -387,7 +387,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Upgrade to Pro to unlock AI-powered weekly Kesehatan iWawasan';
 
   @override
-  String get proPlan => 'Pro Plan';
+  String get proPlan => 'Rencana Pro';
 
   @override
   String get viewAllPlans => 'View Semua plans';
@@ -520,8 +520,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count anggota terhubung',
+      one: '$count anggota terhubung',
     );
     return '$_temp0';
   }
@@ -741,7 +741,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get purchasesRestored => 'Pembelian telah dipulihkan.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Pulihkan purchases.';
+  String get failedToRestorePurchases => 'Gagal memulihkan pembelian.';
 
   @override
   String get contactSalesEnterprise =>
@@ -807,7 +807,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Dukungan request. Please try again or Email support@vitalseker.com.';
+      'Permintaan bantuan gagal dikirim. Silakan coba lagi atau kirim email ke support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -846,7 +846,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Buka Profil > Langganan, lalu pilih paket Gratis untuk menurunkan tingkat langganan. Fitur-fitur Pro atau Enterprise Anda akan tetap aktif hingga akhir periode penagihan saat ini.';
 
   @override
   String get exportConfigurePreview =>
@@ -921,7 +921,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Tambah Keluarga member. Please try again.';
+      'Gagal menambahkan anggota keluarga. Silakan coba lagi.';
 
   @override
   String get removeFamilyMember => 'Hapus Anggota Keluarga';
@@ -939,7 +939,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Hapus Keluarga member. Please try again.';
+      'Gagal menghapus anggota keluarga. Silakan coba lagi.';
 
   @override
   String get fullNameLabel => 'Full Nama';
@@ -994,14 +994,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String editMedicationName(String name) {
-    return 'Edit $name';
+    return 'Sunting $name';
   }
 
   @override
   String get dosage => 'Dosis';
 
   @override
-  String get unit => 'Unit';
+  String get unit => 'Satuan';
 
   @override
   String get frequency => 'Frekuensi';
@@ -1037,7 +1037,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get medicationDeleted => 'Obat dihapus';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Hapus medication.';
+  String get failedToDeleteMedication => 'Gagal menghapus obat.';
 
   @override
   String get editDetails => 'Edit Detail';
@@ -1101,7 +1101,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get appointmentCancelled => 'Janji temu dibatalkan';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Batal appointment.';
+  String get failedToCancelAppointment => 'Gagal membatalkan janji temu.';
 
   @override
   String get selectNewDate => 'Select new Tanggal';
@@ -1130,7 +1130,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get appointmentDeleted => 'Janji temu telah dihapus';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Hapus appointment.';
+  String get failedToDeleteAppointment => 'Gagal menghapus janji temu.';
 
   @override
   String get reschedule => 'Jadwalkan Ulang';
@@ -1799,8 +1799,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alergi',
+      one: '$count Alergi',
     );
     return '$_temp0';
   }
@@ -1810,8 +1810,8 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Obat',
+      one: '$count Obat',
     );
     return '$_temp0';
   }
@@ -1876,7 +1876,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get sosFailed => 'SOS GAGAL';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS AKTIF';
 
   @override
   String get sendingEmergencyAlert => 'Sending Darurat Alert';
@@ -1928,14 +1928,14 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count kontak diberitahu via SMS',
+      one: '$count kontak diberitahu via SMS',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Riwayat';
+  String get failedLoadHistory => 'Gagal memuat riwayat';
 
   @override
   String thisMonthCount(int count) {
@@ -2229,14 +2229,14 @@ class AppLocalizationsId extends AppLocalizations {
   String get avatarRemoved => 'Avatar telah dihapus.';
 
   @override
-  String get avatarRemoveFailed => 'Failed to Hapus avatar. Please try again.';
+  String get avatarRemoveFailed => 'Gagal menghapus avatar. Silakan coba lagi.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'Gagal memperbarui profil. Silakan coba lagi.';
 
   @override
   String get editProfileTitle => 'Edit Profil';
@@ -2389,7 +2389,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Tanda vital';
+  String get failedToLoadVitals => 'Gagal memuat data tanda-tanda vital';
 
   @override
   String get noVitalsYet => 'Belum ada tanda vital yang dicatat';
@@ -2458,7 +2458,8 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Simpan vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Gagal menyimpan data penting. Silakan coba lagi.';
 
   @override
   String get vitalsHistoryTitle => 'Tanda vital Riwayat';
@@ -2485,7 +2486,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Tidak ditemukan data untuk periode waktu yang dipilih';
 
   @override
   String get singleReading => '1 bacaan';
@@ -2497,7 +2498,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get min => 'Saya punya';
 
   @override
-  String get max => 'Max';
+  String get max => 'Maks';
 
   @override
   String get latest => 'Terbaru';
@@ -2526,7 +2527,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get dosageLabel => 'Dosis';
 
   @override
-  String get unitLabel => 'Unit';
+  String get unitLabel => 'Satuan';
 
   @override
   String get frequencyLabel => 'Frekuensi';
@@ -2563,7 +2564,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Tambah medication. Please try again.';
+      'Gagal menambahkan obat. Silakan coba lagi.';
 
   @override
   String get addAppointmentTitle => 'Tambah Appointment';
@@ -2667,7 +2668,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get recordUpdateFailed => 'Gagal memperbarui catatan.';
 
   @override
-  String get recordAddFailed => 'Failed to Tambah record.';
+  String get recordAddFailed => 'Gagal menambahkan catatan.';
 
   @override
   String get deleteRecordTitle => 'Hapus Record';
@@ -2681,7 +2682,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get recordDeleted => 'Catatan telah dihapus.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Hapus record.';
+  String get recordDeleteFailed => 'Gagal menghapus catatan.';
 
   @override
   String get medicalRecordsTitle => 'Rekam medis';
@@ -2703,7 +2704,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String triageStepOf(Object current, Object total) {
-    return 'Step $current of $total';
+    return 'Langkah $current dari $total';
   }
 
   @override
@@ -2872,4 +2873,17 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Tidak previous purchases found to rPulihkan';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

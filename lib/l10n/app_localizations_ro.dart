@@ -232,7 +232,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get helpCenter => 'Ajutor Center';
 
   @override
-  String get contactConcierge => 'Contact Concierge';
+  String get contactConcierge => 'Contactați concierge';
 
   @override
   String get aboutVitalSeker => 'Despre VitalSeker';
@@ -522,8 +522,8 @@ class AppLocalizationsRo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count connected members',
-      one: '$count connected member',
+      other: '$count membri conectați',
+      one: '$count membru conectat',
     );
     return '$_temp0';
   }
@@ -586,7 +586,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get failedToUpdatePassword =>
-      'Failed to update pParolă Please try again.';
+      'Nu s-a putut actualiza parola. Vă rugăm să încercați din nou.';
 
   @override
   String get deleteAccountIrreversible =>
@@ -597,7 +597,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get failedToDeleteAccount =>
-      'Failed to Ștergere account. Please try again or contact sSuport';
+      'Nu s-a putut șterge contul. Vă rugăm să încercați din nou sau să contactați serviciul de asistență.';
 
   @override
   String get manageYourSubscription => 'Gestionați-vă abonamentul';
@@ -742,7 +742,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get purchasesRestored => 'Achizițiile au fost restabilite.';
 
   @override
-  String get failedToRestorePurchases => 'Failed to Restabilire purchases.';
+  String get failedToRestorePurchases => 'Nu s-au putut restabili achizițiile.';
 
   @override
   String get contactSalesEnterprise =>
@@ -808,7 +808,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get failedToSubmitSupport =>
-      'Failed to submit Suport request. Please try again or Email support@vitalseker.com.';
+      'Nu s-a reușit trimiterea cererii de asistență. Vă rugăm să încercați din nou sau să trimiteți un e-mail la support@vitalseker.com.';
 
   @override
   String get couldNotOpenEmailClient =>
@@ -847,7 +847,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get faqAnswer5 =>
-      'Go to Profile > Subscription and select the Free plan to downgrade. Your Pro or Enterprise features will remain active until the end of your current billing period.';
+      'Accesați Profil > Abonament și selectați planul gratuit pentru a trece la un plan inferior. Funcțiile planurilor Pro sau Enterprise vor rămâne active până la sfârșitul perioadei de facturare curente.';
 
   @override
   String get exportConfigurePreview =>
@@ -922,7 +922,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get failedToAddFamily =>
-      'Failed to Adăugare Familie member. Please try again.';
+      'Nu s-a putut adăuga membrul familiei. Vă rugăm să încercați din nou.';
 
   @override
   String get removeFamilyMember => 'Eliminare Familie Member';
@@ -940,7 +940,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get failedToRemoveFamily =>
-      'Failed to Eliminare Familie member. Please try again.';
+      'Nu s-a reușit eliminarea membrului familiei. Vă rugăm să încercați din nou.';
 
   @override
   String get fullNameLabel => 'Full Nume';
@@ -1039,7 +1039,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get medicationDeleted => 'Medicament eliminat';
 
   @override
-  String get failedToDeleteMedication => 'Failed to Ștergere medication.';
+  String get failedToDeleteMedication => 'Nu s-a putut șterge medicamentul.';
 
   @override
   String get editDetails => 'Editare Details';
@@ -1103,7 +1103,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get appointmentCancelled => 'Programare anulată';
 
   @override
-  String get failedToCancelAppointment => 'Failed to Anulare appointment.';
+  String get failedToCancelAppointment => 'Nu s-a reușit anularea programării.';
 
   @override
   String get selectNewDate => 'Select new Dată';
@@ -1132,7 +1132,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get appointmentDeleted => 'Programare ștearsă';
 
   @override
-  String get failedToDeleteAppointment => 'Failed to Ștergere appointment.';
+  String get failedToDeleteAppointment => 'Nu s-a putut șterge întâlnirea.';
 
   @override
   String get reschedule => 'Reprogramare';
@@ -1179,7 +1179,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get failedToSaveNotificationSetting =>
-      'Failed to Salvare notification setting';
+      'Nu s-a putut salva setarea de notificare';
 
   @override
   String get keyFeatures => 'Caracteristici principale';
@@ -1804,8 +1804,8 @@ class AppLocalizationsRo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Allergies',
-      one: '$count Allergy',
+      other: '$count Alergii',
+      one: '$count Alergie',
     );
     return '$_temp0';
   }
@@ -1815,8 +1815,8 @@ class AppLocalizationsRo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Medications',
-      one: '$count Medication',
+      other: '$count Medicamente',
+      one: '$count Medicament',
     );
     return '$_temp0';
   }
@@ -1881,7 +1881,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get sosFailed => 'SOS EȘUAT';
 
   @override
-  String get sosActive => 'SOS ACTIVE';
+  String get sosActive => 'SOS ACTIV';
 
   @override
   String get sendingEmergencyAlert => 'Sending Urgență Alert';
@@ -1933,14 +1933,14 @@ class AppLocalizationsRo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count contacts reached via SMS',
-      one: '$count contact reached via SMS',
+      other: '$count contacte notificate prin SMS',
+      one: '$count contact notificat prin SMS',
     );
     return '$_temp0';
   }
 
   @override
-  String get failedLoadHistory => 'Failed to load Istoric';
+  String get failedLoadHistory => 'Nu s-a putut încărca istoricul';
 
   @override
   String thisMonthCount(int count) {
@@ -2235,14 +2235,14 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get avatarRemoveFailed =>
-      'Failed to Eliminare avatar. Please try again.';
+      'Nu s-a putut șterge avatarul. Vă rugăm să încercați din nou.';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil updated successfully!';
 
   @override
   String get profileUpdateFailed =>
-      'Failed to update pProfil Please try again.';
+      'Nu s-a putut actualiza profilul. Vă rugăm să încercați din nou.';
 
   @override
   String get editProfileTitle => 'Editare Profil';
@@ -2394,7 +2394,8 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get failedToLoadVitals => 'Failed to load Semne vitale';
+  String get failedToLoadVitals =>
+      'Nu s-au putut încărca datele privind semnele vitale';
 
   @override
   String get noVitalsYet => 'Nu Semne vitale Yet';
@@ -2462,7 +2463,8 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get vitalSaveFailed => 'Failed to Salvare vital. Please try again.';
+  String get vitalSaveFailed =>
+      'Nu s-a putut salva „vital”. Vă rugăm să încercați din nou.';
 
   @override
   String get vitalsHistoryTitle => 'Semne vitale Istoric';
@@ -2489,7 +2491,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get noReadingsForPeriod =>
-      'No readings found for the selected time period';
+      'Nu s-au găsit date pentru perioada selectată';
 
   @override
   String get singleReading => '1 lectură';
@@ -2567,7 +2569,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get medicationAddFailed =>
-      'Failed to Adăugare medication. Please try again.';
+      'Nu s-a putut adăuga medicamentul. Vă rugăm să încercați din nou.';
 
   @override
   String get addAppointmentTitle => 'Adăugare Appointment';
@@ -2672,7 +2674,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get recordUpdateFailed => 'Nu s-a putut actualiza înregistrarea.';
 
   @override
-  String get recordAddFailed => 'Failed to Adăugare record.';
+  String get recordAddFailed => 'Nu s-a putut adăuga înregistrarea.';
 
   @override
   String get deleteRecordTitle => 'Ștergere Record';
@@ -2686,7 +2688,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get recordDeleted => 'Înregistrarea a fost ștersă.';
 
   @override
-  String get recordDeleteFailed => 'Failed to Ștergere record.';
+  String get recordDeleteFailed => 'Nu s-a putut șterge înregistrarea.';
 
   @override
   String get medicalRecordsTitle => 'Fișe medicale';
@@ -2817,7 +2819,8 @@ class AppLocalizationsRo extends AppLocalizations {
   String get back => 'Înapoi';
 
   @override
-  String get triageFailed => 'Triaj analysis failed. Please try again.';
+  String get triageFailed =>
+      'Analiza de triere a eșuat. Vă rugăm să încercați din nou.';
 
   @override
   String get symptomFever => 'Febră';
@@ -2879,4 +2882,17 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get noPurchasesToRestore =>
       'Nu previous purchases found to rRestabilire';
+
+  @override
+  String get failedToCompleteOnboarding =>
+      'Failed to complete onboarding. Please check your connection and try again.';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get securitySettingsOnThisPage => 'Security settings are on this page';
 }

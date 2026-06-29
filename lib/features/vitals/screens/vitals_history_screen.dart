@@ -5,6 +5,7 @@ import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/models/vital.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
 class VitalsHistoryScreen extends ConsumerStatefulWidget {
   final VitalType? initialType;
@@ -177,6 +178,8 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                           vitalType: _selectedType,
                           isDark: isDark,
                         ),
+                        const SizedBox(height: 16),
+                        const MedicalDisclaimerBanner(compact: true),
                         const SizedBox(height: 40),
                       ],
                     ),
