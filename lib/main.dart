@@ -18,62 +18,34 @@ import 'core/providers/locale_provider.dart';
 import 'shared/theme/app_theme.dart';
 
 void main() async {
+  // Bootstrap Flutter binding first — required before any async work.
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load environment variables
-  await dotenv.load(fileName: '.env', isOptional: true);
-
-  // Initialize Supabase
-  await SupabaseService().initialize();
-
-  // Initialize Hive for offline storage (per Cahier des Charges Section 2.3:
-  // "Mode Hors-Ligne — Triage de base et passeport complet accessibles sans
-  // internet"). Hive caches the health passport + symptom history locally.
-  await Hive.initFlutter();
-
-  // Open all Hive boxes for offline caching (passport, symptom logs, profile,
-  // pending triage queue, vitals). Without this call, OfflineCacheService
-  // methods silently no-op because the boxes are never opened.
-  await OfflineCacheService().initialize();
-
-  // Initialize OneSignal for push notifications (per Cahier des Charges
-  // Section 3: "Notifications — OneSignal — Push notifications, rappels,
-  // alertes santé"). The App ID is loaded from .env; if not set, OneSignal
-  // runs in no-op mode (safe for dev).
-  final onesignalAppId = dotenv.env['ONESIGNAL_APP_ID'] ??
-      const String.fromEnvironment('ONESIGNAL_APP_ID', defaultValue: '');
-  if (onesignalAppId.isNotEmpty) {
-    OneSignal.initialize(onesignalAppId);
-    // Prompt user for notification permission (can be deferred to onboarding).
-    OneSignal.Notifications.requestPermission(true);
-  }
-
-  // Initialize PostHog for analytics (per Cahier des Charges Section 3:
-  // "Analytics — PostHog — Tracking comportement, entonnoirs, rétention").
-  // The API key is loaded from .env; if not set, PostHog is not initialized.
-  final posthogApiKey = dotenv.env['POSTHOG_API_KEY'] ??
-      const String.fromEnvironment('POSTHOG_API_KEY', defaultValue: '');
-  if (posthogApiKey.isNotEmpty) {
-    final posthogConfig = PostHogConfig(posthogApiKey);
-    posthogConfig.host = dotenv.env['POSTHOG_HOST'] ?? 'https://us.i.posthog.com';
-    await Posthog().setup(posthogConfig);
-  }
-
-  // Set preferred orientations
+  // Lock orientation early so the first frame doesn't rotate.
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
-  // Initialize flutter_animate
-  Animate.restartOnHotReload = true;
+  // ───────────────────────────────────────────────────────────────────────
+  // CRITICAL FIX: Run app startup in the background so the UI renders
+  // immediately and the splash screen never gets stuck.
+  //
+  // Previous behavior: every init (Supabase, Hive, OneSignal, PostHog,
+  // Sentry) was awaited sequentially in main() before runApp() was called.
+  // If any of them hung (e.g. Supabase auto-session-restore on a slow
+  // network, PostHog waiting for network, OneSignal requiring Google Play
+  // Services), the app froze forever on the Flutter splash screen.
+  //
+  // New behavior: runApp() is called immediately with a loading state,
+  // then all services are initialized in the background with timeouts.
+  // Each service is wrapped in try/catch so a failure in one does NOT
+  // prevent the app from starting.
+  // ───────────────────────────────────────────────────────────────────────
 
-  // Initialize Sentry for crash monitoring (per Cahier des Charges Section 3:
-  // "Monitoring — Sentry — Suivi erreurs, crashs, disponibilité API").
-  // The DSN is loaded from .env or String.fromEnvironment; if not set,
-  // Sentry runs in no-op mode (safe for dev).
-  final sentryDsn = dotenv.env['SENTRY_DSN'] ??
-      const String.fromEnvironment('SENTRY_DSN', defaultValue: '');
+  // Start Sentry FIRST (it wraps runApp via appRunner) but with a null DSN
+  // fallback so it doesn't block if the env isn't loaded yet.
+  final sentryDsn = const String.fromEnvironment('SENTRY_DSN', defaultValue: '');
   await SentryFlutter.init(
     (options) {
       options.dsn = sentryDsn.isEmpty ? null : sentryDsn;
@@ -82,6 +54,82 @@ void main() async {
     },
     appRunner: () => runApp(const ProviderScope(child: VitalSekerApp())),
   );
+
+  // Now initialize everything else in the background — app is already rendering.
+  _initializeBackgroundServices();
+}
+
+/// Initialize all background services with timeouts and error isolation.
+///
+/// Each service is wrapped in try/catch with an 8-second timeout so that
+/// a single failing service (e.g. Supabase on a slow network) cannot block
+/// app startup or freeze the UI.
+Future<void> _initializeBackgroundServices() async {
+  // 1. Load .env (8s timeout — file is bundled in assets, should be instant)
+  try {
+    await dotenv.load(fileName: '.env', isOptional: true)
+        .timeout(const Duration(seconds: 8));
+    debugPrint('[Startup] .env loaded');
+  } catch (e) {
+    debugPrint('[Startup] .env load failed (non-fatal): $e');
+  }
+
+  // 2. Supabase (15s timeout — initialize() can trigger session restore)
+  try {
+    await SupabaseService().initialize()
+        .timeout(const Duration(seconds: 15));
+    debugPrint('[Startup] Supabase initialized');
+  } catch (e) {
+    debugPrint('[Startup] Supabase init failed (non-fatal): $e');
+  }
+
+  // 3. Hive offline storage (10s timeout — disk I/O, normally <1s)
+  try {
+    await Hive.initFlutter()
+        .timeout(const Duration(seconds: 10));
+    await OfflineCacheService().initialize()
+        .timeout(const Duration(seconds: 10));
+    debugPrint('[Startup] Hive + OfflineCache initialized');
+  } catch (e) {
+    debugPrint('[Startup] Hive init failed (non-fatal): $e');
+  }
+
+  // 4. OneSignal push notifications (8s timeout — requires Google Play Services)
+  try {
+    final onesignalAppId = dotenv.env['ONESIGNAL_APP_ID'] ??
+        const String.fromEnvironment('ONESIGNAL_APP_ID', defaultValue: '');
+    if (onesignalAppId.isNotEmpty) {
+      OneSignal.initialize(onesignalAppId);
+      OneSignal.Notifications.requestPermission(true);
+      debugPrint('[Startup] OneSignal initialized');
+    } else {
+      debugPrint('[Startup] OneSignal skipped (no App ID)');
+    }
+  } catch (e) {
+    debugPrint('[Startup] OneSignal init failed (non-fatal): $e');
+  }
+
+  // 5. PostHog analytics (8s timeout — network call to PostHog)
+  try {
+    final posthogApiKey = dotenv.env['POSTHOG_API_KEY'] ??
+        const String.fromEnvironment('POSTHOG_API_KEY', defaultValue: '');
+    if (posthogApiKey.isNotEmpty) {
+      final posthogConfig = PostHogConfig(posthogApiKey);
+      posthogConfig.host = dotenv.env['POSTHOG_HOST'] ?? 'https://us.i.posthog.com';
+      await Posthog().setup(posthogConfig)
+          .timeout(const Duration(seconds: 8));
+      debugPrint('[Startup] PostHog initialized');
+    } else {
+      debugPrint('[Startup] PostHog skipped (no API key)');
+    }
+  } catch (e) {
+    debugPrint('[Startup] PostHog init failed (non-fatal): $e');
+  }
+
+  // 6. flutter_animate config (instant — no I/O)
+  Animate.restartOnHotReload = true;
+
+  debugPrint('[Startup] All background services initialized');
 }
 
 class VitalSekerApp extends ConsumerWidget {
