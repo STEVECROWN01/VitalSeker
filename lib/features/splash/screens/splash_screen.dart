@@ -84,33 +84,20 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
           child: Column(
             children: [
               const Spacer(flex: 2),
-              // Logo — 90×90 per design, green-only gradient, heart+medical cross
+              // Logo — displayed clean, edge-to-edge, no extra container.
+              // The app_logo.png already contains the teal background + white
+              // heart+ECG logo, so we just round the corners and show it.
               Center(
                 child: Column(
                   children: [
-                    Container(
-                      width: 90,
-                      height: 90,
-                      decoration: BoxDecoration(
-                        gradient: AppColors.brandGradientFor(isDark),
-                        borderRadius: BorderRadius.circular(28), // radius-lg per tokens
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary(isDark).withValues(alpha: 0.3),
-                            blurRadius: 30,
-                            offset: const Offset(0, 10),
-                          ),
-                        ],
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(14),
-                        child: Image(
-                          image: AssetImage(
-                            'assets/images/branding/app_logo.png',
-                          ),
-                          fit: BoxFit.contain,
-                          gaplessPlayback: true,
-                        ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(28),
+                      child: Image.asset(
+                        'assets/images/branding/app_logo.png',
+                        width: 110,
+                        height: 110,
+                        fit: BoxFit.cover,
+                        gaplessPlayback: true,
                       ),
                     ).animate().scale(
                           duration: 600.ms,

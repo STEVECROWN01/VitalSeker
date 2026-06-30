@@ -12,6 +12,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'core/services/offline_cache_service.dart';
 import 'core/services/supabase_service.dart';
+import 'core/providers/auth_provider.dart';
 import 'core/router/app_router.dart';
 import 'core/providers/theme_provider.dart';
 import 'core/providers/locale_provider.dart';
@@ -43,6 +44,11 @@ void main() async {
   // prevent the app from starting.
   // ───────────────────────────────────────────────────────────────────────
 
+  // Create a ProviderContainer we can use to refresh providers after
+  // background init completes (e.g. refresh authStateProvider once
+  // Supabase is ready, so the router can re-evaluate auth state).
+  final container = ProviderContainer();
+
   // Start Sentry FIRST (it wraps runApp via appRunner) but with a null DSN
   // fallback so it doesn't block if the env isn't loaded yet.
   final sentryDsn = const String.fromEnvironment('SENTRY_DSN', defaultValue: '');
@@ -52,11 +58,17 @@ void main() async {
       options.tracesSampleRate = 1.0;
       options.environment = kDebugMode ? 'debug' : 'production';
     },
-    appRunner: () => runApp(const ProviderScope(child: VitalSekerApp())),
+    appRunner: () => runApp(
+      UncontrolledProviderScope(
+        container: container,
+        child: const VitalSekerApp(),
+      ),
+    ),
   );
 
   // Now initialize everything else in the background — app is already rendering.
-  _initializeBackgroundServices();
+  // Pass the container so we can refresh auth providers after Supabase init.
+  _initializeBackgroundServices(container);
 }
 
 /// Initialize all background services with timeouts and error isolation.
@@ -64,7 +76,7 @@ void main() async {
 /// Each service is wrapped in try/catch with an 8-second timeout so that
 /// a single failing service (e.g. Supabase on a slow network) cannot block
 /// app startup or freeze the UI.
-Future<void> _initializeBackgroundServices() async {
+Future<void> _initializeBackgroundServices(ProviderContainer container) async {
   // 1. Load .env (8s timeout — file is bundled in assets, should be instant)
   try {
     await dotenv.load(fileName: '.env', isOptional: true)
@@ -79,6 +91,13 @@ Future<void> _initializeBackgroundServices() async {
     await SupabaseService().initialize()
         .timeout(const Duration(seconds: 15));
     debugPrint('[Startup] Supabase initialized');
+    // CRITICAL: Refresh authStateProvider now that Supabase is ready,
+    // so it re-subscribes to onAuthStateChange instead of returning
+    // the empty stream from the defensive fallback. Without this,
+    // the splash screen would never see auth state changes and would
+    // route every user to onboarding even if they're already logged in.
+    container.invalidate(authStateProvider);
+    debugPrint('[Startup] authStateProvider invalidated (will re-subscribe)');
   } catch (e) {
     debugPrint('[Startup] Supabase init failed (non-fatal): $e');
   }
