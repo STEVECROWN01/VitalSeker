@@ -40,6 +40,14 @@ class SupabaseService {
     _initialized = true;
   }
 
+  /// Mark the service as initialized after Supabase.initialize() was called
+  /// directly (bypassing initialize()). Used by the diagnostic main() which
+  /// calls Supabase.initialize() with hardcoded config to skip dotenv.
+  void markInitialized() {
+    _client = Supabase.instance.client;
+    _initialized = true;
+  }
+
   GoTrueClient get auth => _client.auth;
 
   PostgrestQueryBuilder fromTable(String table) => _client.from(table);
