@@ -6,6 +6,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/services/offline_cache_service.dart';
