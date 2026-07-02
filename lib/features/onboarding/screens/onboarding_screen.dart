@@ -137,41 +137,48 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Hero icon container — green-only gradient per design
-                        Container(
-                          width: 140,
-                          height: 140,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: page.gradient,
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
+                        // Hero icon. For pages with an imageAsset (e.g. the app
+                        // icon on the first page), show it clean — no gradient
+                        // container. For other pages, use the gradient container
+                        // with a Material icon inside.
+                        if (page.imageAsset != null)
+                          ClipRRect(
                             borderRadius: BorderRadius.circular(40),
-                            boxShadow: [
-                              BoxShadow(
-                                color: page.gradient[0].withValues(alpha: 0.3),
-                                blurRadius: 30,
-                                offset: const Offset(0, 15),
+                            child: Image.asset(
+                              page.imageAsset!,
+                              width: 140,
+                              height: 140,
+                              fit: BoxFit.cover,
+                              gaplessPlayback: true,
+                            ),
+                          ).animate().scale(
+                                duration: 500.ms,
+                                curve: Curves.elasticOut,
+                              )
+                        else
+                          Container(
+                            width: 140,
+                            height: 140,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: page.gradient,
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                            ],
-                          ),
-                          child: page.imageAsset != null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.asset(
-                                    page.imageAsset!,
-                                    width: 56,
-                                    height: 56,
-                                    fit: BoxFit.cover,
-                                    gaplessPlayback: true,
-                                  ),
-                                )
-                              : Icon(page.icon, color: Colors.white, size: 64),
-                        ).animate().scale(
-                          duration: 500.ms,
-                          curve: Curves.elasticOut,
-                        ),
+                              borderRadius: BorderRadius.circular(40),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: page.gradient[0].withValues(alpha: 0.3),
+                                  blurRadius: 30,
+                                  offset: const Offset(0, 15),
+                                ),
+                              ],
+                            ),
+                            child: Icon(page.icon, color: Colors.white, size: 64),
+                          ).animate().scale(
+                                duration: 500.ms,
+                                curve: Curves.elasticOut,
+                              ),
                         const SizedBox(height: 40),
                         // Title — ClashDisplay ExtraBold w800 per design tokens
                         Text(
