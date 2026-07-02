@@ -19,46 +19,33 @@ import 'core/providers/theme_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'shared/theme/app_theme.dart';
 
-/// PRODUCTION main() — runApp() FIRST, then initialize services from a
-/// lightweight bootstrap widget's initState().
+/// PRODUCTION main() — runApp() FIRST, then initialize ALL services
+/// (including Sentry) from a widget's initState().
 ///
 /// CRITICAL LESSON LEARNED (from diagnostic builds):
-///   If main() awaits ANY service init before runApp(), and that service
-///   hangs, the Dart isolate never reaches runApp(), so the Flutter engine
-///   never paints its first frame, and the native Android splash stays
-///   visible forever.
+///   1. If main() awaits ANY service init before runApp(), the Dart
+///      isolate blocks and the Flutter engine never paints its first
+///      frame. Native Android splash stays visible forever.
+///   2. Even SentryFlutter.init(appRunner: runApp) hangs — the await
+///      on SentryFlutter.init blocks the event loop before appRunner
+///      is called, so on devices where Sentry's native init is slow
+///      (loading DSN, installing crash handler), the app freezes.
 ///
-///   The diagnostic confirmed all 5 services (Supabase, Hive, dotenv,
-///   OneSignal, PostHog) initialize successfully within 10 seconds when
-///   called from a widget initState (event loop running). So this pattern
-///   is safe and correct.
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Lock orientation early so the first frame doesn't rotate.
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-
+/// FIX: Call runApp() SYNCHRONOUSLY at the very first line of main().
+/// Initialize Sentry (and all other services) from the widget's
+/// initState() AFTER the widget tree is mounted and the event loop
+/// is running.
+void main() {
   // Create the ProviderContainer up-front so we can invalidate providers
   // after Supabase finishes initializing in the background.
   final container = ProviderContainer();
 
-  // Sentry FIRST (it wraps runApp via appRunner). Null DSN fallback so
-  // it doesn't block if env isn't loaded yet.
-  final sentryDsn = const String.fromEnvironment('SENTRY_DSN', defaultValue: '');
-  await SentryFlutter.init(
-    (options) {
-      options.dsn = sentryDsn.isEmpty ? null : sentryDsn;
-      options.tracesSampleRate = 1.0;
-      options.environment = kDebugMode ? 'debug' : 'production';
-    },
-    appRunner: () => runApp(
-      UncontrolledProviderScope(
-        container: container,
-        child: VitalSekerApp(container: container),
-      ),
+  // runApp() IMMEDIATELY — no awaits, no Sentry wrapper.
+  // The native splash is dismissed as soon as VitalSekerApp renders.
+  runApp(
+    UncontrolledProviderScope(
+      container: container,
+      child: VitalSekerApp(container: container),
     ),
   );
 }
@@ -81,6 +68,17 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
   @override
   void initState() {
     super.initState();
+    // Ensure Flutter binding is initialized (required for async work in
+    // StatefulWidget initState — main() no longer calls it since main()
+    // must call runApp() synchronously).
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Lock orientation.
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     // Initialize services AFTER the widget is mounted. This guarantees
     // the UI renders first (native splash dismissed) and the event loop
     // is running so timeouts fire correctly.
@@ -88,6 +86,22 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
   }
 
   Future<void> _initializeServices() async {
+    // 0. Sentry (init from widget, NOT from main — main() must call
+    //    runApp() synchronously to dismiss the native splash)
+    try {
+      final sentryDsn = const String.fromEnvironment('SENTRY_DSN', defaultValue: '');
+      await SentryFlutter.init(
+        (options) {
+          options.dsn = sentryDsn.isEmpty ? null : sentryDsn;
+          options.tracesSampleRate = 1.0;
+          options.environment = kDebugMode ? 'debug' : 'production';
+        },
+      ).timeout(const Duration(seconds: 10));
+      debugPrint('[Startup] Sentry initialized');
+    } catch (e) {
+      debugPrint('[Startup] Sentry init failed (non-fatal): $e');
+    }
+
     // 1. Supabase (use hardcoded config — no dotenv needed for critical path)
     try {
       await Supabase.initialize(
