@@ -49,7 +49,7 @@ const DEFAULT_FALLBACK = {
   recommended_action: 'Consultez un médecin dès que possible.',
   explanation: "Notre service d'IA n'a pas pu analyser vos symptômes en détail. Par précaution, nous vous recommandons de consulter un professionnel de santé.",
   clarifying_question: null,
-  when_to_escalate: 'Consultez immédiatement un service d'urgence si vous ressentez des douleurs thoraciques, des difficultés respiratoires, une perte de conscience ou des saignements abondants.',
+  when_to_escalate: "Consultez immédiatement un service d'urgence si vous ressentez des douleurs thoraciques, des difficultés respiratoires, une perte de conscience ou des saignements abondants.",
   disclaimer: "Ces informations ne constituent pas un diagnostic médical. VitalSeker ne remplace pas un professionnel de santé qualifié.",
 }
 
