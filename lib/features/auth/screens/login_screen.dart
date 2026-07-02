@@ -160,36 +160,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 48),
-                  // Logo — VitalSeker brand logo on green-only gradient.
+                  const SizedBox(height: 56),
+                  // Logo — VitalSeker brand logo, clean squircle (no gradient container).
                   Center(
-                    child: Container(
-                      width: 72,
-                      height: 72,
-                      decoration: BoxDecoration(
-                        gradient: AppColors.brandGradientFor(isDark),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary(isDark).withValues(alpha: 0.3),
-                            blurRadius: 20,
-                            offset: const Offset(0, 8),
-                          ),
-                        ],
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Image(
-                          image: AssetImage(
-                            'assets/images/branding/app_logo.png',
-                          ),
-                          fit: BoxFit.contain,
-                          gaplessPlayback: true,
-                        ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        'assets/images/branding/app_logo.png',
+                        width: 64,
+                        height: 64,
+                        fit: BoxFit.cover,
+                        gaplessPlayback: true,
                       ),
                     ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 32),
                   Center(
                     child: Text(
                       l10n.welcomeBack,

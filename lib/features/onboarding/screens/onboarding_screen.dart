@@ -32,6 +32,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   List<OnboardingPage> _buildPages(AppLocalizations l10n) => [
     OnboardingPage(
       icon: Icons.favorite_rounded,
+      imageAsset: 'assets/images/branding/app_logo.png',
       title: l10n.onboardingTitle1,
       description: l10n.onboardingDescription1,
       gradient: [const Color(0xFF054D39), const Color(0xFF0B7A5B)], // ForestDark → VitalGreen
@@ -155,7 +156,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               ),
                             ],
                           ),
-                          child: Icon(page.icon, color: Colors.white, size: 64),
+                          child: page.imageAsset != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.asset(
+                                    page.imageAsset!,
+                                    width: 56,
+                                    height: 56,
+                                    fit: BoxFit.cover,
+                                    gaplessPlayback: true,
+                                  ),
+                                )
+                              : Icon(page.icon, color: Colors.white, size: 64),
                         ).animate().scale(
                           duration: 500.ms,
                           curve: Curves.elasticOut,
@@ -273,6 +285,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
 class OnboardingPage {
   final IconData icon;
+  final String? imageAsset; // If set, renders an Image instead of the IconData
   final String title;
   final String description;
   final List<Color> gradient;
@@ -282,5 +295,6 @@ class OnboardingPage {
     required this.title,
     required this.description,
     required this.gradient,
+    this.imageAsset,
   });
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -274,11 +275,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 16),
-                  // Back button
+                  // Back button — navigates to login screen explicitly
                   Align(
                     alignment: Alignment.centerLeft,
                     child: IconButton(
-                      onPressed: () => context.pop(),
+                      onPressed: () {
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        } else {
+                          context.go(AppConfig.login);
+                        }
+                      },
                       icon: Icon(
                         Icons.arrow_back_ios_new,
                         color: AppColors.textPrimary(isDark),
@@ -286,6 +293,20 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
+                  // Logo — VitalSeker brand logo, clean squircle
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        'assets/images/branding/app_logo.png',
+                        width: 64,
+                        height: 64,
+                        fit: BoxFit.cover,
+                        gaplessPlayback: true,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
                   Text(
                     l10n.createAccount,
                     style: TextStyle(
@@ -500,47 +521,51 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Terms checkbox
+                  // Terms checkbox — checkbox and text are horizontally aligned.
+                  // Only clicking the checkbox toggles it (not the text).
+                  // "Terms of Service" and "Privacy Policy" are clickable links.
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Checkbox(
-                          value: _acceptTerms,
-                          onChanged: (value) => setState(() => _acceptTerms = value ?? false),
-                          activeColor: AppColors.primary(isDark),
-                        ),
+                      Checkbox(
+                        value: _acceptTerms,
+                        onChanged: (value) => setState(() => _acceptTerms = value ?? false),
+                        activeColor: AppColors.primary(isDark),
                       ),
                       Expanded(
-                        child: GestureDetector(
-                          onTap: () => setState(() => _acceptTerms = !_acceptTerms),
-                          child: Text.rich(
-                            TextSpan(
-                              text: l10n.iAgreeTo,
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 13,
-                                color: AppColors.textSecondary(isDark),
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: l10n.termsOfService,
-                                  style: TextStyle(
-                                    color: AppColors.primary(isDark),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                TextSpan(text: l10n.andText),
-                                TextSpan(
-                                  text: l10n.privacyPolicy,
-                                  style: TextStyle(
-                                    color: AppColors.primary(isDark),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
+                        child: Text.rich(
+                          TextSpan(
+                            text: l10n.iAgreeTo,
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 13,
+                              color: AppColors.textSecondary(isDark),
                             ),
+                            children: [
+                              TextSpan(
+                                text: l10n.termsOfService,
+                                style: TextStyle(
+                                  color: AppColors.primary(isDark),
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: AppColors.primary(isDark),
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => context.push(AppConfig.termsOfService),
+                              ),
+                              TextSpan(text: l10n.andText),
+                              TextSpan(
+                                text: l10n.privacyPolicy,
+                                style: TextStyle(
+                                  color: AppColors.primary(isDark),
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: AppColors.primary(isDark),
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => context.push(AppConfig.privacyPolicy),
+                              ),
+                            ],
                           ),
                         ),
                       ),
