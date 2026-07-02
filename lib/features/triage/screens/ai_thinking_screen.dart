@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -104,29 +105,43 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
     final bgColor = AppColors.background(isDark);
     final primaryColor = AppColors.primary(isDark);
 
-    return Material(
-      // Transparent so the radial gradient Container paints the actual bg.
-      color: Colors.transparent,
-      child: Container(
-        // Subtle radial gradient radiating from the cluster — gives the
-        // overlay depth without distracting from the central element.
-        decoration: BoxDecoration(
-          color: bgColor,
-          gradient: RadialGradient(
-            center: Alignment.center,
-            radius: 0.85,
-            colors: [
-              primaryColor.withValues(alpha: isDark ? 0.10 : 0.06),
-              bgColor,
-            ],
-            stops: const [0.0, 1.0],
+    return Stack(
+      children: [
+        // 1) Blur the screen behind the overlay + opaque dim layer so the
+        //    background is no longer visible/bleeding through.
+        Positioned.fill(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              color: bgColor.withValues(alpha: 0.94),
+            ),
           ),
         ),
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+        // 2) Subtle radial gradient on top of the blur (kept very subtle so
+        //    it does not re-introduce transparency at the center).
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: Alignment.center,
+                radius: 0.85,
+                colors: [
+                  primaryColor.withValues(alpha: isDark ? 0.10 : 0.06),
+                  bgColor.withValues(alpha: 0.0),
+                ],
+                stops: const [0.0, 1.0],
+              ),
+            ),
+          ),
+        ),
+        // 3) Actual overlay content.
+        Material(
+          color: Colors.transparent,
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
               const Spacer(flex: 3),
               _buildCluster(isDark),
               const SizedBox(height: 40),
@@ -143,7 +158,8 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
             ],
           ),
         ),
-      ),
+        ),
+      ],
     );
   }
 

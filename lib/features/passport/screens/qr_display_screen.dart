@@ -95,16 +95,14 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
     } catch (e) {
       debugPrint('QR generation failed: $e');
       if (mounted) {
-        // Surface the actual error string in the snackbar instead of the
-        // generic "Failed to generate QR code" message — the original code
-        // hid the real cause (missing QR_ENCRYPTION_KEY, missing UNIQUE
-        // constraint on health_passports.user_id, edge function 500, etc.).
-        // Logging the full exception via debugPrint above so the dev console
-        // has the stack trace too.
-        AppSnackBar.errorFromException(
+        // Show a user-friendly message. The raw exception (e.g.
+        // "FunctionException(status: 503, details: {code: BOOT_ERROR, ...})")
+        // is logged via debugPrint above for developer debugging, but
+        // must NOT be shown to end users — it leaks backend internals.
+        final l10n = AppLocalizations.of(context)!;
+        AppSnackBar.error(
           context,
-          'Failed to generate QR: ${e.toString()}',
-          e,
+          l10n.qrGenerationFailed,
         );
       }
     } finally {

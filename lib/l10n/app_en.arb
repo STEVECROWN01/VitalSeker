@@ -780,6 +780,7 @@
   "share": "SHARE",
   "noQrCodeGenerated": "No QR Code Generated",
   "generateQrCode": "Generate QR Code",
+  "qrGenerationFailed": "Failed to generate QR code. Please try again.",
   "expired": "Expired",
   "validFor": "Valid for {hours}h {minutes}m",
   "@validFor": {

@@ -622,7 +622,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
               const SizedBox(height: 12),
               _SummaryRow(label: l10n.symptoms, value: _selectedSymptoms.map((s) => _symptomLabel(s, l10n)).join(', ')),
               const SizedBox(height: 6),
-              _SummaryRow(label: l10n.triageSeverityLabel, value: '$_severity/10 ($_severityLabel(_severity, l10n))'),
+              _SummaryRow(label: l10n.triageSeverityLabel, value: '$_severity/10 (${_severityLabel(_severity, l10n)})'),
               const SizedBox(height: 6),
               _SummaryRow(label: l10n.triageQ2Title, value: _duration != null ? _durationLabel(_duration!, l10n) : '—'),
               const SizedBox(height: 6),
