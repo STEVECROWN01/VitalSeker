@@ -78,7 +78,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
         l10n.familyProfilesProOnly,
       );
       // Redirect to subscription screen
-      context.push(AppConfig.subscription);
+      context.go(AppConfig.subscription);
       return;
     }
 
@@ -311,6 +311,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 dropdownColor: AppColors.surface(isDark),
+                style: TextStyle(color: AppColors.textPrimary(isDark)),
                 value: _selectedBloodType,
                 decoration: InputDecoration(
                   labelText: l10n.bloodTypeOptional,
@@ -555,6 +556,28 @@ class _TopBar extends StatelessWidget {
               data: (p) {
                 final name = p?.fullName ?? 'U';
                 final initial = name.isNotEmpty ? name[0].toUpperCase() : 'U';
+                final avatarUrl = p?.avatarUrl;
+                if (avatarUrl != null && avatarUrl.isNotEmpty) {
+                  return ClipOval(
+                    child: Image.network(
+                      avatarUrl,
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Center(
+                        child: Text(
+                          initial,
+                          style: TextStyle(
+                            fontFamily: 'ClashDisplay',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primary(isDark),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
                 return Center(
                   child: Text(
                     initial,
@@ -723,15 +746,48 @@ class _OwnerCard extends StatelessWidget {
                     ),
                   ),
                   child: Center(
-                    child: Text(
-                      fullName.isNotEmpty
-                          ? fullName[0].toUpperCase()
-                          : 'U',
-                      style: TextStyle(
-                        fontFamily: 'ClashDisplay',
-                        fontSize: 26,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primary(isDark),
+                    child: profileAsync.maybeWhen(
+                      data: (p) {
+                        final avatarUrl = p?.avatarUrl;
+                        final name = fullName.isNotEmpty ? fullName : (p?.fullName ?? 'U');
+                        final initial = name.isNotEmpty ? name[0].toUpperCase() : 'U';
+                        if (avatarUrl != null && avatarUrl.isNotEmpty) {
+                          return ClipOval(
+                            child: Image.network(
+                              avatarUrl,
+                              width: 64,
+                              height: 64,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Text(
+                                initial,
+                                style: TextStyle(
+                                  fontFamily: 'ClashDisplay',
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.primary(isDark),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        return Text(
+                          initial,
+                          style: TextStyle(
+                            fontFamily: 'ClashDisplay',
+                            fontSize: 26,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primary(isDark),
+                          ),
+                        );
+                      },
+                      orElse: () => Text(
+                        fullName.isNotEmpty ? fullName[0].toUpperCase() : 'U',
+                        style: TextStyle(
+                          fontFamily: 'ClashDisplay',
+                          fontSize: 26,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primary(isDark),
+                        ),
                       ),
                     ),
                   ),

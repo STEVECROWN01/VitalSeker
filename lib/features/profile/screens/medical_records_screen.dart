@@ -158,6 +158,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
                   dropdownColor: AppColors.surface(isDark),
+                  style: TextStyle(color: AppColors.textPrimary(isDark)),
                   value: selectedType,
                   decoration: InputDecoration(
                     labelText: l10n.typeLabel,

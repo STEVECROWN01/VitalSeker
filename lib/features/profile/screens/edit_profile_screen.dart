@@ -481,6 +481,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           // Gender Dropdown
                           DropdownButtonFormField<String>(
                             dropdownColor: AppColors.surface(isDark),
+                            style: TextStyle(color: AppColors.textPrimary(isDark)),
                             value: _gender,
                             decoration: InputDecoration(
                               labelText: l10n.gender,
@@ -500,6 +501,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           // Blood Type Dropdown
                           DropdownButtonFormField<String>(
                             dropdownColor: AppColors.surface(isDark),
+                            style: TextStyle(color: AppColors.textPrimary(isDark)),
                             value: _bloodType,
                             decoration: InputDecoration(
                               labelText: l10n.bloodType,

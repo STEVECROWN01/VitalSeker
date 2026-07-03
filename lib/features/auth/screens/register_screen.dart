@@ -472,6 +472,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   // Gender Dropdown
                   DropdownButtonFormField<String>(
                     dropdownColor: AppColors.surface(isDark),
+                    style: TextStyle(color: AppColors.textPrimary(isDark)),
                     value: _gender,
                     decoration: InputDecoration(
                       labelText: l10n.gender,
@@ -499,6 +500,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   // Blood Type Dropdown
                   DropdownButtonFormField<String>(
                     dropdownColor: AppColors.surface(isDark),
+                    style: TextStyle(color: AppColors.textPrimary(isDark)),
                     value: _bloodType,
                     decoration: InputDecoration(
                       labelText: l10n.bloodType,

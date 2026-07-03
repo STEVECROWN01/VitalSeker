@@ -251,21 +251,31 @@ class _SosScreenState extends ConsumerState<SosScreen>
         return null;
       }
 
-      // Use a 10s time limit so a slow GPS fix doesn't hang the call
-      // forever — the previous implementation could block indefinitely in
-      // tunnels / indoors.
-      return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-        timeLimit: const Duration(seconds: 10),
-      );
-    } on TimeoutException {
-      if (mounted) {
-        AppSnackBar.error(
-          context,
-          'Could not get a GPS fix. Please try again outdoors or near a window.',
+      // Use a 7s time limit for high accuracy. If it times out (common
+      // indoors), fall back to low accuracy with another 5s. This two-stage
+      // approach dramatically reduces "Could not get a GPS fix" failures.
+      try {
+        return await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+          timeLimit: const Duration(seconds: 7),
         );
+      } on TimeoutException {
+        // High accuracy timed out — try low accuracy (network/cell tower)
+        try {
+          return await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.low,
+            timeLimit: const Duration(seconds: 5),
+          );
+        } on TimeoutException {
+          if (mounted) {
+            AppSnackBar.error(
+              context,
+              'Could not get a GPS fix. Please try again outdoors or near a window.',
+            );
+          }
+          return null;
+        }
       }
-      return null;
     } catch (e) {
       debugPrint('_getCurrentLocation error: $e');
       if (mounted) {
@@ -451,21 +461,13 @@ class _SosScreenState extends ConsumerState<SosScreen>
   /// "hospitals near me" search — the maps app will use its own location.
   Future<void> _findNearbyHospitals() async {
     HapticFeedback.selectionClick();
-    Position? position;
-    try {
-      position = await _getCurrentLocation();
-    } catch (_) {
-      // GPS unavailable — fall through to generic search.
-    }
 
-    // Build both candidate URIs up-front so we can fall through cleanly.
-    final Uri geoUri = position != null
-        ? Uri.parse('geo:${position.latitude},${position.longitude}?q=hospital')
-        : Uri.parse('geo:0,0?q=hospital');
-    final Uri httpsUri = position != null
-        ? Uri.parse(
-            'https://www.google.com/maps/search/hospital/@${position.latitude},${position.longitude},15z')
-        : Uri.parse('https://www.google.com/maps/search/hospital');
+    // Skip GPS acquisition — the maps app has its own location services
+    // which are faster and more reliable than getting a fix from within
+    // the app. Using geo:0,0?q=hospital tells the maps app to use the
+    // user's current location and search for nearby hospitals.
+    final Uri geoUri = Uri.parse('geo:0,0?q=hospital');
+    final Uri httpsUri = Uri.parse('https://www.google.com/maps/search/hospital');
 
     // ── Attempt 1: native maps app via geo: ──
     try {

@@ -197,6 +197,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                 fillColor: AppColors.inputFill(isDark),
               ),
               dropdownColor: AppColors.surface(isDark),
+              style: TextStyle(color: AppColors.textPrimary(isDark)),
               items: _languages
                   .map((lang) => DropdownMenuItem(
                         value: lang,
