@@ -310,6 +310,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
+                dropdownColor: AppColors.surface(isDark),
                 value: _selectedBloodType,
                 decoration: InputDecoration(
                   labelText: l10n.bloodTypeOptional,

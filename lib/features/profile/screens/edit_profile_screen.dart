@@ -480,6 +480,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           const SizedBox(height: 8),
                           // Gender Dropdown
                           DropdownButtonFormField<String>(
+                            dropdownColor: AppColors.surface(isDark),
                             value: _gender,
                             decoration: InputDecoration(
                               labelText: l10n.gender,
@@ -498,6 +499,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           const SizedBox(height: 16),
                           // Blood Type Dropdown
                           DropdownButtonFormField<String>(
+                            dropdownColor: AppColors.surface(isDark),
                             value: _bloodType,
                             decoration: InputDecoration(
                               labelText: l10n.bloodType,

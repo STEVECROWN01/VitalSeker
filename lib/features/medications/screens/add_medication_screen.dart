@@ -200,6 +200,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                   Expanded(
                     flex: 1,
                     child: DropdownButtonFormField<String>(
+                      dropdownColor: AppColors.surface(isDark),
                       value: _unit,
                       decoration: InputDecoration(
                         labelText: l10n.unitLabel,
@@ -221,6 +222,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
 
               // Frequency dropdown
               DropdownButtonFormField<MedicationFrequency>(
+                dropdownColor: AppColors.surface(isDark),
                 value: _frequency,
                 decoration: InputDecoration(
                   labelText: l10n.frequencyLabel,

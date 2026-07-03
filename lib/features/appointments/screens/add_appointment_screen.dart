@@ -161,6 +161,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
 
               // Specialty dropdown
               DropdownButtonFormField<String>(
+                dropdownColor: AppColors.surface(isDark),
                 value: _specialty,
                 decoration: InputDecoration(
                   labelText: l10n.specialtyLabel,

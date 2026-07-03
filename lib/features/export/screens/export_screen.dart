@@ -585,6 +585,7 @@ class _ConfigurationCard extends StatelessWidget {
                 Expanded(
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<int>(
+                      dropdownColor: AppColors.surface(isDark),
                       value: dateRangeIndex,
                       isExpanded: true,
                       style: TextStyle(

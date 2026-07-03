@@ -74,6 +74,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                 ),
                 const SizedBox(height: 12),
                 DropdownButtonFormField<String>(
+                  dropdownColor: AppColors.surface(isDark),
                   value: unit,
                   decoration: InputDecoration(labelText: l10n.unit),
                   items: const ['mg', 'mcg', 'mL', 'g', 'IU', 'drops', 'puffs', 'tablets', 'capsules']
@@ -83,6 +84,7 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                 ),
                 const SizedBox(height: 12),
                 DropdownButtonFormField<MedicationFrequency>(
+                  dropdownColor: AppColors.surface(isDark),
                   value: frequency,
                   decoration: InputDecoration(labelText: l10n.frequency),
                   items: MedicationFrequency.values

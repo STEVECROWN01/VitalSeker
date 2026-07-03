@@ -60,6 +60,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<VitalType>(
+                  dropdownColor: AppColors.surface(isDark),
                   value: _selectedType,
                   isExpanded: true,
                   icon: Icon(
