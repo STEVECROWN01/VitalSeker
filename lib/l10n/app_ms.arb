@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Gagal melengkapkan onboarding. Sila semak sambungan anda dan cuba lagi.",
   "fieldRequired": "Medan ini diperlukan",
   "securitySettingsOnThisPage": "Tetapan keselamatan berada di halaman ini",
-  "somethingWentWrong": "Sesuatu tidak kena. Sila cuba lagi."
+  "somethingWentWrong": "Sesuatu tidak kena. Sila cuba lagi.",
+  "qrGenerationFailed": "Gagal menjana kod QR. Sila cuba lagi."
 }

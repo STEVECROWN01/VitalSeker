@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Det gick inte att slutföra introduktionen. Kontrollera din anslutning och försök igen.",
   "fieldRequired": "Detta fält är obligatoriskt",
   "securitySettingsOnThisPage": "Säkerhetsinställningar finns på den här sidan",
-  "somethingWentWrong": "Något gick fel. Försök igen."
+  "somethingWentWrong": "Något gick fel. Försök igen.",
+  "qrGenerationFailed": "Det gick inte att generera QR-koden. Försök igen."
 }

@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Ọ dịghị ike imecha mmalite. Biko lelee njikọ gị wee nwalee ọzọ.",
   "fieldRequired": "Achọrọ mpaghara a",
   "securitySettingsOnThisPage": "Ntọala nchekwa dị na peeji a",
-  "somethingWentWrong": "Ihe adịghị mma. Biko nwalee ọzọ."
+  "somethingWentWrong": "Ihe adịghị mma. Biko nwalee ọzọ.",
+  "qrGenerationFailed": "Ọ dịghị ike imepụta koodu QR. Biko nwalee ọzọ."
 }

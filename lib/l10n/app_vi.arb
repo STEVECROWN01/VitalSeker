@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Không thể hoàn tất giới thiệu. Vui lòng kiểm tra kết nối và thử lại.",
   "fieldRequired": "Trường này là bắt buộc",
   "securitySettingsOnThisPage": "Cài đặt bảo mật nằm trên trang này",
-  "somethingWentWrong": "Đã xảy ra lỗi. Vui lòng thử lại."
+  "somethingWentWrong": "Đã xảy ra lỗi. Vui lòng thử lại.",
+  "qrGenerationFailed": "Không thể tạo mã QR. Vui lòng thử lại."
 }

@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Nie udało się ukończyć wprowadzenia. Sprawdź połączenie i spróbuj ponownie.",
   "fieldRequired": "To pole jest wymagane",
   "securitySettingsOnThisPage": "Ustawienia zabezpieczeń znajdują się na tej stronie",
-  "somethingWentWrong": "Coś poszło nie tak. Spróbuj ponownie."
+  "somethingWentWrong": "Coś poszło nie tak. Spróbuj ponownie.",
+  "qrGenerationFailed": "Nie udało się wygenerować kodu QR. Spróbuj ponownie."
 }

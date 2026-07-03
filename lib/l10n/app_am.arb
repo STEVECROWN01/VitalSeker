@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "የመነሻ ሂደቱን ማጠናቀቅ አልተሳካም። እባክዎ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።",
   "fieldRequired": "ይህ መስክ ያስፈልጋል",
   "securitySettingsOnThisPage": "የደህንነት ቅንብሮች በዚህ ገጽ ላይ ናቸው",
-  "somethingWentWrong": "የሆነ ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።"
+  "somethingWentWrong": "የሆነ ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።",
+  "qrGenerationFailed": "የQR ኮድ ማመንጫ አልተሳካም። እባክዎ እንደገና ይሞክሩ።"
 }

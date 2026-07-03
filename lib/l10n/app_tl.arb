@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Nabigo sa pagkumpleto ng onboarding. Mangyaring suriin ang iyong koneksyon at subukang muli.",
   "fieldRequired": "Kinakailangan ang patlang na ito",
   "securitySettingsOnThisPage": "Ang mga setting ng seguridad ay nasa pahinang ito",
-  "somethingWentWrong": "May nangyaring mali. Mangyaring subukang muli."
+  "somethingWentWrong": "May nangyaring mali. Mangyaring subukang muli.",
+  "qrGenerationFailed": "Nabigo sa paglikha ng QR code. Mangyaring subukang muli."
 }

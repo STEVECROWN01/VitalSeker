@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "تعارف مکمل کرنے میں ناکام۔ براہ کرم اپنا کنکشن چیک کریں اور دوبارہ کوشش کریں۔",
   "fieldRequired": "یہ خانہ لازمی ہے",
   "securitySettingsOnThisPage": "سیکیورٹی سیٹنگز اس صفحے پر ہیں",
-  "somethingWentWrong": "کوئی چیزی غلط ہو گئی۔ براہ کرم دوبارہ کوشش کریں۔"
+  "somethingWentWrong": "کوئی چیزی غلط ہو گئی۔ براہ کرم دوبارہ کوشش کریں۔",
+  "qrGenerationFailed": "QR کوڈ بنانے میں ناکام۔ براہ کرم دوبارہ کوشش کریں۔"
 }

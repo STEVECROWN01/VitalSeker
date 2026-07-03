@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Не вдалося завершити реєстрацію. Перевірте підключення та спробуйте ще раз.",
   "fieldRequired": "Це поле обов'язкове",
   "securitySettingsOnThisPage": "Налаштування безпеки знаходяться на цій сторінці",
-  "somethingWentWrong": "Щось пішло не так. Спробуйте ще раз."
+  "somethingWentWrong": "Щось пішло не так. Спробуйте ще раз.",
+  "qrGenerationFailed": "Не вдалося створити QR-код. Спробуйте ще раз."
 }

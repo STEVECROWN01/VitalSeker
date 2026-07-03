@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Imeshindikana kukamilisha utambulisho. Tafadhali angalia muunganisho wako na ujaribu tena.",
   "fieldRequired": "Sehemu hii inahitajika",
   "securitySettingsOnThisPage": "Mipangilio ya usalazi iko kwenye ukurasa huu",
-  "somethingWentWrong": "Hitu kimetokea. Tafadhali jaribu tena."
+  "somethingWentWrong": "Hitu kimetokea. Tafadhali jaribu tena.",
+  "qrGenerationFailed": "Imeshindikana kuunda kodi ya QR. Tafadhali jaribu tena."
 }

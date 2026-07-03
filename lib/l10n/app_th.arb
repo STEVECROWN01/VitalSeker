@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "ไม่สามารถเสร็จสิ้นการเริ่มต้นใช้งานได้ กรุณาตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง",
   "fieldRequired": "ต้องระบุฟิลด์นี้",
   "securitySettingsOnThisPage": "การตั้งค่าความปลอดภัยอยู่ในหน้านี้",
-  "somethingWentWrong": "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
+  "somethingWentWrong": "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
+  "qrGenerationFailed": "ไม่สามารถสร้างรหัส QR ได้ กรุณาลองอีกครั้ง"
 }

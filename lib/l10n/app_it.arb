@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Impossibile completare l'onboarding. Controlla la connessione e riprova.",
   "fieldRequired": "Questo campo è obbligatorio",
   "securitySettingsOnThisPage": "Le impostazioni di sicurezza sono su questa pagina",
-  "somethingWentWrong": "Si è verificato un errore. Riprova."
+  "somethingWentWrong": "Si è verificato un errore. Riprova.",
+  "qrGenerationFailed": "Impossibile generare il codice QR. Riprova."
 }

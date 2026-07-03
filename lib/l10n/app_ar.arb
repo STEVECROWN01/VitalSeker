@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "تعذر إكمال التهيئة. يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
   "fieldRequired": "هذا الحقل مطلوب",
   "securitySettingsOnThisPage": "إعدادات الأمان موجودة على هذه الصفحة",
-  "somethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  "somethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "qrGenerationFailed": "تعذر إنشاء رمز QR. يرجى المحاولة مرة أخرى."
 }

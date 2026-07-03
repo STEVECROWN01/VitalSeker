@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Gagal menyelesaikan orientasi. Periksa koneksi Anda dan coba lagi.",
   "fieldRequired": "Bidang ini wajib diisi",
   "securitySettingsOnThisPage": "Pengaturan keamanan ada di halaman ini",
-  "somethingWentWrong": "Terjadi kesalahan. Silakan coba lagi."
+  "somethingWentWrong": "Terjadi kesalahan. Silakan coba lagi.",
+  "qrGenerationFailed": "Gagal membuat kode QR. Silakan coba lagi."
 }

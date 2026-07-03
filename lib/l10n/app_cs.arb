@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Nepodařilo se dokončit registraci. Zkontrolujte připojení a zkuste to znovu.",
   "fieldRequired": "Toto pole je povinné",
   "securitySettingsOnThisPage": "Nastavení zabezpečení jsou na této stránce",
-  "somethingWentWrong": "Něco se pokazilo. Zkuste to znovu."
+  "somethingWentWrong": "Něco se pokazilo. Zkuste to znovu.",
+  "qrGenerationFailed": "Nepodařilo se vygenerovat QR kód. Zkuste to prosím znovu."
 }

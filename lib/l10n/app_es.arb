@@ -859,5 +859,6 @@
   "failedToCompleteOnboarding": "No se pudo completar la incorporación. Compruebe su conexión e inténtelo de nuevo.",
   "fieldRequired": "Este campo es obligatorio",
   "securitySettingsOnThisPage": "La configuración de seguridad está en esta página",
-  "somethingWentWrong": "Algo salió mal. Inténtelo de nuevo."
+  "somethingWentWrong": "Algo salió mal. Inténtelo de nuevo.",
+  "qrGenerationFailed": "No se pudo generar el código QR. Inténtelo de nuevo."
 }

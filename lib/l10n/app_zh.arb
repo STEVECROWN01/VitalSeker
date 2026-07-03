@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "无法完成入门引导。请检查您的连接并重试。",
   "fieldRequired": "此字段为必填项",
   "securitySettingsOnThisPage": "安全设置位于此页面",
-  "somethingWentWrong": "出现问题。请重试。"
+  "somethingWentWrong": "出现问题。请重试。",
+  "qrGenerationFailed": "无法生成二维码。请重试。"
 }

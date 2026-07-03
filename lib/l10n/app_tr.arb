@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Onboarding tamamlanamadı. Lütfen bağlantınızı kontrol edin ve tekrar deneyin.",
   "fieldRequired": "Bu alan zorunludur",
   "securitySettingsOnThisPage": "Güvenlik ayarları bu sayfada",
-  "somethingWentWrong": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+  "somethingWentWrong": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+  "qrGenerationFailed": "QR kodu oluşturulamadı. Lütfen tekrar deneyin."
 }

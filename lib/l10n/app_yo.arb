@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Kò ṣeé ṣe láti parí ìfilọ́lẹ̀. Jọ̀wọ yẹ ìdarapọ̀ rẹ kí o sì gbiyànjú lẹ́ẹ̀kan si.",
   "fieldRequired": "A nílò̀ pápà yìí",
   "securitySettingsOnThisPage": "Àwọn ètò aàbọ̀ wà lórí ojú ewé yìí",
-  "somethingWentWrong": "Nnkan ṣẹlẹ̀. Jọ̀wọ gbiyànjú lẹ́ẹ̀kan si."
+  "somethingWentWrong": "Nnkan ṣẹlẹ̀. Jọ̀wọ gbiyànjú lẹ́ẹ̀kan si.",
+  "qrGenerationFailed": "Kò ṣeé ṣe láti dá koodu QR. Jọ̀wọ gbiyànjú lẹ́ẹ̀kan si."
 }

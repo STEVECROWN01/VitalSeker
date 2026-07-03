@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Esittelyä ei voitu suorittaa loppuun. Tarkista yhteytesi ja yritä uudelleen.",
   "fieldRequired": "Tämä kenttä on pakollinen",
   "securitySettingsOnThisPage": "Turvallisuusasetukset ovat tällä sivulla",
-  "somethingWentWrong": "Jokin meni pieleen. Yritä uudelleen."
+  "somethingWentWrong": "Jokin meni pieleen. Yritä uudelleen.",
+  "qrGenerationFailed": "QR-koodin luonti epäonnistui. Yritä uudelleen."
 }

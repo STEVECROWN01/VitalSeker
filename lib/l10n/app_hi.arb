@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "ऑनबोर्डिंग पूर्ण करने में विफल। कृपया अपना कनेक्शन जांचें और पुनः प्रयास करें।",
   "fieldRequired": "यह फ़ील्ड आवश्यक है",
   "securitySettingsOnThisPage": "सुरक्षा सेटिंग्स इस पृष्ठ पर हैं",
-  "somethingWentWrong": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।"
+  "somethingWentWrong": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
+  "qrGenerationFailed": "QR कोड जेनरेट करने में विफल। कृपया पुनः प्रयास करें।"
 }

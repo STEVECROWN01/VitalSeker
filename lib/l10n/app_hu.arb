@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Nem sikerült befejezni a bevezetést. Ellenőrizze a kapcsolatot, és próbálja újra.",
   "fieldRequired": "Ez a mező kötelező",
   "securitySettingsOnThisPage": "A biztonsági beállítások ezen az oldalon találhatók",
-  "somethingWentWrong": "Valami hiba történt. Próbálja újra."
+  "somethingWentWrong": "Valami hiba történt. Próbálja újra.",
+  "qrGenerationFailed": "Nem sikerült létrehozni a QR-kódot. Kérjük, próbálja újra."
 }

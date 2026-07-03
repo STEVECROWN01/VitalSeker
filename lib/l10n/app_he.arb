@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "השלמת ההיכרות נכשלה. נא בדוק את החיבור שלך ונסה שוב.",
   "fieldRequired": "שדה זה נדרש",
   "securitySettingsOnThisPage": "הגדרות האבטחה נמצאות בעמוד זה",
-  "somethingWentWrong": "משהו השתבש. נא נסה שוב."
+  "somethingWentWrong": "משהו השתבש. נא נסה שוב.",
+  "qrGenerationFailed": "נכשל ביצירת קוד QR. נא נסה שוב."
 }

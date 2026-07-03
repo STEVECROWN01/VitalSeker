@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Kunne ikke fullføre introduksjonen. Sjekk tilkoblingen din og prøv igjen.",
   "fieldRequired": "Dette feltet er obligatorisk",
   "securitySettingsOnThisPage": "Sikkerhetsinnstillinger er på denne siden",
-  "somethingWentWrong": "Noe gikk galt. Prøv igjen."
+  "somethingWentWrong": "Noe gikk galt. Prøv igjen.",
+  "qrGenerationFailed": "Kunne ikke generere QR-kode. Prøv igjen."
 }

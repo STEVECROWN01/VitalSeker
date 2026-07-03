@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "تکمیل معرفی ناموفق بود. لطفاً اتصال خود را بررسی کنید و دوباره امتحان کنید.",
   "fieldRequired": "این فیلد الزامی است",
   "securitySettingsOnThisPage": "تنظیمات امنیتی در این صفحه قرار دارند",
-  "somethingWentWrong": "مشکلی پیش آمد. لطفاً دوباره امتحان کنید."
+  "somethingWentWrong": "مشکلی پیش آمد. لطفاً دوباره امتحان کنید.",
+  "qrGenerationFailed": "تولید کد QR ناموفق بود. لطفاً دوباره امتحان کنید."
 }

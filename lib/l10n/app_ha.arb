@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Ba a kammala gabatarwa ba. Da fatan za a bincika haɗin ku kuma a sake gwadawa.",
   "fieldRequired": "Wannan filin ana buƙata",
   "securitySettingsOnThisPage": "Tsaron saituna suna kan wannan shafin",
-  "somethingWentWrong": "Wani abu ya same matsala. Da fatan za a sake gwadawa."
+  "somethingWentWrong": "Wani abu ya same matsala. Da fatan za a sake gwadawa.",
+  "qrGenerationFailed": "Ba a iya ƙirƙirar lambar QR ba. Da fatan za a sake gwadawa."
 }

@@ -858,5 +858,6 @@
   "failedToCompleteOnboarding": "Onboarding kon niet worden voltooid. Controleer uw verbinding en probeer het opnieuw.",
   "fieldRequired": "Dit veld is verplicht",
   "securitySettingsOnThisPage": "Beveiligingsinstellingen staan op deze pagina",
-  "somethingWentWrong": "Er is iets misgegaan. Probeer het opnieuw."
+  "somethingWentWrong": "Er is iets misgegaan. Probeer het opnieuw.",
+  "qrGenerationFailed": "QR-code kon niet worden gegenereerd. Probeer het opnieuw."
 }
