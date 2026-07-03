@@ -557,6 +557,12 @@ class _SosScreenState extends ConsumerState<SosScreen>
                   _buildActiveState(),
                 ],
 
+                // ── Quick Dial, Share Location, Emergency Contacts ──
+                // Only show these in idle state OR successful SOS state.
+                // When SOS FAILED, skip them — the user just needs to retry
+                // or dismiss. This prevents the layout overflow where the
+                // failure banner pushed "Share My Location" off-screen.
+                if (!_isActiveState || (_sosActive && _sosResult != null)) ...[
                 const SizedBox(height: 32),
 
                 // ── Quick Dial ──
@@ -934,6 +940,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                 ),
 
                 const SizedBox(height: 20),
+                ], // end if (Quick Dial + Share Location + Emergency Contacts)
               ],
             ),
           ),
