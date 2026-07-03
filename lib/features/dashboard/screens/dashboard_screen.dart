@@ -310,7 +310,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   _SectionHeader(
                     title: l10n.recentChecks,
                     actionText: l10n.viewAll,
-                    onAction: () => context.push(AppConfig.history),
+                    onAction: () => context.go(AppConfig.history),
                   ),
                   const SizedBox(height: 12),
                   logsAsync.maybeWhen(
@@ -322,7 +322,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         // Checks" list.
                         return GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          onTap: () => context.push(AppConfig.triage),
+                          onTap: () => context.go(AppConfig.triage),
                           child: _EmptyStateCard(
                             icon: Icons.history,
                             message: l10n.noSymptomsLogs,
@@ -699,7 +699,7 @@ class _HealthScoreHeroCard extends StatelessWidget {
           const SizedBox(height: 16),
           // CTA
           GestureDetector(
-            onTap: () => context.push(AppConfig.insights),
+            onTap: () => context.go(AppConfig.insights),
             behavior: HitTestBehavior.opaque,
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -815,7 +815,7 @@ class _BentoQuickActions extends StatelessWidget {
           icon: Icons.healing,
           title: l10n.checkSymptomsNow,
           subtitle: l10n.aiTriageIn90Seconds,
-          onTap: () => context.push(AppConfig.triage),
+          onTap: () => context.go(AppConfig.triage),
         ),
         const SizedBox(height: 12),
         // Row 2: two smaller cards side-by-side
@@ -827,7 +827,7 @@ class _BentoQuickActions extends StatelessWidget {
                 icon: Icons.shield_outlined,
                 title: l10n.healthPassport,
                 subtitle: l10n.qrAndMedicalInfo,
-                onTap: () => context.push(AppConfig.passport),
+                onTap: () => context.go(AppConfig.passport),
               ),
             ),
             const SizedBox(width: 12),
@@ -837,7 +837,7 @@ class _BentoQuickActions extends StatelessWidget {
                 icon: Icons.history,
                 title: l10n.myHistory,
                 subtitle: l10n.pastChecksAndVitals,
-                onTap: () => context.push(AppConfig.history),
+                onTap: () => context.go(AppConfig.history),
               ),
             ),
           ],

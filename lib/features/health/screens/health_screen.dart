@@ -36,7 +36,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           IconButton(
             icon: const Icon(Icons.insights_outlined),
             tooltip: l10n.weeklyInsightsTooltip,
-            onPressed: () => context.push(AppConfig.insights),
+            onPressed: () => context.go(AppConfig.insights),
           ),
         ],
       ),
@@ -269,7 +269,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                               ),
                               const SizedBox(height: 8),
                               TextButton.icon(
-                                onPressed: () => context.push(AppConfig.triage),
+                                onPressed: () => context.go(AppConfig.triage),
                                 icon: const Icon(Icons.add, size: 18),
                                 label: Text(l10n.startTriage),
                                 style: TextButton.styleFrom(
@@ -344,7 +344,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                 width: double.infinity,
                 height: 56,
                 child: OutlinedButton.icon(
-                  onPressed: () => context.push(AppConfig.insights),
+                  onPressed: () => context.go(AppConfig.insights),
                   icon: const Icon(Icons.insights_outlined),
                   label: Text(l10n.viewWeeklyInsights),
                   style: OutlinedButton.styleFrom(

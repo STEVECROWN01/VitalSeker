@@ -145,7 +145,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                               borderRadius: BorderRadius.circular(16),
                             ),
                           ),
-                          onPressed: () => context.push(AppConfig.triage),
+                          onPressed: () => context.go(AppConfig.triage),
                           icon: const Icon(Icons.healing, size: 20),
                           label: Text(
                             l10n.startFirstTriage,
