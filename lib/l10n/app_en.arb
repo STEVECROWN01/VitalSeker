@@ -940,6 +940,11 @@
     }
   },
   "medicalDisclaimer": "This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.",
+  "medicalDisclaimerShort": "CK provides general guidance, not a diagnosis. Always consult a doctor.",
+  "ckGreeting": "Hi! I'm CK, your AI Health Assistant. I'm here to help you understand your symptoms and provide guidance. What's bothering you today? You can type or hold the mic button to speak.",
+  "aiChatTriage": "AI Chat with CK",
+  "chatWithCk": "Chat with CK",
+  "chatWithCkDesc": "Talk to our AI health assistant in real-time",
   "poweredByGlm": "Powered by GLM-4",
   "aiTriageIn90Seconds": "AI-powered triage in 90 seconds",
   "vitalValueOutOfRange": "Value out of expected range",
