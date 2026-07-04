@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:file_picker/file_picker.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/services/supabase_service.dart';
@@ -59,11 +60,14 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   String _partialTranscription = '';
   final stt.SpeechToText _speech = stt.SpeechToText();
   bool _speechAvailable = false;
+  bool _isOnline = true;
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 
   @override
   void initState() {
     super.initState();
     _initSpeech();
+    _initConnectivity();
     // Add Seker's greeting message
     final l10n = AppLocalizations.of(context)!;
     _messages.add(_ChatMessage(
@@ -71,6 +75,29 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       isUser: false,
       timestamp: DateTime.now(),
     ));
+  }
+
+  Future<void> _initConnectivity() async {
+    try {
+      final connectivity = Connectivity();
+      // Check initial connectivity
+      final result = await connectivity.checkConnectivity();
+      if (mounted) {
+        setState(() {
+          _isOnline = !result.contains(ConnectivityResult.none);
+        });
+      }
+      // Listen for connectivity changes
+      _connectivitySubscription = connectivity.onConnectivityChanged.listen((result) {
+        if (mounted) {
+          setState(() {
+            _isOnline = !result.contains(ConnectivityResult.none);
+          });
+        }
+      });
+    } catch (e) {
+      debugPrint('Connectivity init failed: $e');
+    }
   }
 
   Future<void> _initSpeech() async {
@@ -95,6 +122,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
     _textController.dispose();
     _scrollController.dispose();
     _speech.stop();
+    _connectivitySubscription?.cancel();
     super.dispose();
   }
 
@@ -113,6 +141,15 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   Future<void> _sendMessage() async {
     final text = _textController.text.trim();
     if (text.isEmpty || _isSending) return;
+
+    // Block sending when offline — AI requires internet
+    if (!_isOnline) {
+      AppSnackBar.error(
+        context,
+        'You are offline. Seker AI requires an internet connection. Please connect to a network to chat.',
+      );
+      return;
+    }
 
     _textController.clear();
     setState(() {
@@ -286,22 +323,15 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       appBar: AppBar(
         title: Row(
           children: [
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                gradient: AppColors.brandGradientFor(isDark),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Center(
-                child: Text(
-                  'S',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
+            // Seker AI avatar — clean, fully visible
+            ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: Image.asset(
+                'assets/images/branding/seker_ai_avatar.png',
+                width: 36,
+                height: 36,
+                fit: BoxFit.cover,
+                gaplessPlayback: true,
               ),
             ),
             const SizedBox(width: 12),
@@ -310,20 +340,50 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Seker — AI Health Assistant',
+                    'Seker AI',
                     style: AppTextStyles.subheading2.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Text(
-                    _isSending ? 'typing...' : 'Online',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: _isSending
-                          ? AppColors.textSecondary(isDark)
-                          : AppColors.success(isDark),
-                    ),
+                  Row(
+                    children: [
+                      // Online/offline status indicator
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: _isOnline
+                              ? AppColors.success(isDark)
+                              : AppColors.error(isDark),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: (_isOnline
+                                      ? AppColors.success(isDark)
+                                      : AppColors.error(isDark))
+                                  .withValues(alpha: 0.5),
+                              blurRadius: 6,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        _isSending
+                            ? 'typing...'
+                            : (_isOnline ? 'Online' : 'Offline'),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: _isSending
+                              ? AppColors.textSecondary(isDark)
+                              : (_isOnline
+                                  ? AppColors.success(isDark)
+                                  : AppColors.error(isDark)),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

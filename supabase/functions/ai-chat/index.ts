@@ -257,6 +257,60 @@ function extractHealthData(userMessage: string, userProfile: any, passport: any)
     }
   }
 
+  // ── Symptom detection ──
+  // Detects common symptoms the user reports experiencing. These are saved
+  // to the symptom_logs table so they appear in the History screen.
+  const symptomKeywords: Record<string, string[]> = {
+    'fever': ['fever', 'high temperature', 'running a temperature', 'hot', 'chills', 'shivering'],
+    'headache': ['headache', 'head pain', 'migraine', 'head hurts', 'pounding head'],
+    'cough': ['cough', 'coughing', 'dry cough', 'wet cough'],
+    'sore_throat': ['sore throat', 'throat pain', 'throat hurts', 'scratchy throat'],
+    'fatigue': ['fatigue', 'tired', 'exhausted', 'no energy', 'weakness', 'feeling weak'],
+    'nausea': ['nausea', 'nauseous', 'feeling sick', 'want to vomit', 'queasy'],
+    'vomiting': ['vomiting', 'throwing up', 'threw up', 'puking'],
+    'diarrhea': ['diarrhea', 'loose stool', 'watery stool'],
+    'shortness_of_breath': ['shortness of breath', 'difficulty breathing', 'breathless', 'can\'t breathe', 'trouble breathing'],
+    'chest_pain': ['chest pain', 'chest hurts', 'chest tightness', 'pressure in chest'],
+    'dizziness': ['dizziness', 'dizzy', 'lightheaded', 'feeling faint', 'vertigo'],
+    'abdominal_pain': ['abdominal pain', 'stomach pain', 'belly pain', 'stomach ache', 'tummy pain', 'cramps'],
+    'back_pain': ['back pain', 'lower back pain', 'upper back pain', 'back hurts'],
+    'joint_pain': ['joint pain', 'aching joints', 'sore joints'],
+    'muscle_pain': ['muscle pain', 'muscle ache', 'body ache', 'sore muscles'],
+    'rash': ['rash', 'skin rash', 'hives', 'itchy skin', 'skin irritation'],
+    'insomnia': ['insomnia', 'can\'t sleep', 'trouble sleeping', 'sleepless'],
+    'anxiety': ['anxiety', 'anxious', 'panic', 'panic attack', 'feeling anxious'],
+    'depression': ['depression', 'depressed', 'feeling down', 'hopeless', 'sad all the time'],
+    'loss_of_appetite': ['loss of appetite', 'no appetite', 'not hungry', 'don\'t want to eat'],
+    'weight_loss': ['weight loss', 'losing weight', 'lost weight'],
+    'weight_gain': ['weight gain', 'gaining weight', 'gained weight'],
+    'frequent_urination': ['frequent urination', 'peeing a lot', 'urinating often'],
+    'blurred_vision': ['blurred vision', 'blurry vision', 'can\'t see clearly', 'vision problems'],
+    'ringing_in_ears': ['ringing in ears', 'tinnitus', 'ears ringing'],
+  }
+
+  const detectedSymptoms: string[] = []
+  for (const [symptomKey, keywords] of Object.entries(symptomKeywords)) {
+    for (const keyword of keywords) {
+      const pattern = new RegExp(`\\b${keyword.replace(/'/g, "'")}\\b`, 'i')
+      if (pattern.test(userMessage)) {
+        // Check if the user is actually experiencing it (not just mentioning)
+        // Look for "I have", "I feel", "experiencing", "suffering from" nearby
+        const contextPattern = new RegExp(`(?:i have|i have|i feel|i'm feeling|i am feeling|experiencing|suffering from|i've been having|i've had|having|got|with)\\s+[^.]*${keyword}`, 'i')
+        const directPattern = new RegExp(`^(?:i|i'm|i have|i feel)\\s+[^.]*${keyword}`, 'i')
+        if (contextPattern.test(userMessage) || directPattern.test(userMessage) || new RegExp(`\\b${keyword}\\b`, 'i').test(userMessage)) {
+          if (!detectedSymptoms.includes(symptomKey)) {
+            detectedSymptoms.push(symptomKey)
+          }
+          break
+        }
+      }
+    }
+  }
+
+  if (detectedSymptoms.length > 0) {
+    extracted.symptoms = detectedSymptoms
+  }
+
   return extracted
 }
 
@@ -406,6 +460,25 @@ serve(async (req: Request) => {
             if (extractedData.chronic_conditions) savedData.push('chronic conditions')
             if (extractedData.medications) savedData.push('medications')
           }
+        }
+      }
+
+      // Save symptoms to symptom_logs table
+      if (extractedData.symptoms && extractedData.symptoms.length > 0) {
+        const { error: symptomErr } = await supabaseClient
+          .from('symptom_logs')
+          .insert({
+            user_id: user.id,
+            symptoms: extractedData.symptoms,
+            severity: 5, // Default severity — user can update later
+            notes: 'Auto-detected from AI chat with Seker',
+            ai_recommendation: 'chat',
+            logged_at: new Date().toISOString(),
+          })
+        if (!symptomErr) {
+          savedData.push(`symptoms: ${extractedData.symptoms.join(', ')}`)
+        } else {
+          console.error('Symptom log insert error:', symptomErr)
         }
       }
     }
