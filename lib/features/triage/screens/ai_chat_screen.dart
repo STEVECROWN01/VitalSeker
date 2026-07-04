@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,9 +7,13 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:file_picker/file_picker.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/services/supabase_service.dart';
+import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/providers/health_passport_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
@@ -139,6 +144,23 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       final reply = data['reply'] as String? ??
           "I'm sorry, I didn't catch that. Could you tell me more?";
 
+      // Check if Seker auto-saved any health data from the conversation
+      final savedData = (data['saved_data'] as List<dynamic>?) ?? [];
+      if (savedData.isNotEmpty) {
+        // Show a subtle success notification
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            AppSnackBar.success(
+              context,
+              '✓ ${savedData.join(', ')} saved to your profile',
+            );
+            // Invalidate providers so the profile/passport refresh
+            ref.invalidate(userProfileProvider);
+            ref.invalidate(healthPassportProvider);
+          }
+        });
+      }
+
       setState(() {
         _messages.add(_ChatMessage(
           content: reply,
@@ -208,6 +230,50 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       }
       _partialTranscription = '';
     });
+  }
+
+  /// Pick a file (prescription, lab result, imaging) to share with Seker.
+  /// The file name is inserted into the chat as a user message so Seker
+  /// knows the user has shared a document.
+  Future<void> _pickFile() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'],
+      );
+      if (result == null || result.files.single.path == null) return;
+
+      final fileName = result.files.single.name;
+      final file = File(result.files.single.path!);
+
+      // Upload to Supabase Storage
+      final user = ref.read(currentUserProvider);
+      if (user == null) {
+        AppSnackBar.error(context, 'Please sign in to upload files.');
+        return;
+      }
+
+      AppSnackBar.info(context, 'Uploading $fileName...');
+
+      final storagePath = '${user.id}/chat/${DateTime.now().millisecondsSinceEpoch}_$fileName';
+      try {
+        await Supabase.instance.client.storage
+            .from('medical-records')
+            .upload(storagePath, file);
+      } catch (e) {
+        // If storage fails, still send the message to Seker about the file
+        debugPrint('Storage upload failed: $e');
+      }
+
+      // Add a message to the chat indicating the user shared a file
+      final fileMessage = 'I\'ve shared a file: $fileName. Please analyze this and let me know what you think.';
+      _textController.text = fileMessage;
+      await _sendMessage();
+    } catch (e) {
+      if (mounted) {
+        AppSnackBar.error(context, 'Could not pick file: $e');
+      }
+    }
   }
 
   @override
@@ -413,6 +479,24 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         ),
         child: Row(
           children: [
+            // File upload button — share prescriptions, lab results, etc.
+            GestureDetector(
+              onTap: _pickFile,
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryContainer(isDark),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.attach_file,
+                  color: AppColors.primary(isDark),
+                  size: 20,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
             // Voice record button — tap to start, tap again to stop
             GestureDetector(
               onTap: _isRecording ? _stopRecording : _startRecording,
