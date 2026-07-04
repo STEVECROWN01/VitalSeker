@@ -400,13 +400,6 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
             }
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share_outlined),
-            onPressed: _shareConversation,
-            tooltip: 'Share conversation',
-          ),
-        ],
       ),
       body: Column(
         children: [

@@ -257,15 +257,25 @@ function extractHealthData(userMessage: string, userProfile: any, passport: any)
     }
   }
 
-  // ── Symptom detection ──
-  // Detects common symptoms the user reports experiencing. These are saved
-  // to the symptom_logs table so they appear in the History screen.
+  // ── Symptom detection (INTELLIGENT) ──
+  // Detects symptoms the user is CURRENTLY experiencing or recently had.
+  // Only saves NEW symptoms that aren't already in the user's symptom_logs
+  // (avoids duplicates from past conversations).
+  //
+  // INTELLIGENCE RULES:
+  //   1. Only detect symptoms the user is experiencing NOW or RECENTLY
+  //      (today, yesterday, this week, "since", "for the past few days")
+  //   2. Skip HISTORICAL mentions ("last year I had", "when I was a child",
+  //      "I used to have", "in the past")
+  //   3. Skip HYPOTHETICAL mentions ("what if I have", "could it be")
+  //   4. Only save if the symptom is NOT already logged in the last 7 days
+  //      (prevents re-saving the same symptom from multiple conversations)
   const symptomKeywords: Record<string, string[]> = {
-    'fever': ['fever', 'high temperature', 'running a temperature', 'hot', 'chills', 'shivering'],
+    'fever': ['fever', 'high temperature', 'running a temperature', 'chills', 'shivering'],
     'headache': ['headache', 'head pain', 'migraine', 'head hurts', 'pounding head'],
     'cough': ['cough', 'coughing', 'dry cough', 'wet cough'],
     'sore_throat': ['sore throat', 'throat pain', 'throat hurts', 'scratchy throat'],
-    'fatigue': ['fatigue', 'tired', 'exhausted', 'no energy', 'weakness', 'feeling weak'],
+    'fatigue': ['fatigue', 'exhausted', 'no energy', 'weakness', 'feeling weak'],
     'nausea': ['nausea', 'nauseous', 'feeling sick', 'want to vomit', 'queasy'],
     'vomiting': ['vomiting', 'throwing up', 'threw up', 'puking'],
     'diarrhea': ['diarrhea', 'loose stool', 'watery stool'],
@@ -288,20 +298,49 @@ function extractHealthData(userMessage: string, userProfile: any, passport: any)
     'ringing_in_ears': ['ringing in ears', 'tinnitus', 'ears ringing'],
   }
 
+  // Temporal context patterns — ONLY detect CURRENT/RECENT symptoms
+  const currentContextPattern = /(?:i have|i have|i feel|i'm feeling|i am feeling|i'm experiencing|i am experiencing|experiencing|suffering from|i've been having|i've had|i have had|having|i've got|i got|started having|been feeling|been experiencing)\s+/i
+  // Historical patterns — SKIP these (past tense, not current)
+  const historicalPattern = /(?:last year|last month|years ago|when i was (?:young|a child|little)|i used to|in the past|previously|before|i had (?:it )?(?:last|years|months)|long time ago|childhood|as a kid)/i
+  // Hypothetical patterns — SKIP these
+  const hypotheticalPattern = /(?:what if|could it be|hypothetically|let's say|imagine if|wondering if)/i
+
+  // Skip if the entire message is historical or hypothetical
+  const isHistorical = historicalPattern.test(userMessage)
+  const isHypothetical = hypotheticalPattern.test(userMessage)
+
   const detectedSymptoms: string[] = []
-  for (const [symptomKey, keywords] of Object.entries(symptomKeywords)) {
-    for (const keyword of keywords) {
-      const pattern = new RegExp(`\\b${keyword.replace(/'/g, "'")}\\b`, 'i')
-      if (pattern.test(userMessage)) {
-        // Check if the user is actually experiencing it (not just mentioning)
-        // Look for "I have", "I feel", "experiencing", "suffering from" nearby
-        const contextPattern = new RegExp(`(?:i have|i have|i feel|i'm feeling|i am feeling|experiencing|suffering from|i've been having|i've had|having|got|with)\\s+[^.]*${keyword}`, 'i')
-        const directPattern = new RegExp(`^(?:i|i'm|i have|i feel)\\s+[^.]*${keyword}`, 'i')
-        if (contextPattern.test(userMessage) || directPattern.test(userMessage) || new RegExp(`\\b${keyword}\\b`, 'i').test(userMessage)) {
-          if (!detectedSymptoms.includes(symptomKey)) {
-            detectedSymptoms.push(symptomKey)
+  if (!isHistorical && !isHypothetical) {
+    for (const [symptomKey, keywords] of Object.entries(symptomKeywords)) {
+      for (const keyword of keywords) {
+        const keywordPattern = new RegExp(`\\b${keyword.replace(/'/g, "'")}\\b`, 'i')
+        if (keywordPattern.test(userMessage)) {
+          // Check that the symptom is in a CURRENT context (not past tense)
+          // Look for current/recent context words near the symptom
+          const symptomIndex = userMessage.toLowerCase().indexOf(keyword.toLowerCase())
+          const beforeText = userMessage.substring(Math.max(0, symptomIndex - 80), symptomIndex)
+          const afterText = userMessage.substring(symptomIndex, Math.min(userMessage.length, symptomIndex + 80))
+
+          // Check for current/recent context
+          const hasCurrentContext = currentContextPattern.test(beforeText) ||
+            /(?:today|yesterday|this week|this morning|now|currently|since|for the past|lately|recently|still|again)/i.test(beforeText + ' ' + afterText)
+
+          // Check for past tense that would indicate historical (not current)
+          const hasPastTense = /(?:had last|had years|had months|used to have|when i was)/i.test(beforeText + ' ' + afterText)
+
+          if (hasCurrentContext && !hasPastTense) {
+            if (!detectedSymptoms.includes(symptomKey)) {
+              detectedSymptoms.push(symptomKey)
+            }
+            break
+          } else if (keywordPattern.test(userMessage) && !hasPastTense && !isHistorical) {
+            // Fallback: if the symptom is mentioned without explicit past tense,
+            // and the message isn't historical, treat it as current
+            if (!detectedSymptoms.includes(symptomKey)) {
+              detectedSymptoms.push(symptomKey)
+            }
+            break
           }
-          break
         }
       }
     }
@@ -463,22 +502,52 @@ serve(async (req: Request) => {
         }
       }
 
-      // Save symptoms to symptom_logs table
+      // Save symptoms to symptom_logs table — INTELLIGENT deduplication
+      // Only save symptoms that aren't already logged in the last 7 days.
+      // This prevents re-saving the same symptom from multiple conversations.
       if (extractedData.symptoms && extractedData.symptoms.length > 0) {
-        const { error: symptomErr } = await supabaseClient
+        // Query existing symptom logs from the last 7 days
+        const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+        const { data: recentLogs } = await supabaseClient
           .from('symptom_logs')
-          .insert({
-            user_id: user.id,
-            symptoms: extractedData.symptoms,
-            severity: 5, // Default severity — user can update later
-            notes: 'Auto-detected from AI chat with Seker',
-            ai_recommendation: 'chat',
-            logged_at: new Date().toISOString(),
-          })
-        if (!symptomErr) {
-          savedData.push(`symptoms: ${extractedData.symptoms.join(', ')}`)
-        } else {
-          console.error('Symptom log insert error:', symptomErr)
+          .select('symptoms')
+          .eq('user_id', user.id)
+          .gte('logged_at', sevenDaysAgo)
+
+        // Flatten all symptoms from recent logs into a Set
+        const existingSymptoms = new Set<string>()
+        if (recentLogs && recentLogs.length > 0) {
+          for (const log of recentLogs) {
+            const symptoms = log.symptoms
+            if (Array.isArray(symptoms)) {
+              for (const s of symptoms) {
+                existingSymptoms.add(String(s).toLowerCase())
+              }
+            }
+          }
+        }
+
+        // Filter out symptoms that are already logged
+        const newSymptoms = extractedData.symptoms.filter(
+          (s: string) => !existingSymptoms.has(s.toLowerCase())
+        )
+
+        if (newSymptoms.length > 0) {
+          const { error: symptomErr } = await supabaseClient
+            .from('symptom_logs')
+            .insert({
+              user_id: user.id,
+              symptoms: newSymptoms,
+              severity: 5, // Default severity — user can update later
+              notes: 'Auto-detected from AI chat with Seker',
+              ai_recommendation: 'chat',
+              logged_at: new Date().toISOString(),
+            })
+          if (!symptomErr) {
+            savedData.push(`symptoms: ${newSymptoms.join(', ')}`)
+          } else {
+            console.error('Symptom log insert error:', symptomErr)
+          }
         }
       }
     }
