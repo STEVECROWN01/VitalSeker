@@ -10,7 +10,7 @@ const corsHeaders = {
 // AI ENGINE SPECIFICATION — matches Cahier des Charges v1.0 Section 5
 // ─────────────────────────────────────────────────────────────────────────────
 //
-// Model:        GLM-4-plus (substituted for claude-sonnet-4-20250514 per owner)
+// Model:        GLM-4-flash (FREE tier from z.ai — substituted for paid glm-4-plus)
 // max_tokens:   800 (per spec)
 // temperature:  0   (per spec — deterministic for medical use)
 // system:       from TRIAGE_SYSTEM_PROMPT env var (per spec — never hardcoded)
@@ -432,7 +432,9 @@ Respond ONLY with valid JSON matching the schema. No markdown, no prose.`
 
     messages.push({ role: 'user', content: currentTurnPrompt })
 
-    // GLM request — per spec: max_tokens 800, temperature 0
+    // GLM request — using glm-4-flash (FREE tier) instead of glm-4-plus (paid)
+    // glm-4-flash is free on z.ai with good quality for medical triage
+    // max_tokens 800 per spec, temperature 0 for deterministic medical output
     const glmResponse = await fetch(`${glmApiUrl}/chat/completions`, {
       method: 'POST',
       headers: {
@@ -440,7 +442,7 @@ Respond ONLY with valid JSON matching the schema. No markdown, no prose.`
         'Authorization': `Bearer ${glmApiKey}`,
       },
       body: JSON.stringify({
-        model: 'glm-4-plus',
+        model: 'glm-4-flash',
         max_tokens: 800,
         temperature: 0,
         messages,
