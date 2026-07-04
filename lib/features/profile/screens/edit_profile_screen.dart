@@ -487,7 +487,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               labelText: l10n.gender,
                               prefixIcon: Icon(Icons.wc_outlined),
                             ),
-                            style: const TextStyle(fontFamily: 'Inter'),
                             items: _genders.map((g) => DropdownMenuItem(
                               value: g,
                               child: Text(
@@ -507,7 +506,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               labelText: l10n.bloodType,
                               prefixIcon: Icon(Icons.bloodtype_outlined),
                             ),
-                            style: const TextStyle(fontFamily: 'Inter'),
                             items: _bloodTypes.map((bt) => DropdownMenuItem(
                               value: bt,
                               child: Text(bt, style: const TextStyle(fontFamily: 'Inter')),

@@ -489,11 +489,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       );
                     }).toList(),
                     onChanged: (value) => setState(() => _gender = value),
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 16,
-                      color: AppColors.textPrimary(isDark),
-                    ),
                   ),
                   const SizedBox(height: 16),
 
@@ -517,11 +512,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       );
                     }).toList(),
                     onChanged: (value) => setState(() => _bloodType = value),
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 16,
-                      color: AppColors.textPrimary(isDark),
-                    ),
                   ),
                   const SizedBox(height: 20),
 

@@ -326,11 +326,6 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                 onChanged: (value) {
                   setDialogState(() => _selectedBloodType = value);
                 },
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 16,
-                  color: AppColors.textPrimary(isDark),
-                ),
               ),
             ],
           ),
@@ -680,6 +675,7 @@ class _OwnerCard extends StatelessWidget {
   final String? gender;
   final int score;
   final AppLocalizations l10n;
+  final String? avatarUrl;
   const _OwnerCard({
     required this.isDark,
     required this.fullName,
@@ -688,6 +684,7 @@ class _OwnerCard extends StatelessWidget {
     required this.gender,
     required this.score,
     required this.l10n,
+    this.avatarUrl,
   });
 
   String _ageLine() {
@@ -746,50 +743,38 @@ class _OwnerCard extends StatelessWidget {
                     ),
                   ),
                   child: Center(
-                    child: profileAsync.maybeWhen(
-                      data: (p) {
-                        final avatarUrl = p?.avatarUrl;
-                        final name = fullName.isNotEmpty ? fullName : (p?.fullName ?? 'U');
-                        final initial = name.isNotEmpty ? name[0].toUpperCase() : 'U';
-                        if (avatarUrl != null && avatarUrl.isNotEmpty) {
-                          return ClipOval(
-                            child: Image.network(
-                              avatarUrl,
-                              width: 64,
-                              height: 64,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Text(
-                                initial,
-                                style: TextStyle(
-                                  fontFamily: 'ClashDisplay',
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.primary(isDark),
-                                ),
+                    child: Builder(builder: (context) {
+                      final name = fullName.isNotEmpty ? fullName : 'U';
+                      final initial = name.isNotEmpty ? name[0].toUpperCase() : 'U';
+                      if (avatarUrl != null && avatarUrl!.isNotEmpty) {
+                        return ClipOval(
+                          child: Image.network(
+                            avatarUrl!,
+                            width: 64,
+                            height: 64,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Text(
+                              initial,
+                              style: TextStyle(
+                                fontFamily: 'ClashDisplay',
+                                fontSize: 26,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primary(isDark),
                               ),
                             ),
-                          );
-                        }
-                        return Text(
-                          initial,
-                          style: TextStyle(
-                            fontFamily: 'ClashDisplay',
-                            fontSize: 26,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.primary(isDark),
                           ),
                         );
-                      },
-                      orElse: () => Text(
-                        fullName.isNotEmpty ? fullName[0].toUpperCase() : 'U',
+                      }
+                      return Text(
+                        initial,
                         style: TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 26,
                           fontWeight: FontWeight.w700,
                           color: AppColors.primary(isDark),
                         ),
-                      ),
-                    ),
+                      );
+                    }),
                   ),
                 ),
                 Positioned(

@@ -172,7 +172,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
       }
     }
 
-    Future<void> _pickFromCamera() async {
+    Future<void> _pickFromCamera(void Function(void Function()) setDialogState) async {
       try {
         final picker = ImagePicker();
         final picked = await picker.pickImage(source: ImageSource.camera, imageQuality: 85);
@@ -183,8 +183,10 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
           sourcePath: picked.path,
           aspectRatioPresets: [
             CropAspectRatioPreset.original,
-            CropAspectRatioPreset.ratio3x4,
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.ratio3x2,
             CropAspectRatioPreset.ratio4x3,
+            CropAspectRatioPreset.ratio16x9,
           ],
           uiSettings: [
             AndroidUiSettings(
@@ -230,7 +232,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
       }
     }
 
-    Future<void> _pickFromFile() async {
+    Future<void> _pickFromFile(void Function(void Function()) setDialogState) async {
       try {
         final result = await FilePicker.platform.pickFiles(
           type: FileType.custom,
@@ -294,7 +296,6 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                     labelText: l10n.typeLabel,
                     prefixIcon: const Icon(Icons.category_outlined),
                   ),
-                  style: const TextStyle(fontFamily: 'Inter'),
                   items: [
                     DropdownMenuItem(value: 'labResults', child: Text(l10n.recordTypeLabResults)),
                     DropdownMenuItem(value: 'prescriptions', child: Text(l10n.recordTypePrescriptions)),
@@ -405,7 +406,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                     children: [
                       Expanded(
                         child: OutlinedButton.icon(
-                          onPressed: isUploading ? null : _pickFromCamera,
+                          onPressed: isUploading ? null : () => _pickFromCamera(setDialogState),
                           icon: const Icon(Icons.camera_alt_outlined, size: 18),
                           label: const Text('Scan'),
                           style: OutlinedButton.styleFrom(
@@ -417,7 +418,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: OutlinedButton.icon(
-                          onPressed: isUploading ? null : _pickFromFile,
+                          onPressed: isUploading ? null : () => _pickFromFile(setDialogState),
                           icon: const Icon(Icons.folder_outlined, size: 18),
                           label: const Text('Upload'),
                           style: OutlinedButton.styleFrom(

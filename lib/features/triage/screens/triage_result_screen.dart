@@ -565,13 +565,11 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
         // an error. This is the correct UX: the user just did a triage and
         // wants to save the result; we should create the passport for them.
         try {
-          await ref.read(databaseServiceProvider).createHealthPassport(
-                userId: user.id,
-                data: {
-                  'last_assessment_date': DateTime.now().toIso8601String(),
-                  'vital_score': 75, // Default starting score
-                },
-              );
+          await ref.read(databaseServiceProvider).createHealthPassport({
+            'user_id': user.id,
+            'last_assessment_date': DateTime.now().toIso8601String(),
+            'vital_score': 75, // Default starting score
+          });
           ref.invalidate(healthPassportProvider);
           if (mounted) {
             AppSnackBar.success(

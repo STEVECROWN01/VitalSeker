@@ -97,7 +97,7 @@ class AboutScreen extends StatelessWidget {
                 _FeatureItem(icon: Icons.family_restroom, title: l10n.featureFamilyProfilesTitle, description: l10n.featureFamilyProfilesDesc, isDark: isDark),
                 _FeatureItem(icon: Icons.picture_as_pdf, title: l10n.featurePdfExportTitle, description: l10n.featurePdfExportDesc, isDark: isDark),
                 _FeatureItem(icon: Icons.translate, title: 'Medical Translation', description: 'Translate medical terms into 40+ languages with DeepL', isDark: isDark),
-                _FeatureItem(icon: Icons.medical_records, title: 'Medical Records', description: 'Store and manage prescriptions, lab results, and imaging files', isDark: isDark),
+                _FeatureItem(icon: Icons.folder_outlined, title: 'Medical Records', description: 'Store and manage prescriptions, lab results, and imaging files', isDark: isDark),
                 _FeatureItem(icon: Icons.monitor_heart, title: 'Vitals Tracking', description: 'Track heart rate, blood pressure, temperature, and more', isDark: isDark),
                 _FeatureItem(icon: Icons.medication, title: 'Medication Reminders', description: 'Never miss a dose with smart medication reminders', isDark: isDark),
                 _FeatureItem(icon: Icons.event, title: 'Appointment Manager', description: 'Schedule and track doctor appointments', isDark: isDark),
