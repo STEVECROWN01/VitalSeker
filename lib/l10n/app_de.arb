@@ -860,5 +860,12 @@
   "fieldRequired": "Dieses Feld ist erforderlich",
   "securitySettingsOnThisPage": "Sicherheitseinstellungen befinden sich auf dieser Seite",
   "somethingWentWrong": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
-  "qrGenerationFailed": "QR-Code konnte nicht generiert werden. Bitte versuchen Sie es erneut."
+  "qrGenerationFailed": "QR-Code konnte nicht generiert werden. Bitte versuchen Sie es erneut.",
+  "sekerGreeting": "Hallo! Ich bin Seker, Ihr KI-Gesundheitsassistent. Ich bin hier, um Ihnen zu helfen, Ihre Symptome zu verstehen und Ratschläge zu geben. Was beschäftigt Sie heute? Sie können tippen oder das Mikrofon drücken.",
+  "chatWithSeker": "Mit Seker chatten",
+  "chatWithSekerDesc": "Sprechen Sie in Echtzeit mit unserem KI-Gesundheitsassistenten",
+  "medicalDisclaimerShort": "Seker gibt allgemeine Ratschläge, keine Diagnose. Konsultieren Sie immer einen Arzt.",
+  "aiChatTriage": "Chat mit Seker KI",
+  "health": "Gesundheit",
+  "family": "Familie"
 }

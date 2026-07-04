@@ -859,5 +859,12 @@
   "fieldRequired": "Detta fält är obligatoriskt",
   "securitySettingsOnThisPage": "Säkerhetsinställningar finns på den här sidan",
   "somethingWentWrong": "Något gick fel. Försök igen.",
-  "qrGenerationFailed": "Det gick inte att generera QR-koden. Försök igen."
+  "qrGenerationFailed": "Det gick inte att generera QR-koden. Försök igen.",
+  "sekerGreeting": "Hej! Jag är Seker, din AI-hälsoassistent. Jag är här för att hjälpa dig förstå dina symtom. Vad stör dig idag? Du kan skriva eller hålla mikrofonknappen för att prata.",
+  "chatWithSeker": "Chatta med Seker",
+  "chatWithSekerDesc": "Prata med vår AI-hälsoassistent i realtid",
+  "medicalDisclaimerShort": "Seker ger allmän vägledning, inte en diagnos. Konsultera alltid en läkare.",
+  "aiChatTriage": "Chatta med Seker AI",
+  "health": "Hälsa",
+  "family": "Familj"
 }

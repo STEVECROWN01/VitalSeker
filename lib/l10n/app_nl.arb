@@ -859,5 +859,12 @@
   "fieldRequired": "Dit veld is verplicht",
   "securitySettingsOnThisPage": "Beveiligingsinstellingen staan op deze pagina",
   "somethingWentWrong": "Er is iets misgegaan. Probeer het opnieuw.",
-  "qrGenerationFailed": "QR-code kon niet worden gegenereerd. Probeer het opnieuw."
+  "qrGenerationFailed": "QR-code kon niet worden gegenereerd. Probeer het opnieuw.",
+  "sekerGreeting": "Hoi! Ik ben Seker, je AI-gezondheidsassistent. Ik ben hier om je te helpen je symptomen te begrijpen. Wat hindert je vandaag? Je kunt typen of de microfoonknop ingedrukt houden om te praten.",
+  "chatWithSeker": "Chat met Seker",
+  "chatWithSekerDesc": "Praat in realtime met onze AI-gezondheidsassistent",
+  "medicalDisclaimerShort": "Seker geeft algemene richtlijnen, geen diagnose. Raadpleeg altijd een arts.",
+  "aiChatTriage": "Chat met Seker AI",
+  "health": "Gezondheid",
+  "family": "Familie"
 }

@@ -859,5 +859,12 @@
   "fieldRequired": "Bidang ini wajib diisi",
   "securitySettingsOnThisPage": "Pengaturan keamanan ada di halaman ini",
   "somethingWentWrong": "Terjadi kesalahan. Silakan coba lagi.",
-  "qrGenerationFailed": "Gagal membuat kode QR. Silakan coba lagi."
+  "qrGenerationFailed": "Gagal membuat kode QR. Silakan coba lagi.",
+  "sekerGreeting": "Halo! Saya Seker, asisten kesehatan AI Anda. Saya di sini untuk membantu memahami gejala Anda. Apa yang mengganggu hari ini? Anda bisa mengetik atau menahan tombol mikrofon untuk berbicara.",
+  "chatWithSeker": "Ngobrol dengan Seker",
+  "chatWithSekerDesc": "Bicara dengan asisten kesehatan AI kami secara real-time",
+  "medicalDisclaimerShort": "Seker memberikan panduan umum, bukan diagnosis. Selalu konsultasikan dengan dokter.",
+  "aiChatTriage": "Obrolan dengan Seker AI",
+  "health": "Kesehatan",
+  "family": "Keluarga"
 }

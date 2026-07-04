@@ -859,5 +859,12 @@
   "fieldRequired": "שדה זה נדרש",
   "securitySettingsOnThisPage": "הגדרות האבטחה נמצאות בעמוד זה",
   "somethingWentWrong": "משהו השתבש. נא נסה שוב.",
-  "qrGenerationFailed": "נכשל ביצירת קוד QR. נא נסה שוב."
+  "qrGenerationFailed": "נכשל ביצירת קוד QR. נא נסה שוב.",
+  "sekerGreeting": "שלום! אני סקר, עוזר הבריאות AI שלך. אני כאן כדי לעזור לך להבין את התסמינים שלך. מה מטריד אותך היום? אתה יכול להקליד או ללחוץ על כפתור המיקרופון.",
+  "chatWithSeker": "צ'אט עם סקר",
+  "chatWithSekerDesc": "דבר עם עוזר הבריאות AI שלנו בזמן אמת",
+  "medicalDisclaimerShort": "סקר נותן הדרכה כללית, לא אבחנה. תמיד התייעץ עם רופא.",
+  "aiChatTriage": "צ'אט עם סקר AI",
+  "health": "בריאות",
+  "family": "משפחה"
 }

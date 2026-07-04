@@ -859,5 +859,12 @@
   "fieldRequired": "Bu alan zorunludur",
   "securitySettingsOnThisPage": "Güvenlik ayarları bu sayfada",
   "somethingWentWrong": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
-  "qrGenerationFailed": "QR kodu oluşturulamadı. Lütfen tekrar deneyin."
+  "qrGenerationFailed": "QR kodu oluşturulamadı. Lütfen tekrar deneyin.",
+  "sekerGreeting": "Merhaba! Ben Seker, AI sağlık asistanınız. Belirtilerinizi anlamanıza yardımcı olmak için buradayım. Bugün ne rahatsız ediyor? Yazabilir veya mikrofon düğmesine basılı tutarak konuşabilirsiniz.",
+  "chatWithSeker": "Seker ile sohbet et",
+  "chatWithSekerDesc": "AI sağlık asistanımızla gerçek zamanlı konuşun",
+  "medicalDisclaimerShort": "Seker genel rehberlik sağlar, teşhis değil. Her zaman doktora danışın.",
+  "aiChatTriage": "Seker AI ile sohbet",
+  "health": "Sağlık",
+  "family": "Aile"
 }

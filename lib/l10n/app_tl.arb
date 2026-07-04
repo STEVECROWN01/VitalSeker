@@ -859,5 +859,12 @@
   "fieldRequired": "Kinakailangan ang patlang na ito",
   "securitySettingsOnThisPage": "Ang mga setting ng seguridad ay nasa pahinang ito",
   "somethingWentWrong": "May nangyaring mali. Mangyaring subukang muli.",
-  "qrGenerationFailed": "Nabigo sa paglikha ng QR code. Mangyaring subukang muli."
+  "qrGenerationFailed": "Nabigo sa paglikha ng QR code. Mangyaring subukang muli.",
+  "sekerGreeting": "Kamusta! Ako si Seker, iyong AI health assistant. Nandito ako para tulungan kang maunawaan ang iyong sintomas. Anong problema ngayon? Maaari kang magtype o pindutin ang mic button para magsalita.",
+  "chatWithSeker": "Chat kay Seker",
+  "chatWithSekerDesc": "Makipag-usap sa aming AI health assistant nang real-time",
+  "medicalDisclaimerShort": "Nagbibigay si Seker ng pangkalahatang gabay, hindi diagnosis. Laging kumunsulta sa doktor.",
+  "aiChatTriage": "Chat kay Seker AI",
+  "health": "Kalusugan",
+  "family": "Pamilya"
 }

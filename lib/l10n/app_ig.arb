@@ -859,5 +859,12 @@
   "fieldRequired": "Achọrọ mpaghara a",
   "securitySettingsOnThisPage": "Ntọala nchekwa dị na peeji a",
   "somethingWentWrong": "Ihe adịghị mma. Biko nwalee ọzọ.",
-  "qrGenerationFailed": "Ọ dịghị ike imepụta koodu QR. Biko nwalee ọzọ."
+  "qrGenerationFailed": "Ọ dịghị ike imepụta koodu QR. Biko nwalee ọzọ.",
+  "sekerGreeting": "Ndewo! Abụ m Seker, onye inyeaka ahụ ike AI gị. Anọ m ebe a inyere gị aka ịghọta mgbaàmà gị. Kedu ihe na-amasị gị taa? I nwere ike ịpị akwụkwọ ma ọ bụ jide bọtịnụ igwe okwu.",
+  "chatWithSeker": "Kparịtaụkwụ ya na Seker",
+  "chatWithSekerDesc": "Gwa onye inyeaka ahụ ike AI anyị okwu n'ezigbo oge",
+  "medicalDisclaimerShort": "Seker na-enye ntụziaka n'ozuzu, ọ bụghị nchọpụta. Hụta dọkịta mgbe niile.",
+  "aiChatTriage": "Mkparịtaụkwụ ya na Seker AI",
+  "health": "Ahụ ike",
+  "family": "Ezinụlọ"
 }

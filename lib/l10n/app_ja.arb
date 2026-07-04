@@ -859,5 +859,12 @@
   "fieldRequired": "この項目は必須です",
   "securitySettingsOnThisPage": "セキュリティ設定はこのページにあります",
   "somethingWentWrong": "エラーが発生しました。もう一度お試しください。",
-  "qrGenerationFailed": "QRコードの生成に失敗しました。もう一度お試しください。"
+  "qrGenerationFailed": "QRコードの生成に失敗しました。もう一度お試しください。",
+  "sekerGreeting": "こんにちは！私はセカー、あなたのAI健康アシスタントです。症状を理解し、ガイダンスを提供するためにここにいます。今日は何が気になりますか？タイプするか、マイクボタンを押して話せます。",
+  "chatWithSeker": "セカーとチャット",
+  "chatWithSekerDesc": "AI健康アシスタントとリアルタイムで話す",
+  "medicalDisclaimerShort": "セカーは一般的なガイダンスを提供し、診断ではありません。常に医師に相談してください。",
+  "aiChatTriage": "セカーAIとのチャット",
+  "health": "健康",
+  "family": "家族"
 }

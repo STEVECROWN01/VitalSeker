@@ -859,5 +859,12 @@
   "fieldRequired": "Ez a mező kötelező",
   "securitySettingsOnThisPage": "A biztonsági beállítások ezen az oldalon találhatók",
   "somethingWentWrong": "Valami hiba történt. Próbálja újra.",
-  "qrGenerationFailed": "Nem sikerült létrehozni a QR-kódot. Kérjük, próbálja újra."
+  "qrGenerationFailed": "Nem sikerült létrehozni a QR-kódot. Kérjük, próbálja újra.",
+  "sekerGreeting": "Szia! Én Seker vagyok, az AI egészségügyi asszisztensed. Azért vagyok itt, hogy segítsek megérteni a tüneteidet. Mi zavar ma? Írhatsz vagy nyomva tarthatod a mikrofon gombot.",
+  "chatWithSeker": "Csevegés Sekerrel",
+  "chatWithSekerDesc": "Beszélj az AI egészségügyi asszisztensünkkel valós időben",
+  "medicalDisclaimerShort": "Seker általános tanácsokat ad, nem diagnózist. Mindig konzultálj orvossal.",
+  "aiChatTriage": "Csevegés a Seker AI-val",
+  "health": "Egészség",
+  "family": "Család"
 }

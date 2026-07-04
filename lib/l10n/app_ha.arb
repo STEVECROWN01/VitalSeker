@@ -859,5 +859,12 @@
   "fieldRequired": "Wannan filin ana buƙata",
   "securitySettingsOnThisPage": "Tsaron saituna suna kan wannan shafin",
   "somethingWentWrong": "Wani abu ya same matsala. Da fatan za a sake gwadawa.",
-  "qrGenerationFailed": "Ba a iya ƙirƙirar lambar QR ba. Da fatan za a sake gwadawa."
+  "qrGenerationFailed": "Ba a iya ƙirƙirar lambar QR ba. Da fatan za a sake gwadawa.",
+  "sekerGreeting": "Sannu! Ni ne Seker, mataimakin lafiyar ku na AI. Ina nan don taimaka muku fahimtar alamun ku da bayar da shawara. Me ya same ku yau? Kuna iya rubuta ko latsa maɓallin mic don yi magana.",
+  "chatWithSeker": "Yi magana da Seker",
+  "chatWithSekerDesc": "Yi magana da mataimakin lafiyar AI mu a lokaci guda",
+  "medicalDisclaimerShort": "Seker yana bayar da jagora gaba ɗaya, ba ganewar asali ba. Koyaushe tuntuɓar likita.",
+  "aiChatTriage": "Tattaunawa da Seker AI",
+  "health": "Lafiya",
+  "family": "Iyali"
 }

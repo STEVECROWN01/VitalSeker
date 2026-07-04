@@ -859,5 +859,12 @@
   "fieldRequired": "Sehemu hii inahitajika",
   "securitySettingsOnThisPage": "Mipangilio ya usalazi iko kwenye ukurasa huu",
   "somethingWentWrong": "Hitu kimetokea. Tafadhali jaribu tena.",
-  "qrGenerationFailed": "Imeshindikana kuunda kodi ya QR. Tafadhali jaribu tena."
+  "qrGenerationFailed": "Imeshindikana kuunda kodi ya QR. Tafadhali jaribu tena.",
+  "sekerGreeting": "Habari! Mimi ni Seker, msaidizi wako wa afya wa AI. Niko hapa kukusaidia kuelewa dalili zako. Nini kina kukera leo? Unaweza kuandika au kushikilia kitufe cha maikrofoni kuongea.",
+  "chatWithSeker": "Soga na Seker",
+  "chatWithSekerDesc": "Ongea na msaidizi wetu wa afya wa AI wakati halisi",
+  "medicalDisclaimerShort": "Seker anatoa mwongozo wa jumla, sio uaguzi. Sikiliza daktari kila wakati.",
+  "aiChatTriage": "Soga na Seker AI",
+  "health": "Afya",
+  "family": "Familia"
 }

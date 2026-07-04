@@ -859,5 +859,12 @@
   "fieldRequired": "Tämä kenttä on pakollinen",
   "securitySettingsOnThisPage": "Turvallisuusasetukset ovat tällä sivulla",
   "somethingWentWrong": "Jokin meni pieleen. Yritä uudelleen.",
-  "qrGenerationFailed": "QR-koodin luonti epäonnistui. Yritä uudelleen."
+  "qrGenerationFailed": "QR-koodin luonti epäonnistui. Yritä uudelleen.",
+  "sekerGreeting": "Hei! Olen Seker, tekoälyterveysavustajasi. Olen täällä auttamassa ymmärtämään oireitasi. Mikä vaivaa sinua tänään? Voit kirjoittaa tai painaa mikrofonipainiketta puhuaksesi.",
+  "chatWithSeker": "Keskustele Sekerin kanssa",
+  "chatWithSekerDesc": "Puhu tekoälyterveysavustajamme kanssa reaaliajassa",
+  "medicalDisclaimerShort": "Seker antaa yleisiä ohjeita, ei diagnoosia. Konsultoi aina lääkäriä.",
+  "aiChatTriage": "Keskustelu Seker-tekoälyn kanssa",
+  "health": "Terveys",
+  "family": "Perhe"
 }

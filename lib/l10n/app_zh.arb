@@ -859,5 +859,12 @@
   "fieldRequired": "此字段为必填项",
   "securitySettingsOnThisPage": "安全设置位于此页面",
   "somethingWentWrong": "出现问题。请重试。",
-  "qrGenerationFailed": "无法生成二维码。请重试。"
+  "qrGenerationFailed": "无法生成二维码。请重试。",
+  "sekerGreeting": "你好！我是Seker，您的AI健康助手。我在这里帮助您了解症状并提供指导。今天有什么困扰？您可以打字或按住麦克风按钮说话。",
+  "chatWithSeker": "与Seker聊天",
+  "chatWithSekerDesc": "与我们的AI健康助手实时对话",
+  "medicalDisclaimerShort": "Seker提供一般指导，而非诊断。请务必咨询医生。",
+  "aiChatTriage": "与Seker AI聊天",
+  "health": "健康",
+  "family": "家庭"
 }

@@ -859,5 +859,12 @@
   "fieldRequired": "Toto pole je povinné",
   "securitySettingsOnThisPage": "Nastavenia zabezpečenia sú na tejto stránke",
   "somethingWentWrong": "Niečo sa pokazilo. Skúste to znova.",
-  "qrGenerationFailed": "Nepodarilo sa vygenerovať QR kód. Skúste to znova."
+  "qrGenerationFailed": "Nepodarilo sa vygenerovať QR kód. Skúste to znova.",
+  "sekerGreeting": "Ahoj! Som Seker, váš AI zdravotný asistent. Som tu, aby som vám pomohl pochopiť vaše príznaky. Čo vás dnes trápi? Môžete písať alebo stlačiť tlačidlo mikrofónu, aby ste hovorili.",
+  "chatWithSeker": "Chatujte so Sekerom",
+  "chatWithSekerDesc": "Hovorte s naším AI zdravotným asistentom v reálnom čase",
+  "medicalDisclaimerShort": "Seker poskytuje všeobecné pokyny, nie diagnózu. Vždy sa poraďte s lekárom.",
+  "aiChatTriage": "Chat s AI Sekerom",
+  "health": "Zdravie",
+  "family": "Rodina"
 }

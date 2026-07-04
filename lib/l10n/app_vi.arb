@@ -859,5 +859,12 @@
   "fieldRequired": "Trường này là bắt buộc",
   "securitySettingsOnThisPage": "Cài đặt bảo mật nằm trên trang này",
   "somethingWentWrong": "Đã xảy ra lỗi. Vui lòng thử lại.",
-  "qrGenerationFailed": "Không thể tạo mã QR. Vui lòng thử lại."
+  "qrGenerationFailed": "Không thể tạo mã QR. Vui lòng thử lại.",
+  "sekerGreeting": "Xin chào! Tôi là Seker, trợ lý sức khỏe AI của bạn. Tôi ở đây để giúp bạn hiểu các triệu chứng. Điều gì làm phiền bạn hôm nay? Bạn có thể gõ hoặc giữ nút mic để nói.",
+  "chatWithSeker": "Trò chuyện với Seker",
+  "chatWithSekerDesc": "Nói chuyện với trợ lý sức khỏe AI của chúng tôi theo thời gian thực",
+  "medicalDisclaimerShort": "Seker cung cấp hướng dẫn chung, không phải chẩn đoán. Luôn tham khảo ý kiến bác sĩ.",
+  "aiChatTriage": "Trò chuyện với Seker AI",
+  "health": "Sức khỏe",
+  "family": "Gia đình"
 }

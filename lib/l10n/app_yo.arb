@@ -859,5 +859,12 @@
   "fieldRequired": "A nílò̀ pápà yìí",
   "securitySettingsOnThisPage": "Àwọn ètò aàbọ̀ wà lórí ojú ewé yìí",
   "somethingWentWrong": "Nnkan ṣẹlẹ̀. Jọ̀wọ gbiyànjú lẹ́ẹ̀kan si.",
-  "qrGenerationFailed": "Kò ṣeé ṣe láti dá koodu QR. Jọ̀wọ gbiyànjú lẹ́ẹ̀kan si."
+  "qrGenerationFailed": "Kò ṣeé ṣe láti dá koodu QR. Jọ̀wọ gbiyànjú lẹ́ẹ̀kan si.",
+  "sekerGreeting": "Kaabo! Emi ni Seker, olùrànlọwọ ilera AI rẹ. Mo wà nibí lati ṣèrànwọ́ fún ọ láti yé àwàmì rẹ. Kíni n ṣẹlẹ̀ òní? O le kọ tàbí tẹ bọ́tínì mic láti sọ̀rọ̀.",
+  "chatWithSeker": "Sọ̀rọ̀ pẹ̀lú Seker",
+  "chatWithSekerDesc": "Sọ̀rọ̀ pẹ̀lú olùrànlọwọ ilera AI wa ní àkókò gidi",
+  "medicalDisclaimerShort": "Seker ń fúnni ní ìtọ́ni àgbájá, kì í ṣe ìdájọ́. Kan si dókítà nígbà gbogbo.",
+  "aiChatTriage": "Sọ̀rọ̀ pẹ̀lú Seker AI",
+  "health": "Ilera",
+  "family": "Idile"
 }

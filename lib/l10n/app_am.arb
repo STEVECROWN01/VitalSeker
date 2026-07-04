@@ -859,5 +859,12 @@
   "fieldRequired": "ይህ መስክ ያስፈልጋል",
   "securitySettingsOnThisPage": "የደህንነት ቅንብሮች በዚህ ገጽ ላይ ናቸው",
   "somethingWentWrong": "የሆነ ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።",
-  "qrGenerationFailed": "የQR ኮድ ማመንጫ አልተሳካም። እባክዎ እንደገና ይሞክሩ።"
+  "qrGenerationFailed": "የQR ኮድ ማመንጫ አልተሳካም። እባክዎ እንደገና ይሞክሩ።",
+  "sekerGreeting": "ሰላም! እኔ ሴከር ነኝ፣ የእርስዎ AI የጤና አጋዥ ነኝ። ምልክቶችዎን ለመረዳት እና መመሪያ ለመስጠት እዚህ ነኝ። ምን ይሄዳል? መተየብ ወይም ማዳመጥ ይችላሉ።",
+  "chatWithSeker": "ከሴከር ጋር ይዋዩ",
+  "chatWithSekerDesc": "ከ AI የጤና አጋዥ ጋር በእውነተኛ ጊዜ ይዋዩ",
+  "medicalDisclaimerShort": "ሴከር አጠቃላይ መመሪያ ይሰጣል፣ ምርመራ አይደለም። ሁልጊዜ ዶክተር ያማክሩ።",
+  "aiChatTriage": "ከሴከር AI ጋር ውይይት",
+  "health": "ጤና",
+  "family": "ቤተሰብ"
 }

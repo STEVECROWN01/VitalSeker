@@ -860,5 +860,12 @@
   "fieldRequired": "Este campo es obligatorio",
   "securitySettingsOnThisPage": "La configuración de seguridad está en esta página",
   "somethingWentWrong": "Algo salió mal. Inténtelo de nuevo.",
-  "qrGenerationFailed": "No se pudo generar el código QR. Inténtelo de nuevo."
+  "qrGenerationFailed": "No se pudo generar el código QR. Inténtelo de nuevo.",
+  "sekerGreeting": "¡Hola! Soy Seker, tu asistente de salud IA. Estoy aquí para ayudarte a entender tus síntomas y brindarte orientación. ¿Qué te molesta hoy? Puedes escribir o mantener presionado el botón del micrófono para hablar.",
+  "chatWithSeker": "Chatear con Seker",
+  "chatWithSekerDesc": "Habla con nuestro asistente de salud IA en tiempo real",
+  "medicalDisclaimerShort": "Seker ofrece orientación general, no un diagnóstico. Siempre consulta a un médico.",
+  "aiChatTriage": "Chat con Seker IA",
+  "health": "Salud",
+  "family": "Familia"
 }

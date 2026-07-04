@@ -859,5 +859,12 @@
   "fieldRequired": "이 필드는 필수 항목입니다",
   "securitySettingsOnThisPage": "보안 설정이 이 페이지에 있습니다",
   "somethingWentWrong": "문제가 발생했습니다. 다시 시도해 주세요.",
-  "qrGenerationFailed": "QR 코드 생성에 실패했습니다. 다시 시도해 주세요."
+  "qrGenerationFailed": "QR 코드 생성에 실패했습니다. 다시 시도해 주세요.",
+  "sekerGreeting": "안녕하세요! 저는 세커, 귀하의 AI 건강 도우미입니다. 증상을 이해하고 안내하는 데 도움을 드리기 위해 여기 있습니다. 오늘 무엇이 걱정되시나요? 타이핑하거나 마이크 버튼을 눌러 말할 수 있습니다.",
+  "chatWithSeker": "세커와 채팅",
+  "chatWithSekerDesc": "AI 건강 도우미와 실시간으로 대화하세요",
+  "medicalDisclaimerShort": "세커는 일반적인 안내를 제공하며 진단이 아닙니다. 항상 의사와 상담하세요.",
+  "aiChatTriage": "세커 AI와 채팅",
+  "health": "건강",
+  "family": "가족"
 }

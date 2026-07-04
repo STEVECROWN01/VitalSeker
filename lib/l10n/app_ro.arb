@@ -859,5 +859,12 @@
   "fieldRequired": "Acest câmp este obligatoriu",
   "securitySettingsOnThisPage": "Setările de securitate sunt pe această pagină",
   "somethingWentWrong": "Ceva a mers prost. Încercați din nou.",
-  "qrGenerationFailed": "Generarea codului QR a eșuat. Încercați din nou."
+  "qrGenerationFailed": "Generarea codului QR a eșuat. Încercați din nou.",
+  "sekerGreeting": "Salut! Sunt Seker, asistentul tău de sănătate AI. Sunt aici să te ajut să îți înțelegi simptomele. Ce te deranjează astăzi? Poți scrie sau ține apăsat butonul microfonului pentru a vorbi.",
+  "chatWithSeker": "Conversează cu Seker",
+  "chatWithSekerDesc": "Vorbește cu asistentul nostru de sănătate AI în timp real",
+  "medicalDisclaimerShort": "Seker oferă îndrumări generale, nu un diagnostic. Consultă întotdeauna un medic.",
+  "aiChatTriage": "Conversație cu Seker AI",
+  "health": "Sănătate",
+  "family": "Familie"
 }

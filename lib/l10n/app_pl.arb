@@ -859,5 +859,12 @@
   "fieldRequired": "To pole jest wymagane",
   "securitySettingsOnThisPage": "Ustawienia zabezpieczeń znajdują się na tej stronie",
   "somethingWentWrong": "Coś poszło nie tak. Spróbuj ponownie.",
-  "qrGenerationFailed": "Nie udało się wygenerować kodu QR. Spróbuj ponownie."
+  "qrGenerationFailed": "Nie udało się wygenerować kodu QR. Spróbuj ponownie.",
+  "sekerGreeting": "Cześć! Jestem Seker, Twój asystent zdrowia AI. Pomagam zrozumieć objawy i udzielać wskazówek. Co Ci dzisiaj dolega? Możesz pisać lub przytrzymać przycisk mikrofonu, aby mówić.",
+  "chatWithSeker": "Czatuj z Sekerem",
+  "chatWithSekerDesc": "Rozmawiaj z naszym asystentem zdrowia AI w czasie rzeczywistym",
+  "medicalDisclaimerShort": "Seker udziela ogólnych wskazówek, nie diagnozy. Zawsze konsultuj się z lekarzem.",
+  "aiChatTriage": "Czat z Seker AI",
+  "health": "Zdrowie",
+  "family": "Rodzina"
 }

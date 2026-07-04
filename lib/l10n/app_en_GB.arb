@@ -1292,5 +1292,12 @@
   "fieldRequired": "This field is required",
   "securitySettingsOnThisPage": "Security settings are on this page",
   "somethingWentWrong": "Something went wrong. Please try again.",
-  "qrGenerationFailed": "Failed to generate QR code. Please try again."
+  "qrGenerationFailed": "Failed to generate QR code. Please try again.",
+  "sekerGreeting": "Hi! I'm Seker, your AI Health Assistant. I'm here to help you understand your symptoms and provide guidance. What's bothering you today? You can type or hold the mic button to speak.",
+  "chatWithSeker": "Chat with Seker",
+  "chatWithSekerDesc": "Talk to our AI health assistant in real-time",
+  "medicalDisclaimerShort": "Seker provides general guidance, not a diagnosis. Always consult a doctor.",
+  "aiChatTriage": "Chat with Seker AI",
+  "health": "Health",
+  "family": "Family"
 }

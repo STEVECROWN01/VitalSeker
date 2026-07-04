@@ -859,5 +859,12 @@
   "fieldRequired": "Medan ini diperlukan",
   "securitySettingsOnThisPage": "Tetapan keselamatan berada di halaman ini",
   "somethingWentWrong": "Sesuatu tidak kena. Sila cuba lagi.",
-  "qrGenerationFailed": "Gagal menjana kod QR. Sila cuba lagi."
+  "qrGenerationFailed": "Gagal menjana kod QR. Sila cuba lagi.",
+  "sekerGreeting": "Hai! Saya Seker, pembantu kesihatan AI anda. Saya di sini untuk membantu memahami simptom anda. Apa yang mengganggu hari ini? Anda boleh menaip atau tekan butang mikrofon untuk bercakap.",
+  "chatWithSeker": "Sembang dengan Seker",
+  "chatWithSekerDesc": "Bercakap dengan pembantu kesihatan AI kami secara real-time",
+  "medicalDisclaimerShort": "Seker memberikan panduan umum, bukan diagnosis. Sentiasa berunding dengan doktor.",
+  "aiChatTriage": "Sembang dengan Seker AI",
+  "health": "Kesihatan",
+  "family": "Keluarga"
 }
