@@ -9,6 +9,11 @@
     <!-- Geolocation permission for the SOS screen share-location feature. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- Microphone permission for AI chat voice notes (speech-to-text) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!-- Storage permissions for medical record file uploads (images/documents) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <application
         android:label="VitalSeker"
         android:name="${applicationName}"

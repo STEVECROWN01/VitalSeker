@@ -354,7 +354,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      l10n.chatWithCk,
+                      l10n.chatWithSeker,
                       style: const TextStyle(
                         fontFamily: 'ClashDisplay',
                         fontSize: 16,
@@ -363,7 +363,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
                       ),
                     ),
                     Text(
-                      l10n.chatWithCkDesc,
+                      l10n.chatWithSekerDesc,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.white.withValues(alpha: 0.85),
@@ -627,6 +627,8 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
         TextFormField(
           controller: _conditionsController,
           maxLines: 3,
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.newline,
           decoration: InputDecoration(
             hintText: l10n.conditionsHint,
           ),
@@ -639,6 +641,8 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
         TextFormField(
           controller: _medicationsController,
           maxLines: 3,
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.newline,
           decoration: InputDecoration(
             hintText: l10n.medicationsHint,
           ),

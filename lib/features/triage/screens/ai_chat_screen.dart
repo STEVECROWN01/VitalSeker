@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/services/supabase_service.dart';
@@ -13,17 +13,19 @@ import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 
-/// AI Chat Triage Screen — "CK" the AI Health Assistant
+/// AI Chat Screen — "Seker" the AI Health Assistant
 ///
-/// A conversational AI chat (like ChatGPT but for health).
-/// The user can type or hold-to-record voice notes.
-/// Voice notes are transcribed in real-time and sent to the AI.
+/// A conversational AI health chat. The user can type or hold-to-record
+/// voice notes. Voice notes are transcribed in real-time and sent to the AI.
 ///
-/// The AI:
+/// Seker:
+///   - Introduces itself on first message + tells user what it knows about them
 ///   - Asks questions to understand symptoms
 ///   - Manages user stress/emotions with empathy
 ///   - Provides general health advice (not diagnoses)
-///   - Always recommends seeing a doctor
+///   - Always recommends consulting a professional doctor
+///   - Responds in the user's language (40 supported languages)
+///   - ONLY discusses health/biology/psychology
 class AiChatScreen extends ConsumerStatefulWidget {
   const AiChatScreen({super.key});
 
@@ -50,23 +52,44 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   bool _isSending = false;
   bool _isRecording = false;
   String _partialTranscription = '';
+  final stt.SpeechToText _speech = stt.SpeechToText();
+  bool _speechAvailable = false;
 
   @override
   void initState() {
     super.initState();
-    // Add CK's greeting message
+    _initSpeech();
+    // Add Seker's greeting message
     final l10n = AppLocalizations.of(context)!;
     _messages.add(_ChatMessage(
-      content: l10n.ckGreeting,
+      content: l10n.sekerGreeting,
       isUser: false,
       timestamp: DateTime.now(),
     ));
+  }
+
+  Future<void> _initSpeech() async {
+    try {
+      _speechAvailable = await _speech.initialize(
+        onError: (error) => debugPrint('Speech error: $error'),
+        onStatus: (status) {
+          if (status == 'notListening' && _isRecording) {
+            _stopRecording();
+          }
+        },
+      );
+      if (mounted) setState(() {});
+    } catch (e) {
+      debugPrint('Speech init failed: $e');
+      _speechAvailable = false;
+    }
   }
 
   @override
   void dispose() {
     _textController.dispose();
     _scrollController.dispose();
+    _speech.stop();
     super.dispose();
   }
 
@@ -102,6 +125,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         'ai-chat',
         body: {
           'messages': _messages
+              .where((m) => m.isUser || m.content != (AppLocalizations.of(context)?.sekerGreeting ?? ''))
               .map((m) => {
                     'role': m.isUser ? 'user' : 'assistant',
                     'content': m.content,
@@ -138,20 +162,45 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
     }
   }
 
-  void _startRecording() {
-    // Voice recording would use the speech_to_text or record package
-    // For now, show a placeholder that voice notes require the package
-    setState(() {
-      _isRecording = true;
-      _partialTranscription = '';
-    });
-    AppSnackBar.info(
-      context,
-      'Voice notes require the speech_to_text package. Please type your message for now.',
-    );
+  Future<void> _startRecording() async {
+    if (!_speechAvailable) {
+      AppSnackBar.error(
+        context,
+        'Speech recognition is not available on this device. Please type your message.',
+      );
+      return;
+    }
+
+    try {
+      await _speech.listen(
+        onResult: (result) {
+          setState(() {
+            _partialTranscription = result.recognizedWords;
+            _textController.text = _partialTranscription;
+            _textController.selection = TextSelection.fromPosition(
+              TextPosition(offset: _textController.text.length),
+            );
+          });
+        },
+        localeId: Localizations.localeOf(context).languageCode,
+        listenMode: stt.ListenMode.dictation,
+        listenFor: const Duration(seconds: 30),
+        pauseFor: const Duration(seconds: 3),
+      );
+      setState(() {
+        _isRecording = true;
+        _partialTranscription = '';
+      });
+    } catch (e) {
+      AppSnackBar.error(
+        context,
+        'Could not start voice recording. Please check microphone permissions.',
+      );
+    }
   }
 
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    await _speech.stop();
     setState(() {
       _isRecording = false;
       if (_partialTranscription.isNotEmpty) {
@@ -180,10 +229,10 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
               ),
               child: const Center(
                 child: Text(
-                  'CK',
+                  'S',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 18,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -195,7 +244,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'CK — AI Health Assistant',
+                    'Seker — AI Health Assistant',
                     style: AppTextStyles.subheading2.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -299,13 +348,47 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'CK is thinking...',
+                          'Seker is thinking...',
                           style: TextStyle(
                             fontSize: 12,
                             color: AppColors.textSecondary(isDark),
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          // Recording indicator
+          if (_isRecording)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              color: AppColors.error(isDark).withValues(alpha: 0.1),
+              child: Row(
+                children: [
+                  Icon(Icons.mic, color: AppColors.error(isDark), size: 16),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _partialTranscription.isEmpty
+                          ? 'Listening...'
+                          : _partialTranscription,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textPrimary(isDark),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _stopRecording,
+                    child: Text(
+                      'Stop',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.error(isDark),
+                      ),
                     ),
                   ),
                 ],
@@ -330,10 +413,9 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         ),
         child: Row(
           children: [
-            // Voice record button
+            // Voice record button — tap to start, tap again to stop
             GestureDetector(
-              onLongPressStart: (_) => _startRecording(),
-              onLongPressEnd: (_) => _stopRecording(),
+              onTap: _isRecording ? _stopRecording : _startRecording,
               child: Container(
                 width: 40,
                 height: 40,
@@ -369,7 +451,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                   decoration: InputDecoration(
                     hintText: _isRecording
                         ? 'Recording...'
-                        : 'Type your message...',
+                        : 'Type or tap mic to speak...',
                     hintStyle: TextStyle(
                       color: AppColors.textHint(isDark),
                       fontSize: 14,
@@ -415,12 +497,12 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
 
   void _shareConversation() {
     final conversationText = _messages.map((m) {
-      final sender = m.isUser ? 'You' : 'CK';
+      final sender = m.isUser ? 'You' : 'Seker';
       return '[$sender] ${m.content}';
     }).join('\n\n');
 
     Share.share(
-      'My VitalSeker AI Health Chat with CK:\n\n$conversationText\n\n— Shared via VitalSeker',
+      'My VitalSeker AI Health Chat with Seker:\n\n$conversationText\n\n— Shared via VitalSeker',
       subject: 'VitalSeker AI Health Chat',
     );
   }
@@ -468,7 +550,7 @@ class _ChatBubble extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 4),
                 child: Text(
-                  'CK',
+                  'Seker',
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,

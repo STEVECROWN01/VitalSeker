@@ -73,6 +73,20 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
         : urgencyLevel == 'yellow' || urgencyLevel == 'medium' ? 'urgent-care'
         : urgencyLevel == 'green' || urgencyLevel == 'low' ? 'self-care'
         : 'schedule-appointment');
+
+    // ── Full result fields from the edge function ──
+    // The edge function returns: urgency, urgency_label, possible_areas,
+    // recommended_action, explanation, when_to_escalate, disclaimer,
+    // clarifying_question. Display ALL of these so the user gets a complete
+    // medical result, not just "visit urgent care + urgency score".
+    final urgencyLabel = triage['urgency_label'] as String? ?? '';
+    final possibleAreas =
+        (triage['possible_areas'] as List<dynamic>? ?? []).cast<String>();
+    final recommendedAction = triage['recommended_action'] as String? ?? '';
+    final explanation = triage['explanation'] as String? ?? '';
+    final whenToEscalate = triage['when_to_escalate'] as String? ?? '';
+    final clarifyingQuestion = triage['clarifying_question'] as String?;
+
     final recommendations =
         (triage['recommendations'] as List<dynamic>? ?? []).cast<String>();
     final redFlags =
@@ -81,6 +95,15 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
     final disclaimer = triage['disclaimer'] as String? ?? l10n.triageDisclaimer;
     final followUpQuestions =
         (triage['follow_up_questions'] as List<dynamic>? ?? []).cast<String>();
+
+    // If recommended_action exists, add it as the first recommendation
+    if (recommendedAction.isNotEmpty && !recommendations.contains(recommendedAction)) {
+      recommendations.insert(0, recommendedAction);
+    }
+    // If when_to_escalate exists, add it to red flags
+    if (whenToEscalate.isNotEmpty && !redFlags.contains(whenToEscalate)) {
+      redFlags.add(whenToEscalate);
+    }
 
     final heroColor = _urgencyColor(urgencyLevel);
     final headline = _seekCareHeadline(seekCare, l10n);
@@ -160,6 +183,120 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
               ),
             ),
             const SizedBox(height: 28),
+
+            // ── 4b. AI Explanation (what might be happening) ──
+            if (explanation.isNotEmpty) ...[
+              _SectionTitle(
+                title: 'AI Analysis',
+                icon: Icons.psychology_outlined,
+                color: AppColors.primary(isDark),
+              ),
+              const SizedBox(height: 8),
+              Card(
+                color: AppColors.primaryContainer(isDark),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    explanation,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                      height: 1.6,
+                      color: AppColors.textPrimary(isDark),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
+
+            // ── 4c. Possible areas (what body systems might be involved) ──
+            if (possibleAreas.isNotEmpty) ...[
+              _SectionTitle(
+                title: 'Possible Areas',
+                icon: Icons.medical_information_outlined,
+                color: AppColors.info(isDark),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: possibleAreas
+                    .map((area) => Chip(
+                          label: Text(area),
+                          backgroundColor: AppColors.info(isDark)
+                              .withValues(alpha: isDark ? 0.15 : 0.10),
+                          labelStyle: TextStyle(
+                            color: AppColors.textPrimary(isDark),
+                            fontSize: 12,
+                          ),
+                        ))
+                    .toList(),
+              ),
+              const SizedBox(height: 24),
+            ],
+
+            // ── 4d. Recommended Action ──
+            if (recommendedAction.isNotEmpty) ...[
+              _SectionTitle(
+                title: 'Recommended Action',
+                icon: Icons.medical_services_outlined,
+                color: AppColors.success(isDark),
+              ),
+              const SizedBox(height: 8),
+              Card(
+                color: AppColors.success(isDark).withValues(alpha: isDark ? 0.12 : 0.08),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(Icons.check_circle_outline,
+                          color: AppColors.success(isDark), size: 20),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          recommendedAction,
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            height: 1.6,
+                            color: AppColors.textPrimary(isDark),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
+
+            // ── 4e. Urgency Label (short description like "Surveillance à domicile") ──
+            if (urgencyLabel.isNotEmpty) ...[
+              _SectionTitle(
+                title: 'Assessment',
+                icon: Icons.verified_outlined,
+                color: heroColor,
+              ),
+              const SizedBox(height: 8),
+              Card(
+                color: heroColor.withValues(alpha: isDark ? 0.12 : 0.08),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    urgencyLabel,
+                    style: TextStyle(
+                      fontFamily: 'ClashDisplay',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary(isDark),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
 
             // ── 5. "When to escalate" amber card ──
             _EscalationCard(
@@ -424,9 +561,34 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
           await ref.read(healthPassportProvider.future);
 
       if (passport == null) {
-        if (mounted) {
-          AppSnackBar.error(
-              context, 'No health passport found. Please create one first.');
+        // No passport exists — create one automatically instead of showing
+        // an error. This is the correct UX: the user just did a triage and
+        // wants to save the result; we should create the passport for them.
+        try {
+          await ref.read(databaseServiceProvider).createHealthPassport(
+                userId: user.id,
+                data: {
+                  'last_assessment_date': DateTime.now().toIso8601String(),
+                  'vital_score': 75, // Default starting score
+                },
+              );
+          ref.invalidate(healthPassportProvider);
+          if (mounted) {
+            AppSnackBar.success(
+              context,
+              'Health passport created! Saving triage result...',
+            );
+            // Retry the save now that the passport exists
+            await Future.delayed(const Duration(milliseconds: 500));
+            await _saveToPassport();
+          }
+        } catch (e) {
+          if (mounted) {
+            AppSnackBar.error(
+              context,
+              'Could not create health passport. Please try again.',
+            );
+          }
         }
         return;
       }

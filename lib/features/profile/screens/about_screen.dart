@@ -23,22 +23,14 @@ class AboutScreen extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      gradient: AppColors.brandGradient,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(12),
-                      child: Image(
-                        image: AssetImage(
-                          'assets/images/branding/app_logo.png',
-                        ),
-                        fit: BoxFit.contain,
-                        gaplessPlayback: true,
-                      ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: Image.asset(
+                      'assets/images/branding/app_logo.png',
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                      gaplessPlayback: true,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -97,12 +89,20 @@ class AboutScreen extends StatelessWidget {
               isDark: isDark,
               children: [
                 _FeatureItem(icon: Icons.psychology, title: l10n.featureAiTriageTitle, description: l10n.featureAiTriageDesc, isDark: isDark),
+                _FeatureItem(icon: Icons.chat, title: 'AI Chat with Seker', description: 'Conversational AI health assistant — talk to Seker in real-time, with voice notes', isDark: isDark),
                 _FeatureItem(icon: Icons.badge, title: l10n.featureHealthPassportTitle, description: l10n.featureHealthPassportDesc, isDark: isDark),
                 _FeatureItem(icon: Icons.qr_code_2, title: l10n.featureQrSharingTitle, description: l10n.featureQrSharingDesc, isDark: isDark),
                 _FeatureItem(icon: Icons.emergency, title: l10n.featureEmergencySosTitle, description: l10n.featureEmergencySosDesc, isDark: isDark),
                 _FeatureItem(icon: Icons.insights, title: l10n.featureWeeklyInsightsTitle, description: l10n.featureWeeklyInsightsDesc, isDark: isDark),
                 _FeatureItem(icon: Icons.family_restroom, title: l10n.featureFamilyProfilesTitle, description: l10n.featureFamilyProfilesDesc, isDark: isDark),
                 _FeatureItem(icon: Icons.picture_as_pdf, title: l10n.featurePdfExportTitle, description: l10n.featurePdfExportDesc, isDark: isDark),
+                _FeatureItem(icon: Icons.translate, title: 'Medical Translation', description: 'Translate medical terms into 40+ languages with DeepL', isDark: isDark),
+                _FeatureItem(icon: Icons.medical_records, title: 'Medical Records', description: 'Store and manage prescriptions, lab results, and imaging files', isDark: isDark),
+                _FeatureItem(icon: Icons.monitor_heart, title: 'Vitals Tracking', description: 'Track heart rate, blood pressure, temperature, and more', isDark: isDark),
+                _FeatureItem(icon: Icons.medication, title: 'Medication Reminders', description: 'Never miss a dose with smart medication reminders', isDark: isDark),
+                _FeatureItem(icon: Icons.event, title: 'Appointment Manager', description: 'Schedule and track doctor appointments', isDark: isDark),
+                _FeatureItem(icon: Icons.offline_bolt, title: 'Offline Mode', description: 'Access your health passport and history without internet', isDark: isDark),
+                _FeatureItem(icon: Icons.language, title: '41 Languages', description: 'Full app localization in 41 languages including African languages', isDark: isDark),
               ],
             ),
 
@@ -121,7 +121,16 @@ class AboutScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      const Icon(Icons.rocket_launch, color: Colors.white, size: 32),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          'assets/images/branding/keter_marketing_logo.png',
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
+                          gaplessPlayback: true,
+                        ),
+                      ),
                       const SizedBox(height: 8),
                       Text(
                         AppConfig.producer,
