@@ -231,7 +231,11 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
             if (_currentStep > 0) {
               _previousStep();
             } else {
-              context.pop();
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              } else {
+                context.go(AppConfig.dashboard);
+              }
             }
           },
         ),

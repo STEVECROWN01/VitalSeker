@@ -4,7 +4,7 @@ import 'supabase_service.dart';
 class EdgeFunctionService {
   final SupabaseClient _client = SupabaseService().client;
 
-  /// AI Triage - Analyze symptoms using Claude AI.
+  /// AI Triage - Analyze symptoms using GLM-4 AI.
   ///
   /// Pass [conversationHistory] to enable follow-up questions. Each entry
   /// should be `{role: 'user' | 'assistant', content: String}` from prior
@@ -32,10 +32,13 @@ class EdgeFunctionService {
     if (conversationHistory != null && conversationHistory.isNotEmpty) {
       body['conversation_history'] = conversationHistory;
     }
+    // 60s timeout — GLM-4 can take 10-30s for complex triage, but 60s is the
+    // hard limit. Without this, the call hangs forever if the edge function
+    // is slow or the network drops.
     final response = await _client.functions.invoke(
       'vitalseker-triage',
       body: body,
-    );
+    ).timeout(const Duration(seconds: 60));
 
     if (response.status != 200) {
       throw Exception('Triage failed: ${response.data}');
@@ -45,7 +48,8 @@ class EdgeFunctionService {
 
   /// Generate QR Token for Health Passport
   Future<Map<String, dynamic>> generateQr() async {
-    final response = await _client.functions.invoke('generate-qr');
+    final response = await _client.functions.invoke('generate-qr')
+        .timeout(const Duration(seconds: 30));
     if (response.status != 200) {
       throw Exception('QR generation failed: ${response.data}');
     }
@@ -132,7 +136,7 @@ class EdgeFunctionService {
     final response = await _client.functions.invoke(
       'translate',
       body: {'text': text, 'target_lang': targetLang},
-    );
+    ).timeout(const Duration(seconds: 30));
     if (response.status != 200) {
       throw Exception('Translation failed: ${response.data}');
     }

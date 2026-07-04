@@ -292,24 +292,39 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
       builder: (context, _) {
         final t = Curves.easeOut.transform(_progressController.value);
         final fill = t * 0.9; // cap at 90% per spec
-        return SizedBox(
-          width: 200,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: SizedBox(
-              height: 8,
-              child: LinearProgressIndicator(
-                value: fill,
-                minHeight: 8,
-                backgroundColor:
-                    AppColors.primary(isDark).withValues(alpha: 0.12),
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  AppColors.primary(isDark),
-                ),
+        final percent = (fill * 100).round();
+        return Column(
+          children: [
+            SizedBox(
+              width: 200,
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
+                child: SizedBox(
+                  height: 8,
+                  child: LinearProgressIndicator(
+                    value: fill,
+                    minHeight: 8,
+                    backgroundColor:
+                        AppColors.primary(isDark).withValues(alpha: 0.12),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.primary(isDark),
+                    ),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
               ),
             ),
-          ),
+            const SizedBox(height: 8),
+            Text(
+              '$percent%',
+              style: TextStyle(
+                fontFamily: 'JetBrainsMono',
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: AppColors.primary(isDark),
+              ),
+            ),
+          ],
         );
       },
     );
