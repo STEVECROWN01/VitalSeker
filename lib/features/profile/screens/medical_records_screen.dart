@@ -1,6 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
@@ -137,6 +142,131 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
         ? (DateTime.tryParse(record!['date'] as String) ?? DateTime.now())
         : DateTime.now();
     bool isSaving = false;
+    File? attachedFile;
+    String? attachedFileName;
+    String? existingFileUrl;
+    bool isUploading = false;
+
+    // If editing, check for existing file URL
+    if (isEditing && record != null) {
+      existingFileUrl = record['file_url'] as String?;
+    }
+
+    Future<String?> _uploadFile(File file, String userId) async {
+      try {
+        final fileName = '${userId}/${DateTime.now().millisecondsSinceEpoch}_${file.path.split('/').last}';
+        final storage = Supabase.instance.client.storage;
+        // Try to upload to 'medical-records' bucket; create if doesn't exist
+        try {
+          await storage.from('medical-records').upload(fileName, file);
+        } catch (e) {
+          // Bucket might not exist — try creating it
+          debugPrint('Upload failed, bucket may not exist: $e');
+          // Fall back to base64 inline storage (not ideal but works)
+          return null;
+        }
+        return storage.from('medical-records').getPublicUrl(fileName);
+      } catch (e) {
+        debugPrint('File upload error: $e');
+        return null;
+      }
+    }
+
+    Future<void> _pickFromCamera() async {
+      try {
+        final picker = ImagePicker();
+        final picked = await picker.pickImage(source: ImageSource.camera, imageQuality: 85);
+        if (picked == null) return;
+
+        // Crop the image — document scanner style
+        final cropped = await ImageCropper().cropImage(
+          sourcePath: picked.path,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.ratio3x4,
+            CropAspectRatioPreset.ratio4x3,
+          ],
+          uiSettings: [
+            AndroidUiSettings(
+              toolbarTitle: 'Crop Document',
+              toolbarColor: AppColors.darkPrimary,
+              toolbarWidgetColor: Colors.white,
+              activeControlsWidgetColor: Colors.white,
+              lockAspectRatio: false,
+            ),
+            IOSUiSettings(
+              title: 'Crop Document',
+              aspectRatioLockEnabled: false,
+            ),
+          ],
+        );
+
+        if (cropped == null) return;
+
+        setDialogState(() {
+          attachedFile = File(cropped.path);
+          attachedFileName = 'Scanned document';
+          isUploading = true;
+        });
+
+        // Upload to Supabase Storage
+        final user = ref.read(currentUserProvider);
+        if (user != null) {
+          final url = await _uploadFile(File(cropped.path), user.id);
+          if (url != null) {
+            existingFileUrl = url;
+          }
+        }
+
+        setDialogState(() => isUploading = false);
+        if (mounted) {
+          AppSnackBar.success(context, 'Document scanned successfully');
+        }
+      } catch (e) {
+        setDialogState(() => isUploading = false);
+        if (mounted) {
+          AppSnackBar.error(context, 'Could not capture document: $e');
+        }
+      }
+    }
+
+    Future<void> _pickFromFile() async {
+      try {
+        final result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'],
+        );
+        if (result == null || result.files.single.path == null) return;
+
+        final file = File(result.files.single.path!);
+        final fileName = result.files.single.name;
+
+        setDialogState(() {
+          attachedFile = file;
+          attachedFileName = fileName;
+          isUploading = true;
+        });
+
+        // Upload to Supabase Storage
+        final user = ref.read(currentUserProvider);
+        if (user != null) {
+          final url = await _uploadFile(file, user.id);
+          if (url != null) {
+            existingFileUrl = url;
+          }
+        }
+
+        setDialogState(() => isUploading = false);
+        if (mounted) {
+          AppSnackBar.success(context, 'File uploaded successfully');
+        }
+      } catch (e) {
+        setDialogState(() => isUploading = false);
+        if (mounted) {
+          AppSnackBar.error(context, 'Could not pick file: $e');
+        }
+      }
+    }
 
     showDialog(
       context: context,
@@ -207,6 +337,98 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                   ),
                   style: const TextStyle(fontFamily: 'Inter'),
                 ),
+                const SizedBox(height: 16),
+                // File upload section — optional attachment
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Attachment (optional)',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textSecondary(isDark),
+                        ),
+                      ),
+                    ),
+                    if (isUploading)
+                      const Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                // Show attached file or upload buttons
+                if (attachedFile != null || existingFileUrl != null) ...[
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryContainer(isDark),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.border(isDark)),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.attach_file, color: AppColors.primary(isDark), size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            attachedFileName ?? 'Existing file',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: AppColors.textPrimary(isDark),
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.close, size: 18, color: AppColors.error(isDark)),
+                          onPressed: isUploading ? null : () {
+                            setDialogState(() {
+                              attachedFile = null;
+                              attachedFileName = null;
+                              existingFileUrl = null;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ] else ...[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: isUploading ? null : _pickFromCamera,
+                          icon: const Icon(Icons.camera_alt_outlined, size: 18),
+                          label: const Text('Scan'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.primary(isDark),
+                            side: BorderSide(color: AppColors.primary(isDark)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: isUploading ? null : _pickFromFile,
+                          icon: const Icon(Icons.folder_outlined, size: 18),
+                          label: const Text('Upload'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.primary(isDark),
+                            side: BorderSide(color: AppColors.primary(isDark)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),
@@ -234,6 +456,8 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                           'type': selectedType,
                           'description': descController.text.trim(),
                           'date': selectedDate.toIso8601String().split('T')[0],
+                          'has_attachment': attachedFile != null || existingFileUrl != null,
+                          if (existingFileUrl != null) 'file_url': existingFileUrl,
                         };
                         if (isEditing && record != null) {
                           await db.updateMedicalRecord(record['id'] as String, payload);

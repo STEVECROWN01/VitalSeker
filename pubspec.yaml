@@ -68,6 +68,10 @@ dependencies:
   image_picker: ^1.1.2
   # Voice notes in AI chat — real-time speech-to-text transcription
   speech_to_text: ^7.0.0
+  # Medical records file upload — pick files from device
+  file_picker: ^8.0.0
+  # Image cropping for document scanner
+  image_cropper: ^8.0.0
 
 dev_dependencies:
   flutter_test:

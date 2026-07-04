@@ -74,6 +74,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            tooltip: l10n.settings,
+            onPressed: () => context.push(AppConfig.settings),
+          ),
+          IconButton(
             icon: const Icon(Icons.notifications_outlined),
             tooltip: l10n.notifications,
             onPressed: () => context.push(AppConfig.notificationsSettings),
@@ -244,35 +249,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 }),
                 const SizedBox(height: 24),
 
-                // ── Appearance ──
+                // ── Health Features (profile-specific) ──
                 _MenuSection(
-                  title: l10n.appearance,
-                  isDark: isDark,
-                  children: [
-                    _MenuItem(
-                      icon: Icons.dark_mode_outlined,
-                      iconBg: _tint(AppColors.primary(isDark), isDark),
-                      iconFg: AppColors.primary(isDark),
-                      label: l10n.darkMode,
-                      subtitle: _themeSubtitle(ref.read(themeModeProvider), l10n),
-                      trailing: Switch(
-                        value: Theme.of(context).brightness == Brightness.dark,
-                        onChanged: (v) => ref
-                            .read(themeModeProvider.notifier)
-                            .setTheme(v ? ThemeMode.dark : ThemeMode.light),
-                        activeTrackColor: AppColors.primary(isDark),
-                        thumbColor: WidgetStateProperty.all(Colors.white),
-                      ),
-                      onTap: () => ref
-                          .read(themeModeProvider.notifier)
-                          .setTheme(isDark ? ThemeMode.light : ThemeMode.dark),
-                    ),
-                  ],
-                ),
-
-                // ── Account ──
-                _MenuSection(
-                  title: l10n.account,
+                  title: l10n.health,
                   isDark: isDark,
                   children: [
                     _MenuItem(
@@ -284,72 +263,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       onTap: () => context.go(AppConfig.passport),
                     ),
                     _MenuItem(
-                      icon: Icons.family_restroom,
-                      iconBg: _tint(const Color(0xFF5B6F6A), isDark),
-                      iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                      label: l10n.familyProfiles,
-                      subtitle: l10n.connectedMembers(familyCount),
-                      onTap: () => context.push(AppConfig.family),
-                    ),
-                    _MenuItem(
-                      icon: Icons.language,
-                      iconBg: _tint(AppColors.primaryContainer(isDark), isDark),
-                      iconFg: isDark
-                          ? AppColors.darkOnSurface
-                          : AppColors.primary(isDark),
-                      label: l10n.language,
-                      // Reflect the actual selected locale (was hardcoded 'English (US)').
-                      subtitle: localeToLanguageName(ref.watch(localeProvider)),
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (ctx) => SafeArea(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Text(
-                                    l10n.selectLanguage,
-                                    style: TextStyle(
-                                      fontFamily: 'ClashDisplay',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.textPrimary(isDark),
-                                    ),
-                                  ),
-                                ),
-                                ...languageLocales.keys.map((lang) => ListTile(
-                                  title: Text(lang, style: const TextStyle(fontFamily: 'Inter')),
-                                  trailing: ref.watch(localeProvider).languageCode == (languageLocales[lang]?.languageCode ?? 'en')
-                                      ? Icon(Icons.check, color: AppColors.primary(isDark))
-                                      : null,
-                                  onTap: () {
-                                    ref.read(localeProvider.notifier).setLocaleByLanguageName(lang);
-                                    Navigator.pop(ctx);
-                                  },
-                                )),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    _MenuItem(
-                      icon: Icons.notifications_active_outlined,
-                      iconBg: _tint(AppColors.primary(isDark), isDark),
-                      iconFg: AppColors.primary(isDark),
-                      label: l10n.notifications,
-                      subtitle: l10n.alertsSmartReminders,
-                      onTap: () => context.push(AppConfig.notificationsSettings),
-                    ),
-                    _MenuItem(
                       icon: Icons.folder_outlined,
                       iconBg: _tint(AppColors.secondary(isDark), isDark),
                       iconFg: AppColors.secondary(isDark),
                       label: l10n.medicalRecords,
                       subtitle: l10n.documentsImaging,
                       onTap: () => context.push(AppConfig.medicalRecords),
+                    ),
+                    _MenuItem(
+                      icon: Icons.badge_outlined,
+                      iconBg: _tint(const Color(0xFF5B6F6A), isDark),
+                      iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
+                      label: l10n.medicalID,
+                      subtitle: l10n.emergencyMedicalCard,
+                      onTap: () => context.push(AppConfig.medicalId),
                     ),
                     _MenuItem(
                       icon: Icons.translate,
@@ -361,76 +288,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       subtitle: l10n.translateMedicalTermsSubtitle,
                       onTap: () => context.push(AppConfig.translation),
                     ),
-                    _MenuItem(
-                      icon: Icons.badge_outlined,
-                      iconBg: _tint(const Color(0xFF5B6F6A), isDark),
-                      iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                      label: l10n.medicalID,
-                      subtitle: l10n.emergencyMedicalCard,
-                      onTap: () => context.push(AppConfig.medicalId),
-                    ),
                   ],
                 ),
 
-                // ── Privacy & Data ──
+                // ── Family ──
                 _MenuSection(
-                  title: l10n.privacyData,
+                  title: l10n.family,
                   isDark: isDark,
                   children: [
                     _MenuItem(
-                      icon: Icons.shield_outlined,
-                      iconBg: _tint(AppColors.error(isDark), isDark),
-                      iconFg: AppColors.error(isDark),
-                      label: l10n.securityStorage,
-                      subtitle: l10n.aes256EncryptionActive,
-                      // Points to the Settings screen (where data-management
-                      // + security toggles live) — NOT the Privacy Policy page.
-                      onTap: () => context.push(AppConfig.settings),
-                    ),
-                    _MenuItem(
-                      icon: Icons.download_outlined,
-                      iconBg: _tint(AppColors.primary(isDark), isDark),
-                      iconFg: AppColors.primary(isDark),
-                      label: l10n.exportData,
-                      subtitle: l10n.downloadYourHealthData,
-                      onTap: () => context.push(AppConfig.exportScreen),
-                    ),
-                  ],
-                ),
-
-                // ── Support ──
-                _MenuSection(
-                  title: l10n.support,
-                  isDark: isDark,
-                  children: [
-                    _MenuItem(
-                      icon: Icons.settings_outlined,
-                      iconBg: _tint(AppColors.primary(isDark), isDark),
-                      iconFg: AppColors.primary(isDark),
-                      label: l10n.settings,
-                      subtitle: l10n.themePasswordAccount,
-                      onTap: () => context.push(AppConfig.settings),
-                    ),
-                    _MenuItem(
-                      icon: Icons.help_outline,
-                      iconBg: _tint(AppColors.secondary(isDark), isDark),
-                      iconFg: AppColors.secondary(isDark),
-                      label: l10n.helpCenter,
-                      subtitle: l10n.faqsDocumentation,
-                      onTap: () => context.push(AppConfig.helpSupport),
-                    ),
-                    _MenuItem(
-                      icon: Icons.support_agent,
+                      icon: Icons.family_restroom,
                       iconBg: _tint(const Color(0xFF5B6F6A), isDark),
                       iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
-                      label: l10n.contactConcierge,
-                      subtitle: l10n.priorityProSupport,
-                      onTap: () => context.push(AppConfig.helpSupport),
+                      label: l10n.familyProfiles,
+                      subtitle: l10n.connectedMembers(familyCount),
+                      onTap: () => context.push(AppConfig.family),
                     ),
                   ],
                 ),
 
-                // ── About ──
+                // ── About & Legal ──
                 _MenuSection(
                   title: l10n.about,
                   isDark: isDark,
