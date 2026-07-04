@@ -181,13 +181,6 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
         // Crop the image — document scanner style
         final cropped = await ImageCropper().cropImage(
           sourcePath: picked.path,
-          aspectRatioPresets: [
-            CropAspectRatioPreset.original,
-            CropAspectRatioPreset.square,
-            CropAspectRatioPreset.ratio3x2,
-            CropAspectRatioPreset.ratio4x3,
-            CropAspectRatioPreset.ratio16x9,
-          ],
           uiSettings: [
             AndroidUiSettings(
               toolbarTitle: 'Crop Document',
@@ -195,10 +188,24 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
               toolbarWidgetColor: Colors.white,
               activeControlsWidgetColor: Colors.white,
               lockAspectRatio: false,
+              aspectRatioPresets: [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9,
+              ],
             ),
             IOSUiSettings(
               title: 'Crop Document',
               aspectRatioLockEnabled: false,
+              aspectRatioPresets: [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9,
+              ],
             ),
           ],
         );
