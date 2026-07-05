@@ -184,29 +184,50 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       // Check if Seker auto-saved any health data from the conversation
       final savedData = (data['saved_data'] as List<dynamic>?) ?? [];
       if (savedData.isNotEmpty) {
-        // Show a subtle success notification
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {
             AppSnackBar.success(
               context,
               '✓ ${savedData.join(', ')} saved to your profile',
             );
-            // Invalidate providers so the profile/passport refresh
             ref.invalidate(userProfileProvider);
             ref.invalidate(healthPassportProvider);
           }
         });
       }
 
+      // Simulate streaming: add an empty message, then reveal it word by word
+      final streamingMessage = _ChatMessage(
+        content: '',
+        isUser: false,
+        timestamp: DateTime.now(),
+      );
       setState(() {
-        _messages.add(_ChatMessage(
-          content: reply,
-          isUser: false,
-          timestamp: DateTime.now(),
-        ));
+        _messages.add(streamingMessage);
         _isSending = false;
       });
       _scrollToBottom();
+
+      // Reveal the reply word by word (simulated streaming)
+      final words = reply.split(' ');
+      String currentText = '';
+      for (int i = 0; i < words.length; i++) {
+        if (!mounted) break;
+        currentText += (i == 0 ? '' : ' ') + words[i];
+        await Future.delayed(const Duration(milliseconds: 30));
+        if (!mounted) break;
+        setState(() {
+          final idx = _messages.indexOf(streamingMessage);
+          if (idx >= 0) {
+            _messages[idx] = _ChatMessage(
+              content: currentText,
+              isUser: false,
+              timestamp: streamingMessage.timestamp,
+            );
+          }
+        });
+        _scrollToBottom();
+      }
     } catch (e) {
       setState(() {
         _messages.add(_ChatMessage(
@@ -231,6 +252,21 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
     }
 
     try {
+      // Try to get available locales for auto-detection
+      final availableLocales = await _speech.locales();
+      final appLocale = Localizations.localeOf(context).languageCode;
+      // Match the app's current language to the best available speech locale
+      String? bestLocaleId;
+      try {
+        final match = availableLocales.firstWhere(
+          (l) => l.localeId.startsWith(appLocale),
+          orElse: () => availableLocales.first,
+        );
+        bestLocaleId = match.localeId;
+      } catch (_) {
+        bestLocaleId = null; // Let the system auto-detect
+      }
+
       await _speech.listen(
         onResult: (result) {
           setState(() {
@@ -241,7 +277,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
             );
           });
         },
-        localeId: Localizations.localeOf(context).languageCode,
+        localeId: bestLocaleId,
         listenMode: stt.ListenMode.dictation,
         listenFor: const Duration(seconds: 60),
         pauseFor: const Duration(seconds: 5),
