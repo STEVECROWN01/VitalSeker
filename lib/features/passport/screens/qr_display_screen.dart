@@ -288,6 +288,9 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                         ),
                         const SizedBox(height: 20),
                         // Square-module QR (was circle) for scanner reliability.
+                        // The QR encodes a URL that scanners can open — when
+                        // scanned, it opens the VitalSeker passport viewer
+                        // web page which decrypts and displays the health data.
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
@@ -295,17 +298,17 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: QrImageView(
-                            data: _qrToken!,
+                            data: 'https://vitalseker.app/qr/$_qrToken',
                             version: QrVersions.auto,
                             size: 240,
                             backgroundColor: Colors.white,
                             eyeStyle: QrEyeStyle(
                               eyeShape: QrEyeShape.square,
-                              color: AppColors.primary(isDark),
+                              color: Colors.black,
                             ),
                             dataModuleStyle: QrDataModuleStyle(
                               dataModuleShape: QrDataModuleShape.square,
-                              color: AppColors.textPrimary(isDark),
+                              color: Colors.black,
                             ),
                           ),
                         ),

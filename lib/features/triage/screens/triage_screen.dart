@@ -330,22 +330,14 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
           ),
           child: Row(
             children: [
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Center(
-                  child: Text(
-                    'CK',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  'assets/images/branding/seker_ai_avatar.png',
+                  width: 44,
+                  height: 44,
+                  fit: BoxFit.cover,
+                  gaplessPlayback: true,
                 ),
               ),
               const SizedBox(width: 12),

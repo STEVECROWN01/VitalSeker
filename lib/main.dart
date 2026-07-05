@@ -183,7 +183,22 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
 
-    return MaterialApp.router(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      // Set status bar icons based on theme:
+      // - Light mode: dark icons (visible on white background)
+      // - Dark mode: light icons (visible on dark background)
+      value: themeMode == ThemeMode.dark
+          ? SystemUiOverlayStyle.light.copyWith(
+              statusBarColor: Colors.transparent,
+              systemNavigationBarColor: AppColors.darkBackground,
+              systemNavigationBarIconBrightness: Brightness.light,
+            )
+          : SystemUiOverlayStyle.dark.copyWith(
+              statusBarColor: Colors.transparent,
+              systemNavigationBarColor: AppColors.lightBackground,
+              systemNavigationBarIconBrightness: Brightness.dark,
+            ),
+      child: MaterialApp.router(
       title: 'VitalSeker',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
@@ -213,6 +228,7 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
           child: child ?? const SizedBox.shrink(),
         );
       },
+    ),
     );
   }
 }

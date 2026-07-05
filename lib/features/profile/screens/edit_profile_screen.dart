@@ -628,12 +628,12 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             spacing: 8,
                             runSpacing: 4,
                             children: _allergies.map((allergy) => Chip(
-                              label: Text(allergy, style: const TextStyle(fontFamily: 'Inter', fontSize: 13)),
-                              deleteIcon: const Icon(Icons.close, size: 16),
+                              label: Text(allergy, style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: AppColors.textPrimary(isDark))),
+                              deleteIcon: Icon(Icons.close, size: 16, color: AppColors.textSecondary(isDark)),
                               onDeleted: () => _removeAllergy(allergy),
                               backgroundColor: (AppColors.primary(isDark)).withValues(alpha: 0.08),
                               side: BorderSide(color: (AppColors.primary(isDark)).withValues(alpha: 0.3)),
-                              labelStyle: TextStyle(color: AppColors.primary(isDark)),
+                              labelStyle: TextStyle(color: AppColors.textPrimary(isDark)),
                             )).toList(),
                           ),
                           if (_allergies.isEmpty)
@@ -684,8 +684,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             spacing: 8,
                             runSpacing: 4,
                             children: _chronicConditions.map((condition) => Chip(
-                              label: Text(condition, style: const TextStyle(fontFamily: 'Inter', fontSize: 13)),
-                              deleteIcon: const Icon(Icons.close, size: 16),
+                              label: Text(condition, style: TextStyle(fontFamily: 'Inter', fontSize: 13, color: AppColors.textPrimary(isDark))),
+                              deleteIcon: Icon(Icons.close, size: 16, color: AppColors.textSecondary(isDark)),
                               onDeleted: () => _removeCondition(condition),
                               backgroundColor: (isDark ? AppColors.darkWarning : AppColors.lightWarning).withValues(alpha: 0.08),
                               side: BorderSide(color: (isDark ? AppColors.darkWarning : AppColors.lightWarning).withValues(alpha: 0.3)),
