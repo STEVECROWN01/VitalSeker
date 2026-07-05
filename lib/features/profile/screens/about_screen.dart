@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/config/app_config.dart';
 import '../../../shared/theme/app_colors.dart';
 
@@ -112,7 +113,14 @@ class AboutScreen extends StatelessWidget {
               icon: Icons.business,
               isDark: isDark,
               children: [
-                Container(
+                GestureDetector(
+                  onTap: () async {
+                    final url = Uri.parse('https://www.ketermarketing.com');
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url, mode: LaunchMode.externalApplication);
+                    }
+                  },
+                  child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -152,6 +160,7 @@ class AboutScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
                 ),
               ],
             ),

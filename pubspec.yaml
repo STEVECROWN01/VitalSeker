@@ -74,6 +74,8 @@ dependencies:
   image_cropper: ^8.0.0
   # Connectivity detection for online/offline indicator
   connectivity_plus: ^6.0.0
+  # Local storage for theme persistence + other prefs
+  shared_preferences: ^2.3.0
 
 dev_dependencies:
   flutter_test:
