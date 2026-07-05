@@ -465,25 +465,25 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
             children: [
               // Main screen content.
               widget.child,
-              // Draggable SOS FAB — only on the Home tab.
-              if (widget.currentIndex == 0)
-                Positioned(
-                  left: pos.dx,
-                  top: pos.dy,
-                  child: _DraggableSosFab(
-                    onDrag: (delta) {
-                      setState(() {
-                        final base = _fabPosition ?? defaultPos;
-                        final newX = (base.dx + delta.dx)
-                            .clamp(0.0, constraints.maxWidth - _fabSize);
-                        final newY = (base.dy + delta.dy)
-                            .clamp(0.0, constraints.maxHeight - _fabSize);
-                        _fabPosition = Offset(newX, newY);
-                      });
-                    },
-                    onTap: () => context.push(AppConfig.sos),
-                  ),
+              // Draggable Seker AI FAB — visible on ALL tabs so the user
+              // can chat with Seker from anywhere. Long-press to drag.
+              Positioned(
+                left: pos.dx,
+                top: pos.dy,
+                child: _DraggableSekerFab(
+                  onDrag: (delta) {
+                    setState(() {
+                      final base = _fabPosition ?? defaultPos;
+                      final newX = (base.dx + delta.dx)
+                          .clamp(0.0, constraints.maxWidth - _fabSize);
+                      final newY = (base.dy + delta.dy)
+                          .clamp(0.0, constraints.maxHeight - _fabSize);
+                      _fabPosition = Offset(newX, newY);
+                    });
+                  },
+                  onTap: () => context.push(AppConfig.aiChat),
                 ),
+              ),
             ],
           );
         },
@@ -493,36 +493,28 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
   }
 }
 
-/// Draggable SOS FloatingActionButton.
+/// Draggable Seker AI FloatingActionButton.
 ///
-/// Gesture contract:
-///   - **Tap** → invokes [onTap] (navigates to the SOS screen).
-///   - **Long-press + drag** → invokes [onDrag] with the incremental delta on
-///     each move event; the parent repositions the FAB.
-///
-/// We use the long-press gesture channel (rather than a plain `onPanUpdate`)
-/// so that a quick tap is never misinterpreted as a drag — the user has to
-/// deliberately press-and-hold before the FAB starts moving.
-class _DraggableSosFab extends StatefulWidget {
+/// Shows the Seker AI avatar + "Seker AI" label. Visible on ALL tabs.
+/// Tap → navigates to the AI chat screen.
+/// Long-press + drag → repositions the button.
+class _DraggableSekerFab extends StatefulWidget {
   final void Function(Offset delta) onDrag;
   final VoidCallback onTap;
 
-  const _DraggableSosFab({required this.onDrag, required this.onTap});
+  const _DraggableSekerFab({required this.onDrag, required this.onTap});
 
   @override
-  State<_DraggableSosFab> createState() => _DraggableSosFabState();
+  State<_DraggableSekerFab> createState() => _DraggableSekerFabState();
 }
 
-class _DraggableSosFabState extends State<_DraggableSosFab> {
-  /// Global position captured at the start of each long-press drag — used to
-  /// compute the incremental delta between `onLongPressMoveUpdate` callbacks.
+class _DraggableSekerFabState extends State<_DraggableSekerFab> {
   Offset? _dragOrigin;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      // Long-press starts a drag session.
       onLongPressStart: (details) {
         _dragOrigin = details.globalPosition;
       },
@@ -535,13 +527,54 @@ class _DraggableSosFabState extends State<_DraggableSosFab> {
       onLongPressEnd: (_) {
         _dragOrigin = null;
       },
-      child: FloatingActionButton(
-        heroTag: 'sos_fab',
-        backgroundColor: AppColors.urgencyEmergency,
-        // Short taps fall through to the FAB's own onPressed — the
-        // GestureDetector only intercepts the long-press channel.
-        onPressed: widget.onTap,
-        child: const Icon(Icons.emergency, color: Colors.white),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.lightPrimary.withValues(alpha: 0.4),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: GestureDetector(
+              onTap: widget.onTap,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(28),
+                child: Image.asset(
+                  'assets/images/branding/seker_ai_avatar.png',
+                  width: 56,
+                  height: 56,
+                  fit: BoxFit.cover,
+                  gaplessPlayback: true,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              color: AppColors.lightPrimary,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Text(
+              'Seker AI',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 9,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Inter',
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

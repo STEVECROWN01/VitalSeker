@@ -300,34 +300,6 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
               ),
             ),
             const SizedBox(height: 20),
-
-            // Info note
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: (isDark ? AppColors.darkInfo : AppColors.lightInfo).withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: (isDark ? AppColors.darkInfo : AppColors.lightInfo).withValues(alpha: 0.2)),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.info_outline, size: 18, color: isDark ? AppColors.darkInfo : AppColors.lightInfo),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      l10n.notificationPreferences,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 12,
-                        color: AppColors.textSecondary(isDark),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 80),
           ],
         ),
       ),
