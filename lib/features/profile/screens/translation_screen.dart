@@ -76,6 +76,10 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
     'Portuguese', 'Chinese', 'Japanese', 'Italian', 'Dutch',
     'Polish', 'Russian', 'Korean', 'Turkish', 'Indonesian',
     'Thai', 'Vietnamese', 'Hindi', 'Bengali', 'Urdu',
+    'Hebrew', 'Persian', 'Czech', 'Greek', 'Romanian', 'Hungarian',
+    'Swedish', 'Norwegian', 'Danish', 'Finnish', 'Slovak', 'Ukrainian',
+    'Malay', 'Burmese', 'Amharic', 'Swahili', 'Hausa', 'Yoruba', 'Igbo',
+    'Tagalog',
   ];
 
   @override

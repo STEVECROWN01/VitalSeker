@@ -178,42 +178,10 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
         final picked = await picker.pickImage(source: ImageSource.camera, imageQuality: 85);
         if (picked == null) return;
 
-        // Crop the image — document scanner style
-        final cropped = await ImageCropper().cropImage(
-          sourcePath: picked.path,
-          uiSettings: [
-            AndroidUiSettings(
-              toolbarTitle: 'Crop Document',
-              toolbarColor: AppColors.darkPrimary,
-              toolbarWidgetColor: Colors.white,
-              activeControlsWidgetColor: Colors.white,
-              lockAspectRatio: false,
-              aspectRatioPresets: [
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio16x9,
-              ],
-            ),
-            IOSUiSettings(
-              title: 'Crop Document',
-              aspectRatioLockEnabled: false,
-              aspectRatioPresets: [
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio16x9,
-              ],
-            ),
-          ],
-        );
-
-        if (cropped == null) return;
-
+        // Skip cropping for now — it can crash on some devices when the
+        // dialog is dismissed by the camera. Just use the picked image.
         setDialogState(() {
-          attachedFile = File(cropped.path);
+          attachedFile = File(picked.path);
           attachedFileName = 'Scanned document';
           isUploading = true;
         });
@@ -221,7 +189,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
         // Upload to Supabase Storage
         final user = ref.read(currentUserProvider);
         if (user != null) {
-          final url = await _uploadFile(File(cropped.path), user.id);
+          final url = await _uploadFile(File(picked.path), user.id);
           if (url != null) {
             existingFileUrl = url;
           }
@@ -464,9 +432,14 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                           'type': selectedType,
                           'description': descController.text.trim(),
                           'date': selectedDate.toIso8601String().split('T')[0],
-                          'has_attachment': attachedFile != null || existingFileUrl != null,
-                          if (existingFileUrl != null) 'file_url': existingFileUrl,
                         };
+                        // Only include file fields if we have a file
+                        if (existingFileUrl != null) {
+                          payload['file_url'] = existingFileUrl;
+                          payload['has_attachment'] = true;
+                        } else {
+                          payload['has_attachment'] = false;
+                        }
                         if (isEditing && record != null) {
                           await db.updateMedicalRecord(record['id'] as String, payload);
                         } else {

@@ -53,6 +53,7 @@ const LANGUAGE_MAP: Record<string, string> = {
   'vietnamese': 'VI',
   'hindi': 'HI',
   'bengali': 'BN',
+  'hebrew': 'HE',
   'urdu': 'UR',
   'swahili': '',  // DeepL doesn't support Swahili as of 2025 — will fall back
   'hausa': '',

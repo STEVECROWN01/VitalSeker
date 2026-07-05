@@ -671,10 +671,11 @@ class _TimelineItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     log.symptoms.take(3).join(', '),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary(isDark),
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -721,7 +722,7 @@ class _TimelineItem extends StatelessWidget {
                   runSpacing: 6,
                   children: log.symptoms
                       .map((s) => Chip(
-                            label: Text(s, style: const TextStyle(fontSize: 11)),
+                            label: Text(s, style: TextStyle(fontSize: 11, color: AppColors.textPrimary(isDark))),
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
                             padding: EdgeInsets.zero,

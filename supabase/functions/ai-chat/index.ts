@@ -608,28 +608,44 @@ serve(async (req: Request) => {
     }
 
     // GLM API call — FREE tier glm-4-flash
-    const glmResponse = await fetch(`${glmApiUrl}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${glmApiKey}`,
-      },
-      body: JSON.stringify({
-        model: 'glm-4-flash',
-        max_tokens: 600,
-        temperature: 0.7,
-        messages: glmMessages,
-      }),
-    })
+    // Retry up to 2 times on failure (GLM free tier can be flaky)
+    let glmResponse: Response | null = null
+    let lastError = ''
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        glmResponse = await fetch(`${glmApiUrl}/chat/completions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${glmApiKey}`,
+          },
+          body: JSON.stringify({
+            model: 'glm-4-flash',
+            max_tokens: 600,
+            temperature: 0.7,
+            messages: glmMessages,
+          }),
+        })
+        if (glmResponse.ok) break
+        lastError = await glmResponse.text()
+        console.error(`GLM API attempt ${attempt + 1} failed:`, glmResponse.status, lastError)
+        // Wait 1s before retry
+        if (attempt < 2) await new Promise(r => setTimeout(r, 1000))
+      } catch (e) {
+        lastError = String(e)
+        console.error(`GLM API attempt ${attempt + 1} error:`, e)
+        if (attempt < 2) await new Promise(r => setTimeout(r, 1000))
+      }
+    }
 
-    if (!glmResponse.ok) {
-      const errText = await glmResponse.text()
-      console.error('GLM API error:', glmResponse.status, errText)
+    if (!glmResponse || !glmResponse.ok) {
+      console.error('GLM API all retries failed:', lastError)
       return new Response(JSON.stringify({
-        reply: "I'm having trouble connecting right now. Please try again in a moment. If this is an emergency, call 112 or 911.",
+        reply: "I apologize, but I'm having difficulty connecting to my AI service right now. This is likely a temporary issue. Please try again in a moment. If this is a medical emergency, please call 112 or 911 immediately.",
         sender: 'seker',
         extracted_data: extractedData,
         saved_data: savedData,
+        error: true,
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       })
