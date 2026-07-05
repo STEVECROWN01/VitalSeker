@@ -422,6 +422,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
                           gender: ownerProfile?.gender,
                           score: ownerScore,
                           l10n: l10n,
+                          avatarUrl: ownerProfile?.avatarUrl,
                         )
                             .animate()
                             .slideY(duration: 400.ms, begin: 0.1)

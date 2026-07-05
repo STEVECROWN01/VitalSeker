@@ -950,13 +950,16 @@ class _GenerateInsightsCta extends ConsumerWidget {
                 duration: const Duration(seconds: 2),
               ),
             );
-            // Attempt to invoke the weekly-insights edge function. Failures
-            // are tolerated (the function may be CRON-only); we still refresh
-            // the local provider so any newly-persisted rows surface.
+            // Attempt to invoke the weekly-insights edge function.
             try {
               await EdgeFunctionService().generateWeeklyInsights();
-            } catch (_) {
-              // Expected — the function may be CRON-gated. Continue.
+              if (context.mounted) {
+                AppSnackBar.success(context, 'Insights generated successfully!');
+              }
+            } catch (e) {
+              if (context.mounted) {
+                AppSnackBar.error(context, 'Could not generate insights. Please try again later.');
+              }
             }
             if (context.mounted) {
               ref.invalidate(weeklyInsightsProvider);

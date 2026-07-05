@@ -339,6 +339,24 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                 const SizedBox(height: 16),
 
+                // ── Settings ──
+                _MenuSection(
+                  title: l10n.settings,
+                  isDark: isDark,
+                  children: [
+                    _MenuItem(
+                      icon: Icons.settings_outlined,
+                      iconBg: _tint(AppColors.primary(isDark), isDark),
+                      iconFg: AppColors.primary(isDark),
+                      label: l10n.settings,
+                      subtitle: l10n.themePasswordAccount,
+                      onTap: () => context.push(AppConfig.settings),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
+
                 // ── Sign out ──
                 SizedBox(
                   width: double.infinity,

@@ -123,7 +123,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     if (!isPro) {
       if (!mounted) return;
       AppSnackBar.error(context, l10n.exportProOnly);
-      context.push(AppConfig.subscription);
+      context.go(AppConfig.subscription);
       return;
     }
 
