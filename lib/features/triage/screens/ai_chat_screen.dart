@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:file_picker/file_picker.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -645,18 +644,6 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  void _shareConversation() {
-    final conversationText = _messages.map((m) {
-      final sender = m.isUser ? 'You' : 'Seker';
-      return '[$sender] ${m.content}';
-    }).join('\n\n');
-
-    Share.share(
-      'My VitalSeker AI Health Chat with Seker:\n\n$conversationText\n\n— Shared via VitalSeker',
-      subject: 'VitalSeker AI Health Chat',
     );
   }
 }

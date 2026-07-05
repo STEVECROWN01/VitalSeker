@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
@@ -149,7 +148,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
 
     // If editing, check for existing file URL
     if (isEditing && record != null) {
-      existingFileUrl = record['file_url'] as String?;
+      existingFileUrl = record['attachment_url'] as String?;
     }
 
     Future<String?> _uploadFile(File file, String userId) async {
@@ -433,18 +432,14 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                           'description': descController.text.trim(),
                           'date': selectedDate.toIso8601String().split('T')[0],
                         };
-                        // Only include file fields if we have a file
+                        // Only include attachment_url if we have a file
                         if (existingFileUrl != null) {
-                          payload['file_url'] = existingFileUrl;
-                          payload['has_attachment'] = true;
-                        } else {
-                          payload['has_attachment'] = false;
+                          payload['attachment_url'] = existingFileUrl;
                         }
                         if (isEditing && record != null) {
                           await db.updateMedicalRecord(record['id'] as String, payload);
                         } else {
                           payload['user_id'] = user.id;
-                          payload['has_attachment'] = false;
                           await db.insertMedicalRecord(payload);
                         }
                         if (mounted) {
@@ -718,7 +713,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      if (record['has_attachment'] == true)
+                                      if (record['attachment_url'] != null)
                                         Icon(Icons.attach_file, size: 18, color: AppColors.textSecondary(isDark)),
                                       IconButton(
                                         icon: const Icon(Icons.more_vert, size: 18),

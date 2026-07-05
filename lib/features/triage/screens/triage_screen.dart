@@ -177,13 +177,21 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
 
     try {
       final edgeService = EdgeFunctionService();
+      // Build comprehensive notes including age, sex, conditions, medications
+      // so the AI has full context (previously these were collected but discarded)
+      final comprehensiveNotes = <String>[
+        if (_notesController.text.trim().isNotEmpty) _notesController.text.trim(),
+        if (_ageController.text.isNotEmpty) 'Age: ${_ageController.text}',
+        if (_biologicalSex != null) 'Biological sex: $_biologicalSex',
+        if (_conditionsController.text.trim().isNotEmpty) 'Chronic conditions: ${_conditionsController.text.trim()}',
+        if (_medicationsController.text.trim().isNotEmpty) 'Current medications: ${_medicationsController.text.trim()}',
+      ].join('. ');
+
       final result = await edgeService.runTriage(
         symptoms: _selectedSymptoms.toList(),
         severity: _severity,
         duration: _duration,
-        notes: _notesController.text.trim().isEmpty
-            ? null
-            : _notesController.text.trim(),
+        notes: comprehensiveNotes.isEmpty ? null : comprehensiveNotes,
         language: ref.read(localeProvider).languageCode,
       );
 

@@ -88,7 +88,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
     final clarifyingQuestion = triage['clarifying_question'] as String?;
 
     final recommendations =
-        (triage['recommendations'] as List<dynamic>? ?? []).cast<String>();
+        <String>[...(triage['recommendations'] as List<dynamic>? ?? const []).cast<String>()];
     final redFlags =
         (triage['red_flags'] as List<dynamic>? ?? []).cast<String>();
     final possibleConditions = triage['possible_conditions'] as List<dynamic>? ?? [];

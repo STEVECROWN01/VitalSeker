@@ -18,6 +18,7 @@ import 'core/router/app_router.dart';
 import 'core/providers/theme_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'shared/theme/app_theme.dart';
+import 'shared/theme/app_colors.dart';
 
 /// PRODUCTION main() — runApp() FIRST, then initialize ALL services
 /// (including Sentry) from a widget's initState().
