@@ -1095,7 +1095,9 @@ class _RecentCheckItem extends StatelessWidget {
     final title = log.symptoms.take(2).join(', ');
     final displayTitle = title.isEmpty ? l10n.symptomCheck : title;
 
-    return Container(
+    return GestureDetector(
+      onTap: () => context.go(AppConfig.history),
+      child: Container(
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
       decoration: BoxDecoration(
         color: AppColors.cardBackground(isDark),
@@ -1157,6 +1159,7 @@ class _RecentCheckItem extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }
