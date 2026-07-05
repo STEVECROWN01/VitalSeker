@@ -422,16 +422,13 @@ class _SosScreenState extends ConsumerState<SosScreen>
   }
 
   Future<void> _shareLocation() async {
+    // Show loading indicator immediately
+    if (mounted) {
+      AppSnackBar.info(context, 'Getting your location...');
+    }
     final position = await _getCurrentLocation();
-    // _getCurrentLocation already shows a contextual snackbar on every
-    // failure mode (services off / permission denied / timeout / exception),
-    // so we just bail out silently here when it returns null.
     if (position == null) return;
     try {
-      // Use Share.share to open the system share sheet (SMS, WhatsApp, email,
-      // etc.). The previous implementation copied to clipboard only, which
-      // was counter-intuitive — the user tapped "Share My Location" expecting
-      // to send via SMS to a contact, not to get a clipboard copy.
       final locationText =
           'My emergency location: https://maps.google.com/?q=${position.latitude},${position.longitude}';
       await Share.share(locationText, subject: 'Emergency Location');

@@ -1455,7 +1455,7 @@ class _ProUpsellEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             GestureDetector(
-              onTap: () => context.push(AppConfig.subscription),
+              onTap: () => context.go(AppConfig.subscription),
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -1499,7 +1499,7 @@ class _ProUpsellEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             TextButton(
-              onPressed: () => context.push(AppConfig.subscription),
+              onPressed: () => context.go(AppConfig.subscription),
               child: Text(
                 l10n.viewAllPlans,
                 style: TextStyle(

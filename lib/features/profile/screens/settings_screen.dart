@@ -3,6 +3,7 @@ import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/family_provider.dart';
@@ -553,7 +554,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   iconFg: isDark ? const Color(0xFFB6CBC5) : const Color(0xFF3E4944),
                   label: l10n.contactConcierge,
                   subtitle: l10n.priorityProSupport,
-                  onTap: () => context.push(AppConfig.helpSupport),
+                  onTap: () async {
+                    // Open email composer directly for concierge support
+                    final url = Uri.parse('mailto:support@vitalseker.app?subject=VitalSeker Support Request&body=Hello, I need assistance with...');
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    } else {
+                      if (mounted) {
+                        AppSnackBar.info(context, 'Email: support@vitalseker.app');
+                      }
+                    }
+                  },
                 ),
                 _SettingsTile(
                   icon: Icons.logout,
