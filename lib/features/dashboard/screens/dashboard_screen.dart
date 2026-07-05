@@ -676,21 +676,64 @@ class _HealthScoreHeroCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              // VitalScoreRing wrapped in a translucent white circle so the
-              // ring's track + arc stay legible against the green gradient.
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.22),
-                  shape: BoxShape.circle,
-                ),
-                child: VitalScoreRing(
-                  score: score,
-                  size: 80,
-                  showLabel: false,
-                ),
-              ),
+              // User profile picture (replaces the duplicate VitalScoreRing
+              // which was showing the same score a second time)
+              Consumer(builder: (context, ref, _) {
+                final profileAsync = ref.watch(userProfileProvider);
+                final profile = profileAsync.valueOrNull;
+                final avatarUrl = profile?.avatarUrl;
+                final initial = (profile?.fullName?.isNotEmpty == true)
+                    ? profile!.fullName![0].toUpperCase()
+                    : 'U';
+                if (avatarUrl != null && avatarUrl.isNotEmpty) {
+                  return Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.22),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white.withValues(alpha: 0.4), width: 2),
+                    ),
+                    child: ClipOval(
+                      child: Image.network(
+                        avatarUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Center(
+                          child: Text(
+                            initial,
+                            style: const TextStyle(
+                              fontFamily: 'ClashDisplay',
+                              fontSize: 28,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.22),
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.4), width: 2),
+                  ),
+                  child: Center(
+                    child: Text(
+                      initial,
+                      style: const TextStyle(
+                        fontFamily: 'ClashDisplay',
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                );
+              }),
             ],
           ),
           const SizedBox(height: 22),

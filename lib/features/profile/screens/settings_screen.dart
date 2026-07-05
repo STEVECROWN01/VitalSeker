@@ -280,6 +280,48 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
+  void _showSecurityInfo(bool isDark) {
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.shield_outlined, color: AppColors.error(isDark)),
+            const SizedBox(width: 8),
+            Text(l10n.securityStorage, style: const TextStyle(fontFamily: 'ClashDisplay')),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _SecurityInfoRow(icon: Icons.lock, label: 'AES-256 Encryption', value: 'Active', isDark: isDark),
+            const SizedBox(height: 12),
+            _SecurityInfoRow(icon: Icons.storage, label: 'Local Storage', value: 'Hive (encrypted)', isDark: isDark),
+            const SizedBox(height: 12),
+            _SecurityInfoRow(icon: Icons.cloud_outlined, label: 'Cloud Storage', value: 'Supabase (RLS)', isDark: isDark),
+            const SizedBox(height: 12),
+            _SecurityInfoRow(icon: Icons.token, label: 'JWT Auth', value: 'Active', isDark: isDark),
+            const SizedBox(height: 12),
+            _SecurityInfoRow(icon: Icons.update, label: 'Data Retention', value: '24 months', isDark: isDark),
+            const SizedBox(height: 16),
+            Text(
+              'Your health data is encrypted at rest and in transit. Only you can access your data through Row Level Security policies.',
+              style: TextStyle(fontSize: 12, color: AppColors.textSecondary(isDark)),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(l10n.close),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showLanguageSheet() {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -471,7 +513,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   iconFg: AppColors.error(isDark),
                   label: l10n.securityStorage,
                   subtitle: l10n.aes256EncryptionActive,
-                  onTap: () => AppSnackBar.info(context, l10n.securitySettingsOnThisPage),
+                  onTap: () => _showSecurityInfo(isDark),
                 ),
                 _SettingsTile(
                   icon: Icons.download_outlined,
@@ -721,6 +763,49 @@ class _SettingsTile extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SecurityInfoRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final bool isDark;
+
+  const _SecurityInfoRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: AppColors.primary(isDark)),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 13,
+              color: AppColors.textPrimary(isDark),
+            ),
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: AppColors.success(isDark),
+          ),
+        ),
+      ],
     );
   }
 }

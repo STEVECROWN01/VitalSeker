@@ -583,13 +583,19 @@ serve(async (req: Request) => {
       })
     }
 
-    // Language instruction
+    // Language instruction — detect the language from the user's latest message
+    const lastUserMsg = [...messages].reverse().find(m => m.role === 'user')
     const langCode = (language || 'en').toLowerCase().slice(0, 2)
     const isSupported = SUPPORTED_LANGUAGES.includes(langCode)
     if (!isSupported) {
       glmMessages.push({
         role: 'system',
-        content: `The user's language (${langCode}) is not one of the 40 supported languages. Respond in English and politely let them know that you can only communicate in the supported languages.`
+        content: `The user's app language (${langCode}) is not one of the 40 supported languages. Detect the language the user wrote in. If it's one of the supported languages, respond in that language. Otherwise respond in English and politely let them know you can only communicate in supported languages.`
+      })
+    } else {
+      glmMessages.push({
+        role: 'system',
+        content: `CRITICAL: You MUST respond in the SAME LANGUAGE the user writes in. If the user writes in French, respond in French. If in English, respond in English. If in Arabic, respond in Arabic. Always match the user's language exactly. The user's app is set to ${langCode} but you should follow the language of their actual message.`
       })
     }
 
