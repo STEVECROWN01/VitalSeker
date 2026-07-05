@@ -215,7 +215,7 @@ class _InsightsAppBar extends StatelessWidget {
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
         color: AppColors.primary(isDark),
-        onPressed: () => context.pop(),
+        onPressed: () { if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.dashboard); } },
       ),
       titleSpacing: 0,
       title: Column(
@@ -1304,7 +1304,7 @@ class _ProEmptyStateState extends State<_ProEmptyState> {
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
                   color: AppColors.primary(widget.isDark),
-                  onPressed: () => context.pop(),
+                  onPressed: () { if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.dashboard); } },
                 ),
                 Text(
                   'VitalSeker',
@@ -1412,7 +1412,7 @@ class _ProUpsellEmptyState extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
                   color: AppColors.primary(isDark),
-                  onPressed: () => context.pop(),
+                  onPressed: () { if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.dashboard); } },
                 ),
                 Text(
                   'VitalSeker',

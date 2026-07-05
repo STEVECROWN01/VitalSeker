@@ -26,6 +26,16 @@ class PassportScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              context.go(AppConfig.dashboard);
+            }
+          },
+        ),
         title: Text(
           l10n.healthPassport,
           style: AppTextStyles.heading3.copyWith(color: AppColors.primary(isDark)),
@@ -88,14 +98,15 @@ class PassportScreen extends ConsumerWidget {
                         children: [
                           Row(
                             children: [
-                              const Image(
-                                image: AssetImage(
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(6),
+                                child: Image.asset(
                                   'assets/images/branding/app_logo.png',
+                                  width: 22,
+                                  height: 22,
+                                  fit: BoxFit.cover,
+                                  gaplessPlayback: true,
                                 ),
-                                width: 22,
-                                height: 22,
-                                fit: BoxFit.contain,
-                                gaplessPlayback: true,
                               ),
                               const SizedBox(width: 8),
                               Text(
@@ -422,7 +433,6 @@ class PassportScreen extends ConsumerWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(height: 80),
               ],
             ),
           );

@@ -101,12 +101,16 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
       }
 
       final db = ref.read(databaseServiceProvider);
-      await db.createFamilyProfile({
+      // Build payload with only non-null fields to avoid DB constraint errors
+      final payload = <String, dynamic>{
         'owner_id': user.id,
         'full_name': _nameController.text.trim(),
         'relationship': _relationshipController.text.trim(),
-        'blood_type': _selectedBloodType,
-      });
+      };
+      if (_selectedBloodType != null && _selectedBloodType!.isNotEmpty) {
+        payload['blood_type'] = _selectedBloodType;
+      }
+      await db.createFamilyProfile(payload);
 
       ref.invalidate(familyProfilesProvider);
       _resetForm();
@@ -1448,7 +1452,7 @@ class _ProUpsellSection extends StatelessWidget {
                         height: 52,
                         child: ElevatedButton(
                           onPressed: () =>
-                              context.push(AppConfig.subscription),
+                              context.go(AppConfig.subscription),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary(isDark),
                             foregroundColor: Colors.white,
@@ -1480,7 +1484,7 @@ class _ProUpsellSection extends StatelessWidget {
                         height: 52,
                         child: OutlinedButton(
                           onPressed: () =>
-                              context.push(AppConfig.subscription),
+                              context.go(AppConfig.subscription),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor:
@@ -1514,7 +1518,7 @@ class _ProUpsellSection extends StatelessWidget {
                         height: 52,
                         child: OutlinedButton.icon(
                           onPressed: () =>
-                              context.push(AppConfig.subscription),
+                              context.go(AppConfig.subscription),
                           icon: const Icon(Icons.workspace_premium,
                               color: Colors.white),
                           label: Text(
