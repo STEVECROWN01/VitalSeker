@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
@@ -35,6 +38,9 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
   String _targetLang = 'French';
   String? _translation;
   bool _isLoading = false;
+  bool _isRecording = false;
+  final stt.SpeechToText _speech = stt.SpeechToText();
+  bool _speechAvailable = false;
 
   /// Max chars per translation request. Protects the DeepL free-tier quota
   /// (1M chars/month) from a single oversized request. The edge function
@@ -85,7 +91,86 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
   @override
   void dispose() {
     _textController.dispose();
+    _speech.stop();
     super.dispose();
+  }
+
+  Future<void> _initSpeech() async {
+    try {
+      _speechAvailable = await _speech.initialize();
+      if (mounted) setState(() {});
+    } catch (_) {
+      _speechAvailable = false;
+    }
+  }
+
+  Future<void> _startRecording() async {
+    if (!_speechAvailable) {
+      await _initSpeech();
+      if (!_speechAvailable) {
+        AppSnackBar.error(context, 'Speech recognition not available. Please type instead.');
+        return;
+      }
+    }
+    try {
+      final availableLocales = await _speech.locales();
+      final appLocale = Localizations.localeOf(context).languageCode;
+      String? bestLocaleId;
+      try {
+        final match = availableLocales.firstWhere(
+          (l) => l.localeId.startsWith(appLocale),
+          orElse: () => availableLocales.first,
+        );
+        bestLocaleId = match.localeId;
+      } catch (_) {
+        bestLocaleId = null;
+      }
+
+      await _speech.listen(
+        onResult: (result) {
+          setState(() {
+            _textController.text = result.recognizedWords;
+            _textController.selection = TextSelection.fromPosition(
+              TextPosition(offset: _textController.text.length),
+            );
+          });
+        },
+        localeId: bestLocaleId,
+        listenMode: stt.ListenMode.dictation,
+        listenFor: const Duration(seconds: 60),
+        pauseFor: const Duration(seconds: 5),
+      );
+      setState(() => _isRecording = true);
+    } catch (e) {
+      AppSnackBar.error(context, 'Could not start recording. Check microphone permissions.');
+    }
+  }
+
+  Future<void> _stopRecording() async {
+    await _speech.stop();
+    setState(() => _isRecording = false);
+  }
+
+  Future<void> _pickFile() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['txt'],
+      );
+      if (result == null || result.files.single.path == null) return;
+      final file = File(result.files.single.path!);
+      final content = await file.readAsString();
+      if (content.length > _maxChars) {
+        AppSnackBar.error(context, 'File too long (max $_maxChars characters).');
+        return;
+      }
+      setState(() {
+        _textController.text = content.substring(0, _maxChars);
+      });
+      AppSnackBar.success(context, 'File loaded. Tap Translate to proceed.');
+    } catch (e) {
+      AppSnackBar.error(context, 'Could not read file: $e');
+    }
   }
 
   Future<void> _translate() async {
@@ -167,25 +252,73 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
             ),
             const SizedBox(height: 20),
 
-            // ── Input field ──
-            TextField(
-              controller: _textController,
-              minLines: 2,
-              maxLines: 4,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: InputDecoration(
-                labelText: l10n.medicalTermOrPhrase,
-                hintText: l10n.medicalTermHint,
-                alignLabelWithHint: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+            // ── Input field with mic + file upload buttons ──
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _textController,
+                    minLines: 2,
+                    maxLines: 4,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(
+                      labelText: l10n.medicalTermOrPhrase,
+                      hintText: _isRecording ? 'Listening...' : l10n.medicalTermHint,
+                      alignLabelWithHint: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      filled: true,
+                      fillColor: AppColors.inputFill(isDark),
+                    ),
+                    style: AppTextStyles.bodyLarge.copyWith(
+                      color: AppColors.textPrimary(isDark),
+                    ),
+                  ),
                 ),
-                filled: true,
-                fillColor: AppColors.inputFill(isDark),
-              ),
-              style: AppTextStyles.bodyLarge.copyWith(
-                color: AppColors.textPrimary(isDark),
-              ),
+                const SizedBox(width: 8),
+                Column(
+                  children: [
+                    // Mic button
+                    GestureDetector(
+                      onTap: _isRecording ? _stopRecording : _startRecording,
+                      child: Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: _isRecording
+                              ? AppColors.error(isDark)
+                              : AppColors.primaryContainer(isDark),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          _isRecording ? Icons.stop : Icons.mic,
+                          color: _isRecording ? Colors.white : AppColors.primary(isDark),
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    // File upload button
+                    GestureDetector(
+                      onTap: _pickFile,
+                      child: Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryContainer(isDark),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.attach_file,
+                          color: AppColors.primary(isDark),
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
             const SizedBox(height: 16),
 
