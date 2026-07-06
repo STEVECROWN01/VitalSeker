@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/services/notification_service.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 
 class NotificationsSettingsScreen extends ConsumerStatefulWidget {
   const NotificationsSettingsScreen({super.key});
@@ -20,6 +22,8 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
   bool? _vitalsLoggingReminders;
   bool? _healthTips;
   bool? _weeklyReport;
+  String _selectedSound = 'default';
+  final _notificationService = NotificationService();
 
   // Schedule customization — now editable per the user's request.
   String _triageSchedule = 'Daily at 9:00 AM';
@@ -48,11 +52,14 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
     'Every Monday at 10:00 AM', 'Every Monday at 8:00 AM', 'Every Sunday at 6:00 PM',
   ];
 
+  static const List<String> _soundOptions = [
+    'default', 'chime', 'alert', 'bell', 'soft',
+  ];
+
   @override
   void initState() {
     super.initState();
-    // Load asynchronously after first frame so the provider has had a chance
-    // to resolve. We use listenSelf-style via post-frame callback.
+    _notificationService.initialize();
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadSettings());
   }
 
@@ -60,7 +67,6 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
     final profile = ref.read(userProfileProvider).valueOrNull;
     if (profile == null) return;
     final prefs = profile.notificationPrefs;
-    // Only set if currently null (avoid clobbering in-flight user toggles).
     _triageReminders ??= prefs?.triageReminders ?? true;
     _medicationReminders ??= prefs?.medicationReminders ?? true;
     _appointmentReminders ??= prefs?.appointmentReminders ?? true;
@@ -70,11 +76,21 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
     if (mounted) setState(() {});
   }
 
+  /// Parse a schedule string like "Daily at 9:00 AM" into hour and minute.
+  ({int hour, int minute}) _parseSchedule(String schedule) {
+    final match = RegExp(r'(\d+):(\d+)\s*(AM|PM)').firstMatch(schedule);
+    if (match == null) return (hour: 9, minute: 0);
+    var hour = int.parse(match.group(1)!);
+    final minute = int.parse(match.group(2)!);
+    final period = match.group(3)!;
+    if (period == 'PM' && hour != 12) hour += 12;
+    if (period == 'AM' && hour == 12) hour = 0;
+    return (hour: hour, minute: minute);
+  }
+
   Future<void> _onChanged(bool Function(NotificationPrefs) getter,
       NotificationPrefs Function(NotificationPrefs, bool) updater, bool value) async {
-    // Optimistic UI update.
     setState(() {
-      // Use the updater to compute new prefs and stash into the matching field.
       final current = NotificationPrefs(
         triageReminders: _triageReminders ?? true,
         medicationReminders: _medicationReminders ?? true,
@@ -92,6 +108,32 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
       _weeklyReport = next.weeklyReport;
     });
 
+    // Schedule or cancel the actual notification
+    try {
+      if (value) {
+        // Schedule the notification based on the schedule string
+        final sched = _parseSchedule(_triageSchedule);
+        await _notificationService.scheduleDailyReminder(
+          hour: sched.hour,
+          minute: sched.minute,
+          title: 'VitalSeker Health Check',
+          body: 'Time for your daily health check. Tap to start a triage.',
+          channelId: 'vitalseker_reminders',
+          id: 0,
+        );
+        if (mounted) {
+          AppSnackBar.success(context, 'Reminder scheduled for ${_triageSchedule}');
+        }
+      } else {
+        await _notificationService.cancelNotification(0);
+        if (mounted) {
+          AppSnackBar.info(context, 'Reminder cancelled');
+        }
+      }
+    } catch (e) {
+      debugPrint('Notification scheduling error: $e');
+    }
+
     final user = ref.read(currentUserProvider);
     if (user == null) return;
     try {
@@ -106,7 +148,6 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
           'weekly_report': _weeklyReport ?? true,
         },
       });
-      // Refresh the cached profile so other screens see the new value.
       ref.invalidate(userProfileProvider);
     } catch (e) {
       if (mounted) {
@@ -300,6 +341,49 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
               ),
             ),
             const SizedBox(height: 20),
+
+            // ── Ringtone selector ──
+            _SectionLabel(label: 'Notification Sound'),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: AppColors.inputFill(isDark),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.borderLight(isDark)),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: _selectedSound,
+                  isExpanded: true,
+                  dropdownColor: AppColors.surface(isDark),
+                  style: TextStyle(color: AppColors.textPrimary(isDark), fontFamily: 'Inter', fontSize: 14),
+                  items: _soundOptions.map((sound) => DropdownMenuItem(
+                    value: sound,
+                    child: Text(sound[0].toUpperCase() + sound.substring(1)),
+                  )).toList(),
+                  onChanged: (value) async {
+                    if (value == null) return;
+                    setState(() => _selectedSound = value);
+                    await _notificationService.setCustomSound('vitalseker_reminders', value);
+                    // Test the sound immediately
+                    await _notificationService.showNotification(
+                      title: 'Sound Changed',
+                      body: 'Notification sound set to $value',
+                      sound: value,
+                    );
+                    if (mounted) {
+                      AppSnackBar.success(context, 'Sound set to $value. Check your notification.');
+                    }
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Tap a sound to preview it. The selected sound will play for all scheduled notifications.',
+              style: TextStyle(fontSize: 11, color: AppColors.textSecondary(isDark)),
+            ),
           ],
         ),
       ),

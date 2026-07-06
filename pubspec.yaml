@@ -76,6 +76,12 @@ dependencies:
   connectivity_plus: ^6.0.0
   # Local storage for theme persistence + other prefs
   shared_preferences: ^2.3.0
+  # Local notifications with custom sounds
+  flutter_local_notifications: ^18.0.1
+  # OCR for medical document scanning
+  google_mlkit_text_recognition: ^0.14.0
+  # Timezone support for scheduled notifications
+  timezone: ^0.9.4
 
 dev_dependencies:
   flutter_test:
