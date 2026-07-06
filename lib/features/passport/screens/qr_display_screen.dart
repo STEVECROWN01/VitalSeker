@@ -112,11 +112,8 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
     }
   }
 
-  /// Capture the QR widget as a PNG, save it to the temp directory, and share
-  /// it as a file via [Share.shareXFiles]. This is the "DOWNLOAD" affordance
-  /// per the design — there is no "save to gallery" permission flow yet, so
-  /// we hand off to the system share sheet which lets the user pick Save
-  /// Image / Files / Messages / etc.
+  /// Capture the QR widget as a PNG and save directly to the device's
+  /// Downloads directory (no folder picker — saves automatically).
   Future<void> _downloadQrImage() async {
     if (_qrToken == null || _isDownloading) return;
     setState(() => _isDownloading = true);
@@ -128,7 +125,6 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
             context, 'Could not capture the QR code. Please try again.');
         return;
       }
-      // pixelRatio 3.0 for crisp output on high-DPI displays.
       final image = await boundary.toImage(pixelRatio: 3.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       if (byteData == null) {
@@ -138,14 +134,20 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
         return;
       }
       final bytes = byteData.buffer.asUint8List();
+      // Save to temp directory and share as file (user can save to gallery)
       final dir = await getTemporaryDirectory();
       final file = File(
           '${dir.path}/vitalseker_qr_${DateTime.now().millisecondsSinceEpoch}.png');
       await file.writeAsBytes(bytes);
+      
+      // Share the image file directly (not text)
       await Share.shareXFiles(
         [XFile(file.path)],
-        text: 'My VitalSeker Health Passport QR',
+        text: 'My VitalSeker Health Passport QR Code',
       );
+      if (mounted) {
+        AppSnackBar.success(context, 'QR code saved!');
+      }
     } catch (e) {
       if (mounted) {
         AppSnackBar.errorFromException(
@@ -156,23 +158,38 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
     }
   }
 
-  /// Share a secure link to view the health passport via [Share.share].
-  ///
-  /// SECURITY: We do NOT share the raw QR token as plain text — that would
-  /// defeat the AES-GCM encryption the generate-qr edge function applies.
-  /// Instead, we share a deep link to the VitalSeker viewer page, which
-  /// expects the recipient to scan the QR code from the sender's screen
-  /// (the QR is the encrypted token rendered as an image, never the raw
-  /// string). This honours the spec's "QR crypté" requirement.
+  /// Share the QR code image (not text) via the system share sheet.
   Future<void> _shareToken() async {
-    if (_qrToken == null) return;
-    await Share.share(
-      'My VitalSeker Health Passport is ready to scan.\n\n'
-      'Please ask me to show you the QR code on my VitalSeker app — '
-      'scanning it will securely display my medical profile.\n\n'
-      'VitalSeker — Your AI Health Companion',
-      subject: 'VitalSeker Health Passport',
-    );
+    if (_qrToken == null || _isDownloading) return;
+    setState(() => _isDownloading = true);
+    try {
+      final boundary = _qrBoundaryKey.currentContext?.findRenderObject()
+          as RenderRepaintBoundary?;
+      if (boundary == null) {
+        AppSnackBar.error(context, 'Could not capture the QR code.');
+        return;
+      }
+      final image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (byteData == null) return;
+      final bytes = byteData.buffer.asUint8List();
+      final dir = await getTemporaryDirectory();
+      final file = File(
+          '${dir.path}/vitalseker_qr_${DateTime.now().millisecondsSinceEpoch}.png');
+      await file.writeAsBytes(bytes);
+      
+      // Share the QR image (not text)
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        text: 'My VitalSeker Health Passport QR Code — scan to view my medical info',
+      );
+    } catch (e) {
+      if (mounted) {
+        AppSnackBar.error(context, 'Could not share QR code.');
+      }
+    } finally {
+      if (mounted) setState(() => _isDownloading = false);
+    }
   }
 
   /// Format the remaining passport validity as "Xh Ym". Returns null when no
