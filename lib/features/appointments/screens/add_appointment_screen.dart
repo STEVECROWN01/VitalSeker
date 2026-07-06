@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/config/app_config.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/providers/appointments_provider.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -81,7 +82,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
 
       if (mounted) {
         AppSnackBar.success(context, l10n.appointmentScheduledSuccessfully);
-        context.pop();
+        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.dashboard); }
       }
     } catch (e) {
       if (mounted) AppSnackBar.errorFromException(context, l10n.appointmentScheduleFailed, e);

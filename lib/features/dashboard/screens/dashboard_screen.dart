@@ -12,9 +12,7 @@ import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
-import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
-import '../../../shared/widgets/vital_score_ring.dart';
 
 /// VitalSeker dashboard — redesigned to match the Google Stitch UI audit.
 ///
@@ -47,119 +45,9 @@ class DashboardScreen extends ConsumerStatefulWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  // ── AI health-tip state (preserved for state-management continuity) ──
-  //
-  // The tip is no longer rendered on the redesigned dashboard (the AI Health
-  // Tip card was removed per the design audit). The fetcher + cache remain
-  // so future surfaces can read `_aiTip` without paying for a second edge
-  // function call.
-  String? _aiTip;
-  bool _isLoadingTip = false;
-  DateTime? _tipFetchedAt;
-
   @override
   void initState() {
     super.initState();
-    // Note: the previous implementation called _loadAiTip() here, which
-    // misused the triage edge function (a $0.003/consultation call) to
-    // generate a "wellness tip" that was never rendered after the dashboard
-    // redesign. The dead code has been removed to avoid wasting AI calls
-    // on every dashboard mount. If AI-generated tips are needed in the
-    // future, implement a dedicated edge function.
-  }
-
-  /// Fetch a real AI-generated health tip via the triage edge function.
-  ///
-  /// The triage function already wraps Anthropic Claude with our system prompt,
-  /// so we reuse it with a "general health tip" framing instead of paying for
-  /// a separate function. The result is cached for the lifetime of the
-  /// dashboard widget — refreshing requires pull-to-refresh on the dashboard
-  /// (or restarting the app).
-  ///
-  /// Falls back to a curated set of static tips on any error.
-  Future<void> _loadAiTip() async {
-    if (_isLoadingTip) return;
-    // Don't refetch if we already have a tip from the last 6 hours.
-    if (_aiTip != null && _tipFetchedAt != null &&
-        DateTime.now().difference(_tipFetchedAt!) < const Duration(hours: 6)) {
-      return;
-    }
-
-    setState(() => _isLoadingTip = true);
-    try {
-      final profile = ref.read(userProfileProvider).valueOrNull;
-      final passport = ref.read(healthPassportProvider).valueOrNull;
-      final vitalsAsync = ref.read(vitalsProvider).valueOrNull;
-
-      // Build a brief context string for the AI to base its tip on.
-      final contextParts = <String>[];
-      if (profile?.bloodType != null) {
-        contextParts.add('blood type: ${profile!.bloodType}');
-      }
-      if (profile?.allergies.isNotEmpty == true) {
-        contextParts.add('allergies: ${profile!.allergies.join(', ')}');
-      }
-      if (profile?.chronicConditions.isNotEmpty == true) {
-        contextParts.add('conditions: ${profile!.chronicConditions.join(', ')}');
-      }
-      if (passport != null) {
-        contextParts.add('vital score: ${passport.vitalScore}/100');
-      }
-      if (vitalsAsync != null && vitalsAsync.isNotEmpty) {
-        final latest = vitalsAsync.first;
-        contextParts.add('latest vital: ${latest.type.name}=${latest.value}');
-      }
-      final context = contextParts.isEmpty
-          ? 'No specific health data available yet.'
-          : contextParts.join('; ');
-
-      final edgeService = EdgeFunctionService();
-      final result = await edgeService.runTriage(
-        symptoms: ['general wellness check'],
-        severity: 1,
-        notes: 'Please provide ONE short (1-2 sentence) actionable health tip '
-            'tailored to this user. Context: $context. Reply with the tip '
-            'directly in the recommendations field — do not perform triage.',
-      );
-
-      final triage = result['triage'] as Map<String, dynamic>?;
-      final recommendations = triage?['recommendations'] as List?;
-      if (recommendations != null && recommendations.isNotEmpty) {
-        final tip = recommendations.first.toString();
-        if (tip.isNotEmpty) {
-          setState(() {
-            _aiTip = tip;
-            _tipFetchedAt = DateTime.now();
-            _isLoadingTip = false;
-          });
-          return;
-        }
-      }
-      // Fallback if AI didn't return a usable tip.
-      setState(() {
-        _aiTip = _fallbackTip();
-        _tipFetchedAt = DateTime.now();
-        _isLoadingTip = false;
-      });
-    } catch (_) {
-      // Network / edge function error — use a fallback tip.
-      setState(() {
-        _aiTip = _fallbackTip();
-        _tipFetchedAt = DateTime.now();
-        _isLoadingTip = false;
-      });
-    }
-  }
-
-  static String _fallbackTip() {
-    const tips = [
-      'Stay hydrated! Drinking 8 glasses of water daily helps maintain healthy blood pressure and improves circulation.',
-      'Aim for 7-9 hours of sleep per night to support immune function and recovery.',
-      'Even 15 minutes of brisk walking daily can improve cardiovascular health over time.',
-      'Practice deep breathing for 5 minutes a day to help manage stress and reduce blood pressure.',
-      'Keep a consistent meal schedule to help stabilize blood sugar levels.',
-    ];
-    return tips[DateTime.now().millisecond % tips.length];
   }
 
   /// Time-of-day-aware greeting ("Good morning/afternoon/evening/night").

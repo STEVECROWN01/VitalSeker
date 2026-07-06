@@ -187,7 +187,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ] else ...[
                         const SizedBox(height: 12),
                         GestureDetector(
-                          onTap: () => context.push(AppConfig.subscription),
+                          onTap: () => context.go(AppConfig.subscription),
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                             decoration: BoxDecoration(

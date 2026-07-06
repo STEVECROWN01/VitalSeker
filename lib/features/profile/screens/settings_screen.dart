@@ -498,7 +498,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     iconFg: const Color(0xFFFF9800),
                     label: l10n.vitalSekerPro,
                     subtitle: l10n.manageYourSubscription,
-                    onTap: () => context.push(AppConfig.subscription),
+                    onTap: () => context.go(AppConfig.subscription),
                   ),
               ],
             ),

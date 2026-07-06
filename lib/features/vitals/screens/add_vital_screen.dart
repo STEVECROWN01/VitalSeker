@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/config/app_config.dart';
 import '../../../core/models/vital.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -160,7 +161,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
 
       if (mounted) {
         AppSnackBar.success(context, AppLocalizations.of(context)!.vitalSavedSuccessfully(_selectedType.displayName));
-        context.pop();
+        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.dashboard); }
       }
     } catch (e) {
       if (mounted) AppSnackBar.errorFromException(context, AppLocalizations.of(context)!.vitalSaveFailed, e);
