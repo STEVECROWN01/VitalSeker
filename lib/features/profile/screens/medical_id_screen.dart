@@ -26,7 +26,7 @@ class MedicalIdScreen extends ConsumerWidget {
             if (Navigator.canPop(context)) {
               Navigator.pop(context);
             } else {
-              context.go(AppConfig.dashboard);
+              context.go(AppConfig.profile);
             }
           },
         ),

@@ -122,7 +122,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
 
       if (mounted) {
         AppSnackBar.success(context, l10n.medicationAddedSuccessfully);
-        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.dashboard); }
+        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.medications); }
       }
     } catch (e) {
       if (mounted) AppSnackBar.errorFromException(context, l10n.medicationAddFailed, e);

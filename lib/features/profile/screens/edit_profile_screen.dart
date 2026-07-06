@@ -316,7 +316,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(l10n.profileUpdatedSuccessfully)),
         );
-        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.dashboard); }
+        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.profile); }
       }
     } catch (e) {
       if (mounted) {

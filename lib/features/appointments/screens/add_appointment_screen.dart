@@ -82,7 +82,7 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
 
       if (mounted) {
         AppSnackBar.success(context, l10n.appointmentScheduledSuccessfully);
-        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.dashboard); }
+        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.appointments); }
       }
     } catch (e) {
       if (mounted) AppSnackBar.errorFromException(context, l10n.appointmentScheduleFailed, e);

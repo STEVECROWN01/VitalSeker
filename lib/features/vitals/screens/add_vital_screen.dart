@@ -161,7 +161,7 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
 
       if (mounted) {
         AppSnackBar.success(context, AppLocalizations.of(context)!.vitalSavedSuccessfully(_selectedType.displayName));
-        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.dashboard); }
+        if (Navigator.canPop(context)) { Navigator.pop(context); } else { context.go(AppConfig.vitals); }
       }
     } catch (e) {
       if (mounted) AppSnackBar.errorFromException(context, AppLocalizations.of(context)!.vitalSaveFailed, e);

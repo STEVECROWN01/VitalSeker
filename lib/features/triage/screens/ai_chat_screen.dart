@@ -453,7 +453,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
             if (Navigator.canPop(context)) {
               Navigator.pop(context);
             } else {
-              context.go(AppConfig.dashboard);
+              context.go(AppConfig.triage);
             }
           },
         ),
@@ -487,8 +487,48 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
             child: ListView.builder(
               controller: _scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              itemCount: _messages.length,
+              itemCount: _messages.length + (_isSending ? 1 : 0),
               itemBuilder: (context, index) {
+                if (index == _messages.length && _isSending) {
+                  // Typing indicator appears as the last item (where the answer will be)
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.80,
+                      ),
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: AppColors.surface(isDark),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
+                          bottomLeft: Radius.circular(4),
+                          bottomRight: Radius.circular(16),
+                        ),
+                        border: Border.all(color: AppColors.border(isDark), width: 0.5),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(
+                              'assets/images/branding/seker_ai_avatar.png',
+                              width: 18,
+                              height: 18,
+                              fit: BoxFit.cover,
+                              gaplessPlayback: true,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          _TypingDots(isDark: isDark),
+                        ],
+                      ),
+                    ),
+                  );
+                }
                 final msg = _messages[index];
                 return _ChatBubble(
                   message: msg,
@@ -497,32 +537,6 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
               },
             ),
           ),
-          // Loading indicator
-          if (_isSending)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 20),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.surface(isDark),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Three glowing animated dots (like ChatGPT typing indicator)
-                        _TypingDots(isDark: isDark),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
           // Recording indicator — Stop text on LEFT, mic+waveform on RIGHT
           if (_isRecording)
             Container(
