@@ -919,9 +919,12 @@ class _PreviewPane extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Center(
-            child: AspectRatio(
-              aspectRatio: 1 / 1.414, // A4
-              child: Container(
+            child: InteractiveViewer(
+              minScale: 0.5,
+              maxScale: 3.0,
+              child: AspectRatio(
+                aspectRatio: 1 / 1.414, // A4
+                child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -948,6 +951,7 @@ class _PreviewPane extends StatelessWidget {
                   includeAiSummary: includeAiSummary,
                   l10n: l10n,
                 ),
+              ),
               ),
             ),
           ),
