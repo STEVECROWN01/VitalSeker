@@ -29,14 +29,12 @@ import '../../../shared/theme/app_colors.dart';
 ///      dots (primary-container / yellow-500 / error).
 ///   6. Footer — "Powered by Keter Marketing"
 ///
-/// The widget stays a [ConsumerStatefulWidget] so the AI-health-tip fetcher
-/// (previously surfaced as a card on the dashboard) keeps its state
-/// management. The tip itself is no longer rendered here — the card was
-/// removed per the design audit — but `_loadAiTip`/`_aiTip`/`_tipFetchedAt`
-/// remain so a future surface (e.g. the insights screen) can read the cached
-/// tip without a refetch. The data providers
-/// (userProfileProvider, healthPassportProvider, symptomLogsProvider,
-/// subscriptionProvider, vitalsProvider) are all still watched/read.
+/// Dashboard screen — the main landing page after authentication.
+///
+/// Shows: greeting, health score hero card, quick action grid, recent checks,
+/// and an AI chat CTA. Data providers (userProfileProvider,
+/// healthPassportProvider, symptomLogsProvider, subscriptionProvider,
+/// vitalsProvider) are watched for real-time updates.
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
