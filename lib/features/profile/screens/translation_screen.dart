@@ -15,6 +15,8 @@ import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
+import '../../../core/providers/subscription_provider.dart';
 
 /// Medical Translation Screen
 ///
@@ -337,6 +339,17 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isPro = ref.watch(isProUserProvider);
+
+    if (!isPro) {
+      return const ProFeatureGate(
+        featureName: 'Medical Translation',
+        featureDescription: 'Translate medical terms and phrases into 40+ languages with DeepL. Includes voice recording, document scanning (OCR), and PDF export.',
+        featureIcon: Icons.translate,
+      );
+    }
+
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 

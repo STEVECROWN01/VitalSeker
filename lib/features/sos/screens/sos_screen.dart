@@ -16,6 +16,8 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
+import '../../../core/providers/subscription_provider.dart';
 
 class SosScreen extends ConsumerStatefulWidget {
   const SosScreen({super.key});

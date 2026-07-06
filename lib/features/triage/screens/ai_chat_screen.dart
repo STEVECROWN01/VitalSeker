@@ -14,9 +14,11 @@ import '../../../core/services/supabase_service.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/health_passport_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
 
 /// AI Chat Screen — "Seker" the AI Health Assistant
 ///
@@ -362,6 +364,16 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
+    final isPro = ref.watch(isProUserProvider);
+
+    // Pro gate — AI chat is Pro-only
+    if (!isPro) {
+      return const ProFeatureGate(
+        featureName: 'AI Chat with Seker',
+        featureDescription: 'Chat with Seker, your AI Health Assistant, in real-time. Get personalized health guidance, symptom analysis, and emotional support.',
+        featureIcon: Icons.chat,
+      );
+    }
 
     return Scaffold(
       backgroundColor: AppColors.background(isDark),

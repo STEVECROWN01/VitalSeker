@@ -11,6 +11,7 @@ import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
 
 enum RecordType { all, labResults, prescriptions, imaging, other }
 
@@ -539,6 +540,17 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isPro = ref.watch(isProUserProvider);
+
+    if (!isPro) {
+      return const ProFeatureGate(
+        featureName: 'Medical Records',
+        featureDescription: 'Store and manage your prescriptions, lab results, and imaging files securely. Scan documents with your camera and access them anytime.',
+        featureIcon: Icons.folder_outlined,
+      );
+    }
+
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
     final filtered = _filteredRecords;

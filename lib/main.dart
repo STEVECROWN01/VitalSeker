@@ -184,22 +184,7 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      // Set status bar icons based on theme:
-      // - Light mode: dark icons (visible on white background)
-      // - Dark mode: light icons (visible on dark background)
-      value: themeMode == ThemeMode.dark
-          ? SystemUiOverlayStyle.light.copyWith(
-              statusBarColor: Colors.transparent,
-              systemNavigationBarColor: AppColors.darkBackground,
-              systemNavigationBarIconBrightness: Brightness.light,
-            )
-          : SystemUiOverlayStyle.dark.copyWith(
-              statusBarColor: Colors.transparent,
-              systemNavigationBarColor: AppColors.lightBackground,
-              systemNavigationBarIconBrightness: Brightness.dark,
-            ),
-      child: MaterialApp.router(
+    return MaterialApp.router(
       title: 'VitalSeker',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
@@ -215,21 +200,29 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: router,
       builder: (context, child) {
-        // While services are initializing, show a branded loading screen
-        // INSTEAD of the real router. This prevents the splash screen's
-        // _navigateNext() from firing before Supabase is ready (which
-        // would route everyone to onboarding even if they're logged in).
-        if (!_servicesReady) {
-          return const _StartupLoadingScreen();
-        }
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: TextScaler.noScaling,
+        // Use the ACTUAL brightness from the theme (not the user preference)
+        // to set the status bar style. This handles ThemeMode.system correctly.
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: isDark
+              ? SystemUiOverlayStyle.light.copyWith(
+                  statusBarColor: Colors.transparent,
+                  systemNavigationBarColor: AppColors.darkBackground,
+                  systemNavigationBarIconBrightness: Brightness.light,
+                )
+              : SystemUiOverlayStyle.dark.copyWith(
+                  statusBarColor: Colors.transparent,
+                  systemNavigationBarColor: AppColors.lightBackground,
+                  systemNavigationBarIconBrightness: Brightness.dark,
+                ),
+          child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: TextScaler.noScaling,
+            ),
+            child: child ?? const SizedBox.shrink(),
           ),
-          child: child ?? const SizedBox.shrink(),
         );
       },
-    ),
     );
   }
 }

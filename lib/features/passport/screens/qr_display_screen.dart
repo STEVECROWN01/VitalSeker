@@ -14,6 +14,8 @@ import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
+import '../../../core/providers/subscription_provider.dart';
 
 /// QR Display Screen — redesigned to match the Google Stitch UI design.
 ///

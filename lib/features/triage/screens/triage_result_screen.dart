@@ -7,8 +7,10 @@ import 'package:share_plus/share_plus.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
 import '../../../shared/widgets/urgency_badge.dart';
 
 /// Triage Result Screen — redesigned to match the Google Stitch UI design.
@@ -62,6 +64,18 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isPro = ref.watch(isProUserProvider);
+
+    // Pro gate — triage results are Pro-only
+    // Free users complete the 5-step triage but see a gate instead of results
+    if (!isPro) {
+      return const ProFeatureGate(
+        featureName: 'AI Triage Results',
+        featureDescription: 'Your AI triage analysis has been completed. Subscribe to VitalSeker Pro to view your detailed results, including AI analysis, possible conditions, recommended actions, and emergency red flags.',
+        featureIcon: Icons.healing,
+      );
+    }
+
     final triage =
         widget.triageData['triage'] as Map<String, dynamic>? ?? widget.triageData;
     final urgencyLevel = triage['urgency_level'] as String? ??
