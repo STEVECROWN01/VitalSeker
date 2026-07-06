@@ -275,17 +275,19 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
               ],
             ),
           ),
-          // Step content
+          // Step content + disclaimer (scrollable together, not sticky)
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _buildStepContent(isDark, l10n),
+              child: Column(
+                children: [
+                  _buildStepContent(isDark, l10n),
+                  const SizedBox(height: 16),
+                  const MedicalDisclaimerBanner(compact: true),
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
-          ),
-          // Medical disclaimer
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: MedicalDisclaimerBanner(compact: true),
           ),
           // Bottom navigation
           _buildBottomBar(isDark, l10n),
