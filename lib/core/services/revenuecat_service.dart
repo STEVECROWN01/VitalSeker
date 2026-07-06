@@ -1,6 +1,7 @@
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 /// RevenueCat service for subscription management.
 ///
@@ -73,9 +74,14 @@ class RevenueCatService {
     try {
       await Purchases.purchasePackage(package);
       return true;
-    } on PurchasesErrorCode catch (e) {
-      if (e == PurchasesErrorCode.purchaseCancelledError) return false;
-      debugPrint('[RevenueCat] Purchase failed: $e');
+    } on PlatformException catch (e) {
+      // PurchasesErrorCode is an enum, not a throwable type — the purchases_flutter
+      // package throws PlatformException. Check the code/message for cancellation.
+      if (e.code?.contains('purchaseCancelled') == true ||
+          e.message?.contains('cancel') == true) {
+        return false; // User cancelled — not an error
+      }
+      debugPrint('[RevenueCat] Purchase failed: ${e.code} ${e.message}');
       rethrow;
     } catch (e) {
       debugPrint('[RevenueCat] Purchase error: $e');

@@ -143,7 +143,7 @@ Respond ONLY with valid JSON:
               'Authorization': `Bearer ${glmApiKey}`,
             },
             body: JSON.stringify({
-              model: 'glm-4-plus',
+              model: 'glm-4-flash',
               max_tokens: 512,
               temperature: 0,  // deterministic for medical analytics
               messages: [
@@ -156,10 +156,23 @@ Respond ONLY with valid JSON:
           if (aiResponse.ok) {
             const aiData = await aiResponse.json()
             const content = aiData.choices?.[0]?.message?.content || '{}'
-            // Use non-greedy match to grab the first JSON object — avoids
-            // accidentally swallowing trailing prose after the JSON block.
-            const jsonMatch = content.match(/\{[\s\S]*?\}(?=\s*$|\s*[^,}\s])/)
-            const candidate = jsonMatch ? jsonMatch[0] : content
+            // Robust JSON extraction — find balanced braces (same approach as
+            // vitalseker-triage). The previous regex was non-greedy and would
+            // truncate nested JSON objects.
+            let candidate = content.trim()
+            const startIdx = candidate.indexOf('{')
+            if (startIdx >= 0) {
+              let depth = 0
+              let endIdx = startIdx
+              for (let i = startIdx; i < candidate.length; i++) {
+                if (candidate[i] === '{') depth++
+                else if (candidate[i] === '}') {
+                  depth--
+                  if (depth === 0) { endIdx = i; break }
+                }
+              }
+              candidate = candidate.substring(startIdx, endIdx + 1)
+            }
             try {
               const parsed = JSON.parse(candidate)
               summary = parsed.summary || summary
