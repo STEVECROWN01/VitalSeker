@@ -613,59 +613,73 @@ serve(async (req: Request) => {
       })
     }
 
-    // GLM API call — FREE tier glm-4-flash
-    // Retry up to 2 times on failure (GLM free tier can be flaky)
+    // GLM API call — try glm-4-flash first, then glm-4-plus as fallback
+    // Retry up to 2 times per model
     let glmResponse: Response | null = null
     let lastError = ''
-    for (let attempt = 0; attempt < 3; attempt++) {
-      try {
-        glmResponse = await fetch(`${glmApiUrl}/chat/completions`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${glmApiKey}`,
-          },
-          body: JSON.stringify({
-            model: 'glm-4-flash',
-            max_tokens: 600,
-            temperature: 0.7,
-            messages: glmMessages,
-          }),
-        })
-        if (glmResponse.ok) break
-        lastError = await glmResponse.text()
-        console.error(`GLM API attempt ${attempt + 1} failed:`, glmResponse.status, lastError)
-        // Wait 1s before retry
-        if (attempt < 2) await new Promise(r => setTimeout(r, 1000))
-      } catch (e) {
-        lastError = String(e)
-        console.error(`GLM API attempt ${attempt + 1} error:`, e)
-        if (attempt < 2) await new Promise(r => setTimeout(r, 1000))
+    const models = ['glm-4-flash', 'glm-4-plus']
+    
+    for (const model of models) {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          glmResponse = await fetch(`${glmApiUrl}/chat/completions`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${glmApiKey}`,
+            },
+            body: JSON.stringify({
+              model: model,
+              max_tokens: 600,
+              temperature: 0.7,
+              messages: glmMessages,
+            }),
+          })
+          if (glmResponse.ok) {
+            // Verify the response actually has content
+            const testData = await glmResponse.json()
+            const testContent = testData.choices?.[0]?.message?.content
+            if (testContent && testContent.length > 5) {
+              // Good response — re-parse and use it
+              console.log(`GLM API success with model ${model}, attempt ${attempt + 1}`)
+              const reply = testContent
+              return new Response(JSON.stringify({
+                reply,
+                sender: 'seker',
+                timestamp: new Date().toISOString(),
+                extracted_data: extractedData,
+                saved_data: savedData,
+              }), {
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+              })
+            } else {
+              console.error(`GLM API returned empty/short content with model ${model}:`, testContent)
+              lastError = 'Empty response from AI'
+              glmResponse = null
+            }
+          } else {
+            lastError = await glmResponse.text()
+            console.error(`GLM API attempt ${attempt + 1} with ${model} failed:`, glmResponse.status, lastError)
+            glmResponse = null
+          }
+          if (attempt < 1) await new Promise(r => setTimeout(r, 500))
+        } catch (e) {
+          lastError = String(e)
+          console.error(`GLM API attempt ${attempt + 1} with ${model} error:`, e)
+          glmResponse = null
+          if (attempt < 1) await new Promise(r => setTimeout(r, 500))
+        }
       }
     }
 
-    if (!glmResponse || !glmResponse.ok) {
-      console.error('GLM API all retries failed:', lastError)
-      return new Response(JSON.stringify({
-        reply: "I apologize, but I'm having difficulty connecting to my AI service right now. This is likely a temporary issue. Please try again in a moment. If this is a medical emergency, please call 112 or 911 immediately.",
-        sender: 'seker',
-        extracted_data: extractedData,
-        saved_data: savedData,
-        error: true,
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      })
-    }
-
-    const glmData = await glmResponse.json()
-    const reply = glmData.choices?.[0]?.message?.content || "I'm sorry, I didn't catch that. Could you tell me more about what you're experiencing?"
-
+    // All models and attempts failed
+    console.error('GLM API all retries failed:', lastError)
     return new Response(JSON.stringify({
-      reply,
+      reply: "I apologize, but I'm having difficulty connecting to my AI service right now. This is likely a temporary issue. Please try again in a moment. If this is a medical emergency, please call 112 or 911 immediately.",
       sender: 'seker',
-      timestamp: new Date().toISOString(),
       extracted_data: extractedData,
       saved_data: savedData,
+      error: true,
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     })

@@ -247,7 +247,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
             }
           },
         ),
-        title: Text(l10n.triage, style: AppTextStyles.heading4),
+        title: Text('AI Triage', style: AppTextStyles.heading4),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(6),
           child: _buildProgressBar(isDark),

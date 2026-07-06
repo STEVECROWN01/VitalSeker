@@ -39,22 +39,22 @@ const corsHeaders = {
 //   - Max 500 chars per field
 //
 // Fallback on API error or JSON parse failure:
-//   urgency: "yellow", recommended_action: "Consultez un médecin"
+//   urgency: "yellow", recommended_action: "Please consult a doctor"
 // ─────────────────────────────────────────────────────────────────────────────
 
 const DEFAULT_FALLBACK = {
   urgency: 'yellow',
-  urgency_label: 'Consultation médicale recommandée',
-  possible_areas: ['Évaluation clinique recommandée'],
-  recommended_action: 'Consultez un médecin dès que possible.',
-  explanation: "Notre service d'IA n'a pas pu analyser vos symptômes en détail. Par précaution, nous vous recommandons de consulter un professionnel de santé.",
+  urgency_label: 'Medical consultation recommended',
+  possible_areas: ['Clinical evaluation recommended'],
+  recommended_action: 'Please consult a doctor as soon as possible.',
+  explanation: "Our AI service could not analyze your symptoms in detail. As a precaution, we recommend consulting a healthcare professional.",
   clarifying_question: null,
-  when_to_escalate: "Consultez immédiatement un service d'urgence si vous ressentez des douleurs thoraciques, des difficultés respiratoires, une perte de conscience ou des saignements abondants.",
-  disclaimer: "Ces informations ne constituent pas un diagnostic médical. VitalSeker ne remplace pas un professionnel de santé qualifié.",
+  when_to_escalate: "Seek immediate emergency care if you experience chest pain, difficulty breathing, loss of consciousness, or severe bleeding.",
+  disclaimer: "This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.",
 }
 
 // Standard disclaimer (per spec — always present, non-negotiable)
-const STANDARD_DISCLAIMER = "Ces informations ne constituent pas un diagnostic médical. VitalSeker ne remplace pas un professionnel de santé qualifié."
+const STANDARD_DISCLAIMER = "This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional."
 
 // Mental-health crisis keywords — trigger automatic red urgency (Rule R4)
 // Multilingual: EN, FR, ES, AR (transliterated), PT, plus common variations
@@ -181,7 +181,7 @@ function validateAndNormalize(raw: Record<string, unknown>, userLanguage: string
     if (Array.isArray(raw.recommendations) && raw.recommendations.length > 0) {
       action = raw.recommendations.map((r: unknown) => String(r)).join('. ').slice(0, 500)
     } else {
-      action = 'Consultez un médecin.'
+      action = 'Please consult a doctor.'
     }
   }
   if (result.urgency === 'red') {

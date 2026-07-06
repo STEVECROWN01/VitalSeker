@@ -459,33 +459,7 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
             constraints.maxWidth - _fabSize - _fabMargin,
             constraints.maxHeight - _fabSize - _fabMargin,
           );
-          final pos = _fabPosition ?? defaultPos;
-
-          return Stack(
-            children: [
-              // Main screen content.
-              widget.child,
-              // Draggable Seker AI FAB — visible on ALL tabs so the user
-              // can chat with Seker from anywhere. Long-press to drag.
-              Positioned(
-                left: pos.dx,
-                top: pos.dy,
-                child: _DraggableSekerFab(
-                  onDrag: (delta) {
-                    setState(() {
-                      final base = _fabPosition ?? defaultPos;
-                      final newX = (base.dx + delta.dx)
-                          .clamp(0.0, constraints.maxWidth - _fabSize);
-                      final newY = (base.dy + delta.dy)
-                          .clamp(0.0, constraints.maxHeight - _fabSize);
-                      _fabPosition = Offset(newX, newY);
-                    });
-                  },
-                  onTap: () => context.push(AppConfig.aiChat),
-                ),
-              ),
-            ],
-          );
+          return widget.child;
         },
       ),
       bottomNavigationBar: AppBottomNav(currentIndex: widget.currentIndex),

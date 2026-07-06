@@ -302,26 +302,35 @@ class _SosScreenState extends ConsumerState<SosScreen>
     _startCountdown();
 
     try {
-      Position? position;
-      try {
-        position = await _getCurrentLocation();
-      } catch (_) {
-        // Best-effort — the SOS still goes out without coordinates.
-      }
+      // Send SOS IMMEDIATELY — do NOT wait for GPS.
+      // For emergencies, speed is more important than location.
+      // Start the edge function call and GPS acquisition in parallel.
+      final edgeService = EdgeFunctionService();
 
+      // Start GPS acquisition in background (non-blocking)
+      Position? position;
+      final gpsFuture = _getCurrentLocation().catchError((_) => null);
+
+      // Send the SOS alert immediately WITHOUT location
+      // The edge function will accept it and send SMS to emergency contacts
+      final sosFuture = edgeService.sendSosAlert(
+        latitude: null,
+        longitude: null,
+        locationAddress: null,
+      );
+
+      // Wait for both — but the SOS is already sent
+      final results = await Future.wait([sosFuture, gpsFuture]);
+      final result = results[0] as Map<String, dynamic>;
+      position = results[1] as Position?;
+
+      // If we got GPS, update the location display
       final locationText = position != null
           ? '${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)}'
           : null;
       if (locationText != null) {
         setState(() => _locationText = locationText);
       }
-
-      final edgeService = EdgeFunctionService();
-      final result = await edgeService.sendSosAlert(
-        latitude: position?.latitude,
-        longitude: position?.longitude,
-        locationAddress: locationText,
-      );
 
       // ── Success ──
       // Flip _sosActive ON so the active state UI renders with the result

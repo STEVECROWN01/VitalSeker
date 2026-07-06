@@ -307,6 +307,9 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   /// Pick a file (prescription, lab result, imaging) to share with Seker.
   /// The file name is inserted into the chat as a user message so Seker
   /// knows the user has shared a document.
+  String? _attachedFileName;
+  String? _attachedFileUrl;
+
   Future<void> _pickFile() async {
     try {
       final result = await FilePicker.platform.pickFiles(
@@ -328,19 +331,26 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       AppSnackBar.info(context, 'Uploading $fileName...');
 
       final storagePath = '${user.id}/chat/${DateTime.now().millisecondsSinceEpoch}_$fileName';
+      String? fileUrl;
       try {
         await Supabase.instance.client.storage
             .from('medical-records')
             .upload(storagePath, file);
+        fileUrl = Supabase.instance.client.storage
+            .from('medical-records')
+            .getPublicUrl(storagePath);
       } catch (e) {
-        // If storage fails, still send the message to Seker about the file
         debugPrint('Storage upload failed: $e');
       }
 
-      // Add a message to the chat indicating the user shared a file
-      final fileMessage = 'I\'ve shared a file: $fileName. Please analyze this and let me know what you think.';
-      _textController.text = fileMessage;
-      await _sendMessage();
+      // Show the file as an attachment — do NOT auto-send
+      setState(() {
+        _attachedFileName = fileName;
+        _attachedFileUrl = fileUrl;
+      });
+      if (mounted) {
+        AppSnackBar.success(context, 'File attached: $fileName');
+      }
     } catch (e) {
       if (mounted) {
         AppSnackBar.error(context, 'Could not pick file: $e');
@@ -501,19 +511,14 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                 ],
               ),
             ),
-          // Recording indicator
+          // Recording indicator — Stop text on LEFT, mic+waveform on RIGHT
           if (_isRecording)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               color: AppColors.error(isDark).withValues(alpha: 0.1),
               child: Row(
                 children: [
-                  // Pulsing mic icon
-                  _PulsingMicIcon(color: AppColors.error(isDark)),
-                  const SizedBox(width: 8),
-                  // Animated waveform-style bars (not transcription text)
-                  _RecordingWaveform(isDark: isDark),
-                  const Spacer(),
+                  // Stop text — LEFT side
                   GestureDetector(
                     onTap: _stopRecording,
                     child: Text(
@@ -524,6 +529,38 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                         color: AppColors.error(isDark),
                       ),
                     ),
+                  ),
+                  const Spacer(),
+                  // Animated waveform-style bars
+                  _RecordingWaveform(isDark: isDark),
+                  const SizedBox(width: 8),
+                  // Pulsing mic icon — RIGHT side
+                  _PulsingMicIcon(color: AppColors.error(isDark)),
+                ],
+              ),
+            ),
+          // File attachment preview (above input bar)
+          if (_attachedFileName != null)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              color: AppColors.primaryContainer(isDark).withValues(alpha: 0.3),
+              child: Row(
+                children: [
+                  Icon(Icons.attach_file, size: 16, color: AppColors.primary(isDark)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _attachedFileName!,
+                      style: TextStyle(fontSize: 12, color: AppColors.textPrimary(isDark)),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => setState(() {
+                      _attachedFileName = null;
+                      _attachedFileUrl = null;
+                    }),
+                    child: Icon(Icons.close, size: 16, color: AppColors.error(isDark)),
                   ),
                 ],
               ),
@@ -547,7 +584,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         ),
         child: Row(
           children: [
-            // File upload button — share prescriptions, lab results, etc.
+            // File upload button — left side
             GestureDetector(
               onTap: _pickFile,
               child: Container(
@@ -560,28 +597,6 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                 child: Icon(
                   Icons.attach_file,
                   color: AppColors.primary(isDark),
-                  size: 20,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            // Voice record button — tap to start, tap again to stop
-            GestureDetector(
-              onTap: _isRecording ? _stopRecording : _startRecording,
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: _isRecording
-                      ? AppColors.error(isDark)
-                      : AppColors.primaryContainer(isDark),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  _isRecording ? Icons.stop : Icons.mic,
-                  color: _isRecording
-                      ? Colors.white
-                      : AppColors.primary(isDark),
                   size: 20,
                 ),
               ),
@@ -603,7 +618,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                   decoration: InputDecoration(
                     hintText: _isRecording
                         ? 'Recording...'
-                        : 'Type or tap mic to speak...',
+                        : 'Type your message...',
                     hintStyle: TextStyle(
                       color: AppColors.textHint(isDark),
                       fontSize: 14,
@@ -618,6 +633,28 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                     color: AppColors.textPrimary(isDark),
                     fontSize: 14,
                   ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            // Voice record button — RIGHT side, between text and send
+            GestureDetector(
+              onTap: _isRecording ? _stopRecording : _startRecording,
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: _isRecording
+                      ? AppColors.error(isDark)
+                      : AppColors.primaryContainer(isDark),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  _isRecording ? Icons.stop : Icons.mic,
+                  color: _isRecording
+                      ? Colors.white
+                      : AppColors.primary(isDark),
+                  size: 20,
                 ),
               ),
             ),

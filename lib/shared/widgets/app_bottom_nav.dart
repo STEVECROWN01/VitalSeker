@@ -66,7 +66,7 @@ class AppBottomNav extends StatelessWidget {
         NavigationDestination(
           icon: const Icon(Icons.healing_outlined),
           selectedIcon: const Icon(Icons.healing),
-          label: l10n.triage,
+          label: 'AI Triage',
         ),
         NavigationDestination(
           icon: const Icon(Icons.insights_outlined),
