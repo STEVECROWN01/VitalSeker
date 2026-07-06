@@ -28,21 +28,33 @@ serve(async (req: Request) => {
     })
   }
 
-  // --- Cron secret gate ---
+  // --- Auth gate: accept either CRON secret OR authenticated user JWT ---
   const cronSecret = Deno.env.get('CRON_SECRET')
   const providedSecret = req.headers.get('x-cron-secret')
-  if (!cronSecret) {
-    console.error('CRON_SECRET env var is not set on the edge function. Refusing to run.')
-    return new Response(JSON.stringify({ error: 'Server misconfigured: missing cron secret' }), {
-      status: 503,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
-  }
-  if (!providedSecret || providedSecret !== cronSecret) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-      status: 401,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+  
+  // Check if this is a CRON call (has valid cron secret)
+  const isCronCall = cronSecret && providedSecret && providedSecret === cronSecret
+  
+  // If not a CRON call, check for authenticated user
+  if (!isCronCall) {
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      })
+    }
+    // Verify the user is authenticated
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: authHeader } } }
+    )
+    const { data: { user } } = await supabaseClient.auth.getUser()
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      })
+    }
   }
 
   try {
