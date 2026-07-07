@@ -203,45 +203,45 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
             if (_includePatientOverview) {
               blocks.add(pw.Header(level: 0, text: 'Patient Overview & Vital Stats'));
               blocks.add(pw.Paragraph(
-                text: 'Name: ${pdfData['patient']?['name'] ?? 'N/A'}',
+                text: 'Name: ${previewData['patient']?['name'] ?? 'N/A'}',
               ));
               blocks.add(pw.Paragraph(
-                text: 'Email: ${pdfData['patient']?['email'] ?? 'N/A'}',
+                text: 'Email: ${previewData['patient']?['email'] ?? 'N/A'}',
               ));
               blocks.add(pw.Paragraph(
-                text: 'Date of Birth: ${pdfData['patient']?['date_of_birth'] ?? 'N/A'}',
+                text: 'Date of Birth: ${previewData['patient']?['date_of_birth'] ?? 'N/A'}',
               ));
               blocks.add(pw.Paragraph(
-                text: 'Blood Type: ${pdfData['patient']?['blood_type'] ?? 'N/A'}',
+                text: 'Blood Type: ${previewData['patient']?['blood_type'] ?? 'N/A'}',
               ));
-              if (pdfData['health_passport'] != null) {
+              if (previewData['health_passport'] != null) {
                 blocks.add(pw.Paragraph(
                   text:
-                      'Vital Score: ${pdfData['health_passport']['vital_score'] ?? 'N/A'}/100',
+                      'Vital Score: ${previewData['health_passport']['vital_score'] ?? 'N/A'}/100',
                 ));
                 blocks.add(pw.Paragraph(
                   text:
-                      'Chronic Conditions: ${(pdfData['health_passport']['chronic_conditions'] as List?)?.join(', ') ?? 'None'}',
+                      'Chronic Conditions: ${(previewData['health_passport']['chronic_conditions'] as List?)?.join(', ') ?? 'None'}',
                 ));
               }
             }
 
-            if (_includeMedications && pdfData['health_passport'] != null) {
+            if (_includeMedications && previewData['health_passport'] != null) {
               blocks.add(pw.Header(level: 0, text: 'Medications & Allergies'));
               blocks.add(pw.Paragraph(
                 text:
-                    'Allergies: ${(pdfData['health_passport']['allergies'] as List?)?.join(', ') ?? 'None'}',
+                    'Allergies: ${(previewData['health_passport']['allergies'] as List?)?.join(', ') ?? 'None'}',
               ));
               blocks.add(pw.Paragraph(
                 text:
-                    'Medications: ${(pdfData['health_passport']['medications'] as List?)?.join(', ') ?? 'None'}',
+                    'Medications: ${(previewData['health_passport']['medications'] as List?)?.join(', ') ?? 'None'}',
               ));
             }
 
             if (_includeSymptomsLog &&
-                (pdfData['symptom_history'] as List?)?.isNotEmpty == true) {
+                (previewData['symptom_history'] as List?)?.isNotEmpty == true) {
               blocks.add(pw.Header(level: 0, text: 'Symptoms & Triage Log'));
-              for (final log in (pdfData['symptom_history'] as List)) {
+              for (final log in (previewData['symptom_history'] as List)) {
                 blocks.add(pw.Container(
                   margin: const pw.EdgeInsets.only(bottom: 8),
                   child: pw.Column(
@@ -263,9 +263,9 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 
             if (_includeAiSummary) {
               blocks.add(pw.Header(level: 0, text: 'AI Analysis Summary'));
-              final aiText = (pdfData['health_passport'] != null)
+              final aiText = (previewData['health_passport'] != null)
                   ? 'Patient exhibits generally stable vitals over the ${_dateRangeOptions[_dateRangeIndex].toLowerCase()}. '
-                      'Vital Score is ${pdfData['health_passport']['vital_score'] ?? 'N/A'}/100. '
+                      'Vital Score is ${previewData['health_passport']['vital_score'] ?? 'N/A'}/100. '
                       'No critical flags detected. Continue current hydration protocol and monitor trends.'
                   : 'AI analysis unavailable — no health passport on file for this patient.';
               blocks.add(pw.Paragraph(text: aiText));
@@ -273,12 +273,12 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 
             blocks.add(pw.Divider());
             blocks.add(pw.Paragraph(
-              text: pdfData['footer']?['disclaimer'] ??
+              text: previewData['footer']?['disclaimer'] ??
                   'This document does not constitute a medical diagnosis.',
               style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey600),
             ));
             blocks.add(pw.Paragraph(
-              text: pdfData['footer']?['producer'] ??
+              text: previewData['footer']?['producer'] ??
                   'Powered by ${AppConfig.producer}',
               style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey500),
             ));
@@ -962,12 +962,12 @@ class _PreviewPane extends StatelessWidget {
                               color: Colors.white,
                               child: _PreviewDocument(
                                 isDark: isDark,
-                                previewData: _previewData,
-                                dateRangeLabel: _dateRangeOptions[_dateRangeIndex],
-                                includePatientOverview: _includePatientOverview,
-                                includeSymptomsLog: _includeSymptomsLog,
-                                includeMedications: _includeMedications,
-                                includeAiSummary: _includeAiSummary,
+                                previewData: previewData,
+                                dateRangeLabel: dateRangeLabel,
+                                includePatientOverview: includePatientOverview,
+                                includeSymptomsLog: includeSymptomsLog,
+                                includeMedications: includeMedications,
+                                includeAiSummary: includeAiSummary,
                                 l10n: l10n,
                               ),
                             ),
@@ -1012,6 +1012,7 @@ class _PreviewPane extends StatelessWidget {
                 ),
               ),
               ),
+            ),
             ),
           ),
         ],

@@ -677,7 +677,7 @@ class _ProfileAvatar extends StatelessWidget {
                   width: 104,
                   height: 104,
                   
-                  loadingBuilder: (context, child, loadingProgress) {
+                  progressIndicatorBuilder: (context, url, downloadProgress) {
                     if (loadingProgress == null) return child;
                     return initialsWidget;
                   },

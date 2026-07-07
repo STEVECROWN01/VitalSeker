@@ -12,19 +12,9 @@ final subscriptionProvider = FutureProvider<Subscription?>((ref) async {
 });
 
 final isProUserProvider = Provider<bool>((ref) {
-  // First check the subscriptions table
   final subAsync = ref.watch(subscriptionProvider);
-  final isProFromSub = subAsync.maybeWhen(
+  return subAsync.maybeWhen(
     data: (sub) => sub?.isPro ?? false,
     orElse: () => false,
   );
-  // Also check the user profile's subscription_status as fallback
-  // (for dev-mode subscriptions set directly on the profile)
-  if (isProFromSub) return true;
-  final profileAsync = ref.watch(userProfileProvider);
-  final isProFromProfile = profileAsync.maybeWhen(
-    data: (profile) => profile?.subscriptionStatus == 'pro',
-    orElse: () => false,
-  );
-  return isProFromProfile;
 });

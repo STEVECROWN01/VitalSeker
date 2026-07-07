@@ -13,6 +13,7 @@ import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
 import '../../../shared/widgets/pro_feature_gate.dart';
+import '../../../core/providers/subscription_provider.dart';
 
 enum RecordType { all, labResults, prescriptions, imaging, other }
 
@@ -602,7 +603,6 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
       );
     }
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
     final filtered = _filteredRecords;
 
