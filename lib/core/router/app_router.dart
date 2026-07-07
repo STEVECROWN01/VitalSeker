@@ -23,6 +23,7 @@ import '../../features/export/screens/export_screen.dart';
 import '../../features/sos/screens/sos_screen.dart';
 import '../../features/triage/screens/ai_chat_screen.dart';
 import '../../features/triage/screens/seker_info_screen.dart';
+import '../../features/profile/screens/pro_plan_screen.dart';
 import '../../features/vitals/screens/vitals_screen.dart';
 import '../../features/vitals/screens/add_vital_screen.dart';
 import '../../features/vitals/screens/vitals_history_screen.dart';
@@ -373,6 +374,11 @@ GoRouter createRouter(Ref ref) {
         path: AppConfig.sekerInfo,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const SekerInfoScreen(),
+      ),
+      GoRoute(
+        path: AppConfig.proPlan,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const ProPlanScreen(),
       ),
       GoRoute(
         path: AppConfig.medications,

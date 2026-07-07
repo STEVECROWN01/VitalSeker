@@ -44,4 +44,5 @@ class AppConfig {
   static const String vitalsHistory = '/home/vitals/history';
   static const String aiChat = '/home/ai-chat';
   static const String sekerInfo = '/home/seker-info';
+  static const String proPlan = '/home/pro-plan';
 }
