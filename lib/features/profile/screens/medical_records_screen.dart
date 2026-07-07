@@ -150,6 +150,17 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
     // If editing, check for existing file URL
     if (isEditing && record != null) {
       existingFileUrl = record['attachment_url'] as String?;
+      // Try to extract the file name from the URL
+      if (existingFileUrl != null) {
+        final uri = Uri.tryParse(existingFileUrl!);
+        if (uri != null) {
+          final pathSegments = uri.pathSegments;
+          if (pathSegments.isNotEmpty) {
+            attachedFileName = pathSegments.last.split('_').last;
+          }
+        }
+        attachedFileName ??= 'Attached document';
+      }
     }
 
     Future<String?> _uploadFile(File file, String userId) async {
@@ -746,8 +757,13 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                       ),
                     ),
 
-                  const SliverToBoxAdapter(child: MedicalDisclaimerBanner(compact: true)),
-                  const SliverToBoxAdapter(child: SizedBox(height: 80)),
+                  const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: MedicalDisclaimerBanner(compact: true),
+                    ),
+                  ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 32)),
                 ],
               ),
             ),

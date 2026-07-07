@@ -380,15 +380,18 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       appBar: AppBar(
         title: Row(
           children: [
-            // Seker AI avatar — clean, fully visible
-            ClipRRect(
-              borderRadius: BorderRadius.circular(18),
-              child: Image.asset(
-                'assets/images/branding/seker_ai_avatar.png',
-                width: 36,
-                height: 36,
-                fit: BoxFit.cover,
-                gaplessPlayback: true,
+            // Seker AI avatar — clean, fully visible, clickable
+            GestureDetector(
+              onTap: () => context.push(AppConfig.sekerInfo),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: Image.asset(
+                  'assets/images/branding/seker_ai_avatar.png',
+                  width: 36,
+                  height: 36,
+                  fit: BoxFit.cover,
+                  gaplessPlayback: true,
+                ),
               ),
             ),
             const SizedBox(width: 12),
