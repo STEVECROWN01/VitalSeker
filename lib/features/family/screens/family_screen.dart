@@ -68,18 +68,20 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
   Future<void> _addFamilyMember() async {
     final l10n = AppLocalizations.of(context)!;
 
-    // Pro-gating: family profiles is a Pro-only feature per Cahier des Charges
-    // Section 2.6 ("Profils Famille (Pro) — Jusqu'à 5 profils familiaux").
+    // Pro-gating: wait for subscription to load before checking
     final isPro = ref.read(isProUserProvider);
     if (!isPro) {
-      if (!mounted) return;
-      AppSnackBar.error(
-        context,
-        l10n.familyProfilesProOnly,
-      );
-      // Redirect to subscription screen
-      context.go(AppConfig.subscription);
-      return;
+      // Double-check by waiting for the subscription provider to resolve
+      final sub = await ref.read(subscriptionProvider.future);
+      if (sub == null || !sub.isPro) {
+        if (!mounted) return;
+        AppSnackBar.error(
+          context,
+          l10n.familyProfilesProOnly,
+        );
+        context.go(AppConfig.subscription);
+        return;
+      }
     }
 
     if (_nameController.text.trim().isEmpty ||

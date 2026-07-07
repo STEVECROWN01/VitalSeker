@@ -457,12 +457,18 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 // Top app bar
 // ═══════════════════════════════════════════════════════════════════════════
 
-class _TopBar extends StatelessWidget {
+class _TopBar extends ConsumerWidget {
   final bool isDark;
   const _TopBar({required this.isDark});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profile = ref.watch(userProfileProvider).valueOrNull;
+    final avatarUrl = profile?.avatarUrl;
+    final initial = (profile?.fullName?.isNotEmpty == true)
+        ? profile!.fullName![0].toUpperCase()
+        : 'U';
+
     return Container(
       height: 72,
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -503,11 +509,36 @@ class _TopBar extends StatelessWidget {
                 color: AppColors.borderLight(isDark).withValues(alpha: 0.6),
               ),
             ),
-            child: Icon(
-              Icons.person,
-              color: AppColors.primary(isDark),
-              size: 20,
-            ),
+            child: avatarUrl != null && avatarUrl.isNotEmpty
+                ? ClipOval(
+                    child: Image.network(
+                      avatarUrl,
+                      fit: BoxFit.cover,
+                      gaplessPlayback: true,
+                      errorBuilder: (_, __, ___) => Center(
+                        child: Text(
+                          initial,
+                          style: TextStyle(
+                            fontFamily: 'ClashDisplay',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primary(isDark),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : Center(
+                    child: Text(
+                      initial,
+                      style: TextStyle(
+                        fontFamily: 'ClashDisplay',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary(isDark),
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),
