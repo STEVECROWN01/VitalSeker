@@ -130,17 +130,9 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     setState(() => viaEmail ? _isEmailing = true : _isExporting = true);
     try {
       final passport = ref.read(healthPassportProvider).valueOrNull;
-      final edgeService = EdgeFunctionService();
+      final profile = ref.read(userProfileProvider).valueOrNull;
 
-      // Fetch the structured export data via the edge function.
-      final pdfData = await edgeService.exportPdf(
-        passportId: passport?.id,
-        includeHistory: _includeHistory,
-      );
-      if (!mounted) return;
-      setState(() => _previewData = pdfData);
-
-      // Generate PDF locally, gated by the 4 section toggles.
+      // Generate PDF locally (don't depend on the edge function which may fail)
       final pdf = pw.Document();
 
       pdf.addPage(
