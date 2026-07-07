@@ -19,6 +19,7 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -39,6 +40,10 @@ android {
         abortOnError = false
         checkReleaseBuilds = false
     }
+}
+
+dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }
 
 // Force-downgrade androidx libraries that pulled in minAgpVersion 8.9.1 requirements
