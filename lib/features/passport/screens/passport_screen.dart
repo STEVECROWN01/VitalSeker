@@ -101,12 +101,15 @@ class PassportScreen extends ConsumerWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(6),
-                                child: Image.asset(
-                                  'assets/images/branding/app_logo.png',
-                                  width: 22,
-                                  height: 22,
-                                  fit: BoxFit.cover,
-                                  gaplessPlayback: true,
+                                child: Container(
+                                  color: Colors.white.withValues(alpha: 0.2),
+                                  child: Image.asset(
+                                    'assets/images/branding/app_logo.png',
+                                    width: 22,
+                                    height: 22,
+                                    fit: BoxFit.cover,
+                                    gaplessPlayback: true,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 8),
