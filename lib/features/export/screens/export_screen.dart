@@ -203,45 +203,45 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
             if (_includePatientOverview) {
               blocks.add(pw.Header(level: 0, text: 'Patient Overview & Vital Stats'));
               blocks.add(pw.Paragraph(
-                text: 'Name: ${previewData['patient']?['name'] ?? 'N/A'}',
+                text: 'Name: ${_previewData['patient']?['name'] ?? 'N/A'}',
               ));
               blocks.add(pw.Paragraph(
-                text: 'Email: ${previewData['patient']?['email'] ?? 'N/A'}',
+                text: 'Email: ${_previewData['patient']?['email'] ?? 'N/A'}',
               ));
               blocks.add(pw.Paragraph(
-                text: 'Date of Birth: ${previewData['patient']?['date_of_birth'] ?? 'N/A'}',
+                text: 'Date of Birth: ${_previewData['patient']?['date_of_birth'] ?? 'N/A'}',
               ));
               blocks.add(pw.Paragraph(
-                text: 'Blood Type: ${previewData['patient']?['blood_type'] ?? 'N/A'}',
+                text: 'Blood Type: ${_previewData['patient']?['blood_type'] ?? 'N/A'}',
               ));
-              if (previewData['health_passport'] != null) {
+              if (_previewData['health_passport'] != null) {
                 blocks.add(pw.Paragraph(
                   text:
-                      'Vital Score: ${previewData['health_passport']['vital_score'] ?? 'N/A'}/100',
+                      'Vital Score: ${_previewData['health_passport']['vital_score'] ?? 'N/A'}/100',
                 ));
                 blocks.add(pw.Paragraph(
                   text:
-                      'Chronic Conditions: ${(previewData['health_passport']['chronic_conditions'] as List?)?.join(', ') ?? 'None'}',
+                      'Chronic Conditions: ${(_previewData['health_passport']['chronic_conditions'] as List?)?.join(', ') ?? 'None'}',
                 ));
               }
             }
 
-            if (_includeMedications && previewData['health_passport'] != null) {
+            if (_includeMedications && _previewData['health_passport'] != null) {
               blocks.add(pw.Header(level: 0, text: 'Medications & Allergies'));
               blocks.add(pw.Paragraph(
                 text:
-                    'Allergies: ${(previewData['health_passport']['allergies'] as List?)?.join(', ') ?? 'None'}',
+                    'Allergies: ${(_previewData['health_passport']['allergies'] as List?)?.join(', ') ?? 'None'}',
               ));
               blocks.add(pw.Paragraph(
                 text:
-                    'Medications: ${(previewData['health_passport']['medications'] as List?)?.join(', ') ?? 'None'}',
+                    'Medications: ${(_previewData['health_passport']['medications'] as List?)?.join(', ') ?? 'None'}',
               ));
             }
 
             if (_includeSymptomsLog &&
-                (previewData['symptom_history'] as List?)?.isNotEmpty == true) {
+                (_previewData['symptom_history'] as List?)?.isNotEmpty == true) {
               blocks.add(pw.Header(level: 0, text: 'Symptoms & Triage Log'));
-              for (final log in (previewData['symptom_history'] as List)) {
+              for (final log in (_previewData['symptom_history'] as List)) {
                 blocks.add(pw.Container(
                   margin: const pw.EdgeInsets.only(bottom: 8),
                   child: pw.Column(
@@ -263,9 +263,9 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 
             if (_includeAiSummary) {
               blocks.add(pw.Header(level: 0, text: 'AI Analysis Summary'));
-              final aiText = (previewData['health_passport'] != null)
+              final aiText = (_previewData['health_passport'] != null)
                   ? 'Patient exhibits generally stable vitals over the ${_dateRangeOptions[_dateRangeIndex].toLowerCase()}. '
-                      'Vital Score is ${previewData['health_passport']['vital_score'] ?? 'N/A'}/100. '
+                      'Vital Score is ${_previewData['health_passport']['vital_score'] ?? 'N/A'}/100. '
                       'No critical flags detected. Continue current hydration protocol and monitor trends.'
                   : 'AI analysis unavailable — no health passport on file for this patient.';
               blocks.add(pw.Paragraph(text: aiText));
@@ -273,12 +273,12 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 
             blocks.add(pw.Divider());
             blocks.add(pw.Paragraph(
-              text: previewData['footer']?['disclaimer'] ??
+              text: _previewData['footer']?['disclaimer'] ??
                   'This document does not constitute a medical diagnosis.',
               style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey600),
             ));
             blocks.add(pw.Paragraph(
-              text: previewData['footer']?['producer'] ??
+              text: _previewData['footer']?['producer'] ??
                   'Powered by ${AppConfig.producer}',
               style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey500),
             ));
@@ -1046,9 +1046,9 @@ class _PreviewDocument extends StatelessWidget {
   // passport would see a fake patient profile in the live preview, which
   // was misleading. Now they return a localized "—" placeholder until the
   // real data is fetched via the exportPdf edge function call.
-  String get _patientName => previewData['patient']?['name'] ?? '—';
-  String get _patientDob => previewData['patient']?['date_of_birth'] ?? '—';
-  int get _vitalScore => previewData['health_passport']?['vital_score'] ?? 0;
+  String get _patientName => _previewData['patient']?['name'] ?? '—';
+  String get _patientDob => _previewData['patient']?['date_of_birth'] ?? '—';
+  int get _vitalScore => _previewData['health_passport']?['vital_score'] ?? 0;
 
   /// Symptom history entries returned by the export-pdf edge function
   /// (each entry has `date`, `symptoms`, `severity`, `triage_result`,
@@ -1056,7 +1056,7 @@ class _PreviewDocument extends StatelessWidget {
   /// so the preview can show a localized empty placeholder instead of the
   /// previous hardcoded "Tension Headache" / "Mild Fatigue" mock rows.
   List<Map<String, dynamic>> get _symptomHistory {
-    final raw = previewData['symptom_history'];
+    final raw = _previewData['symptom_history'];
     if (raw is! List) return const [];
     return raw
         .whereType<Map<String, dynamic>>()
@@ -1274,7 +1274,7 @@ class _PreviewDocument extends StatelessWidget {
                       label: 'Primary Care Physician',
                       // Use real physician name from data if available,
                       // otherwise "—" (was hardcoded 'Dr. Sarah Jenkins').
-                      value: previewData['patient']?['primary_care_physician'] ?? '—',
+                      value: _previewData['patient']?['primary_care_physician'] ?? '—',
                     ),
                     const SizedBox(height: 6),
                     _PreviewInfoRow(
@@ -1374,7 +1374,7 @@ class _PreviewDocument extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Allergies: ${(previewData['health_passport']?['allergies'] as List?)?.join(', ') ?? 'None recorded'}',
+                      'Allergies: ${(_previewData['health_passport']?['allergies'] as List?)?.join(', ') ?? 'None recorded'}',
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 10,
@@ -1383,7 +1383,7 @@ class _PreviewDocument extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Medications: ${(previewData['health_passport']?['medications'] as List?)?.join(', ') ?? 'None recorded'}',
+                      'Medications: ${(_previewData['health_passport']?['medications'] as List?)?.join(', ') ?? 'None recorded'}',
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 10,
