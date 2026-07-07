@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
@@ -189,10 +190,49 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
         final picked = await picker.pickImage(source: ImageSource.camera, imageQuality: 85);
         if (picked == null) return;
 
-        // Skip cropping for now — it can crash on some devices when the
-        // dialog is dismissed by the camera. Just use the picked image.
+        // Try cropping with safe fallback — if cropper crashes, use the raw image
+        String imagePath = picked.path;
+        try {
+          final cropped = await ImageCropper().cropImage(
+            sourcePath: picked.path,
+            uiSettings: [
+              AndroidUiSettings(
+                toolbarTitle: 'Crop Document',
+                toolbarColor: AppColors.darkPrimary,
+                toolbarWidgetColor: Colors.white,
+                activeControlsWidgetColor: Colors.white,
+                lockAspectRatio: false,
+                aspectRatioPresets: [
+                  CropAspectRatioPreset.original,
+                  CropAspectRatioPreset.square,
+                  CropAspectRatioPreset.ratio3x2,
+                  CropAspectRatioPreset.ratio4x3,
+                  CropAspectRatioPreset.ratio16x9,
+                ],
+              ),
+              IOSUiSettings(
+                title: 'Crop Document',
+                aspectRatioLockEnabled: false,
+                aspectRatioPresets: [
+                  CropAspectRatioPreset.original,
+                  CropAspectRatioPreset.square,
+                  CropAspectRatioPreset.ratio3x2,
+                  CropAspectRatioPreset.ratio4x3,
+                  CropAspectRatioPreset.ratio16x9,
+                ],
+              ),
+            ],
+          );
+          if (cropped != null) {
+            imagePath = cropped.path;
+          }
+        } catch (cropError) {
+          // Cropper failed — use the raw image (no crash)
+          debugPrint('Crop failed, using raw image: $cropError');
+        }
+
         setDialogState(() {
-          attachedFile = File(picked.path);
+          attachedFile = File(imagePath);
           attachedFileName = 'Scanned document';
           isUploading = true;
         });
@@ -200,7 +240,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
         // Upload to Supabase Storage
         final user = ref.read(currentUserProvider);
         if (user != null) {
-          final url = await _uploadFile(File(picked.path), user.id);
+          final url = await _uploadFile(File(imagePath), user.id);
           if (url != null) {
             existingFileUrl = url;
           }

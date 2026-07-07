@@ -942,7 +942,42 @@ class _PreviewPane extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Center(
-            child: InteractiveViewer(
+            child: GestureDetector(
+              onTap: () {
+                // Open full-screen preview
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Scaffold(
+                      appBar: AppBar(title: const Text('Preview')),
+                      body: InteractiveViewer(
+                        minScale: 0.5,
+                        maxScale: 5.0,
+                        child: Center(
+                          child: AspectRatio(
+                            aspectRatio: 1 / 1.414,
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(20),
+                              color: Colors.white,
+                              child: _PreviewDocument(
+                                isDark: isDark,
+                                previewData: _previewData,
+                                dateRangeLabel: _dateRangeOptions[_dateRangeIndex],
+                                includePatientOverview: _includePatientOverview,
+                                includeSymptomsLog: _includeSymptomsLog,
+                                includeMedications: _includeMedications,
+                                includeAiSummary: _includeAiSummary,
+                                l10n: l10n,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              child: InteractiveViewer(
               minScale: 0.5,
               maxScale: 3.0,
               child: AspectRatio(

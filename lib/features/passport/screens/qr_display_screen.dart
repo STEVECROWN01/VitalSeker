@@ -317,7 +317,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: QrImageView(
-                            data: 'https://vitalseker.app/qr/$_qrToken',
+                            data: 'VITALSEKER_PASSPORT:$_qrToken',
                             version: QrVersions.auto,
                             size: 240,
                             backgroundColor: Colors.white,
