@@ -15,6 +15,7 @@ import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 /// PDF Export screen — redesigned to match the Google Stitch UI design.
 ///
@@ -503,11 +504,11 @@ class _TopBar extends ConsumerWidget {
             ),
             child: avatarUrl != null && avatarUrl.isNotEmpty
                 ? ClipOval(
-                    child: Image.network(
-                      avatarUrl,
+                    child: CachedNetworkImage(
+                      imageUrl: avatarUrl,
                       fit: BoxFit.cover,
-                      gaplessPlayback: true,
-                      errorBuilder: (_, __, ___) => Center(
+                      
+                      errorWidget: (_, __, ___) => Center(
                         child: Text(
                           initial,
                           style: TextStyle(

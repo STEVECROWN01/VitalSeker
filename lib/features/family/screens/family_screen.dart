@@ -12,6 +12,7 @@ import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 /// Family Profiles screen — redesigned to match the Google Stitch UI design.
 ///
@@ -561,12 +562,12 @@ class _TopBar extends StatelessWidget {
                 final avatarUrl = p?.avatarUrl;
                 if (avatarUrl != null && avatarUrl.isNotEmpty) {
                   return ClipOval(
-                    child: Image.network(
-                      avatarUrl,
+                    child: CachedNetworkImage(
+                      imageUrl: avatarUrl,
                       width: 40,
                       height: 40,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Center(
+                      errorWidget: (_, __, ___) => Center(
                         child: Text(
                           initial,
                           style: TextStyle(
@@ -755,12 +756,12 @@ class _OwnerCard extends StatelessWidget {
                       final initial = name.isNotEmpty ? name[0].toUpperCase() : 'U';
                       if (avatarUrl != null && avatarUrl!.isNotEmpty) {
                         return ClipOval(
-                          child: Image.network(
-                            avatarUrl!,
+                          child: CachedNetworkImage(
+                            imageUrl: avatarUrl!,
                             width: 64,
                             height: 64,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Text(
+                            errorWidget: (_, __, ___) => Text(
                               initial,
                               style: TextStyle(
                                 fontFamily: 'ClashDisplay',

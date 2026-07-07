@@ -13,6 +13,7 @@ import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 /// VitalSeker dashboard — redesigned to match the Google Stitch UI audit.
 ///
@@ -318,17 +319,17 @@ class _Avatar extends StatelessWidget {
         ),
         child: ClipOval(
           child: hasAvatar
-              ? Image.network(
-                  avatarUrl,
+              ? CachedNetworkImage(
+                  imageUrl: avatarUrl,
                   fit: BoxFit.cover,
                   width: 40,
                   height: 40,
-                  gaplessPlayback: true,
+                  
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return initialsWidget;
                   },
-                  errorBuilder: (context, error, stackTrace) =>
+                  errorWidget: (context, error, stackTrace) =>
                       initialsWidget,
                 )
               : initialsWidget,
@@ -581,10 +582,10 @@ class _HealthScoreHeroCard extends StatelessWidget {
                       border: Border.all(color: Colors.white.withValues(alpha: 0.4), width: 2),
                     ),
                     child: ClipOval(
-                      child: Image.network(
-                        avatarUrl,
+                      child: CachedNetworkImage(
+                        imageUrl: avatarUrl,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Center(
+                        errorWidget: (_, __, ___) => Center(
                           child: Text(
                             initial,
                             style: const TextStyle(

@@ -14,6 +14,7 @@ import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -670,17 +671,17 @@ class _ProfileAvatar extends StatelessWidget {
         ),
         child: ClipOval(
           child: hasAvatar
-              ? Image.network(
-                  avatarUrl!,
+              ? CachedNetworkImage(
+                  imageUrl: avatarUrl!,
                   fit: BoxFit.cover,
                   width: 104,
                   height: 104,
-                  gaplessPlayback: true,
+                  
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return initialsWidget;
                   },
-                  errorBuilder: (context, error, stackTrace) =>
+                  errorWidget: (context, error, stackTrace) =>
                       initialsWidget,
                 )
               : initialsWidget,
