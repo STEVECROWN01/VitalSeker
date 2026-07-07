@@ -1046,9 +1046,9 @@ class _PreviewDocument extends StatelessWidget {
   // passport would see a fake patient profile in the live preview, which
   // was misleading. Now they return a localized "—" placeholder until the
   // real data is fetched via the exportPdf edge function call.
-  String get _patientName => _previewData['patient']?['name'] ?? '—';
-  String get _patientDob => _previewData['patient']?['date_of_birth'] ?? '—';
-  int get _vitalScore => _previewData['health_passport']?['vital_score'] ?? 0;
+  String get _patientName => previewData['patient']?['name'] ?? '—';
+  String get _patientDob => previewData['patient']?['date_of_birth'] ?? '—';
+  int get _vitalScore => previewData['health_passport']?['vital_score'] ?? 0;
 
   /// Symptom history entries returned by the export-pdf edge function
   /// (each entry has `date`, `symptoms`, `severity`, `triage_result`,
@@ -1056,7 +1056,7 @@ class _PreviewDocument extends StatelessWidget {
   /// so the preview can show a localized empty placeholder instead of the
   /// previous hardcoded "Tension Headache" / "Mild Fatigue" mock rows.
   List<Map<String, dynamic>> get _symptomHistory {
-    final raw = _previewData['symptom_history'];
+    final raw = previewData['symptom_history'];
     if (raw is! List) return const [];
     return raw
         .whereType<Map<String, dynamic>>()
@@ -1274,7 +1274,7 @@ class _PreviewDocument extends StatelessWidget {
                       label: 'Primary Care Physician',
                       // Use real physician name from data if available,
                       // otherwise "—" (was hardcoded 'Dr. Sarah Jenkins').
-                      value: _previewData['patient']?['primary_care_physician'] ?? '—',
+                      value: previewData['patient']?['primary_care_physician'] ?? '—',
                     ),
                     const SizedBox(height: 6),
                     _PreviewInfoRow(
@@ -1374,7 +1374,7 @@ class _PreviewDocument extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Allergies: ${(_previewData['health_passport']?['allergies'] as List?)?.join(', ') ?? 'None recorded'}',
+                      'Allergies: ${(previewData['health_passport']?['allergies'] as List?)?.join(', ') ?? 'None recorded'}',
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 10,
@@ -1383,7 +1383,7 @@ class _PreviewDocument extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Medications: ${(_previewData['health_passport']?['medications'] as List?)?.join(', ') ?? 'None recorded'}',
+                      'Medications: ${(previewData['health_passport']?['medications'] as List?)?.join(', ') ?? 'None recorded'}',
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 10,
