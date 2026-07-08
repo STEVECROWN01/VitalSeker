@@ -467,7 +467,7 @@ class PassportScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: () => context.go(AppConfig.triage),
+            onPressed: () => context.push(AppConfig.triage),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary(isDark),
               foregroundColor: Colors.white,

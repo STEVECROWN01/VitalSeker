@@ -86,7 +86,7 @@ class ProFeatureGate extends StatelessWidget {
                 width: double.infinity,
                 height: 52,
                 child: ElevatedButton(
-                  onPressed: () => context.go(AppConfig.proPlan),
+                  onPressed: () => context.push(AppConfig.proPlan),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary(isDark),
                     foregroundColor: Colors.white,
@@ -109,7 +109,7 @@ class ProFeatureGate extends StatelessWidget {
                 width: double.infinity,
                 height: 52,
                 child: OutlinedButton(
-                  onPressed: () => context.go(AppConfig.subscription),
+                  onPressed: () => context.push(AppConfig.subscription),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary(isDark),
                     side: BorderSide(color: AppColors.primary(isDark)),

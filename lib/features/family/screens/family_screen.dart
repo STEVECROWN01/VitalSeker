@@ -80,7 +80,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
           context,
           l10n.familyProfilesProOnly,
         );
-        context.go(AppConfig.proPlan);
+        context.push(AppConfig.proPlan);
         return;
       }
     }
@@ -1456,7 +1456,7 @@ class _ProUpsellSection extends StatelessWidget {
                         height: 52,
                         child: ElevatedButton(
                           onPressed: () =>
-                              context.go(AppConfig.proPlan),
+                              context.push(AppConfig.proPlan),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary(isDark),
                             foregroundColor: Colors.white,
@@ -1488,7 +1488,7 @@ class _ProUpsellSection extends StatelessWidget {
                         height: 52,
                         child: OutlinedButton(
                           onPressed: () =>
-                              context.go(AppConfig.proPlan),
+                              context.push(AppConfig.proPlan),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor:
@@ -1522,7 +1522,7 @@ class _ProUpsellSection extends StatelessWidget {
                         height: 52,
                         child: OutlinedButton.icon(
                           onPressed: () =>
-                              context.go(AppConfig.proPlan),
+                              context.push(AppConfig.proPlan),
                           icon: const Icon(Icons.workspace_premium,
                               color: Colors.white),
                           label: Text(

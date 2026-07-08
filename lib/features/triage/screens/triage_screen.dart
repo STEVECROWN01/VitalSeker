@@ -158,7 +158,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
       if (monthCount >= 3) {
         AppSnackBar.error(context, l10n.triageLimitReached);
         // Navigate to subscription screen so the user can upgrade
-        context.go(AppConfig.subscription);
+        context.push(AppConfig.subscription);
         return;
       }
     }

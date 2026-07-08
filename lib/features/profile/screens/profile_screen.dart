@@ -188,7 +188,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ] else ...[
                         const SizedBox(height: 12),
                         GestureDetector(
-                          onTap: () => context.go(AppConfig.subscription),
+                          onTap: () => context.push(AppConfig.subscription),
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                             decoration: BoxDecoration(
@@ -261,7 +261,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       iconFg: AppColors.secondary(isDark),
                       label: l10n.healthPassport,
                       subtitle: l10n.manageMedicalCredentials,
-                      onTap: () => context.go(AppConfig.passport),
+                      onTap: () => context.push(AppConfig.passport),
                     ),
                     _MenuItem(
                       icon: Icons.folder_outlined,

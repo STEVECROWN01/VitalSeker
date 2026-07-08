@@ -462,7 +462,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   iconFg: AppColors.secondary(isDark),
                   label: l10n.healthPassport,
                   subtitle: l10n.manageMedicalCredentials,
-                  onTap: () => context.go(AppConfig.passport),
+                  onTap: () => context.push(AppConfig.passport),
                 ),
                 _SettingsTile(
                   icon: Icons.family_restroom,
@@ -498,7 +498,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     iconFg: const Color(0xFFFF9800),
                     label: l10n.vitalSekerPro,
                     subtitle: l10n.manageYourSubscription,
-                    onTap: () => context.go(AppConfig.subscription),
+                    onTap: () => context.push(AppConfig.subscription),
                   ),
               ],
             ),

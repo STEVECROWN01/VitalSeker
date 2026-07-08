@@ -166,7 +166,7 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
             const SizedBox(height: 12),
             // View all plans
             TextButton(
-              onPressed: () => context.go(AppConfig.subscription),
+              onPressed: () => context.push(AppConfig.subscription),
               child: Text(
                 'View All Plans',
                 style: TextStyle(
