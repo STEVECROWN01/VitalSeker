@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart' as PathProvider;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../core/providers/health_passport_provider.dart';
@@ -134,19 +134,33 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
         return;
       }
       final bytes = byteData.buffer.asUint8List();
-      // Save to temp directory and share as file (user can save to gallery)
-      final dir = await getTemporaryDirectory();
-      final file = File(
-          '${dir.path}/vitalseker_qr_${DateTime.now().millisecondsSinceEpoch}.png');
+      
+      // Save directly to the phone's Downloads directory — no folder picker
+      Directory? saveDir;
+      try {
+        // On Android, getExternalStoragePublicDirectory gives /storage/emulated/0/Download
+        saveDir = await PathProvider.getDownloadsDirectory();
+      } catch (_) {}
+      
+      if (saveDir == null) {
+        // Fallback: try external storage
+        try {
+          saveDir = Directory('/storage/emulated/0/Download');
+          if (!await saveDir.exists()) {
+            await saveDir.create(recursive: true);
+          }
+        } catch (_) {
+          // Final fallback: temp directory
+          saveDir = await PathProvider.getTemporaryDirectory();
+        }
+      }
+      
+      final fileName = 'vitalseker_qr_${DateTime.now().millisecondsSinceEpoch}.png';
+      final file = File('${saveDir.path}/$fileName');
       await file.writeAsBytes(bytes);
       
-      // Share the image file directly (not text)
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        text: 'My VitalSeker Health Passport QR Code',
-      );
       if (mounted) {
-        AppSnackBar.success(context, 'QR code saved!');
+        AppSnackBar.success(context, 'QR code saved to Downloads!');
       }
     } catch (e) {
       if (mounted) {
@@ -173,7 +187,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       if (byteData == null) return;
       final bytes = byteData.buffer.asUint8List();
-      final dir = await getTemporaryDirectory();
+      final dir = await PathProvider.getTemporaryDirectory();
       final file = File(
           '${dir.path}/vitalseker_qr_${DateTime.now().millisecondsSinceEpoch}.png');
       await file.writeAsBytes(bytes);
