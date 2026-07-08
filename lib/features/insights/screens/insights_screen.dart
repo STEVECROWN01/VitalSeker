@@ -1500,7 +1500,7 @@ class _ProUpsellEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             TextButton(
-              onPressed: () => context.push(AppConfig.proPlan),
+              onPressed: () => context.push(AppConfig.subscription),
               child: Text(
                 l10n.viewAllPlans,
                 style: TextStyle(
