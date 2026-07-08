@@ -120,7 +120,16 @@ serve(async (req: Request) => {
     const emergencyContacts = (userProfile?.emergency_contacts || []) as Array<{ name?: string; phone?: string; number?: string }>
     const contactsNotified: Array<{ name: string; phone: string; status: string }> = []
 
-    // Create SOS event
+    // Create SOS event.
+    //
+    // CRITICAL DEFENSIVE BEHAVIOUR: if the DB insert fails (transient DB
+    // outage, connection pool exhaustion, etc.), we DO NOT abort the SOS.
+    // The SMS dispatch below does not depend on the sos_event row — it only
+    // needs the user's profile + emergency contacts, which were already
+    // fetched above. So we log the DB error, set sosEvent to null, and
+    // continue. The SMS still goes out to the user's emergency contacts.
+    // The only thing we lose is the auditable sos_events row — acceptable
+    // in an emergency where delivering the SMS is the priority.
     const { data: sosEvent, error: sosError } = await supabaseClient
       .from('sos_events')
       .insert({
@@ -136,8 +145,8 @@ serve(async (req: Request) => {
       .single()
 
     if (sosError) {
-      console.error('SOS event creation error:', sosError)
-      return new Response(JSON.stringify({ error: 'Failed to create SOS event' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
+      // Log but DO NOT return 500 — continue to SMS dispatch.
+      console.error('SOS event creation error (non-fatal, continuing to SMS):', sosError)
     }
 
     // Send SMS via Twilio if configured
@@ -237,17 +246,21 @@ serve(async (req: Request) => {
       }
     }
 
-    // Update SOS event with notification results
-    await supabaseClient
-      .from('sos_events')
-      .update({
-        contacts_notified: contactsNotified,
-        sms_sent: smsSent,
-      })
-      .eq('id', sosEvent.id)
+    // Update SOS event with notification results (only if the insert
+    // succeeded earlier — if it failed, sosEvent is null and we skip the
+    // update; the SMS still went out).
+    if (sosEvent) {
+      await supabaseClient
+        .from('sos_events')
+        .update({
+          contacts_notified: contactsNotified,
+          sms_sent: smsSent,
+        })
+        .eq('id', sosEvent.id)
+    }
 
     return new Response(JSON.stringify({
-      sos_event_id: sosEvent.id,
+      sos_event_id: sosEvent?.id ?? null,
       sms_sent: smsSent,
       contacts_notified: contactsNotified,
       message: smsSent

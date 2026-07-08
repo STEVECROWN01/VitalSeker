@@ -52,7 +52,27 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
     final logsAsync = ref.watch(symptomLogsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.symptomHistory)),
+      // AppBar back arrow uses the "intelligent back" pattern: if there is a
+      // previous route on the navigator stack (i.e. the user navigated here
+      // via push from another screen), pop back to THAT screen — whatever it
+      // was. Only fall back to the dashboard if the navigator stack is empty
+      // (e.g. the user deep-linked directly to /home/history or arrived via
+      // the bottom-nav tab switch, which uses context.go and clears the
+      // stack). This matches the user's expectation that the back arrow
+      // returns to "the screen I just came from", not a hardcoded screen.
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              context.go(AppConfig.dashboard);
+            }
+          },
+        ),
+        title: Text(l10n.symptomHistory),
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(symptomLogsProvider);

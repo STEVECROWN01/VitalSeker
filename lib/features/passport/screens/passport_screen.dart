@@ -80,6 +80,11 @@ class PassportScreen extends ConsumerWidget {
           }
 
           return SingleChildScrollView(
+            // ClampingScrollPhysics prevents the over-scroll "bounce" that
+            // made the screen feel like it scrolled endlessly even when the
+            // passport content was shorter than the viewport. With clamping,
+            // the scroll view only scrolls when content actually overflows.
+            physics: const ClampingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,30 +110,18 @@ class PassportScreen extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(6),
-                                child: Container(
-                                  color: Colors.white.withValues(alpha: 0.2),
-                                  child: Image.asset(
-                                    'assets/images/branding/app_logo.png',
-                                    width: 22,
-                                    height: 22,
-                                    fit: BoxFit.cover,
-                                    gaplessPlayback: true,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'VitalSeker',
-                                style: AppTextStyles.subheading1.copyWith(
-                                  color: Colors.white.withValues(alpha: 0.9),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
+                          // Brand name only — the semi-transparent white
+                          // rectangle that wrapped the app logo has been
+                          // removed (it was appearing as a "transparent
+                          // rectangular frame" in the top-left corner because
+                          // the logo PNG has transparent padding around the
+                          // mark, letting the tinted background show through).
+                          Text(
+                            'VitalSeker',
+                            style: AppTextStyles.subheading1.copyWith(
+                              color: Colors.white.withValues(alpha: 0.9),
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                           Text(
                             l10n.healthPassport.toUpperCase(),

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
@@ -136,7 +138,25 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
     ];
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.triageResults)),
+      // AppBar back arrow uses the "intelligent back" pattern: pop back to
+      // whatever screen the user came from (triage wizard, history list,
+      // chat, etc.) if there is a previous route on the stack. Only fall
+      // back to the dashboard if the stack is empty (deep-link / cold
+      // start). This matches the user expectation that the back arrow
+      // returns to "the screen I just came from", not a hardcoded screen.
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              context.go(AppConfig.dashboard);
+            }
+          },
+        ),
+        title: Text(l10n.triageResults),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: Column(

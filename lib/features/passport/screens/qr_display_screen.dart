@@ -45,6 +45,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
   String? _qrToken;
   bool _isGenerating = false;
   bool _isDownloading = false;
+  bool _isSharing = false;
 
   /// GlobalKey for the QR widget so the DOWNLOAD button can capture it as a
   /// PNG via [RepaintBoundary] + [RenderRepaintBoundary.toImage].
@@ -115,7 +116,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
   /// Capture the QR widget as a PNG and save directly to the device's
   /// Downloads directory (no folder picker — saves automatically).
   Future<void> _downloadQrImage() async {
-    if (_qrToken == null || _isDownloading) return;
+    if (_qrToken == null || _isDownloading || _isSharing) return;
     setState(() => _isDownloading = true);
     try {
       final boundary = _qrBoundaryKey.currentContext?.findRenderObject()
@@ -173,9 +174,13 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
   }
 
   /// Share the QR code image (not text) via the system share sheet.
+  ///
+  /// Uses its own [_isSharing] flag (NOT [_isDownloading]) so the loading
+  /// spinner appears on the Share button — not on the Download button —
+  /// while the share sheet is being prepared.
   Future<void> _shareToken() async {
-    if (_qrToken == null || _isDownloading) return;
-    setState(() => _isDownloading = true);
+    if (_qrToken == null || _isDownloading || _isSharing) return;
+    setState(() => _isSharing = true);
     try {
       final boundary = _qrBoundaryKey.currentContext?.findRenderObject()
           as RenderRepaintBoundary?;
@@ -202,7 +207,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
         AppSnackBar.error(context, 'Could not share QR code.');
       }
     } finally {
-      if (mounted) setState(() => _isDownloading = false);
+      if (mounted) setState(() => _isSharing = false);
     }
   }
 
@@ -392,21 +397,25 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                 ),
                 const SizedBox(height: 28),
                 // ── 5. DOWNLOAD + SHARE pill buttons (52px tall) ──
+                // NOTE: each button uses its OWN loading flag so a Share tap
+                // doesn't make the Download button appear active (and vice
+                // versa). Both buttons are also disabled while either is busy.
                 _PillActionButton(
                   label: l10n.download,
                   icon: Icons.download_outlined,
                   isDark: isDark,
                   isLoading: _isDownloading,
                   primary: true,
-                  onPressed: _downloadQrImage,
+                  onPressed: _isSharing ? null : _downloadQrImage,
                 ),
                 const SizedBox(height: 12),
                 _PillActionButton(
                   label: l10n.share,
                   icon: Icons.share_outlined,
                   isDark: isDark,
+                  isLoading: _isSharing,
                   primary: false,
-                  onPressed: _shareToken,
+                  onPressed: _isDownloading ? null : _shareToken,
                 ),
               ] else ...[
                 Icon(Icons.qr_code_2,
@@ -462,7 +471,9 @@ class _PillActionButton extends StatelessWidget {
   final bool isDark;
   final bool primary;
   final bool isLoading;
-  final VoidCallback onPressed;
+  /// Nullable so the parent can disable a button while the OTHER button's
+  /// action is in progress (e.g. disable Download while Share is sharing).
+  final VoidCallback? onPressed;
 
   const _PillActionButton({
     required this.label,
@@ -480,7 +491,12 @@ class _PillActionButton extends StatelessWidget {
       width: double.infinity,
       height: 52,
       child: GestureDetector(
-        onTap: isLoading ? null : onPressed,
+        // HitTestBehavior.opaque ensures the ENTIRE 52x∞ button area is
+        // tappable — even the transparent outlined area on the Share button.
+        // Without this, only the icon/text/border register taps, so a tap
+        // on the middle of the outlined Share button could silently miss.
+        behavior: HitTestBehavior.opaque,
+        onTap: (isLoading || onPressed == null) ? null : onPressed,
         child: Container(
           decoration: BoxDecoration(
             gradient: primary ? brandGradient : null,

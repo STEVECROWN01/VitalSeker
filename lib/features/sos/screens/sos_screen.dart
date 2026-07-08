@@ -35,6 +35,10 @@ class _SosScreenState extends ConsumerState<SosScreen>
   // Live GPS coordinates obtained during the SOS trigger — shown in the
   // active state contact card so the user can see what was shared.
   String? _locationText;
+  // True when the most recent SOS attempt was rejected by the edge
+  // function's 60-second rate limit. Drives a different failure message
+  // ("please wait 60s") instead of the generic "delivery failed".
+  bool _sosRateLimited = false;
 
   /// True while the alert is being sent OR after it has been sent (before the
   /// user resolves it). Drives the full-screen red gradient + active UI.
@@ -191,29 +195,36 @@ class _SosScreenState extends ConsumerState<SosScreen>
   ///   4. GPS acquisition takes too long — a 10s [timeLimit] is set so the
   ///      caller doesn't hang forever waiting for a fix.
   ///
+  /// [silent] suppresses the error snackbars AND the system-settings
+  /// redirects — used by [_triggerSos] so that GPS failures during an
+  /// emergency don't open the location-settings screen or stack a location
+  /// snackbar on top of the SOS failure snackbar. The SOS flow handles the
+  /// "no location" case itself by sending the alert without coordinates.
+  ///
   /// Returns the [Position] on success, or `null` on any failure (with a
-  /// contextual snackbar shown to the user via [AppSnackBar]).
-  Future<Position?> _getCurrentLocation() async {
+  /// contextual snackbar shown to the user via [AppSnackBar] when [silent]
+  /// is false).
+  Future<Position?> _getCurrentLocation({bool silent = false}) async {
     try {
       final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         // Location services are off — offer to open the system settings so
         // the user can enable GPS. This is the most common cause of the old
         // "Could not get current location" message.
-        if (mounted) {
+        if (!silent && mounted) {
           AppSnackBar.error(
             context,
             'Location services are disabled. Please enable GPS in your device settings.',
           );
-        }
-        // Best-effort attempt to open the system location settings so the
-        // user can flip the switch without leaving the flow. The user comes
-        // back to the app after enabling.
-        try {
-          await Geolocator.openLocationSettings();
-        } catch (_) {
-          // openLocationSettings may not be implemented on every platform —
-          // the snackbar above already told the user what to do.
+          // Best-effort attempt to open the system location settings so the
+          // user can flip the switch without leaving the flow. The user comes
+          // back to the app after enabling.
+          try {
+            await Geolocator.openLocationSettings();
+          } catch (_) {
+            // openLocationSettings may not be implemented on every platform —
+            // the snackbar above already told the user what to do.
+          }
         }
         return null;
       }
@@ -228,7 +239,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied ||
             permission == LocationPermission.deniedForever) {
-          if (mounted) {
+          if (!silent && mounted) {
             AppSnackBar.error(
               context,
               'Location permission denied. Please grant location access in your device settings.',
@@ -241,15 +252,15 @@ class _SosScreenState extends ConsumerState<SosScreen>
         // The user previously selected "Deny forever" — the OS won't show
         // the permission dialog again, so we have to send them to app
         // settings.
-        if (mounted) {
+        if (!silent && mounted) {
           AppSnackBar.error(
             context,
             'Location permission is permanently denied. Please enable it in your app settings to use this feature.',
           );
+          try {
+            await Geolocator.openAppSettings();
+          } catch (_) {}
         }
-        try {
-          await Geolocator.openAppSettings();
-        } catch (_) {}
         return null;
       }
 
@@ -269,7 +280,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
             timeLimit: const Duration(seconds: 5),
           );
         } on TimeoutException {
-          if (mounted) {
+          if (!silent && mounted) {
             AppSnackBar.error(
               context,
               'Could not get a GPS fix. Please try again outdoors or near a window.',
@@ -280,7 +291,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
       }
     } catch (e) {
       debugPrint('_getCurrentLocation error: $e');
-      if (mounted) {
+      if (!silent && mounted) {
         AppSnackBar.errorFromException(
           context,
           'Could not get current location. Please check location permissions.',
@@ -297,36 +308,47 @@ class _SosScreenState extends ConsumerState<SosScreen>
 
     setState(() {
       _isSending = true;
-      _sosMessage = 'Sending emergency alert...';
+      _sosMessage = 'Acquiring GPS location...';
       _locationText = null;
+      // Reset prior failure flag so the UI doesn't briefly render the old
+      // failure state while we re-attempt.
+      _sosRateLimited = false;
     });
 
     _startCountdown();
 
     try {
-      // Send SOS IMMEDIATELY — do NOT wait for GPS.
-      // For emergencies, speed is more important than location.
-      // Start the edge function call and GPS acquisition in parallel.
       final edgeService = EdgeFunctionService();
 
-      // Start GPS acquisition in background (non-blocking)
+      // ── Step 1: Acquire GPS FIRST (with a 5s timeout) ──
+      // Previously the SOS was sent IMMEDIATELY with hardcoded null
+      // coordinates, then GPS was acquired in parallel and the result was
+      // thrown away (only used for display). This meant emergency contacts
+      // never received the user's actual location — defeating the entire
+      // purpose of the SOS feature.
+      //
+      // We now wait up to 5 seconds for a GPS fix BEFORE sending the SOS,
+      // so the actual coordinates are included in the SMS body. If GPS
+      // fails or times out, we still send the SOS — just without location.
+      //
+      // `silent: true` suppresses the location-error snackbars and the
+      // system-settings redirects that would otherwise fire when GPS is
+      // unavailable — during an emergency we don't want to yank the user
+      // out of the SOS flow into the location-settings screen, and we
+      // don't want a "GPS disabled" snackbar stacking on top of the SOS
+      // failure snackbar.
       Position? position;
-      final gpsFuture = _getCurrentLocation().catchError((_) => null);
+      try {
+        position = await _getCurrentLocation(silent: true).timeout(
+          const Duration(seconds: 5),
+          onTimeout: () => null,
+        );
+      } catch (e) {
+        debugPrint('GPS acquisition failed (non-fatal): $e');
+        // Don't propagate — we still want to send the SOS without location.
+      }
 
-      // Send the SOS alert immediately WITHOUT location
-      // The edge function will accept it and send SMS to emergency contacts
-      final sosFuture = edgeService.sendSosAlert(
-        latitude: null,
-        longitude: null,
-        locationAddress: null,
-      );
-
-      // Wait for both — but the SOS is already sent
-      final results = await Future.wait([sosFuture, gpsFuture]);
-      final result = results[0] as Map<String, dynamic>;
-      position = results[1] as Position?;
-
-      // If we got GPS, update the location display
+      // Update display with whatever we got (null is fine).
       final locationText = position != null
           ? '${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)}'
           : null;
@@ -334,13 +356,25 @@ class _SosScreenState extends ConsumerState<SosScreen>
         setState(() => _locationText = locationText);
       }
 
-      // ── Success ──
-      // Flip _sosActive ON so the active state UI renders with the result
-      // message + contacts-notified card. The previous code already set
-      // _sosActive here, but combined with the finally-block that resets
-      // _isSending = false, the active state needs _sosActive to stay true
-      // — which it does. The bug was that on the error path below, the
-      // active state was never shown and the user saw no feedback at all.
+      // ── Step 2: Send the SOS alert WITH actual coordinates ──
+      setState(() {
+        _sosMessage = position != null
+            ? 'Sending emergency alert with your location...'
+            : 'Sending emergency alert (no GPS)...';
+      });
+
+      final result = await edgeService.sendSosAlert(
+        latitude: position?.latitude,
+        longitude: position?.longitude,
+        locationAddress: null,
+      );
+
+      // ── Step 3: Handle the response ──
+      // The edge function returns 200 with `sms_sent: true|false`. Even if
+      // no SMS was sent (e.g. user has no emergency contacts configured),
+      // the SOS event was still recorded in the database — that's a
+      // PARTIAL success, not a hard failure. We surface the actual server
+      // message so the user knows exactly what happened.
       setState(() {
         _sosActive = true;
         _sosResult = result;
@@ -348,13 +382,36 @@ class _SosScreenState extends ConsumerState<SosScreen>
             'Emergency alert sent! Your contacts have been notified.';
       });
 
-      // Continuous haptic
       HapticFeedback.mediumImpact();
+    } on FormatException catch (e) {
+      // FormatException is what we throw from EdgeFunctionService when the
+      // response status is not 200. We parse the body to detect the 429
+      // rate-limit case and show a more helpful message.
+      final raw = e.message;
+      final isRateLimited = raw.contains('429') ||
+          raw.toLowerCase().contains('rate limit');
+      debugPrint('SOS edge function error: $raw');
+      setState(() {
+        _sosActive = true;
+        _sosResult = null;
+        _sosRateLimited = isRateLimited;
+        _sosMessage = isRateLimited
+            ? 'You just sent an SOS. Please wait 60 seconds before sending another — emergency services may already be responding.'
+            : 'Failed to send alert. Please call emergency services directly (112 / 911).';
+      });
+      if (mounted) {
+        AppSnackBar.error(
+          context,
+          isRateLimited
+              ? 'SOS rate limit: please wait 60 seconds before retrying.'
+              : 'SOS delivery failed. Please call 112 or 911 directly.',
+        );
+      }
+      HapticFeedback.heavyImpact();
     } catch (e) {
-      // ── Failure ──
-      // Set _sosActive = true here too so the active-state UI renders with
-      // the failure message — previously the error was written to
-      // _sosMessage but never shown because _isActiveState was false.
+      // ── Hard failure (network error, edge function 500, etc.) ──
+      // Still show the active-state UI so the user sees the failure
+      // message + has buttons to retry or call emergency services.
       debugPrint('SOS trigger error: $e');
       setState(() {
         _sosActive = true;
@@ -406,6 +463,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
       _sosMessage = null;
       _sosResult = null;
       _locationText = null;
+      _sosRateLimited = false;
       _countdownSeconds = _kCountdownFrom;
     });
     HapticFeedback.lightImpact();
@@ -1073,6 +1131,11 @@ class _SosScreenState extends ConsumerState<SosScreen>
   Widget _buildActiveState() {
     final l10n = AppLocalizations.of(context)!;
     final smsSent = _sosResult?['sms_sent'] == true;
+    // True when the SOS was queued locally (network was unavailable). The
+    // alert WILL be delivered automatically once the device reconnects —
+    // this is NOT a failure, so we show a distinct "QUEUED" indicator
+    // instead of the "SOS ACTIVE" success label.
+    final bool queuedLocally = _sosResult?['queued_locally'] == true;
     final contactsNotified = (_sosResult?['contacts_notified'] as List?) ?? [];
     final sentCount =
         contactsNotified.where((c) => c['status'] == 'sent').length;
@@ -1081,6 +1144,12 @@ class _SosScreenState extends ConsumerState<SosScreen>
     // still want to render the active state so the user sees the failure
     // message + can dismiss it, but with a "FAILED" label instead of
     // "SOS ACTIVE".
+    //
+    // A 200 response with `sms_sent: false` is a PARTIAL success (the SOS
+    // event was recorded in the database, but no SMS went out because the
+    // user has no emergency contacts configured OR Twilio isn't set up
+    // server-side). That's NOT a hard failure — we still show the active
+    // state, but the message below will tell the user exactly what happened.
     final bool sendFailed = !_isSending && _sosResult == null;
 
     return Column(
@@ -1129,13 +1198,22 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         // Show an error icon when the send failed so the
                         // user immediately understands the alert did not go
                         // through (per Bug 1 #5 — give the user feedback).
-                        sendFailed ? Icons.error_outline : Icons.check_circle,
+                        // Show a "cloud upload" / "offline bolt" icon when
+                        // the SOS was queued locally — distinct from both
+                        // the success check and the error X.
+                        sendFailed
+                            ? Icons.error_outline
+                            : (queuedLocally
+                                ? Icons.cloud_upload_outlined
+                                : Icons.check_circle),
                         color: Colors.white,
                         size: 60,
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        sendFailed ? l10n.sosFailed : l10n.sosActive,
+                        sendFailed
+                            ? l10n.sosFailed
+                            : (queuedLocally ? 'SOS QUEUED' : l10n.sosActive),
                         style: const TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 20,
@@ -1154,7 +1232,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
               ? l10n.sendingEmergencyAlert
               : (sendFailed
                   ? l10n.alertCouldNotBeSent
-                  : l10n.emergencyAlertSent),
+                  : (queuedLocally
+                      ? 'Emergency Alert Queued'
+                      : l10n.emergencyAlertSent)),
           style: const TextStyle(
             fontFamily: 'ClashDisplay',
             fontSize: 24,
@@ -1193,44 +1273,100 @@ class _SosScreenState extends ConsumerState<SosScreen>
         ),
         const SizedBox(height: 24),
         if (!_isSending)
-          Row(
-            children: [
-              // On failure, show a "Try Again" button that re-triggers the
-              // SOS. On success, just show the "I'm Safe - Resolve" button.
-              if (sendFailed)
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: _triggerSos,
-                    icon: const Icon(Icons.refresh),
-                    label: Text(l10n.tryAgain),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.white),
+          // ── Action buttons row ──
+          // On failure: show THREE buttons — "Call 112" (most prominent,
+          // filled white), "Try Again" (outlined), and "Dismiss" (outlined).
+          // Previously we only showed "Try Again" + "Dismiss", which meant
+          // when the user was told "please call 112 or 911 directly" they
+          // had no button to actually do it — they had to leave the app,
+          // open the phone app, and dial manually. The Call 112 button
+          // opens the system dialer directly via the `tel:` URL scheme.
+          //
+          // On success: just "I'm Safe - Resolve".
+          if (sendFailed)
+            Column(
+              children: [
+                // Call 112 — full-width, most prominent. This is the
+                // action the user is being told to take; make it impossible
+                // to miss.
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () => _makePhoneCall('112'),
+                    icon: const Icon(Icons.phone_in_talk, size: 22),
+                    label: const Text('Call 112 / 911 Now'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFFB8321D),
                       minimumSize: const Size.fromHeight(56),
+                      textStyle: const TextStyle(
+                        fontFamily: 'ClashDisplay',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
                   ),
                 ),
-              if (sendFailed) const SizedBox(width: 12),
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: _resolveSos,
-                  icon: Icon(sendFailed ? Icons.close : Icons.check_circle),
-                  label: Text(sendFailed ? l10n.dismiss : l10n.imSafeResolve),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: const Color(0xFFB8321D),
-                    minimumSize: const Size.fromHeight(56),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    if (!_sosRateLimited)
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: _triggerSos,
+                          icon: const Icon(Icons.refresh),
+                          label: Text(l10n.tryAgain),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            side: const BorderSide(color: Colors.white),
+                            minimumSize: const Size.fromHeight(56),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (!_sosRateLimited) const SizedBox(width: 12),
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: _resolveSos,
+                        icon: const Icon(Icons.close),
+                        label: Text(l10n.dismiss),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.white),
+                          minimumSize: const Size.fromHeight(56),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                      ),
                     ),
+                  ],
+                ),
+              ],
+            )
+          else
+            // Success — single "I'm Safe - Resolve" button.
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: _resolveSos,
+                icon: const Icon(Icons.check_circle),
+                label: Text(l10n.imSafeResolve),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: const Color(0xFFB8321D),
+                  minimumSize: const Size.fromHeight(56),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
       ],
     );
   }

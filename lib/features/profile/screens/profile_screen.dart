@@ -156,39 +156,52 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ),
                       if (isPro) ...[
                         const SizedBox(height: 12),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: AppColors.secondaryContainer(isDark),
-                            borderRadius: BorderRadius.circular(9999),
-                            border: Border.all(
-                              color: AppColors.secondary(isDark).withValues(alpha: 0.1),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.star_rounded,
-                                  size: 16,
-                                  color: isDark
-                                      ? AppColors.darkOnSurface
-                                      : const Color(0xFF326F59)),
-                              const SizedBox(width: 6),
-                              Text(
-                                l10n.vitalSekerPro,
-                                style: AppTextStyles.labelMedium.copyWith(
-                                  color: isDark
-                                      ? AppColors.darkOnSurface
-                                      : const Color(0xFF326F59),
-                                ),
+                        // VitalSeker Pro badge — tappable so the user can
+                        // review / change / manage their subscription from the
+                        // profile screen. Routes to the same subscription
+                        // screen as the "Upgrade to Pro" badge on the free
+                        // plan, so the behaviour is consistent across all
+                        // plan tiers (Free, Pro, and anything above Pro).
+                        // HitTestBehavior.opaque ensures the entire pill area
+                        // is tappable, not just the icon + text glyphs.
+                        GestureDetector(
+                          onTap: () => context.push(AppConfig.subscription),
+                          behavior: HitTestBehavior.opaque,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: AppColors.secondaryContainer(isDark),
+                              borderRadius: BorderRadius.circular(9999),
+                              border: Border.all(
+                                color: AppColors.secondary(isDark).withValues(alpha: 0.1),
                               ),
-                            ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.star_rounded,
+                                    size: 16,
+                                    color: isDark
+                                        ? AppColors.darkOnSurface
+                                        : const Color(0xFF326F59)),
+                                const SizedBox(width: 6),
+                                Text(
+                                  l10n.vitalSekerPro,
+                                  style: AppTextStyles.labelMedium.copyWith(
+                                    color: isDark
+                                        ? AppColors.darkOnSurface
+                                        : const Color(0xFF326F59),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ] else ...[
                         const SizedBox(height: 12),
                         GestureDetector(
                           onTap: () => context.push(AppConfig.subscription),
+                          behavior: HitTestBehavior.opaque,
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                             decoration: BoxDecoration(

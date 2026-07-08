@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/services.dart';
@@ -8,8 +9,10 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'core/services/edge_function_service.dart';
 import 'core/services/offline_cache_service.dart';
 import 'core/services/supabase_service.dart';
 import 'core/config/supabase_config.dart';
@@ -66,6 +69,18 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
   /// the real app (router-driven).
   bool _servicesReady = false;
 
+  /// Subscription to connectivity changes — when the device regains
+  /// network access (e.g. user comes back online after being offline),
+  /// we flush the locally-queued SOS events so they finally get
+  /// delivered to the user's emergency contacts.
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySub;
+
+  /// Periodic timer that flushes the SOS queue every 5 minutes as a
+  /// safety net — catches queued events that the connectivity listener
+  /// might miss (e.g. if the connectivity event fired before Supabase
+  /// finished initializing).
+  Timer? _sosQueueFlushTimer;
+
   @override
   void initState() {
     super.initState();
@@ -84,6 +99,13 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
     // the UI renders first (native splash dismissed) and the event loop
     // is running so timeouts fire correctly.
     _initializeServices();
+  }
+
+  @override
+  void dispose() {
+    _connectivitySub?.cancel();
+    _sosQueueFlushTimer?.cancel();
+    super.dispose();
   }
 
   Future<void> _initializeServices() async {
@@ -116,6 +138,55 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
       // empty stream from the defensive fallback.
       widget.container.invalidate(authStateProvider);
       debugPrint('[Startup] Supabase initialized');
+
+      // ── SOS queue flush — life-safety feature ──
+      // If the user triggered an SOS while offline (the SOS was queued
+      // locally in SharedPreferences by EdgeFunctionService.sendSosAlert),
+      // we flush the queue now that Supabase is ready. We also set up:
+      //   (a) a connectivity listener that flushes the queue the moment
+      //       the device regains network access
+      //   (b) a 5-minute periodic timer as a safety net
+      // This ensures a queued SOS is NEVER silently dropped — it will be
+      // delivered to the user's emergency contacts as soon as the device
+      // is online, even if that's minutes or hours after the user
+      // originally triggered it.
+      try {
+        await EdgeFunctionService().flushPendingSosQueue();
+        debugPrint('[Startup] Pending SOS queue flushed');
+      } catch (e) {
+        debugPrint('[Startup] SOS queue flush failed (non-fatal): $e');
+      }
+
+      // (a) Connectivity listener — flush the queue on network regain.
+      _connectivitySub = Connectivity().onConnectivityChanged.listen(
+        (List<ConnectivityResult> results) {
+          // results is a list because the device may have multiple active
+          // connections (e.g. wifi + mobile). If ANY of them is not "none",
+          // we have connectivity.
+          final hasConnection = results.any(
+            (r) => r != ConnectivityResult.none,
+          );
+          if (hasConnection) {
+            // Fire-and-forget — don't block the connectivity listener.
+            EdgeFunctionService().flushPendingSosQueue().catchError((e) {
+              debugPrint('[Connectivity] SOS queue flush failed: $e');
+            });
+          }
+        },
+        onError: (e) {
+          debugPrint('[Connectivity] listener error: $e');
+        },
+      );
+
+      // (b) Periodic 5-minute safety-net flush.
+      _sosQueueFlushTimer = Timer.periodic(
+        const Duration(minutes: 5),
+        (_) {
+          EdgeFunctionService().flushPendingSosQueue().catchError((e) {
+            debugPrint('[Timer] SOS queue flush failed: $e');
+          });
+        },
+      );
     } catch (e) {
       debugPrint('[Startup] Supabase init failed (non-fatal): $e');
     }
