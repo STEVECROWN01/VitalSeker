@@ -8,6 +8,7 @@ import '../../../core/models/medication.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/medications_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
@@ -23,6 +24,7 @@ class PassportScreen extends ConsumerWidget {
     final passportAsync = ref.watch(healthPassportProvider);
     final profileAsync = ref.watch(userProfileProvider);
     final medicationsAsync = ref.watch(medicationsProvider);
+    final isPro = ref.watch(isProUserProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +45,13 @@ class PassportScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.qr_code_2),
-            onPressed: () => context.push('${AppConfig.passport}/qr'),
+            onPressed: () {
+              if (!isPro) {
+                context.push(AppConfig.proPlan);
+              } else {
+                context.push('${AppConfig.passport}/qr');
+              }
+            },
             tooltip: l10n.showQrCode,
           ),
         ],
@@ -394,7 +402,13 @@ class PassportScreen extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: OutlinedButton.icon(
-                        onPressed: () => context.push('${AppConfig.passport}/qr'),
+            onPressed: () {
+              if (!isPro) {
+                context.push(AppConfig.proPlan);
+              } else {
+                context.push('${AppConfig.passport}/qr');
+              }
+            },
                         icon: const Icon(Icons.qr_code_2),
                         label: Text(l10n.qrCode),
                         style: OutlinedButton.styleFrom(
