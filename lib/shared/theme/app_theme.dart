@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'app_colors.dart';
 import 'app_text_styles.dart';
 
@@ -106,6 +107,7 @@ class AppTheme {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       foregroundColor: AppColors.lightOnSurface,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
       titleTextStyle: TextStyle(
         fontFamily: 'ClashDisplay',
         fontSize: 20,
@@ -243,6 +245,7 @@ class AppTheme {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       foregroundColor: AppColors.darkOnSurface,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
       titleTextStyle: TextStyle(
         fontFamily: 'ClashDisplay',
         fontSize: 20,
