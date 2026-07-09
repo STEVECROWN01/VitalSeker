@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker cung cấp hướng dẫn chung, không phải chẩn đoán. Luôn tham khảo ý kiến bác sĩ.",
   "aiChatTriage": "Trò chuyện với Seker AI",
   "health": "Sức khỏe",
-  "family": "Gia đình"
+  "family": "Gia đình",
+  "vitalDeleted": "Đã xóa số đo.",
+  "failedToDeleteVital": "Không thể xóa số đo. Vui lòng thử lại.",
+  "deleteVitalTitle": "Xóa số đo",
+  "deleteVitalConfirm": "Xóa số đo này: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
