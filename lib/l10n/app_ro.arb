@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker oferă îndrumări generale, nu un diagnostic. Consultă întotdeauna un medic.",
   "aiChatTriage": "Conversație cu Seker AI",
   "health": "Sănătate",
-  "family": "Familie"
+  "family": "Familie",
+  "vitalDeleted": "Măsurătoare ștearsă.",
+  "failedToDeleteVital": "Ștergerea măsurătorii a eșuat. Încercați din nou.",
+  "deleteVitalTitle": "Șterge măsurătoarea",
+  "deleteVitalConfirm": "Ștergeți această măsurătoare: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
