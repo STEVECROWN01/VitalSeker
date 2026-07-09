@@ -239,93 +239,151 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
       body: appointmentsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) {
+          // ── Error state with retry button ──
+          // Previously just showed "Something went wrong" with no way to
+          // recover. Now shows the error icon + message + a retry button
+          // that invalidates the provider to re-fetch.
           debugPrint('Appointments load error: $e');
-          return Center(child: Text(l10n.somethingWentWrong));
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, size: 64, color: AppColors.urgencyEmergency),
+                  const SizedBox(height: 16),
+                  Text(
+                    l10n.somethingWentWrong,
+                    style: TextStyle(
+                      fontFamily: 'ClashDisplay',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary(isDark),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '$e',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 13,
+                      color: AppColors.textSecondary(isDark),
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton.icon(
+                    onPressed: () => ref.invalidate(appointmentsProvider),
+                    icon: const Icon(Icons.refresh, size: 20),
+                    label: Text(l10n.retry),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary(isDark),
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
         },
         data: (appointments) {
           final filtered = _applyFilters(appointments);
 
-          return Column(
-            children: [
-              // Filter chips
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
-                child: Row(
-                  children: [
-                    _StatusFilterChip(
-                      label: l10n.all,
-                      selected: _filterStatus == null,
-                      onSelected: () => setState(() => _filterStatus = null),
-                      isDark: isDark,
-                    ),
-                    const SizedBox(width: 8),
-                    _StatusFilterChip(
-                      label: l10n.upcoming,
-                      selected: _filterStatus == AppointmentStatus.upcoming,
-                      onSelected: () => setState(() => _filterStatus =
-                          _filterStatus == AppointmentStatus.upcoming
-                              ? null
-                              : AppointmentStatus.upcoming),
-                      isDark: isDark,
-                      color: AppColors.primary(isDark),
-                    ),
-                    const SizedBox(width: 8),
-                    _StatusFilterChip(
-                      label: l10n.completed,
-                      selected: _filterStatus == AppointmentStatus.completed,
-                      onSelected: () => setState(() => _filterStatus =
-                          _filterStatus == AppointmentStatus.completed
-                              ? null
-                              : AppointmentStatus.completed),
-                      isDark: isDark,
-                      color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
-                    ),
-                    const SizedBox(width: 8),
-                    _StatusFilterChip(
-                      label: l10n.cancelled,
-                      selected: _filterStatus == AppointmentStatus.cancelled,
-                      onSelected: () => setState(() => _filterStatus =
-                          _filterStatus == AppointmentStatus.cancelled
-                              ? null
-                              : AppointmentStatus.cancelled),
-                      isDark: isDark,
-                      color: isDark ? AppColors.grey500 : AppColors.grey400,
-                    ),
-                  ],
+          // ── Pull-to-refresh ──
+          // Wrapping the content in a RefreshIndicator lets the user
+          // pull down to re-fetch appointments from the DB at any time.
+          // The RefreshIndicator is only shown when there's data (the
+          // empty state and error state have their own retry paths).
+          return RefreshIndicator(
+            onRefresh: () async {
+              ref.invalidate(appointmentsProvider);
+              await ref.read(appointmentsProvider.future);
+            },
+            color: AppColors.primary(isDark),
+            child: Column(
+              children: [
+                // Filter chips
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+                  child: Row(
+                    children: [
+                      _StatusFilterChip(
+                        label: l10n.all,
+                        selected: _filterStatus == null,
+                        onSelected: () => setState(() => _filterStatus = null),
+                        isDark: isDark,
+                      ),
+                      const SizedBox(width: 8),
+                      _StatusFilterChip(
+                        label: l10n.upcoming,
+                        selected: _filterStatus == AppointmentStatus.upcoming,
+                        onSelected: () => setState(() => _filterStatus =
+                            _filterStatus == AppointmentStatus.upcoming
+                                ? null
+                                : AppointmentStatus.upcoming),
+                        isDark: isDark,
+                        color: AppColors.primary(isDark),
+                      ),
+                      const SizedBox(width: 8),
+                      _StatusFilterChip(
+                        label: l10n.completed,
+                        selected: _filterStatus == AppointmentStatus.completed,
+                        onSelected: () => setState(() => _filterStatus =
+                            _filterStatus == AppointmentStatus.completed
+                                ? null
+                                : AppointmentStatus.completed),
+                        isDark: isDark,
+                        color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess,
+                      ),
+                      const SizedBox(width: 8),
+                      _StatusFilterChip(
+                        label: l10n.cancelled,
+                        selected: _filterStatus == AppointmentStatus.cancelled,
+                        onSelected: () => setState(() => _filterStatus =
+                            _filterStatus == AppointmentStatus.cancelled
+                                ? null
+                                : AppointmentStatus.cancelled),
+                        isDark: isDark,
+                        color: isDark ? AppColors.grey500 : AppColors.grey400,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
+                const SizedBox(height: 12),
 
-              // Appointments list
-              Expanded(
-                child: appointments.isEmpty
-                    ? _EmptyState(isDark: isDark, l10n: l10n)
-                    : filtered.isEmpty
-                        ? Center(
-                            child: Text(
-                              l10n.noAppointmentsMatchFilter,
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 14,
-                                color: AppColors.textSecondary(isDark),
+                // Appointments list
+                Expanded(
+                  child: appointments.isEmpty
+                      ? _EmptyState(isDark: isDark, l10n: l10n)
+                      : filtered.isEmpty
+                          ? Center(
+                              child: Text(
+                                l10n.noAppointmentsMatchFilter,
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 14,
+                                  color: AppColors.textSecondary(isDark),
+                                ),
                               ),
+                            )
+                          : ListView.builder(
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                              itemCount: filtered.length,
+                              itemBuilder: (context, index) {
+                                final appointment = filtered[index];
+                                return _AppointmentCard(
+                                  appointment: appointment,
+                                  isDark: isDark,
+                                  onActionsTap: () => _showCardActions(appointment),
+                                  l10n: l10n,
+                                );
+                              },
                             ),
-                          )
-                        : ListView.builder(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-                            itemCount: filtered.length,
-                            itemBuilder: (context, index) {
-                              final appointment = filtered[index];
-                              return _AppointmentCard(
-                                appointment: appointment,
-                                isDark: isDark,
-                                onActionsTap: () => _showCardActions(appointment),
-                                l10n: l10n,
-                              );
-                            },
-                          ),
-              ),
-            ],
+                ),
+              ],
+            ),
           );
         },
       ),
