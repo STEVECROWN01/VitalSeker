@@ -67,7 +67,6 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
   /// Tracks whether background service initialization has finished.
   /// While false, we show a branded loading screen. Once true, we show
   /// the real app (router-driven).
-  bool _servicesReady = false;
 
   /// Subscription to connectivity changes — when the device regains
   /// network access (e.g. user comes back online after being offline),
@@ -129,7 +128,7 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
     try {
       await Supabase.initialize(
         url: SupabaseConfig.url,
-        anonKey: SupabaseConfig.anonKey,
+        publishableKey: SupabaseConfig.publishableKey,
         debug: false,
       ).timeout(const Duration(seconds: 15));
       SupabaseService().markInitialized();
@@ -170,6 +169,7 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
             // Fire-and-forget — don't block the connectivity listener.
             EdgeFunctionService().flushPendingSosQueue().catchError((e) {
               debugPrint('[Connectivity] SOS queue flush failed: $e');
+              return 0;
             });
           }
         },
@@ -184,6 +184,7 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
         (_) {
           EdgeFunctionService().flushPendingSosQueue().catchError((e) {
             debugPrint('[Timer] SOS queue flush failed: $e');
+            return 0;
           });
         },
       );
@@ -242,9 +243,7 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
 
     // Mark services as ready — triggers rebuild to show the real app.
     if (mounted) {
-      setState(() {
-        _servicesReady = true;
-      });
+      setState(() {});
     }
     debugPrint('[Startup] All background services initialized');
   }
@@ -294,69 +293,6 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
           ),
         );
       },
-    );
-  }
-}
-
-/// Branded loading screen shown while services initialize in the background.
-///
-/// Replaces the previous "frozen splash" with a clearly-visible loading
-/// state. Shows the VitalSeker logo + a CircularProgressIndicator so the
-/// user knows the app is alive and working.
-class _StartupLoadingScreen extends StatelessWidget {
-  const _StartupLoadingScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0B7A5B),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Logo
-              ClipRRect(
-                borderRadius: BorderRadius.circular(28),
-                child: Image.asset(
-                  'assets/images/branding/app_logo.png',
-                  width: 110,
-                  height: 110,
-                  fit: BoxFit.cover,
-                  gaplessPlayback: true,
-                ),
-              ),
-              const SizedBox(height: 32),
-              const Text(
-                'VitalSeker',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: -0.02,
-                ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Your AI Health Companion',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14,
-                ),
-              ),
-              const SizedBox(height: 48),
-              const SizedBox(
-                width: 32,
-                height: 32,
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 3,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
