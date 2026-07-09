@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker ń fúnni ní ìtọ́ni àgbájá, kì í ṣe ìdájọ́. Kan si dókítà nígbà gbogbo.",
   "aiChatTriage": "Sọ̀rọ̀ pẹ̀lú Seker AI",
   "health": "Ilera",
-  "family": "Idile"
+  "family": "Idile",
+  "vitalDeleted": "Àkọsílẹ̀ ti parẹ́.",
+  "failedToDeleteVital": "Kò ṣeé parẹ́ àkọsílẹ̀. Tún gbìyànjú.",
+  "deleteVitalTitle": "Pa Àkọsílẹ̀ Rẹ́",
+  "deleteVitalConfirm": "Pa àkọsílẹ̀ yìí rẹ́: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
