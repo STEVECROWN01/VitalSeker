@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker általános tanácsokat ad, nem diagnózist. Mindig konzultálj orvossal.",
   "aiChatTriage": "Csevegés a Seker AI-val",
   "health": "Egészség",
-  "family": "Család"
+  "family": "Család",
+  "vitalDeleted": "Mérés törölve.",
+  "failedToDeleteVital": "A mérés törlése sikertelen. Próbálja újra.",
+  "deleteVitalTitle": "Mérés törlése",
+  "deleteVitalConfirm": "Törli ezt a mérést: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
