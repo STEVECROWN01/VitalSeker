@@ -263,4 +263,5 @@ void main() {
 
   // Silence unused-element warnings for types referenced only for type-checking.
   // ignore: unused_element
+  final _unusedUserProfile = UserProfile;
 }
