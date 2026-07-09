@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "سيكر يقدم إرشادات عامة وليس تشخيصا. استشر طبيبا دائما.",
   "aiChatTriage": "محادثة مع سيكر AI",
   "health": "الصحة",
-  "family": "العائلة"
+  "family": "العائلة",
+  "vitalDeleted": "تم حذف القراءة.",
+  "failedToDeleteVital": "فشل حذف القراءة. حاول مرة أخرى.",
+  "deleteVitalTitle": "حذف القراءة",
+  "deleteVitalConfirm": "حذف هذه القراءة: {value}؟",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
