@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker anatoa mwongozo wa jumla, sio uaguzi. Sikiliza daktari kila wakati.",
   "aiChatTriage": "Soga na Seker AI",
   "health": "Afya",
-  "family": "Familia"
+  "family": "Familia",
+  "vitalDeleted": "Somo limefutwa.",
+  "failedToDeleteVital": "Imeshindwa kufuta somo. Jaribu tena.",
+  "deleteVitalTitle": "Futa Somo",
+  "deleteVitalConfirm": "Futa somo hili: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
