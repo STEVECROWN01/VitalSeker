@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "سیکر عام رہنمائی دیتا ہے، تشخیص نہیں۔ ہمیشہ ڈاکٹر سے مشورہ کریں۔",
   "aiChatTriage": "سیکر AI کے ساتھ چیٹ",
   "health": "صحت",
-  "family": "خاندان"
+  "family": "خاندان",
+  "vitalDeleted": "ریڈنگ حذف ہو گئی۔",
+  "failedToDeleteVital": "ریڈنگ حذف کرنے میں ناکامی۔ دوبارہ کوشش کریں۔",
+  "deleteVitalTitle": "ریڈنگ حذف کریں",
+  "deleteVitalConfirm": "یہ ریڈنگ حذف کریں: {value}؟",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
