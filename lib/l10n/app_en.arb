@@ -1137,17 +1137,6 @@
     }
   },
   "vitalSaveFailed": "Failed to save vital. Please try again.",
-  "vitalDeleted": "Reading deleted.",
-  "failedToDeleteVital": "Failed to delete reading. Please try again.",
-  "deleteVitalTitle": "Delete Reading",
-  "deleteVitalConfirm": "Delete this reading: {value}?",
-  "@deleteVitalConfirm": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "vitalsHistoryTitle": "Vitals History",
   "range7Days": "7D",
   "range1Month": "1M",
@@ -1310,5 +1299,16 @@
   "failedToCompleteOnboarding": "Failed to complete onboarding. Please check your connection and try again.",
   "fieldRequired": "This field is required",
   "somethingWentWrong": "Something went wrong. Please try again.",
-  "securitySettingsOnThisPage": "Security settings are on this page"
+  "securitySettingsOnThisPage": "Security settings are on this page",
+  "vitalDeleted": "Reading deleted.",
+  "failedToDeleteVital": "Failed to delete reading. Please try again.",
+  "deleteVitalTitle": "Delete Reading",
+  "deleteVitalConfirm": "Delete this reading: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
