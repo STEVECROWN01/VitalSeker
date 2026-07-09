@@ -11,7 +11,6 @@ import '../../../core/config/app_config.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
-import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
@@ -110,10 +109,6 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     ];
     return '${months[d.month - 1]} ${d.day}, ${d.year}';
   }
-
-  /// Whether to include the symptom history in the export, derived from the
-  /// "Symptoms & Triage Log" checkbox (replaces the old single toggle).
-  bool get _includeHistory => _includeSymptomsLog;
 
   Future<void> _exportPdf({required bool viaEmail}) async {
     final l10n = AppLocalizations.of(context)!;
