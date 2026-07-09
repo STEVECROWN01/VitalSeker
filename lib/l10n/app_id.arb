@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker memberikan panduan umum, bukan diagnosis. Selalu konsultasikan dengan dokter.",
   "aiChatTriage": "Obrolan dengan Seker AI",
   "health": "Kesehatan",
-  "family": "Keluarga"
+  "family": "Keluarga",
+  "vitalDeleted": "Pembacaan dihapus.",
+  "failedToDeleteVital": "Gagal menghapus pembacaan. Coba lagi.",
+  "deleteVitalTitle": "Hapus Pembacaan",
+  "deleteVitalConfirm": "Hapus pembacaan ini: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
