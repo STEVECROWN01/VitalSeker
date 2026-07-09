@@ -34,24 +34,6 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
   String _healthTipsSchedule = '3 times per week';
   String _weeklyReportSchedule = 'Every Monday at 10:00 AM';
 
-  static const List<String> _triageScheduleOptions = [
-    'Daily at 9:00 AM', 'Daily at 12:00 PM', 'Daily at 6:00 PM', 'Every 2 days', 'Weekly',
-  ];
-  static const List<String> _medicationScheduleOptions = [
-    'Per prescription schedule', 'Every 4 hours', 'Every 8 hours', 'Twice daily',
-  ];
-  static const List<String> _appointmentScheduleOptions = [
-    '1 day before', '2 hours before', '1 hour before', 'At appointment time',
-  ];
-  static const List<String> _vitalsScheduleOptions = [
-    'Daily at 8:00 AM', 'Daily at 12:00 PM', 'Twice daily', 'Every 2 days',
-  ];
-  static const List<String> _healthTipsScheduleOptions = [
-    '3 times per week', 'Daily', 'Once a week',
-  ];
-  static const List<String> _weeklyReportScheduleOptions = [
-    'Every Monday at 10:00 AM', 'Every Monday at 8:00 AM', 'Every Sunday at 6:00 PM',
-  ];
 
   @override
   void initState() {
