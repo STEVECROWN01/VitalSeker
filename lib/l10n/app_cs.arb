@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker poskytuje obecné pokyny, nikoli diagnózu. Vždy se poraďte s lékařem.",
   "aiChatTriage": "Chat s AI Sekerem",
   "health": "Zdraví",
-  "family": "Rodina"
+  "family": "Rodina",
+  "vitalDeleted": "Měření smazáno.",
+  "failedToDeleteVital": "Smazání měření se nezdařilo. Zkuste to znovu.",
+  "deleteVitalTitle": "Smazat měření",
+  "deleteVitalConfirm": "Smazat toto měření: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
