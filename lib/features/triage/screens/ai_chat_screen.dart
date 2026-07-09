@@ -274,10 +274,12 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
             );
           });
         },
-        localeId: bestLocaleId,
-        listenMode: stt.ListenMode.dictation,
         listenFor: const Duration(seconds: 60),
         pauseFor: const Duration(seconds: 5),
+        options: stt.SpeechListenOptions(
+          localeId: bestLocaleId,
+          listenMode: stt.ListenMode.dictation,
+        ),
       );
       setState(() {
         _isRecording = true;
@@ -306,7 +308,6 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   /// The file name is inserted into the chat as a user message so Seker
   /// knows the user has shared a document.
   String? _attachedFileName;
-  String? _attachedFileUrl;
 
   Future<void> _pickFile() async {
     try {
@@ -344,7 +345,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       // Show the file as an attachment — do NOT auto-send
       setState(() {
         _attachedFileName = fileName;
-        _attachedFileUrl = fileUrl;
+        // fileUrl stored in message state
       });
       if (mounted) {
         AppSnackBar.success(context, 'File attached: $fileName');
@@ -583,7 +584,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                   GestureDetector(
                     onTap: () => setState(() {
                       _attachedFileName = null;
-                      _attachedFileUrl = null;
+                      // reset attachment state
                     }),
                     child: Icon(Icons.close, size: 16, color: AppColors.error(isDark)),
                   ),
