@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "سِکِر راهنمایی عمومی ارائه می‌دهد، نه تشخیص. همیشه با پزشک مشورت کنید.",
   "aiChatTriage": "گفتگو با هوش مصنوعی سِکِر",
   "health": "سلامتی",
-  "family": "خانواده"
+  "family": "خانواده",
+  "vitalDeleted": "قراءة حذف شد.",
+  "failedToDeleteVital": "حذف قراءة ناموفق بود. دوباره تلاش کنید.",
+  "deleteVitalTitle": "حذف قراءة",
+  "deleteVitalConfirm": "این قراءة حذف شود: {value}؟",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
