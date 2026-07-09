@@ -399,6 +399,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         'title': l10n.actionScheduleCheckup,
         'description': l10n.actionScheduleCheckupDesc,
         'color': AppColors.urgencyMedium,
+        'route': AppConfig.appointments,
       });
     }
 
@@ -408,31 +409,38 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
         'title': l10n.actionLogVitals,
         'description': l10n.actionLogVitalsDesc,
         'color': AppColors.primary(isDark),
+        'route': AppConfig.vitals,
       },
       {
         'icon': Icons.psychology_outlined,
         'title': l10n.actionRunSymptomCheck,
         'description': l10n.actionRunSymptomCheckDesc,
         'color': AppColors.secondary(isDark),
+        'route': AppConfig.triage,
       },
       {
         'icon': Icons.nightlight_outlined,
         'title': l10n.actionImproveSleep,
         'description': l10n.actionImproveSleepDesc,
         'color': isDark ? AppColors.darkInfo : AppColors.lightInfo,
+        'route': null,
       },
       {
         'icon': Icons.fitness_center_outlined,
         'title': l10n.actionStayActive,
         'description': l10n.actionStayActiveDesc,
         'color': AppColors.urgencyLow,
+        'route': null,
       },
     ]);
     return actions.map((action) {
       final color = action['color'] as Color;
+      final route = action['route'] as String?;
       return Padding(
         padding: const EdgeInsets.only(bottom: 12),
-        child: Container(
+        child: GestureDetector(
+          onTap: route != null ? () => context.push(route) : null,
+          child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: color.withValues(alpha: isDark ? 0.08 : 0.04),
@@ -481,6 +489,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                   color: AppColors.textHint(isDark), size: 20),
             ],
           ),
+        ),
         ),
       ).animate().fadeIn(duration: 400.ms);
     }).toList();
