@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/symptom_log.dart';
-import '../services/database_service.dart';
 import '../services/offline_cache_service.dart';
 import 'auth_provider.dart';
 import 'user_profile_provider.dart';
