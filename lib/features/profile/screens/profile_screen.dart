@@ -4,11 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
-import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/family_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/symptom_log_provider.dart';
-import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -433,17 +431,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         },
       ),
     );
-  }
-
-  String _themeSubtitle(ThemeMode mode, AppLocalizations l10n) {
-    switch (mode) {
-      case ThemeMode.dark:
-        return l10n.dark;
-      case ThemeMode.light:
-        return l10n.light;
-      default:
-        return l10n.systemDefault;
-    }
   }
 
   /// Build a soft tinted background square (40×40, radius 10) for menu icons.
