@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker提供一般指导，而非诊断。请务必咨询医生。",
   "aiChatTriage": "与Seker AI聊天",
   "health": "健康",
-  "family": "家庭"
+  "family": "家庭",
+  "vitalDeleted": "读数已删除。",
+  "failedToDeleteVital": "删除读数失败。请重试。",
+  "deleteVitalTitle": "删除读数",
+  "deleteVitalConfirm": "删除此读数: {value}？",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
