@@ -10,4 +10,8 @@ class SupabaseConfig {
     'SUPABASE_ANON_KEY',
     defaultValue: 'sb_publishable_2w75vf7pUF_wlxUQive7aA_-SgHPvoR',
   );
+  // Alias — Supabase SDK >= 2.16 renamed the `anonKey` parameter to
+  // `publishableKey`. Both point to the same value so existing code that
+  // references SupabaseConfig.anonKey still works.
+  static const String publishableKey = anonKey;
 }
