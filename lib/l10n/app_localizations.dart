@@ -4525,6 +4525,30 @@ abstract class AppLocalizations {
   /// **'Failed to save vital. Please try again.'**
   String get vitalSaveFailed;
 
+  /// No description provided for @vitalDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading deleted.'**
+  String get vitalDeleted;
+
+  /// No description provided for @failedToDeleteVital.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete reading. Please try again.'**
+  String get failedToDeleteVital;
+
+  /// No description provided for @deleteVitalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Reading'**
+  String get deleteVitalTitle;
+
+  /// No description provided for @deleteVitalConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this reading: {value}?'**
+  String deleteVitalConfirm(String value);
+
   /// No description provided for @vitalsHistoryTitle.
   ///
   /// In en, this message translates to:
