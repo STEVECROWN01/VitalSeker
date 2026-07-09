@@ -4,9 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/vital.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
 
 class VitalsScreen extends ConsumerStatefulWidget {
   const VitalsScreen({super.key});
@@ -29,6 +31,21 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final vitalsAsync = ref.watch(vitalsProvider);
     final l10n = AppLocalizations.of(context)!;
+
+    // ── Pro gate ──
+    // Vitals Tracking is a Pro-only feature. Free users see the
+    // ProFeatureGate upsell screen instead of the vitals dashboard.
+    // Uses the sync `isProUserProvider` which reads the cached value of
+    // `isProUserAsyncProvider` (DB + RevenueCat fallback) — so paying
+    // users are never blocked by a DB sync delay.
+    final isPro = ref.watch(isProUserProvider);
+    if (!isPro) {
+      return const ProFeatureGate(
+        featureName: 'Vitals Tracking',
+        featureDescription: 'Track heart rate, blood pressure, temperature, and more. Visualize trends over time and share with your doctor.',
+        featureIcon: Icons.monitor_heart,
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.vitals)),
