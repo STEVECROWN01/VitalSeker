@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Ο Seker παρέχει γενικές οδηγίες, όχι διάγνωση. Πάντα να συμβουλεύεστε γιατρό.",
   "aiChatTriage": "Συνομιλία με AI Seker",
   "health": "Υγεία",
-  "family": "Οικογένεια"
+  "family": "Οικογένεια",
+  "vitalDeleted": "Η μέτρηση διαγράφηκε.",
+  "failedToDeleteVital": "Αποτυχία διαγραφής μέτρησης. Δοκιμάστε ξανά.",
+  "deleteVitalTitle": "Διαγραφή μέτρησης",
+  "deleteVitalConfirm": "Διαγραφή αυτής της μέτρησης: {value};",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
