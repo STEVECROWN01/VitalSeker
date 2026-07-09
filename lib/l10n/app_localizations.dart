@@ -1153,6 +1153,42 @@ abstract class AppLocalizations {
   /// **'VitalSeker Pro'**
   String get vitalSekerPro;
 
+  /// No description provided for @aiChatTriage.
+  ///
+  /// In en, this message translates to:
+  /// 'AI Chat with Seker'
+  String get aiChatTriage;
+
+  /// No description provided for @chatWithSeker.
+  ///
+  /// In en, this message translates to:
+  /// 'Chat with Seker'
+  String get chatWithSeker;
+
+  /// No description provided for @chatWithSekerDesc.
+  ///
+  /// In en, this message translates to:
+  /// 'Talk to our AI health assistant in real-time'
+  String get chatWithSekerDesc;
+
+  /// No description provided for @medicalDisclaimerShort.
+  ///
+  /// In en, this message translates to:
+  /// 'Seker provides general guidance, not a diagnosis. Always consult a doctor.'
+  String get medicalDisclaimerShort;
+
+  /// No description provided for @qrGenerationFailed.
+  ///
+  /// In en, this message translates to:
+  /// 'Failed to generate QR code. Please try again.'
+  String get qrGenerationFailed;
+
+  /// No description provided for @sekerGreeting.
+  ///
+  /// In en, this message translates to:
+  /// 'Hi! I\'m Seker, your AI Health Assistant. I\'m here to help you understand your symptoms and provide guidance. What\'s bothering you today? You can type or hold the mic button to speak.'
+  String get sekerGreeting;
+
   /// No description provided for @signingOut.
   ///
   /// In en, this message translates to:
