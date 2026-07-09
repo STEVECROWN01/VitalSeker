@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "セカーは一般的なガイダンスを提供し、診断ではありません。常に医師に相談してください。",
   "aiChatTriage": "セカーAIとのチャット",
   "health": "健康",
-  "family": "家族"
+  "family": "家族",
+  "vitalDeleted": "測定値を削除しました。",
+  "failedToDeleteVital": "測定値の削除に失敗しました。もう一度お試しください。",
+  "deleteVitalTitle": "測定値を削除",
+  "deleteVitalConfirm": "この測定値を削除しますか: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
