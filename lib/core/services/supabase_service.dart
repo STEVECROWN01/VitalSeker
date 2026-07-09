@@ -27,13 +27,13 @@ class SupabaseService {
     final url = dotenv.env['SUPABASE_URL']?.isNotEmpty == true
         ? dotenv.env['SUPABASE_URL']!
         : SupabaseConfig.url;
-    final anonKey = dotenv.env['SUPABASE_ANON_KEY']?.isNotEmpty == true
+    final publishableKey = dotenv.env['SUPABASE_ANON_KEY']?.isNotEmpty == true
         ? dotenv.env['SUPABASE_ANON_KEY']!
-        : SupabaseConfig.anonKey;
+        : SupabaseConfig.publishableKey;
 
     await Supabase.initialize(
       url: url,
-      anonKey: anonKey,
+      publishableKey: publishableKey,
       debug: false,
     );
     _client = Supabase.instance.client;
