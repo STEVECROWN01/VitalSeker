@@ -277,6 +277,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       onTap: () => context.push(AppConfig.passport),
                     ),
                     _MenuItem(
+                      icon: Icons.monitor_heart,
+                      iconBg: _tint(AppColors.primary(isDark), isDark),
+                      iconFg: AppColors.primary(isDark),
+                      label: 'Vitals Tracking',
+                      subtitle: 'Track heart rate, blood pressure, temperature',
+                      onTap: () => context.push(AppConfig.vitals),
+                    ),
+                    _MenuItem(
+                      icon: Icons.event,
+                      iconBg: _tint(AppColors.primary(isDark), isDark),
+                      iconFg: AppColors.primary(isDark),
+                      label: 'Appointment Manager',
+                      subtitle: 'Schedule and track doctor appointments',
+                      onTap: () => context.push(AppConfig.appointments),
+                    ),
+                    _MenuItem(
                       icon: Icons.folder_outlined,
                       iconBg: _tint(AppColors.secondary(isDark), isDark),
                       iconFg: AppColors.secondary(isDark),
