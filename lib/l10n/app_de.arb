@@ -867,5 +867,16 @@
   "medicalDisclaimerShort": "Seker gibt allgemeine Ratschläge, keine Diagnose. Konsultieren Sie immer einen Arzt.",
   "aiChatTriage": "Chat mit Seker KI",
   "health": "Gesundheit",
-  "family": "Familie"
+  "family": "Familie",
+  "vitalDeleted": "Messung gelöscht.",
+  "failedToDeleteVital": "Löschen der Messung fehlgeschlagen. Bitte erneut versuchen.",
+  "deleteVitalTitle": "Messung löschen",
+  "deleteVitalConfirm": "Diese Messung löschen: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
