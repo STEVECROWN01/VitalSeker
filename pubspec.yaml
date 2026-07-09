@@ -84,6 +84,8 @@ dependencies:
   timezone: ^0.9.4
   # Cached network images — eliminates profile picture lag/delay
   cached_network_image: ^3.4.1
+  # Sound preview playback for notification sound selector
+  audioplayers: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -102,6 +104,7 @@ flutter:
     - assets/images/branding/
     - assets/fonts/
     - assets/design/
+    - assets/sounds/
   
   fonts:
     - family: ClashDisplay
