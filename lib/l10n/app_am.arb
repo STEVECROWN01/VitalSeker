@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "ሴከር አጠቃላይ መመሪያ ይሰጣል፣ ምርመራ አይደለም። ሁልጊዜ ዶክተር ያማክሩ።",
   "aiChatTriage": "ከሴከር AI ጋር ውይይት",
   "health": "ጤና",
-  "family": "ቤተሰብ"
+  "family": "ቤተሰብ",
+  "vitalDeleted": "ንባቡ ተሰርዟል።",
+  "failedToDeleteVital": "ንባቡን ማጥፋት አልተሳካም። እንደገና ይሞክሩ።",
+  "deleteVitalTitle": "ንባብ ሰርዝ",
+  "deleteVitalConfirm": "ይህን ንባብ ይሰርዙ: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
