@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker fornisce indicazioni generali, non una diagnosi. Consulta sempre un medico.",
   "aiChatTriage": "Chat con Seker IA",
   "health": "Salute",
-  "family": "Famiglia"
+  "family": "Famiglia",
+  "vitalDeleted": "Lettura eliminata.",
+  "failedToDeleteVital": "Eliminazione della lettura non riuscita. Riprova.",
+  "deleteVitalTitle": "Elimina lettura",
+  "deleteVitalConfirm": "Eliminare questa lettura: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
