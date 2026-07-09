@@ -28,6 +28,10 @@ class VitalsNotifier extends AsyncNotifier<List<Vital>> {
       valueSecondary: valueSecondary,
       recordedAt: recordedAt ?? now,
       notes: notes,
+      // Explicitly set source='manual' — the model constructor defaults to
+      // 'manual' but being explicit here makes the intent clear and is
+      // robust against future changes to the default.
+      source: 'manual',
       createdAt: now,
     );
     try {
