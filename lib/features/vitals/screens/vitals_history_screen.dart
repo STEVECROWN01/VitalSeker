@@ -6,6 +6,7 @@ import '../../../core/models/vital.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
 import '../../../shared/widgets/pro_feature_gate.dart';
 
@@ -676,7 +677,7 @@ class _VitalsDataTable extends StatelessWidget {
   }
 }
 
-class _DataRow extends StatelessWidget {
+class _DataRow extends ConsumerWidget {
   final Vital vital;
   final VitalType vitalType;
   final bool isDark;
@@ -687,68 +688,118 @@ class _DataRow extends StatelessWidget {
     required this.isDark,
   });
 
+  Future<void> _deleteVital(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
+    try {
+      await ref.read(vitalsProvider.notifier).deleteVital(vital.id);
+      if (context.mounted) {
+        AppSnackBar.success(context, l10n.vitalDeleted);
+      }
+    } catch (e) {
+      if (context.mounted) {
+        AppSnackBar.errorFromException(context, l10n.failedToDeleteVital, e);
+      }
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Text(
-              '${vital.recordedAt.day.toString().padLeft(2, '0')}/${vital.recordedAt.month.toString().padLeft(2, '0')}/${vital.recordedAt.year}',
-              style: TextStyle(
-                fontFamily: 'JetBrainsMono',
-                fontSize: 12,
-                color: isDark ? AppColors.grey300 : AppColors.grey700,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    return Dismissible(
+      key: ValueKey(vital.id),
+      direction: DismissDirection.endToStart,
+      background: Container(
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 20),
+        color: AppColors.urgencyEmergency,
+        child: const Icon(Icons.delete_outline, color: Colors.white, size: 22),
+      ),
+      confirmDismiss: (direction) async {
+        // Confirm before deleting — prevents accidental data loss.
+        return await showDialog<bool>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text(l10n.deleteVitalTitle),
+            content: Text(l10n.deleteVitalConfirm(vital.displayWithUnit)),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: Text(l10n.cancel),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              '${vital.recordedAt.hour.toString().padLeft(2, '0')}:${vital.recordedAt.minute.toString().padLeft(2, '0')}',
-              style: TextStyle(
-                fontFamily: 'JetBrainsMono',
-                fontSize: 12,
-                color: AppColors.textSecondary(isDark),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              vital.displayWithUnit,
-              style: TextStyle(
-                fontFamily: 'JetBrainsMono',
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: vitalType.color,
-              ),
-              textAlign: TextAlign.right,
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(
-                color: _sourceColor.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Text(
-                (vital.source.isEmpty ? '?' : vital.source.substring(0, 1)).toUpperCase(),
-                style: TextStyle(
-                  fontFamily: 'DMSans',
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                  color: _sourceColor,
+              ElevatedButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.urgencyEmergency,
+                  foregroundColor: Colors.white,
                 ),
-                textAlign: TextAlign.center,
+                child: Text(l10n.delete),
+              ),
+            ],
+          ),
+        );
+      },
+      onDismissed: (direction) => _deleteVital(context, ref),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Text(
+                '${vital.recordedAt.day.toString().padLeft(2, '0')}/${vital.recordedAt.month.toString().padLeft(2, '0')}/${vital.recordedAt.year}',
+                style: TextStyle(
+                  fontFamily: 'JetBrainsMono',
+                  fontSize: 12,
+                  color: isDark ? AppColors.grey300 : AppColors.grey700,
+                ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 1,
+              child: Text(
+                '${vital.recordedAt.hour.toString().padLeft(2, '0')}:${vital.recordedAt.minute.toString().padLeft(2, '0')}',
+                style: TextStyle(
+                  fontFamily: 'JetBrainsMono',
+                  fontSize: 12,
+                  color: AppColors.textSecondary(isDark),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Text(
+                vital.displayWithUnit,
+                style: TextStyle(
+                  fontFamily: 'JetBrainsMono',
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: vitalType.color,
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: _sourceColor.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  (vital.source.isEmpty ? '?' : vital.source.substring(0, 1)).toUpperCase(),
+                  style: TextStyle(
+                    fontFamily: 'DMSans',
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: _sourceColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
