@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Секер дає загальні рекомендації, а не діагноз. Завжди консультуйтеся з лікарем.",
   "aiChatTriage": "Чат зі ШІ Секером",
   "health": "Здоров'я",
-  "family": "Сім'я"
+  "family": "Сім'я",
+  "vitalDeleted": "Показник видалено.",
+  "failedToDeleteVital": "Не вдалося видалити показник. Спробуйте ще раз.",
+  "deleteVitalTitle": "Видалити показник",
+  "deleteVitalConfirm": "Видалити цей показник: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
