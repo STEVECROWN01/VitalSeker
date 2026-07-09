@@ -5,9 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/vital.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
 
 class AddVitalScreen extends ConsumerStatefulWidget {
   const AddVitalScreen({super.key});
@@ -174,6 +176,18 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
+
+    // ── Pro gate ──
+    // Adding vitals is a Pro-only feature. If a free user deep-links here
+    // directly, show the ProFeatureGate upsell instead of the form.
+    final isPro = ref.watch(isProUserProvider);
+    if (!isPro) {
+      return const ProFeatureGate(
+        featureName: 'Vitals Tracking',
+        featureDescription: 'Track heart rate, blood pressure, temperature, and more. Visualize trends over time and share with your doctor.',
+        featureIcon: Icons.monitor_heart,
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.logVitalTitle)),
