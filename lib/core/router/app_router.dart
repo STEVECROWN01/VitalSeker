@@ -452,10 +452,6 @@ class ScaffoldWithNavBar extends StatefulWidget {
 }
 
 class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
-  /// When non-null, the user has dragged the FAB and this is the new top-left
-  /// coordinate (relative to the body Stack). Null = use default bottom-right.
-  Offset? _fabPosition;
-
   // Standard FAB is 56×56. We pad with 16px of breathing room on each side.
   static const double _fabSize = 56.0;
   static const double _fabMargin = 16.0;
