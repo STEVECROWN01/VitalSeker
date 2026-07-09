@@ -772,6 +772,36 @@ class _BentoQuickActions extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 12),
+        // Row 3: Vitals Tracking + Appointment Manager (Pro features)
+        // These are also accessible from the Profile screen, but adding
+        // them to the Home dashboard gives users a more discoverable entry
+        // point. Both are Pro-gated at the screen level — tapping them
+        // from here will show the ProFeatureGate upsell for free users,
+        // or the full screen for Pro users.
+        Row(
+          children: [
+            Expanded(
+              child: _SmallBentoCard(
+                isDark: isDark,
+                icon: Icons.monitor_heart,
+                title: 'Vitals',
+                subtitle: 'Heart rate, BP, temp',
+                onTap: () => context.push(AppConfig.vitals),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _SmallBentoCard(
+                isDark: isDark,
+                icon: Icons.event,
+                title: 'Appointments',
+                subtitle: 'Schedule & track visits',
+                onTap: () => context.push(AppConfig.appointments),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
