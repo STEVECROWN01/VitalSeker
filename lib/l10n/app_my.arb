@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker က အထွေထွေ လမ်းညွှန်ချက်ပေးတာပါ၊ ရောဂါခွဲခြားချက်မဟုတ်ပါ။ ဆရာဝန်နဲ့ အမြဲတမ်း တိုင်ပင်ပါ။",
   "aiChatTriage": "Seker AI နဲ့ စကားပြော",
   "health": "ကျန်းမာရေး",
-  "family": "မိသားစု"
+  "family": "မိသားစု",
+  "vitalDeleted": "ဖတ်ရှုမှုကို ဖျက်လိုက်ပြီ။",
+  "failedToDeleteVital": "ဖတ်ရှုမှုကို ဖျက်၍မရပါ။ ပြန်လည်ကြိုးစားပါ။",
+  "deleteVitalTitle": "ဖတ်ရှုမှု ဖျက်ပါ",
+  "deleteVitalConfirm": "ဤဖတ်ရှုမှုကို ဖျက်မည်လား: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
