@@ -2445,18 +2445,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vitalSaveFailed => 'Failed to save vital. Please try again.';
 
   @override
-  String get vitalDeleted => 'Reading deleted.';
-
-  @override
-  String get failedToDeleteVital => 'Failed to delete reading. Please try again.';
-
-  @override
-  String get deleteVitalTitle => 'Delete Reading';
-
-  @override
-  String deleteVitalConfirm(String value) => 'Delete this reading: $value?';
-
-  @override
   String get vitalsHistoryTitle => 'Vitals History';
 
   @override
@@ -5321,18 +5309,6 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get vitalSaveFailed => 'Failed to save vital. Please try again.';
-
-  @override
-  String get vitalDeleted => 'Reading deleted.';
-
-  @override
-  String get failedToDeleteVital => 'Failed to delete reading. Please try again.';
-
-  @override
-  String get deleteVitalTitle => 'Delete Reading';
-
-  @override
-  String deleteVitalConfirm(String value) => 'Delete this reading: $value?';
 
   @override
   String get vitalsHistoryTitle => 'Vitals History';
