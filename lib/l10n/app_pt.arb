@@ -867,5 +867,16 @@
   "medicalDisclaimerShort": "Seker fornece orientação geral, não diagnóstico. Consulte sempre um médico.",
   "aiChatTriage": "Conversa com Seker IA",
   "health": "Saúde",
-  "family": "Família"
+  "family": "Família",
+  "vitalDeleted": "Leitura excluída.",
+  "failedToDeleteVital": "Falha ao excluir leitura. Tente novamente.",
+  "deleteVitalTitle": "Excluir leitura",
+  "deleteVitalConfirm": "Excluir esta leitura: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
