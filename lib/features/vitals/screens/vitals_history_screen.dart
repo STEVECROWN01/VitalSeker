@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/models/vital.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
 
 class VitalsHistoryScreen extends ConsumerStatefulWidget {
   final VitalType? initialType;
@@ -41,6 +43,18 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
     final l10n = AppLocalizations.of(context)!;
     final typeVitals = ref.watch(vitalsByTypeProvider(_selectedType));
     final filteredVitals = _filterByRange(typeVitals);
+
+    // ── Pro gate ──
+    // Vitals history is a Pro-only feature. If a free user deep-links here
+    // directly, show the ProFeatureGate upsell instead of the history chart.
+    final isPro = ref.watch(isProUserProvider);
+    if (!isPro) {
+      return const ProFeatureGate(
+        featureName: 'Vitals Tracking',
+        featureDescription: 'Track heart rate, blood pressure, temperature, and more. Visualize trends over time and share with your doctor.',
+        featureIcon: Icons.monitor_heart,
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.vitalsHistoryTitle)),
