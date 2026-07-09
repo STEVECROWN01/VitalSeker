@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker na-enye ntụziaka n'ozuzu, ọ bụghị nchọpụta. Hụta dọkịta mgbe niile.",
   "aiChatTriage": "Mkparịtaụkwụ ya na Seker AI",
   "health": "Ahụ ike",
-  "family": "Ezinụlọ"
+  "family": "Ezinụlọ",
+  "vitalDeleted": "E wepụrụ ihe dị.",
+  "failedToDeleteVital": "Ọ dịghị ike iwepụ ihe dị. Nwaa ọzọ.",
+  "deleteVitalTitle": "Wepụ Ihe Dị",
+  "deleteVitalConfirm": "Wepụ ihe dị a: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
