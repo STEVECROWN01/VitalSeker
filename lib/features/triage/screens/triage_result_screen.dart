@@ -101,7 +101,6 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
     final recommendedAction = triage['recommended_action'] as String? ?? '';
     final explanation = triage['explanation'] as String? ?? '';
     final whenToEscalate = triage['when_to_escalate'] as String? ?? '';
-    final clarifyingQuestion = triage['clarifying_question'] as String?;
 
     final recommendations =
         <String>[...(triage['recommendations'] as List<dynamic>? ?? const []).cast<String>()];
@@ -543,13 +542,13 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () => Share.share(
-                      'My VitalSeker triage result:\n'
+                    onPressed: () => SharePlus.instance.share(ShareParams(
+                      text: 'My VitalSeker triage result:\n'
                       'Urgency: ${urgencyLevel.toUpperCase()} ($urgencyScore/100)\n'
                       'Recommendation: ${_seekCareLabel(seekCare, l10n)}\n\n'
                       '$disclaimer',
-                      subject: 'VitalSeker Triage Result',
-                    ),
+                      title: 'VitalSeker Triage Result',
+                    )),
                     icon: const Icon(Icons.share_outlined, size: 18),
                     label: Text(l10n.shareResult),
                     style: ElevatedButton.styleFrom(
