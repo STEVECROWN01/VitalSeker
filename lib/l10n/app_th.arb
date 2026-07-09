@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker ให้คำแนะนำทั่วไป ไม่ใช่การวินิจฉัย ปรึกษาแพทย์เสมอ",
   "aiChatTriage": "แชทกับ Seker AI",
   "health": "สุขภาพ",
-  "family": "ครอบครัว"
+  "family": "ครอบครัว",
+  "vitalDeleted": "ลบการอ่านแล้ว",
+  "failedToDeleteVital": "ลบการอ่านไม่สำเร็จ กรุณาลองอีกครั้ง",
+  "deleteVitalTitle": "ลบการอ่าน",
+  "deleteVitalConfirm": "ลบการอ่านนี้: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
