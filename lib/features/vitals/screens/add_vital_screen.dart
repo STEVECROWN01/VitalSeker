@@ -141,7 +141,6 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
       return;
     }
     setState(() => _isSaving = true);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     try {
       if (_isBloodPressure) {
