@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "সেকার সাধারণ গাইডেন্স দেয়, রোগ নির্ণয় নয়। সর্বদা একজন ডাক্তারের সাথে পরামর্শ করুন।",
   "aiChatTriage": "সেকার AI এর সাথে চ্যাট",
   "health": "স্বাস্থ্য",
-  "family": "পরিবার"
+  "family": "পরিবার",
+  "vitalDeleted": "রিডিং মুছে ফেলা হয়েছে।",
+  "failedToDeleteVital": "রিডিং মুছতে ব্যর্থ। আবার চেষ্টা করুন।",
+  "deleteVitalTitle": "রিডিং মুছুন",
+  "deleteVitalConfirm": "এই রিডিংটি মুছবেন: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
