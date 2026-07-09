@@ -29,8 +29,8 @@ void main() {
     const amber = Color(0xFFFF9800);
     const green = Color(0xFF4CAF50);
 
-    expect(red.red, greaterThan(150));
-    expect(amber.red, greaterThan(200));
-    expect(green.green, greaterThan(150));
+    expect((red.r * 255.0).round().clamp(0, 255), greaterThan(150));
+    expect((amber.r * 255.0).round().clamp(0, 255), greaterThan(200));
+    expect((green.g * 255.0).round().clamp(0, 255), greaterThan(150));
   });
 }
