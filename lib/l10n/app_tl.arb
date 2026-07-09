@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Nagbibigay si Seker ng pangkalahatang gabay, hindi diagnosis. Laging kumunsulta sa doktor.",
   "aiChatTriage": "Chat kay Seker AI",
   "health": "Kalusugan",
-  "family": "Pamilya"
+  "family": "Pamilya",
+  "vitalDeleted": "Na-delete ang pagbasa.",
+  "failedToDeleteVital": "Hindi ma-delete ang pagbasa. Subukan muli.",
+  "deleteVitalTitle": "Tanggalin ang Pagbasa",
+  "deleteVitalConfirm": "Tanggalin ang pagbasang ito: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
