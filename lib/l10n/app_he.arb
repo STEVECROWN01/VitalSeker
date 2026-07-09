@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "סקר נותן הדרכה כללית, לא אבחנה. תמיד התייעץ עם רופא.",
   "aiChatTriage": "צ'אט עם סקר AI",
   "health": "בריאות",
-  "family": "משפחה"
+  "family": "משפחה",
+  "vitalDeleted": "הקריאה נמחקה.",
+  "failedToDeleteVital": "מחיקת הקריאה נכשלה. נסה שוב.",
+  "deleteVitalTitle": "מחק קריאה",
+  "deleteVitalConfirm": "למחוק קריאה זו: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
