@@ -5,8 +5,10 @@ import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/appointment.dart';
 import '../../../core/providers/appointments_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
 
 class AppointmentsScreen extends ConsumerStatefulWidget {
   const AppointmentsScreen({super.key});
@@ -209,6 +211,21 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
     final appointmentsAsync = ref.watch(appointmentsProvider);
+
+    // ── Pro gate ──
+    // Appointment Manager is a Pro-only feature. Free users see the
+    // ProFeatureGate upsell screen instead of the appointments list.
+    // Uses the sync `isProUserProvider` which reads the cached value of
+    // `isProUserAsyncProvider` (DB + RevenueCat fallback) — so paying
+    // users are never blocked by a DB sync delay.
+    final isPro = ref.watch(isProUserProvider);
+    if (!isPro) {
+      return const ProFeatureGate(
+        featureName: 'Appointment Manager',
+        featureDescription: 'Schedule and track doctor appointments. Set reminders, reschedule, and keep a complete history of your medical visits.',
+        featureIcon: Icons.event,
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
