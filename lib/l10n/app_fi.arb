@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker antaa yleisiä ohjeita, ei diagnoosia. Konsultoi aina lääkäriä.",
   "aiChatTriage": "Keskustelu Seker-tekoälyn kanssa",
   "health": "Terveys",
-  "family": "Perhe"
+  "family": "Perhe",
+  "vitalDeleted": "Mittaus poistettu.",
+  "failedToDeleteVital": "Mittauksen poistaminen epäonnistui. Yritä uudelleen.",
+  "deleteVitalTitle": "Poista mittaus",
+  "deleteVitalConfirm": "Poistetaanko tämä mittaus: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
