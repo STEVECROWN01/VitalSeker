@@ -223,7 +223,7 @@ class DatabaseService {
   }
 
   // ==================== VITALS ====================
-  Future<List<Map<String, dynamic>>> getVitals(String userId, {int limit = 100, int offset = 0}) async {
+  Future<List<Map<String, dynamic>>> getVitals(String userId, {int limit = 1000, int offset = 0}) async {
     final response = await _client
         .from('vitals')
         .select()
