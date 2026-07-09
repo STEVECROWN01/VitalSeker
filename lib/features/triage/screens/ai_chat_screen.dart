@@ -197,38 +197,34 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         });
       }
 
-      // Simulate streaming: add an empty message, then reveal it word by word
-      final streamingMessage = _ChatMessage(
-        content: '',
-        isUser: false,
-        timestamp: DateTime.now(),
-      );
+      // ── Show the full reply immediately ──
+      // PREVIOUS BUG: the code used a "simulated streaming" approach that
+      // revealed the reply word-by-word. But it had a fatal reference-
+      // identity bug:
+      //   1. A `streamingMessage` object (#1) was added to _messages.
+      //   2. On the first loop iteration, _messages.indexOf(streamingMessage)
+      //      found #1 at index N, and REPLACED it with a NEW _ChatMessage
+      //      instance (#2) containing the first word.
+      //   3. On the SECOND iteration, _messages.indexOf(streamingMessage)
+      //      searched for #1 again — but #1 was already replaced by #2, so
+      //      indexOf returned -1, and the update was SILENTLY SKIPPED.
+      //   4. Result: only the FIRST WORD of the reply was ever shown. If the
+      //      reply started with "I" (e.g. "I apologize, but I'm having
+      //      difficulty..."), the user saw just "I" and nothing else.
+      //
+      // FIX: Remove the simulated streaming entirely. Show the full reply
+      // immediately. This also eliminates the artificial 30ms-per-word delay
+      // (which added ~1.2s of lag on top of the API call time for a typical
+      // 40-word reply) and makes the chat feel instant.
       setState(() {
-        _messages.add(streamingMessage);
+        _messages.add(_ChatMessage(
+          content: reply,
+          isUser: false,
+          timestamp: DateTime.now(),
+        ));
         _isSending = false;
       });
       _scrollToBottom();
-
-      // Reveal the reply word by word (simulated streaming)
-      final words = reply.split(' ');
-      String currentText = '';
-      for (int i = 0; i < words.length; i++) {
-        if (!mounted) break;
-        currentText += (i == 0 ? '' : ' ') + words[i];
-        await Future.delayed(const Duration(milliseconds: 30));
-        if (!mounted) break;
-        setState(() {
-          final idx = _messages.indexOf(streamingMessage);
-          if (idx >= 0) {
-            _messages[idx] = _ChatMessage(
-              content: currentText,
-              isUser: false,
-              timestamp: streamingMessage.timestamp,
-            );
-          }
-        });
-        _scrollToBottom();
-      }
     } catch (e) {
       setState(() {
         _messages.add(_ChatMessage(

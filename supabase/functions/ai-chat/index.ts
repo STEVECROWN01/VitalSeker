@@ -614,14 +614,27 @@ serve(async (req: Request) => {
     }
 
     // GLM API call — try glm-4-flash first, then glm-4-plus as fallback
-    // Retry up to 2 times per model
+    // Retry up to 2 times per model.
+    //
+    // RELIABILITY NOTES:
+    //   - Each fetch has a 25s timeout via AbortController. Without this,
+    //     a hanging TCP connection can block for minutes, making the chat
+    //     feel frozen.
+    //   - 500ms delay between retries (gives the API a moment to recover).
+    //   - We check that the response content is > 5 chars to reject
+    //     truncated/empty responses from the free-tier glm-4-flash model.
     let glmResponse: Response | null = null
     let lastError = ''
     const models = ['glm-4-flash', 'glm-4-plus']
-    
+
     for (const model of models) {
       for (let attempt = 0; attempt < 2; attempt++) {
         try {
+          // 25s timeout — prevents indefinite hang on dropped connections.
+          // GLM-4-flash typically responds in 3-10s; 25s is a generous ceiling.
+          const controller = new AbortController()
+          const timeoutId = setTimeout(() => controller.abort(), 25000)
+
           glmResponse = await fetch(`${glmApiUrl}/chat/completions`, {
             method: 'POST',
             headers: {
@@ -633,8 +646,11 @@ serve(async (req: Request) => {
               max_tokens: 600,
               temperature: 0.7,
               messages: glmMessages,
+              stream: false,
             }),
+            signal: controller.signal,
           })
+          clearTimeout(timeoutId)
           if (glmResponse.ok) {
             // Verify the response actually has content
             const testData = await glmResponse.json()
