@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker yana bayar da jagora gaba ɗaya, ba ganewar asali ba. Koyaushe tuntuɓar likita.",
   "aiChatTriage": "Tattaunawa da Seker AI",
   "health": "Lafiya",
-  "family": "Iyali"
+  "family": "Iyali",
+  "vitalDeleted": "An goge karatu.",
+  "failedToDeleteVital": "An kasa goge karatu. Da farko a sake gwadawa.",
+  "deleteVitalTitle": "Goge Karatu",
+  "deleteVitalConfirm": "Goge wannan karatun: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
