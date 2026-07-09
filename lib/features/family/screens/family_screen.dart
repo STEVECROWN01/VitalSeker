@@ -69,20 +69,22 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
   Future<void> _addFamilyMember() async {
     final l10n = AppLocalizations.of(context)!;
 
-    // Pro-gating: wait for subscription to load before checking
-    final isPro = ref.read(isProUserProvider);
+    // ── Pro-gating (authoritative) ──
+    // Uses `isProUserAsyncProvider` which checks BOTH the DB subscriptions
+    // row AND RevenueCat's SDK directly. This ensures paying users are
+    // never blocked by a DB sync delay — the original bug was that the
+    // family-add flow only checked the DB, so users who had paid via
+    // RevenueCat but whose `subscriptions` row hadn't synced yet were
+    // incorrectly rejected.
+    final isPro = await ref.read(isProUserAsyncProvider.future);
     if (!isPro) {
-      // Double-check by waiting for the subscription provider to resolve
-      final sub = await ref.read(subscriptionProvider.future);
-      if (sub == null || !sub.isPro) {
-        if (!mounted) return;
-        AppSnackBar.error(
-          context,
-          l10n.familyProfilesProOnly,
-        );
-        context.push(AppConfig.proPlan);
-        return;
-      }
+      if (!mounted) return;
+      AppSnackBar.error(
+        context,
+        l10n.familyProfilesProOnly,
+      );
+      context.push(AppConfig.proPlan);
+      return;
     }
 
     if (_nameController.text.trim().isEmpty ||
@@ -113,7 +115,19 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
       if (_selectedBloodType != null && _selectedBloodType!.isNotEmpty) {
         payload['blood_type'] = _selectedBloodType;
       }
-      await db.createFamilyProfile(payload);
+
+      // Defensive: log the payload for debugging if the insert fails.
+      // Previously a failed insert showed only a generic "Failed to add
+      // family member" message with no detail, making root-cause
+      // identification impossible.
+      try {
+        await db.createFamilyProfile(payload);
+      } catch (insertError) {
+        debugPrint('[Family] createFamilyProfile failed. '
+            'Payload: $payload');
+        debugPrint('[Family] Insert error: $insertError');
+        rethrow;
+      }
 
       ref.invalidate(familyProfilesProvider);
       _resetForm();

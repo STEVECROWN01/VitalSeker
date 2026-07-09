@@ -120,7 +120,11 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 
     // Pro-gating: PDF export is a Pro-only feature per Cahier des Charges
     // Section 2.5 ("Export PDF médecin (Pro) — Aperçu rapport, envoi par email").
-    final isPro = ref.read(isProUserProvider);
+    //
+    // Uses the ASYNC provider so we get a fresh RevenueCat check if the DB
+    // row hasn't synced yet — paying users must never be blocked by a DB
+    // sync delay.
+    final isPro = await ref.read(isProUserAsyncProvider.future);
     if (!isPro) {
       if (!mounted) return;
       AppSnackBar.error(context, l10n.exportProOnly);
