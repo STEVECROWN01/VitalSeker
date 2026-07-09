@@ -4,8 +4,10 @@ import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/providers/appointments_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
+import '../../../shared/widgets/pro_feature_gate.dart';
 
 class AddAppointmentScreen extends ConsumerStatefulWidget {
   const AddAppointmentScreen({super.key});
@@ -130,6 +132,18 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
+
+    // ── Pro gate ──
+    // Adding appointments is a Pro-only feature. If a free user deep-links
+    // here directly, show the ProFeatureGate upsell instead of the form.
+    final isPro = ref.watch(isProUserProvider);
+    if (!isPro) {
+      return const ProFeatureGate(
+        featureName: 'Appointment Manager',
+        featureDescription: 'Schedule and track doctor appointments. Set reminders, reschedule, and keep a complete history of your medical visits.',
+        featureIcon: Icons.event,
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
