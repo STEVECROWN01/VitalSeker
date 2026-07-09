@@ -115,7 +115,10 @@ class AboutScreen extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    final url = Uri.parse('https://www.ketermarketing.com');
+                    // Keter Marketing producer website.
+                    // Updated to the official Vercel-hosted site per the
+                    // producer's current deployment.
+                    final url = Uri.parse('https://keter-marketing.vercel.app/');
                     if (await canLaunchUrl(url)) {
                       await launchUrl(url, mode: LaunchMode.externalApplication);
                     }
