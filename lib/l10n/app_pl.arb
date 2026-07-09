@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker udziela ogólnych wskazówek, nie diagnozy. Zawsze konsultuj się z lekarzem.",
   "aiChatTriage": "Czat z Seker AI",
   "health": "Zdrowie",
-  "family": "Rodzina"
+  "family": "Rodzina",
+  "vitalDeleted": "Odczyt usunięty.",
+  "failedToDeleteVital": "Nie udało się usunąć odczytu. Spróbuj ponownie.",
+  "deleteVitalTitle": "Usuń odczyt",
+  "deleteVitalConfirm": "Usunąć ten odczyt: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
