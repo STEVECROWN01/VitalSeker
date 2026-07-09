@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker giver generel vejledning, ikke en diagnose. Konsultér altid en læge.",
   "aiChatTriage": "Chat med Seker AI",
   "health": "Sundhed",
-  "family": "Familie"
+  "family": "Familie",
+  "vitalDeleted": "Måling slettet.",
+  "failedToDeleteVital": "Kunne ikke slette måling. Prøv igen.",
+  "deleteVitalTitle": "Slet måling",
+  "deleteVitalConfirm": "Slet denne måling: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
