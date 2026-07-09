@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart' as PathProvider;
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../core/providers/health_passport_provider.dart';
@@ -138,7 +138,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       Directory? saveDir;
       try {
         // On Android, getExternalStoragePublicDirectory gives /storage/emulated/0/Download
-        saveDir = await PathProvider.getDownloadsDirectory();
+        saveDir = await path_provider.getDownloadsDirectory();
       } catch (_) {}
       
       if (saveDir == null) {
@@ -150,7 +150,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
           }
         } catch (_) {
           // Final fallback: temp directory
-          saveDir = await PathProvider.getTemporaryDirectory();
+          saveDir = await path_provider.getTemporaryDirectory();
         }
       }
       
@@ -190,16 +190,16 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       if (byteData == null) return;
       final bytes = byteData.buffer.asUint8List();
-      final dir = await PathProvider.getTemporaryDirectory();
+      final dir = await path_provider.getTemporaryDirectory();
       final file = File(
           '${dir.path}/vitalseker_qr_${DateTime.now().millisecondsSinceEpoch}.png');
       await file.writeAsBytes(bytes);
       
       // Share the QR image (not text)
-      await Share.shareXFiles(
-        [XFile(file.path)],
+      await SharePlus.instance.share(ShareParams(
+        files: [XFile(file.path)],
         text: 'My VitalSeker Health Passport QR Code — scan to view my medical info',
-      );
+      ));
     } catch (e) {
       if (mounted) {
         AppSnackBar.error(context, 'Could not share QR code.');
