@@ -24,7 +24,6 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-  String _selectedLanguage = 'English (US)';
 
   Future<void> _signOut() async {
     final l10n = AppLocalizations.of(context)!;
