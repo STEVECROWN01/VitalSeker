@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/appointment.dart';
 import '../providers/auth_provider.dart';
-import '../services/database_service.dart';
 import 'user_profile_provider.dart';
 
 final appointmentsProvider = AsyncNotifierProvider<AppointmentsNotifier, List<Appointment>>(AppointmentsNotifier.new);
