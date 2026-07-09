@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker genel rehberlik sağlar, teşhis değil. Her zaman doktora danışın.",
   "aiChatTriage": "Seker AI ile sohbet",
   "health": "Sağlık",
-  "family": "Aile"
+  "family": "Aile",
+  "vitalDeleted": "Okuma silindi.",
+  "failedToDeleteVital": "Okuma silinemedi. Tekrar deneyin.",
+  "deleteVitalTitle": "Okumayı sil",
+  "deleteVitalConfirm": "Bu okuma silinsin mi: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
