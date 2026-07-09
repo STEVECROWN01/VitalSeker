@@ -507,6 +507,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vitalSekerPro => 'VitalSeker Pro';
 
   @override
+  String get aiChatTriage => 'AI Chat with Seker';
+
+  @override
+  String get chatWithSeker => 'Chat with Seker';
+
+  @override
+  String get chatWithSekerDesc => 'Talk to our AI health assistant in real-time';
+
+  @override
+  String get medicalDisclaimerShort => 'Seker provides general guidance, not a diagnosis. Always consult a doctor.';
+
+  @override
+  String get qrGenerationFailed => 'Failed to generate QR code. Please try again.';
+
+  @override
+  String get sekerGreeting => "Hi! I'm Seker, your AI Health Assistant. I'm here to help you understand your symptoms and provide guidance. What's bothering you today? You can type or hold the mic button to speak.";
+
+  @override
   String get signingOut => 'Signing out...';
 
   @override
@@ -3371,6 +3389,24 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get vitalSekerPro => 'VitalSeker Pro';
+
+  @override
+  String get aiChatTriage => 'AI Chat with Seker';
+
+  @override
+  String get chatWithSeker => 'Chat with Seker';
+
+  @override
+  String get chatWithSekerDesc => 'Talk to our AI health assistant in real-time';
+
+  @override
+  String get medicalDisclaimerShort => 'Seker provides general guidance, not a diagnosis. Always consult a doctor.';
+
+  @override
+  String get qrGenerationFailed => 'Failed to generate QR code. Please try again.';
+
+  @override
+  String get sekerGreeting => "Hi! I'm Seker, your AI Health Assistant. I'm here to help you understand your symptoms and provide guidance. What's bothering you today? You can type or hold the mic button to speak.";
 
   @override
   String get signingOut => 'Signing out...';
