@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Секер даёт общие рекомендации, а не диагноз. Всегда консультируйтесь с врачом.",
   "aiChatTriage": "Чат с ИИ Секером",
   "health": "Здоровье",
-  "family": "Семья"
+  "family": "Семья",
+  "vitalDeleted": "Показание удалено.",
+  "failedToDeleteVital": "Не удалось удалить показание. Попробуйте снова.",
+  "deleteVitalTitle": "Удалить показание",
+  "deleteVitalConfirm": "Удалить это показание: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
