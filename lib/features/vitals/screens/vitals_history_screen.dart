@@ -422,7 +422,23 @@ class _LineChartPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LineChartPainter oldDelegate) {
-    return oldDelegate.vitals != vitals || oldDelegate.color != color;
+    // Compare the data that actually affects the chart rendering:
+    // list length, color, theme, and each vital's id + value + recordedAt.
+    // The Vital class doesn't override ==, so we compare by field values
+    // to avoid repainting when the provider rebuilds with identical data.
+    if (oldDelegate.vitals.length != vitals.length) return true;
+    if (oldDelegate.color != color) return true;
+    if (oldDelegate.isDark != isDark) return true;
+    for (int i = 0; i < vitals.length; i++) {
+      final old = oldDelegate.vitals[i];
+      final cur = vitals[i];
+      if (old.id != cur.id ||
+          old.value != cur.value ||
+          old.recordedAt != cur.recordedAt) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
