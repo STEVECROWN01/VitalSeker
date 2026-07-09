@@ -866,5 +866,16 @@
   "medicalDisclaimerShort": "Seker geeft algemene richtlijnen, geen diagnose. Raadpleeg altijd een arts.",
   "aiChatTriage": "Chat met Seker AI",
   "health": "Gezondheid",
-  "family": "Familie"
+  "family": "Familie",
+  "vitalDeleted": "Meting verwijderd.",
+  "failedToDeleteVital": "Verwijderen van meting mislukt. Probeer opnieuw.",
+  "deleteVitalTitle": "Meting verwijderen",
+  "deleteVitalConfirm": "Deze meting verwijderen: {value}?",
+  "@deleteVitalConfirm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
