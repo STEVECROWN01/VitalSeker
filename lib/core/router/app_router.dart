@@ -459,17 +459,7 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          // Default position: bottom-right of the body, just above the
-          // bottom-nav bar.
-          final defaultPos = Offset(
-            constraints.maxWidth - _fabSize - _fabMargin,
-            constraints.maxHeight - _fabSize - _fabMargin,
-          );
-          return widget.child;
-        },
-      ),
+      body: widget.child,
       bottomNavigationBar: AppBottomNav(currentIndex: widget.currentIndex),
     );
   }
