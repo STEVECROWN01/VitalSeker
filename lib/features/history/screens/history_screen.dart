@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/symptom_log_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../core/models/symptom_log.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/urgency_badge.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
 
@@ -919,14 +921,48 @@ class _DashedLinePainter extends CustomPainter {
 // ═══════════════════════════════════════════════════════════════════════════
 // Export 30-day Report (Pro) button — full-width, rounded-full,
 // bg-inverse-surface.
+//
+// PRO-GATING:
+//   The button label says "(Pro)" — it must only work for Pro users.
+//   On tap, we check the AUTHORITATIVE Pro status via
+//   `isProUserAsyncProvider` (which queries BOTH the DB subscriptions row
+//   AND RevenueCat's SDK directly, so paying users are never blocked by a
+//   DB sync delay).
+//   - If Pro  → navigate to the export screen
+//   - If Free → show the ProFeatureGate upsell screen so the user knows
+//               they must subscribe to Pro first to access this feature.
 // ═══════════════════════════════════════════════════════════════════════════
 
-class _ExportReportButton extends StatelessWidget {
+class _ExportReportButton extends ConsumerWidget {
   final bool isDark;
   const _ExportReportButton({required this.isDark});
 
+  Future<void> _handleTap(BuildContext context, WidgetRef ref) async {
+    // Authoritative Pro check — DB + RevenueCat fallback.
+    final isPro = await ref.read(isProUserAsyncProvider.future);
+    if (!mounted(context)) return;
+    if (isPro) {
+      context.push(AppConfig.exportScreen);
+    } else {
+      // Route free users to the Pro plan screen so they can subscribe.
+      // Using push (not go) preserves the navigation stack so the user
+      // can tap back to return to the symptom history screen.
+      AppSnackBar.error(
+        context,
+        AppLocalizations.of(context)!.exportProOnly,
+      );
+      context.push(AppConfig.proPlan);
+    }
+  }
+
+  // Check that the widget is still mounted before navigating — ConsumerWidget
+  // doesn't expose `mounted` directly, so we check via the context.
+  bool mounted(BuildContext context) {
+    return context.mounted;
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     // bg-inverse-surface: dark on light theme, light on dark theme.
     // text: opposite (white on dark button, dark on light button).
@@ -940,7 +976,7 @@ class _ExportReportButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(26),
         child: InkWell(
           borderRadius: BorderRadius.circular(26),
-          onTap: () => context.push(AppConfig.exportScreen),
+          onTap: () => _handleTap(context, ref),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             alignment: Alignment.center,
