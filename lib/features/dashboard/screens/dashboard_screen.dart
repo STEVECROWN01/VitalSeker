@@ -11,6 +11,7 @@ import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -325,7 +326,7 @@ class _Avatar extends StatelessWidget {
                   height: 40,
                   
                   progressIndicatorBuilder: (context, url, downloadProgress) {
-                    if (downloadProgress == null) return const SizedBox.shrink();
+                    
                     return initialsWidget;
                   },
                   errorWidget: (context, error, stackTrace) =>
@@ -767,36 +768,6 @@ class _BentoQuickActions extends StatelessWidget {
                 title: l10n.myHistory,
                 subtitle: l10n.pastChecksAndVitals,
                 onTap: () => context.push(AppConfig.history),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        // Row 3: Vitals Tracking + Appointment Manager (Pro features)
-        // These are also accessible from the Profile screen, but adding
-        // them to the Home dashboard gives users a more discoverable entry
-        // point. Both are Pro-gated at the screen level — tapping them
-        // from here will show the ProFeatureGate upsell for free users,
-        // or the full screen for Pro users.
-        Row(
-          children: [
-            Expanded(
-              child: _SmallBentoCard(
-                isDark: isDark,
-                icon: Icons.monitor_heart,
-                title: 'Vitals',
-                subtitle: 'Heart rate, BP, temp',
-                onTap: () => context.push(AppConfig.vitals),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _SmallBentoCard(
-                isDark: isDark,
-                icon: Icons.event,
-                title: 'Appointments',
-                subtitle: 'Schedule & track visits',
-                onTap: () => context.push(AppConfig.appointments),
               ),
             ),
           ],
