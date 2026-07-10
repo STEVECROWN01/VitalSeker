@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -149,11 +150,11 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
     bool isUploading = false;
 
     // If editing, check for existing file URL
-    if (isEditing && record != null) {
+    if (isEditing) {
       existingFileUrl = record['attachment_url'] as String?;
       // Try to extract the file name from the URL
       if (existingFileUrl != null) {
-        final uri = Uri.tryParse(existingFileUrl!);
+        final uri = Uri.tryParse(existingFileUrl);
         if (uri != null) {
           final pathSegments = uri.pathSegments;
           if (pathSegments.isNotEmpty) {
@@ -488,7 +489,7 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                         if (existingFileUrl != null) {
                           payload['attachment_url'] = existingFileUrl;
                         }
-                        if (isEditing && record != null) {
+                        if (isEditing) {
                           await db.updateMedicalRecord(record['id'] as String, payload);
                         } else {
                           payload['user_id'] = user.id;
