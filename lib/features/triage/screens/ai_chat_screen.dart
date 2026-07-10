@@ -310,7 +310,6 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   /// The file name is inserted into the chat as a user message so Seker
   /// knows the user has shared a document.
   String? _attachedFileName;
-  String? _attachedFileUrl;
 
   Future<void> _pickFile() async {
     try {
@@ -582,7 +581,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                   GestureDetector(
                     onTap: () => setState(() {
                       _attachedFileName = null;
-                      _attachedFileUrl = null;
+                      // reset
                     }),
                     child: Icon(Icons.close, size: 16, color: AppColors.error(isDark)),
                   ),
