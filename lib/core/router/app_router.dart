@@ -454,11 +454,8 @@ class ScaffoldWithNavBar extends StatefulWidget {
 class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
   /// When non-null, the user has dragged the FAB and this is the new top-left
   /// coordinate (relative to the body Stack). Null = use default bottom-right.
-  Offset? _fabPosition;
 
   // Standard FAB is 56×56. We pad with 16px of breathing room on each side.
-  static const double _fabSize = 56.0;
-  static const double _fabMargin = 16.0;
 
   @override
   Widget build(BuildContext context) {
@@ -467,10 +464,6 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
         builder: (context, constraints) {
           // Default position: bottom-right of the body, just above the
           // bottom-nav bar.
-          final defaultPos = Offset(
-            constraints.maxWidth - _fabSize - _fabMargin,
-            constraints.maxHeight - _fabSize - _fabMargin,
-          );
           return widget.child;
         },
       ),
