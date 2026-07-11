@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
+import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/family_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/symptom_log_provider.dart';
+import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -275,22 +277,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       onTap: () => context.push(AppConfig.passport),
                     ),
                     _MenuItem(
-                      icon: Icons.monitor_heart,
-                      iconBg: _tint(AppColors.primary(isDark), isDark),
-                      iconFg: AppColors.primary(isDark),
-                      label: 'Vitals Tracking',
-                      subtitle: 'Track heart rate, blood pressure, temperature',
-                      onTap: () => context.push(AppConfig.vitals),
-                    ),
-                    _MenuItem(
-                      icon: Icons.event,
-                      iconBg: _tint(AppColors.primary(isDark), isDark),
-                      iconFg: AppColors.primary(isDark),
-                      label: 'Appointment Manager',
-                      subtitle: 'Schedule and track doctor appointments',
-                      onTap: () => context.push(AppConfig.appointments),
-                    ),
-                    _MenuItem(
                       icon: Icons.folder_outlined,
                       iconBg: _tint(AppColors.secondary(isDark), isDark),
                       iconFg: AppColors.secondary(isDark),
@@ -433,6 +419,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
+  String _themeSubtitle(ThemeMode mode, AppLocalizations l10n) {
+    switch (mode) {
+      case ThemeMode.dark:
+        return l10n.dark;
+      case ThemeMode.light:
+        return l10n.light;
+      default:
+        return l10n.systemDefault;
+    }
+  }
+
   /// Build a soft tinted background square (40×40, radius 10) for menu icons.
   Color _tint(Color base, bool isDark) {
     if (isDark) {
@@ -573,7 +570,7 @@ class _MenuItem extends StatelessWidget {
     required this.iconFg,
     required this.label,
     this.subtitle,
-    this.trailing,
+
     this.onTap,
   });
 
