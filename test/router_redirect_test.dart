@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vitalseker/core/config/app_config.dart';
 import 'package:vitalseker/core/providers/auth_provider.dart';
 import 'package:vitalseker/core/providers/user_profile_provider.dart';
-import 'package:vitalseker/core/models/user_profile.dart';
 
 /// Re-implements the redirect rules from app_router.dart verbatim, so we can
 /// test the auth/onboarding gate logic in isolation without spinning up a
