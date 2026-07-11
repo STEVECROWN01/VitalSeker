@@ -77,8 +77,8 @@ class RevenueCatService {
     } on PlatformException catch (e) {
       // PurchasesErrorCode is an enum, not a throwable type — the purchases_flutter
       // package throws PlatformException. Check the code/message for cancellation.
-      if (e.code.contains('purchaseCancelled') == true ||
-          e.message.contains('cancel') == true) {
+      if ((e.code ?? '').contains('purchaseCancelled') ||
+          (e.message ?? '').contains('cancel')) {
         return false; // User cancelled — not an error
       }
       debugPrint('[RevenueCat] Purchase failed: ${e.code} ${e.message}');
