@@ -11,7 +11,6 @@ import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
-import '../../../core/providers/vitals_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
