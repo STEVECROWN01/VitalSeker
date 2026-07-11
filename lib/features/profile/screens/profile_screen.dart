@@ -561,7 +561,6 @@ class _MenuItem extends StatelessWidget {
   final Color iconFg;
   final String label;
   final String? subtitle;
-  final Widget? trailing;
   final VoidCallback? onTap;
 
   const _MenuItem({
@@ -570,14 +569,13 @@ class _MenuItem extends StatelessWidget {
     required this.iconFg,
     required this.label,
     this.subtitle,
-
     this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final chevron = trailing ??
+    final chevron =
         Icon(Icons.chevron_right, size: 20, color: AppColors.outlineVariant(isDark));
 
     return InkWell(
