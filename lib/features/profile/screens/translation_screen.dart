@@ -143,12 +143,10 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
             );
           });
         },
+        localeId: bestLocaleId,
+        listenMode: stt.ListenMode.dictation,
         listenFor: const Duration(seconds: 60),
         pauseFor: const Duration(seconds: 5),
-        options: stt.SpeechListenOptions(
-          localeId: bestLocaleId,
-          listenMode: stt.ListenMode.dictation,
-        ),
       );
       setState(() => _isRecording = true);
     } catch (e) {
@@ -270,10 +268,10 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
       await file.writeAsBytes(await pdf.save());
 
       // Share the PDF (user can save to device or share)
-      await SharePlus.instance.share(ShareParams(
-        files: [XFile(filePath)],
+      await Share.shareXFiles(
+        [XFile(filePath)],
         subject: 'VitalSeker Medical Translation — $targetLang',
-      ));
+      );
 
       if (mounted) {
         AppSnackBar.success(context, 'Translation PDF ready!');
