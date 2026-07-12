@@ -45,6 +45,16 @@ android {
         abortOnError = false
         checkReleaseBuilds = false
     }
+
+    // Rename the output APK from "app-release.apk" to "VitalSeker.apk"
+    // so it's easy to find when copying to a phone.
+    applicationVariants.all {
+        val variant = this
+        variant.outputs.all {
+            val output = this as com.android.build.gradle.internal.api.ApkVariantOutputImpl
+            output.outputFileName = "VitalSeker.apk"
+        }
+    }
 }
 
 dependencies {
