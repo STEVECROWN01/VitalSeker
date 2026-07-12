@@ -417,7 +417,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  }
 
   /// Build a soft tinted background square (40×40, radius 10) for menu icons.
   Color _tint(Color base, bool isDark) {
