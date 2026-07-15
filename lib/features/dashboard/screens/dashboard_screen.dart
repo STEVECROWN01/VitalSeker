@@ -43,10 +43,8 @@ class DashboardScreen extends ConsumerStatefulWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  // FIX (audit 5.1): removed the empty initState override — it only called
+  // super.initState() with no additional logic.
 
   /// Time-of-day-aware greeting ("Good morning/afternoon/evening/night").
   String _greeting(AppLocalizations l10n) {
@@ -140,20 +138,28 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   },
                 ),
                 const SizedBox(width: 8),
-                GestureDetector(
-                  onTap: () => context.push(AppConfig.notificationsSettings),
-                  child: Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: AppColors.subtleBackground(isDark),
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.borderLight(isDark)),
-                    ),
-                    child: Icon(
-                      Icons.notifications_outlined,
-                      color: AppColors.textPrimary(isDark),
-                      size: 20,
+                // FIX (audit CC.3): wrap in Tooltip + Semantics for screen readers.
+                Tooltip(
+                  message: l10n.notifications,
+                  child: Semantics(
+                    label: l10n.notifications,
+                    button: true,
+                    child: GestureDetector(
+                      onTap: () => context.push(AppConfig.notificationsSettings),
+                      child: Container(
+                        width: 38,
+                        height: 38,
+                        decoration: BoxDecoration(
+                          color: AppColors.subtleBackground(isDark),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.borderLight(isDark)),
+                        ),
+                        child: Icon(
+                          Icons.notifications_outlined,
+                          color: AppColors.textPrimary(isDark),
+                          size: 20,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -244,7 +250,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   // 6. Footer
                   Center(
                     child: Text(
-                      l10n.poweredBy,
+                      l10n.poweredBy(AppConfig.producer),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Inter',
@@ -347,37 +353,45 @@ class _ThemeTogglePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        decoration: BoxDecoration(
-          color: AppColors.subtleBackground(isDark),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.borderLight(isDark)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isDark
-                  ? Icons.light_mode_outlined
-                  : Icons.dark_mode_outlined,
-              size: 14,
-              color: AppColors.textSecondary(isDark),
+    // FIX (audit CC.3): wrap in Tooltip + Semantics for screen readers.
+    return Tooltip(
+      message: isDark ? l10n.switchToLightMode : l10n.switchToDarkMode,
+      child: Semantics(
+        label: isDark ? l10n.switchToLightMode : l10n.switchToDarkMode,
+        button: true,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+              color: AppColors.subtleBackground(isDark),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppColors.borderLight(isDark)),
             ),
-            const SizedBox(width: 4),
-            Text(
-              isDark ? l10n.light : l10n.dark,
-              style: TextStyle(
-                fontFamily: 'DMSans',
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textSecondary(isDark),
-                letterSpacing: 0.4,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  isDark
+                      ? Icons.light_mode_outlined
+                      : Icons.dark_mode_outlined,
+                  size: 14,
+                  color: AppColors.textSecondary(isDark),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  isDark ? l10n.light : l10n.dark,
+                  style: TextStyle(
+                    fontFamily: 'DMSans',
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textSecondary(isDark),
+                    letterSpacing: 0.4,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

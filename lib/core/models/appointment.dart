@@ -21,15 +21,21 @@ extension AppointmentStatusX on AppointmentStatus {
 @JsonSerializable()
 class Appointment {
   final String id;
+  @JsonKey(name: 'user_id')
   final String userId;
+  @JsonKey(name: 'doctor_name')
   final String doctorName;
   final String? specialty;
+  @JsonKey(name: 'date_time')
   final DateTime dateTime;
   final String? location;
   final String? notes;
+  @JsonKey(name: 'reminder_enabled')
   final bool reminderEnabled;
   final AppointmentStatus status;
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
+  @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
   Appointment({
@@ -65,4 +71,33 @@ class Appointment {
   }
 
   bool get isUpcoming => status == AppointmentStatus.upcoming && dateTime.isAfter(DateTime.now());
+
+  /// FIX (audit M-16): add copyWith for immutable updates.
+  Appointment copyWith({
+    String? id,
+    String? userId,
+    String? doctorName,
+    String? specialty,
+    DateTime? dateTime,
+    String? location,
+    String? notes,
+    bool? reminderEnabled,
+    AppointmentStatus? status,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return Appointment(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      doctorName: doctorName ?? this.doctorName,
+      specialty: specialty ?? this.specialty,
+      dateTime: dateTime ?? this.dateTime,
+      location: location ?? this.location,
+      notes: notes ?? this.notes,
+      reminderEnabled: reminderEnabled ?? this.reminderEnabled,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

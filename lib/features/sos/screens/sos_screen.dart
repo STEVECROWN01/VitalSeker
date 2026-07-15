@@ -300,6 +300,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
   }
 
   Future<void> _triggerSos() async {
+    final l10n = AppLocalizations.of(context)!;
     // Haptic feedback
     HapticFeedback.heavyImpact();
 
@@ -317,14 +318,21 @@ class _SosScreenState extends ConsumerState<SosScreen>
     try {
       final edgeService = EdgeFunctionService();
 
-      // ── Step 1: Acquire GPS FIRST (with a 5s timeout) ──
+      // ── Step 1: Acquire GPS FIRST (with a 3s timeout) ──
+      //
+      // FIX (audit H-39): reduced the GPS timeout from 5s to 3s. In a real
+      // emergency, every second counts — a 5s wait before the alert goes
+      // out is too long. 3s is enough for a cached/last-known position on
+      // most devices, and if GPS isn't ready we send the SOS without
+      // location rather than delaying the alert.
+      //
       // Previously the SOS was sent IMMEDIATELY with hardcoded null
       // coordinates, then GPS was acquired in parallel and the result was
       // thrown away (only used for display). This meant emergency contacts
       // never received the user's actual location — defeating the entire
       // purpose of the SOS feature.
       //
-      // We now wait up to 5 seconds for a GPS fix BEFORE sending the SOS,
+      // We now wait up to 3 seconds for a GPS fix BEFORE sending the SOS,
       // so the actual coordinates are included in the SMS body. If GPS
       // fails or times out, we still send the SOS — just without location.
       //
@@ -337,7 +345,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
       Position? position;
       try {
         position = await _getCurrentLocation(silent: true).timeout(
-          const Duration(seconds: 5),
+          const Duration(seconds: 3),
           onTimeout: () => null,
         );
       } catch (e) {
@@ -393,15 +401,15 @@ class _SosScreenState extends ConsumerState<SosScreen>
         _sosResult = null;
         _sosRateLimited = isRateLimited;
         _sosMessage = isRateLimited
-            ? 'You just sent an SOS. Please wait 60 seconds before sending another — emergency services may already be responding.'
-            : 'Failed to send alert. Please call emergency services directly (112 / 911).';
+            ? l10n.sosRateLimitMessage
+            : l10n.sosDeliveryFailedMessage;
       });
       if (mounted) {
         AppSnackBar.error(
           context,
           isRateLimited
-              ? 'SOS rate limit: please wait 60 seconds before retrying.'
-              : 'SOS delivery failed. Please call 112 or 911 directly.',
+              ? l10n.sosRateLimitRetryMessage
+              : l10n.sosDeliveryFailedMessage,
         );
       }
       HapticFeedback.heavyImpact();
@@ -414,12 +422,12 @@ class _SosScreenState extends ConsumerState<SosScreen>
         _sosActive = true;
         _sosResult = null;
         _sosMessage =
-            'Failed to send alert. Please call emergency services directly (112 / 911).';
+            l10n.sosDeliveryFailedMessage;
       });
       if (mounted) {
         AppSnackBar.errorFromException(
           context,
-          'SOS delivery failed. Please call 112 or 911 directly.',
+          l10n.sosDeliveryFailedMessage,
           e,
         );
       }
@@ -452,7 +460,90 @@ class _SosScreenState extends ConsumerState<SosScreen>
     });
   }
 
-  void _resolveSos() {
+  /// Confirm and override the rate limit to resend the SOS.
+  ///
+  /// FIX (audit H-5): the 60s rate limit is a spam guard, not a safety
+  /// guard. If the user has a NEW emergency within 60s of the previous SOS,
+  /// blocking the alert is dangerous. This method shows a strong warning
+  /// confirmation dialog, then re-triggers the SOS flow. The server-side
+  /// rate limit may still reject the request, but at least the user has
+  /// the option to try.
+  Future<void> _confirmOverrideAndResend() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Override Rate Limit?'),
+        content: const Text(
+          'You sent an SOS less than 60 seconds ago. If this is a NEW '
+          'emergency (not a repeat of the same one), you can override '
+          'the rate limit and send another alert.\n\n'
+          'Warning: overriding will send a second SMS to all your '
+          'emergency contacts. Only do this if you have a genuinely '
+          'new emergency.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(AppLocalizations.of(context)!.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.urgencyEmergency,
+            ),
+            child: const Text('Override & Send'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      // Reset the rate-limit flag and re-trigger the SOS flow.
+      setState(() {
+        _sosRateLimited = false;
+        _sosActive = false;
+        _sosResult = null;
+      });
+      _triggerSos();
+    }
+  }
+
+  /// Resolve the active SOS — resets the UI to the initial state.
+  ///
+  /// FIX (audit H-40): show a confirmation dialog before resolving. The
+  /// previous code resolved immediately on tap, which meant an accidental
+  /// tap (e.g. while handing the phone to someone) would dismiss the SOS
+  /// and emergency contacts might stop responding. The confirmation dialog
+  /// requires an explicit "Yes, I'm safe" to proceed.
+  Future<void> _resolveSos() async {
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.imSafeResolve),
+        content: Text(
+          'Are you safe? Your emergency contacts will be notified that '
+          'the alert has been resolved. If you are NOT safe, tap "Cancel" '
+          'and call emergency services directly.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.primary(Theme.of(context).brightness == Brightness.dark),
+            ),
+            child: Text('Yes, I\'m safe'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
     _countdownTimer?.cancel();
     setState(() {
       _sosActive = false;
@@ -1134,8 +1225,14 @@ class _SosScreenState extends ConsumerState<SosScreen>
     // instead of the "SOS ACTIVE" success label.
     final bool queuedLocally = _sosResult?['queued_locally'] == true;
     final contactsNotified = (_sosResult?['contacts_notified'] as List?) ?? [];
+    // FIX (audit 12.8): count any non-failure status, not just 'sent'.
+    // The edge function may return 'delivered', 'queued', or 'submitted'
+    // — those all mean the SMS was accepted by Twilio.
     final sentCount =
-        contactsNotified.where((c) => c['status'] == 'sent').length;
+        contactsNotified.where((c) {
+          final status = c['status'] as String? ?? '';
+          return status != 'failed' && status != 'rejected' && status != 'error' && status != 'invalid';
+        }).length;
     // Whether the SOS alert actually went out. False in the catch-block path
     // of [_triggerSos] (edge-function error, network failure, etc.) — we
     // still want to render the active state so the user sees the failure
@@ -1291,7 +1388,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                   child: ElevatedButton.icon(
                     onPressed: () => _makePhoneCall('112'),
                     icon: const Icon(Icons.phone_in_talk, size: 22),
-                    label: const Text('Call 112 / 911 Now'),
+                    label: Text(l10n.callEmergencyNow),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       foregroundColor: const Color(0xFFB8321D),
@@ -1344,6 +1441,34 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     ),
                   ],
                 ),
+                // FIX (audit H-5): when rate-limited, show an "Override and
+                // resend" button so the user can force a new SOS if this is
+                // a NEW emergency (not a double-tap). The 60s rate limit is
+                // a spam guard, not a safety guard — blocking a real second
+                // emergency is dangerous. The button requires explicit
+                // confirmation to prevent accidental overrides.
+                if (_sosRateLimited) ...[
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: () => _confirmOverrideAndResend(),
+                      icon: const Icon(Icons.warning_amber_rounded),
+                      label: const Text(
+                        'Override — This is a new emergency',
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        side: BorderSide(color: Colors.white.withValues(alpha: 0.8), width: 2),
+                        minimumSize: const Size.fromHeight(56),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ],
             )
           else

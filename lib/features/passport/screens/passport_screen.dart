@@ -269,6 +269,20 @@ class PassportScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
+                ] else ...[
+                  // FIX (audit M-5): show an empty-state card so the user
+                  // knows the field exists and can add their allergies.
+                  _EmptyStateCard(
+                    isDark: isDark,
+                    icon: Icons.coronavirus_rounded,
+                    iconColor: AppColors.error(isDark),
+                    title: l10n.knownAllergies,
+                    message: 'No allergies recorded. Add yours in Edit Profile '
+                        'so emergency responders are aware.',
+                    ctaLabel: l10n.editProfile,
+                    onCtaTap: () => context.push(AppConfig.editProfile),
+                  ),
+                  const SizedBox(height: 16),
                 ],
 
                 // ── Medications ──
@@ -306,16 +320,43 @@ class PassportScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
+                ] else ...[
+                  // FIX (audit M-5): empty-state card for medications.
+                  _EmptyStateCard(
+                    isDark: isDark,
+                    icon: Icons.medication_rounded,
+                    iconColor: AppColors.primary(isDark),
+                    title: l10n.currentMedications,
+                    message: 'No medications recorded. Add your current '
+                        'prescriptions so they appear on your passport.',
+                    ctaLabel: l10n.addMedication,
+                    onCtaTap: () => context.push(AppConfig.addMedication),
+                  ),
+                  const SizedBox(height: 16),
                 ],
 
-                // ── Chronic Conditions (legacy _InfoCard) ──
+                // ── Chronic Conditions ──
                 if (passport.chronicConditions.isNotEmpty)
                   _InfoCard(
                     icon: Icons.health_and_safety,
                     iconColor: AppColors.primary(isDark),
                     title: l10n.chronicConditions,
                     value: passport.chronicConditions.join(', '),
+                  )
+                else ...[
+                  // FIX (audit M-5): empty-state card for chronic conditions.
+                  _EmptyStateCard(
+                    isDark: isDark,
+                    icon: Icons.health_and_safety,
+                    iconColor: AppColors.primary(isDark),
+                    title: l10n.chronicConditions,
+                    message: 'No chronic conditions recorded. Add any ongoing '
+                        'conditions (diabetes, hypertension, etc.) in Edit Profile.',
+                    ctaLabel: l10n.editProfile,
+                    onCtaTap: () => context.push(AppConfig.editProfile),
                   ),
+                  const SizedBox(height: 16),
+                ],
 
                 // ── Insurance (legacy _InfoCard) ──
                 if (passport.insuranceProvider != null)
@@ -437,7 +478,7 @@ class PassportScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 Center(
                   child: Text(
-                    l10n.poweredBy,
+                    l10n.poweredBy(AppConfig.producer),
                     style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
                     ),
@@ -687,6 +728,99 @@ class _GridCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           ...children,
+        ],
+      ),
+    );
+  }
+}
+
+/// FIX (audit M-5): empty-state card shown when a passport section (allergies,
+/// medications, chronic conditions) has no data. Shows an icon, title,
+/// helpful message, and a CTA button to add data.
+class _EmptyStateCard extends StatelessWidget {
+  final bool isDark;
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String message;
+  final String ctaLabel;
+  final VoidCallback onCtaTap;
+
+  const _EmptyStateCard({
+    required this.isDark,
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.message,
+    required this.ctaLabel,
+    required this.onCtaTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.cardBackground(isDark),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: AppColors.border(isDark),
+          width: 1,
+          style: BorderStyle.solid,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 20, color: iconColor),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: TextStyle(
+                  fontFamily: 'ClashDisplay',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary(isDark),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            message,
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 13,
+              color: AppColors.textSecondary(isDark),
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              onPressed: onCtaTap,
+              icon: Icon(Icons.add, size: 18, color: AppColors.primary(isDark)),
+              label: Text(
+                ctaLabel,
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary(isDark),
+                ),
+              ),
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -164,22 +164,75 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
       }
     }
 
+    /// Verify the file type by reading magic bytes.
+    String? _verifyFileType(File file) {
+      try {
+        final bytes = file.readAsBytesSync();
+        if (bytes.length < 4) return null;
+        if (bytes[0] == 0xFF && bytes[1] == 0xD8 && bytes[2] == 0xFF) return 'image/jpeg';
+        if (bytes[0] == 0x89 && bytes[1] == 0x50 && bytes[2] == 0x4E && bytes[3] == 0x47) return 'image/png';
+        if (bytes[0] == 0x25 && bytes[1] == 0x50 && bytes[2] == 0x44 && bytes[3] == 0x46) return 'application/pdf';
+        if (bytes.length >= 8 && bytes[0] == 0xD0 && bytes[1] == 0xCF && bytes[2] == 0x11 && bytes[3] == 0xE0 && bytes[4] == 0xA1 && bytes[5] == 0xB1 && bytes[6] == 0x1A && bytes[7] == 0xE1) return 'application/msword';
+        if (bytes[0] == 0x50 && bytes[1] == 0x4B && bytes[2] == 0x03 && bytes[3] == 0x04) return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        return null;
+      } catch (e) {
+        debugPrint('File type verification failed: $e');
+        return null;
+      }
+    }
+
     Future<String?> _uploadFile(File file, String userId) async {
       try {
-        final fileName = '${userId}/${DateTime.now().millisecondsSinceEpoch}_${file.path.split('/').last}';
-        final storage = Supabase.instance.client.storage;
-        // Try to upload to 'medical-records' bucket; create if doesn't exist
-        try {
-          await storage.from('medical-records').upload(fileName, file);
-        } catch (e) {
-          // Bucket might not exist — try creating it
-          debugPrint('Upload failed, bucket may not exist: $e');
-          // Fall back to base64 inline storage (not ideal but works)
+        final fileSize = file.lengthSync();
+        const maxSize = 10 * 1024 * 1024; // 10 MB
+        if (fileSize > maxSize) {
+          if (mounted) {
+            AppSnackBar.error(
+              context,
+              'File is too large (${(fileSize / 1024 / 1024).toStringAsFixed(1)} MB). '
+              'Maximum allowed size is 10 MB.',
+            );
+          }
           return null;
         }
-        return storage.from('medical-records').getPublicUrl(fileName);
+
+        // SECURITY FIX (audit H-29): verify the actual file type by reading
+        // magic bytes, not just the file extension. A user can rename
+        // malware.exe → report.pdf and the FilePicker extension filter
+        // would accept it. We read the first few bytes and compare against
+        // known magic numbers for allowed types.
+        final allowedMime = _verifyFileType(file);
+        if (allowedMime == null) {
+          if (mounted) {
+            AppSnackBar.error(
+              context,
+              'File type not allowed. Please upload a JPG, PNG, PDF, DOC, or DOCX file.',
+            );
+          }
+          return null;
+        }
+
+        final fileName = '${userId}/${DateTime.now().millisecondsSinceEpoch}_${file.path.split('/').last}';
+        final storage = Supabase.instance.client.storage;
+
+        // Upload to the 'medical-records' bucket with the verified MIME type.
+        // The bucket's allowed_mime_types policy (migration 010) will also
+        // enforce this server-side as defense-in-depth.
+        await storage.from('medical-records').upload(
+          fileName,
+          file,
+          fileOptions: FileOptions(contentType: allowedMime),
+        );
+
+        return 'medical-records://$fileName';
       } catch (e) {
         debugPrint('File upload error: $e');
+        if (mounted) {
+          AppSnackBar.error(
+            context,
+            'Could not upload file. Please check your connection and try again.',
+          );
+        }
         return null;
       }
     }
@@ -237,19 +290,30 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
           isUploading = true;
         });
 
-        // Upload to Supabase Storage
+        // Upload to Supabase Storage.
+        // SECURITY FIX (audit C-11): only show "scanned successfully" if the
+        // upload actually succeeded. The previous code showed success even
+        // when _uploadFile returned null (upload failed), leaving the user
+        // with a false sense that the file was attached.
         final user = ref.read(currentUserProvider);
         if (user != null) {
           final url = await _uploadFile(File(imagePath), user.id);
           if (url != null) {
             existingFileUrl = url;
+            if (mounted) {
+              AppSnackBar.success(context, 'Document scanned and uploaded successfully');
+            }
+          } else {
+            // Upload failed — _uploadFile already showed an error snackbar.
+            // Reset the attachment state so the user doesn't see a phantom file.
+            setDialogState(() {
+              attachedFile = null;
+              attachedFileName = null;
+            });
           }
         }
 
         setDialogState(() => isUploading = false);
-        if (mounted) {
-          AppSnackBar.success(context, 'Document scanned successfully');
-        }
       } catch (e) {
         setDialogState(() => isUploading = false);
         if (mounted) {
@@ -275,19 +339,28 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
           isUploading = true;
         });
 
-        // Upload to Supabase Storage
+        // Upload to Supabase Storage.
+        // SECURITY FIX (audit C-11): only show "uploaded successfully" if the
+        // upload actually succeeded. _uploadFile shows its own error snackbar
+        // on failure, so we just reset the attachment state here.
         final user = ref.read(currentUserProvider);
         if (user != null) {
           final url = await _uploadFile(file, user.id);
           if (url != null) {
             existingFileUrl = url;
+            if (mounted) {
+              AppSnackBar.success(context, 'File uploaded successfully');
+            }
+          } else {
+            // Upload failed — reset the attachment state.
+            setDialogState(() {
+              attachedFile = null;
+              attachedFileName = null;
+            });
           }
         }
 
         setDialogState(() => isUploading = false);
-        if (mounted) {
-          AppSnackBar.success(context, 'File uploaded successfully');
-        }
       } catch (e) {
         setDialogState(() => isUploading = false);
         if (mounted) {

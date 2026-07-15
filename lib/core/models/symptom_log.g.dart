@@ -9,10 +9,14 @@ part of 'symptom_log.dart';
 SymptomLog _$SymptomLogFromJson(Map<String, dynamic> json) => SymptomLog(
       id: json['id'] as String,
       userId: json['user_id'] as String,
-      symptoms: (json['symptoms'] as List<dynamic>?)?.cast<String>() ?? [],
-      severity: json['severity'] as int,
+      symptoms:
+          (json['symptoms'] as List<dynamic>).map((e) => e as String).toList(),
+      severity: (json['severity'] as num).toInt(),
       duration: json['duration'] as String?,
-      bodyRegions: (json['body_regions'] as List<dynamic>?)?.cast<String>() ?? [],
+      bodyRegions: (json['body_regions'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       triageResult: json['triage_result'] == null
           ? null
           : TriageResult.fromJson(json['triage_result'] as Map<String, dynamic>),
@@ -38,28 +42,38 @@ Map<String, dynamic> _$SymptomLogToJson(SymptomLog instance) =>
     };
 
 TriageResult _$TriageResultFromJson(Map<String, dynamic> json) => TriageResult(
-      urgencyLevel: json['urgency_level'] as String,
-      urgencyScore: json['urgency_score'] as int,
-      possibleConditions: (json['possible_conditions'] as List<dynamic>?)
-          ?.map((e) => PossibleCondition.fromJson(e as Map<String, dynamic>))
-          .toList() ?? [],
-      recommendations: (json['recommendations'] as List<dynamic>?)?.cast<String>() ?? [],
-      redFlags: (json['red_flags'] as List<dynamic>?)?.cast<String>() ?? [],
-      seekCare: json['seek_care'] as String,
-      followUpQuestions:
-          (json['follow_up_questions'] as List<dynamic>?)?.cast<String>() ?? [],
+      urgencyLevel: (json['urgencyLevel'] ?? json['urgency_level']) as String,
+      urgencyScore: ((json['urgencyScore'] ?? json['urgency_score']) as num).toInt(),
+      possibleConditions: ((json['possibleConditions'] ?? json['possible_conditions']) as List<dynamic>?)
+              ?.map(
+                  (e) => PossibleCondition.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      recommendations: (json['recommendations'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      redFlags: ((json['redFlags'] ?? json['red_flags']) as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      seekCare: (json['seekCare'] ?? json['seek_care']) as String,
+      followUpQuestions: ((json['followUpQuestions'] ?? json['follow_up_questions']) as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       disclaimer: json['disclaimer'] as String,
     );
 
 Map<String, dynamic> _$TriageResultToJson(TriageResult instance) =>
     <String, dynamic>{
-      'urgency_level': instance.urgencyLevel,
-      'urgency_score': instance.urgencyScore,
-      'possible_conditions': instance.possibleConditions,
+      'urgencyLevel': instance.urgencyLevel,
+      'urgencyScore': instance.urgencyScore,
+      'possibleConditions': instance.possibleConditions,
       'recommendations': instance.recommendations,
-      'red_flags': instance.redFlags,
-      'seek_care': instance.seekCare,
-      'follow_up_questions': instance.followUpQuestions,
+      'redFlags': instance.redFlags,
+      'seekCare': instance.seekCare,
+      'followUpQuestions': instance.followUpQuestions,
       'disclaimer': instance.disclaimer,
     };
 

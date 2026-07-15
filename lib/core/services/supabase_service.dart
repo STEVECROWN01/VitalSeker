@@ -1,7 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../config/supabase_config.dart';
 
+/// SupabaseService — singleton wrapper around the Supabase client.
+///
+/// FIX (audit M-25): removed the dead `initialize()` method. main.dart calls
+/// `Supabase.initialize()` directly and then `markInitialized()`. The
+/// `initialize()` method was never called from anywhere — its dotenv-override
+/// logic was therefore never exercised.
+///
+/// FIX (audit M-26): `markInitialized()` now has a try/catch with a clear
+/// error message in case `Supabase.initialize()` hasn't been called yet.
 class SupabaseService {
   static final SupabaseService _instance = SupabaseService._internal();
   factory SupabaseService() => _instance;
@@ -12,40 +21,34 @@ class SupabaseService {
 
   SupabaseClient get client {
     if (!_initialized) {
-      throw StateError('SupabaseService not initialized. Call initialize() first.');
+      throw StateError(
+        'SupabaseService not initialized. Call Supabase.initialize() and '
+        'SupabaseService().markInitialized() before accessing the client. '
+        'This usually happens during cold start — the splash screen should '
+        'wait for Supabase to be ready.',
+      );
     }
     return _client;
   }
 
   bool get isInitialized => _initialized;
 
-  Future<void> initialize() async {
-    if (_initialized) return;
-
-    // Always use the hardcoded SupabaseConfig values as the primary source
-    // The .env file can override these if present
-    final url = dotenv.env['SUPABASE_URL']?.isNotEmpty == true
-        ? dotenv.env['SUPABASE_URL']!
-        : SupabaseConfig.url;
-    final publishableKey = dotenv.env['SUPABASE_ANON_KEY']?.isNotEmpty == true
-        ? dotenv.env['SUPABASE_ANON_KEY']!
-        : SupabaseConfig.publishableKey;
-
-    await Supabase.initialize(
-      url: url,
-      publishableKey: publishableKey,
-      debug: false,
-    );
-    _client = Supabase.instance.client;
-    _initialized = true;
-  }
-
-  /// Mark the service as initialized after Supabase.initialize() was called
-  /// directly (bypassing initialize()). Used by the diagnostic main() which
-  /// calls Supabase.initialize() with hardcoded config to skip dotenv.
+  /// Mark the service as initialized after `Supabase.initialize()` was
+  /// called directly in main.dart. This is the only initialization path —
+  /// the previous `initialize()` method is removed because it was never
+  /// called and its dotenv-override logic was dead code.
+  ///
+  /// FIX (audit M-26): wrap in try/catch with a clear error message.
   void markInitialized() {
-    _client = Supabase.instance.client;
-    _initialized = true;
+    try {
+      _client = Supabase.instance.client;
+      _initialized = true;
+      debugPrint('[SupabaseService] Marked as initialized');
+    } catch (e) {
+      debugPrint('[SupabaseService] markInitialized() failed — '
+          'Supabase.initialize() has not been called yet: $e');
+      // Don't set _initialized = true — the client is not usable.
+    }
   }
 
   GoTrueClient get auth => _client.auth;

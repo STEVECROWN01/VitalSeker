@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,31 +24,30 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   int _currentPage = 0;
   bool _isNavigating = false;
 
-  // Design-correct gradients per Stitch mockups.
-  // Slide 1: "Know your body." — symptom checking
-  // Slide 2: "Your health, always with you." — health passport
-  // Slide 3: "Works everywhere. Even offline." — 40+ languages, offline support
-  // Titles/descriptions are localized, so the pages list is built inside
-  // [build] where [AppLocalizations] is available.
+  // FIX (audit 2.3): cache the pages list so it's not rebuilt on every
+  // setState (e.g. when _currentPage changes). The list is built once in
+  // initState via addPostFrameCallback (when l10n is available) and reused.
+  List<OnboardingPage>? _cachedPages;
+
   List<OnboardingPage> _buildPages(AppLocalizations l10n) => [
     OnboardingPage(
       icon: Icons.favorite_rounded,
       imageAsset: 'assets/images/branding/app_logo.png',
       title: l10n.onboardingTitle1,
       description: l10n.onboardingDescription1,
-      gradient: [const Color(0xFF054D39), const Color(0xFF0B7A5B)], // ForestDark → VitalGreen
+      gradient: [const Color(0xFF054D39), const Color(0xFF0B7A5B)],
     ),
     OnboardingPage(
       icon: Icons.badge_rounded,
       title: l10n.onboardingTitle2,
       description: l10n.onboardingDescription2,
-      gradient: [const Color(0xFF0B7A5B), const Color(0xFF0B9E70)], // VitalGreen → Electric Mint
+      gradient: [const Color(0xFF0B7A5B), const Color(0xFF0B9E70)],
     ),
     OnboardingPage(
       icon: Icons.language_rounded,
       title: l10n.onboardingTitle3,
       description: l10n.onboardingDescription3,
-      gradient: [const Color(0xFF0B9E70), const Color(0xFF1DB886)], // Electric Mint → lighter mint
+      gradient: [const Color(0xFF0B9E70), const Color(0xFF1DB886)],
     ),
   ];
 
@@ -63,32 +63,37 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
     try {
       final user = ref.read(currentUserProvider);
+
+      // If the user IS authenticated, save onboarding flag to DB.
       if (user != null) {
         try {
           final db = DatabaseService();
-          await db.completeOnboarding(user.id);
+          await db.completeOnboarding(user.id).timeout(
+            const Duration(seconds: 10),
+            onTimeout: () => debugPrint('[Onboarding] DB write timed out — proceeding anyway'),
+          );
           ref.invalidate(userProfileProvider);
-          // Wait for the provider to refresh so the router redirect sees the
-          // updated onboarding_completed=true. Without this, the router may
-          // bounce the user back to onboarding (redirect loop).
-          await ref.read(userProfileProvider.future);
         } catch (e) {
-          if (!mounted) return;
-          // Surface the failure — don't navigate to dashboard if the DB write
-          // failed, or the router will bounce the user back to onboarding
-          // (isOnboardingCompletedProvider still returns false).
-          final l10n = AppLocalizations.of(context)!;
-          AppSnackBar.error(context, l10n.failedToCompleteOnboarding);
-          return;
+          debugPrint('[Onboarding] DB write failed: $e');
+          // Proceed anyway — the user can still use the app.
         }
       }
 
+      // Navigate immediately — don't wait for provider refresh.
       if (!mounted) return;
 
       final isAuthenticated = ref.read(isAuthenticatedProvider);
       if (isAuthenticated) {
         context.go(AppConfig.dashboard);
       } else {
+        // Not authenticated — go to login.
+        // The router redirect allows login for unauthenticated users.
+        context.go(AppConfig.login);
+      }
+    } catch (e) {
+      debugPrint('[Onboarding] _finishOnboarding error: $e');
+      // Even on error, try to navigate to login so the user isn't stuck.
+      if (mounted) {
         context.go(AppConfig.login);
       }
     } finally {
@@ -100,7 +105,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
-    final pages = _buildPages(l10n);
+    // FIX (audit 2.3): use cached pages if available, build once.
+    final pages = _cachedPages ??= _buildPages(l10n);
 
     return Scaffold(
       body: SafeArea(

@@ -24,14 +24,18 @@ class RevenueCatService {
   RevenueCatService._internal();
 
   bool _initialized = false;
+  String? _currentUserId;
   static const String _proEntitlementId = 'pro';
   static const String _enterpriseEntitlementId = 'enterprise';
 
   /// Initialize RevenueCat with the user's Supabase user ID.
   /// Call this after sign-in to associate purchases with the user.
+  ///
+  /// Safety: if a different user signs in after a previous session (e.g. user A
+  /// signs out, user B signs in on the same device), we MUST re-initialize with
+  /// the new appUserID so entitlements are not leaked across accounts. The SDK
+  /// supports this via `Purchases.logIn(newUserId)`.
   Future<void> initialize(String userId) async {
-    if (_initialized) return;
-
     final apiKey = dotenv.env['REVENUECAT_API_KEY'] ??
         const String.fromEnvironment('REVENUECAT_API_KEY', defaultValue: '');
 
@@ -41,11 +45,36 @@ class RevenueCatService {
       return;
     }
 
+    // Already initialized for the same user — nothing to do.
+    if (_initialized && _currentUserId == userId) return;
+
     try {
-      await Purchases.configure(
-        PurchasesConfiguration(apiKey)..appUserID = userId,
-      );
+      if (!_initialized) {
+        // First initialization this app session.
+        await Purchases.configure(
+          PurchasesConfiguration(apiKey)..appUserID = userId,
+        );
+      } else {
+        // Already initialized for a DIFFERENT user — switch appUserID.
+        // Purchases.logIn handles the user switch and returns the new CustomerInfo.
+        // If the new appUserID was already seen on this device, RC returns
+        // `created=false` and merges the anon+named histories safely.
+        try {
+          await Purchases.logIn(userId);
+        } on PlatformException catch (e) {
+          // Receiving the same appUserID twice can raise `PlatformException`
+          // with code `PurchaseAlreadyLinkedToAnotherUserSubscriberError` —
+          // rare in our flow (we only call logIn after signOut). If it happens,
+          // fall back to logOut + configure.
+          debugPrint('[RevenueCat] logIn failed (${e.code}), reconfiguring: ${e.message}');
+          await Purchases.logOut();
+          await Purchases.configure(
+            PurchasesConfiguration(apiKey)..appUserID = userId,
+          );
+        }
+      }
       _initialized = true;
+      _currentUserId = userId;
       debugPrint('[RevenueCat] Initialized successfully for user $userId');
     } catch (e) {
       debugPrint('[RevenueCat] Initialization failed: $e');
@@ -141,13 +170,23 @@ class RevenueCatService {
     return info.entitlements.all[_proEntitlementId]?.isActive == true;
   }
 
-  /// Sign out — clears the RevenueCat user ID.
+  /// Sign out — clears the RevenueCat user ID and resets internal state so
+  /// the next sign-in re-initializes with the new user's appUserID.
+  ///
+  /// CRITICAL: if we don't reset `_initialized` and `_currentUserId` here, the
+  /// next call to `initialize(newUserId)` will early-return and RevenueCat
+  /// will continue to report the PREVIOUS user's entitlements — leaking
+  /// subscription state across accounts on shared devices.
   Future<void> signOut() async {
     if (!_initialized) return;
     try {
       await Purchases.logOut();
-    } catch (_) {
-      // Non-fatal — user is signing out anyway.
+    } catch (e) {
+      // Non-fatal — user is signing out anyway. We still reset state below so
+      // the next sign-in starts fresh.
+      debugPrint('[RevenueCat] logOut on signOut failed (non-fatal): $e');
     }
+    _initialized = false;
+    _currentUserId = null;
   }
 }

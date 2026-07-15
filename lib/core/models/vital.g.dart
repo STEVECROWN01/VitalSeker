@@ -3,7 +3,7 @@
 part of 'vital.dart';
 
 // **************************************************************************
-// JsonSerializable Generator
+// JsonSerializableGenerator
 // **************************************************************************
 
 Vital _$VitalFromJson(Map<String, dynamic> json) => Vital(
@@ -21,7 +21,7 @@ Vital _$VitalFromJson(Map<String, dynamic> json) => Vital(
 Map<String, dynamic> _$VitalToJson(Vital instance) => <String, dynamic>{
       'id': instance.id,
       'user_id': instance.userId,
-      'type': _$VitalTypeEnumMap[instance.type],
+      'type': _$VitalTypeEnumMap[instance.type]!,
       'value': instance.value,
       'value_secondary': instance.valueSecondary,
       'recorded_at': instance.recordedAt.toIso8601String(),
@@ -39,7 +39,3 @@ const _$VitalTypeEnumMap = {
   VitalType.bloodGlucose: 'blood_glucose',
   VitalType.respiratoryRate: 'respiratory_rate',
 };
-
-T $enumDecode<T>(Map<T, String> enumMap, String value) {
-  return enumMap.entries.firstWhere((e) => e.value == value, orElse: () => enumMap.entries.first).key;
-}

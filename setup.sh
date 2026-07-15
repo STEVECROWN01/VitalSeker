@@ -136,11 +136,20 @@ green "  Migrations applied."
 # ---- 5. Deploy edge functions ----------------------------------------------
 echo
 yellow "→ Deploying edge functions..."
-for fn in vitalseker-triage generate-qr export-pdf weekly-insights sos-alert delete-account; do
+# FIX (audit C-5, L-16/L-22): deploy all 8 functions (was 6 — missing
+# translate and ai-chat). Only weekly-insights uses --no-verify-jwt (cron);
+# all others keep JWT verification ON for security.
+NO_VERIFY_JWT_FUNCTIONS="weekly-insights"
+for fn in vitalseker-triage generate-qr export-pdf translate ai-chat weekly-insights sos-alert delete-account; do
   if [[ -d "supabase/functions/${fn}" ]]; then
     yellow "  Deploying ${fn}..."
-    ${SUPABASE_BIN} functions deploy "${fn}" --no-verify-jwt || \
-      red "  FAILED to deploy ${fn} — check the function logs."
+    if [[ " ${NO_VERIFY_JWT_FUNCTIONS} " =~ " ${fn} " ]]; then
+      ${SUPABASE_BIN} functions deploy "${fn}" --no-verify-jwt || \
+        red "  FAILED to deploy ${fn} — check the function logs."
+    else
+      ${SUPABASE_BIN} functions deploy "${fn}" || \
+        red "  FAILED to deploy ${fn} — check the function logs."
+    fi
   fi
 done
 green "  All edge functions deployed."

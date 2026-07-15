@@ -73,9 +73,25 @@ const MENTAL_HEALTH_CRISIS_KEYWORDS = [
   'intihar', 'aqutol nafsi', 'urid al-mawt',
 ]
 
+// FIX (audit H-7): use word-boundary matching for short keywords to avoid
+// false positives. Bare 'tuer' (FR: "to kill") matches 'tuer le temps'
+// (kill time), 'envie de' matches broadly, etc. Short keywords (<=5 chars)
+// use word boundaries; longer keywords use substring (safe enough).
 function isMentalHealthCrisis(text: string): boolean {
   const lower = text.toLowerCase()
-  return MENTAL_HEALTH_CRISIS_KEYWORDS.some(kw => lower.includes(kw))
+  return MENTAL_HEALTH_CRISIS_KEYWORDS.some(kw => {
+    if (kw.length <= 5) {
+      // Use word boundaries for short keywords to avoid false positives.
+      // E.g. \btuer\b won't match 'tuer le temps' but will match 'je veux tuer'.
+      try {
+        const re = new RegExp(`\\b${kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i')
+        return re.test(lower)
+      } catch {
+        return lower.includes(kw)
+      }
+    }
+    return lower.includes(kw)
+  })
 }
 
 // HTML sanitization (per spec Rule: strip HTML, max 500 chars)
@@ -214,9 +230,18 @@ function validateAndNormalize(raw: Record<string, unknown>, userLanguage: string
   result.disclaimer = STANDARD_DISCLAIMER
 
   // urgency_score (kept for backwards compatibility with Flutter client)
+  // FIX (audit H-12): validate that the score is a finite number before
+  // using it. Number('high') = NaN, Number('90') = 90. The previous code
+  // accidentally worked for NaN (NaN > 0 is false, so it fell through to
+  // the urgency-derived score) but silently clamped out-of-range values
+  // like 9999 to 100 without logging.
   const score = Number(raw.urgency_score ?? 0)
-  if (score > 0) {
-    result.urgency_score = Math.max(1, Math.min(100, Math.round(score)))
+  if (Number.isFinite(score) && score > 0) {
+    const clamped = Math.max(1, Math.min(100, Math.round(score)))
+    if (clamped !== Math.round(score)) {
+      console.warn('urgency_score was out of range, clamped:', score, '->', clamped)
+    }
+    result.urgency_score = clamped
   } else {
     // Derive a score from urgency
     result.urgency_score = result.urgency === 'red' ? 90 : result.urgency === 'yellow' ? 50 : 20
@@ -378,8 +403,24 @@ URGENCY LEVELS:
     // Check GLM config
     if (!glmApiKey || !glmApiUrl) {
       console.error('GLM_GATEWAY_SECRET or GLM_GATEWAY_URL is not set')
-      // Return spec-compliant yellow fallback (not 502)
+      // FIX (audit H-1): log the symptom entry even on fallback paths.
+      // Previously, if GLM was unavailable, the user's symptoms vanished —
+      // no audit trail, no weekly-insights input, no clinician review.
       const fallback = { ...DEFAULT_FALLBACK }
+      try {
+        await supabaseClient.from('symptom_logs').insert({
+          user_id: user.id,
+          symptoms: symptomsList,
+          severity: safeSeverity ?? 5,
+          duration: safeDuration || null,
+          body_regions: safeBodyRegions,
+          triage_result: fallback,
+          ai_recommendation: 'urgent-care',
+          notes: safeNotes || null,
+        })
+      } catch (logErr) {
+        console.error('Failed to log symptoms on GLM-unavailable fallback:', logErr)
+      }
       return new Response(JSON.stringify({ triage: fallback }), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -452,7 +493,21 @@ Respond ONLY with valid JSON matching the schema. No markdown, no prose.`
     if (!glmResponse.ok) {
       const errText = await glmResponse.text()
       console.error('GLM API error:', glmResponse.status, errText)
-      // Per spec: fallback to yellow, not 502
+      // FIX (audit H-1): log symptoms even when GLM returns an error.
+      try {
+        await supabaseClient.from('symptom_logs').insert({
+          user_id: user.id,
+          symptoms: symptomsList,
+          severity: safeSeverity ?? 5,
+          duration: safeDuration || null,
+          body_regions: safeBodyRegions,
+          triage_result: DEFAULT_FALLBACK,
+          ai_recommendation: 'urgent-care',
+          notes: safeNotes || null,
+        })
+      } catch (logErr) {
+        console.error('Failed to log symptoms on GLM-error fallback:', logErr)
+      }
       return new Response(JSON.stringify({ triage: DEFAULT_FALLBACK }), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -500,7 +555,25 @@ Respond ONLY with valid JSON matching the schema. No markdown, no prose.`
     })
   } catch (error) {
     console.error('Triage function error:', error)
-    // Per spec: fallback to yellow on any internal error
+    // FIX (audit H-1): log symptoms even on internal errors. We need to
+    // re-extract the user/symptoms from the outer scope — they may not be
+    // available if the error happened before they were parsed.
+    try {
+      if (typeof user !== 'undefined' && user) {
+        await supabaseClient.from('symptom_logs').insert({
+          user_id: user.id,
+          symptoms: symptomsList || [],
+          severity: safeSeverity ?? 5,
+          duration: safeDuration || null,
+          body_regions: safeBodyRegions || [],
+          triage_result: DEFAULT_FALLBACK,
+          ai_recommendation: 'urgent-care',
+          notes: safeNotes || null,
+        })
+      }
+    } catch (logErr) {
+      console.error('Failed to log symptoms on exception fallback:', logErr)
+    }
     return new Response(JSON.stringify({ triage: DEFAULT_FALLBACK }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

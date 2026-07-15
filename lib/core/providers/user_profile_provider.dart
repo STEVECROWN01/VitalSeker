@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/user_profile.dart';
 import '../services/database_service.dart';
@@ -14,9 +15,12 @@ final userProfileProvider = FutureProvider<UserProfile?>((ref) async {
   // Try network first
   try {
     final profile = await db.getUserProfile(user.id);
-    // Cache for offline use
+    // FIX (audit M-15): fire-and-forget the cache write instead of awaiting
+    // it. The cache write doesn't affect the return value, and awaiting it
+    // adds unnecessary latency to the profile load (Hive writes are usually
+    // fast, but on a slow disk they can add tens of milliseconds).
     if (profile != null) {
-      await OfflineCacheService().cacheProfile(user.id, profile.toJson());
+      unawaited(OfflineCacheService().cacheProfile(user.id, profile.toJson()));
     }
     return profile;
   } catch (e) {

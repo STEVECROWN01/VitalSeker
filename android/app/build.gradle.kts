@@ -12,7 +12,11 @@ android {
     defaultConfig {
         applicationId = "com.ketermarketing.vitalseker"
         minSdk = 24
-        targetSdk = 34
+        // FIX (audit H-13): bump targetSdk to 35 (Android 15). Google Play
+        // requires new apps to target SDK 35 by August 31, 2025, and existing
+        // apps by November 1, 2025. After these deadlines, new submissions
+        // are rejected.
+        targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true
@@ -30,9 +34,55 @@ android {
         }
     }
 
+    // FIX (audit H-12): define a proper release signing config.
+    //
+    // The previous release build used signingConfigs.getByName("debug"),
+    // which signs release APKs with the debug keystore. Anyone with the
+    // standard debug keystore (it's public — every Android dev has it)
+    // could build and sign an APK that installs as an "update" to
+    // VitalSeker on a user's phone. Play Store also rejects debug-signed
+    // AABs.
+    //
+    // The release keystore is loaded from a key.properties file that is
+    // NOT checked into the repo. To build a release APK:
+    //   1. Generate a keystore:
+    //        keytool -genkey -v -keystore vitalseker.jks \
+    //          -keyalg RSA -keysize 2048 -validity 10000 -alias vitalseker
+    //   2. Create android/key.properties with:
+    //        storePassword=...
+    //        keyPassword=...
+    //        keyAlias=vitalseker
+    //        storeFile=../vitalseker.jks
+    //   3. Run: flutter build appbundle --release
+    //
+    // If key.properties is absent (e.g. dev machine without the keystore),
+    // we fall back to the debug signing config so local builds still work.
+    val keystoreProperties = java.util.Properties()
+    val keystorePropertiesFile = rootProject.file("key.properties")
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(java.io.FileInputStream(keystorePropertiesFile))
+    }
+
+    signingConfigs {
+        create("release") {
+            if (keystoreProperties.isNotEmpty()) {
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+            }
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            // Use the release signing config if the keystore is configured;
+            // otherwise fall back to debug so local dev builds still work.
+            signingConfig = if (keystoreProperties.isNotEmpty()) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

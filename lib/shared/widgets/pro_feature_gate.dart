@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../shared/theme/app_colors.dart';
 
@@ -23,6 +24,7 @@ class ProFeatureGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -93,7 +95,9 @@ class ProFeatureGate extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Subscribe to Pro — \$6.99/month',
+                    // FIX (audit L-11): use AppConfig.proPriceMonthly
+                    // instead of hardcoded $6.99.
+                    'Subscribe to Pro — \$${AppConfig.proPriceMonthly}/month',
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 15,
@@ -116,7 +120,7 @@ class ProFeatureGate extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'View All Plans',
+                    l10n.viewAllPlans,
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 15,

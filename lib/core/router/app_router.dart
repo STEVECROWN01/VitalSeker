@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uni_links/uni_links.dart';
+import 'dart:async';
 import '../config/app_config.dart';
 import '../models/vital.dart';
 import '../providers/auth_provider.dart';
@@ -110,9 +112,13 @@ GoRouter createRouter(Ref ref) {
       // Allow splash to load (it handles its own navigation)
       if (isSplash) return null;
 
-      // Not authenticated: only allow login, register, onboarding
+      // Not authenticated: allow login, register, and onboarding.
+      // FIX: the router was potentially blocking navigation from onboarding
+      // to login for unauthenticated users. Make sure login/register are
+      // always allowed for unauthenticated users.
       if (!isAuth) {
         if (isLogin || isRegister || isOnboarding) return null;
+        // Redirect everything else to onboarding (first-time user flow)
         return AppConfig.onboarding;
       }
 
@@ -407,15 +413,61 @@ GoRouter createRouter(Ref ref) {
 /// Refresh the router whenever the auth state changes. This ensures that
 /// sign-in / sign-out transitions trigger a re-evaluation of the `redirect`
 /// callback (which reads the latest auth + onboarding state).
+///
+/// FIX (audit 5.9): add deep-link handling. When the app receives a deep link
+/// (e.g. from an SOS notification or a shared passport QR URL), the router
+/// navigates to the corresponding screen. Supported deep-link paths:
+///   - vitalseker://sos → SOS screen
+///   - vitalseker://triage → Triage screen
+///   - vitalseker://passport → Passport screen
+///   - https://passport.vitalseker.app/v/{token} → QR display screen
 final routerProvider = Provider<GoRouter>((ref) {
   final router = createRouter(ref);
   ref.listen<AsyncValue>(authStateProvider, (_, __) {
     router.refresh();
   });
-  // Also refresh when the user profile changes (e.g. onboarding flag flips).
   ref.listen<AsyncValue>(userProfileProvider, (_, __) {
     router.refresh();
   });
+
+  // Deep-link subscription.
+  StreamSubscription<Uri?>? linkSub;
+  ref.onDispose(() {
+    linkSub?.cancel();
+  });
+
+  try {
+    linkSub = uriLinkStream.listen((Uri? uri) {
+      if (uri == null) return;
+      // Handle vitalseker:// scheme deep links.
+      if (uri.scheme == 'vitalseker') {
+        switch (uri.host) {
+          case 'sos':
+            router.go(AppConfig.sos);
+            break;
+          case 'triage':
+            router.go(AppConfig.triage);
+            break;
+          case 'passport':
+            router.go(AppConfig.passport);
+            break;
+          case 'dashboard':
+            router.go(AppConfig.dashboard);
+            break;
+        }
+      }
+      // Handle https://passport.vitalseker.app/v/{token} deep links.
+      if (uri.scheme == 'https' && uri.host == 'passport.vitalseker.app') {
+        final pathSegments = uri.pathSegments;
+        if (pathSegments.length >= 2 && pathSegments[0] == 'v') {
+          router.go(AppConfig.passport);
+        }
+      }
+    });
+  } catch (_) {
+    // uni_links not available on all platforms — ignore.
+  }
+
   return router;
 });
 

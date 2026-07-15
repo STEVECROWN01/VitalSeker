@@ -66,7 +66,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
     _selectedBloodType = null;
   }
 
-  Future<void> _addFamilyMember() async {
+  Future<void> _addFamilyMember(void Function(void Function()) setDialogState) async {
     final l10n = AppLocalizations.of(context)!;
 
     // ── Pro-gating (authoritative) ──
@@ -96,6 +96,13 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
       return;
     }
 
+    // FIX (audit H-21): the previous code called setState on the PARENT
+    // widget, but the dialog uses StatefulBuilder with its own setDialogState.
+    // The dialog's button never showed the loading spinner and stayed enabled,
+    // allowing the user to tap "Add" multiple times and create duplicates.
+    // We now accept the setDialogState callback and use it to update the
+    // dialog's loading state directly.
+    setDialogState(() {});
     setState(() => _isAdding = true);
     try {
       final user = ref.read(currentUserProvider);
@@ -106,7 +113,6 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
       }
 
       final db = ref.read(databaseServiceProvider);
-      // Build payload with only non-null fields to avoid DB constraint errors
       final payload = <String, dynamic>{
         'owner_id': user.id,
         'full_name': _nameController.text.trim(),
@@ -116,15 +122,10 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
         payload['blood_type'] = _selectedBloodType;
       }
 
-      // Defensive: log the payload for debugging if the insert fails.
-      // Previously a failed insert showed only a generic "Failed to add
-      // family member" message with no detail, making root-cause
-      // identification impossible.
       try {
         await db.createFamilyProfile(payload);
       } catch (insertError) {
-        debugPrint('[Family] createFamilyProfile failed. '
-            'Payload: $payload');
+        debugPrint('[Family] createFamilyProfile failed. Payload: $payload');
         debugPrint('[Family] Insert error: $insertError');
         rethrow;
       }
@@ -143,7 +144,11 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
         e,
       );
     } finally {
-      if (mounted) setState(() => _isAdding = false);
+      if (mounted) {
+        setState(() => _isAdding = false);
+        // Rebuild the dialog so the button exits its loading state.
+        setDialogState(() {});
+      }
     }
   }
 
@@ -356,7 +361,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
               child: Text(l10n.cancel),
             ),
             ElevatedButton(
-              onPressed: _isAdding ? null : _addFamilyMember,
+              onPressed: _isAdding ? null : () => _addFamilyMember(setDialogState),
               child: _isAdding
                   ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
                   : Text(l10n.add),

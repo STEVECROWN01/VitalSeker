@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 /// Reusable VitalSeker brand logo widget.
 ///
@@ -55,13 +56,23 @@ class BrandLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    // FIX (audit L-9): add errorBuilder so a missing asset doesn't crash
+    // the app. Shows a fallback icon instead.
     final logo = Image.asset(
       assetPath ?? 'assets/images/branding/app_logo.png',
       width: size,
       height: size,
       fit: BoxFit.contain,
-      // Prevent the image from flickering on rebuilds
       gaplessPlayback: true,
+      errorBuilder: (context, error, stack) => SizedBox(
+        width: size,
+        height: size,
+        child: Icon(
+          Icons.health_and_safety,
+          size: size * 0.6,
+          color: AppColors.primary(isDark),
+        ),
+      ),
     );
 
     if (!showContainer) {

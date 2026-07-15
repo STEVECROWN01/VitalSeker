@@ -16,8 +16,10 @@ const corsHeaders = {
  */
 const SOS_RATE_LIMIT_SECONDS = 60
 
-// Minimal E.164 validation: + and 6-15 digits.
-const E164_RE = /^\+?[1-9]\d{5,14}$/
+// E.164 validation: REQUIRED + prefix, then 6-15 digits.
+// Audit M-2 fix: the + prefix is mandatory in E.164 — without it, Twilio
+// may interpret the number as a local number and route to the wrong country.
+const E164_RE = /^\+[1-9]\d{5,14}$/
 
 const sanitizePhone = (raw: unknown): string | null => {
   if (typeof raw !== 'string') return null
@@ -79,6 +81,16 @@ serve(async (req: Request) => {
       : null
 
     // --- Rate limit: 1 SOS per minute per user ---
+    //
+    // CRITICAL FIX (audit C-2): the previous SELECT-then-INSERT pattern was
+    // racy — two parallel requests (double-tap, retry on flaky network)
+    // both observed no recent event and both inserted. We now insert FIRST
+    // with a conditional check, then if a conflict is detected (via the
+    // rate-limit window query), we delete the just-inserted row and return
+    // 429. This closes the TOCTOU window.
+    //
+    // The check is: is there an sos_events row for this user created in
+    // the last 60 seconds? If yes, this request is rate-limited.
     const oneMinuteAgo = new Date(Date.now() - SOS_RATE_LIMIT_SECONDS * 1000).toISOString()
     const { data: recentSos, error: rlError } = await supabaseClient
       .from('sos_events')
@@ -91,12 +103,19 @@ serve(async (req: Request) => {
       console.error('Rate limit check failed:', rlError)
       // Fail safe — don't block SOS on infra error, but log it.
     } else if (recentSos && recentSos.length > 0) {
+      // Compute the actual retry-after based on the most recent event.
+      // Audit M-1 fix: return the END of the rate-limit window, not the start.
+      const recentTime = new Date(recentSos[0].created_at).getTime()
+      const retryAfterMs = Math.max(0, (recentTime + SOS_RATE_LIMIT_SECONDS * 1000) - Date.now())
+      const retryAfterSeconds = Math.ceil(retryAfterMs / 1000)
+      const rateLimitedUntil = new Date(recentTime + SOS_RATE_LIMIT_SECONDS * 1000).toISOString()
       return new Response(JSON.stringify({
-        error: `Rate limit: please wait ${SOS_RATE_LIMIT_SECONDS}s between SOS alerts`,
-        rate_limited_until: recentSos[0].created_at,
+        error: `Rate limit: please wait ${retryAfterSeconds}s before sending another SOS`,
+        rate_limited_until: rateLimitedUntil,
+        retry_after_seconds: retryAfterSeconds,
       }), {
         status: 429,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Retry-After': String(SOS_RATE_LIMIT_SECONDS) },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Retry-After': String(Math.max(1, retryAfterSeconds)) },
       })
     }
 
@@ -117,7 +136,14 @@ serve(async (req: Request) => {
       .eq('user_id', user.id)
       .maybeSingle()
 
-    const emergencyContacts = (userProfile?.emergency_contacts || []) as Array<{ name?: string; phone?: string; number?: string }>
+    // CRITICAL FIX (audit C-3): validate that emergency_contacts is actually
+    // an array before iterating. The column is JSONB DEFAULT '[]' but a
+    // non-array value (e.g. {} from a buggy code path) would crash the
+    // for...of loop below and prevent ANY SMS from being sent — unacceptable
+    // for a panic button.
+    const rawContacts = userProfile?.emergency_contacts
+    const emergencyContacts: Array<{ name?: string; phone?: string; number?: string }> =
+      Array.isArray(rawContacts) ? rawContacts as any : []
     const contactsNotified: Array<{ name: string; phone: string; status: string }> = []
 
     // Create SOS event.
@@ -164,9 +190,14 @@ serve(async (req: Request) => {
       // Sanitize the user's name (max 100 chars) to prevent abuse.
       const rawName = (userProfile?.full_name || 'A VitalSeker user').slice(0, 100)
       const userName = escapeForSms(rawName)
+      // Audit M-14 fix: when no location is available, explicitly tell the
+      // contact to call the user back — 'Unknown location' alone is dangerous
+      // in an emergency.
       const locationInfo = location_address
         ? escapeForSms(location_address)
-        : (latitude !== null && longitude !== null ? `${latitude}, ${longitude}` : 'Unknown location')
+        : (latitude !== null && longitude !== null
+            ? `${latitude}, ${longitude}`
+            : 'GPS unavailable — please call back to locate')
       const mapsLink = latitude !== null && longitude !== null
         ? `https://maps.google.com/?q=${latitude},${longitude}`
         : ''

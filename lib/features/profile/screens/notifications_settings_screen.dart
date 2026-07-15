@@ -551,8 +551,10 @@ class _SoundTile extends StatelessWidget {
             GestureDetector(
               onTap: onPlayTap,
               child: Container(
-                width: 36,
-                height: 36,
+                // FIX (audit M-30): increase from 36x36 to 48x48 to meet
+                // the 48dp minimum tap target for Android.
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
                   color: isPlaying
                       ? AppColors.urgencyEmergency.withValues(alpha: 0.12)

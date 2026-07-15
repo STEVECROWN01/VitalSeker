@@ -39,18 +39,37 @@ import 'shared/theme/app_colors.dart';
 /// Initialize Sentry (and all other services) from the widget's
 /// initState() AFTER the widget tree is mounted and the event loop
 /// is running.
+///
+/// FIX (audit H-35): wrap runApp() in runZonedGuarded so async errors
+/// thrown outside the Flutter framework's zone (from _initializeServices,
+/// stream subscriptions, Timer.periodic callbacks) are caught and sent
+/// to Sentry. Without this, uncaught async errors hit the Dart VM's
+/// uncaught error handler and are silently swallowed in release mode.
 void main() {
   // Create the ProviderContainer up-front so we can invalidate providers
   // after Supabase finishes initializing in the background.
   final container = ProviderContainer();
 
-  // runApp() IMMEDIATELY — no awaits, no Sentry wrapper.
-  // The native splash is dismissed as soon as VitalSekerApp renders.
-  runApp(
-    UncontrolledProviderScope(
-      container: container,
-      child: VitalSekerApp(container: container),
-    ),
+  // Wrap runApp in runZonedGuarded so uncaught async errors reach Sentry.
+  // The zone is set up BEFORE runApp so all async work inside the app
+  // (including _initializeServices, connectivity listeners, periodic
+  // timers) is guarded.
+  runZonedGuarded(
+    () {
+      runApp(
+        UncontrolledProviderScope(
+          container: container,
+          child: VitalSekerApp(container: container),
+        ),
+      );
+    },
+    (error, stackTrace) {
+      // Forward to Sentry if it's been initialized. If Sentry isn't ready
+      // yet (early in startup), this is a no-op — the error is at least
+      // logged to console.
+      Sentry.captureException(error, stackTrace: stackTrace).catchError((_) => SentryId.empty());
+      debugPrint('[Zone] Uncaught async error: $error');
+    },
   );
 }
 
@@ -115,7 +134,9 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
       await SentryFlutter.init(
         (options) {
           options.dsn = sentryDsn.isEmpty ? null : sentryDsn;
-          options.tracesSampleRate = 1.0;
+          // Reduce trace sampling in production to control Sentry cost.
+          // Audit M-36 fix.
+          options.tracesSampleRate = kDebugMode ? 1.0 : 0.1;
           options.environment = kDebugMode ? 'debug' : 'production';
         },
       ).timeout(const Duration(seconds: 10));
@@ -123,6 +144,53 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
     } catch (e) {
       debugPrint('[Startup] Sentry init failed (non-fatal): $e');
     }
+    if (!mounted) return;
+
+    // ── SOS queue flush triggers — life-safety feature ──────────────────
+    // CRITICAL FIX (audit C-20): the connectivity listener and 5-minute
+    // periodic timer MUST be wired up regardless of whether Supabase
+    // initializes successfully. If Supabase init fails (transient outage,
+    // expired publishable key, SDK bug) and these triggers are inside the
+    // Supabase try/catch, the only remaining flush trigger is the next app
+    // restart — a queued SOS could sit in SharedPreferences indefinitely.
+    //
+    // flushPendingSosQueue() is safe to call even when Supabase isn't
+    // ready: it checks SupabaseService().isInitialized and the current
+    // session before attempting to invoke the edge function. If Supabase
+    // isn't ready, it returns 0 and leaves the events in the queue for the
+    // next flush.
+    //
+    // We still do the initial flush attempt AFTER Supabase init (below),
+    // because that's the most likely time for it to succeed.
+
+    // (a) Connectivity listener — flush the queue on network regain.
+    _connectivitySub = Connectivity().onConnectivityChanged.listen(
+      (List<ConnectivityResult> results) {
+        final hasConnection = results.any(
+          (r) => r != ConnectivityResult.none,
+        );
+        if (hasConnection) {
+          EdgeFunctionService().flushPendingSosQueue().catchError((e) {
+            debugPrint('[Connectivity] SOS queue flush failed: $e');
+            return 0;
+          });
+        }
+      },
+      onError: (e) {
+        debugPrint('[Connectivity] listener error: $e');
+      },
+    );
+
+    // (b) Periodic 5-minute safety-net flush.
+    _sosQueueFlushTimer = Timer.periodic(
+      const Duration(minutes: 5),
+      (_) {
+        EdgeFunctionService().flushPendingSosQueue().catchError((e) {
+          debugPrint('[Timer] SOS queue flush failed: $e');
+          return 0;
+        });
+      },
+    );
 
     // 1. Supabase (use hardcoded config — no dotenv needed for critical path)
     try {
@@ -135,62 +203,23 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
       // Refresh authStateProvider now that Supabase is ready so it
       // re-subscribes to onAuthStateChange instead of returning the
       // empty stream from the defensive fallback.
-      widget.container.invalidate(authStateProvider);
+      if (mounted) {
+        widget.container.invalidate(authStateProvider);
+      }
       debugPrint('[Startup] Supabase initialized');
 
-      // ── SOS queue flush — life-safety feature ──
-      // If the user triggered an SOS while offline (the SOS was queued
-      // locally in SharedPreferences by EdgeFunctionService.sendSosAlert),
-      // we flush the queue now that Supabase is ready. We also set up:
-      //   (a) a connectivity listener that flushes the queue the moment
-      //       the device regains network access
-      //   (b) a 5-minute periodic timer as a safety net
-      // This ensures a queued SOS is NEVER silently dropped — it will be
-      // delivered to the user's emergency contacts as soon as the device
-      // is online, even if that's minutes or hours after the user
-      // originally triggered it.
+      // Initial SOS queue flush — now that Supabase is ready, attempt to
+      // deliver any queued events from a previous offline session.
       try {
         await EdgeFunctionService().flushPendingSosQueue();
         debugPrint('[Startup] Pending SOS queue flushed');
       } catch (e) {
         debugPrint('[Startup] SOS queue flush failed (non-fatal): $e');
       }
-
-      // (a) Connectivity listener — flush the queue on network regain.
-      _connectivitySub = Connectivity().onConnectivityChanged.listen(
-        (List<ConnectivityResult> results) {
-          // results is a list because the device may have multiple active
-          // connections (e.g. wifi + mobile). If ANY of them is not "none",
-          // we have connectivity.
-          final hasConnection = results.any(
-            (r) => r != ConnectivityResult.none,
-          );
-          if (hasConnection) {
-            // Fire-and-forget — don't block the connectivity listener.
-            EdgeFunctionService().flushPendingSosQueue().catchError((e) {
-              debugPrint('[Connectivity] SOS queue flush failed: $e');
-              return 0;
-            });
-          }
-        },
-        onError: (e) {
-          debugPrint('[Connectivity] listener error: $e');
-        },
-      );
-
-      // (b) Periodic 5-minute safety-net flush.
-      _sosQueueFlushTimer = Timer.periodic(
-        const Duration(minutes: 5),
-        (_) {
-          EdgeFunctionService().flushPendingSosQueue().catchError((e) {
-            debugPrint('[Timer] SOS queue flush failed: $e');
-            return 0;
-          });
-        },
-      );
     } catch (e) {
       debugPrint('[Startup] Supabase init failed (non-fatal): $e');
     }
+    if (!mounted) return;
 
     // 2. dotenv (non-critical — Supabase uses hardcoded config)
     try {

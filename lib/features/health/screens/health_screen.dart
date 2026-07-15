@@ -24,7 +24,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final vitalScore = ref.watch(vitalScoreProvider);
+    final vitalScore = ref.watch(vitalScoreProvider) ?? 0;
     final profileAsync = ref.watch(userProfileProvider);
     final symptomLogsAsync = ref.watch(symptomLogsProvider);
     final l10n = AppLocalizations.of(context)!;
@@ -40,7 +40,14 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
           ),
         ],
       ),
-      body: CustomScrollView(
+      // FIX (audit 6.6): add RefreshIndicator for pull-to-refresh.
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(userProfileProvider);
+          ref.invalidate(symptomLogsProvider);
+        },
+        color: AppColors.primary(isDark),
+        child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
           // ── Health Score Section ──
@@ -378,6 +385,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
 
           const SliverToBoxAdapter(child: SizedBox(height: 80)),
         ],
+        ),
       ),
     );
   }

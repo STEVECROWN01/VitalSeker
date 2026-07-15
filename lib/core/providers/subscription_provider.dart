@@ -45,8 +45,24 @@ final subscriptionProvider = FutureProvider<Subscription?>((ref) async {
 ///     provider and handle the loading state.
 final isProUserAsyncProvider = FutureProvider<bool>((ref) async {
   // Source 1: DB-backed subscription row.
-  final sub = await ref.read(subscriptionProvider.future);
-  if (sub != null && sub.isPro) {
+  //
+  // CRITICAL FIX (audit C-21): use ref.watch instead of ref.read so that
+  // invalidating subscriptionProvider cascades into isProUserAsyncProvider.
+  // Previously, after a successful purchase, screens invalidated
+  // subscriptionProvider but NOT isProUserAsyncProvider — so the cached
+  // "false" persisted and paying users hit ProFeatureGate on the next screen
+  // until the app was restarted.
+  //
+  // FIX (audit M-13): wrap the subscriptionProvider read in try/catch so
+  // a DB error (network failure, RLS denial, malformed row) falls through
+  // to the RevenueCat check instead of propagating uncaught to consumers.
+  Subscription? sub;
+  try {
+    sub = await ref.watch(subscriptionProvider.future);
+  } catch (e) {
+    debugPrint('[Subscription] DB read failed, falling through to RC: $e');
+  }
+  if (sub != null && sub.isProAndNotExpired) {
     return true;
   }
 
@@ -54,6 +70,12 @@ final isProUserAsyncProvider = FutureProvider<bool>((ref) async {
   // Even if the DB row is missing or says "free", RevenueCat knows the
   // real entitlement state. This catches the case where the user has
   // paid but the webhook hasn't synced the DB row yet.
+  //
+  // NOTE: the client-side RevenueCat check is a UX convenience only and is
+  // NOT a security boundary — a patched build can spoof it. Sensitive
+  // operations (export, translation, AI chat, triage result delivery) MUST
+  // additionally verify entitlement server-side via an edge function that
+  // re-checks RevenueCat with the secret API key (audit C-2 recommendation).
   try {
     final rcPro = await RevenueCatService().isProUser();
     if (rcPro) {

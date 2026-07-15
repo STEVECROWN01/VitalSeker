@@ -192,6 +192,12 @@ class AppLocalizationsTl extends AppLocalizations {
   String get about => 'Tungkol sa';
 
   @override
+  String get health => 'Kalusugan';
+
+  @override
+  String get family => 'Pamilya';
+
+  @override
   String get privacyPolicy => 'Patakaran sa Privacy';
 
   @override
@@ -315,7 +321,9 @@ class AppLocalizationsTl extends AppLocalizations {
   String get loading => 'LoaNaglo-load';
 
   @override
-  String get poweredBy => 'Powered by Keter Marketing';
+  String poweredBy(String producer) {
+    return 'Powered by Keter Marketing';
+  }
 
   @override
   String get pressAndHold => 'Press and hold to send Emergency alert';
@@ -1848,6 +1856,10 @@ class AppLocalizationsTl extends AppLocalizations {
   String get generateQrCode => 'Generate QR code';
 
   @override
+  String get qrGenerationFailed =>
+      'Nabigo sa paglikha ng QR code. Mangyaring subukang muli.';
+
+  @override
   String get expired => 'Nag-expire na';
 
   @override
@@ -2103,6 +2115,24 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get medicalDisclaimer =>
       'Ang impormasyong ito ay hindi bumubuo ng isang medikal na diagnosis. Hindi pinapalitan ng VitalSeker ang isang kwalipikadong propesyonal sa pangangalagang pangkalusugan.';
+
+  @override
+  String get medicalDisclaimerShort =>
+      'Nagbibigay si Seker ng pangkalahatang gabay, hindi diagnosis. Laging kumunsulta sa doktor.';
+
+  @override
+  String get sekerGreeting =>
+      'Kamusta! Ako si Seker, iyong AI health assistant. Nandito ako para tulungan kang maunawaan ang iyong sintomas. Anong problema ngayon? Maaari kang magtype o pindutin ang mic button para magsalita.';
+
+  @override
+  String get aiChatTriage => 'Chat kay Seker AI';
+
+  @override
+  String get chatWithSeker => 'Chat kay Seker';
+
+  @override
+  String get chatWithSekerDesc =>
+      'Makipag-usap sa aming AI health assistant nang real-time';
 
   @override
   String get poweredByGlm => 'Powered by GLM-4';
@@ -2893,14 +2923,384 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get failedToCompleteOnboarding =>
-      'Failed to complete onboarding. Please check your connection and try again.';
+      'Nabigo sa pagkumpleto ng onboarding. Mangyaring suriin ang iyong koneksyon at subukang muli.';
 
   @override
-  String get fieldRequired => 'This field is required';
+  String get fieldRequired => 'Kinakailangan ang patlang na ito';
 
   @override
-  String get somethingWentWrong => 'Something went wrong. Please try again.';
+  String get somethingWentWrong =>
+      'May nangyaring mali. Mangyaring subukang muli.';
 
   @override
-  String get securitySettingsOnThisPage => 'Security settings are on this page';
+  String get securitySettingsOnThisPage =>
+      'Ang mga setting ng seguridad ay nasa pahinang ito';
+
+  @override
+  String get vitalDeleted => 'Na-delete ang pagbasa.';
+
+  @override
+  String get failedToDeleteVital =>
+      'Hindi ma-delete ang pagbasa. Subukan muli.';
+
+  @override
+  String get deleteVitalTitle => 'Tanggalin ang Pagbasa';
+
+  @override
+  String deleteVitalConfirm(String value) {
+    return 'Tanggalin ang pagbasang ito: $value?';
+  }
+
+  @override
+  String get vitalScore => 'Vital Score';
+
+  @override
+  String get scoreLabelExcellent => 'Excellent';
+
+  @override
+  String get scoreLabelGood => 'Good';
+
+  @override
+  String get scoreLabelFair => 'Fair';
+
+  @override
+  String get scoreLabelPoor => 'Poor';
+
+  @override
+  String get scoreLabelCritical => 'Critical';
+
+  @override
+  String get aboutSekerAi => 'About Seker AI';
+
+  @override
+  String get sekerAiName => 'Seker AI';
+
+  @override
+  String get sekerAiSubtitle => 'Your AI Health Assistant';
+
+  @override
+  String get sekerWhatIsTitle => 'What is Seker?';
+
+  @override
+  String get sekerWhatIsBody =>
+      'Seker is an AI-powered health assistant built into VitalSeker. Seker is an expert in biology, human health, psychology, and the human body. Seker provides general health guidance, symptom analysis, and emotional support.';
+
+  @override
+  String get sekerCapabilitiesTitle => 'What can Seker do?';
+
+  @override
+  String get sekerCapabilitiesBody =>
+      '• Understand your symptoms and ask follow-up questions\n• Provide general health guidance and coaching\n• Help manage stress, anxiety, and emotional well-being\n• Auto-detect and save health information you share\n• Respond in your language (40+ supported)\n• Accept voice notes and file uploads';
+
+  @override
+  String get sekerHowToUseTitle => 'How to use Seker';
+
+  @override
+  String get sekerHowToUseBody =>
+      '1. Type your message or tap the mic to speak\n2. Seker will ask questions to understand your situation\n3. Seker provides guidance and recommendations\n4. You can upload prescriptions, lab results, or images\n5. Health information you share is auto-saved to your profile';
+
+  @override
+  String get sekerSafetyTitle => 'Important Safety Information';
+
+  @override
+  String get sekerSafetyBody =>
+      '• Seker provides general guidance, NOT a medical diagnosis\n• Always consult a professional doctor for proper diagnosis\n• Seker does NOT recommend specific medications or dosages\n• For emergencies, call 112 or 911 immediately\n• Seker only discusses health, biology, and psychology\n• Your conversations are private and secure';
+
+  @override
+  String get backToChat => 'Back to Chat';
+
+  @override
+  String get switchToLightMode => 'Switch to light mode';
+
+  @override
+  String get switchToDarkMode => 'Switch to dark mode';
+
+  @override
+  String get comprehensiveHealthReport => 'COMPREHENSIVE HEALTH REPORT';
+
+  @override
+  String get generated => 'Generated';
+
+  @override
+  String get range => 'Range';
+
+  @override
+  String get medicationsAndAllergies => 'Medications & Allergies';
+
+  @override
+  String get symptomsAndTriageLog => 'Symptoms & Triage Log';
+
+  @override
+  String get nameLabel => 'Name';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get dateOfBirthLabel => 'Date of Birth';
+
+  @override
+  String get bloodTypeLabel => 'Blood Type';
+
+  @override
+  String get vitalScoreLabel => 'Vital Score';
+
+  @override
+  String get chronicConditionsLabel => 'Chronic Conditions';
+
+  @override
+  String get allergiesLabel => 'Allergies';
+
+  @override
+  String get medicationsLabel => 'Medications';
+
+  @override
+  String get symptomsLabel => 'Symptoms';
+
+  @override
+  String get severityLabel => 'Severity';
+
+  @override
+  String get noneRecorded => 'None recorded';
+
+  @override
+  String get thisDocumentDisclaimer =>
+      'This document is generated by VitalSeker AI Health Companion and does not constitute a medical diagnosis. Always consult a qualified healthcare professional.';
+
+  @override
+  String get failedToEmailPdf => 'Failed to email PDF. Please try again.';
+
+  @override
+  String get failedToExportPdf => 'Failed to export PDF. Please try again.';
+
+  @override
+  String get generatePdf => 'Generate PDF';
+
+  @override
+  String get inAppPurchasesNotAvailable =>
+      'In-app purchases are not available on this device.';
+
+  @override
+  String get couldNotLoadPlans =>
+      'Could not load available plans. Please check your connection and try again.';
+
+  @override
+  String planNotAvailable(String plan) {
+    return 'The $plan plan is not available for purchase right now. Please try again later.';
+  }
+
+  @override
+  String get documentScannedAndUploaded =>
+      'Document scanned and uploaded successfully';
+
+  @override
+  String get couldNotUploadFile =>
+      'Could not upload file. Please check your connection and try again.';
+
+  @override
+  String fileTooLarge(String size) {
+    return 'File is too large ($size MB). Maximum allowed size is 10 MB.';
+  }
+
+  @override
+  String get fileTypeNotAllowed =>
+      'File type not allowed. Please upload a JPG, PNG, PDF, DOC, or DOCX file.';
+
+  @override
+  String get appointmentTimeMustBeFuture =>
+      'Appointment time must be in the future. Please pick a later time.';
+
+  @override
+  String get enterValidNumber => 'Enter a valid number';
+
+  @override
+  String get doseMustBePositive => 'Dose must be greater than 0';
+
+  @override
+  String get doseTooHigh => 'Dose seems too high — please check';
+
+  @override
+  String get overrideRateLimit => 'Override Rate Limit?';
+
+  @override
+  String get overrideRateLimitMessage =>
+      'You sent an SOS less than 60 seconds ago. If this is a NEW emergency (not a repeat of the same one), you can override the rate limit and send another alert.\n\nWarning: overriding will send a second SMS to all your emergency contacts. Only do this if you have a genuinely new emergency.';
+
+  @override
+  String get overrideAndSend => 'Override & Send';
+
+  @override
+  String get areYouSafeConfirm =>
+      'Are you safe? Your emergency contacts will be notified that the alert has been resolved. If you are NOT safe, tap \"Cancel\" and call emergency services directly.';
+
+  @override
+  String get yesImSafe => 'Yes, I\'m safe';
+
+  @override
+  String get qrSavedToPhotos =>
+      'QR code saved. Use the share sheet to save to Photos or Files.';
+
+  @override
+  String get qrSavedToDownloads => 'QR code saved to Downloads.';
+
+  @override
+  String get qrSavedToAppStorage => 'QR code saved to app storage.';
+
+  @override
+  String get shareMedicalPassport => 'Share Medical Passport?';
+
+  @override
+  String get shareMedicalPassportMessage =>
+      'This QR code grants access to your medical information (blood type, allergies, chronic conditions, medications, emergency contacts). Anyone who receives it can scan it and view your health data.\n\nOnly share it with people you trust — doctors, nurses, or emergency contacts. Do not post it on social media.\n\nThe QR code expires in 24 hours.';
+
+  @override
+  String get showMore => 'Show more';
+
+  @override
+  String get noAllergiesRecorded =>
+      'No allergies recorded. Add yours in Edit Profile so emergency responders are aware.';
+
+  @override
+  String get noMedicationsRecorded =>
+      'No medications recorded. Add your current prescriptions so they appear on your passport.';
+
+  @override
+  String get noChronicConditionsRecorded =>
+      'No chronic conditions recorded. Add any ongoing conditions (diabetes, hypertension, etc.) in Edit Profile.';
+
+  @override
+  String get speechNotAvailable =>
+      'Speech recognition not available. Please type instead.';
+
+  @override
+  String get couldNotStartRecording =>
+      'Could not start recording. Check microphone permissions.';
+
+  @override
+  String get pleaseSignInToUpload => 'Please sign in to upload files.';
+
+  @override
+  String get uploading => 'Uploading';
+
+  @override
+  String get fileAttached => 'File attached';
+
+  @override
+  String get couldNotPickFile => 'Could not pick file';
+
+  @override
+  String get typeYourMessage => 'Type your message...';
+
+  @override
+  String get online => 'Online';
+
+  @override
+  String get offline => 'Offline';
+
+  @override
+  String get typing => 'typing...';
+
+  @override
+  String get stop => 'Stop';
+
+  @override
+  String get recording => 'Recording...';
+
+  @override
+  String get noTextFoundInImage =>
+      'No text found in the image. Try a clearer photo, or type the text manually. Note: non-Latin scripts may not be recognized on all devices.';
+
+  @override
+  String documentScanned(int count) {
+    return 'Document scanned! $count characters extracted. Tap Translate.';
+  }
+
+  @override
+  String get translationPdfReady => 'Translation PDF ready!';
+
+  @override
+  String get couldNotGeneratePdf => 'Could not generate PDF';
+
+  @override
+  String get translationContainsNonLatin =>
+      'Note: the translation contains characters that may not render in the PDF. If the PDF shows blank boxes, please copy the text from the screen instead.';
+
+  @override
+  String get callEmergencyNow => 'Call 112 / 911 Now';
+
+  @override
+  String get couldNotOpenDialer =>
+      'Could not open the phone dialer. Please call 112 or your local emergency number manually.';
+
+  @override
+  String get sosRateLimitMessage =>
+      'You just sent an SOS. Please wait 60 seconds before sending another — emergency services may already be responding.';
+
+  @override
+  String get sosDeliveryFailedMessage =>
+      'Failed to send alert. Please call emergency services directly (112 / 911).';
+
+  @override
+  String get sosRateLimitRetryMessage =>
+      'SOS rate limit: please wait 60 seconds before retrying.';
+
+  @override
+  String get sosQueued => 'SOS QUEUED';
+
+  @override
+  String get emergencyAlertQueued => 'Emergency Alert Queued';
+
+  @override
+  String get emergencyContact => 'Emergency Contact';
+
+  @override
+  String get tapToViewQrCode => 'Tap to view QR Code';
+
+  @override
+  String get translation => 'Medical Translation';
+
+  @override
+  String get translationDesc =>
+      'Translate medical terms into 40+ languages with DeepL';
+
+  @override
+  String get medicalRecordsDesc =>
+      'Store and manage prescriptions, lab results, and imaging files';
+
+  @override
+  String get vitalsTrackingTitle => 'Vitals Tracking';
+
+  @override
+  String get vitalsTrackingDesc =>
+      'Track heart rate, blood pressure, temperature, and more';
+
+  @override
+  String get medicationRemindersTitle => 'Medication Reminders';
+
+  @override
+  String get medicationRemindersDesc =>
+      'Never miss a dose with smart medication reminders';
+
+  @override
+  String get appointmentManagerTitle => 'Appointment Manager';
+
+  @override
+  String get appointmentManagerDesc => 'Schedule and track doctor appointments';
+
+  @override
+  String get offlineModeTitle => 'Offline Mode';
+
+  @override
+  String get offlineModeDesc =>
+      'Access your health passport and history without internet';
+
+  @override
+  String get languagesTitle => '41 Languages';
+
+  @override
+  String get languagesDesc =>
+      'Full app localization in 41 languages including African languages';
+
+  @override
+  String get primaryCarePhysician => 'Primary Care Physician';
 }

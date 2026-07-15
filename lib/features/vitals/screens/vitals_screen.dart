@@ -79,6 +79,18 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                   ),
                   textAlign: TextAlign.center,
                 ),
+                const SizedBox(height: 16),
+                // FIX (audit M-2): add a retry button so the user can
+                // re-fetch without having to leave and re-enter the screen.
+                ElevatedButton.icon(
+                  onPressed: () => ref.invalidate(vitalsProvider),
+                  icon: const Icon(Icons.refresh, size: 18),
+                  label: Text(l10n.tryAgain),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary(isDark),
+                    foregroundColor: Colors.white,
+                  ),
+                ),
               ],
             ),
           ),
@@ -240,7 +252,9 @@ class _SegmentButton extends StatelessWidget {
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          // FIX (audit M-30): increase vertical padding from 10 to 14 to meet
+          // the 44px minimum tap target height (was ~34px).
+          padding: const EdgeInsets.symmetric(vertical: 14),
           decoration: BoxDecoration(
             color: isSelected
                 ? (AppColors.primary(isDark))

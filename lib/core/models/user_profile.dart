@@ -6,23 +6,36 @@ part 'user_profile.g.dart';
 class UserProfile {
   final String id;
   final String email;
+  @JsonKey(name: 'full_name')
   final String? fullName;
   final String? phone;
+  @JsonKey(name: 'avatar_url')
   final String? avatarUrl;
+  @JsonKey(name: 'date_of_birth')
   final DateTime? dateOfBirth;
+  @JsonKey(name: 'blood_type')
   final String? bloodType;
   final List<String> allergies;
+  @JsonKey(name: 'chronic_conditions')
   final List<String> chronicConditions;
+  @JsonKey(name: 'emergency_contacts')
   final List<EmergencyContact> emergencyContacts;
+  @JsonKey(name: 'preferred_language')
   final String preferredLanguage;
+  @JsonKey(name: 'theme_preference')
   final String themePreference;
+  @JsonKey(name: 'onboarding_completed')
   final bool onboardingCompleted;
-  // Extension columns (migration 003)
   final String? gender;
+  @JsonKey(name: 'height_cm')
   final double? heightCm;
+  @JsonKey(name: 'weight_kg')
   final double? weightKg;
+  @JsonKey(name: 'notification_prefs')
   final NotificationPrefs? notificationPrefs;
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
+  @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
   UserProfile({

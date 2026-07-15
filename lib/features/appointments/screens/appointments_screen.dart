@@ -20,6 +20,17 @@ class AppointmentsScreen extends ConsumerStatefulWidget {
 class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
   AppointmentStatus? _filterStatus;
 
+  @override
+  void initState() {
+    super.initState();
+    // FIX (audit M-8): auto-complete past appointments on screen load.
+    // This marks any 'upcoming' appointments whose dateTime has passed as
+    // 'completed', keeping the DB status in sync with reality.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(appointmentsProvider.notifier).autoCompletePastAppointments();
+    });
+  }
+
   List<Appointment> _applyFilters(List<Appointment> appointments) {
     if (_filterStatus != null) {
       return appointments.where((a) => a.status == _filterStatus).toList();
@@ -627,6 +638,34 @@ class _AppointmentCard extends StatelessWidget {
                         color: AppColors.textSecondary(isDark),
                       ),
                       maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+
+            // FIX (audit 6.5): show notes on the appointment card.
+            if (appointment.notes != null && appointment.notes!.isNotEmpty) ...[
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Icon(
+                    Icons.sticky_note_2_outlined,
+                    size: 14,
+                    color: AppColors.textHint(isDark),
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      appointment.notes!,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 12,
+                        color: AppColors.textSecondary(isDark),
+                        fontStyle: FontStyle.italic,
+                      ),
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

@@ -57,26 +57,34 @@ class AppBottomNav extends StatelessWidget {
           icon: const Icon(Icons.home_outlined),
           selectedIcon: const Icon(Icons.home),
           label: l10n.home,
+          // FIX (audit L-7): add tooltips for accessibility — long-press
+          // on a nav item now shows a descriptive label.
+          tooltip: l10n.home,
         ),
         NavigationDestination(
           icon: const Icon(Icons.history_outlined),
           selectedIcon: const Icon(Icons.history),
           label: l10n.history,
+          tooltip: l10n.history,
         ),
         NavigationDestination(
           icon: const Icon(Icons.healing_outlined),
           selectedIcon: const Icon(Icons.healing),
-          label: 'AI Triage',
+          // FIX (audit L-6): use localized label instead of hardcoded English.
+          label: l10n.triage,
+          tooltip: l10n.triage,
         ),
         NavigationDestination(
           icon: const Icon(Icons.insights_outlined),
           selectedIcon: const Icon(Icons.insights),
           label: l10n.insights,
+          tooltip: l10n.insights,
         ),
         NavigationDestination(
           icon: const Icon(Icons.badge_outlined),
           selectedIcon: const Icon(Icons.badge),
           label: l10n.passport,
+          tooltip: l10n.passport,
         ),
       ],
     );

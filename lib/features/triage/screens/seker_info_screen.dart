@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
@@ -7,12 +8,15 @@ import '../../../shared/theme/app_text_styles.dart';
 /// Seker AI Info Screen — shows when the user taps the Seker avatar.
 /// Displays the AI's profile picture, name, description, capabilities,
 /// and safety warnings.
+///
+/// FIX (audit M-1): all strings are now localized via AppLocalizations.
 class SekerInfoScreen extends StatelessWidget {
   const SekerInfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: AppColors.background(isDark),
@@ -27,7 +31,7 @@ class SekerInfoScreen extends StatelessWidget {
             }
           },
         ),
-        title: Text('About Seker AI', style: AppTextStyles.heading3),
+        title: Text(l10n.aboutSekerAi, style: AppTextStyles.heading3),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -42,11 +46,16 @@ class SekerInfoScreen extends StatelessWidget {
                 height: 120,
                 fit: BoxFit.cover,
                 gaplessPlayback: true,
+                errorBuilder: (context, error, stack) => SizedBox(
+                  width: 120,
+                  height: 120,
+                  child: Icon(Icons.smart_toy, size: 60, color: AppColors.primary(isDark)),
+                ),
               ),
             ),
             const SizedBox(height: 20),
             Text(
-              'Seker AI',
+              l10n.sekerAiName,
               style: TextStyle(
                 fontFamily: 'ClashDisplay',
                 fontSize: 32,
@@ -56,7 +65,7 @@ class SekerInfoScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Your AI Health Assistant',
+              l10n.sekerAiSubtitle,
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 16,
@@ -69,10 +78,8 @@ class SekerInfoScreen extends StatelessWidget {
             _InfoCard(
               isDark: isDark,
               icon: Icons.info_outline,
-              title: 'What is Seker?',
-              body: 'Seker is an AI-powered health assistant built into VitalSeker. '
-                  'Seker is an expert in biology, human health, psychology, and the human body. '
-                  'Seker provides general health guidance, symptom analysis, and emotional support.',
+              title: l10n.sekerWhatIsTitle,
+              body: l10n.sekerWhatIsBody,
             ),
             const SizedBox(height: 16),
 
@@ -80,13 +87,8 @@ class SekerInfoScreen extends StatelessWidget {
             _InfoCard(
               isDark: isDark,
               icon: Icons.psychology_outlined,
-              title: 'What can Seker do?',
-              body: '• Understand your symptoms and ask follow-up questions\n'
-                  '• Provide general health guidance and coaching\n'
-                  '• Help manage stress, anxiety, and emotional well-being\n'
-                  '• Auto-detect and save health information you share\n'
-                  '• Respond in your language (40+ supported)\n'
-                  '• Accept voice notes and file uploads',
+              title: l10n.sekerCapabilitiesTitle,
+              body: l10n.sekerCapabilitiesBody,
             ),
             const SizedBox(height: 16),
 
@@ -94,12 +96,8 @@ class SekerInfoScreen extends StatelessWidget {
             _InfoCard(
               isDark: isDark,
               icon: Icons.chat_outlined,
-              title: 'How to use Seker',
-              body: '1. Type your message or tap the mic to speak\n'
-                  '2. Seker will ask questions to understand your situation\n'
-                  '3. Seker provides guidance and recommendations\n'
-                  '4. You can upload prescriptions, lab results, or images\n'
-                  '5. Health information you share is auto-saved to your profile',
+              title: l10n.sekerHowToUseTitle,
+              body: l10n.sekerHowToUseBody,
             ),
             const SizedBox(height: 16),
 
@@ -107,13 +105,8 @@ class SekerInfoScreen extends StatelessWidget {
             _InfoCard(
               isDark: isDark,
               icon: Icons.warning_amber_rounded,
-              title: 'Important Safety Information',
-              body: '• Seker provides general guidance, NOT a medical diagnosis\n'
-                  '• Always consult a professional doctor for proper diagnosis\n'
-                  '• Seker does NOT recommend specific medications or dosages\n'
-                  '• For emergencies, call 112 or 911 immediately\n'
-                  '• Seker only discusses health, biology, and psychology\n'
-                  '• Your conversations are private and secure',
+              title: l10n.sekerSafetyTitle,
+              body: l10n.sekerSafetyBody,
               iconColor: AppColors.warning(isDark),
             ),
             const SizedBox(height: 32),
@@ -138,7 +131,7 @@ class SekerInfoScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Back to Chat',
+                  l10n.backToChat,
                   style: TextStyle(
                     fontFamily: 'Outfit',
                     fontSize: 15,
@@ -182,13 +175,15 @@ class _InfoCard extends StatelessWidget {
               children: [
                 Icon(icon, color: iconColor ?? AppColors.primary(isDark), size: 24),
                 const SizedBox(width: 12),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontFamily: 'ClashDisplay',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary(isDark),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontFamily: 'ClashDisplay',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary(isDark),
+                    ),
                   ),
                 ),
               ],

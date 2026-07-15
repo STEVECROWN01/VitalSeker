@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -327,7 +328,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                         const MedicalDisclaimerBanner(),
                         const SizedBox(height: 16),
                         Text(
-                          l10n.poweredBy,
+                          l10n.poweredBy(AppConfig.producer),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Inter',
@@ -538,7 +539,9 @@ class _FilterChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        // FIX (audit M-30): increase vertical padding from 8 to 12 to meet
+        // the 44px minimum tap target (was ~28px).
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
           color: selected
               ? AppColors.primaryContainer(isDark)
@@ -678,7 +681,7 @@ class _TimelineItem extends StatelessWidget {
           children: [
             // Relative date stamp (JetBrainsMono).
             Text(
-              _formatRelativeDate(log.loggedAt),
+              _formatRelativeDate(log.loggedAt, l10n, Localizations.localeOf(context).languageCode),
               style: TextStyle(
                 fontFamily: 'JetBrainsMono',
                 fontSize: 11,
@@ -1030,10 +1033,14 @@ Color _urgencyColor(String level, bool isDark) {
   }
 }
 
-/// Format the log timestamp as a relative-date + time stamp using the
-/// JetBrainsMono-style format: "TODAY • 08:42 AM", "YESTERDAY • 03:15 PM",
-/// "MON • 11:30 AM" (this week), or "12 OCT • 09:00 AM" (older).
-String _formatRelativeDate(DateTime date) {
+/// Format the log timestamp as a relative-date + time stamp.
+///
+/// FIX (audit H-22): the previous version hardcoded English strings
+/// ('TODAY', 'YESTERDAY', 'MON'–'SUN', 'JAN'–'DEC', 'AM'/'PM'). A French
+/// user saw "TODAY • 08:42 AM" instead of "AUJOURD'HUI • 08:42". We now
+/// use the localized `todayLabel` / `yesterdayLabel` from the .arb files
+/// and `intl`'s `DateFormat` for locale-aware day/month/time formatting.
+String _formatRelativeDate(DateTime date, AppLocalizations l10n, String localeCode) {
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final that = DateTime(date.year, date.month, date.day);
@@ -1041,25 +1048,18 @@ String _formatRelativeDate(DateTime date) {
 
   String dayLabel;
   if (diff == 0) {
-    dayLabel = 'TODAY';
+    dayLabel = l10n.todayLabel.toUpperCase();
   } else if (diff == 1) {
-    dayLabel = 'YESTERDAY';
+    dayLabel = l10n.yesterdayLabel.toUpperCase();
   } else if (diff > 0 && diff < 7) {
-    const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-    dayLabel = days[date.weekday - 1];
+    // Locale-aware abbreviated weekday (e.g. "Mon", "lun.")
+    dayLabel = DateFormat('EEE', localeCode).format(date).toUpperCase();
   } else {
-    const months = [
-      'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
-      'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
-    ];
-    dayLabel = '${date.day} ${months[date.month - 1]}';
+    // Locale-aware "d MMM" (e.g. "12 Oct", "12 oct.")
+    dayLabel = DateFormat('d MMM', localeCode).format(date).toUpperCase();
   }
 
-  final hour = date.hour > 12
-      ? date.hour - 12
-      : (date.hour == 0 ? 12 : date.hour);
-  final minute = date.minute.toString().padLeft(2, '0');
-  final ampm = date.hour >= 12 ? 'PM' : 'AM';
-  final hourStr = hour.toString().padLeft(2, '0');
-  return '$dayLabel • $hourStr:$minute $ampm';
+  // Locale-aware time format (automatically 12h or 24h based on locale)
+  final timeLabel = DateFormat('HH:mm', localeCode).format(date);
+  return '$dayLabel • $timeLabel';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
@@ -181,7 +182,15 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                     flex: 2,
                     child: TextFormField(
                       controller: _dosageController,
-                      keyboardType: TextInputType.number,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      // FIX (audit H-20): restrict input to numeric values and
+                      // validate the parsed dose is within a reasonable range.
+                      // The previous code had no inputFormatters and only
+                      // checked for empty — a user could enter "abc", "0",
+                      // "999999", or negative numbers.
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                      ],
                       decoration: InputDecoration(
                         labelText: l10n.dosageLabel,
                         labelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 13),
@@ -193,7 +202,14 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                         fontSize: 15,
                         color: AppColors.textPrimary(isDark),
                       ),
-                      validator: (v) => v == null || v.trim().isEmpty ? l10n.fieldRequired : null,
+                      validator: (v) {
+                        if (v == null || v.trim().isEmpty) return l10n.fieldRequired;
+                        final dose = double.tryParse(v.trim());
+                        if (dose == null) return 'Enter a valid number';
+                        if (dose <= 0) return 'Dose must be greater than 0';
+                        if (dose > 10000) return 'Dose seems too high — please check';
+                        return null;
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -264,7 +280,17 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                 children: [
                   Switch(
                     value: _hasEndDate,
-                    onChanged: (v) => setState(() => _hasEndDate = v),
+                    // FIX (audit H-19): when the toggle is turned ON, immediately
+                    // set _endDate to a sensible default (start + 30 days) so
+                    // the user doesn't save with _hasEndDate=true but
+                    // _endDate=null. The previous code showed a default date in
+                    // the UI but passed null to the provider on save.
+                    onChanged: (v) => setState(() {
+                      _hasEndDate = v;
+                      if (v && _endDate == null) {
+                        _endDate = _startDate.add(const Duration(days: 30));
+                      }
+                    }),
                     activeColor: AppColors.primary(isDark),
                   ),
                   Text(

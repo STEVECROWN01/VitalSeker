@@ -5,14 +5,19 @@ part 'weekly_insight.g.dart';
 @JsonSerializable()
 class WeeklyInsight {
   final String id;
+  @JsonKey(name: 'user_id')
   final String userId;
+  @JsonKey(name: 'week_start')
   final DateTime weekStart;
+  @JsonKey(name: 'week_end')
   final DateTime weekEnd;
   final String summary;
+  @JsonKey(name: 'trend_analysis')
   final TrendAnalysis trendAnalysis;
   final List<String> recommendations;
   final int vitalScoreChange;
   final DateTime generatedAt;
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
 
   WeeklyInsight({

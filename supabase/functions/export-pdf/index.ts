@@ -99,7 +99,10 @@ serve(async (req: Request) => {
       },
       patient: {
         name: userProfile?.full_name || 'Unknown',
-        email: userProfile?.email || user.email,
+        // FIX (audit H-11): prefer auth.users.email (always current) over
+        // public.users.email (may be stale if the user changed their email
+        // and the sync trigger hasn't fired).
+        email: user.email || userProfile?.email,
         date_of_birth: userProfile?.date_of_birth,
         blood_type: passport?.blood_type || userProfile?.blood_type,
       },
@@ -127,8 +130,17 @@ serve(async (req: Request) => {
       },
     }
 
+    // FIX (audit H-10): add Cache-Control: no-store so the response (which
+    // contains PII — insurance number, DOB, blood type) is never cached by
+    // the browser or any intermediate proxy.
     return new Response(JSON.stringify(pdfData), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
     })
   } catch (error) {
     console.error('Export PDF error:', error)

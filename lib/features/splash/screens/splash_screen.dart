@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/services/supabase_service.dart';
 import '../../../shared/theme/app_colors.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -38,10 +39,40 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 
   Future<void> _navigateNext() async {
-    await Future.delayed(const Duration(seconds: 3));
+    // FIX (audit H-42): wait for Supabase to finish initializing before
+    // reading auth state. On a cold start, Supabase restores the session
+    // synchronously inside Supabase.initialize() — but if we read
+    // isAuthenticatedProvider before initialization completes, the
+    // authStateProvider returns Stream.empty() and currentUser is null,
+    // causing a previously-signed-in user to be wrongly sent to onboarding.
+    //
+    // We wait up to 8 seconds for Supabase to be ready (the splash never
+    // hangs indefinitely), then read the auth state directly from the
+    // Supabase client (bypassing the provider chain that may still be in
+    // loading state). A minimum branding time of 1.5s ensures the animation
+    // is visible even on fast devices.
+    final startupDeadline = DateTime.now().add(const Duration(seconds: 8));
+    final minBrandingTime = DateTime.now().add(const Duration(milliseconds: 1500));
+
+    // Wait for Supabase to be initialized.
+    while (!SupabaseService().isInitialized && DateTime.now().isBefore(startupDeadline)) {
+      await Future.delayed(const Duration(milliseconds: 100));
+      if (!mounted) return;
+    }
+
+    // Ensure minimum branding time has elapsed.
+    if (DateTime.now().isBefore(minBrandingTime)) {
+      await Future.delayed(minBrandingTime.difference(DateTime.now()));
+    }
+
     if (!mounted || _hasNavigated) return;
 
-    final isAuthenticated = ref.read(isAuthenticatedProvider);
+    // Read auth state directly from the Supabase client to avoid the
+    // provider chain's loading state. Once Supabase.initialize() returns,
+    // the session is already restored from local storage and currentUser
+    // is populated.
+    final isAuthenticated = SupabaseService().isInitialized &&
+        SupabaseService().client.auth.currentUser != null;
 
     if (isAuthenticated) {
       final isOnboardingDone = ref.read(isOnboardingCompletedProvider);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +12,14 @@ import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/providers/vitals_provider.dart';
+import '../../../core/providers/medications_provider.dart';
+import '../../../core/providers/appointments_provider.dart';
+import '../../../core/providers/health_passport_provider.dart';
+import '../../../core/providers/symptom_log_provider.dart';
+import '../../../core/providers/insights_provider.dart';
 import '../../../core/services/edge_function_service.dart';
+import '../../../core/services/offline_cache_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
@@ -247,12 +255,42 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           // signOut may throw if the session was already
                           // invalidated by the edge function; ignore.
                         }
+
+                        // SECURITY FIX (audit H-14): invalidate ALL user-scoped
+                        // providers, not just userProfileProvider and
+                        // authStateProvider. The previous code left stale
+                        // subscriptionProvider, familyProfilesProvider,
+                        // vitalsProvider, symptomLogsProvider, and
+                        // activeMedicationsProvider in memory — if the user
+                        // signed in with a different account on the same
+                        // device, the new account would briefly see the old
+                        // account's data.
+                        //
+                        // We also clear the offline cache so cached PHI
+                        // (passport, symptom logs, profile) is wiped.
+                        try {
+                          await OfflineCacheService().clearAll(typed);
+                        } catch (e) {
+                          debugPrint('Offline cache clear on delete failed (non-fatal): $e');
+                        }
+
                         if (!mounted) return;
                         Navigator.pop(ctx);
                         AppSnackBar.success(context, l10n.accountDeleted);
-                        // Clear ALL cached state so the login screen shows fresh.
+
+                        // Invalidate ALL user-scoped providers.
                         ref.invalidate(userProfileProvider);
                         ref.invalidate(authStateProvider);
+                        ref.invalidate(subscriptionProvider);
+                        ref.invalidate(isProUserAsyncProvider);
+                        ref.invalidate(familyProfilesProvider);
+                        ref.invalidate(vitalsProvider);
+                        ref.invalidate(symptomLogsProvider);
+                        ref.invalidate(activeMedicationsProvider);
+                        ref.invalidate(appointmentsProvider);
+                        ref.invalidate(healthPassportProvider);
+                        ref.invalidate(weeklyInsightsProvider);
+
                         if (mounted) context.go(AppConfig.login);
                       } catch (e) {
                         if (!mounted) return;
@@ -610,7 +648,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             // ── Footer ──
             const SizedBox(height: 24),
             Text(
-              l10n.poweredBy,
+              l10n.poweredBy(AppConfig.producer),
               style: AppTextStyles.labelSmall.copyWith(
                 color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
               ),

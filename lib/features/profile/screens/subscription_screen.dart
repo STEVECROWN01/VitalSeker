@@ -21,16 +21,39 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
   String? _pendingPlan;
   bool _isRestoring = false;
 
-  /// Apply a plan change. In production this would launch the platform
-  /// paywall (RevenueCat / StoreKit / Google Play Billing) and only update
-  /// the DB row after a successful purchase callback. For now, we update the
-  /// subscription row directly so the rest of the app sees the new tier —
-  /// this is clearly disclosed to the user via the dev-mode banner.
+  /// Apply a plan change.
+  ///
+  /// SECURITY (audit C-7, C-8 fix): paid plans (pro, enterprise) MUST go
+  /// through RevenueCat. If RevenueCat is not configured, we FAIL CLOSED —
+  /// the user sees an error and no DB write happens. The previous
+  /// implementation fell through to a direct DB write that granted the
+  /// requested plan without payment, which was a payment bypass.
+  ///
+  /// Only the 'free' plan can be set without payment (it's a downgrade).
+  /// Even then, the DB row is only written by the client to mirror what
+  /// the RevenueCat webhook will eventually write — the server-side
+  /// webhook (service-role) is the source of truth.
   Future<void> _changePlan(String planName) async {
     final l10n = AppLocalizations.of(context)!;
     final user = ref.read(currentUserProvider);
     if (user == null) {
       AppSnackBar.error(context, l10n.mustBeSignedInToChangePlans);
+      return;
+    }
+
+    // CRITICAL: For paid plans, require RevenueCat. Fail closed if not
+    // configured — never silently fall through to a DB write.
+    final rcService = RevenueCatService();
+    final isPaidPlan = planName == 'pro' || planName == 'enterprise';
+
+    if (isPaidPlan && !rcService.isConfigured) {
+      if (mounted) {
+        AppSnackBar.error(
+          context,
+          'In-app purchases are not available on this device. '
+          'Please update the app or contact support.',
+        );
+      }
       return;
     }
 
@@ -59,39 +82,101 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
     setState(() => _pendingPlan = planName);
     try {
-      // ── RevenueCat IAP Integration ────────────────────────────────────
+      // ── RevenueCat IAP path (paid plans) ──────────────────────────────
       // Per Cahier des Charges Section 3: "Paiements — RevenueCat".
-      // If RevenueCat is configured (API key set), process the purchase through
-      // the App Store / Google Play. If not configured (dev mode), fall back
-      // to the direct DB write for testing.
-      final rcService = RevenueCatService();
-      if (rcService.isConfigured && planName != 'free') {
+      // The purchase MUST succeed before any DB write happens. RevenueCat's
+      // webhook (server-side, service-role) is the authoritative writer of
+      // the subscriptions row; the client write here is only a best-effort
+      // mirror so the UI updates immediately.
+      if (isPaidPlan) {
         final offering = await rcService.getCurrentOffering();
-        if (offering != null) {
-          // Find the package matching the selected plan
-          final package = offering.availablePackages.where((p) {
-            return p.identifier.toLowerCase().contains(planName);
-          }).firstOrNull;
-          if (package != null) {
-            final success = await rcService.purchasePackage(package);
-            if (!success) {
-              if (mounted) {
-                AppSnackBar.error(context, l10n.purchaseCancelled);
-              }
-              return;
-            }
-            // Purchase successful — RevenueCat will sync the entitlement.
-            // Also update the local DB so the app reflects the change immediately.
+        if (offering == null) {
+          if (mounted) {
+            AppSnackBar.error(
+              context,
+              'Could not load available plans. Please check your connection and try again.',
+            );
           }
+          return;
         }
+
+        // Find the package matching the selected plan.
+        final package = offering.availablePackages.where((p) {
+          return p.identifier.toLowerCase().contains(planName);
+        }).firstOrNull;
+
+        if (package == null) {
+          if (mounted) {
+            AppSnackBar.error(
+              context,
+              'The "$planName" plan is not available for purchase right now. '
+              'Please try again later.',
+            );
+          }
+          return;
+        }
+
+        final success = await rcService.purchasePackage(package);
+        if (!success) {
+          if (mounted) {
+            AppSnackBar.error(context, l10n.purchaseCancelled);
+          }
+          return;
+        }
+
+        // Purchase succeeded — read the REAL expiration from RevenueCat
+        // rather than hardcoding 30 days (audit C-3 fix).
+        final customerInfo = await rcService.getCustomerInfo();
+        final entitlement = customerInfo?.entitlements.all[planName];
+        final periodEndStr = entitlement?.expirationDate;
+
+        final db = ref.read(databaseServiceProvider);
+        final existing = await db.getSubscription(user.id);
+        final now = DateTime.now();
+        // Fallback to 30 days only if RevenueCat didn't return an expiration
+        // (e.g. lifetime entitlements). Use the RC value when available.
+        final periodEnd = periodEndStr != null
+            ? DateTime.tryParse(periodEndStr) ?? now.add(const Duration(days: 30))
+            : now.add(const Duration(days: 30));
+
+        final payload = {
+          'plan': planName,
+          'status': 'active',
+          'current_period_start': now.toIso8601String(),
+          'current_period_end': periodEnd.toIso8601String(),
+          'cancel_at_period_end': false,
+        };
+
+        if (existing == null) {
+          await db.createSubscription({
+            'user_id': user.id,
+            ...payload,
+          });
+        } else {
+          await db.updateSubscription(existing.id, payload);
+        }
+
+        ref.invalidate(subscriptionProvider);
+        ref.invalidate(userProfileProvider);
+        // Also invalidate isProUserAsyncProvider so the cached "false"
+        // doesn't persist after a successful purchase (audit C-21 fix).
+        ref.invalidate(isProUserAsyncProvider);
+
+        if (mounted) {
+          AppSnackBar.success(context, l10n.welcomeToPlan(planName));
+        }
+        return;
       }
 
+      // ── Free plan downgrade ───────────────────────────────────────────
+      // Downgrading to Free does not require a purchase. If RevenueCat is
+      // configured, we still call restorePurchases() so the SDK knows the
+      // user no longer has the paid entitlement (the actual subscription
+      // cancellation happens via the App Store / Google Play, not here).
       final db = ref.read(databaseServiceProvider);
       final existing = await db.getSubscription(user.id);
 
       final now = DateTime.now();
-      // Compute one month from now correctly using Duration(days: 30).
-      // For real IAP, RevenueCat / StoreKit provides the exact period end.
       final periodEnd = now.add(const Duration(days: 30));
 
       if (existing == null) {
@@ -115,13 +200,10 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
       ref.invalidate(subscriptionProvider);
       ref.invalidate(userProfileProvider);
+      ref.invalidate(isProUserAsyncProvider);
+
       if (mounted) {
-        AppSnackBar.success(
-          context,
-          planName == 'free'
-              ? l10n.downgradedToFree
-              : l10n.welcomeToPlan(planName),
-        );
+        AppSnackBar.success(context, l10n.downgradedToFree);
       }
     } catch (e) {
       if (mounted) {
@@ -139,27 +221,46 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
       // Restore purchases via RevenueCat (queries App Store / Google Play).
       // Per Cahier des Charges Section 3: "RevenueCat — Gestion abonnements".
       final rcService = RevenueCatService();
-      if (rcService.isConfigured) {
-        final restored = await rcService.restorePurchases();
-        if (restored) {
-          ref.invalidate(subscriptionProvider);
-          if (mounted) {
-            AppSnackBar.success(context, l10n.purchasesRestored);
-          }
-        } else {
-          // No active Pro entitlement found — refresh from DB anyway.
-          ref.invalidate(subscriptionProvider);
-          await ref.read(subscriptionProvider.future);
-          if (mounted) {
-            AppSnackBar.success(context, l10n.noPurchasesToRestore);
-          }
+      if (!rcService.isConfigured) {
+        // RevenueCat not configured — cannot restore. Be honest with the user
+        // rather than silently refreshing from DB (which could restore a
+        // dev-mode-granted entitlement, audit H-3).
+        if (mounted) {
+          AppSnackBar.info(
+            context,
+            'In-app purchases are not available on this device.',
+          );
         }
-      } else {
-        // RevenueCat not configured (dev mode) — just refresh from DB.
-        ref.invalidate(subscriptionProvider);
-        await ref.read(subscriptionProvider.future);
+        return;
+      }
+
+      final restored = await rcService.restorePurchases();
+      ref.invalidate(subscriptionProvider);
+      ref.invalidate(isProUserAsyncProvider);
+      await ref.read(subscriptionProvider.future);
+
+      if (restored) {
         if (mounted) {
           AppSnackBar.success(context, l10n.purchasesRestored);
+        }
+      } else {
+        // No active Pro entitlement found in RevenueCat. If the DB row still
+        // claims Pro, it was likely set via the (now-fixed) dev-mode bypass —
+        // downgrade it to 'free' so we don't restore a bogus entitlement
+        // (audit H-3 fix).
+        final sub = await ref.read(subscriptionProvider.future);
+        if (sub != null && sub.plan != 'free') {
+          final db = ref.read(databaseServiceProvider);
+          await db.updateSubscription(sub.id, {
+            'plan': 'free',
+            'status': 'active',
+            'cancel_at_period_end': false,
+          });
+          ref.invalidate(subscriptionProvider);
+          ref.invalidate(isProUserAsyncProvider);
+        }
+        if (mounted) {
+          AppSnackBar.success(context, l10n.noPurchasesToRestore);
         }
       }
     } catch (e) {

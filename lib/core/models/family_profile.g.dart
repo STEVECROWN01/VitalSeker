@@ -16,13 +16,22 @@ FamilyProfile _$FamilyProfileFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['date_of_birth'] as String),
       bloodType: json['blood_type'] as String?,
-      allergies: (json['allergies'] as List<dynamic>?)?.cast<String>() ?? [],
-      chronicConditions:
-          (json['chronic_conditions'] as List<dynamic>?)?.cast<String>() ?? [],
-      medications: (json['medications'] as List<dynamic>?)?.cast<String>() ?? [],
+      allergies: (json['allergies'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      chronicConditions: (json['chronic_conditions'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      medications: (json['medications'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       emergencyContacts: (json['emergency_contacts'] as List<dynamic>?)
-          ?.map((e) => EmergencyContact.fromJson(e as Map<String, dynamic>))
-          .toList() ?? [],
+              ?.map((e) => EmergencyContact.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       passportId: json['passport_id'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),

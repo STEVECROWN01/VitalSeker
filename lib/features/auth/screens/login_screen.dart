@@ -24,6 +24,32 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool _isLoading = false;
   bool _obscurePassword = true;
 
+  // FIX (audit H-17): client-side rate limiting for sign-in attempts.
+  // After 5 failed attempts within 60 seconds, the user is locked out
+  // for 60 seconds with a countdown. This prevents brute-force attacks
+  // and reduces load on the Supabase auth endpoint. Supabase also has
+  // server-side rate limiting, but this gives immediate user feedback.
+  int _failedAttempts = 0;
+  DateTime? _firstFailedAt;
+  DateTime? _lockedUntil;
+
+  bool get _isLockedOut {
+    if (_lockedUntil == null) return false;
+    if (DateTime.now().isAfter(_lockedUntil!)) {
+      // Lockout expired — reset.
+      _lockedUntil = null;
+      _failedAttempts = 0;
+      _firstFailedAt = null;
+      return false;
+    }
+    return true;
+  }
+
+  int get _lockoutSecondsRemaining {
+    if (_lockedUntil == null) return 0;
+    return _lockedUntil!.difference(DateTime.now()).inSeconds;
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -61,6 +87,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _signIn() async {
     if (!_formKey.currentState!.validate()) return;
 
+    // FIX (audit H-17): check rate limit before attempting sign-in.
+    if (_isLockedOut) {
+      _showError(
+        'Too many failed attempts. Please wait ${_lockoutSecondsRemaining}s '
+        'before trying again.',
+      );
+      return;
+    }
+
     setState(() => _isLoading = true);
     try {
       final authService = ref.read(authServiceProvider);
@@ -68,11 +103,41 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
+      // Success — reset the failed attempt counter.
+      _failedAttempts = 0;
+      _firstFailedAt = null;
       if (mounted) context.go(AppConfig.dashboard);
     } catch (e) {
+      // Track failed attempts for rate limiting.
+      _recordFailedAttempt();
       _showError(AuthService.getFriendlyError(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  /// Record a failed sign-in attempt and trigger a lockout if the threshold
+  /// is reached. FIX (audit H-17).
+  void _recordFailedAttempt() {
+    final now = DateTime.now();
+
+    // Reset the window if the first failure was more than 60s ago.
+    if (_firstFailedAt != null &&
+        now.difference(_firstFailedAt!).inSeconds > 60) {
+      _failedAttempts = 0;
+      _firstFailedAt = null;
+    }
+
+    _firstFailedAt ??= now;
+    _failedAttempts++;
+
+    // After 5 failed attempts, lock out for 60 seconds.
+    if (_failedAttempts >= 5) {
+      _lockedUntil = now.add(const Duration(seconds: 60));
+      _showError(
+        'Too many failed attempts. Account locked for 60 seconds. '
+        'Please wait before trying again.',
+      );
     }
   }
 
@@ -199,13 +264,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
+                    autofillHints: const [AutofillHints.email],
                     decoration: InputDecoration(
                       labelText: l10n.email,
                       prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) return l10n.emailRequired;
-                      if (!value.contains('@')) return l10n.enterValidEmail;
+                      // FIX (audit 3.1): use proper email validation matching
+                      // register_screen — check for both @ and . in the domain.
+                      if (!value.contains('@') || !value.contains('.')) return l10n.enterValidEmail;
                       return null;
                     },
                   ).animate().slideX(duration: 400.ms, delay: 200.ms, begin: 0.1),
@@ -216,6 +284,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     obscureText: _obscurePassword,
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) => _signIn(),
+                    autofillHints: const [AutofillHints.password],
                     decoration: InputDecoration(
                       labelText: l10n.password,
                       prefixIcon: const Icon(Icons.lock_outline),
@@ -247,8 +316,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 24),
                   // Sign In button
+                  // FIX (audit 3.3): disable button when email/password are empty.
                   ElevatedButton(
-                    onPressed: _signIn,
+                    onPressed: (_emailController.text.isEmpty || _passwordController.text.isEmpty || _isLoading)
+                        ? null
+                        : _signIn,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 56),
                       backgroundColor: AppColors.primary(isDark),
@@ -320,7 +392,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   // Footer credit
                   Center(
                     child: Text(
-                      l10n.poweredBy,
+                      l10n.poweredBy(AppConfig.producer),
                       style: AppTextStyles.labelSmall.copyWith(
                         color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
                       ),

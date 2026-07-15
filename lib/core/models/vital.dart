@@ -61,18 +61,55 @@ extension VitalTypeX on VitalType {
       case VitalType.respiratoryRate: return const Color(0xFF00BCD4);
     }
   }
+
+  /// Physiologically plausible range for the primary value of this vital
+  /// type. Values outside this range are rejected by [Vital.validate].
+  ///
+  /// FIX (audit H-45): the Vital model previously accepted any double
+  /// value with no bounds checking. A user (or buggy device import) could
+  /// log heartRate = 999, temperature = 500, spO2 = 150% — these bogus
+  /// values would flow into trend analysis, vital-score computation, and
+  /// dashboard charts, potentially suppressing real alerts.
+  (double, double) get validRange {
+    switch (this) {
+      case VitalType.heartRate:         return (20, 250);    // bpm
+      case VitalType.bloodPressure:     return (50, 300);    // systolic mmHg
+      case VitalType.spO2:              return (50, 100);    // %
+      case VitalType.temperature:       return (30, 45);     // °C
+      case VitalType.weight:            return (2, 500);     // kg
+      case VitalType.bloodGlucose:      return (20, 1000);   // mg/dL
+      case VitalType.respiratoryRate:   return (5, 60);      // breaths/min
+    }
+  }
+
+  /// Physiologically plausible range for the secondary value (diastolic BP).
+  /// Only meaningful for [VitalType.bloodPressure].
+  (double, double)? get validRangeSecondary {
+    switch (this) {
+      case VitalType.bloodPressure:     return (30, 200);    // diastolic mmHg
+      default:                          return null;
+    }
+  }
+
+  /// Whether this vital type requires a secondary value (e.g. blood
+  /// pressure requires both systolic and diastolic).
+  bool get requiresSecondary => this == VitalType.bloodPressure;
 }
 
 @JsonSerializable()
 class Vital {
   final String id;
+  @JsonKey(name: 'user_id')
   final String userId;
   final VitalType type;
   final double value;
+  @JsonKey(name: 'value_secondary')
   final double? valueSecondary; // For BP diastolic
+  @JsonKey(name: 'recorded_at')
   final DateTime recordedAt;
   final String? notes;
   final String source; // 'manual', 'device', 'import'
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
 
   Vital({
@@ -98,4 +135,60 @@ class Vital {
   }
 
   String get displayWithUnit => '$displayValue ${type.unit}';
+
+  /// FIX (audit M-16): add copyWith for immutable updates.
+  Vital copyWith({
+    String? id,
+    String? userId,
+    VitalType? type,
+    double? value,
+    double? valueSecondary,
+    DateTime? recordedAt,
+    String? notes,
+    String? source,
+    DateTime? createdAt,
+  }) {
+    return Vital(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      type: type ?? this.type,
+      value: value ?? this.value,
+      valueSecondary: valueSecondary ?? this.valueSecondary,
+      recordedAt: recordedAt ?? this.recordedAt,
+      notes: notes ?? this.notes,
+      source: source ?? this.source,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  /// Validates this vital's values against physiologically plausible ranges.
+  ///
+  /// Returns `null` if valid, or an error message string if invalid.
+  ///
+  /// FIX (audit H-45, H-46): the Vital model previously had no validation.
+  /// A user could log heartRate = 999, spO2 = 150%, or blood pressure with
+  /// no diastolic value. These bogus values would flow into trend analysis
+  /// and vital-score computation, potentially suppressing real alerts.
+  String? validate() {
+    final (min, max) = type.validRange;
+    if (value < min || value > max) {
+      return '${type.displayName} must be between $min and $max ${type.unit}.';
+    }
+
+    if (type.requiresSecondary) {
+      if (valueSecondary == null) {
+        return '${type.displayName} requires both systolic and diastolic values.';
+      }
+      final (sMin, sMax) = type.validRangeSecondary!;
+      if (valueSecondary! < sMin || valueSecondary! > sMax) {
+        return '${type.displayName} diastolic must be between $sMin and $sMax ${type.unit}.';
+      }
+      // Systolic should be greater than diastolic
+      if (value <= valueSecondary!) {
+        return 'Systolic blood pressure must be greater than diastolic.';
+      }
+    }
+
+    return null; // valid
+  }
 }

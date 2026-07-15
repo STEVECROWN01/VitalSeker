@@ -5,6 +5,7 @@ import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/providers/health_passport_provider.dart';
@@ -85,10 +86,16 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
     // JSON numbers may decode as int or double — use num?.toInt() to be safe.
     final urgencyScore = (triage['urgency_score'] as num?)?.toInt() ?? 50;
     final seekCare = triage['seek_care'] as String? ??
-        (urgencyLevel == 'red' || urgencyLevel == 'emergency' ? 'emergency'
-        : urgencyLevel == 'yellow' || urgencyLevel == 'medium' ? 'urgent-care'
+        // FIX (audit H-9, 8.4): map 'critical' and 'red' to emergency.
+        // The previous mapping missed 'critical' (a plausible AI return),
+        // sending critical emergencies to 'schedule-appointment'.
+        // Also: unknown urgency levels default to 'urgent-care' (conservative)
+        // instead of 'schedule-appointment' — better to over-triage than
+        // under-triage for a health app.
+        (urgencyLevel == 'red' || urgencyLevel == 'emergency' || urgencyLevel == 'critical' ? 'emergency'
+        : urgencyLevel == 'yellow' || urgencyLevel == 'medium' || urgencyLevel == 'high' ? 'urgent-care'
         : urgencyLevel == 'green' || urgencyLevel == 'low' ? 'self-care'
-        : 'schedule-appointment');
+        : 'urgent-care'); // conservative default for unknown
 
     // ── Full result fields from the edge function ──
     // The edge function returns: urgency, urgency_label, possible_areas,
@@ -517,6 +524,45 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
             ),
             const SizedBox(height: 28),
 
+            // ── 6.5. Emergency quick-dial (audit H-3) ──
+            // When the triage result indicates emergency or urgent care,
+            // show a prominent "Call 112 / 911 Now" button so the user
+            // can dial emergency services with one tap without leaving
+            // the app. The button uses tel: URI launch (same pattern as
+            // the SOS screen). For non-emergency results, this button is
+            // hidden.
+            if (seekCare == 'emergency' || seekCare == 'urgent-care' ||
+                urgencyLevel == 'red' || urgencyLevel == 'critical') ...[
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () => _callEmergencyServices(),
+                  icon: const Icon(Icons.phone_in_talk, size: 22),
+                  label: Text(
+                    // Use 112 (universal EU) as the default — most users
+                    // who see this will be in regions where 112 works.
+                    // The SOS screen also has 911 and 15 quick-dial buttons.
+                    'Call 112 / 911 Now',
+                    style: TextStyle(
+                      fontFamily: 'Outfit',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.urgencyEmergency,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+                    elevation: 2,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
+
             // ── 7. Action buttons ──
             Row(
               children: [
@@ -569,6 +615,42 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
   }
 
   // ── Helpers ──
+
+  /// Launch the phone dialer with 112 (universal EU emergency number).
+  ///
+  /// Audit H-3 fix: previously, the triage result screen showed "Emergency
+  /// Care Now" as a headline but provided no quick-dial button — the user
+  /// had to leave the app, open the phone app, and dial manually. In a
+  /// real emergency this delay is dangerous.
+  ///
+  /// We use 112 as the default because it's the universal EU emergency
+  /// number and also works on most mobile networks worldwide (GSM phones
+  /// route 112 to the local emergency number even without a SIM). The SOS
+  /// screen has additional quick-dial buttons for 911 (US) and 15 (FR SAMU).
+  Future<void> _callEmergencyServices() async {
+    final uri = Uri(scheme: 'tel', path: '112');
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        if (mounted) {
+          AppSnackBar.error(
+            context,
+            'Could not open the phone dialer. Please call 112 or your local '
+            'emergency number manually.',
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        AppSnackBar.error(
+          context,
+          'Could not open the phone dialer. Please call 112 or your local '
+          'emergency number manually.',
+        );
+      }
+    }
+  }
 
   /// Persist the current triage result to the user's health passport.
   ///
@@ -672,9 +754,14 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
       case 'high':
         return AppColors.urgencyHigh;
       case 'emergency':
+      case 'critical':
+      case 'red':
         return AppColors.urgencyEmergency;
       default:
-        return AppColors.urgencyMedium;
+        // FIX (audit 8.10): default to HIGH (not medium) for unrecognized
+        // urgency levels — conservative. Better to over-alert than
+        // under-alert for a health app.
+        return AppColors.urgencyHigh;
     }
   }
 
@@ -695,6 +782,12 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
 
   /// Headline shown beneath the hero — derived from `seek_care`.
   /// "Monitor at Home" is the green-light (low) variant per the design mockup.
+  //
+  // FIX (audit H-9): the default case previously returned `monitorAtHome`
+  // (self-care) for unknown seek_care values. For a health app, defaulting
+  // to self-care for an unknown urgency is unsafe — the user might actually
+  // need urgent care. The default is now `seeDoctorSoon` (schedule
+  // appointment) — conservative but not alarmist.
   String _seekCareHeadline(String care, AppLocalizations l10n) {
     switch (care) {
       case 'self-care':
@@ -706,7 +799,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
       case 'emergency':
         return l10n.emergencyCareNow;
       default:
-        return l10n.monitorAtHome;
+        return l10n.seeDoctorSoon; // conservative default for unknown
     }
   }
 

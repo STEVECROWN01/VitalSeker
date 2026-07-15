@@ -15,8 +15,11 @@ WeeklyInsight _$WeeklyInsightFromJson(Map<String, dynamic> json) =>
       summary: json['summary'] as String,
       trendAnalysis:
           TrendAnalysis.fromJson(json['trend_analysis'] as Map<String, dynamic>),
-      recommendations: (json['recommendations'] as List<dynamic>?)?.cast<String>() ?? [],
-      vitalScoreChange: json['vital_score_change'] as int? ?? 0,
+      recommendations: (json['recommendations'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      vitalScoreChange: (json['vital_score_change'] as num?)?.toInt() ?? 0,
       generatedAt: DateTime.parse(json['generated_at'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
     );
@@ -37,16 +40,18 @@ Map<String, dynamic> _$WeeklyInsightToJson(WeeklyInsight instance) =>
 
 TrendAnalysis _$TrendAnalysisFromJson(Map<String, dynamic> json) =>
     TrendAnalysis(
-      symptomFrequency: json['symptom_frequency'] as int,
-      avgSeverity: (json['avg_severity'] as num).toDouble(),
+      symptomFrequency: ((json['symptomFrequency'] ?? json['symptom_frequency']) as num).toInt(),
+      avgSeverity: ((json['avgSeverity'] ?? json['avg_severity']) as num).toDouble(),
       direction: json['direction'] as String?,
-      keyFindings: (json['key_findings'] as List<dynamic>?)?.cast<String>() ?? [],
+      keyFindings: ((json['keyFindings'] ?? json['key_findings']) as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$TrendAnalysisToJson(TrendAnalysis instance) =>
     <String, dynamic>{
-      'symptom_frequency': instance.symptomFrequency,
-      'avg_severity': instance.avgSeverity,
+      'symptomFrequency': instance.symptomFrequency,
+      'avgSeverity': instance.avgSeverity,
       'direction': instance.direction,
-      'key_findings': instance.keyFindings,
+      'keyFindings': instance.keyFindings,
     };

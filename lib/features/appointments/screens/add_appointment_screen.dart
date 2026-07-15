@@ -60,7 +60,9 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
   }
 
   Future<void> _saveAppointment() async {
-    if (!_formKey.currentState!.validate()) return;
+    // Validate the form. If validation fails (empty required fields, etc.),
+    // the form fields will display their error messages and we abort.
+    if (!(_formKey.currentState?.validate() ?? false)) return;
     final l10n = AppLocalizations.of(context)!;
 
     setState(() => _isSaving = true);
@@ -72,6 +74,23 @@ class _AddAppointmentScreenState extends ConsumerState<AddAppointmentScreen> {
         _selectedTime.hour,
         _selectedTime.minute,
       );
+
+      // CRITICAL FIX (audit C-13): validate that the appointment time is in
+      // the future. The date picker restricts to today-or-later, but the
+      // time picker has no such restriction — a user can pick today's date
+      // and a time earlier than now (e.g. it's 15:00 and they pick 09:00),
+      // creating an "upcoming" appointment that's already in the past.
+      // Such an appointment would never trigger a reminder and would
+      // confuse the appointments list.
+      if (dateTime.isBefore(DateTime.now())) {
+        if (mounted) {
+          AppSnackBar.error(
+            context,
+            'Appointment time must be in the future. Please pick a later time.',
+          );
+        }
+        return;
+      }
 
       await ref.read(appointmentsProvider.notifier).addAppointment(
             doctorName: _doctorNameController.text.trim(),

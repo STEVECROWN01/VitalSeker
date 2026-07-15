@@ -10,7 +10,17 @@ import 'dart:math';
 import 'supabase_service.dart';
 
 class AuthService {
-  final SupabaseClient _client = SupabaseService().client;
+  // FIX (audit H-52): make _client a lazy getter instead of a field
+  // initializer. The previous code `final SupabaseClient _client =
+  // SupabaseService().client;` threw StateError if AuthService was
+  // instantiated before Supabase.initialize() completed. Since
+  // authServiceProvider is a lazy Provider, any widget that reads it
+  // during the first frame (before _initializeServices finishes) would
+  // throw and put the provider into a permanent error state.
+  //
+  // With a getter, the SupabaseService().client call is deferred to
+  // method-call time, when Supabase is guaranteed to be ready.
+  SupabaseClient get _client => SupabaseService().client;
 
   Stream<AuthState> get authStateChanges => _client.auth.onAuthStateChange;
 

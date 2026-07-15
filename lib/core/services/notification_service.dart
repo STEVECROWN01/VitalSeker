@@ -175,6 +175,10 @@ class NotificationService {
   }
 
   /// Schedule a daily notification at a specific hour.
+  ///
+  /// FIX (audit M-17): delegate to _scheduleDaily instead of duplicating its
+  /// logic. The previous implementation didn't use _getSavedSound (always
+  /// hardcoded 'notification') and didn't use _channelName.
   Future<void> scheduleDailyReminder({
     required int hour,
     required int minute,
@@ -183,43 +187,15 @@ class NotificationService {
     String channelId = _channelReminders,
     int id = 0,
   }) async {
-    if (!_initialized) await initialize();
-
-    final now = tz.TZDateTime.now(tz.local);
-    var scheduled = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
-    if (scheduled.isBefore(now)) {
-      scheduled = scheduled.add(const Duration(days: 1));
-    }
-
-    final androidDetails = AndroidNotificationDetails(
-      channelId,
-      'Scheduled Notifications',
-      importance: Importance.high,
-      priority: Priority.high,
-      sound: const RawResourceAndroidNotificationSound('notification'),
-      icon: '@mipmap/ic_launcher',
+    await _scheduleDaily(
+      id: id,
+      channelId: channelId,
+      hour: hour,
+      minute: minute,
+      title: title,
+      body: body,
     );
 
-    const iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    final details = NotificationDetails(android: androidDetails, iOS: iosDetails);
-
-    await _plugin.zonedSchedule(
-      id,
-      title,
-      body,
-      scheduled,
-      details,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
-    );
-
-    // Save the schedule preference
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('notif_reminder_enabled', true);
     await prefs.setInt('notif_reminder_hour', hour);
@@ -227,12 +203,25 @@ class NotificationService {
   }
 
   /// Cancel a scheduled notification by ID.
+  ///
+  /// FIX (audit M-16): handle IDs 0-4 (previously only 0-2). IDs 3 (health
+  /// tips) and 4 (weekly report) were not handled, so cancelling them didn't
+  /// reset the SharedPreferences flag — the UI showed them as enabled even
+  /// after cancellation.
   Future<void> cancelNotification(int id) async {
     await _plugin.cancel(id);
     final prefs = await SharedPreferences.getInstance();
-    if (id == 0) await prefs.setBool('notif_reminder_enabled', false);
-    if (id == 1) await prefs.setBool('notif_insights_enabled', false);
-    if (id == 2) await prefs.setBool('notif_medications_enabled', false);
+    switch (id) {
+      case 0: await prefs.setBool('notif_reminder_enabled', false); break;
+      case 1: await prefs.setBool('notif_medications_enabled', false); break;
+      case 2: await prefs.setBool('notif_vitals_enabled', false); break;
+      case 3: await prefs.setBool('notif_tips_enabled', false); break;
+      case 4: await prefs.setBool('notif_insights_enabled', false); break;
+      // Appointment reminders use IDs >= 100 (see scheduleAppointmentReminder).
+      // They don't have a prefs flag — cancelling the plugin notification is
+      // sufficient.
+      default: break;
+    }
   }
 
   /// Cancel all notifications.
@@ -240,8 +229,10 @@ class NotificationService {
     await _plugin.cancelAll();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('notif_reminder_enabled', false);
-    await prefs.setBool('notif_insights_enabled', false);
     await prefs.setBool('notif_medications_enabled', false);
+    await prefs.setBool('notif_vitals_enabled', false);
+    await prefs.setBool('notif_tips_enabled', false);
+    await prefs.setBool('notif_insights_enabled', false);
   }
 
   /// Set a custom sound for a notification channel.
@@ -418,9 +409,18 @@ class NotificationService {
 
     final now = tz.TZDateTime.now(tz.local);
     var scheduled = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+    // FIX (audit M-18): validate weekday is in [1, 7] to prevent an
+    // infinite loop. If weekday is 0, 8, or negative, the while condition
+    // `scheduled.weekday != weekday` is always true and the loop never exits.
+    if (weekday < 1 || weekday > 7) {
+      debugPrint('[Notifications] Invalid weekday $weekday — must be 1-7. Defaulting to 1 (Monday).');
+    }
+    final targetWeekday = (weekday < 1 || weekday > 7) ? 1 : weekday;
     // Advance to the target weekday
-    while (scheduled.weekday != weekday || scheduled.isBefore(now)) {
+    int safetyCounter = 0;
+    while ((scheduled.weekday != targetWeekday || scheduled.isBefore(now)) && safetyCounter < 14) {
       scheduled = scheduled.add(const Duration(days: 1));
+      safetyCounter++;
     }
 
     final soundName = sound ?? await _getSavedSound(_channelInsights);

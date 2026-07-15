@@ -27,12 +27,18 @@ class VitalsNotifier extends AsyncNotifier<List<Vital>> {
       valueSecondary: valueSecondary,
       recordedAt: recordedAt ?? now,
       notes: notes,
-      // Explicitly set source='manual' — the model constructor defaults to
-      // 'manual' but being explicit here makes the intent clear and is
-      // robust against future changes to the default.
       source: 'manual',
       createdAt: now,
     );
+
+    // FIX (audit H-45, H-46): validate the vital before inserting. Reject
+    // out-of-range values and require valueSecondary for blood pressure.
+    // The validate() method returns an error message string or null.
+    final validationError = vital.validate();
+    if (validationError != null) {
+      throw ArgumentError(validationError);
+    }
+
     try {
       final db = ref.read(databaseServiceProvider);
       await db.insertVital(vital.toJson());
@@ -64,12 +70,16 @@ class VitalsNotifier extends AsyncNotifier<List<Vital>> {
   }
 }
 
-final vitalsByTypeProvider = Provider.family<List<Vital>, VitalType>((ref, type) {
+/// FIX (audit M-14): use .autoDispose so the filtered list is released when
+/// the vitals history screen is popped. The family provider creates one
+/// instance per VitalType — without autoDispose, all 7 types stay in memory
+/// for the app's lifetime.
+final vitalsByTypeProvider = Provider.autoDispose.family<List<Vital>, VitalType>((ref, type) {
   final vitals = ref.watch(vitalsProvider).valueOrNull ?? [];
   return vitals.where((v) => v.type == type).toList();
 });
 
-final latestVitalProvider = Provider.family<Vital?, VitalType>((ref, type) {
+final latestVitalProvider = Provider.autoDispose.family<Vital?, VitalType>((ref, type) {
   final vitals = ref.watch(vitalsByTypeProvider(type));
   if (vitals.isEmpty) return null;
   final sorted = List<Vital>.from(vitals)..sort((a, b) => b.recordedAt.compareTo(a.recordedAt));

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import '../../../core/config/app_config.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -133,33 +134,66 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
         return;
       }
       final bytes = byteData.buffer.asUint8List();
-      
-      // Save directly to the phone's Downloads directory — no folder picker
-      Directory? saveDir;
-      try {
-        // On Android, getExternalStoragePublicDirectory gives /storage/emulated/0/Download
-        saveDir = await path_provider.getDownloadsDirectory();
-      } catch (_) {}
-      
-      if (saveDir == null) {
-        // Fallback: try external storage
-        try {
-          saveDir = Directory('/storage/emulated/0/Download');
-          if (!await saveDir.exists()) {
-            await saveDir.create(recursive: true);
-          }
-        } catch (_) {
-          // Final fallback: temp directory
-          saveDir = await path_provider.getTemporaryDirectory();
-        }
-      }
-      
+
+      // FIX (audit H-7): platform-aware save location.
+      //
+      // On iOS, getDownloadsDirectory() returns null (iOS has no public
+      // Downloads directory). The previous code fell back to a hardcoded
+      // Android path (/storage/emulated/0/Download) that doesn't exist on
+      // iOS, then to getTemporaryDirectory() — but the success snackbar
+      // still said "saved to Downloads", which was a lie. iOS also purges
+      // temp files.
+      //
+      // Now: on iOS we save to the app's documents directory and present
+      // a share sheet so the user can save to Photos or Files. On Android
+      // we use getDownloadsDirectory() (works via SAF on Android 10+).
       final fileName = 'vitalseker_qr_${DateTime.now().millisecondsSinceEpoch}.png';
-      final file = File('${saveDir.path}/$fileName');
-      await file.writeAsBytes(bytes);
-      
-      if (mounted) {
-        AppSnackBar.success(context, 'QR code saved to Downloads!');
+
+      if (Platform.isIOS) {
+        // iOS: save to app documents, then offer a share sheet so the user
+        // can save to Photos or Files. The share sheet is the iOS-native
+        // way to let users choose where to save.
+        final docsDir = await path_provider.getApplicationDocumentsDirectory();
+        final file = File('${docsDir.path}/$fileName');
+        await file.writeAsBytes(bytes);
+        if (mounted) {
+          // Present the share sheet — the user can save to Photos, Files,
+          // or send via Messages/Mail.
+          await SharePlus.instance.share(ShareParams(
+            files: [XFile(file.path)],
+            text: 'VitalSeker Health Passport QR Code',
+          ));
+          AppSnackBar.success(
+            context,
+            'QR code saved. Use the share sheet to save to Photos or Files.',
+          );
+        }
+      } else {
+        // Android: save to the public Downloads directory.
+        Directory? saveDir;
+        try {
+          saveDir = await path_provider.getDownloadsDirectory();
+        } catch (_) {}
+
+        if (saveDir == null) {
+          // Fallback: app-specific external storage (still accessible via
+          // the system file picker on Android 10+).
+          try {
+            saveDir = await path_provider.getExternalStorageDirectory() ??
+                await path_provider.getTemporaryDirectory();
+          } catch (_) {
+            saveDir = await path_provider.getTemporaryDirectory();
+          }
+        }
+
+        final file = File('${saveDir.path}/$fileName');
+        await file.writeAsBytes(bytes);
+        if (mounted) {
+          AppSnackBar.success(
+            context,
+            'QR code saved to ${saveDir.path.contains('Download') ? "Downloads" : "app storage"}.',
+          );
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -194,11 +228,45 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       final file = File(
           '${dir.path}/vitalseker_qr_${DateTime.now().millisecondsSinceEpoch}.png');
       await file.writeAsBytes(bytes);
-      
+
+      // FIX (audit H-8): show a confirmation dialog before sharing so the
+      // user understands they're sharing their full medical passport. The
+      // previous code shared immediately on tap — anyone receiving the share
+      // (messages, email, social media) could scan the QR and view the user's
+      // blood type, allergies, conditions, and medications.
+      final l10n = AppLocalizations.of(context)!;
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Share Medical Passport?'),
+          content: const Text(
+            'This QR code grants access to your medical information '
+            '(blood type, allergies, chronic conditions, medications, '
+            'emergency contacts). Anyone who receives it can scan it '
+            'and view your health data.\n\n'
+            'Only share it with people you trust — doctors, nurses, or '
+            'emergency contacts. Do not post it on social media.\n\n'
+            'The QR code expires in 24 hours.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l10n.cancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(l10n.share),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true) return;
+
       // Share the QR image (not text)
       await SharePlus.instance.share(ShareParams(
         files: [XFile(file.path)],
-        text: 'My VitalSeker Health Passport QR Code — scan to view my medical info',
+        text: 'My VitalSeker Health Passport QR Code — scan to view my medical info. '
+              'This code expires in 24 hours. Only share with trusted healthcare providers.',
       ));
     } catch (e) {
       if (mounted) {
@@ -334,7 +402,20 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: QrImageView(
-                            data: 'VITALSEKER_PASSPORT:$_qrToken',
+                            // FIX (audit H-54): encode a real URL so standard
+                            // QR scanners (phone camera, third-party apps)
+                            // can open it in a browser. The previous format
+                            // 'VITALSEKER_PASSPORT:token' was not a URL —
+                            // standard scanners saw it as text and did nothing.
+                            // An emergency responder with a standard scanner
+                            // would see gibberish instead of the passport.
+                            //
+                            // The URL points to the VitalSeker passport viewer
+                            // web page, which decodes the token and displays
+                            // the medical info. The domain must be configured
+                            // in your DNS — replace 'passport.vitalseker.app'
+                            // with your actual domain.
+                            data: 'https://passport.vitalseker.app/v/$_qrToken',
                             version: QrVersions.auto,
                             size: 240,
                             backgroundColor: Colors.white,
@@ -439,7 +520,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
               const SizedBox(height: 16),
               // ── 6. Footer ──
               Text(
-                l10n.poweredBy,
+                l10n.poweredBy(AppConfig.producer),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Inter',

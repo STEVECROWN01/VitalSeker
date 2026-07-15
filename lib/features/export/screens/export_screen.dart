@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +11,7 @@ import 'dart:io';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
+import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
@@ -60,6 +62,26 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     'All Time',
   ];
 
+  /// FIX (audit H-30): compute the start date for the selected date range.
+  /// The previous code used _dateRangeIndex only for the header text and
+  /// AI summary — the actual data was never filtered. Now _hydratePreview
+  /// uses this to filter symptom logs and (when available) vitals.
+  DateTime? _rangeStartDate() {
+    final now = DateTime.now();
+    switch (_dateRangeIndex) {
+      case 0: // Last 30 Days
+        return now.subtract(const Duration(days: 30));
+      case 1: // Last 3 Months
+        return DateTime(now.year, now.month - 3, now.day);
+      case 2: // Year to Date
+        return DateTime(now.year, 1, 1);
+      case 3: // All Time
+        return null; // no filter
+      default:
+        return now.subtract(const Duration(days: 30));
+    }
+  }
+
   bool _isExporting = false;
   bool _isEmailing = false;
 
@@ -75,9 +97,33 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _hydratePreview());
   }
 
-  void _hydratePreview() {
+  Future<void> _hydratePreview() async {
     final passport = ref.read(healthPassportProvider).valueOrNull;
     final profile = ref.read(userProfileProvider).valueOrNull;
+
+    // CRITICAL FIX (audit C-14): load symptom history so it actually
+    // appears in the PDF. The previous code only loaded patient + passport
+    // data, so the "Symptoms & Triage Log" section was always empty even
+    // when the user had the checkbox checked.
+    //
+    // FIX (audit H-30): filter symptom history by the selected date range.
+    // The previous code loaded ALL logs regardless of the dropdown selection.
+    final DateTime? rangeStart = _rangeStartDate();
+    List<Map<String, dynamic>> symptomHistory = [];
+    try {
+      final logs = await ref.read(symptomLogsProvider.future);
+      symptomHistory = logs
+          .where((log) => rangeStart == null || log.loggedAt.isAfter(rangeStart))
+          .map((log) => {
+        'date': log.loggedAt.toIso8601String(),
+        'symptoms': log.symptoms,
+        'severity': log.severity,
+        'triage_result': log.triageResult,
+      }).toList();
+    } catch (e) {
+      debugPrint('Failed to load symptom logs for export: $e');
+    }
+
     if (!mounted) return;
     setState(() {
       _previewData = {
@@ -98,6 +144,8 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                 'chronic_conditions': passport.chronicConditions,
               }
             : null,
+        'symptom_history': symptomHistory,
+        'range_start': rangeStart?.toIso8601String(),
       };
     });
   }
@@ -160,7 +208,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                     ),
                     pw.SizedBox(height: 2),
                     pw.Text(
-                      'COMPREHENSIVE HEALTH REPORT',
+                      l10n.comprehensiveHealthReport,
                       style: pw.TextStyle(
                         fontSize: 9,
                         fontWeight: pw.FontWeight.bold,
@@ -174,7 +222,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                   crossAxisAlignment: pw.CrossAxisAlignment.end,
                   children: [
                     pw.Text(
-                      'Generated: ${_formatDate(DateTime.now())}',
+                      '${l10n.generated}: ${_formatDate(DateTime.now())}',
                       style: pw.TextStyle(
                         fontSize: 9,
                         color: PdfColors.grey700,
@@ -182,7 +230,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                     ),
                     pw.SizedBox(height: 2),
                     pw.Text(
-                      'Range: ${_dateRangeOptions[_dateRangeIndex]}',
+                      '${l10n.range}: ${_dateRangeOptions[_dateRangeIndex]}',
                       style: pw.TextStyle(
                         fontSize: 8,
                         color: PdfColors.grey500,
@@ -197,40 +245,40 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
             final blocks = <pw.Widget>[];
 
             if (_includePatientOverview) {
-              blocks.add(pw.Header(level: 0, text: 'Patient Overview & Vital Stats'));
+              blocks.add(pw.Header(level: 0, text: l10n.patientOverview));
               blocks.add(pw.Paragraph(
-                text: 'Name: ${_previewData['patient']?['name'] ?? 'N/A'}',
+                text: '${l10n.nameLabel}: ${_previewData['patient']?['name'] ?? l10n.notAvailable}',
               ));
               blocks.add(pw.Paragraph(
-                text: 'Email: ${_previewData['patient']?['email'] ?? 'N/A'}',
+                text: '${l10n.emailLabel}: ${_previewData['patient']?['email'] ?? l10n.notAvailable}',
               ));
               blocks.add(pw.Paragraph(
-                text: 'Date of Birth: ${_previewData['patient']?['date_of_birth'] ?? 'N/A'}',
+                text: '${l10n.dateOfBirthLabel}: ${_previewData['patient']?['date_of_birth'] ?? l10n.notAvailable}',
               ));
               blocks.add(pw.Paragraph(
-                text: 'Blood Type: ${_previewData['patient']?['blood_type'] ?? 'N/A'}',
+                text: '${l10n.bloodTypeLabel}: ${_previewData['patient']?['blood_type'] ?? l10n.notAvailable}',
               ));
               if (_previewData['health_passport'] != null) {
                 blocks.add(pw.Paragraph(
                   text:
-                      'Vital Score: ${_previewData['health_passport']['vital_score'] ?? 'N/A'}/100',
+                      '${l10n.vitalScoreLabel}: ${_previewData['health_passport']['vital_score'] ?? l10n.notAvailable}/100',
                 ));
                 blocks.add(pw.Paragraph(
                   text:
-                      'Chronic Conditions: ${(_previewData['health_passport']['chronic_conditions'] as List?)?.join(', ') ?? 'None'}',
+                      '${l10n.chronicConditionsLabel}: ${(_previewData['health_passport']['chronic_conditions'] as List?)?.join(', ') ?? l10n.noneRecorded}',
                 ));
               }
             }
 
             if (_includeMedications && _previewData['health_passport'] != null) {
-              blocks.add(pw.Header(level: 0, text: 'Medications & Allergies'));
+              blocks.add(pw.Header(level: 0, text: l10n.medicationsAndAllergies));
               blocks.add(pw.Paragraph(
                 text:
-                    'Allergies: ${(_previewData['health_passport']['allergies'] as List?)?.join(', ') ?? 'None'}',
+                      '${l10n.allergiesLabel}: ${(_previewData['health_passport']['allergies'] as List?)?.join(', ') ?? l10n.noneRecorded}',
               ));
               blocks.add(pw.Paragraph(
                 text:
-                    'Medications: ${(_previewData['health_passport']['medications'] as List?)?.join(', ') ?? 'None'}',
+                    '${l10n.medicationsLabel}: ${(_previewData['health_passport']['medications'] as List?)?.join(', ') ?? l10n.noneRecorded}',
               ));
             }
 
@@ -259,11 +307,26 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
 
             if (_includeAiSummary) {
               blocks.add(pw.Header(level: 0, text: 'AI Analysis Summary'));
+              // CRITICAL FIX (audit C-15): the previous text hardcoded
+              // "No critical flags detected" regardless of the patient's
+              // actual health data. That was a medical claim that could
+              // mislead a doctor into thinking the patient had been cleared
+              // by an AI when no analysis was actually performed. We now
+              // use neutral, factual language that defers clinical
+              // judgement to the reviewing clinician.
+              final vitalScore = _previewData['health_passport']?['vital_score'];
+              final symptomCount = (_previewData['symptom_history'] as List?)?.length ?? 0;
               final aiText = (_previewData['health_passport'] != null)
-                  ? 'Patient exhibits generally stable vitals over the ${_dateRangeOptions[_dateRangeIndex].toLowerCase()}. '
-                      'Vital Score is ${_previewData['health_passport']['vital_score'] ?? 'N/A'}/100. '
-                      'No critical flags detected. Continue current hydration protocol and monitor trends.'
-                  : 'AI analysis unavailable — no health passport on file for this patient.';
+                  ? 'Vital Score: ${vitalScore ?? 'N/A'}/100 '
+                      '(see Vital Score reference above for interpretation). '
+                      'Symptom/triage logs in selected range: $symptomCount. '
+                      'Refer to vital trends, symptom log, and clinical '
+                      'assessment sections above for full context. '
+                      'This summary is auto-generated and does not constitute '
+                      'a medical diagnosis.'
+                  : 'AI analysis unavailable — no health passport on file '
+                      'for this patient. Refer to the symptom log and any '
+                      'provided documents for clinical assessment.';
               blocks.add(pw.Paragraph(text: aiText));
             }
 
@@ -285,7 +348,9 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
       );
 
       final output = await getTemporaryDirectory();
-      final file = File('${output.path}/vitalseker_health_passport.pdf');
+      // FIX (audit 11.11): include timestamp in filename so multiple exports
+      // don't overwrite each other.
+      final file = File('${output.path}/vitalseker_health_report_${DateTime.now().millisecondsSinceEpoch}.pdf');
       await file.writeAsBytes(await pdf.save());
 
       if (!mounted) return;
@@ -381,8 +446,13 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                     _ConfigurationCard(
                       isDark: isDark,
                       dateRangeIndex: _dateRangeIndex,
-                      onDateRangeChanged: (i) =>
-                          setState(() => _dateRangeIndex = i),
+                      // FIX (audit H-30): re-hydrate the preview when the
+                      // date range changes so the filtered symptom history
+                      // updates immediately.
+                      onDateRangeChanged: (i) {
+                        setState(() => _dateRangeIndex = i);
+                        _hydratePreview();
+                      },
                       includePatientOverview: _includePatientOverview,
                       includeSymptomsLog: _includeSymptomsLog,
                       includeMedications: _includeMedications,
@@ -945,7 +1015,7 @@ class _PreviewPane extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => Scaffold(
-                      appBar: AppBar(title: const Text('Preview')),
+                      appBar: AppBar(title: Text(l10n.preview)),
                       body: InteractiveViewer(
                         minScale: 0.5,
                         maxScale: 5.0,
@@ -1135,18 +1205,18 @@ class _PreviewDocument extends StatelessWidget {
     } else if (triageResult is Map) {
       raw = (triageResult['urgencyLevel'] ??
               triageResult['urgency_level'] ??
-              triageResult['seekCare'])
+              triageResult['seekCare'] ??
+              triageResult['seek_care'])
           ?.toString();
     }
     if (raw == null || raw.isEmpty) return null;
     final lower = raw.toLowerCase();
-    if (lower.contains('emergency') || lower.contains('red')) return 'emergency';
-    if (lower.contains('high') || lower.contains('yellow') ||
-        lower.contains('urgent')) return 'high';
-    if (lower.contains('medium') || lower.contains('appointment')) return 'medium';
-    if (lower.contains('low') || lower.contains('green') ||
-        lower.contains('self-care') || lower.contains('self_care') ||
-        lower.contains('routine')) return 'low';
+    // FIX (audit 11.10): use word-boundary matching to avoid false positives
+    // like 'yellow' matching 'low' (contains 'low'), or 'below' matching 'low'.
+    if (lower.contains('emergency') || lower.contains('red') || lower.contains('critical')) return 'emergency';
+    if (RegExp(r'\b(high|yellow|urgent)\b').hasMatch(lower)) return 'high';
+    if (RegExp(r'\b(medium|appointment|schedule)\b').hasMatch(lower)) return 'medium';
+    if (RegExp(r'\b(low|green|self.?care|routine)\b').hasMatch(lower)) return 'low';
     return null;
   }
 
@@ -1204,7 +1274,7 @@ class _PreviewDocument extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          'COMPREHENSIVE HEALTH REPORT',
+                          l10n.comprehensiveHealthReport,
                           style: TextStyle(
                             fontFamily: 'DMSans',
                             fontSize: 8,
@@ -1220,7 +1290,7 @@ class _PreviewDocument extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        'Generated: ${_formatToday()}',
+                        '${l10n.generated}: ${_formatToday()}',
                         style: const TextStyle(
                           fontFamily: 'JetBrainsMono',
                           fontSize: 9,
@@ -1257,24 +1327,24 @@ class _PreviewDocument extends StatelessWidget {
                 child: Column(
                   children: [
                     _PreviewInfoRow(
-                      label: 'Patient Name',
+                      label: l10n.nameLabel,
                       value: _patientName,
                     ),
                     const SizedBox(height: 6),
                     _PreviewInfoRow(
-                      label: 'DOB / Age',
+                      label: l10n.dateOfBirthLabel,
                       value: _patientDob,
                     ),
                     const SizedBox(height: 6),
                     _PreviewInfoRow(
-                      label: 'Primary Care Physician',
+                      label: l10n.primaryCarePhysician,
                       // Use real physician name from data if available,
                       // otherwise "—" (was hardcoded 'Dr. Sarah Jenkins').
                       value: previewData['patient']?['primary_care_physician'] ?? '—',
                     ),
                     const SizedBox(height: 6),
                     _PreviewInfoRow(
-                      label: 'Reporting Period',
+                      label: l10n.range,
                       value: dateRangeLabel,
                       valueColor: const Color(0xFF005F46),
                       mono: true,
@@ -1307,7 +1377,7 @@ class _PreviewDocument extends StatelessWidget {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'AI Diagnostic Summary',
+                          l10n.aiAnalysisSummary,
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
@@ -1358,7 +1428,7 @@ class _PreviewDocument extends StatelessWidget {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'Medications & Allergies',
+                          l10n.medicationsAndAllergies,
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             fontSize: 12,
@@ -1408,7 +1478,7 @@ class _PreviewDocument extends StatelessWidget {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    'Recent Symptoms Log',
+                    l10n.symptomsAndTriageLog,
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       fontSize: 12,
@@ -1436,11 +1506,11 @@ class _PreviewDocument extends StatelessWidget {
                         vertical: 4,
                       ),
                       child: Row(
-                        children: const [
+                        children: [
                           Expanded(
                             flex: 2,
                             child: Text(
-                              'DATE',
+                              l10n.dateOfBirthLabel.toUpperCase(),
                               style: TextStyle(
                                 fontFamily: 'DMSans',
                                 fontSize: 8,
@@ -1453,7 +1523,7 @@ class _PreviewDocument extends StatelessWidget {
                           Expanded(
                             flex: 3,
                             child: Text(
-                              'SYMPTOM',
+                              l10n.symptomsLabel.toUpperCase(),
                               style: TextStyle(
                                 fontFamily: 'DMSans',
                                 fontSize: 8,
@@ -1466,7 +1536,7 @@ class _PreviewDocument extends StatelessWidget {
                           Expanded(
                             flex: 2,
                             child: Text(
-                              'TRIAGE',
+                              l10n.triage.toUpperCase(),
                               style: TextStyle(
                                 fontFamily: 'DMSans',
                                 fontSize: 8,
@@ -1520,7 +1590,7 @@ class _PreviewDocument extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'CRAFTED UNDER ${AppConfig.producer.toUpperCase()} DESIGN GUIDANCE',
+                    l10n.poweredBy(AppConfig.producer).toUpperCase(),
                     style: TextStyle(
                       fontFamily: 'DMSans',
                       fontSize: 7,
@@ -1530,7 +1600,7 @@ class _PreviewDocument extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Page 1 of 2',
+                    'Page 1',
                     style: TextStyle(
                       fontFamily: 'JetBrainsMono',
                       fontSize: 7,

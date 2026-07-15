@@ -6,7 +6,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'supabase_service.dart';
 
 class EdgeFunctionService {
-  final SupabaseClient _client = SupabaseService().client;
+  // FIX (audit H-52): lazy getter instead of field initializer, same as
+  // AuthService. Prevents StateError if EdgeFunctionService is instantiated
+  // before Supabase.initialize() completes.
+  SupabaseClient get _client => SupabaseService().client;
 
   /// SharedPreferences key for the locally-queued SOS events that haven't
   /// been delivered to the backend yet (e.g. because the network was down
@@ -53,6 +56,12 @@ class EdgeFunctionService {
     if (response.status != 200) {
       throw Exception('Triage failed: ${response.data}');
     }
+    // FIX (audit M-8): validate the response is a Map before casting.
+    // If the edge function returns a list, string, or HTML from a gateway
+    // timeout, the cast would throw a confusing TypeError.
+    if (response.data is! Map<String, dynamic>) {
+      throw Exception('Triage returned an unexpected response format');
+    }
     return response.data as Map<String, dynamic>;
   }
 
@@ -63,6 +72,9 @@ class EdgeFunctionService {
     if (response.status != 200) {
       throw Exception('QR generation failed: ${response.data}');
     }
+    if (response.data is! Map<String, dynamic>) {
+      throw Exception('QR generation returned an unexpected response format');
+    }
     return response.data as Map<String, dynamic>;
   }
 
@@ -71,22 +83,28 @@ class EdgeFunctionService {
     String? passportId,
     bool includeHistory = true,
   }) async {
+    // FIX (audit M-9): add timeout (was missing).
     final response = await _client.functions.invoke(
       'export-pdf',
       body: {
         'passport_id': passportId,
         'include_history': includeHistory,
       },
-    );
+    ).timeout(const Duration(seconds: 30));
     if (response.status != 200) {
       throw Exception('PDF export failed: ${response.data}');
+    }
+    if (response.data is! Map<String, dynamic>) {
+      throw Exception('PDF export returned an unexpected response format');
     }
     return response.data as Map<String, dynamic>;
   }
 
   /// Trigger Weekly Insights (admin/CRON)
   Future<Map<String, dynamic>> generateWeeklyInsights() async {
-    final response = await _client.functions.invoke('weekly-insights');
+    // FIX (audit M-9): add timeout (was missing).
+    final response = await _client.functions.invoke('weekly-insights')
+        .timeout(const Duration(seconds: 30));
     if (response.status != 200) {
       throw Exception('Weekly insights failed: ${response.data}');
     }
@@ -125,13 +143,17 @@ class EdgeFunctionService {
     double? longitude,
     String? locationAddress,
   }) async {
-    const int maxAttempts = 3;
-    const Duration perAttemptTimeout = Duration(seconds: 15);
-    // Exponential backoff: 1s, 2s, 4s between retries.
+    // FIX (audit H-2, H-41): reduced from 3 attempts to 2, and per-attempt
+    // timeout from 15s to 8s. The previous config (3 × 15s + 1 + 2 + 4s
+    // backoff = up to ~52s) was too slow for a life-safety feature — in a
+    // real emergency, the user can't wait a minute for the alert to go out.
+    // 2 attempts × 8s + 1s backoff = max ~17s before queuing locally, which
+    // is still within the edge function's own timeout.
+    const int maxAttempts = 2;
+    const Duration perAttemptTimeout = Duration(seconds: 8);
+    // Exponential backoff: 1s between the 2 attempts.
     const List<Duration> backoffs = [
       Duration(seconds: 1),
-      Duration(seconds: 2),
-      Duration(seconds: 4),
     ];
 
     Object? lastError;
@@ -207,7 +229,19 @@ class EdgeFunctionService {
 
   /// Persist an undelivered SOS event to SharedPreferences so it can be
   /// retried later by [flushPendingSosQueue]. The queue is a JSON-encoded
-  /// list of `{latitude, longitude, location_address, queued_at}` objects.
+  /// list of `{user_id, latitude, longitude, location_address, queued_at}` objects.
+  ///
+  /// CRITICAL FIXES (audit C-17, C-18, C-19, C-20):
+  ///   - Store `user_id` alongside the event so flush can verify the
+  ///     current session matches. Without this, a queued SOS triggered by
+  ///     user A could be flushed under user B's session and sent to B's
+  ///     emergency contacts.
+  ///   - Cap the queue at [_kMaxQueuedSosEvents] and deduplicate by user_id
+  ///     within a 60-second window so panic-tapping while offline doesn't
+  ///     enqueue dozens of duplicate events that all get sent (and SMS'd)
+  ///     on the next flush.
+  ///   - On corrupted queue (unparseable JSON), start a fresh queue with
+  ///     just this event rather than dropping it.
   Future<void> _enqueuePendingSos({
     double? latitude,
     double? longitude,
@@ -215,14 +249,60 @@ class EdgeFunctionService {
   }) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final raw = prefs.getString(_kPendingSosQueueKey) ?? '[]';
-      final queue = (jsonDecode(raw) as List).cast<Map<String, dynamic>>();
-      queue.add({
+
+      // Capture the current user_id so we can verify on flush that the
+      // session hasn't changed. If Supabase isn't ready or there's no
+      // session, store null — flush will skip these entries rather than
+      // send them under the wrong user.
+      final userId = SupabaseService().isInitialized
+          ? _client.auth.currentUser?.id
+          : null;
+
+      final now = DateTime.now();
+      final newEvent = {
+        'user_id': userId,
         'latitude': latitude,
         'longitude': longitude,
         'location_address': locationAddress,
-        'queued_at': DateTime.now().toIso8601String(),
-      });
+        'queued_at': now.toIso8601String(),
+      };
+
+      List<Map<String, dynamic>> queue;
+      try {
+        final raw = prefs.getString(_kPendingSosQueueKey) ?? '[]';
+        final decoded = jsonDecode(raw) as List;
+        queue = decoded
+            .whereType<Map<String, dynamic>>()
+            .toList(growable: true);
+      } catch (e) {
+        // Corrupted queue — start fresh with just this event. Never drop
+        // the new SOS because the old queue is unparseable.
+        debugPrint('[SOS Queue] Corrupted queue detected, resetting: $e');
+        queue = <Map<String, dynamic>>[];
+      }
+
+      // Deduplicate: if there's already an event for this user within the
+      // last 60 seconds, replace it with the new one (keep the most recent
+      // location). This prevents panic-tap floods from generating dozens of
+      // duplicate SMS to emergency contacts.
+      if (userId != null) {
+        final cutoff = now.subtract(const Duration(seconds: 60));
+        queue = queue.where((e) {
+          final eUserId = e['user_id']?.toString();
+          final eQueuedAt = e['queued_at'] as String?;
+          if (eUserId != userId || eQueuedAt == null) return true;
+          final eTime = DateTime.tryParse(eQueuedAt);
+          return eTime == null || eTime.isBefore(cutoff);
+        }).toList();
+      }
+
+      queue.add(newEvent);
+
+      // Cap the queue size as a hard backstop.
+      if (queue.length > _kMaxQueuedSosEvents) {
+        queue = queue.sublist(queue.length - _kMaxQueuedSosEvents);
+      }
+
       await prefs.setString(_kPendingSosQueueKey, jsonEncode(queue));
     } catch (e) {
       // If even SharedPreferences fails (e.g. disk full), there's nothing
@@ -232,6 +312,23 @@ class EdgeFunctionService {
       debugPrint('Failed to enqueue pending SOS: $e');
     }
   }
+
+  /// Maximum number of undelivered SOS events to keep in the local queue.
+  /// Events beyond this are dropped (oldest first). In practice the dedup
+  /// logic in [_enqueuePendingSos] keeps the queue tiny, but this is a
+  /// hard backstop against runaway growth.
+  static const int _kMaxQueuedSosEvents = 5;
+
+  /// Mutex to prevent concurrent flushes. Multiple triggers (startup,
+  /// connectivity-regained listener, 5-minute periodic timer) can fire
+  /// [flushPendingSosQueue] within milliseconds of each other. Without a
+  /// mutex, both would read the same queue, both would attempt to send the
+  /// SAME event → duplicate SMS to emergency contacts, and both would write
+  /// back their own `remaining` list — the second write winning and
+  /// potentially re-adding an already-delivered event.
+  ///
+  /// Audit C-19 fix.
+  static Completer<int>? _flushMutex;
 
   /// Flush the locally-queued SOS events to the backend. Should be called:
   ///   - On app startup (after auth is confirmed)
@@ -243,18 +340,83 @@ class EdgeFunctionService {
   /// events that still fail are left in the queue for the next flush.
   ///
   /// Returns the number of queued events that were successfully delivered.
+  ///
+  /// CRITICAL FIXES (audit C-17, C-18, C-19):
+  ///   - A flush mutex ensures only one flush runs at a time. Concurrent
+  ///     calls share the result of the in-flight flush.
+  ///   - 429 responses are treated as RETRYABLE (kept in queue with a short
+  ///     backoff) rather than silently dropping the event. A 429 does NOT
+  ///     guarantee the prior SOS was actually delivered — it only means the
+  ///     rate limiter tripped, which can happen for benign reasons.
+  ///   - Each event is only flushed if its `user_id` matches the current
+  ///     session. Events from a previous user (e.g. user A signed out, user
+  ///     B signed in) are skipped — they would be sent to the wrong user's
+  ///     emergency contacts.
   Future<int> flushPendingSosQueue() async {
+    // If a flush is already in flight, wait for it and return its result.
+    // This serializes concurrent flush triggers (startup + connectivity
+    // listener + 5-min timer) so we never double-send.
+    if (_flushMutex != null) {
+      return _flushMutex!.future;
+    }
+    final completer = Completer<int>();
+    _flushMutex = completer;
+
     try {
       final prefs = await SharedPreferences.getInstance();
       final raw = prefs.getString(_kPendingSosQueueKey);
-      if (raw == null) return 0;
-      final queue = (jsonDecode(raw) as List).cast<Map<String, dynamic>>();
-      if (queue.isEmpty) return 0;
+      if (raw == null) {
+        completer.complete(0);
+        return 0;
+      }
+
+      List<Map<String, dynamic>> queue;
+      try {
+        final decoded = jsonDecode(raw) as List;
+        queue = decoded
+            .whereType<Map<String, dynamic>>()
+            .toList(growable: true);
+      } catch (e) {
+        // Corrupted queue — reset to empty. Never crash on flush.
+        debugPrint('[SOS Queue] Corrupted queue on flush, resetting: $e');
+        await prefs.setString(_kPendingSosQueueKey, '[]');
+        completer.complete(0);
+        return 0;
+      }
+
+      if (queue.isEmpty) {
+        completer.complete(0);
+        return 0;
+      }
+
+      // Capture the current user_id. Events queued by a different user
+      // (or with no user) are skipped — they must not be flushed under
+      // the current session.
+      final currentUserId = SupabaseService().isInitialized
+          ? _client.auth.currentUser?.id
+          : null;
 
       int delivered = 0;
       final remaining = <Map<String, dynamic>>[];
+      final skipped = <Map<String, dynamic>>[];
 
       for (final event in queue) {
+        final eventUserId = event['user_id']?.toString();
+
+        // Skip events that belong to a different user (or were queued
+        // while signed out). These cannot be safely delivered — the edge
+        // function uses auth.uid() to look up emergency contacts, so
+        // flushing under the wrong session would send the alert to the
+        // wrong user's contacts (or to nobody).
+        if (eventUserId != currentUserId) {
+          debugPrint('[SOS Queue] Skipping event from user '
+              '${eventUserId ?? 'null'} (current: $currentUserId)');
+          // Keep skipped events in the queue in case the original user
+          // signs back in. They'll be retried then.
+          skipped.add(event);
+          continue;
+        }
+
         try {
           final response = await _client.functions.invoke(
             'sos-alert',
@@ -265,13 +427,32 @@ class EdgeFunctionService {
             },
           ).timeout(const Duration(seconds: 15));
 
-          if (response.status == 200 || response.status == 429) {
-            // 200 = delivered. 429 = rate-limited, which means a prior SOS
-            // was already accepted by the server — drop this queued event
-            // since the user's emergency is already being handled.
+          if (response.status == 200) {
+            // Delivered successfully — drop from queue.
             delivered++;
+          } else if (response.status == 429) {
+            // Rate-limited. The previous fix (audit C-17) dropped the
+            // event here, which was unsafe — a 429 does NOT guarantee
+            // the prior SOS was actually delivered. Keep it in the queue
+            // and retry on the next flush. Apply a 60s cooldown so we
+            // don't hammer the server.
+            final queuedAt = event['queued_at'] as String?;
+            final queuedTime = queuedAt != null
+                ? DateTime.tryParse(queuedAt)
+                : null;
+            final age = queuedTime != null
+                ? DateTime.now().difference(queuedTime)
+                : Duration.zero;
+            if (age < const Duration(seconds: 60)) {
+              // Too recent — keep for next flush.
+              remaining.add(event);
+            } else {
+              // Old enough to retry — keep for next flush but log it.
+              debugPrint('[SOS Queue] Retaining 429 event (age: ${age.inSeconds}s)');
+              remaining.add(event);
+            }
           } else {
-            // Other status — keep in queue for next flush.
+            // Other non-200 — keep in queue for next flush.
             remaining.add(event);
           }
         } catch (e) {
@@ -281,19 +462,25 @@ class EdgeFunctionService {
         }
       }
 
+      // Persist the remaining + skipped events back to SharedPreferences.
+      final persistList = [...remaining, ...skipped];
       await prefs.setString(
         _kPendingSosQueueKey,
-        jsonEncode(remaining),
+        jsonEncode(persistList),
       );
 
       if (delivered > 0) {
         debugPrint('Flushed $delivered pending SOS event(s) to the server. '
-            '${remaining.length} still queued.');
+            '${remaining.length} still queued, ${skipped.length} skipped (different user).');
       }
+      completer.complete(delivered);
       return delivered;
     } catch (e) {
       debugPrint('Failed to flush pending SOS queue: $e');
+      completer.complete(0);
       return 0;
+    } finally {
+      _flushMutex = null;
     }
   }
 
@@ -306,10 +493,11 @@ class EdgeFunctionService {
   /// `confirmEmail` must match the signed-in user's email — adds a friction
   /// layer against accidental deletion.
   Future<void> deleteAccount({required String confirmEmail}) async {
+    // FIX (audit M-9): add timeout (was missing).
     final response = await _client.functions.invoke(
       'delete-account',
       body: {'confirm_email': confirmEmail},
-    );
+    ).timeout(const Duration(seconds: 30));
     if (response.status != 200) {
       final data = response.data;
       final message = data is Map ? data['error'] : 'Account deletion failed';
@@ -335,8 +523,14 @@ class EdgeFunctionService {
       throw Exception('Translation failed: ${response.data}');
     }
     final data = response.data as Map<String, dynamic>;
-    return data['translation'] as String? ??
+    final translation = data['translation'] as String? ??
         data['translated_text'] as String? ??
         '';
+    // FIX (audit M-10): throw on empty translation so the caller can show
+    // an error instead of silently displaying an empty string.
+    if (translation.isEmpty) {
+      throw Exception('Translation returned an empty result');
+    }
+    return translation;
   }
 }

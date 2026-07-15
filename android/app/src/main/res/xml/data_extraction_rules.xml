@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Data extraction rules for VitalSeker.
+
+  These rules complement android:allowBackup="false" in the AndroidManifest.
+  Even if a future change re-enables backup, these rules explicitly exclude
+  all PHI-bearing data so it is never backed up to Google Drive or extracted
+  via adb backup / device transfer.
+
+  Audit H-15 fix.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Exclude all shared preferences (contains user session, theme, etc.) -->
+        <exclude domain="sharedpref" path="."/>
+        <!-- Exclude all databases (Hive boxes with cached PHI) -->
+        <exclude domain="database" path="."/>
+        <!-- Exclude internal storage (Hive files, cached passport, symptom logs) -->
+        <exclude domain="root" path="."/>
+        <!-- Exclude external storage (downloaded PDFs, exported QR images) -->
+        <exclude domain="file" path="."/>
+    </cloud-backup>
+    <device-transfer>
+        <!-- Same exclusions for device-to-device transfers -->
+        <exclude domain="sharedpref" path="."/>
+        <exclude domain="database" path="."/>
+        <exclude domain="root" path="."/>
+        <exclude domain="file" path="."/>
+    </device-transfer>
+</data-extraction-rules>

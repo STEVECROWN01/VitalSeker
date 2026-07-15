@@ -56,7 +56,16 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
   Future<void> updateMedicationStatus(String medicationId, MedicationStatus status) async {
     try {
       final db = ref.read(databaseServiceProvider);
-      await db.updateMedication(medicationId, {'status': status.name});
+      // FIX (audit M-9): when transitioning to 'completed' or 'discontinued',
+      // also set end_date to today so the medication history shows when the
+      // user stopped taking it. Previously, end_date stayed null, making it
+      // ambiguous whether the user stopped last week or last year.
+      final payload = <String, dynamic>{'status': status.name};
+      if (status == MedicationStatus.completed ||
+          status == MedicationStatus.discontinued) {
+        payload['end_date'] = DateTime.now().toIso8601String().split('T')[0];
+      }
+      await db.updateMedication(medicationId, payload);
       ref.invalidateSelf();
     } catch (e) {
       rethrow;

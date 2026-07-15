@@ -1,11 +1,11 @@
 {
-    "name": "vitalseker",
-    "short_name": "vitalseker",
+    "name": "VitalSeker",
+    "short_name": "VitalSeker",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0B7A5B",
+    "theme_color": "#0B7A5B",
+    "description": "VitalSeker — Your AI Health Companion. AI symptom triage, digital medical passport, and emergency SOS.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

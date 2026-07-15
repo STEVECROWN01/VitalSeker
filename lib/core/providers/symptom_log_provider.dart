@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/symptom_log.dart';
 import '../services/offline_cache_service.dart';
@@ -12,20 +13,21 @@ final symptomLogsProvider = FutureProvider<List<SymptomLog>>((ref) async {
   // Try network first
   try {
     final logs = await db.getSymptomLogs(user.id);
-    // Cache for offline use
-    if (logs.isNotEmpty) {
-      await OfflineCacheService().cacheSymptomLogs(
-        user.id,
-        logs.map((l) => l.toJson()).toList(),
-      );
-    }
+    // FIX (audit M-5): always write to cache on successful network response,
+    // even when the list is empty. The previous code skipped the cache write
+    // when logs was empty — so if the user deleted all their logs, the cache
+    // retained the previous (non-empty) list and deleted logs reappeared
+    // on the next offline load.
+    //
+    // FIX (audit M-15): fire-and-forget the cache write.
+    unawaited(OfflineCacheService().cacheSymptomLogs(
+      user.id,
+      logs.map((l) => l.toJson()).toList(),
+    ));
     return logs;
   } catch (e) {
     // Network failed — fall back to offline cache
     final cached = OfflineCacheService().getCachedSymptomLogs(user.id);
-    if (cached.isNotEmpty) {
-      return cached.map((json) => SymptomLog.fromJson(json)).toList();
-    }
-    return [];
+    return cached.map((json) => SymptomLog.fromJson(json)).toList();
   }
 });

@@ -3,24 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/database_service.dart';
 import 'auth_provider.dart';
+import 'user_profile_provider.dart';
 
+/// FIX (audit H-2, H-3): the theme provider previously listened to
+/// authStateProvider (which fires on every token refresh) and instantiated
+/// a new DatabaseService() on each fire. We now:
+///   1. Listen to currentUserProvider (deduplicates on user identity —
+///      only fires when the user ID actually changes, not on token refresh).
+///   2. Use ref.read(databaseServiceProvider) instead of new DatabaseService().
+///   3. Use ref.read(userProfileProvider).valueOrNull for reads instead of
+///      a direct DB call, so we benefit from the provider's cache.
 final themeModeProvider = StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
   final notifier = ThemeModeNotifier(ref);
-  // Load theme from local storage immediately (before auth resolves)
   notifier.loadThemeFromLocal();
-  // Also load from DB when auth state changes
-  ref.listen(authStateProvider, (_, __) {
-    notifier.loadTheme();
+  // Listen to currentUserProvider (not authStateProvider) to avoid
+  // firing on every token refresh.
+  ref.listen(currentUserProvider, (previous, next) {
+    if (previous?.id != next?.id) {
+      notifier.loadTheme();
+    }
   });
   return notifier;
 });
 
 class ThemeModeNotifier extends StateNotifier<ThemeMode> {
   final Ref _ref;
-  
+
   ThemeModeNotifier(this._ref) : super(ThemeMode.system);
 
-  /// Load theme from SharedPreferences (local, instant, works offline)
   Future<void> loadThemeFromLocal() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -30,35 +40,29 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
   }
 
   Future<void> loadTheme() async {
-    final user = _ref.read(currentUserProvider);
-    if (user == null) return;
-    try {
-      final db = DatabaseService();
-      final profile = await db.getUserProfile(user.id);
-      if (profile != null) {
-        state = _themeFromString(profile.themePreference);
-        // Also save to local storage for instant load on next startup
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('theme_preference', _themeToString(state));
-      }
-    } catch (_) {}
+    // FIX (audit H-3): use userProfileProvider instead of a direct DB call.
+    final profile = _ref.read(userProfileProvider).valueOrNull;
+    if (profile != null) {
+      state = _themeFromString(profile.themePreference);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('theme_preference', _themeToString(state));
+    }
   }
 
   Future<void> setTheme(ThemeMode mode) async {
     state = mode;
-    // Save to local storage immediately (persists across app restarts)
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('theme_preference', _themeToString(mode));
     } catch (_) {}
-    // Also save to DB if user is logged in
     final user = _ref.read(currentUserProvider);
     if (user == null) return;
     try {
-      final db = DatabaseService();
+      final db = _ref.read(databaseServiceProvider);
       await db.updateUserProfile(user.id, {
         'theme_preference': _themeToString(mode),
       });
+      _ref.invalidate(userProfileProvider);
     } catch (_) {}
   }
 

@@ -9,7 +9,7 @@
 
 ## Edge Functions Deployment
 
-The 5 Edge Functions need to be deployed to Supabase. Since the CLI requires a personal access token, follow these steps:
+The 8 Edge Functions need to be deployed to Supabase. Since the CLI requires a personal access token, follow these steps:
 
 ### Step 1: Install Supabase CLI
 ```bash

@@ -62,18 +62,31 @@ const LANGUAGE_MAP: Record<string, string> = {
   'tagalog': '',
 }
 
-// Normalize input target_lang to a DeepL code
-function normalizeTargetLang(input: string): string {
+// Normalize input target_lang to a DeepL code.
+//
+// FIX (audit H-8): the previous implementation used `if (mapped) return mapped`
+// which treats '' (the sentinel for unsupported languages) as falsy and falls
+// through to `return lower.slice(0, 2).toUpperCase()`. This meant the
+// unsupported-language branch (`if (!deeplTarget)`) never fired — Swahili,
+// Hausa, etc. were sent to DeepL as "SW", "HA", etc., which DeepL rejected.
+// We now return null for unsupported languages so the caller can show the
+// helpful `note` field.
+function normalizeTargetLang(input: string): string | null {
   const lower = input.toLowerCase().trim()
-  // Already a code?
+  // Already a 2-letter code? Return uppercase.
   if (/^[a-z]{2}(-[a-z]{2})?$/i.test(lower)) {
     return lower.toUpperCase()
   }
   // Lookup in map
   const mapped = LANGUAGE_MAP[lower]
-  if (mapped) return mapped
-  // Try first 2 chars
-  return lower.slice(0, 2).toUpperCase()
+  // FIX: check for undefined (not falsy) so '' is treated as "unsupported".
+  if (mapped !== undefined) {
+    // Empty string means "intentionally unsupported" — return null.
+    return mapped || null
+  }
+  // Unknown language name — return null so the caller shows the
+  // "unsupported language" message instead of sending garbage to DeepL.
+  return null
 }
 
 function sanitizeText(v: unknown): string {
@@ -189,16 +202,40 @@ serve(async (req: Request) => {
     const params = new URLSearchParams()
     params.append('text', safeText)
     params.append('target_lang', deeplTarget)
-    // Optional: source_lang hint (let DeepL auto-detect)
 
-    const deeplResponse = await fetch(`${deeplHost}/v2/translate`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `DeepL-Auth-Key ${deeplApiKey}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: params.toString(),
-    })
+    // FIX (audit H-9): add a 15s timeout via AbortController. Without this,
+    // a slow DeepL response hangs the edge function until the platform
+    // timeout. Every other external call in the codebase (ai-chat) has a
+    // timeout; translate didn't.
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 15000)
+
+    let deeplResponse: Response
+    try {
+      deeplResponse = await fetch(`${deeplHost}/v2/translate`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `DeepL-Auth-Key ${deeplApiKey}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString(),
+        signal: controller.signal,
+      })
+      clearTimeout(timeoutId)
+    } catch (fetchError) {
+      clearTimeout(timeoutId)
+      console.error('DeepL fetch error (timeout or network):', fetchError)
+      return new Response(JSON.stringify({
+        translation: safeText,
+        translated_text: safeText,
+        detected_source_lang: 'unknown',
+        target_lang: deeplTarget,
+        chars: safeText.length,
+        note: 'Translation timed out. Showing original text.',
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      })
+    }
 
     if (!deeplResponse.ok) {
       const errText = await deeplResponse.text()

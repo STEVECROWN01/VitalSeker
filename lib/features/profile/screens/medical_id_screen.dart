@@ -34,7 +34,7 @@ class MedicalIdScreen extends ConsumerWidget {
       ),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(l10n.somethingWentWrong)),
         data: (profile) {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -67,7 +67,7 @@ class MedicalIdScreen extends ConsumerWidget {
                       const Icon(Icons.medical_services, color: Colors.white, size: 48),
                       const SizedBox(height: 12),
                       Text(
-                        profile?.fullName ?? 'Unknown',
+                        profile?.fullName ?? l10n.notAvailable,
                         style: const TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 24,
@@ -91,7 +91,7 @@ class MedicalIdScreen extends ConsumerWidget {
                               const Icon(Icons.bloodtype, color: AppColors.urgencyEmergency, size: 28),
                               const SizedBox(width: 8),
                               Text(
-                                profile?.bloodType ?? 'Unknown',
+                                profile?.bloodType ?? l10n.notAvailable,
                                 style: const TextStyle(
                                   fontFamily: 'ClashDisplay',
                                   fontSize: 28,
@@ -101,7 +101,7 @@ class MedicalIdScreen extends ConsumerWidget {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                'Blood Type',
+                                l10n.bloodTypeLabel,
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 12,
@@ -123,7 +123,7 @@ class MedicalIdScreen extends ConsumerWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                'DOB: ${profile!.dateOfBirth!.day}/${profile.dateOfBirth!.month}/${profile.dateOfBirth!.year}',
+                                '${l10n.dateOfBirthLabel}: ${profile!.dateOfBirth!.day}/${profile.dateOfBirth!.month}/${profile.dateOfBirth!.year}',
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 14,
@@ -144,7 +144,7 @@ class MedicalIdScreen extends ConsumerWidget {
                 _InfoSection(
                   icon: Icons.warning_amber_rounded,
                   iconColor: AppColors.urgencyEmergency,
-                  title: 'Allergies',
+                  title: l10n.allergiesLabel,
                   items: profile?.allergies.isEmpty ?? true
                       ? ['None reported']
                       : profile!.allergies,
@@ -157,7 +157,7 @@ class MedicalIdScreen extends ConsumerWidget {
                 _InfoSection(
                   icon: Icons.health_and_safety_outlined,
                   iconColor: isDark ? AppColors.darkWarning : AppColors.lightWarning,
-                  title: 'Chronic Conditions',
+                  title: l10n.chronicConditionsLabel,
                   items: profile?.chronicConditions.isEmpty ?? true
                       ? ['None reported']
                       : profile!.chronicConditions,
@@ -174,8 +174,8 @@ class MedicalIdScreen extends ConsumerWidget {
                     return _InfoSection(
                       icon: Icons.medication_outlined,
                       iconColor: isDark ? AppColors.darkInfo : AppColors.lightInfo,
-                      title: 'Medications',
-                      items: medNames.isEmpty ? ['No active medications'] : medNames,
+                      title: l10n.medicationsLabel,
+                      items: medNames.isEmpty ? [l10n.noneRecorded] : medNames,
                       isDark: isDark,
                       onAdd: () => context.push(AppConfig.medications),
                     );
@@ -195,8 +195,8 @@ class MedicalIdScreen extends ConsumerWidget {
                   _InfoSection(
                     icon: Icons.contact_phone_outlined,
                     iconColor: AppColors.primary(isDark),
-                    title: 'Emergency Contact',
-                    items: const ['No emergency contact set'],
+                    title: l10n.emergencyContact,
+                    items: const ['—'],
                     isDark: isDark,
                     onAdd: () => context.push(AppConfig.editProfile),
                   ),
@@ -218,7 +218,7 @@ class MedicalIdScreen extends ConsumerWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Tap to view QR Code',
+                            l10n.tapToViewQrCode,
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 13,
@@ -318,7 +318,7 @@ class _InfoSection extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.add_circle_outline, size: 20, color: AppColors.primary(isDark)),
                     onPressed: onAdd,
-                    tooltip: 'Add',
+                    tooltip: AppLocalizations.of(context)!.add,
                   ),
               ],
             ),

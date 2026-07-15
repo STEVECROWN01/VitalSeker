@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import '../theme/app_colors.dart';
 
 /// Friendly, consistent snack-bar helpers.
@@ -89,10 +90,21 @@ class AppSnackBar {
     );
   }
 
-  /// Logs the raw exception via debugPrint and shows a friendly error snackbar.
+  /// Logs the raw exception and shows a friendly error snackbar.
   /// Use this in catch blocks where you have no specific friendly message.
+  //
+  // FIX (audit L-16): use Sentry.captureException in addition to debugPrint
+  // so errors are captured in release mode (debugPrint is a no-op in
+  // release). The debugPrint is kept for dev-mode console visibility.
   static void errorFromException(BuildContext context, String friendlyMessage, Object error) {
     debugPrint('[AppSnackBar] $friendlyMessage — raw: $error');
+    // Forward to Sentry if it's initialized. Fire-and-forget — don't block
+    // the UI on error reporting.
+    try {
+      Sentry.captureException(error);
+    } catch (_) {
+      // Sentry not initialized — ignore.
+    }
     // Inline the error snackbar to avoid calling error() which would
     // cause infinite recursion since error() is defined above.
     if (!context.mounted) return;

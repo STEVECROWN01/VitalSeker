@@ -34,29 +34,34 @@ class UrgencyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: _color(isDark).withValues(alpha: isDark ? 0.25 : 0.15),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _color(isDark).withValues(alpha: isDark ? 0.5 : 0.3)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(_icon, size: 16, color: _color(isDark)),
-          const SizedBox(width: 6),
-          Text(
-            urgencyLevel.toUpperCase(),
-            style: TextStyle(
-              fontFamily: 'DMSans',
-              fontSize: fontSize ?? 11,
-              fontWeight: FontWeight.w700,
-              color: _color(isDark),
-              letterSpacing: 0.5,
+    // FIX (audit M-29): wrap in Semantics so screen readers announce
+    // "Urgency level: emergency" instead of just "EMERGENCY".
+    return Semantics(
+      label: 'Urgency level: $urgencyLevel',
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: _color(isDark).withValues(alpha: isDark ? 0.25 : 0.15),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: _color(isDark).withValues(alpha: isDark ? 0.5 : 0.3)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(_icon, size: 16, color: _color(isDark)),
+            const SizedBox(width: 6),
+            Text(
+              urgencyLevel.toUpperCase(),
+              style: TextStyle(
+                fontFamily: 'DMSans',
+                fontSize: fontSize ?? 11,
+                fontWeight: FontWeight.w700,
+                color: _color(isDark),
+                letterSpacing: 0.5,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

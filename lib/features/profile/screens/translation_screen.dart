@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
@@ -56,9 +57,19 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
   static const int _maxChars = 1000;
 
   /// Map display names → ISO 639-1 codes (uppercase for DeepL).
-  /// The previous implementation passed the display name ('French') to the
-  /// edge function, which then had to do its own mapping. Sending the ISO
-  /// code is more robust and lets the edge function trust the client.
+  ///
+  /// FIX (audit H-23): the previous _langCodes map had 19 entries but
+  /// _languages had 38 entries — 19 languages in the list had no mapping.
+  /// When a user selected one of those (e.g. "Hebrew"), the fallback
+  /// passed the English display name to the edge function, which DeepL
+  /// rejected with an error. The comment claimed Swahili/Hausa/Yoruba/
+  /// Igbo/Tagalog were "intentionally omitted" from both the map AND the
+  /// list, but they were actually in the list — the comment was wrong.
+  ///
+  // We now include ALL DeepL-supported languages in both the map and the
+  // list, and exclude languages DeepL doesn't support (Swahili, Hausa,
+  // Yoruba, Igbo, Tagalog, Malay, Burmese, Amharic, Persian). This
+  // ensures every selectable language has a valid DeepL code.
   static const Map<String, String> _langCodes = {
     'French': 'FR',
     'Spanish': 'ES',
@@ -79,21 +90,40 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
     'Hindi': 'HI',
     'Bengali': 'BN',
     'Urdu': 'UR',
-    // Note: Swahili, Hausa, Yoruba, Igbo, Tagalog are NOT supported by
-    // DeepL as of 2025. They're intentionally omitted from this map and
-    // from the _languages list below to prevent users from selecting a
-    // language that will return an error.
+    // DeepL-supported languages that were previously in _languages but
+    // missing from _langCodes:
+    'Hebrew': 'HE',
+    'Czech': 'CS',
+    'Greek': 'EL',
+    'Romanian': 'RO',
+    'Hungarian': 'HU',
+    'Swedish': 'SV',
+    'Norwegian': 'NB',
+    'Danish': 'DA',
+    'Finnish': 'FI',
+    'Slovak': 'SK',
+    'Ukrainian': 'UK',
+    'Bulgarian': 'BG',
+    'Estonian': 'ET',
+    'Latvian': 'LV',
+    'Lithuanian': 'LT',
+    'Slovenian': 'SL',
   };
 
+  /// Languages available for selection. Every entry must have a
+  /// corresponding code in [_langCodes].
   static const List<String> _languages = [
     'French', 'Spanish', 'Arabic', 'German',
     'Portuguese', 'Chinese', 'Japanese', 'Italian', 'Dutch',
     'Polish', 'Russian', 'Korean', 'Turkish', 'Indonesian',
     'Thai', 'Vietnamese', 'Hindi', 'Bengali', 'Urdu',
-    'Hebrew', 'Persian', 'Czech', 'Greek', 'Romanian', 'Hungarian',
+    'Hebrew', 'Czech', 'Greek', 'Romanian', 'Hungarian',
     'Swedish', 'Norwegian', 'Danish', 'Finnish', 'Slovak', 'Ukrainian',
-    'Malay', 'Burmese', 'Amharic', 'Swahili', 'Hausa', 'Yoruba', 'Igbo',
-    'Tagalog',
+    'Bulgarian', 'Estonian', 'Latvian', 'Lithuanian', 'Slovenian',
+    // NOTE: Persian, Malay, Burmese, Amharic, Swahili, Hausa, Yoruba,
+    // Igbo, and Tagalog are NOT supported by DeepL as of 2025. They are
+    // intentionally omitted from both _langCodes and _languages to prevent
+    // users from selecting a language that will return an error.
   ];
 
   @override
@@ -189,16 +219,66 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
 
       AppSnackBar.info(context, 'Scanning document...');
 
-      // Use ML Kit text recognition to extract text from the image
+      // FIX (audit H-24): the previous code used only the Latin script
+      // recognizer, so a prescription in Arabic, Chinese, Japanese, Korean,
+      // or Devanagari returned empty text. We now run multiple recognizers
+      // (Latin + the user's locale script if applicable) and merge results.
       final inputImage = InputImage.fromFilePath(picked.path);
-      final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
-      final recognizedText = await textRecognizer.processImage(inputImage);
-      await textRecognizer.close();
 
-      final extractedText = recognizedText.text.trim();
+      // Determine which scripts to try based on the user's locale.
+      // Latin is always tried first (works for English, French, Spanish,
+      // German, etc.). For locales that use other scripts, we add those.
+      final scriptsToTry = <TextRecognitionScript>[
+        TextRecognitionScript.latin,
+      ];
+      final localeLang = Localizations.localeOf(context).languageCode;
+      switch (localeLang) {
+        case 'ar':
+        case 'fa':
+        case 'ur':
+          // Arabic not supported by ML Kit text recognition — Latin only.
+          break;
+        case 'zh':
+          scriptsToTry.add(TextRecognitionScript.chinese);
+          break;
+        case 'ja':
+          scriptsToTry.add(TextRecognitionScript.japanese);
+          break;
+        case 'ko':
+          scriptsToTry.add(TextRecognitionScript.korean);
+          break;
+        case 'hi':
+        case 'bn':
+          scriptsToTry.add(TextRecognitionScript.devanagiri);
+          break;
+      }
+
+      // Run each recognizer and collect results. We pick the one with the
+      // most extracted text (heuristic: the right script produces more).
+      String bestText = '';
+      for (final script in scriptsToTry) {
+        try {
+          final recognizer = TextRecognizer(script: script);
+          final result = await recognizer.processImage(inputImage);
+          await recognizer.close();
+          final text = result.text.trim();
+          if (text.length > bestText.length) {
+            bestText = text;
+          }
+        } catch (e) {
+          // Some scripts may not be available on all devices — skip silently.
+          debugPrint('OCR script $script failed: $e');
+        }
+      }
+
+      final extractedText = bestText;
       if (extractedText.isEmpty) {
         if (mounted) {
-          AppSnackBar.error(context, 'No text found in the image. Try a clearer photo.');
+          AppSnackBar.error(
+            context,
+            'No text found in the image. Try a clearer photo, or type the text manually. '
+            'Note: non-Latin scripts may not be recognized on all devices.',
+          );
         }
         return;
       }
@@ -225,8 +305,45 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
       final translatedText = _translation ?? '';
       final targetLang = _targetLang;
 
-      // Create PDF document
-      final pdf = pw.Document();
+      // FIX (audit H-25): load a Unicode font so non-Latin scripts (Arabic,
+      // Chinese, Japanese, Korean, Cyrillic, etc.) render correctly in the
+      // PDF. The pdf package's default font only includes Latin glyphs —
+      // without this, translated text appears as empty boxes / question marks.
+      //
+      // We load Inter from the app's bundled assets (already in pubspec.yaml
+      // under assets/fonts/). Inter covers Latin, Latin Extended, Cyrillic,
+      // Greek, and Vietnamese. For CJK/Arabic/Hebrew, a Noto font would be
+      // needed — but bundling all Noto fonts is ~50MB. As a pragmatic fix,
+      // we detect non-Latin text and show a warning if the font doesn't
+      // cover it.
+      final fontData = await rootBundle.load('assets/fonts/Inter-Regular.ttf');
+      final fontDataBold = await rootBundle.load('assets/fonts/Inter-Bold.ttf');
+      final unicodeFont = pw.Font.ttf(fontData);
+      final unicodeFontBold = pw.Font.ttf(fontDataBold);
+
+      // Check if the translated text contains non-Latin characters that
+      // Inter doesn't cover (CJK, Arabic, Hebrew, Devanagari).
+      final hasNonLatin = translatedText.codeUnits.any((c) =>
+          c > 0x2000 && (
+              (c >= 0x4E00 && c <= 0x9FFF) ||  // CJK Unified
+              (c >= 0x3040 && c <= 0x30FF) ||  // Japanese kana
+              (c >= 0xAC00 && c <= 0xD7AF) ||  // Korean Hangul
+              (c >= 0x0600 && c <= 0x06FF) ||  // Arabic
+              (c >= 0x0590 && c <= 0x05FF) ||  // Hebrew
+              (c >= 0x0900 && c <= 0x097F)     // Devanagari
+          ));
+      if (hasNonLatin && mounted) {
+        AppSnackBar.info(
+          context,
+          'Note: the translation contains characters that may not render in the PDF. '
+          'If the PDF shows blank boxes, please copy the text from the screen instead.',
+        );
+      }
+
+      // Create PDF document with the Unicode font as the default theme font.
+      final pdf = pw.Document(
+        theme: pw.ThemeData.withFont(base: unicodeFont, bold: unicodeFontBold),
+      );
 
       pdf.addPage(
         pw.MultiPage(

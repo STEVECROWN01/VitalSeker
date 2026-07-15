@@ -541,6 +541,18 @@ abstract class AppLocalizations {
   /// **'About'**
   String get about;
 
+  /// No description provided for @health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get health;
+
+  /// No description provided for @family.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get family;
+
   /// No description provided for @privacyPolicy.
   ///
   /// In en, this message translates to:
@@ -790,8 +802,8 @@ abstract class AppLocalizations {
   /// No description provided for @poweredBy.
   ///
   /// In en, this message translates to:
-  /// **'Powered by Keter Marketing'**
-  String get poweredBy;
+  /// **'Powered by {producer}'**
+  String poweredBy(String producer);
 
   /// No description provided for @pressAndHold.
   ///
@@ -988,7 +1000,7 @@ abstract class AppLocalizations {
   /// No description provided for @preview.
   ///
   /// In en, this message translates to:
-  /// **'PREVIEW'**
+  /// **'Preview'**
   String get preview;
 
   /// No description provided for @translate.
@@ -1152,42 +1164,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VitalSeker Pro'**
   String get vitalSekerPro;
-
-  /// No description provided for @aiChatTriage.
-  ///
-  /// In en, this message translates to:
-  /// 'AI Chat with Seker'
-  String get aiChatTriage;
-
-  /// No description provided for @chatWithSeker.
-  ///
-  /// In en, this message translates to:
-  /// 'Chat with Seker'
-  String get chatWithSeker;
-
-  /// No description provided for @chatWithSekerDesc.
-  ///
-  /// In en, this message translates to:
-  /// 'Talk to our AI health assistant in real-time'
-  String get chatWithSekerDesc;
-
-  /// No description provided for @medicalDisclaimerShort.
-  ///
-  /// In en, this message translates to:
-  /// 'Seker provides general guidance, not a diagnosis. Always consult a doctor.'
-  String get medicalDisclaimerShort;
-
-  /// No description provided for @qrGenerationFailed.
-  ///
-  /// In en, this message translates to:
-  /// 'Failed to generate QR code. Please try again.'
-  String get qrGenerationFailed;
-
-  /// No description provided for @sekerGreeting.
-  ///
-  /// In en, this message translates to:
-  /// 'Hi! I\'m Seker, your AI Health Assistant. I\'m here to help you understand your symptoms and provide guidance. What\'s bothering you today? You can type or hold the mic button to speak.'
-  String get sekerGreeting;
 
   /// No description provided for @signingOut.
   ///
@@ -3493,6 +3469,12 @@ abstract class AppLocalizations {
   /// **'Generate QR Code'**
   String get generateQrCode;
 
+  /// No description provided for @qrGenerationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to generate QR code. Please try again.'**
+  String get qrGenerationFailed;
+
   /// No description provided for @expired.
   ///
   /// In en, this message translates to:
@@ -3924,6 +3906,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This information does not constitute a medical diagnosis. VitalSeker does not replace a qualified healthcare professional.'**
   String get medicalDisclaimer;
+
+  /// No description provided for @medicalDisclaimerShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Seker provides general guidance, not a diagnosis. Always consult a doctor.'**
+  String get medicalDisclaimerShort;
+
+  /// No description provided for @sekerGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi! I\'m Seker, your AI Health Assistant. I\'m here to help you understand your symptoms and provide guidance. What\'s bothering you today? You can type or hold the mic button to speak.'**
+  String get sekerGreeting;
+
+  /// No description provided for @aiChatTriage.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Chat with Seker'**
+  String get aiChatTriage;
+
+  /// No description provided for @chatWithSeker.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat with Seker'**
+  String get chatWithSeker;
+
+  /// No description provided for @chatWithSekerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk to our AI health assistant in real-time'**
+  String get chatWithSekerDesc;
 
   /// No description provided for @poweredByGlm.
   ///
@@ -5370,6 +5382,660 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Security settings are on this page'**
   String get securitySettingsOnThisPage;
+
+  /// No description provided for @vitalDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading deleted.'**
+  String get vitalDeleted;
+
+  /// No description provided for @failedToDeleteVital.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete reading. Please try again.'**
+  String get failedToDeleteVital;
+
+  /// No description provided for @deleteVitalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Reading'**
+  String get deleteVitalTitle;
+
+  /// No description provided for @deleteVitalConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this reading: {value}?'**
+  String deleteVitalConfirm(String value);
+
+  /// No description provided for @vitalScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Vital Score'**
+  String get vitalScore;
+
+  /// No description provided for @scoreLabelExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get scoreLabelExcellent;
+
+  /// No description provided for @scoreLabelGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get scoreLabelGood;
+
+  /// No description provided for @scoreLabelFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get scoreLabelFair;
+
+  /// No description provided for @scoreLabelPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get scoreLabelPoor;
+
+  /// No description provided for @scoreLabelCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get scoreLabelCritical;
+
+  /// No description provided for @aboutSekerAi.
+  ///
+  /// In en, this message translates to:
+  /// **'About Seker AI'**
+  String get aboutSekerAi;
+
+  /// No description provided for @sekerAiName.
+  ///
+  /// In en, this message translates to:
+  /// **'Seker AI'**
+  String get sekerAiName;
+
+  /// No description provided for @sekerAiSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your AI Health Assistant'**
+  String get sekerAiSubtitle;
+
+  /// No description provided for @sekerWhatIsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What is Seker?'**
+  String get sekerWhatIsTitle;
+
+  /// No description provided for @sekerWhatIsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Seker is an AI-powered health assistant built into VitalSeker. Seker is an expert in biology, human health, psychology, and the human body. Seker provides general health guidance, symptom analysis, and emotional support.'**
+  String get sekerWhatIsBody;
+
+  /// No description provided for @sekerCapabilitiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What can Seker do?'**
+  String get sekerCapabilitiesTitle;
+
+  /// No description provided for @sekerCapabilitiesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'• Understand your symptoms and ask follow-up questions\n• Provide general health guidance and coaching\n• Help manage stress, anxiety, and emotional well-being\n• Auto-detect and save health information you share\n• Respond in your language (40+ supported)\n• Accept voice notes and file uploads'**
+  String get sekerCapabilitiesBody;
+
+  /// No description provided for @sekerHowToUseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to use Seker'**
+  String get sekerHowToUseTitle;
+
+  /// No description provided for @sekerHowToUseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Type your message or tap the mic to speak\n2. Seker will ask questions to understand your situation\n3. Seker provides guidance and recommendations\n4. You can upload prescriptions, lab results, or images\n5. Health information you share is auto-saved to your profile'**
+  String get sekerHowToUseBody;
+
+  /// No description provided for @sekerSafetyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Important Safety Information'**
+  String get sekerSafetyTitle;
+
+  /// No description provided for @sekerSafetyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'• Seker provides general guidance, NOT a medical diagnosis\n• Always consult a professional doctor for proper diagnosis\n• Seker does NOT recommend specific medications or dosages\n• For emergencies, call 112 or 911 immediately\n• Seker only discusses health, biology, and psychology\n• Your conversations are private and secure'**
+  String get sekerSafetyBody;
+
+  /// No description provided for @backToChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Chat'**
+  String get backToChat;
+
+  /// No description provided for @switchToLightMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to light mode'**
+  String get switchToLightMode;
+
+  /// No description provided for @switchToDarkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to dark mode'**
+  String get switchToDarkMode;
+
+  /// No description provided for @comprehensiveHealthReport.
+  ///
+  /// In en, this message translates to:
+  /// **'COMPREHENSIVE HEALTH REPORT'**
+  String get comprehensiveHealthReport;
+
+  /// No description provided for @generated.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated'**
+  String get generated;
+
+  /// No description provided for @range.
+  ///
+  /// In en, this message translates to:
+  /// **'Range'**
+  String get range;
+
+  /// No description provided for @medicationsAndAllergies.
+  ///
+  /// In en, this message translates to:
+  /// **'Medications & Allergies'**
+  String get medicationsAndAllergies;
+
+  /// No description provided for @symptomsAndTriageLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Symptoms & Triage Log'**
+  String get symptomsAndTriageLog;
+
+  /// No description provided for @nameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get nameLabel;
+
+  /// No description provided for @emailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// No description provided for @dateOfBirthLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get dateOfBirthLabel;
+
+  /// No description provided for @bloodTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Type'**
+  String get bloodTypeLabel;
+
+  /// No description provided for @vitalScoreLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Vital Score'**
+  String get vitalScoreLabel;
+
+  /// No description provided for @chronicConditionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Chronic Conditions'**
+  String get chronicConditionsLabel;
+
+  /// No description provided for @allergiesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Allergies'**
+  String get allergiesLabel;
+
+  /// No description provided for @medicationsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Medications'**
+  String get medicationsLabel;
+
+  /// No description provided for @symptomsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Symptoms'**
+  String get symptomsLabel;
+
+  /// No description provided for @severityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity'**
+  String get severityLabel;
+
+  /// No description provided for @noneRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'None recorded'**
+  String get noneRecorded;
+
+  /// No description provided for @thisDocumentDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'This document is generated by VitalSeker AI Health Companion and does not constitute a medical diagnosis. Always consult a qualified healthcare professional.'**
+  String get thisDocumentDisclaimer;
+
+  /// No description provided for @failedToEmailPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to email PDF. Please try again.'**
+  String get failedToEmailPdf;
+
+  /// No description provided for @failedToExportPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to export PDF. Please try again.'**
+  String get failedToExportPdf;
+
+  /// No description provided for @generatePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate PDF'**
+  String get generatePdf;
+
+  /// No description provided for @inAppPurchasesNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'In-app purchases are not available on this device.'**
+  String get inAppPurchasesNotAvailable;
+
+  /// No description provided for @couldNotLoadPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load available plans. Please check your connection and try again.'**
+  String get couldNotLoadPlans;
+
+  /// No description provided for @planNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The {plan} plan is not available for purchase right now. Please try again later.'**
+  String planNotAvailable(String plan);
+
+  /// No description provided for @documentScannedAndUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Document scanned and uploaded successfully'**
+  String get documentScannedAndUploaded;
+
+  /// No description provided for @couldNotUploadFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not upload file. Please check your connection and try again.'**
+  String get couldNotUploadFile;
+
+  /// No description provided for @fileTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'File is too large ({size} MB). Maximum allowed size is 10 MB.'**
+  String fileTooLarge(String size);
+
+  /// No description provided for @fileTypeNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'File type not allowed. Please upload a JPG, PNG, PDF, DOC, or DOCX file.'**
+  String get fileTypeNotAllowed;
+
+  /// No description provided for @appointmentTimeMustBeFuture.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment time must be in the future. Please pick a later time.'**
+  String get appointmentTimeMustBeFuture;
+
+  /// No description provided for @enterValidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number'**
+  String get enterValidNumber;
+
+  /// No description provided for @doseMustBePositive.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose must be greater than 0'**
+  String get doseMustBePositive;
+
+  /// No description provided for @doseTooHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose seems too high — please check'**
+  String get doseTooHigh;
+
+  /// No description provided for @overrideRateLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Override Rate Limit?'**
+  String get overrideRateLimit;
+
+  /// No description provided for @overrideRateLimitMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You sent an SOS less than 60 seconds ago. If this is a NEW emergency (not a repeat of the same one), you can override the rate limit and send another alert.\n\nWarning: overriding will send a second SMS to all your emergency contacts. Only do this if you have a genuinely new emergency.'**
+  String get overrideRateLimitMessage;
+
+  /// No description provided for @overrideAndSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Override & Send'**
+  String get overrideAndSend;
+
+  /// No description provided for @areYouSafeConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you safe? Your emergency contacts will be notified that the alert has been resolved. If you are NOT safe, tap \"Cancel\" and call emergency services directly.'**
+  String get areYouSafeConfirm;
+
+  /// No description provided for @yesImSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, I\'m safe'**
+  String get yesImSafe;
+
+  /// No description provided for @qrSavedToPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code saved. Use the share sheet to save to Photos or Files.'**
+  String get qrSavedToPhotos;
+
+  /// No description provided for @qrSavedToDownloads.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code saved to Downloads.'**
+  String get qrSavedToDownloads;
+
+  /// No description provided for @qrSavedToAppStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code saved to app storage.'**
+  String get qrSavedToAppStorage;
+
+  /// No description provided for @shareMedicalPassport.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Medical Passport?'**
+  String get shareMedicalPassport;
+
+  /// No description provided for @shareMedicalPassportMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This QR code grants access to your medical information (blood type, allergies, chronic conditions, medications, emergency contacts). Anyone who receives it can scan it and view your health data.\n\nOnly share it with people you trust — doctors, nurses, or emergency contacts. Do not post it on social media.\n\nThe QR code expires in 24 hours.'**
+  String get shareMedicalPassportMessage;
+
+  /// No description provided for @showMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get showMore;
+
+  /// No description provided for @noAllergiesRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'No allergies recorded. Add yours in Edit Profile so emergency responders are aware.'**
+  String get noAllergiesRecorded;
+
+  /// No description provided for @noMedicationsRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'No medications recorded. Add your current prescriptions so they appear on your passport.'**
+  String get noMedicationsRecorded;
+
+  /// No description provided for @noChronicConditionsRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'No chronic conditions recorded. Add any ongoing conditions (diabetes, hypertension, etc.) in Edit Profile.'**
+  String get noChronicConditionsRecorded;
+
+  /// No description provided for @speechNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Speech recognition not available. Please type instead.'**
+  String get speechNotAvailable;
+
+  /// No description provided for @couldNotStartRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start recording. Check microphone permissions.'**
+  String get couldNotStartRecording;
+
+  /// No description provided for @pleaseSignInToUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'Please sign in to upload files.'**
+  String get pleaseSignInToUpload;
+
+  /// No description provided for @uploading.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading'**
+  String get uploading;
+
+  /// No description provided for @fileAttached.
+  ///
+  /// In en, this message translates to:
+  /// **'File attached'**
+  String get fileAttached;
+
+  /// No description provided for @couldNotPickFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not pick file'**
+  String get couldNotPickFile;
+
+  /// No description provided for @typeYourMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your message...'**
+  String get typeYourMessage;
+
+  /// No description provided for @online.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get online;
+
+  /// No description provided for @offline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get offline;
+
+  /// No description provided for @typing.
+  ///
+  /// In en, this message translates to:
+  /// **'typing...'**
+  String get typing;
+
+  /// No description provided for @stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stop;
+
+  /// No description provided for @recording.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording...'**
+  String get recording;
+
+  /// No description provided for @noTextFoundInImage.
+  ///
+  /// In en, this message translates to:
+  /// **'No text found in the image. Try a clearer photo, or type the text manually. Note: non-Latin scripts may not be recognized on all devices.'**
+  String get noTextFoundInImage;
+
+  /// No description provided for @documentScanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Document scanned! {count} characters extracted. Tap Translate.'**
+  String documentScanned(int count);
+
+  /// No description provided for @translationPdfReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation PDF ready!'**
+  String get translationPdfReady;
+
+  /// No description provided for @couldNotGeneratePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not generate PDF'**
+  String get couldNotGeneratePdf;
+
+  /// No description provided for @translationContainsNonLatin.
+  ///
+  /// In en, this message translates to:
+  /// **'Note: the translation contains characters that may not render in the PDF. If the PDF shows blank boxes, please copy the text from the screen instead.'**
+  String get translationContainsNonLatin;
+
+  /// No description provided for @callEmergencyNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Call 112 / 911 Now'**
+  String get callEmergencyNow;
+
+  /// No description provided for @couldNotOpenDialer.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the phone dialer. Please call 112 or your local emergency number manually.'**
+  String get couldNotOpenDialer;
+
+  /// No description provided for @sosRateLimitMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You just sent an SOS. Please wait 60 seconds before sending another — emergency services may already be responding.'**
+  String get sosRateLimitMessage;
+
+  /// No description provided for @sosDeliveryFailedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send alert. Please call emergency services directly (112 / 911).'**
+  String get sosDeliveryFailedMessage;
+
+  /// No description provided for @sosRateLimitRetryMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS rate limit: please wait 60 seconds before retrying.'**
+  String get sosRateLimitRetryMessage;
+
+  /// No description provided for @sosQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS QUEUED'**
+  String get sosQueued;
+
+  /// No description provided for @emergencyAlertQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Alert Queued'**
+  String get emergencyAlertQueued;
+
+  /// No description provided for @emergencyContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Contact'**
+  String get emergencyContact;
+
+  /// No description provided for @tapToViewQrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to view QR Code'**
+  String get tapToViewQrCode;
+
+  /// No description provided for @translation.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical Translation'**
+  String get translation;
+
+  /// No description provided for @translationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate medical terms into 40+ languages with DeepL'**
+  String get translationDesc;
+
+  /// No description provided for @medicalRecordsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Store and manage prescriptions, lab results, and imaging files'**
+  String get medicalRecordsDesc;
+
+  /// No description provided for @vitalsTrackingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vitals Tracking'**
+  String get vitalsTrackingTitle;
+
+  /// No description provided for @vitalsTrackingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track heart rate, blood pressure, temperature, and more'**
+  String get vitalsTrackingDesc;
+
+  /// No description provided for @medicationRemindersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication Reminders'**
+  String get medicationRemindersTitle;
+
+  /// No description provided for @medicationRemindersDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Never miss a dose with smart medication reminders'**
+  String get medicationRemindersDesc;
+
+  /// No description provided for @appointmentManagerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment Manager'**
+  String get appointmentManagerTitle;
+
+  /// No description provided for @appointmentManagerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule and track doctor appointments'**
+  String get appointmentManagerDesc;
+
+  /// No description provided for @offlineModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Mode'**
+  String get offlineModeTitle;
+
+  /// No description provided for @offlineModeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Access your health passport and history without internet'**
+  String get offlineModeDesc;
+
+  /// No description provided for @languagesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'41 Languages'**
+  String get languagesTitle;
+
+  /// No description provided for @languagesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Full app localization in 41 languages including African languages'**
+  String get languagesDesc;
+
+  /// No description provided for @primaryCarePhysician.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Care Physician'**
+  String get primaryCarePhysician;
 }
 
 class _AppLocalizationsDelegate

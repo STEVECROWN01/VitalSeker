@@ -13,9 +13,10 @@ SosEvent _$SosEventFromJson(Map<String, dynamic> json) => SosEvent(
       longitude: (json['longitude'] as num?)?.toDouble(),
       locationAddress: json['location_address'] as String?,
       contactsNotified: (json['contacts_notified'] as List<dynamic>?)
-          ?.map(
-              (e) => ContactNotification.fromJson(e as Map<String, dynamic>))
-          .toList() ?? [],
+              ?.map((e) =>
+                  ContactNotification.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       smsSent: json['sms_sent'] as bool? ?? false,
       resolved: json['resolved'] as bool? ?? false,
       resolvedAt: json['resolved_at'] == null
@@ -24,8 +25,7 @@ SosEvent _$SosEventFromJson(Map<String, dynamic> json) => SosEvent(
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
-Map<String, dynamic> _$SosEventToJson(SosEvent instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$SosEventToJson(SosEvent instance) => <String, dynamic>{
       'id': instance.id,
       'user_id': instance.userId,
       'latitude': instance.latitude,

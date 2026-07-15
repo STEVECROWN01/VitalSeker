@@ -164,18 +164,45 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
     _scrollToBottom();
 
     try {
+      // Build the request body. FIX (audit H-6): include file attachment info
+      // so the edge function can pass it to the AI. The previous code uploaded
+      // files to Storage but never included them in the request — the AI
+      // never saw the attachment and the user's expectation that "I shared a
+      // prescription" was met with an AI response that ignored it entirely.
+      final requestBody = <String, dynamic>{
+        'messages': _messages
+            .where((m) => m.isUser || m.content != (AppLocalizations.of(context)?.sekerGreeting ?? ''))
+            .map((m) => {
+                  'role': m.isUser ? 'user' : 'assistant',
+                  'content': m.content,
+                })
+            .toList(),
+        'language': Localizations.localeOf(context).languageCode,
+      };
+
+      // If there's an attached file, include its name and storage path in
+      // the request. The edge function can use this to fetch the file or at
+      // minimum acknowledge to the AI that a file was shared.
+      if (_attachedFileName != null && _attachedFileUrl != null) {
+        requestBody['attachment'] = {
+          'name': _attachedFileName,
+          'path': _attachedFileUrl,
+        };
+        // Also append a note to the last user message so the AI knows a file
+        // was attached (the edge function may not parse the attachment field).
+        if (_messages.isNotEmpty && _messages.last.isUser) {
+          _messages.removeLast();
+          _messages.add(_ChatMessage(
+            content: '$text\n\n[Attached file: $_attachedFileName]',
+            isUser: true,
+            timestamp: DateTime.now(),
+          ));
+        }
+      }
+
       final response = await SupabaseService().client.functions.invoke(
         'ai-chat',
-        body: {
-          'messages': _messages
-              .where((m) => m.isUser || m.content != (AppLocalizations.of(context)?.sekerGreeting ?? ''))
-              .map((m) => {
-                    'role': m.isUser ? 'user' : 'assistant',
-                    'content': m.content,
-                  })
-              .toList(),
-          'language': Localizations.localeOf(context).languageCode,
-        },
+        body: requestBody,
       ).timeout(const Duration(seconds: 60));
 
       final data = response.data as Map<String, dynamic>;
@@ -205,7 +232,11 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       );
       setState(() {
         _messages.add(streamingMessage);
-        _isSending = false;
+        // FIX (audit 10.4): keep _isSending = true until streaming completes.
+        // The previous code set it false here, allowing the user to send
+        // another message mid-stream.
+        _attachedFileName = null;
+        _attachedFileUrl = null;
       });
       _scrollToBottom();
 
@@ -229,6 +260,8 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         });
         _scrollToBottom();
       }
+      // FIX (audit 10.4): now set _isSending = false after streaming is done.
+      if (mounted) setState(() => _isSending = false);
     } catch (e) {
       setState(() {
         _messages.add(_ChatMessage(
@@ -244,11 +277,9 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   }
 
   Future<void> _startRecording() async {
+    final l10n = AppLocalizations.of(context)!;
     if (!_speechAvailable) {
-      AppSnackBar.error(
-        context,
-        'Speech recognition is not available on this device. Please type your message.',
-      );
+      AppSnackBar.error(context, l10n.speechNotAvailable);
       return;
     }
 
@@ -288,10 +319,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         _partialTranscription = '';
       });
     } catch (e) {
-      AppSnackBar.error(
-        context,
-        'Could not start voice recording. Please check microphone permissions.',
-      );
+      AppSnackBar.error(context, l10n.couldNotStartRecording);
     }
   }
 
@@ -309,9 +337,16 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   /// Pick a file (prescription, lab result, imaging) to share with Seker.
   /// The file name is inserted into the chat as a user message so Seker
   /// knows the user has shared a document.
+  //
+  // FIX (audit H-6): store the storage path alongside the file name so
+  // _sendMessage can include it in the request body. The previous code
+  // uploaded the file but only stored the display name — the AI never
+  // received any reference to the uploaded file.
   String? _attachedFileName;
+  String? _attachedFileUrl;
 
   Future<void> _pickFile() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -325,31 +360,38 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       // Upload to Supabase Storage
       final user = ref.read(currentUserProvider);
       if (user == null) {
-        AppSnackBar.error(context, 'Please sign in to upload files.');
+        AppSnackBar.error(context, l10n.pleaseSignInToUpload);
         return;
       }
 
-      AppSnackBar.info(context, 'Uploading $fileName...');
+      AppSnackBar.info(context, '${l10n.uploading} $fileName...');
 
       final storagePath = '${user.id}/chat/${DateTime.now().millisecondsSinceEpoch}_$fileName';
       try {
         await Supabase.instance.client.storage
             .from('medical-records')
             .upload(storagePath, file);
+        // Upload succeeded — store the path so _sendMessage can include it.
+        setState(() {
+          _attachedFileName = fileName;
+          _attachedFileUrl = 'medical-records://$storagePath';
+        });
+        if (mounted) {
+          AppSnackBar.success(context, '${l10n.fileAttached}: $fileName');
+        }
       } catch (e) {
+        // Upload failed — surface the error and do NOT set the attachment.
         debugPrint('Storage upload failed: $e');
-      }
-
-      // Show the file as an attachment — do NOT auto-send
-      setState(() {
-        _attachedFileName = fileName;
-      });
-      if (mounted) {
-        AppSnackBar.success(context, 'File attached: $fileName');
+        if (mounted) {
+          AppSnackBar.error(
+            context,
+            'Could not upload file. Please check your connection and try again.',
+          );
+        }
       }
     } catch (e) {
       if (mounted) {
-        AppSnackBar.error(context, 'Could not pick file: $e');
+        AppSnackBar.error(context, l10n.couldNotPickFile);
       }
     }
   }
@@ -394,7 +436,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Seker AI',
+                    l10n.sekerAiName,
                     style: AppTextStyles.subheading2.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -426,8 +468,8 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                       const SizedBox(width: 6),
                       Text(
                         _isSending
-                            ? 'typing...'
-                            : (_isOnline ? 'Online' : 'Offline'),
+                            ? l10n.typing
+                            : (_isOnline ? l10n.online : l10n.offline),
                         style: TextStyle(
                           fontSize: 11,
                           color: _isSending
@@ -545,7 +587,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                   GestureDetector(
                     onTap: _stopRecording,
                     child: Text(
-                      'Stop',
+                      l10n.stop,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -581,7 +623,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                   GestureDetector(
                     onTap: () => setState(() {
                       _attachedFileName = null;
-                      // reset
+                      _attachedFileUrl = null;
                     }),
                     child: Icon(Icons.close, size: 16, color: AppColors.error(isDark)),
                   ),
@@ -640,8 +682,8 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
                   onSubmitted: (_) => _sendMessage(),
                   decoration: InputDecoration(
                     hintText: _isRecording
-                        ? 'Recording...'
-                        : 'Type your message...',
+                        ? l10n.recording
+                        : l10n.typeYourMessage,
                     hintStyle: TextStyle(
                       color: AppColors.textHint(isDark),
                       fontSize: 14,

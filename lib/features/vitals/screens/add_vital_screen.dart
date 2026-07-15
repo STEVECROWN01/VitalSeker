@@ -329,11 +329,21 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
             ] else ...[
               TextFormField(
                 controller: _valueController,
+                // CRITICAL FIX (audit C-12): allow decimals for temperature
+                // AND weight (and bloodGlucose if mmol/L is used). The
+                // previous code used digitsOnly for all non-temperature
+                // types, making it impossible to enter 70.5 kg — weight
+                // tracking requires decimal precision for useful trend
+                // data and BMI calculations.
                 keyboardType: TextInputType.numberWithOptions(
-                  decimal: _selectedType == VitalType.temperature,
+                  decimal: _selectedType == VitalType.temperature ||
+                           _selectedType == VitalType.weight ||
+                           _selectedType == VitalType.bloodGlucose,
                 ),
                 inputFormatters: [
-                  _selectedType == VitalType.temperature
+                  (_selectedType == VitalType.temperature ||
+                   _selectedType == VitalType.weight ||
+                   _selectedType == VitalType.bloodGlucose)
                       ? FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))
                       : FilteringTextInputFormatter.digitsOnly,
                 ],

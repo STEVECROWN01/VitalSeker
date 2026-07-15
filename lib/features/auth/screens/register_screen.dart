@@ -59,12 +59,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     }
   }
 
+  // FIX (audit 4.4): store TapGestureRecognizers as fields so they can be
+  // disposed. Creating them inline in build() leaks memory on every rebuild.
+  late final TapGestureRecognizer _termsRecognizer;
+  late final TapGestureRecognizer _privacyRecognizer;
+
   @override
   void initState() {
     super.initState();
-    _dobController.addListener(() {
-      // Keep controller text in sync with _dateOfBirth when it changes externally.
-    });
+    _termsRecognizer = TapGestureRecognizer();
+    _privacyRecognizer = TapGestureRecognizer();
   }
 
   @override
@@ -74,6 +78,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     _dobController.dispose();
+    // FIX (audit 4.4): dispose the gesture recognizers.
+    _termsRecognizer.dispose();
+    _privacyRecognizer.dispose();
     super.dispose();
   }
 
@@ -231,6 +238,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   }
 
   Future<void> _signInWithGoogle() async {
+    // FIX (audit H-44): require Terms acceptance before social sign-up.
+    // The previous code let users register via Google/Apple without agreeing
+    // to the Terms of Service and Privacy Policy — a legal compliance gap.
+    final l10n = AppLocalizations.of(context)!;
+    if (!_acceptTerms) {
+      _showError(l10n.acceptTermsRequired);
+      return;
+    }
     setState(() => _isLoading = true);
     try {
       final authService = ref.read(authServiceProvider);
@@ -244,6 +259,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   }
 
   Future<void> _signInWithApple() async {
+    // FIX (audit H-44): require Terms acceptance before social sign-up.
+    final l10n = AppLocalizations.of(context)!;
+    if (!_acceptTerms) {
+      _showError(l10n.acceptTermsRequired);
+      return;
+    }
     setState(() => _isLoading = true);
     try {
       final authService = ref.read(authServiceProvider);
@@ -543,8 +564,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   decoration: TextDecoration.underline,
                                   decorationColor: AppColors.primary(isDark),
                                 ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () => context.push(AppConfig.termsOfService),
+                                recognizer: _termsRecognizer..onTap = () => context.push(AppConfig.termsOfService),
                               ),
                               TextSpan(text: l10n.andText),
                               TextSpan(
@@ -555,8 +575,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   decoration: TextDecoration.underline,
                                   decorationColor: AppColors.primary(isDark),
                                 ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () => context.push(AppConfig.privacyPolicy),
+                                recognizer: _privacyRecognizer..onTap = () => context.push(AppConfig.privacyPolicy),
                               ),
                             ],
                           ),

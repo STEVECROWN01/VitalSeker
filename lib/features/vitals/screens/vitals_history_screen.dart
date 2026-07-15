@@ -23,6 +23,11 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
   late VitalType _selectedType;
   int _selectedRange = 1; // 0: 7D, 1: 1M, 2: 3M, 3: 6M, 4: 1Y
 
+  // FIX (audit M-3): pagination for the data table. The previous code used
+  // vitals.take(20) with no way to see more. We now show 20 rows initially
+  // and offer a "Show more" button that loads 20 at a time.
+  int _displayCount = 20;
+
   static const _rangeLabels = ['7D', '1M', '3M', '6M', '1Y'];
   static const _rangeDays = [7, 30, 90, 180, 365];
 
@@ -110,7 +115,10 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                     );
                   }).toList(),
                   onChanged: (type) {
-                    if (type != null) setState(() => _selectedType = type);
+                    if (type != null) setState(() {
+                      _selectedType = type;
+                      _displayCount = 20; // reset pagination on type change
+                    });
                   },
                 ),
               ),
@@ -127,7 +135,10 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: GestureDetector(
-                    onTap: () => setState(() => _selectedRange = index),
+                    onTap: () => setState(() {
+                      _selectedRange = index;
+                      _displayCount = 20; // reset pagination on range change
+                    }),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -193,6 +204,8 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                           vitals: filteredVitals.reversed.toList(),
                           vitalType: _selectedType,
                           isDark: isDark,
+                          displayCount: _displayCount,
+                          onShowMore: () => setState(() => _displayCount += 20),
                         ),
                         const SizedBox(height: 16),
                         const MedicalDisclaimerBanner(compact: true),
@@ -568,11 +581,15 @@ class _VitalsDataTable extends StatelessWidget {
   final List<Vital> vitals;
   final VitalType vitalType;
   final bool isDark;
+  final int displayCount;
+  final VoidCallback onShowMore;
 
   const _VitalsDataTable({
     required this.vitals,
     required this.vitalType,
     required this.isDark,
+    required this.displayCount,
+    required this.onShowMore,
   });
 
   @override
@@ -668,12 +685,37 @@ class _VitalsDataTable extends StatelessWidget {
             ),
           ),
           // Rows
-          ...vitals.take(20).map((vital) => _DataRow(
+          ...vitals.take(displayCount).map((vital) => _DataRow(
                 vital: vital,
                 vitalType: vitalType,
                 isDark: isDark,
               )),
-          if (vitals.length > 20)
+          if (vitals.length > displayCount)
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      l10n.showingReadingsCount(vitals.length),
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 12,
+                        color: AppColors.textHint(isDark),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    // FIX (audit M-3): "Show more" button to load 20 more rows.
+                    TextButton.icon(
+                      onPressed: onShowMore,
+                      icon: const Icon(Icons.expand_more, size: 18),
+                      label: const Text('Show more'),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          else if (vitals.isNotEmpty)
             Padding(
               padding: const EdgeInsets.all(12),
               child: Center(
@@ -820,8 +862,10 @@ class _DataRow extends ConsumerWidget {
     );
   }
 
+  // FIX (audit 3.5): normalize source to lowercase before matching to
+  // handle case-sensitive storage (e.g. 'Manual' vs 'manual').
   Color get _sourceColor {
-    switch (vital.source) {
+    switch (vital.source.toLowerCase()) {
       case 'manual':
         return AppColors.primary(isDark);
       case 'device':

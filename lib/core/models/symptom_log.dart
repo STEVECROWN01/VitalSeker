@@ -5,15 +5,21 @@ part 'symptom_log.g.dart';
 @JsonSerializable()
 class SymptomLog {
   final String id;
+  @JsonKey(name: 'user_id')
   final String userId;
   final List<String> symptoms;
   final int severity;
   final String? duration;
+  @JsonKey(name: 'body_regions')
   final List<String> bodyRegions;
+  @JsonKey(name: 'triage_result')
   final TriageResult? triageResult;
+  @JsonKey(name: 'ai_recommendation')
   final String? aiRecommendation;
   final String? notes;
+  @JsonKey(name: 'logged_at')
   final DateTime loggedAt;
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
 
   SymptomLog({

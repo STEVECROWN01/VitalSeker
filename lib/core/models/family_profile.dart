@@ -6,17 +6,25 @@ part 'family_profile.g.dart';
 @JsonSerializable()
 class FamilyProfile {
   final String id;
+  @JsonKey(name: 'owner_id')
   final String ownerId;
+  @JsonKey(name: 'full_name')
   final String fullName;
   final String relationship;
+  @JsonKey(name: 'date_of_birth')
   final DateTime? dateOfBirth;
+  @JsonKey(name: 'blood_type')
   final String? bloodType;
   final List<String> allergies;
+  @JsonKey(name: 'chronic_conditions')
   final List<String> chronicConditions;
   final List<String> medications;
+  @JsonKey(name: 'emergency_contacts')
   final List<EmergencyContact> emergencyContacts;
   final String? passportId;
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
+  @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
 
   FamilyProfile({

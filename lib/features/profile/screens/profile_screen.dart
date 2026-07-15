@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +10,11 @@ import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../core/providers/vitals_provider.dart';
+import '../../../core/providers/medications_provider.dart';
+import '../../../core/providers/appointments_provider.dart';
+import '../../../core/providers/health_passport_provider.dart';
+import '../../../core/providers/insights_provider.dart';
+import '../../../core/services/offline_cache_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
@@ -46,7 +52,38 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       setState(() => _isSigningOut = true);
       try {
         final authService = ref.read(authServiceProvider);
+
+        // Capture the user ID before signOut so we can clear the offline cache.
+        final userId = authService.currentUser?.id;
+
         await authService.signOut();
+
+        // SECURITY FIX (audit H-7, H-15): clear the offline cache so user A's
+        // cached PHI doesn't persist on the device after sign-out. Without
+        // this, on a shared device, user B could see user A's cached passport,
+        // symptom logs, and profile data.
+        if (userId != null) {
+          try {
+            await OfflineCacheService().clearAll(userId);
+          } catch (e) {
+            debugPrint('Offline cache clear on signOut failed (non-fatal): $e');
+          }
+        }
+
+        // Invalidate ALL user-scoped providers so stale state doesn't leak
+        // into the next user's session on the same device.
+        ref.invalidate(userProfileProvider);
+        ref.invalidate(authStateProvider);
+        ref.invalidate(subscriptionProvider);
+        ref.invalidate(isProUserAsyncProvider);
+        ref.invalidate(familyProfilesProvider);
+        ref.invalidate(vitalsProvider);
+        ref.invalidate(symptomLogsProvider);
+        ref.invalidate(activeMedicationsProvider);
+        ref.invalidate(appointmentsProvider);
+        ref.invalidate(healthPassportProvider);
+        ref.invalidate(weeklyInsightsProvider);
+
         if (mounted) context.go(AppConfig.login);
       } catch (e) {
         if (mounted) AppSnackBar.errorFromException(context, l10n.failedToSignOut, e);
@@ -402,7 +439,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 // ── Footer ──
                 const SizedBox(height: 24),
                 Text(
-                  l10n.poweredBy,
+                  l10n.poweredBy(AppConfig.producer),
                   style: AppTextStyles.labelSmall.copyWith(
                     color: AppColors.textTertiary(isDark).withValues(alpha: 0.6),
                   ),

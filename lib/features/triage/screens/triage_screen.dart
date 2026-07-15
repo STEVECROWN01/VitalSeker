@@ -93,8 +93,14 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
         }
         if (age > 0) _ageController.text = age.toString();
       }
+      // FIX (audit H-31): the profile stores gender as 'Male'/'Female'/'Other'
+      // (capitalized — see register_screen.dart _genderOptions). Step 3's sex
+      // selector uses lowercase ['male', 'female', 'other']. The comparison
+      // _biologicalSex == sex never matched the capitalized stored value, so
+      // the sex buttons never appeared pre-selected and the user had to
+      // re-select every time. Normalize to lowercase here.
       if (profile.gender != null) {
-        _biologicalSex = profile.gender;
+        _biologicalSex = profile.gender!.toLowerCase();
       }
     }
   }
@@ -145,34 +151,55 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
 
     // ── Free-tier 3 triages/month limit (per Cahier des Charges Section 3):
     // "GRATUIT — 3 triages/mois". Pro users have unlimited triages.
-    final isPro = ref.read(isProUserProvider);
+    //
+    // FIX (audit H-32): the previous code read symptomLogsProvider with
+    // ref.read(...).valueOrNull which returned null while the provider was
+    // still loading — monthCount fell back to 0, and a user could rapidly
+    // run 4 triages before the provider resolved, bypassing the limit. We
+    // now await the provider's future so we always have the real count.
+    final isPro = await ref.read(isProUserAsyncProvider.future);
     if (!isPro) {
-      final symptomLogs = ref.read(symptomLogsProvider).valueOrNull ?? [];
-      // Count logs from this calendar month
-      final now = DateTime.now();
-      final monthStart = DateTime(now.year, now.month, 1);
-      final monthCount = symptomLogs.where((log) {
-        return log.loggedAt.isAfter(monthStart) || log.loggedAt.isAtSameMomentAs(monthStart);
-      }).length;
-      if (monthCount >= 3) {
-        AppSnackBar.error(context, l10n.triageLimitReached);
-        // Navigate to subscription screen so the user can upgrade
-        context.push(AppConfig.subscription);
-        return;
+      try {
+        final symptomLogs = await ref.read(symptomLogsProvider.future);
+        final now = DateTime.now();
+        final monthStart = DateTime(now.year, now.month, 1);
+        final monthCount = symptomLogs.where((log) {
+          return log.loggedAt.isAfter(monthStart) ||
+              log.loggedAt.isAtSameMomentAs(monthStart);
+        }).length;
+        if (monthCount >= 3) {
+          if (!mounted) return;
+          AppSnackBar.error(context, l10n.triageLimitReached);
+          context.push(AppConfig.subscription);
+          return;
+        }
+      } catch (e) {
+        // If we can't load the symptom logs (network error), don't block
+        // the triage — let it proceed. The server-side edge function also
+        // enforces the limit.
+        debugPrint('Failed to load symptom logs for triage limit check: $e');
       }
     }
 
     setState(() => _isProcessing = true);
 
+    // Capture the NavigatorState BEFORE the await so we can pop the overlay
+    // even if the widget is disposed during the AI call.
+    // FIX (audit C-22): the previous code checked `if (!mounted) return;`
+    // BEFORE calling Navigator.of(context).pop() — if the widget disposed
+    // during the await, the overlay was never popped and the user was
+    // stranded on the "AI Thinking" screen forever. By capturing the
+    // navigator up front, we can pop the overlay regardless of the
+    // parent widget's mounted state (the overlay is a separate route).
+    final navigator = Navigator.of(context);
+
     // Show the AI thinking overlay
-    if (mounted) {
-      Navigator.of(context).push(
-        PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (context, _, __) => const AiThinkingScreen(),
-        ),
-      );
-    }
+    navigator.push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (context, _, __) => const AiThinkingScreen(),
+      ),
+    );
 
     try {
       final edgeService = EdgeFunctionService();
@@ -194,18 +221,22 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
         language: ref.read(localeProvider).languageCode,
       );
 
-      if (!mounted) return;
-      Navigator.of(context).pop(); // Close AI thinking overlay
+      // Pop the overlay using the captured navigator — works even if the
+      // parent widget has been disposed (the overlay is its own route).
+      navigator.pop();
 
+      if (!mounted) return;
       final triage = result['triage'] as Map<String, dynamic>? ?? result;
       context.push(AppConfig.triageResult, extra: triage);
     } catch (e) {
+      // Pop the overlay FIRST using the captured navigator so the user
+      // never gets stranded, then handle the error.
+      navigator.pop();
+
       if (!mounted) return;
-      Navigator.of(context).pop(); // Close AI thinking overlay
 
       // ── Offline queue (per Cahier des Charges Section 2.3: "Mode Hors-Ligne")
       // If the network is down, queue the triage request for later submission.
-      final l10n = AppLocalizations.of(context)!;
       final notes = _notesController.text.trim().isEmpty ? null : _notesController.text.trim();
 
       // Queue the request for retry when network returns
@@ -377,6 +408,7 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
               IconButton(
                 onPressed: () => context.push(AppConfig.aiChat),
                 icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                tooltip: l10n.chatWithSeker,
               ),
             ],
           ),

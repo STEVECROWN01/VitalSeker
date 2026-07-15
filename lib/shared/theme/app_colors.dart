@@ -27,7 +27,12 @@ class AppColors {
 
   // Functional
   static const Color lightError = Color(0xFFBA1A1A);
-  static const Color lightWarning = Color(0xFFFF9800);
+  // FIX (audit L-13): darken lightWarning from #FF9800 to #E65100 for text use.
+  // The previous color had a contrast ratio of ~2.8:1 on the light background,
+  // failing WCAG AA. #E65100 has a ratio of ~5.5:1. For background fills
+  // (chips, banners), the original brighter color can still be used via
+  // `warning(isDark).withValues(alpha: 0.1)`.
+  static const Color lightWarning = Color(0xFFE65100);
   static const Color lightSuccess = Color(0xFF4CAF50);
   static const Color lightInfo = Color(0xFF2196F3);
 
@@ -138,7 +143,10 @@ class AppColors {
   // Text colors
   static Color textPrimary(bool isDark) => isDark ? darkOnBackground : lightOnBackground;
   static Color textSecondary(bool isDark) => isDark ? darkOnSurfaceVariant : lightOnSurfaceVariant;
-  static Color textHint(bool isDark) => isDark ? const Color(0xFF8A938C) : const Color(0xFF707973);
+  // FIX (audit L-12): darken the light-mode hint color from #707973 to #5A6361
+  // to meet WCAG AA contrast (4.5:1) on the #F9F9FC background. The previous
+  // color had a contrast ratio of ~3.7:1, which fails for normal text.
+  static Color textHint(bool isDark) => isDark ? const Color(0xFF8A938C) : const Color(0xFF5A6361);
   static Color textTertiary(bool isDark) => isDark ? darkOutline : lightOutline;
 
   // Shadow

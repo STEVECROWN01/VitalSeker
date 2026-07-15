@@ -2,23 +2,54 @@
     <!-- Internet permission required for Supabase, Google Sign-In, and API calls -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Camera permission for avatar upload (Edit Profile screen). image_picker
-         handles the photo picker on Android 13+ without a runtime permission,
-         but the camera action still requires CAMERA on all API levels. -->
+    <!-- Camera permission for avatar upload, medical-records document scanning,
+         and OCR text extraction in the translation feature. -->
     <uses-permission android:name="android.permission.CAMERA"/>
     <!-- Geolocation permission for the SOS screen share-location feature. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- Microphone permission for AI chat voice notes (speech-to-text) -->
+    <!-- Microphone permission for AI chat voice notes (speech-to-text) and
+         translation screen voice input. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <!-- Storage permissions for medical record file uploads (images/documents) -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+
+    <!-- FIX (audit H-14): POST_NOTIFICATIONS is required on Android 13+
+         (API 33) for local notifications to fire. Without it, the medication
+         reminders, appointment reminders, triage reminders, and weekly
+         insights notifications are silently blocked. The runtime permission
+         request is triggered from NotificationService.initialize(). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <!-- SCHEDULE_EXACT_ALARM: required on Android 12+ (API 31) for scheduling
+         exact-time notifications (medication reminders at specific times). -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+
+    <!-- RECEIVE_BOOT_COMPLETED: so the app can reschedule notifications
+         after the device reboots (otherwise all reminders are lost). -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <!-- VIBRATE: for notification vibration. -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <!-- WAKE_LOCK: so the device wakes up to fire scheduled notifications. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <!-- FIX (audit H-15): disable backups. The default (allowBackup="true")
+         would back up the user's medical records, allergies, conditions,
+         and emergency contacts to Google Drive (auto-backup) and allow
+         extraction via `adb backup` on rooted devices. This is PHI
+         leakage — set to false. -->
     <application
         android:label="VitalSeker"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:dataExtractionRules="@xml/data_extraction_rules">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -39,6 +70,19 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- FIX (audit 5.9): Deep link intent filters for uni_links -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="vitalseker"/>
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https" android:host="passport.vitalseker.app"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

@@ -29,10 +29,11 @@ class DatabaseService {
   }
 
   Future<UserProfile> updateUserProfile(String userId, Map<String, dynamic> data) async {
-    data['updated_at'] = DateTime.now().toIso8601String();
+    // FIX (audit M-4): operate on a copy so the caller's map isn't mutated.
+    final payload = {...data, 'updated_at': DateTime.now().toIso8601String()};
     final response = await _client
         .from('users')
-        .update(data)
+        .update(payload)
         .eq('id', userId)
         .select()
         .single();
@@ -70,10 +71,10 @@ class DatabaseService {
   }
 
   Future<HealthPassport> updateHealthPassport(String passportId, Map<String, dynamic> data) async {
-    data['updated_at'] = DateTime.now().toIso8601String();
+    final payload = {...data, 'updated_at': DateTime.now().toIso8601String()};
     final response = await _client
         .from('health_passports')
-        .update(data)
+        .update(payload)
         .eq('id', passportId)
         .select()
         .single();
@@ -81,13 +82,17 @@ class DatabaseService {
   }
 
   // ==================== SYMPTOM LOGS ====================
+  /// FIX (audit M-7): clamp limit to [1, 500] and offset to >= 0 to prevent
+  /// .range(0, -1) (which is undefined behavior) and unbounded queries.
   Future<List<SymptomLog>> getSymptomLogs(String userId, {int limit = 50, int offset = 0}) async {
+    final clampedLimit = limit.clamp(1, 500);
+    final clampedOffset = offset < 0 ? 0 : offset;
     final response = await _client
         .from('symptom_logs')
         .select()
         .eq('user_id', userId)
         .order('logged_at', ascending: false)
-        .range(offset, offset + limit - 1);
+        .range(clampedOffset, clampedOffset + clampedLimit - 1);
     return response.map((json) => SymptomLog.fromJson(json)).toList();
   }
 
@@ -101,9 +106,10 @@ class DatabaseService {
   }
 
   Future<SymptomLog> updateSymptomLog(String logId, Map<String, dynamic> data) async {
+    final payload = {...data, 'updated_at': DateTime.now().toIso8601String()};
     final response = await _client
         .from('symptom_logs')
-        .update(data)
+        .update(payload)
         .eq('id', logId)
         .select()
         .single();
@@ -134,10 +140,10 @@ class DatabaseService {
   }
 
   Future<FamilyProfile> updateFamilyProfile(String profileId, Map<String, dynamic> data) async {
-    data['updated_at'] = DateTime.now().toIso8601String();
+    final payload = {...data, 'updated_at': DateTime.now().toIso8601String()};
     final response = await _client
         .from('family_profiles')
-        .update(data)
+        .update(payload)
         .eq('id', profileId)
         .select()
         .single();
@@ -169,10 +175,10 @@ class DatabaseService {
   }
 
   Future<Subscription> updateSubscription(String subId, Map<String, dynamic> data) async {
-    data['updated_at'] = DateTime.now().toIso8601String();
+    final payload = {...data, 'updated_at': DateTime.now().toIso8601String()};
     final response = await _client
         .from('subscriptions')
-        .update(data)
+        .update(payload)
         .eq('id', subId)
         .select()
         .single();
@@ -209,7 +215,10 @@ class DatabaseService {
     return SosEvent.fromJson(response);
   }
 
-  Future<SosEvent> resolveSosEvent(String eventId) async {
+  /// FIX (audit M-5): use .maybeSingle() instead of .single() so a missing
+  /// or already-resolved event doesn't throw PostgrestException. Returns
+  /// null if no rows match.
+  Future<SosEvent?> resolveSosEvent(String eventId) async {
     final response = await _client
         .from('sos_events')
         .update({
@@ -218,25 +227,30 @@ class DatabaseService {
         })
         .eq('id', eventId)
         .select()
-        .single();
+        .maybeSingle();
+    if (response == null) return null;
     return SosEvent.fromJson(response);
   }
 
   // ==================== VITALS ====================
-  Future<List<Map<String, dynamic>>> getVitals(String userId, {int limit = 1000, int offset = 0}) async {
+  /// FIX (audit M-7): clamp limit to [1, 500] and offset to >= 0.
+  /// Also reduced default limit from 1000 to 500 to reduce memory pressure.
+  Future<List<Map<String, dynamic>>> getVitals(String userId, {int limit = 500, int offset = 0}) async {
+    final clampedLimit = limit.clamp(1, 500);
+    final clampedOffset = offset < 0 ? 0 : offset;
     final response = await _client
         .from('vitals')
         .select()
         .eq('user_id', userId)
         .order('recorded_at', ascending: false)
-        .range(offset, offset + limit - 1);
+        .range(clampedOffset, clampedOffset + clampedLimit - 1);
     return response.toList();
   }
 
   Future<void> insertVital(Map<String, dynamic> data) async {
-    data.remove('id');
-    data['created_at'] = DateTime.now().toIso8601String();
-    await _client.from('vitals').insert(data);
+    final payload = Map<String, dynamic>.from(data)..remove('id');
+    payload['created_at'] = DateTime.now().toIso8601String();
+    await _client.from('vitals').insert(payload);
   }
 
   Future<void> deleteVital(String vitalId) async {
@@ -254,15 +268,15 @@ class DatabaseService {
   }
 
   Future<void> insertMedication(Map<String, dynamic> data) async {
-    data.remove('id');
-    data['created_at'] = DateTime.now().toIso8601String();
-    data['updated_at'] = DateTime.now().toIso8601String();
-    await _client.from('medications').insert(data);
+    final payload = Map<String, dynamic>.from(data)..remove('id');
+    payload['created_at'] = DateTime.now().toIso8601String();
+    payload['updated_at'] = DateTime.now().toIso8601String();
+    await _client.from('medications').insert(payload);
   }
 
   Future<void> updateMedication(String medicationId, Map<String, dynamic> data) async {
-    data['updated_at'] = DateTime.now().toIso8601String();
-    await _client.from('medications').update(data).eq('id', medicationId);
+    final payload = {...data, 'updated_at': DateTime.now().toIso8601String()};
+    await _client.from('medications').update(payload).eq('id', medicationId);
   }
 
   Future<void> deleteMedication(String medicationId) async {
@@ -280,15 +294,15 @@ class DatabaseService {
   }
 
   Future<void> insertAppointment(Map<String, dynamic> data) async {
-    data.remove('id');
-    data['created_at'] = DateTime.now().toIso8601String();
-    data['updated_at'] = DateTime.now().toIso8601String();
-    await _client.from('appointments').insert(data);
+    final payload = Map<String, dynamic>.from(data)..remove('id');
+    payload['created_at'] = DateTime.now().toIso8601String();
+    payload['updated_at'] = DateTime.now().toIso8601String();
+    await _client.from('appointments').insert(payload);
   }
 
   Future<void> updateAppointment(String appointmentId, Map<String, dynamic> data) async {
-    data['updated_at'] = DateTime.now().toIso8601String();
-    await _client.from('appointments').update(data).eq('id', appointmentId);
+    final payload = {...data, 'updated_at': DateTime.now().toIso8601String()};
+    await _client.from('appointments').update(payload).eq('id', appointmentId);
   }
 
   Future<void> deleteAppointment(String appointmentId) async {
@@ -306,19 +320,23 @@ class DatabaseService {
   }
 
   Future<void> insertMedicalRecord(Map<String, dynamic> data) async {
-    data.remove('id');
-    data['created_at'] = DateTime.now().toIso8601String();
-    await _client.from('medical_records').insert(data);
+    final payload = Map<String, dynamic>.from(data)..remove('id');
+    payload['created_at'] = DateTime.now().toIso8601String();
+    await _client.from('medical_records').insert(payload);
   }
 
   Future<void> deleteMedicalRecord(String recordId) async {
     await _client.from('medical_records').delete().eq('id', recordId);
   }
 
-  /// Update an existing medical record. Previously medical_records had no
-  /// UPDATE method — once created, records were immutable from the client.
+  /// Update an existing medical record.
+  ///
+  /// FIX (audit M-3): set `updated_at` for consistency with all other update
+  /// methods. Previously this was the only update method that didn't set
+  /// `updated_at`, leaving the column stale or null after client updates.
   Future<void> updateMedicalRecord(String recordId, Map<String, dynamic> data) async {
-    await _client.from('medical_records').update(data).eq('id', recordId);
+    final payload = {...data, 'updated_at': DateTime.now().toIso8601String()};
+    await _client.from('medical_records').update(payload).eq('id', recordId);
   }
 
   // ==================== AVATAR STORAGE ====================
@@ -333,13 +351,21 @@ class DatabaseService {
     required List<int> bytes,
     required String contentType,
   }) async {
-    final path = '$userId/avatar.jpg';
+    // FIX (audit M-6): use a content-type-appropriate extension and add a
+    // cache-busting query parameter so CachedNetworkImage doesn't serve
+    // the old avatar after upload.
+    final ext = contentType == 'image/png' ? 'png' : 'jpg';
+    final path = '$userId/avatar.$ext';
     await _client.storage.from('avatars').uploadBinary(
           path,
           Uint8List.fromList(bytes),
           fileOptions: FileOptions(contentType: contentType, upsert: true),
         );
-    return _client.storage.from('avatars').getPublicUrl(path);
+    final baseUrl = _client.storage.from('avatars').getPublicUrl(path);
+    // Append a cache-busting timestamp so the URL changes on each upload,
+    // forcing CachedNetworkImage to fetch the new image instead of serving
+    // the cached old one.
+    return '$baseUrl?v=${DateTime.now().millisecondsSinceEpoch}';
   }
 
   /// Remove the avatar file for the given user. Best-effort — does not throw

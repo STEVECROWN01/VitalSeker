@@ -66,23 +66,44 @@ serve(async (req: Request) => {
     const glmApiKey = Deno.env.get('GLM_GATEWAY_SECRET')
     const glmApiUrl = Deno.env.get('GLM_GATEWAY_URL')
 
-    // Get all Pro users
-    const { data: proUsers, error: usersError } = await supabaseAdmin
+    // Get all Pro users.
+    //
+    // FIX (audit H-5): deduplicate user_ids since the subscriptions table
+    // may have multiple rows per user (no UNIQUE constraint was enforced
+    // before migration 009). Without dedup, a user with 2 active Pro rows
+    // would be processed twice — double AI call, double vital_score change.
+    const { data: proUsersRaw, error: usersError } = await supabaseAdmin
       .from('subscriptions')
       .select('user_id')
       .eq('plan', 'pro')
       .eq('status', 'active')
 
-    if (usersError || !proUsers || proUsers.length === 0) {
+    if (usersError || !proUsersRaw || proUsersRaw.length === 0) {
       return new Response(JSON.stringify({ message: 'No pro users found' }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }
 
+    // Deduplicate user_ids.
+    const seenUserIds = new Set<string>()
+    const proUsers = proUsersRaw.filter((sub: { user_id: string }) => {
+      if (seenUserIds.has(sub.user_id)) return false
+      seenUserIds.add(sub.user_id)
+      return true
+    })
+
+    // FIX (audit M-3 from backend): use start-of-day boundaries to avoid
+    // off-by-one errors. The previous code used `now` as the end and
+    // `now - 7d` as the start, which spans 8 calendar days if the user
+    // is east of UTC. We now use startOfDay(now) - 7d as the start and
+    // startOfDay(now) - 1d as the end (inclusive of yesterday).
     const now = new Date()
-    const weekEnd = new Date(now)
-    const weekStart = new Date(now)
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const weekStart = new Date(startOfToday)
     weekStart.setDate(weekStart.getDate() - 7)
+    const weekEnd = new Date(startOfToday)
+    weekEnd.setDate(weekEnd.getDate() - 1)
+    weekEnd.setHours(23, 59, 59, 999)
 
     const insights = []
 
@@ -187,9 +208,28 @@ Respond ONLY with valid JSON:
             }
             try {
               const parsed = JSON.parse(candidate)
-              summary = parsed.summary || summary
-              recommendations = parsed.recommendations || recommendations
-              trendAnalysis = { ...trendAnalysis, ...parsed.trend_analysis }
+              // FIX (audit H-6): validate the AI response shape before using.
+              // If the model returns a string instead of an array for
+              // recommendations, the insert would fail with a type error.
+              if (typeof parsed.summary === 'string' && parsed.summary.trim()) {
+                summary = parsed.summary
+              }
+              if (Array.isArray(parsed.recommendations)) {
+                recommendations = parsed.recommendations.filter(
+                  (r: unknown) => typeof r === 'string' && r.trim()
+                )
+              }
+              if (parsed.trend_analysis && typeof parsed.trend_analysis === 'object') {
+                // Only merge known keys — don't let the AI overwrite
+                // symptom_frequency with a string.
+                const ta = parsed.trend_analysis as Record<string, unknown>
+                if (typeof ta.symptom_frequency === 'number') {
+                  trendAnalysis.symptom_frequency = ta.symptom_frequency
+                }
+                if (typeof ta.avg_severity === 'number') {
+                  trendAnalysis.avg_severity = ta.avg_severity
+                }
+              }
             } catch {
               console.warn('AI returned non-JSON content for user', sub.user_id)
             }
@@ -199,8 +239,12 @@ Respond ONLY with valid JSON:
         }
       }
 
-      // Calculate vital score change
-      const previousScore = passport?.vital_score || 50
+      // Calculate vital score change.
+      // FIX (audit C-7): use nullish coalescing (??) instead of || so a
+      // legitimate vital_score of 0 is not treated as "no score". The
+      // previous code treated 0 as falsy and defaulted to 50, causing the
+      // score to drift upward over time.
+      const previousScore = passport?.vital_score ?? 50
       let scoreChange = 0
       if (avgSeverity <= 3) scoreChange = 5
       else if (avgSeverity <= 6) scoreChange = 0

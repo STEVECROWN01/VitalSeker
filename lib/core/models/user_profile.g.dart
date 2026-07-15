@@ -16,13 +16,18 @@ UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
           ? null
           : DateTime.parse(json['date_of_birth'] as String),
       bloodType: json['blood_type'] as String?,
-      allergies: (json['allergies'] as List<dynamic>?)?.cast<String>() ?? [],
-      chronicConditions:
-          (json['chronic_conditions'] as List<dynamic>?)?.cast<String>() ?? [],
+      allergies: (json['allergies'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      chronicConditions: (json['chronic_conditions'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       emergencyContacts: (json['emergency_contacts'] as List<dynamic>?)
               ?.map((e) => EmergencyContact.fromJson(e as Map<String, dynamic>))
               .toList() ??
-          [],
+          const [],
       preferredLanguage: json['preferred_language'] as String? ?? 'en',
       themePreference: json['theme_preference'] as String? ?? 'system',
       onboardingCompleted: json['onboarding_completed'] as bool? ?? false,
@@ -55,7 +60,7 @@ Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
       'gender': instance.gender,
       'height_cm': instance.heightCm,
       'weight_kg': instance.weightKg,
-      'notification_prefs': instance.notificationPrefs?.toJson(),
+      'notification_prefs': instance.notificationPrefs,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
     };
@@ -76,20 +81,20 @@ Map<String, dynamic> _$EmergencyContactToJson(EmergencyContact instance) =>
 
 NotificationPrefs _$NotificationPrefsFromJson(Map<String, dynamic> json) =>
     NotificationPrefs(
-      triageReminders: json['triage_reminders'] as bool? ?? true,
-      medicationReminders: json['medication_reminders'] as bool? ?? true,
-      appointmentReminders: json['appointment_reminders'] as bool? ?? true,
-      vitalsLoggingReminders: json['vitals_logging_reminders'] as bool? ?? true,
-      healthTips: json['health_tips'] as bool? ?? true,
-      weeklyReport: json['weekly_report'] as bool? ?? true,
+      triageReminders: (json['triageReminders'] ?? json['triage_reminders']) as bool? ?? true,
+      medicationReminders: (json['medicationReminders'] ?? json['medication_reminders']) as bool? ?? true,
+      appointmentReminders: (json['appointmentReminders'] ?? json['appointment_reminders']) as bool? ?? true,
+      vitalsLoggingReminders: (json['vitalsLoggingReminders'] ?? json['vitals_logging_reminders']) as bool? ?? true,
+      healthTips: (json['healthTips'] ?? json['health_tips']) as bool? ?? true,
+      weeklyReport: (json['weeklyReport'] ?? json['weekly_report']) as bool? ?? true,
     );
 
 Map<String, dynamic> _$NotificationPrefsToJson(NotificationPrefs instance) =>
     <String, dynamic>{
-      'triage_reminders': instance.triageReminders,
-      'medication_reminders': instance.medicationReminders,
-      'appointment_reminders': instance.appointmentReminders,
-      'vitals_logging_reminders': instance.vitalsLoggingReminders,
-      'health_tips': instance.healthTips,
-      'weekly_report': instance.weeklyReport,
+      'triageReminders': instance.triageReminders,
+      'medicationReminders': instance.medicationReminders,
+      'appointmentReminders': instance.appointmentReminders,
+      'vitalsLoggingReminders': instance.vitalsLoggingReminders,
+      'healthTips': instance.healthTips,
+      'weeklyReport': instance.weeklyReport,
     };

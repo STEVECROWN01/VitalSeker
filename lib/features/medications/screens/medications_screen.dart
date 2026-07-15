@@ -55,6 +55,12 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
     bool reminders = medication.remindersEnabled;
     bool isSaving = false;
 
+    // FIX (audit H-38): the controllers were never disposed, leaking memory
+    // every time the dialog opened. We now await showDialog and dispose the
+    // controllers when the dialog closes.
+    // The dialog content is built below — showDialog returns when the dialog
+    // is popped, so we dispose in a then() callback.
+
     showDialog(
       context: context,
       builder: (ctx) => StatefulBuilder(
@@ -160,7 +166,13 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
           ],
         ),
       ),
-    );
+    ).then((_) {
+      // FIX (audit H-38): dispose the controllers when the dialog closes
+      // to prevent memory leaks. Each time the dialog opened, two new
+      // TextEditingControllers were created and never disposed.
+      dosageController.dispose();
+      notesController.dispose();
+    });
   }
 
   Future<void> _markComplete(Medication medication) async {
@@ -323,7 +335,27 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) {
           debugPrint('Medications load error: $e');
-          return Center(child: Text(l10n.somethingWentWrong));
+          // FIX (audit M-2): add a retry button with the error message.
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.error_outline, size: 64, color: AppColors.urgencyEmergency),
+                const SizedBox(height: 16),
+                Text(l10n.somethingWentWrong),
+                const SizedBox(height: 16),
+                ElevatedButton.icon(
+                  onPressed: () => ref.invalidate(medicationsProvider),
+                  icon: const Icon(Icons.refresh, size: 18),
+                  label: Text(l10n.tryAgain),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary(Theme.of(context).brightness == Brightness.dark),
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          );
         },
         data: (medications) {
           final filtered = _applyFilters(medications);
@@ -378,6 +410,15 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                       selected: _filterStatus == MedicationStatus.completed,
                       onSelected: () => setState(() => _filterStatus =
                           _filterStatus == MedicationStatus.completed ? null : MedicationStatus.completed),
+                      isDark: isDark,
+                    ),
+                    const SizedBox(width: 8),
+                    // FIX (audit 4.5): add discontinued filter chip.
+                    _FilterChip(
+                      label: l10n.discontinued,
+                      selected: _filterStatus == MedicationStatus.discontinued,
+                      onSelected: () => setState(() => _filterStatus =
+                          _filterStatus == MedicationStatus.discontinued ? null : MedicationStatus.discontinued),
                       isDark: isDark,
                     ),
                     const SizedBox(width: 8),
