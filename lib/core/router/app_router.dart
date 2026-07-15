@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uni_links/uni_links.dart';
-import 'dart:async';
 import '../config/app_config.dart';
 import '../models/vital.dart';
 import '../providers/auth_provider.dart';
@@ -429,45 +427,6 @@ final routerProvider = Provider<GoRouter>((ref) {
   ref.listen<AsyncValue>(userProfileProvider, (_, __) {
     router.refresh();
   });
-
-  // Deep-link subscription.
-  StreamSubscription<Uri?>? linkSub;
-  ref.onDispose(() {
-    linkSub?.cancel();
-  });
-
-  try {
-    linkSub = uriLinkStream.listen((Uri? uri) {
-      if (uri == null) return;
-      // Handle vitalseker:// scheme deep links.
-      if (uri.scheme == 'vitalseker') {
-        switch (uri.host) {
-          case 'sos':
-            router.go(AppConfig.sos);
-            break;
-          case 'triage':
-            router.go(AppConfig.triage);
-            break;
-          case 'passport':
-            router.go(AppConfig.passport);
-            break;
-          case 'dashboard':
-            router.go(AppConfig.dashboard);
-            break;
-        }
-      }
-      // Handle https://passport.vitalseker.app/v/{token} deep links.
-      if (uri.scheme == 'https' && uri.host == 'passport.vitalseker.app') {
-        final pathSegments = uri.pathSegments;
-        if (pathSegments.length >= 2 && pathSegments[0] == 'v') {
-          router.go(AppConfig.passport);
-        }
-      }
-    });
-  } catch (_) {
-    // uni_links not available on all platforms — ignore.
-  }
-
   return router;
 });
 
