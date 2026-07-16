@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
@@ -38,10 +39,10 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
       return;
     }
 
-    // CRITICAL (audit C-7 fix): require RevenueCat. Fail closed if not
-    // configured — never silently fall through to a direct DB write.
+    // CRITICAL (audit C-7 fix): require RevenueCat in production. In debug
+    // mode, allow direct DB write for testing without RevenueCat configured.
     final rcService = RevenueCatService();
-    if (!rcService.isConfigured) {
+    if (!rcService.isConfigured && !kDebugMode) {
       AppSnackBar.error(
         context,
         l10n.inAppPurchasesNotAvailable,
@@ -51,6 +52,35 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
 
     setState(() => _isSubscribing = true);
     try {
+      // In debug mode without RevenueCat, skip the IAP flow and write directly
+      // to the DB so the app can be tested.
+      if (!rcService.isConfigured && kDebugMode) {
+        final db = ref.read(databaseServiceProvider);
+        final existing = await db.getSubscription(user.id);
+        final now = DateTime.now();
+        final periodEnd = now.add(const Duration(days: 30));
+        final payload = {
+          'plan': 'pro',
+          'status': 'active',
+          'current_period_start': now.toIso8601String(),
+          'current_period_end': periodEnd.toIso8601String(),
+          'cancel_at_period_end': false,
+        };
+        if (existing == null) {
+          await db.createSubscription({'user_id': user.id, ...payload});
+        } else {
+          await db.updateSubscription(existing.id, payload);
+        }
+        ref.invalidate(subscriptionProvider);
+        ref.invalidate(userProfileProvider);
+        ref.invalidate(isProUserAsyncProvider);
+        if (mounted) {
+          AppSnackBar.success(context, l10n.welcomeToPlan('pro'));
+          context.go(AppConfig.dashboard);
+        }
+        return;
+      }
+
       // Fetch the current offering from RevenueCat.
       final offering = await rcService.getCurrentOffering();
       if (offering == null) {
@@ -238,7 +268,7 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
             const SizedBox(height: 12),
             // View all plans
             TextButton(
-              onPressed: () => context.push(AppConfig.subscription),
+              onPressed: () => context.go(AppConfig.subscription),
               child: Text(
                 l10n.viewAllPlans,
                 style: TextStyle(

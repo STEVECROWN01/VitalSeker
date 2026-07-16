@@ -133,6 +133,8 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
 
   void _nextStep() {
     if (!_isStepValid) return;
+    // Unfocus current field to dismiss keyboard before switching steps.
+    FocusScope.of(context).unfocus();
     if (_currentStep < _totalSteps - 1) {
       setState(() => _currentStep++);
     } else {
@@ -141,6 +143,8 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
   }
 
   void _previousStep() {
+    // Unfocus current field to dismiss keyboard before switching steps.
+    FocusScope.of(context).unfocus();
     if (_currentStep > 0) {
       setState(() => _currentStep--);
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -41,12 +42,12 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
       return;
     }
 
-    // CRITICAL: For paid plans, require RevenueCat. Fail closed if not
-    // configured — never silently fall through to a DB write.
+    // CRITICAL: For paid plans, require RevenueCat in production. In debug
+    // mode, allow direct DB write for testing without RevenueCat configured.
     final rcService = RevenueCatService();
     final isPaidPlan = planName == 'pro' || planName == 'enterprise';
 
-    if (isPaidPlan && !rcService.isConfigured) {
+    if (isPaidPlan && !rcService.isConfigured && !kDebugMode) {
       if (mounted) {
         AppSnackBar.error(
           context,
@@ -82,12 +83,34 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
     setState(() => _pendingPlan = planName);
     try {
+      // In debug mode without RevenueCat, skip IAP and write directly to DB.
+      if (isPaidPlan && !rcService.isConfigured && kDebugMode) {
+        final db = ref.read(databaseServiceProvider);
+        final existing = await db.getSubscription(user.id);
+        final now = DateTime.now();
+        final periodEnd = now.add(const Duration(days: 30));
+        final payload = {
+          'plan': planName,
+          'status': 'active',
+          'current_period_start': now.toIso8601String(),
+          'current_period_end': periodEnd.toIso8601String(),
+          'cancel_at_period_end': false,
+        };
+        if (existing == null) {
+          await db.createSubscription({'user_id': user.id, ...payload});
+        } else {
+          await db.updateSubscription(existing.id, payload);
+        }
+        ref.invalidate(subscriptionProvider);
+        ref.invalidate(userProfileProvider);
+        ref.invalidate(isProUserAsyncProvider);
+        if (mounted) {
+          AppSnackBar.success(context, l10n.welcomeToPlan(planName));
+        }
+        return;
+      }
+
       // ── RevenueCat IAP path (paid plans) ──────────────────────────────
-      // Per Cahier des Charges Section 3: "Paiements — RevenueCat".
-      // The purchase MUST succeed before any DB write happens. RevenueCat's
-      // webhook (server-side, service-role) is the authoritative writer of
-      // the subscriptions row; the client write here is only a best-effort
-      // mirror so the UI updates immediately.
       if (isPaidPlan) {
         final offering = await rcService.getCurrentOffering();
         if (offering == null) {
