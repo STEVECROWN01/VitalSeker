@@ -500,7 +500,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   iconFg: AppColors.secondary(isDark),
                   label: l10n.healthPassport,
                   subtitle: l10n.manageMedicalCredentials,
-                  onTap: () => context.push(AppConfig.passport),
+                  onTap: () => context.go(AppConfig.passport),
                 ),
                 _SettingsTile(
                   icon: Icons.family_restroom,
