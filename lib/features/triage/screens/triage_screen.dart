@@ -153,6 +153,11 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
   Future<void> _runTriage() async {
     final l10n = AppLocalizations.of(context)!;
 
+    // Set _isProcessing immediately to prevent double-taps during the
+    // async Pro check + free-tier limit check.
+    setState(() => _isProcessing = true);
+
+    try {
     // ── Free-tier 3 triages/month limit (per Cahier des Charges Section 3):
     // "GRATUIT — 3 triages/mois". Pro users have unlimited triages.
     //
@@ -173,19 +178,15 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
         }).length;
         if (monthCount >= 3) {
           if (!mounted) return;
+          setState(() => _isProcessing = false);
           AppSnackBar.error(context, l10n.triageLimitReached);
           context.push(AppConfig.subscription);
           return;
         }
       } catch (e) {
-        // If we can't load the symptom logs (network error), don't block
-        // the triage — let it proceed. The server-side edge function also
-        // enforces the limit.
         debugPrint('Failed to load symptom logs for triage limit check: $e');
       }
     }
-
-    setState(() => _isProcessing = true);
 
     // Capture the NavigatorState BEFORE the await so we can pop the overlay
     // even if the widget is disposed during the AI call.
@@ -257,6 +258,13 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
       );
     } finally {
       if (mounted) setState(() => _isProcessing = false);
+    }
+    } catch (e) {
+      debugPrint('[Triage] _runTriage outer error: $e');
+      if (mounted) {
+        setState(() => _isProcessing = false);
+        AppSnackBar.error(context, l10n.triageFailed);
+      }
     }
   }
 

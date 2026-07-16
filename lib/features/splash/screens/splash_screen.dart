@@ -67,14 +67,21 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (!mounted || _hasNavigated) return;
 
-    // Read auth state directly from the Supabase client to avoid the
-    // provider chain's loading state. Once Supabase.initialize() returns,
-    // the session is already restored from local storage and currentUser
-    // is populated.
     final isAuthenticated = SupabaseService().isInitialized &&
         SupabaseService().client.auth.currentUser != null;
 
     if (isAuthenticated) {
+      // Wait for the user profile to load so we know if onboarding is done.
+      // Without this, isOnboardingCompletedProvider returns false while
+      // userProfileProvider is still loading, causing a brief onboarding flash.
+      try {
+        await ref.read(userProfileProvider.future).timeout(
+          const Duration(seconds: 5),
+          onTimeout: () => null,
+        );
+      } catch (_) {}
+      if (!mounted || _hasNavigated) return;
+
       final isOnboardingDone = ref.read(isOnboardingCompletedProvider);
       if (isOnboardingDone) {
         _hasNavigated = true;

@@ -67,11 +67,21 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isPro = ref.watch(isProUserProvider);
+    // Use the async provider so we don't flash the Pro gate for paying users
+    // while the provider is loading.
+    final isProAsync = ref.watch(isProUserAsyncProvider);
 
-    // Pro gate — triage results are Pro-only
-    // Free users complete the 5-step triage but see a gate instead of results
-    if (!isPro) {
+    return isProAsync.when(
+      loading: () => Scaffold(
+        appBar: AppBar(title: Text(l10n.triageResults)),
+        body: const Center(child: CircularProgressIndicator()),
+      ),
+      error: (_, __) => Scaffold(
+        appBar: AppBar(title: Text(l10n.triageResults)),
+        body: const Center(child: CircularProgressIndicator()),
+      ),
+      data: (isPro) {
+        if (!isPro) {
       return const ProFeatureGate(
         featureName: 'AI Triage Results',
         featureDescription: 'Your AI triage analysis has been completed. Subscribe to VitalSeker Pro to view your detailed results, including AI analysis, possible conditions, recommended actions, and emergency red flags.',
@@ -611,6 +621,8 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
           ],
         ),
       ),
+    );
+      }, // end data callback
     );
   }
 

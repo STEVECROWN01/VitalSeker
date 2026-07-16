@@ -232,6 +232,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       }
                       setDialogState(() => isDeleting = true);
                       try {
+                        // CRITICAL FIX: capture userId BEFORE deletion (user
+                        // is signed out after deleteAccount, so we can't read
+                        // it afterwards). The offline cache is keyed by userId
+                        // (UUID), not by email.
+                        final userId = ref.read(currentUserProvider)?.id;
                         final edgeService = EdgeFunctionService();
                         await edgeService.deleteAccount(confirmEmail: typed);
                         // Sign out from all providers. Note: the previous
@@ -269,7 +274,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         // We also clear the offline cache so cached PHI
                         // (passport, symptom logs, profile) is wiped.
                         try {
-                          await OfflineCacheService().clearAll(typed);
+                          if (userId != null) {
+                            await OfflineCacheService().clearAll(userId);
+                          }
                         } catch (e) {
                           debugPrint('Offline cache clear on delete failed (non-fatal): $e');
                         }

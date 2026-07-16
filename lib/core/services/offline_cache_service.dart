@@ -304,8 +304,9 @@ class OfflineCacheService {
     if (_symptomLogs != null) await _symptomLogs!.delete(userId);
     if (_profile != null) await _profile!.delete(userId);
     if (_vitals != null) await _vitals!.delete(userId);
-    // FIX (audit H-11): clear pending triage on sign-out/account deletion.
-    if (_pendingTriage != null) await _pendingTriage!.delete(userId);
+    // CRITICAL FIX: clear ALL pending triage entries (they're keyed by
+    // entry-id, not by userId, so delete(userId) was a no-op).
+    if (_pendingTriage != null) await _pendingTriage!.clear();
     debugPrint('[OfflineCache] Cleared all cached data for user $userId');
   }
 }

@@ -35,7 +35,7 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
     final l10n = AppLocalizations.of(context)!;
     final user = ref.read(currentUserProvider);
     if (user == null) {
-      AppSnackBar.error(context, l10n.pleaseSignInToUpload);
+      AppSnackBar.error(context, 'Please sign in to subscribe.');
       return;
     }
 
@@ -163,7 +163,7 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
       }
     } catch (e) {
       if (mounted) {
-        AppSnackBar.error(context, l10n.failedToExportPdf);
+        AppSnackBar.error(context, 'Could not complete purchase. Please try again.');
       }
     } finally {
       if (mounted) setState(() => _isSubscribing = false);
@@ -216,7 +216,7 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              '\$6.99/month',
+              '\$${AppConfig.proPriceMonthly}/month',
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 20,
