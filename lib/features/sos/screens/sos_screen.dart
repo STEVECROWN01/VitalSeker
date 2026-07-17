@@ -306,7 +306,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
 
     setState(() {
       _isSending = true;
-      _sosMessage = 'Acquiring GPS location...';
+      _sosMessage = l10n.acquiringGps;
       _locationText = null;
       // Reset prior failure flag so the UI doesn't briefly render the old
       // failure state while we re-attempt.
@@ -364,8 +364,8 @@ class _SosScreenState extends ConsumerState<SosScreen>
       // ── Step 2: Send the SOS alert WITH actual coordinates ──
       setState(() {
         _sosMessage = position != null
-            ? 'Sending emergency alert with your location...'
-            : 'Sending emergency alert (no GPS)...';
+            ? l10n.sendingWithLocation
+            : l10n.sendingNoGps;
       });
 
       final result = await edgeService.sendSosAlert(
@@ -384,7 +384,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
         _sosActive = true;
         _sosResult = result;
         _sosMessage = result['message'] as String? ??
-            'Emergency alert sent! Your contacts have been notified.';
+            l10n.emergencyAlertSent;
       });
 
       HapticFeedback.mediumImpact();
@@ -472,7 +472,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Override Rate Limit?'),
+        title: const Text(l10n.overrideRateLimitTitle),
         content: const Text(
           'You sent an SOS less than 60 seconds ago. If this is a NEW '
           'emergency (not a repeat of the same one), you can override '
@@ -491,7 +491,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.urgencyEmergency,
             ),
-            child: const Text('Override & Send'),
+            child: const Text(l10n.overrideAndSend),
           ),
         ],
       ),
@@ -536,7 +536,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.primary(Theme.of(context).brightness == Brightness.dark),
             ),
-            child: Text('Yes, I\'m safe'),
+            child: Text(l10n.yesImSafeButton),
           ),
         ],
       ),
@@ -1307,7 +1307,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       Text(
                         sendFailed
                             ? l10n.sosFailed
-                            : (queuedLocally ? 'SOS QUEUED' : l10n.sosActive),
+                            : (queuedLocally ? l10n.sosQueuedLabel : l10n.sosActive),
                         style: const TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 20,
@@ -1327,7 +1327,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
               : (sendFailed
                   ? l10n.alertCouldNotBeSent
                   : (queuedLocally
-                      ? 'Emergency Alert Queued'
+                      ? l10n.emergencyAlertQueuedLabel
                       : l10n.emergencyAlertSent)),
           style: const TextStyle(
             fontFamily: 'ClashDisplay',
@@ -1455,7 +1455,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       onPressed: () => _confirmOverrideAndResend(),
                       icon: const Icon(Icons.warning_amber_rounded),
                       label: const Text(
-                        'Override — This is a new emergency',
+                        l10n.overrideButtonText,
                         style: TextStyle(fontWeight: FontWeight.w700),
                       ),
                       style: OutlinedButton.styleFrom(

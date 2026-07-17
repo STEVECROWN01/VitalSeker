@@ -205,9 +205,9 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                       validator: (v) {
                         if (v == null || v.trim().isEmpty) return l10n.fieldRequired;
                         final dose = double.tryParse(v.trim());
-                        if (dose == null) return 'Enter a valid number';
-                        if (dose <= 0) return 'Dose must be greater than 0';
-                        if (dose > 10000) return 'Dose seems too high — please check';
+                        if (dose == null) return l10n.enterValidNumber;
+                        if (dose <= 0) return l10n.doseMustBePositive;
+                        if (dose > 10000) return l10n.doseTooHigh;
                         return null;
                       },
                     ),

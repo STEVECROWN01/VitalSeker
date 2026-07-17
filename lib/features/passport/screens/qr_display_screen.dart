@@ -165,7 +165,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
           ));
           AppSnackBar.success(
             context,
-            'QR code saved. Use the share sheet to save to Photos or Files.',
+            l10n.qrSavedToPhotos,
           );
         }
       } else {
@@ -198,7 +198,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
     } catch (e) {
       if (mounted) {
         AppSnackBar.errorFromException(
-            context, 'Download failed. Please try again.', e);
+            context, l10n.couldNotSharePdf, e);
       }
     } finally {
       if (mounted) setState(() => _isDownloading = false);
@@ -217,7 +217,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       final boundary = _qrBoundaryKey.currentContext?.findRenderObject()
           as RenderRepaintBoundary?;
       if (boundary == null) {
-        AppSnackBar.error(context, 'Could not capture the QR code.');
+        AppSnackBar.error(context, l10n.couldNotSharePdf);
         return;
       }
       final image = await boundary.toImage(pixelRatio: 3.0);
@@ -238,7 +238,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Share Medical Passport?'),
+          title: const Text(l10n.shareMedicalPassport),
           content: const Text(
             'This QR code grants access to your medical information '
             '(blood type, allergies, chronic conditions, medications, '
@@ -270,7 +270,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       ));
     } catch (e) {
       if (mounted) {
-        AppSnackBar.error(context, 'Could not share QR code.');
+        AppSnackBar.error(context, l10n.couldNotSharePdf);
       }
     } finally {
       if (mounted) setState(() => _isSharing = false);

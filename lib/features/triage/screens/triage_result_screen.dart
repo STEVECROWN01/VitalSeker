@@ -83,8 +83,8 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
       data: (isPro) {
         if (!isPro) {
       return const ProFeatureGate(
-        featureName: 'AI Triage Results',
-        featureDescription: 'Your AI triage analysis has been completed. Subscribe to VitalSeker Pro to view your detailed results, including AI analysis, possible conditions, recommended actions, and emergency red flags.',
+        featureName: l10n.aiTriageResults,
+        featureDescription: l10n.aiTriageResultsDesc,
         featureIcon: Icons.healing,
       );
     }

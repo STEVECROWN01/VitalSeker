@@ -147,7 +147,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
     if (!_isOnline) {
       AppSnackBar.error(
         context,
-        'You are offline. Seker AI requires an internet connection. Please connect to a network to chat.',
+        l10n.youAreOffline,
       );
       return;
     }
@@ -207,7 +207,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
 
       final data = response.data as Map<String, dynamic>;
       final reply = data['reply'] as String? ??
-          "I'm sorry, I didn't catch that. Could you tell me more?";
+          l10n.aiFallbackReply;
 
       // Check if Seker auto-saved any health data from the conversation
       final savedData = (data['saved_data'] as List<dynamic>?) ?? [];
