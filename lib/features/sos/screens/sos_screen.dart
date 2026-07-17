@@ -469,10 +469,11 @@ class _SosScreenState extends ConsumerState<SosScreen>
   /// rate limit may still reject the request, but at least the user has
   /// the option to try.
   Future<void> _confirmOverrideAndResend() async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text(l10n.overrideRateLimitTitle),
+        title: Text(l10n.overrideRateLimitTitle),
         content: const Text(
           'You sent an SOS less than 60 seconds ago. If this is a NEW '
           'emergency (not a repeat of the same one), you can override '
@@ -491,7 +492,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.urgencyEmergency,
             ),
-            child: const Text(l10n.overrideAndSend),
+            child: Text(l10n.overrideAndSend),
           ),
         ],
       ),

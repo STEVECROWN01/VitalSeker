@@ -140,6 +140,7 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   }
 
   Future<void> _sendMessage() async {
+    final l10n = AppLocalizations.of(context)!;
     final text = _textController.text.trim();
     if (text.isEmpty || _isSending) return;
 

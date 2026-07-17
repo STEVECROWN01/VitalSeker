@@ -56,10 +56,10 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
   // Index into _dateRangeOptions.
   int _dateRangeIndex = 0;
   static const _dateRangeOptions = <String>[
-    l10n.last30Days,
-    l10n.last3Months,
-    l10n.yearToDate,
-    l10n.allTime,
+    'Last 30 Days',
+    'Last 3 Months',
+    'Year to Date',
+    'All Time',
   ];
 
   /// FIX (audit H-30): compute the start date for the selected date range.

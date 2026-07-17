@@ -115,6 +115,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
   /// Capture the QR widget as a PNG and save directly to the device's
   /// Downloads directory (no folder picker — saves automatically).
   Future<void> _downloadQrImage() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_qrToken == null || _isDownloading || _isSharing) return;
     setState(() => _isDownloading = true);
     try {
@@ -238,7 +239,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text(l10n.shareMedicalPassport),
+          title: Text(l10n.shareMedicalPassport),
           content: const Text(
             'This QR code grants access to your medical information '
             '(blood type, allergies, chronic conditions, medications, '

@@ -82,7 +82,7 @@ class _TriageResultScreenState extends ConsumerState<TriageResultScreen>
       ),
       data: (isPro) {
         if (!isPro) {
-      return const ProFeatureGate(
+      return ProFeatureGate(
         featureName: l10n.aiTriageResults,
         featureDescription: l10n.aiTriageResultsDesc,
         featureIcon: Icons.healing,
