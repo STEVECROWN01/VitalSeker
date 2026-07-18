@@ -213,6 +213,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
   /// while the share sheet is being prepared.
   Future<void> _shareToken() async {
     if (_qrToken == null || _isDownloading || _isSharing) return;
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isSharing = true);
     try {
       final boundary = _qrBoundaryKey.currentContext?.findRenderObject()
@@ -235,7 +236,6 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
       // previous code shared immediately on tap — anyone receiving the share
       // (messages, email, social media) could scan the QR and view the user's
       // blood type, allergies, conditions, and medications.
-      final l10n = AppLocalizations.of(context)!;
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(

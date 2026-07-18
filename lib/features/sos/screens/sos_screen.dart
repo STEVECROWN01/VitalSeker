@@ -1455,9 +1455,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     child: OutlinedButton.icon(
                       onPressed: () => _confirmOverrideAndResend(),
                       icon: const Icon(Icons.warning_amber_rounded),
-                      label: const Text(
+                      label: Text(
                         l10n.overrideButtonText,
-                        style: TextStyle(fontWeight: FontWeight.w700),
+                        style: const TextStyle(fontWeight: FontWeight.w700),
                       ),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: Colors.white,
