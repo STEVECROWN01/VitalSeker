@@ -28,6 +28,18 @@ class RevenueCatService {
   static const String _proEntitlementId = 'pro';
   static const String _enterpriseEntitlementId = 'enterprise';
 
+  /// True if a real-looking API key (non-empty AND not a known placeholder)
+  /// was supplied via .env or --dart-define.
+  ///
+  /// Used by the subscription screens to decide whether the debug-mode bypass
+  /// should fire. The previous logic gated the bypass on `_initialized`, but
+  /// `Purchases.configure()` succeeds even with a bogus/placeholder key —
+  /// which then leaves `_initialized = true` while `getOfferings()` returns
+  /// null, defeating the bypass and leaving the user with a misleading
+  /// "Could not load available plans" message.
+  bool get hasRealApiKey => _hasRealApiKey;
+  bool _hasRealApiKey = false;
+
   /// Initialize RevenueCat with the user's Supabase user ID.
   /// Call this after sign-in to associate purchases with the user.
   ///
@@ -39,9 +51,29 @@ class RevenueCatService {
     final apiKey = dotenv.env['REVENUECAT_API_KEY'] ??
         const String.fromEnvironment('REVENUECAT_API_KEY', defaultValue: '');
 
+    // Detect obviously-invalid placeholders so the debug-mode subscription
+    // bypass can still fire (instead of being defeated by a syntactically-
+    // valid-but-non-functional key copied from DEPLOYMENT.md).
+    final isPlaceholder = apiKey.isEmpty ||
+        apiKey == 'REPLACE_ME_WITH_REAL_KEY' ||
+        apiKey.contains('your_revenuecat_key') ||
+        apiKey.contains('your-api-key') ||
+        apiKey == 'appl_your_revenuecat_key' ||
+        apiKey == 'goog_your_revenuecat_key';
+    _hasRealApiKey = !isPlaceholder && apiKey.isNotEmpty;
+
     if (apiKey.isEmpty) {
       debugPrint('[RevenueCat] No API key found — running in no-op mode. '
           'Set REVENUECAT_API_KEY in .env to enable IAP.');
+      return;
+    }
+
+    if (isPlaceholder) {
+      debugPrint('[RevenueCat] API key looks like a placeholder ($apiKey) — '
+          'running in no-op mode. Edit .env and set a real key '
+          '(appl_… for iOS, goog_… for Android) to enable IAP.');
+      // Do NOT call Purchases.configure — that would set _initialized = true
+      // and break the debug-mode bypass. Treat placeholders as "no key".
       return;
     }
 
@@ -188,5 +220,8 @@ class RevenueCatService {
     }
     _initialized = false;
     _currentUserId = null;
+    // Note: do NOT reset _hasRealApiKey here — it is a function of the
+    // .env / --dart-define value, not the auth state. It survives sign-out
+    // so the next sign-in can re-initialize correctly.
   }
 }

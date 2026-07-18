@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'supabase_service.dart';
 
 class EdgeFunctionService {
@@ -138,25 +139,74 @@ class EdgeFunctionService {
   /// On a non-200 (and non-429) response we throw a [FormatException]
   /// whose `message` contains the status code + body — the caller can
   /// parse it to detect the 429 rate-limit case.
+  ///
+  /// Behavior on failure:
+  ///   - If the device is OFFLINE (no connectivity) → queue locally and
+  ///     return a synthetic "queued" response (legacy behavior). The queue
+  ///     will be flushed when connectivity returns.
+  ///   - If the device is ONLINE but all attempts fail (timeout, 5xx, 401,
+  ///     network error) → THROW the last error. The SosScreen catch block
+  ///     will show the user a "Call 112 / Try Again / Dismiss" failure path
+  ///     instead of a misleading "queued for delivery" message. This is the
+  ///     fix for the user-reported bug where transient timeouts were silently
+  ///     bucketed into the offline-queue path, making SOS appear to succeed
+  ///     when it hadn't.
   Future<Map<String, dynamic>> sendSosAlert({
     double? latitude,
     double? longitude,
     String? locationAddress,
   }) async {
-    // FIX (audit H-2, H-41): reduced from 3 attempts to 2, and per-attempt
-    // timeout from 15s to 8s. The previous config (3 × 15s + 1 + 2 + 4s
-    // backoff = up to ~52s) was too slow for a life-safety feature — in a
-    // real emergency, the user can't wait a minute for the alert to go out.
-    // 2 attempts × 8s + 1s backoff = max ~17s before queuing locally, which
-    // is still within the edge function's own timeout.
+    // FIX (regression): the previous config (2 × 8s + 1s = ~17s) was shorter
+    // than the edge function's realistic cold-start latency. The edge
+    // function does auth.getUser + 3 DB queries + N serial Twilio calls;
+    // on a cold Deno start with 1-2 contacts this easily takes 10-15s. The
+    // 8s timeout guaranteed spurious queueing on every cold-start SOS.
+    //
+    // New config: 2 attempts × 15s + 1s backoff = max ~31s. This is still
+    // well within the edge function's own timeout and the user's tolerance
+    // for a life-safety operation, and it matches the timeout the flush
+    // path already uses (line ~440).
     const int maxAttempts = 2;
-    const Duration perAttemptTimeout = Duration(seconds: 8);
-    // Exponential backoff: 1s between the 2 attempts.
+    const Duration perAttemptTimeout = Duration(seconds: 15);
     const List<Duration> backoffs = [
       Duration(seconds: 1),
     ];
 
     Object? lastError;
+
+    // Pre-flight: are we online at all? If not, skip straight to the queue
+    // path — there's no point burning 31s of retries against a dead network.
+    bool isOffline = false;
+    try {
+      final connectivity = await Connectivity().checkConnectivity();
+      isOffline = connectivity.isEmpty ||
+          connectivity.every((r) => r == ConnectivityResult.none);
+    } catch (e) {
+      debugPrint('[SOS] connectivity check failed (assuming online): $e');
+      // If the connectivity API itself errors, don't assume offline — give
+      // the actual network call a chance.
+    }
+
+    if (isOffline) {
+      debugPrint('[SOS] device is offline — queueing SOS locally without '
+          'attempting the network call.');
+      await _enqueuePendingSos(
+        latitude: latitude,
+        longitude: longitude,
+        locationAddress: locationAddress,
+      );
+      return <String, dynamic>{
+        'sos_event_id': null,
+        'sms_sent': false,
+        'contacts_notified': <Map<String, dynamic>>[],
+        'queued_locally': true,
+        'queued_reason': 'offline',
+        'message': 'SOS queued for delivery. It will be sent automatically '
+            'as soon as your device reconnects to the network. If this is a '
+            'life-threatening emergency, please also call 112 or 911 directly.',
+      };
+    }
+
     for (int attempt = 0; attempt < maxAttempts; attempt++) {
       try {
         final response = await _client.functions.invoke(
@@ -179,17 +229,25 @@ class EdgeFunctionService {
           );
         }
 
+        // 401 = auth expired — don't retry, surface immediately so the user
+        // can re-sign-in instead of sitting in the queue forever.
+        if (response.status == 401) {
+          throw FormatException(
+            'status 401: ${response.data}',
+          );
+        }
+
         // Other non-200 status — record and retry (might be transient).
         lastError = FormatException(
           'status ${response.status}: ${response.data}',
         );
         debugPrint('SOS attempt ${attempt + 1} failed: ${response.status}');
       } on FormatException {
-        // 429 — rethrow immediately, no retry.
+        // 429 or 401 — rethrow immediately, no retry.
         rethrow;
       } on TimeoutException catch (e) {
         lastError = e;
-        debugPrint('SOS attempt ${attempt + 1} timed out');
+        debugPrint('SOS attempt ${attempt + 1} timed out after ${perAttemptTimeout.inSeconds}s');
       } catch (e) {
         lastError = e;
         debugPrint('SOS attempt ${attempt + 1} error: $e');
@@ -201,30 +259,31 @@ class EdgeFunctionService {
       }
     }
 
-    // ── All retries exhausted — persist locally so the SOS is NOT lost ──
-    // The user is in an emergency. Throwing here would mean the alert is
-    // silently dropped. Instead, we queue it locally and return a synthetic
-    // "queued" response. The SosScreen treats this as success (the alert
-    // WILL be delivered once the network returns) and shows the user a
-    // "queued for delivery" message instead of a failure.
+    // ── All retries exhausted while ONLINE ──────────────────────────────
+    // The device has connectivity but we couldn't deliver the SOS in
+    // maxAttempts × perAttemptTimeout seconds. THREW the last error so the
+    // SosScreen can show the user a real failure UI with a "Call 112 / Try
+    // Again" path — instead of the previous misleading "queued for delivery"
+    // message that looked like success.
+    //
+    // We ALSO enqueue the SOS as a safety net: if the user dismisses the
+    // failure dialog without retrying, the next connectivity change will
+    // still try to deliver the alert. But the UI no longer lies to them
+    // about the current state.
     await _enqueuePendingSos(
       latitude: latitude,
       longitude: longitude,
       locationAddress: locationAddress,
     );
+    debugPrint('[SOS] all $maxAttempts attempts failed while ONLINE. '
+        'Enqueued as safety net. Last error: $lastError');
 
-    debugPrint('SOS queued locally after $maxAttempts failed attempts. '
-        'Last error: $lastError');
-
-    return <String, dynamic>{
-      'sos_event_id': null,
-      'sms_sent': false,
-      'contacts_notified': <Map<String, dynamic>>[],
-      'queued_locally': true,
-      'message': 'SOS queued for delivery. It will be sent automatically '
-          'as soon as your device reconnects to the network. If this is a '
-          'life-threatening emergency, please also call 112 or 911 directly.',
-    };
+    // Throw a typed exception so the SosScreen can render the failure path.
+    // The SosScreen already has a catch block at line ~416 that handles this.
+    throw SosDeliveryException(
+      'Could not deliver SOS after $maxAttempts attempts.',
+      lastError: lastError,
+    );
   }
 
   /// Persist an undelivered SOS event to SharedPreferences so it can be
@@ -533,4 +592,24 @@ class EdgeFunctionService {
     }
     return translation;
   }
+}
+
+/// Thrown by [EdgeFunctionService.sendSosAlert] when the device is online
+/// but the SOS could not be delivered after all retries. The SosScreen
+/// catches this and shows the user a "Call 112 / Try Again / Dismiss"
+/// failure UI instead of the misleading "queued for delivery" success-style
+/// message that the previous implementation used.
+///
+/// The SOS has already been enqueued locally as a safety net before this
+/// is thrown — so if the user dismisses the failure dialog, the alert
+/// will still be retried on the next connectivity change.
+class SosDeliveryException implements Exception {
+  final String message;
+  final Object? lastError;
+
+  const SosDeliveryException(this.message, {this.lastError});
+
+  @override
+  String toString() =>
+      'SosDeliveryException: $message (lastError: $lastError)';
 }

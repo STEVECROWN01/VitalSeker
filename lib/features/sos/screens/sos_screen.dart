@@ -32,6 +32,15 @@ class _SosScreenState extends ConsumerState<SosScreen>
   // Live GPS coordinates obtained during the SOS trigger — shown in the
   // active state contact card so the user can see what was shared.
   String? _locationText;
+  // True while _shareLocation is acquiring GPS and preparing the share sheet.
+  // Guards against re-entrancy (user re-tapping the button during the 7-12s
+  // GPS acquisition window) and drives a spinner + disabled state on the
+  // button so the user gets immediate visual feedback that their tap was
+  // registered. Without this, the button stayed enabled and showed no
+  // progress while GPS was being acquired, so users re-tapped — stacking
+  // multiple _getCurrentLocation calls and seeing the first call's late-
+  // arriving timeout error appear "in response to" the second tap.
+  bool _isLocating = false;
   // True when the most recent SOS attempt was rejected by the edge
   // function's 60-second rate limit. Drives a different failure message
   // ("please wait 60s") instead of the generic "delivery failed".
@@ -261,6 +270,28 @@ class _SosScreenState extends ConsumerState<SosScreen>
         return null;
       }
 
+      // FAST PATH: try the last-known position first. On a cold GPS (e.g.
+      // indoors, or the user just opened the app), `getCurrentPosition` can
+      // take 7-15s for a high-accuracy fix — but `getLastKnownPosition`
+      // returns instantly from the OS's cache. For SOS purposes, a 1-5
+      // minute-old fix is more than accurate enough (emergency responders
+      // don't need sub-meter precision; they need to know which block you're
+      // on). This was the missing piece that caused "Location unavailable"
+      // during the 3-second outer SOS-timeout window.
+      try {
+        final lastKnown = await Geolocator.getLastKnownPosition();
+        if (lastKnown != null) {
+          final age = DateTime.now().difference(lastKnown.timestamp);
+          if (age < const Duration(minutes: 5)) {
+            debugPrint('[SOS] using last-known position (age: ${age.inSeconds}s)');
+            return lastKnown;
+          }
+        }
+      } catch (e) {
+        debugPrint('[SOS] getLastKnownPosition failed (non-fatal): $e');
+        // Continue to the live getCurrentPosition call below.
+      }
+
       // Use a 7s time limit for high accuracy. If it times out (common
       // indoors), fall back to low accuracy with another 5s. This two-stage
       // approach dramatically reduces "Could not get a GPS fix" failures.
@@ -318,23 +349,20 @@ class _SosScreenState extends ConsumerState<SosScreen>
     try {
       final edgeService = EdgeFunctionService();
 
-      // ── Step 1: Acquire GPS FIRST (with a 3s timeout) ──
+      // ── Step 1: Acquire GPS FIRST (with a 10s timeout) ──
       //
-      // FIX (audit H-39): reduced the GPS timeout from 5s to 3s. In a real
-      // emergency, every second counts — a 5s wait before the alert goes
-      // out is too long. 3s is enough for a cached/last-known position on
-      // most devices, and if GPS isn't ready we send the SOS without
-      // location rather than delaying the alert.
+      // FIX (regression from audit H-39): the previous 3s outer timeout was
+      // shorter than the inner GPS timeLimit (7s high-accuracy). It fired
+      // before any real fix could arrive, guaranteeing `position == null`
+      // and "Location unavailable" in the active-state card. 3s was only
+      // enough for an instantaneous cached fix, which `_getCurrentLocation`
+      // now provides via `getLastKnownPosition` (fast path) — so the cold-
+      // start case needs a longer outer timeout.
       //
-      // Previously the SOS was sent IMMEDIATELY with hardcoded null
-      // coordinates, then GPS was acquired in parallel and the result was
-      // thrown away (only used for display). This meant emergency contacts
-      // never received the user's actual location — defeating the entire
-      // purpose of the SOS feature.
-      //
-      // We now wait up to 3 seconds for a GPS fix BEFORE sending the SOS,
-      // so the actual coordinates are included in the SMS body. If GPS
-      // fails or times out, we still send the SOS — just without location.
+      // 10s gives the inner 7s high-accuracy call room to complete, plus
+      // a 3s buffer for the OS to grant permission / wake the GPS radio.
+      // If GPS still hasn't returned after 10s, we send the SOS without
+      // location rather than delaying further.
       //
       // `silent: true` suppresses the location-error snackbars and the
       // system-settings redirects that would otherwise fire when GPS is
@@ -345,7 +373,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
       Position? position;
       try {
         position = await _getCurrentLocation(silent: true).timeout(
-          const Duration(seconds: 3),
+          const Duration(seconds: 10),
           onTimeout: () => null,
         );
       } catch (e) {
@@ -580,21 +608,63 @@ class _SosScreenState extends ConsumerState<SosScreen>
   }
 
   Future<void> _shareLocation() async {
-    // Show loading indicator immediately
-    if (mounted) {
-      AppSnackBar.info(context, 'Getting your location...');
-    }
-    final position = await _getCurrentLocation();
-    if (position == null) return;
+    // Re-entrancy guard: if a previous tap is still acquiring GPS or sharing,
+    // ignore subsequent taps. The button is also disabled in the UI via
+    // `_isLocating`, but this guards against the brief window between the
+    // tap event firing and setState rebuilding the button as disabled.
+    if (_isLocating) return;
+
+    setState(() => _isLocating = true);
     try {
+      // Acquire GPS with a hard 9-second outer timeout. The inner
+      // _getCurrentLocation has a 7s+5s chain (12s) — but we cap the total
+      // at 9s here so the user always sees feedback within a reasonable
+      // window. If GPS hasn't returned by then, we show an explicit error
+      // instead of leaving the "Getting your location…" snackbar to expire
+      // silently 8s later (which was the previous behavior and made the
+      // button appear to "hang").
+      //
+      // silent: true — _getCurrentLocation's own error snackbars would stack
+      // on top of our explicit error below, doubling up the failure message.
+      Position? position;
+      try {
+        position = await _getCurrentLocation(silent: true).timeout(
+          const Duration(seconds: 9),
+          onTimeout: () => null,
+        );
+      } catch (e) {
+        debugPrint('[ShareLocation] GPS acquisition error: $e');
+      }
+
+      if (position == null) {
+        if (mounted) {
+          AppSnackBar.error(
+            context,
+            'Could not get a GPS fix. Please try again outdoors or near a window.',
+          );
+        }
+        return;
+      }
+
       final locationText =
           'My emergency location: https://maps.google.com/?q=${position.latitude},${position.longitude}';
       await Share.share(locationText, subject: 'Emergency Location');
+      // Explicit success feedback — the system share sheet opening is the
+      // real success signal, but a snackbar confirms it for users who miss
+      // the sheet (e.g. it appeared behind another window).
+      if (mounted) {
+        AppSnackBar.success(
+          context,
+          'Location ready to share.',
+        );
+      }
     } catch (e) {
       if (mounted) {
         AppSnackBar.errorFromException(
             context, 'Failed to share location.', e);
       }
+    } finally {
+      if (mounted) setState(() => _isLocating = false);
     }
   }
 
@@ -789,9 +859,24 @@ class _SosScreenState extends ConsumerState<SosScreen>
                   width: double.infinity,
                   height: 52,
                   child: OutlinedButton.icon(
-                    onPressed: _shareLocation,
-                    icon: const Icon(Icons.location_on_outlined, size: 20),
-                    label: Text(l10n.shareMyLocation),
+                    // Disable the button while GPS is being acquired so the
+                    // user gets immediate visual feedback (spinner + greyed
+                    // label) and can't fire overlapping _getCurrentLocation
+                    // calls. Previously the button stayed enabled for the
+                    // entire 12s acquisition window, so users re-tapped and
+                    // stacked calls — the first call's late-arriving timeout
+                    // error then appeared "in response to" the second tap.
+                    onPressed: _isLocating ? null : _shareLocation,
+                    icon: _isLocating
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.location_on_outlined, size: 20),
+                    label: Text(_isLocating
+                        ? 'Getting your location…'
+                        : l10n.shareMyLocation),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: _isActiveState
                           ? Colors.white

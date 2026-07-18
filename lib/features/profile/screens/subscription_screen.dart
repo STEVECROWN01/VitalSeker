@@ -44,10 +44,16 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
     // CRITICAL: For paid plans, require RevenueCat in production. In debug
     // mode, allow direct DB write for testing without RevenueCat configured.
+    //
+    // We gate on `hasRealApiKey` (not `isConfigured`) because Purchases.configure()
+    // can succeed even with a bogus/placeholder key — leaving isConfigured=true
+    // while getOfferings() returns null. That combination previously defeated
+    // the debug bypass and surfaced a misleading "Could not load plans" error.
+    // `hasRealApiKey` is true ONLY when a non-placeholder key was supplied.
     final rcService = RevenueCatService();
     final isPaidPlan = planName == 'pro' || planName == 'enterprise';
 
-    if (isPaidPlan && !rcService.isConfigured && !kDebugMode) {
+    if (isPaidPlan && !rcService.hasRealApiKey && !kDebugMode) {
       if (mounted) {
         AppSnackBar.error(
           context,
@@ -83,8 +89,9 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
     setState(() => _pendingPlan = planName);
     try {
-      // In debug mode without RevenueCat, skip IAP and write directly to DB.
-      if (isPaidPlan && !rcService.isConfigured && kDebugMode) {
+      // In debug mode without a real RevenueCat API key, skip IAP and write
+      // directly to DB. This is the dev-mode bypass.
+      if (isPaidPlan && !rcService.hasRealApiKey && kDebugMode) {
         final db = ref.read(databaseServiceProvider);
         final existing = await db.getSubscription(user.id);
         final now = DateTime.now();
@@ -114,6 +121,53 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
       if (isPaidPlan) {
         final offering = await rcService.getCurrentOffering();
         if (offering == null) {
+          // Distinguish three causes so the user gets an actionable message
+          // instead of a misleading "check your connection" error:
+          //   1. RC init failed / never ran        → "IAP not available"
+          //   2. Online but offerings fetch failed → "Could not load plans"
+          //   3. Offerings fetched but none marked Current + kDebugMode
+          //      → fall back to DB write with a loud warning (so a misconfigured
+          //        RevenueCat dashboard doesn't block development)
+          if (!rcService.isConfigured) {
+            if (mounted) {
+              AppSnackBar.error(
+                context,
+                'In-app purchases are not available right now. '
+                'Please restart the app or contact support.',
+              );
+            }
+            return;
+          }
+          if (kDebugMode) {
+            debugPrint('[Subscription] RevenueCat returned no current offering '
+                '— falling back to direct DB write in debug mode. Check the '
+                'RevenueCat dashboard: Offerings tab → mark an Offering as '
+                '"Current" and add a Package whose identifier contains '
+                '"$planName".');
+            final db = ref.read(databaseServiceProvider);
+            final existing = await db.getSubscription(user.id);
+            final now = DateTime.now();
+            final periodEnd = now.add(const Duration(days: 30));
+            final payload = {
+              'plan': planName,
+              'status': 'active',
+              'current_period_start': now.toIso8601String(),
+              'current_period_end': periodEnd.toIso8601String(),
+              'cancel_at_period_end': false,
+            };
+            if (existing == null) {
+              await db.createSubscription({'user_id': user.id, ...payload});
+            } else {
+              await db.updateSubscription(existing.id, payload);
+            }
+            ref.invalidate(subscriptionProvider);
+            ref.invalidate(userProfileProvider);
+            ref.invalidate(isProUserAsyncProvider);
+            if (mounted) {
+              AppSnackBar.success(context, l10n.welcomeToPlan(planName));
+            }
+            return;
+          }
           if (mounted) {
             AppSnackBar.error(
               context,

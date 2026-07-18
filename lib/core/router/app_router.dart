@@ -293,6 +293,13 @@ GoRouter createRouter(Ref ref) {
               ),
               GoRoute(
                 path: 'edit',
+                // FIX: render on the root navigator (not the shell navigator)
+                // so this screen renders ABOVE the SOS screen when SOS pushes
+                // it via context.push(AppConfig.editProfile). Without this,
+                // the pushed page is trapped underneath the still-visible SOS
+                // page (which lives on the root navigator) and the user sees
+                // a blank screen. Mirrors the `vitals/add` pattern at line 212.
+                parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) => slideTransitionPage(
                     child: const EditProfileScreen(), state: state),
               ),
@@ -331,6 +338,12 @@ GoRouter createRouter(Ref ref) {
               ),
               GoRoute(
                 path: 'medical-id',
+                // FIX: render on the root navigator (not the shell navigator)
+                // so this screen renders ABOVE the SOS screen when SOS pushes
+                // it via context.push(AppConfig.medicalId). Same reason as
+                // 'edit' above — without this, the page is trapped under the
+                // SOS page and the user sees a blank screen.
+                parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) => slideTransitionPage(
                     child: const MedicalIdScreen(), state: state),
               ),
