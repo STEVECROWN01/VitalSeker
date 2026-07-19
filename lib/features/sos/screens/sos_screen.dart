@@ -330,7 +330,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
     }
   }
 
-  Future<void> _triggerSos() async {
+  Future<void> _triggerSos({bool overrideRateLimit = false}) async {
     final l10n = AppLocalizations.of(context)!;
     // Haptic feedback
     HapticFeedback.heavyImpact();
@@ -400,6 +400,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
         latitude: position?.latitude,
         longitude: position?.longitude,
         locationAddress: null,
+        overrideRateLimit: overrideRateLimit,
       );
 
       // ── Step 3: Handle the response ──
@@ -533,7 +534,12 @@ class _SosScreenState extends ConsumerState<SosScreen>
         _sosActive = false;
         _sosResult = null;
       });
-      _triggerSos();
+      // Pass overrideRateLimit: true so the edge function skips its 60s
+      // rate-limit check. The user has explicitly confirmed this is a new
+      // emergency. Without this flag, the edge function would return 429
+      // again and the user would be trapped (their explicit override did
+      // nothing — the user-reported "Override doesn't work" bug).
+      _triggerSos(overrideRateLimit: true);
     }
   }
 
@@ -544,6 +550,14 @@ class _SosScreenState extends ConsumerState<SosScreen>
   /// tap (e.g. while handing the phone to someone) would dismiss the SOS
   /// and emergency contacts might stop responding. The confirmation dialog
   /// requires an explicit "Yes, I'm safe" to proceed.
+  ///
+  /// CRITICAL FIX (user-reported): previously this method ONLY reset local
+  /// UI state. The server's `sos_events` row stayed `resolved = false`,
+  /// so emergency contacts who received the SOS SMS got no cancellation
+  /// signal, and the next SOS trigger hit the 60s rate limit because the
+  /// prior event was still "active" in the DB. Now we call
+  /// `EdgeFunctionService.resolveSos()` to mark the event as resolved
+  /// server-side BEFORE resetting the local UI state.
   Future<void> _resolveSos() async {
     final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
@@ -572,6 +586,22 @@ class _SosScreenState extends ConsumerState<SosScreen>
     );
 
     if (confirmed != true) return;
+    if (!mounted) return;
+
+    // Show a resolving state so the user sees feedback while we call the
+    // server.
+    setState(() {
+      _isSending = true;
+      _sosMessage = 'Resolving alert…';
+    });
+
+    try {
+      // Capture the sos_event_id from the result before clearing it.
+      final sosEventId = _sosResult?['sos_event_id']?.toString();
+      await EdgeFunctionService().resolveSos(sosEventId);
+    } catch (e) {
+      debugPrint('[SOS] resolveSos failed (non-fatal — resetting UI anyway): $e');
+    }
 
     _countdownTimer?.cancel();
     setState(() {
@@ -584,6 +614,12 @@ class _SosScreenState extends ConsumerState<SosScreen>
       _countdownSeconds = _kCountdownFrom;
     });
     HapticFeedback.lightImpact();
+
+    // Navigate back to the previous screen (typically the dashboard) so the
+    // user isn't left staring at the idle SOS button after resolving.
+    if (mounted && Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
   }
 
   Future<void> _makePhoneCall(String phoneNumber) async {

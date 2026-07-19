@@ -55,7 +55,50 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     if (confirmed == true && mounted) {
       try {
         final authService = ref.read(authServiceProvider);
+
+        // Capture the user ID before signOut so we can clear the offline cache.
+        final userId = authService.currentUser?.id;
+
         await authService.signOut();
+
+        // SECURITY FIX: clear the offline cache so user A's cached PHI
+        // doesn't persist on the device after sign-out. Without this, on a
+        // shared device, user B could see user A's cached passport, symptom
+        // logs, and profile data. Previously this screen skipped all
+        // cleanup — same app, two different security postures.
+        if (userId != null) {
+          try {
+            await OfflineCacheService().clearAll(userId);
+          } catch (e) {
+            debugPrint('Offline cache clear on signOut failed (non-fatal): $e');
+          }
+        }
+
+        // CRITICAL: clear the pending SOS queue so user A's queued SOS
+        // events (with their lat/lng) don't persist on the device after
+        // sign-out. Even though flushPendingSosQueue filters by user_id,
+        // the queued events themselves are PHI and would accumulate
+        // indefinitely without ever being useful after sign-out.
+        try {
+          await EdgeFunctionService().clearPendingSosQueue();
+        } catch (e) {
+          debugPrint('SOS queue clear on signOut failed (non-fatal): $e');
+        }
+
+        // Invalidate ALL user-scoped providers so stale state doesn't leak
+        // into the next user's session on the same device.
+        ref.invalidate(userProfileProvider);
+        ref.invalidate(authStateProvider);
+        ref.invalidate(subscriptionProvider);
+        ref.invalidate(isProUserAsyncProvider);
+        ref.invalidate(familyProfilesProvider);
+        ref.invalidate(vitalsProvider);
+        ref.invalidate(symptomLogsProvider);
+        ref.invalidate(activeMedicationsProvider);
+        ref.invalidate(appointmentsProvider);
+        ref.invalidate(healthPassportProvider);
+        ref.invalidate(weeklyInsightsProvider);
+
         if (mounted) context.go(AppConfig.login);
       } catch (e) {
         if (mounted) AppSnackBar.errorFromException(context, l10n.failedToSignOut, e);
@@ -151,7 +194,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ],
         ),
       ),
-    );
+      // FIX: dispose the controllers when the dialog closes to prevent
+      // the memory leak (every open of this dialog previously leaked 3
+      // TextEditingControllers).
+    ).then((_) {
+      currentPasswordController.dispose();
+      newPasswordController.dispose();
+      confirmPasswordController.dispose();
+    });
   }
 
   void _showDeleteAccountDialog() {
@@ -323,7 +373,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ],
         ),
       ),
-    );
+      // FIX: dispose the controller when the dialog closes to prevent leak.
+    ).then((_) {
+      confirmController.dispose();
+    });
   }
 
   void _showSecurityInfo(bool isDark) {

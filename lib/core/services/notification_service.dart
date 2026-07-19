@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -79,6 +80,23 @@ class NotificationService {
         debugPrint('[Notifications] Tapped: ${response.payload}');
       },
     );
+
+    // CRITICAL FIX: on Android 13+ (API 33+), POST_NOTIFICATIONS is a
+    // runtime permission. Without requesting it at runtime, every scheduled
+    // notification (medication reminder, appointment reminder, triage,
+    // weekly insights, vitals) is silently blocked. The manifest declaration
+    // alone is insufficient on API 33+. This was the user-reported bug
+    // where reminders never fired.
+    if (Platform.isAndroid) {
+      try {
+        final androidPlugin = _plugin
+            .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+        final granted = await androidPlugin?.requestNotificationsPermission();
+        debugPrint('[Notifications] Android POST_NOTIFICATIONS granted: $granted');
+      } catch (e) {
+        debugPrint('[Notifications] requestNotificationsPermission failed (non-fatal): $e');
+      }
+    }
 
     // Create notification channels with custom sounds
     await _createChannels();
@@ -360,6 +378,46 @@ class NotificationService {
     );
   }
 
+  /// Schedule per-medication reminders at each dose time.
+  ///
+  /// CRITICAL FIX: the previous [scheduleMedicationReminder] used a fixed
+  /// notification ID of 1 — so creating multiple medications would overwrite
+  /// the same notification slot. Worse, no code in the medications provider
+  /// actually called [scheduleMedicationReminder] when a medication was
+  /// created, so the `remindersEnabled: true` flag was dead data and no
+  /// reminders ever fired.
+  ///
+  /// This overload accepts a unique [notificationId] (caller is responsible
+  /// for generating it deterministically from the medication ID + dose index)
+  /// and a [medicationName] so the notification body says "It's time to take
+  /// your Amoxicillin" instead of the generic "your medication".
+  Future<void> scheduleMedicationReminderForMedication({
+    required int notificationId,
+    required String medicationName,
+    required String dosage,
+    required int hour,
+    required int minute,
+    String? sound,
+  }) async {
+    await _scheduleDaily(
+      id: notificationId,
+      channelId: _channelMedications,
+      hour: hour,
+      minute: minute,
+      title: '💊 $medicationName',
+      body: 'Time to take your $medicationName ($dosage). Tap for details.',
+      sound: sound,
+    );
+    debugPrint('[Notifications] Scheduled medication reminder for '
+        '"$medicationName" at $hour:$minute (id=$notificationId)');
+  }
+
+  /// Cancel a per-medication reminder by its notification ID.
+  Future<void> cancelMedicationReminder(int notificationId) async {
+    await _plugin.cancel(notificationId);
+    debugPrint('[Notifications] Cancelled medication reminder id=$notificationId');
+  }
+
   /// Schedule a vitals logging reminder.
   /// Notification ID: 2. Channel: vitalseker_vitals.
   Future<void> scheduleVitalsReminder({
@@ -490,6 +548,71 @@ class NotificationService {
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
+  }
+
+  /// Schedule a per-appointment reminder with the doctor's name in the body.
+  ///
+  /// CRITICAL FIX: the existing [scheduleAppointmentReminder] is never
+  /// invoked anywhere in the codebase — the `reminderEnabled: true` flag
+  /// was dead data and no reminders ever fired. This overload accepts the
+  /// doctor's name + appointment location so the notification body is
+  /// specific ("Appointment with Dr. Smith at City Hospital tomorrow at
+  /// 10:00") instead of the generic "You have a doctor's appointment".
+  Future<void> scheduleAppointmentReminderForAppointment({
+    required int notificationId,
+    required String doctorName,
+    required DateTime appointmentDateTime,
+    String? location,
+    required Duration leadTime,
+    String? sound,
+  }) async {
+    if (!_initialized) await initialize();
+
+    final reminderTime = appointmentDateTime.subtract(leadTime);
+    if (reminderTime.isBefore(DateTime.now())) return; // Already past
+
+    final scheduled = tz.TZDateTime.from(reminderTime, tz.local);
+    final soundName = sound ?? await _getSavedSound(_channelAppointments);
+    final androidDetails = AndroidNotificationDetails(
+      _channelAppointments,
+      'Appointment Reminder',
+      importance: Importance.high,
+      priority: Priority.high,
+      sound: RawResourceAndroidNotificationSound(soundName),
+      icon: '@mipmap/ic_launcher',
+    );
+    const iosDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+    final details = NotificationDetails(android: androidDetails, iOS: iosDetails);
+
+    final dateStr = '${appointmentDateTime.day}/${appointmentDateTime.month}';
+    final timeStr = '${appointmentDateTime.hour}:'
+        '${appointmentDateTime.minute.toString().padLeft(2, '0')}';
+    final body = location != null && location.isNotEmpty
+        ? 'Appointment with $doctorName at $location on $dateStr at $timeStr.'
+        : 'Appointment with $doctorName on $dateStr at $timeStr.';
+
+    await _plugin.zonedSchedule(
+      notificationId,
+      '📅 Upcoming Appointment',
+      body,
+      scheduled,
+      details,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+    );
+    debugPrint('[Notifications] Scheduled appointment reminder for '
+        '"$doctorName" at $dateStr $timeStr (id=$notificationId, '
+        'lead=${leadTime.inHours}h)');
+  }
+
+  /// Cancel an appointment reminder by its notification ID.
+  Future<void> cancelAppointmentReminder(int notificationId) async {
+    await _plugin.cancel(notificationId);
+    debugPrint('[Notifications] Cancelled appointment reminder id=$notificationId');
   }
 
   /// Internal helper: schedule a daily repeating notification.

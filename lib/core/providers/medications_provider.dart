@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/medication.dart';
 import '../providers/auth_provider.dart';
+import '../services/notification_service.dart';
 import 'user_profile_provider.dart';
 
 final medicationsProvider = AsyncNotifierProvider<MedicationsNotifier, List<Medication>>(MedicationsNotifier.new);
@@ -13,6 +15,66 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
     final db = ref.read(databaseServiceProvider);
     final data = await db.getMedications(user.id);
     return data.map((e) => Medication.fromJson(e)).toList();
+  }
+
+  /// Generate a stable notification ID for a medication + dose index.
+  /// Uses a hash of the medication ID + dose index, constrained to the
+  /// range [1000, 9999] to avoid collisions with other notification IDs
+  /// (1=medication global, 2=vitals, 3=health tips, 100+=appointments).
+  int _notificationIdFor(String medicationId, int doseIndex) {
+    final hash = '$medicationId:$doseIndex'.hashCode;
+    return 1000 + (hash.abs() % 9000);
+  }
+
+  /// Schedule per-dose reminders for a medication.
+  /// Iterates `medication.times` and calls
+  /// [NotificationService.scheduleMedicationReminderForMedication] for each,
+  /// using a stable notification ID derived from the medication ID + dose
+  /// index. Safe to call multiple times — the same notification ID gets
+  /// overwritten by the new schedule.
+  Future<void> _scheduleReminders(Medication medication) async {
+    if (!medication.remindersEnabled) return;
+    if (medication.status != MedicationStatus.active) return;
+    if (medication.times.isEmpty) return;
+    try {
+      final notif = NotificationService();
+      if (!notif.isInitialized) return;
+      for (var i = 0; i < medication.times.length; i++) {
+        final time = medication.times[i];
+        final parts = time.split(':');
+        if (parts.length != 2) continue;
+        final hour = int.tryParse(parts[0]);
+        final minute = int.tryParse(parts[1]);
+        if (hour == null || minute == null) continue;
+        if (hour < 0 || hour > 23 || minute < 0 || minute > 59) continue;
+        await notif.scheduleMedicationReminderForMedication(
+          notificationId: _notificationIdFor(medication.id, i),
+          medicationName: medication.name,
+          dosage: '${medication.dosage} ${medication.unit}',
+          hour: hour,
+          minute: minute,
+        );
+      }
+      debugPrint('[Medications] scheduled ${medication.times.length} reminders '
+          'for "${medication.name}"');
+    } catch (e) {
+      debugPrint('[Medications] reminder scheduling failed (non-fatal): $e');
+    }
+  }
+
+  /// Cancel all per-dose reminders for a medication.
+  Future<void> _cancelReminders(Medication medication) async {
+    try {
+      final notif = NotificationService();
+      if (!notif.isInitialized) return;
+      for (var i = 0; i < medication.times.length; i++) {
+        await notif.cancelMedicationReminder(
+          _notificationIdFor(medication.id, i),
+        );
+      }
+    } catch (e) {
+      debugPrint('[Medications] reminder cancellation failed (non-fatal): $e');
+    }
   }
 
   Future<void> addMedication({
@@ -46,7 +108,29 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
     );
     try {
       final db = ref.read(databaseServiceProvider);
-      await db.insertMedication(medication.toJson());
+      final insertedId = await db.insertMedication(medication.toJson());
+      // Schedule reminders for the newly-created medication. CRITICAL FIX:
+      // previously the `remindersEnabled: true` flag was saved to DB but
+      // NO code called NotificationService.scheduleMedicationReminder — so
+      // the user enabled reminders, saw the success snackbar, and never
+      // received a single notification.
+      if (remindersEnabled && insertedId != null && insertedId.isNotEmpty) {
+        await _scheduleReminders(Medication(
+          id: insertedId,
+          userId: medication.userId,
+          name: medication.name,
+          dosage: medication.dosage,
+          unit: medication.unit,
+          frequency: medication.frequency,
+          times: medication.times,
+          startDate: medication.startDate,
+          endDate: medication.endDate,
+          notes: medication.notes,
+          remindersEnabled: medication.remindersEnabled,
+          createdAt: medication.createdAt,
+          updatedAt: medication.updatedAt,
+        ));
+      }
       ref.invalidateSelf();
     } catch (e) {
       rethrow;
@@ -66,6 +150,18 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
         payload['end_date'] = DateTime.now().toIso8601String().split('T')[0];
       }
       await db.updateMedication(medicationId, payload);
+      // FIX: cancel scheduled reminders when the medication is completed or
+      // discontinued — otherwise the user keeps getting reminded to take a
+      // med they're no longer taking.
+      if (status == MedicationStatus.completed ||
+          status == MedicationStatus.discontinued) {
+        final med = state.valueOrNull
+            ?.where((m) => m.id == medicationId)
+            .firstOrNull;
+        if (med != null) {
+          await _cancelReminders(med);
+        }
+      }
       ref.invalidateSelf();
     } catch (e) {
       rethrow;
@@ -98,6 +194,30 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
         'notes': notes,
         'reminders_enabled': remindersEnabled,
       });
+      // Re-schedule reminders with the updated times/toggle.
+      final med = state.valueOrNull
+          ?.where((m) => m.id == medicationId)
+          .firstOrNull;
+      if (med != null) {
+        await _cancelReminders(med);
+        final updatedMed = Medication(
+          id: med.id,
+          userId: med.userId,
+          name: med.name,
+          dosage: dosage,
+          unit: unit,
+          frequency: frequency,
+          times: times,
+          startDate: med.startDate,
+          endDate: endDate,
+          notes: notes,
+          remindersEnabled: remindersEnabled,
+          status: med.status,
+          createdAt: med.createdAt,
+          updatedAt: DateTime.now(),
+        );
+        await _scheduleReminders(updatedMed);
+      }
       ref.invalidateSelf();
     } catch (e) {
       rethrow;
@@ -106,6 +226,14 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
 
   Future<void> deleteMedication(String medicationId) async {
     try {
+      // Cancel reminders BEFORE deleting — once deleted we can't look up
+      // the medication's times to derive notification IDs.
+      final med = state.valueOrNull
+          ?.where((m) => m.id == medicationId)
+          .firstOrNull;
+      if (med != null) {
+        await _cancelReminders(med);
+      }
       final db = ref.read(databaseServiceProvider);
       await db.deleteMedication(medicationId);
       ref.invalidateSelf();

@@ -60,28 +60,37 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
       // In debug mode without a real RevenueCat API key, skip the IAP flow and
       // write directly to the DB so the app can be tested.
       if (!rcService.hasRealApiKey && kDebugMode) {
-        final db = ref.read(databaseServiceProvider);
-        final existing = await db.getSubscription(user.id);
-        final now = DateTime.now();
-        final periodEnd = now.add(const Duration(days: 30));
-        final payload = {
-          'plan': 'pro',
-          'status': 'active',
-          'current_period_start': now.toIso8601String(),
-          'current_period_end': periodEnd.toIso8601String(),
-          'cancel_at_period_end': false,
-        };
-        if (existing == null) {
-          await db.createSubscription({'user_id': user.id, ...payload});
-        } else {
-          await db.updateSubscription(existing.id, payload);
+        try {
+          final db = ref.read(databaseServiceProvider);
+          final existing = await db.getSubscription(user.id);
+          final now = DateTime.now();
+          final periodEnd = now.add(const Duration(days: 30));
+          final payload = {
+            'plan': 'pro',
+            'status': 'active',
+            'current_period_start': now.toIso8601String(),
+            'current_period_end': periodEnd.toIso8601String(),
+            'cancel_at_period_end': false,
+          };
+          if (existing == null) {
+            await db.createSubscription({'user_id': user.id, ...payload});
+          } else {
+            await db.updateSubscription(existing.id, payload);
+          }
+        } catch (e) {
+          debugPrint('[ProPlan] dev-mode DB write failed (RLS hardened? '
+              'non-fatal — invalidating providers so isProUserAsyncProvider '
+              're-evaluates): $e');
         }
         ref.invalidate(subscriptionProvider);
-        ref.invalidate(userProfileProvider);
         ref.invalidate(isProUserAsyncProvider);
         if (mounted) {
           AppSnackBar.success(context, l10n.welcomeToPlan('pro'));
-          context.go(AppConfig.dashboard);
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          } else {
+            context.go(AppConfig.dashboard);
+          }
         }
         return;
       }
@@ -109,28 +118,36 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
               'falling back to direct DB write in debug mode. Check the '
               'RevenueCat dashboard: Offerings tab → mark an Offering as '
               '"Current" and add a Package whose identifier contains "pro".');
-          final db = ref.read(databaseServiceProvider);
-          final existing = await db.getSubscription(user.id);
-          final now = DateTime.now();
-          final periodEnd = now.add(const Duration(days: 30));
-          final payload = {
-            'plan': 'pro',
-            'status': 'active',
-            'current_period_start': now.toIso8601String(),
-            'current_period_end': periodEnd.toIso8601String(),
-            'cancel_at_period_end': false,
-          };
-          if (existing == null) {
-            await db.createSubscription({'user_id': user.id, ...payload});
-          } else {
-            await db.updateSubscription(existing.id, payload);
+          try {
+            final db = ref.read(databaseServiceProvider);
+            final existing = await db.getSubscription(user.id);
+            final now = DateTime.now();
+            final periodEnd = now.add(const Duration(days: 30));
+            final payload = {
+              'plan': 'pro',
+              'status': 'active',
+              'current_period_start': now.toIso8601String(),
+              'current_period_end': periodEnd.toIso8601String(),
+              'cancel_at_period_end': false,
+            };
+            if (existing == null) {
+              await db.createSubscription({'user_id': user.id, ...payload});
+            } else {
+              await db.updateSubscription(existing.id, payload);
+            }
+          } catch (e) {
+            debugPrint('[ProPlan] dev-mode fallback DB write failed (RLS '
+                'hardened? non-fatal): $e');
           }
           ref.invalidate(subscriptionProvider);
-          ref.invalidate(userProfileProvider);
           ref.invalidate(isProUserAsyncProvider);
           if (mounted) {
             AppSnackBar.success(context, l10n.welcomeToPlan('pro'));
-            context.go(AppConfig.dashboard);
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              context.go(AppConfig.dashboard);
+            }
           }
           return;
         }
@@ -162,54 +179,76 @@ class _ProPlanScreenState extends ConsumerState<ProPlanScreen> {
 
       // Launch the platform paywall. purchasePackage throws on failure
       // (except user cancellation, which returns false).
-      final success = await rcService.purchasePackage(package);
-      if (!success) {
+      bool purchaseSucceeded = false;
+      try {
+        purchaseSucceeded = await rcService.purchasePackage(package);
+      } catch (e) {
+        debugPrint('[ProPlan] purchasePackage threw: $e');
+        rethrow;
+      }
+      if (!purchaseSucceeded) {
         // User cancelled — no error snackbar, just return.
         return;
       }
 
-      // Purchase succeeded — read the REAL expiration from RevenueCat
-      // rather than hardcoding 30 days (audit C-3 fix).
-      final customerInfo = await rcService.getCustomerInfo();
-      final entitlement = customerInfo?.entitlements.all['pro'];
-      final periodEndStr = entitlement?.expirationDate;
-      final now = DateTime.now();
-      final periodEnd = periodEndStr != null
-          ? DateTime.tryParse(periodEndStr) ?? now.add(const Duration(days: 30))
-          : now.add(const Duration(days: 30));
+      // ── Purchase succeeded ──────────────────────────────────────────────
+      // CRITICAL FIX: do NOT write to the `subscriptions` table from the
+      // client. Migration 009 hardened RLS so only the service_role
+      // (RevenueCat webhook) can write. Any client write attempt throws
+      // PostgrestException, which used to preempt the `ref.invalidate(...)`
+      // calls below — leaving the UI stuck on "Free" until the user
+      // restarted the app (the user-reported "subscription not applied"
+      // bug).
+      //
+      // Instead: rely on two mechanisms to propagate the new entitlement:
+      //   1. `revenueCatCustomerInfoProvider` (subscribed at app startup)
+      //      listens to `Purchases.customerInfoStream` and invalidates
+      //      `subscriptionProvider` + `isProUserAsyncProvider` the instant
+      //      RevenueCat's SDK observes the new entitlement (within seconds
+      //      of purchasePackage returning).
+      //   2. The explicit `ref.invalidate(...)` calls below cover the case
+      //      where the stream event has already fired (race) and provide
+      //      an immediate UI refresh on this screen.
+      //
+      // The webhook (server-side, service-role) will eventually write the
+      // authoritative row to the `subscriptions` table; when it does, the
+      // next `subscriptionProvider` fetch will pick it up.
+      debugPrint('[ProPlan] purchase succeeded — invalidating subscription '
+          'providers. Entitlement will be confirmed via RevenueCat.');
+      ref.invalidate(subscriptionProvider);
+      ref.invalidate(isProUserAsyncProvider);
+      // Note: userProfileProvider does NOT need invalidation — UserProfile
+      // has no `plan` field; the plan lives only on `subscriptions`.
 
-      // Mirror the entitlement to the local DB so the UI updates immediately.
-      // The RevenueCat webhook (server-side, service-role) is the authoritative
-      // writer; this client write is a best-effort cache.
-      final db = ref.read(databaseServiceProvider);
-      final existing = await db.getSubscription(user.id);
-
-      final payload = {
-        'plan': 'pro',
-        'status': 'active',
-        'current_period_start': now.toIso8601String(),
-        'current_period_end': periodEnd.toIso8601String(),
-        'cancel_at_period_end': false,
-      };
-
-      if (existing == null) {
-        await db.createSubscription({
-          'user_id': user.id,
-          ...payload,
-        });
-      } else {
-        await db.updateSubscription(existing.id, payload);
+      // Verify the entitlement is active via RevenueCat (best-effort).
+      bool entitlementActive = false;
+      try {
+        final customerInfo = await rcService.getCustomerInfo();
+        final entitlement = customerInfo?.entitlements.all['pro'];
+        entitlementActive = entitlement?.isActive == true;
+      } catch (e) {
+        debugPrint('[ProPlan] getCustomerInfo failed (non-fatal): $e');
       }
 
-      ref.invalidate(subscriptionProvider);
-      ref.invalidate(userProfileProvider);
-      // Also invalidate isProUserAsyncProvider so the cached "false"
-      // doesn't persist after a successful purchase (audit C-21 fix).
-      ref.invalidate(isProUserAsyncProvider);
-
       if (mounted) {
-        AppSnackBar.success(context, l10n.welcomeToPlan('pro'));
-        context.go(AppConfig.dashboard);
+        if (entitlementActive) {
+          AppSnackBar.success(context, l10n.welcomeToPlan('pro'));
+        } else {
+          // Rare: purchase succeeded but entitlement not yet active (RC latency).
+          // The customerInfoStream listener will fire shortly and refresh the UI.
+          AppSnackBar.info(
+            context,
+            'Purchase received — your Pro features will activate shortly.',
+          );
+        }
+        // Navigate back instead of wiping the stack — preserves the user's
+        // original destination (e.g. they came from the Family screen to
+        // subscribe, they expect to return to Family after subscribing).
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        } else {
+          context.go(AppConfig.dashboard);
+        }
       }
     } catch (e) {
       if (mounted) {

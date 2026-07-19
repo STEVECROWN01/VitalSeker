@@ -229,7 +229,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
   void _addAllergy() {
     final text = _allergyController.text.trim();
-    if (text.isNotEmpty && !_allergies.contains(text)) {
+    // FIX: case-insensitive duplicate check so "Penicillin" and "penicillin"
+    // are treated as the same allergy (previously both were stored, causing
+    // duplicates in the Medical ID and PDF export).
+    if (text.isNotEmpty &&
+        !_allergies.any((a) => a.toLowerCase() == text.toLowerCase())) {
       setState(() {
         _allergies.add(text);
         _allergyController.clear();
@@ -243,7 +247,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
   void _addCondition() {
     final text = _conditionController.text.trim();
-    if (text.isNotEmpty && !_chronicConditions.contains(text)) {
+    // FIX: case-insensitive duplicate check (see _addAllergy).
+    if (text.isNotEmpty &&
+        !_chronicConditions.any((c) => c.toLowerCase() == text.toLowerCase())) {
       setState(() {
         _chronicConditions.add(text);
         _conditionController.clear();
@@ -535,6 +541,23 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 prefixIcon: Icon(Icons.height_outlined),
                               ),
                               style: const TextStyle(fontFamily: 'Inter'),
+                              // FIX: validate height range. Previously
+                              // out-of-range values were silently dropped
+                              // by _saveProfile (the if-condition skipped
+                              // the write) — the user saw "saved successfully"
+                              // but the value wasn't persisted.
+                              validator: (value) {
+                                final v = value?.trim() ?? '';
+                                if (v.isEmpty) return null; // optional
+                                final h = double.tryParse(v);
+                                if (h == null) {
+                                  return 'Enter a number.';
+                                }
+                                if (h <= 0 || h > 300) {
+                                  return 'Height must be 1-300 cm.';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           const SizedBox(width: 16),
@@ -547,6 +570,19 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 prefixIcon: Icon(Icons.monitor_weight_outlined),
                               ),
                               style: const TextStyle(fontFamily: 'Inter'),
+                              // FIX: validate weight range.
+                              validator: (value) {
+                                final v = value?.trim() ?? '';
+                                if (v.isEmpty) return null; // optional
+                                final w = double.tryParse(v);
+                                if (w == null) {
+                                  return 'Enter a number.';
+                                }
+                                if (w <= 0 || w > 1000) {
+                                  return 'Weight must be 1-1000 kg.';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ],
@@ -577,8 +613,34 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             decoration: InputDecoration(
                               labelText: l10n.phoneNumber,
                               prefixIcon: Icon(Icons.phone_outlined),
+                              hintText: '+234 801 234 5678',
+                              helperText: 'Include country code (e.g. +234).',
                             ),
                             style: const TextStyle(fontFamily: 'Inter'),
+                            // FIX: validate phone format. Previously any
+                            // string was accepted — empty, "abc", "123" —
+                            // which silently broke the medical ID's "Call"
+                            // button and SOS SMS dispatch at emergency time.
+                            validator: (value) {
+                              final v = value?.trim() ?? '';
+                              if (v.isEmpty) {
+                                // Phone is optional (user may not have an
+                                // emergency contact yet) — but if a name is
+                                // entered, the phone is required. We rely
+                                // on _saveProfile to enforce the name+phone
+                                // pairing; here we just validate format when
+                                // a value is present.
+                                return null;
+                              }
+                              // E.164 format: + then 7-15 digits.
+                              final e164 = RegExp(r'^\+[1-9]\d{6,14}$');
+                              // Permissive: + then digits/spaces/dashes/parens.
+                              final permissive = RegExp(r'^\+?[0-9\s\-()]{7,20}$');
+                              if (!e164.hasMatch(v) && !permissive.hasMatch(v)) {
+                                return 'Enter a valid phone number with country code.';
+                              }
+                              return null;
+                            },
                           ),
                           const SizedBox(height: 16),
                           TextFormField(

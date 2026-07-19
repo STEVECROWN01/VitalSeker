@@ -92,27 +92,36 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
       // In debug mode without a real RevenueCat API key, skip IAP and write
       // directly to DB. This is the dev-mode bypass.
       if (isPaidPlan && !rcService.hasRealApiKey && kDebugMode) {
-        final db = ref.read(databaseServiceProvider);
-        final existing = await db.getSubscription(user.id);
-        final now = DateTime.now();
-        final periodEnd = now.add(const Duration(days: 30));
-        final payload = {
-          'plan': planName,
-          'status': 'active',
-          'current_period_start': now.toIso8601String(),
-          'current_period_end': periodEnd.toIso8601String(),
-          'cancel_at_period_end': false,
-        };
-        if (existing == null) {
-          await db.createSubscription({'user_id': user.id, ...payload});
-        } else {
-          await db.updateSubscription(existing.id, payload);
+        try {
+          final db = ref.read(databaseServiceProvider);
+          final existing = await db.getSubscription(user.id);
+          final now = DateTime.now();
+          final periodEnd = now.add(const Duration(days: 30));
+          final payload = {
+            'plan': planName,
+            'status': 'active',
+            'current_period_start': now.toIso8601String(),
+            'current_period_end': periodEnd.toIso8601String(),
+            'cancel_at_period_end': false,
+          };
+          if (existing == null) {
+            await db.createSubscription({'user_id': user.id, ...payload});
+          } else {
+            await db.updateSubscription(existing.id, payload);
+          }
+        } catch (e) {
+          debugPrint('[Subscription] dev-mode DB write failed (RLS hardened? '
+              'non-fatal): $e');
         }
         ref.invalidate(subscriptionProvider);
-        ref.invalidate(userProfileProvider);
         ref.invalidate(isProUserAsyncProvider);
         if (mounted) {
           AppSnackBar.success(context, l10n.welcomeToPlan(planName));
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          } else {
+            context.go(AppConfig.dashboard);
+          }
         }
         return;
       }
@@ -144,27 +153,36 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                 'RevenueCat dashboard: Offerings tab → mark an Offering as '
                 '"Current" and add a Package whose identifier contains '
                 '"$planName".');
-            final db = ref.read(databaseServiceProvider);
-            final existing = await db.getSubscription(user.id);
-            final now = DateTime.now();
-            final periodEnd = now.add(const Duration(days: 30));
-            final payload = {
-              'plan': planName,
-              'status': 'active',
-              'current_period_start': now.toIso8601String(),
-              'current_period_end': periodEnd.toIso8601String(),
-              'cancel_at_period_end': false,
-            };
-            if (existing == null) {
-              await db.createSubscription({'user_id': user.id, ...payload});
-            } else {
-              await db.updateSubscription(existing.id, payload);
+            try {
+              final db = ref.read(databaseServiceProvider);
+              final existing = await db.getSubscription(user.id);
+              final now = DateTime.now();
+              final periodEnd = now.add(const Duration(days: 30));
+              final payload = {
+                'plan': planName,
+                'status': 'active',
+                'current_period_start': now.toIso8601String(),
+                'current_period_end': periodEnd.toIso8601String(),
+                'cancel_at_period_end': false,
+              };
+              if (existing == null) {
+                await db.createSubscription({'user_id': user.id, ...payload});
+              } else {
+                await db.updateSubscription(existing.id, payload);
+              }
+            } catch (e) {
+              debugPrint('[Subscription] dev-mode fallback DB write failed '
+                  '(RLS hardened? non-fatal): $e');
             }
             ref.invalidate(subscriptionProvider);
-            ref.invalidate(userProfileProvider);
             ref.invalidate(isProUserAsyncProvider);
             if (mounted) {
               AppSnackBar.success(context, l10n.welcomeToPlan(planName));
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              } else {
+                context.go(AppConfig.dashboard);
+              }
             }
             return;
           }
@@ -201,86 +219,87 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
           return;
         }
 
-        // Purchase succeeded — read the REAL expiration from RevenueCat
-        // rather than hardcoding 30 days (audit C-3 fix).
-        final customerInfo = await rcService.getCustomerInfo();
-        final entitlement = customerInfo?.entitlements.all[planName];
-        final periodEndStr = entitlement?.expirationDate;
-
-        final db = ref.read(databaseServiceProvider);
-        final existing = await db.getSubscription(user.id);
-        final now = DateTime.now();
-        // Fallback to 30 days only if RevenueCat didn't return an expiration
-        // (e.g. lifetime entitlements). Use the RC value when available.
-        final periodEnd = periodEndStr != null
-            ? DateTime.tryParse(periodEndStr) ?? now.add(const Duration(days: 30))
-            : now.add(const Duration(days: 30));
-
-        final payload = {
-          'plan': planName,
-          'status': 'active',
-          'current_period_start': now.toIso8601String(),
-          'current_period_end': periodEnd.toIso8601String(),
-          'cancel_at_period_end': false,
-        };
-
-        if (existing == null) {
-          await db.createSubscription({
-            'user_id': user.id,
-            ...payload,
-          });
-        } else {
-          await db.updateSubscription(existing.id, payload);
-        }
-
+        // ── Purchase succeeded ─────────────────────────────────────────────
+        // CRITICAL FIX: do NOT write to the `subscriptions` table from the
+        // client. Migration 009 hardened RLS so only the service_role
+        // (RevenueCat webhook) can write. Any client write attempt throws
+        // PostgrestException, which used to preempt the `ref.invalidate(...)`
+        // calls below — leaving the UI stuck on the previous plan until the
+        // user restarted the app (the user-reported "subscription not
+        // applied" bug).
+        //
+        // Instead: invalidate FIRST, then rely on `revenueCatCustomerInfoProvider`
+        // (subscribed at app startup) to keep the UI in sync as RevenueCat's
+        // SDK observes the entitlement change.
+        debugPrint('[Subscription] purchase succeeded for "$planName" — '
+            'invalidating subscription providers. Entitlement will be '
+            'confirmed via RevenueCat.');
         ref.invalidate(subscriptionProvider);
-        ref.invalidate(userProfileProvider);
-        // Also invalidate isProUserAsyncProvider so the cached "false"
-        // doesn't persist after a successful purchase (audit C-21 fix).
         ref.invalidate(isProUserAsyncProvider);
 
+        // Verify the entitlement is active via RevenueCat (best-effort).
+        bool entitlementActive = false;
+        try {
+          final customerInfo = await rcService.getCustomerInfo();
+          final entitlement = customerInfo?.entitlements.all[planName];
+          entitlementActive = entitlement?.isActive == true;
+        } catch (e) {
+          debugPrint('[Subscription] getCustomerInfo failed (non-fatal): $e');
+        }
+
         if (mounted) {
-          AppSnackBar.success(context, l10n.welcomeToPlan(planName));
+          if (entitlementActive) {
+            AppSnackBar.success(context, l10n.welcomeToPlan(planName));
+          } else {
+            // Rare: purchase succeeded but entitlement not yet active (RC latency).
+            // The customerInfoStream listener will fire shortly and refresh the UI.
+            AppSnackBar.info(
+              context,
+              'Purchase received — your plan will activate shortly.',
+            );
+          }
+          // Navigate away from the subscription screen so the user lands on
+          // the dashboard (or wherever they came from). Previously the screen
+          // stayed put with just a snackbar — users thought nothing happened.
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          } else {
+            context.go(AppConfig.dashboard);
+          }
         }
         return;
       }
 
       // ── Free plan downgrade ───────────────────────────────────────────
-      // Downgrading to Free does not require a purchase. If RevenueCat is
-      // configured, we still call restorePurchases() so the SDK knows the
-      // user no longer has the paid entitlement (the actual subscription
-      // cancellation happens via the App Store / Google Play, not here).
-      final db = ref.read(databaseServiceProvider);
-      final existing = await db.getSubscription(user.id);
-
-      final now = DateTime.now();
-      final periodEnd = now.add(const Duration(days: 30));
-
-      if (existing == null) {
-        await db.createSubscription({
-          'user_id': user.id,
-          'plan': planName,
-          'status': 'active',
-          'current_period_start': now.toIso8601String(),
-          'current_period_end': periodEnd.toIso8601String(),
-          'cancel_at_period_end': false,
-        });
-      } else {
-        await db.updateSubscription(existing.id, {
-          'plan': planName,
-          'status': 'active',
-          'current_period_start': now.toIso8601String(),
-          'current_period_end': periodEnd.toIso8601String(),
-          'cancel_at_period_end': false,
-        });
+      // CRITICAL FIX: do NOT write to the `subscriptions` table from the
+      // client — migration 009 hardened RLS so only the service_role can
+      // write. A client write would throw PostgrestException and the UI
+      // would stay on the previous plan.
+      //
+      // For Free downgrades: there's no IAP to perform. We simply invalidate
+      // the subscription providers so they re-fetch from the DB (which will
+      // be updated by the RevenueCat webhook when the user cancels via the
+      // App Store / Google Play, OR immediately if the user was on a
+      // dev-mode-granted entitlement). We also call restorePurchases() to
+      // force RevenueCat to re-sync the entitlement state.
+      try {
+        await rcService.restorePurchases();
+      } catch (e) {
+        debugPrint('[Subscription] restorePurchases during free downgrade '
+            'failed (non-fatal): $e');
       }
 
       ref.invalidate(subscriptionProvider);
-      ref.invalidate(userProfileProvider);
       ref.invalidate(isProUserAsyncProvider);
 
       if (mounted) {
         AppSnackBar.success(context, l10n.downgradedToFree);
+        // Navigate away from the subscription screen.
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        } else {
+          context.go(AppConfig.dashboard);
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -321,21 +340,12 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
           AppSnackBar.success(context, l10n.purchasesRestored);
         }
       } else {
-        // No active Pro entitlement found in RevenueCat. If the DB row still
-        // claims Pro, it was likely set via the (now-fixed) dev-mode bypass —
-        // downgrade it to 'free' so we don't restore a bogus entitlement
-        // (audit H-3 fix).
-        final sub = await ref.read(subscriptionProvider.future);
-        if (sub != null && sub.plan != 'free') {
-          final db = ref.read(databaseServiceProvider);
-          await db.updateSubscription(sub.id, {
-            'plan': 'free',
-            'status': 'active',
-            'cancel_at_period_end': false,
-          });
-          ref.invalidate(subscriptionProvider);
-          ref.invalidate(isProUserAsyncProvider);
-        }
+        // No active Pro entitlement found in RevenueCat. The DB row will be
+        // updated by the RevenueCat webhook (server-side, service-role) —
+        // the client can't write to `subscriptions` (migration 009 hardened
+        // RLS). We just invalidate to force a re-fetch.
+        ref.invalidate(subscriptionProvider);
+        ref.invalidate(isProUserAsyncProvider);
         if (mounted) {
           AppSnackBar.success(context, l10n.noPurchasesToRestore);
         }
@@ -354,10 +364,18 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
     final subAsync = ref.watch(subscriptionProvider);
-    final currentPlan = subAsync.maybeWhen(
-      data: (s) => s?.plan ?? 'free',
-      orElse: () => 'free',
-    );
+    // Watch isProUserProvider so the "Current plan" badge reflects the
+    // RevenueCat SDK state immediately after a purchase, even before the
+    // webhook has written the new row to the `subscriptions` table.
+    // Without this, the badge stays "Free" until the user restarts the app
+    // (the user-reported "subscription not applied" bug).
+    final isPro = ref.watch(isProUserProvider);
+    final currentPlan = isPro
+        ? 'pro'
+        : subAsync.maybeWhen(
+            data: (s) => s?.plan ?? 'free',
+            orElse: () => 'free',
+          );
 
     return Scaffold(
       appBar: AppBar(

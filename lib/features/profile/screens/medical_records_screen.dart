@@ -594,7 +594,13 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
           ],
         ),
       ),
-    );
+      // FIX: dispose the controllers when the dialog closes to prevent
+      // memory leak (every open of this dialog previously leaked 2
+      // TextEditingControllers).
+    ).then((_) {
+      titleController.dispose();
+      descController.dispose();
+    });
   }
 
   Future<void> _deleteRecord(Map<String, dynamic> record) async {

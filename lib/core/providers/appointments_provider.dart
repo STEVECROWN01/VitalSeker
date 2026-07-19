@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/appointment.dart';
 import '../providers/auth_provider.dart';
+import '../services/notification_service.dart';
 import 'user_profile_provider.dart';
 
 final appointmentsProvider = AsyncNotifierProvider<AppointmentsNotifier, List<Appointment>>(AppointmentsNotifier.new);
@@ -14,6 +15,50 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     final db = ref.read(databaseServiceProvider);
     final data = await db.getAppointments(user.id);
     return data.map((e) => Appointment.fromJson(e)).toList();
+  }
+
+  /// Generate a stable notification ID for an appointment.
+  /// Uses a hash of the appointment ID, constrained to [100, 999] to avoid
+  /// collisions with other notification IDs (1-4 = global reminders,
+  /// 1000-9999 = medications).
+  int _notificationIdFor(String appointmentId) {
+    final hash = appointmentId.hashCode;
+    return 100 + (hash.abs() % 900);
+  }
+
+  /// Schedule a reminder for an appointment (24h before).
+  /// CRITICAL FIX: previously the `reminderEnabled: true` flag was saved
+  /// to DB but NO code called NotificationService.scheduleAppointmentReminder
+  /// — so the user enabled reminders, saw the success snackbar, and never
+  /// received a single notification.
+  Future<void> _scheduleReminder(Appointment appt) async {
+    if (!appt.reminderEnabled) return;
+    if (!appt.isUpcoming) return;
+    try {
+      final notif = NotificationService();
+      if (!notif.isInitialized) return;
+      await notif.scheduleAppointmentReminderForAppointment(
+        notificationId: _notificationIdFor(appt.id),
+        doctorName: appt.doctorName,
+        appointmentDateTime: appt.dateTime,
+        location: appt.location,
+        leadTime: const Duration(hours: 24),
+      );
+      debugPrint('[Appointments] scheduled reminder for "${appt.doctorName}" '
+          'on ${appt.dateTime}');
+    } catch (e) {
+      debugPrint('[Appointments] reminder scheduling failed (non-fatal): $e');
+    }
+  }
+
+  Future<void> _cancelReminder(Appointment appt) async {
+    try {
+      final notif = NotificationService();
+      if (!notif.isInitialized) return;
+      await notif.cancelAppointmentReminder(_notificationIdFor(appt.id));
+    } catch (e) {
+      debugPrint('[Appointments] reminder cancellation failed (non-fatal): $e');
+    }
   }
 
   Future<void> addAppointment({
@@ -41,7 +86,22 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     );
     try {
       final db = ref.read(databaseServiceProvider);
-      await db.insertAppointment(appointment.toJson());
+      final insertedId = await db.insertAppointment(appointment.toJson());
+      // Schedule the reminder now that we have the inserted ID.
+      if (reminderEnabled && insertedId.isNotEmpty) {
+        await _scheduleReminder(Appointment(
+          id: insertedId,
+          userId: appointment.userId,
+          doctorName: appointment.doctorName,
+          specialty: appointment.specialty,
+          dateTime: appointment.dateTime,
+          location: appointment.location,
+          notes: appointment.notes,
+          reminderEnabled: appointment.reminderEnabled,
+          createdAt: appointment.createdAt,
+          updatedAt: appointment.updatedAt,
+        ));
+      }
       ref.invalidateSelf();
     } catch (e) {
       rethrow;
@@ -52,6 +112,14 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     try {
       final db = ref.read(databaseServiceProvider);
       await db.updateAppointment(appointmentId, {'status': status.name});
+      // Cancel the reminder if the appointment is cancelled — no point
+      // reminding the user about an appointment they cancelled.
+      if (status == AppointmentStatus.cancelled) {
+        final appt = state.valueOrNull
+            ?.where((a) => a.id == appointmentId)
+            .firstOrNull;
+        if (appt != null) await _cancelReminder(appt);
+      }
       ref.invalidateSelf();
     } catch (e) {
       rethrow;
@@ -66,11 +134,37 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     required DateTime newDateTime,
   }) async {
     try {
+      // Validate the new date is in the future — prevents the user from
+      // rescheduling to a past time, which would never trigger a reminder
+      // and would be auto-completed on the next screen load.
+      if (newDateTime.isBefore(DateTime.now())) {
+        throw ArgumentError('Cannot reschedule an appointment to a past time.');
+      }
       final db = ref.read(databaseServiceProvider);
       await db.updateAppointment(appointmentId, {
         'date_time': newDateTime.toIso8601String(),
         'status': AppointmentStatus.upcoming.name,
       });
+      // Re-schedule the reminder with the new time.
+      final appt = state.valueOrNull
+          ?.where((a) => a.id == appointmentId)
+          .firstOrNull;
+      if (appt != null && appt.reminderEnabled) {
+        await _cancelReminder(appt);
+        await _scheduleReminder(Appointment(
+          id: appt.id,
+          userId: appt.userId,
+          doctorName: appt.doctorName,
+          specialty: appt.specialty,
+          dateTime: newDateTime,
+          location: appt.location,
+          notes: appt.notes,
+          reminderEnabled: appt.reminderEnabled,
+          status: AppointmentStatus.upcoming,
+          createdAt: appt.createdAt,
+          updatedAt: DateTime.now(),
+        ));
+      }
       ref.invalidateSelf();
     } catch (e) {
       rethrow;
@@ -79,6 +173,12 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
 
   Future<void> deleteAppointment(String appointmentId) async {
     try {
+      // Cancel the reminder BEFORE deleting — once deleted we can't look up
+      // the appointment to derive its notification ID.
+      final appt = state.valueOrNull
+          ?.where((a) => a.id == appointmentId)
+          .firstOrNull;
+      if (appt != null) await _cancelReminder(appt);
       final db = ref.read(databaseServiceProvider);
       await db.deleteAppointment(appointmentId);
       ref.invalidateSelf();

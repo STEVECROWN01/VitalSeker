@@ -17,9 +17,12 @@ import 'core/services/offline_cache_service.dart';
 import 'core/services/supabase_service.dart';
 import 'core/config/supabase_config.dart';
 import 'core/providers/auth_provider.dart';
+import 'core/providers/subscription_provider.dart';
 import 'core/router/app_router.dart';
 import 'core/providers/theme_provider.dart';
 import 'core/providers/locale_provider.dart';
+import 'core/providers/user_profile_provider.dart';
+import 'core/providers/health_passport_provider.dart';
 import 'shared/theme/app_theme.dart';
 import 'shared/theme/app_colors.dart';
 
@@ -82,7 +85,8 @@ class VitalSekerApp extends ConsumerStatefulWidget {
   ConsumerState<VitalSekerApp> createState() => _VitalSekerAppState();
 }
 
-class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
+class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
+    with WidgetsBindingObserver {
   /// Tracks whether background service initialization has finished.
   /// While false, we show a branded loading screen. Once true, we show
   /// the real app (router-driven).
@@ -102,6 +106,19 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
   @override
   void initState() {
     super.initState();
+    // Register as a lifecycle observer so we can:
+    //   - Cancel the periodic SOS flush timer when the app is backgrounded
+    //     (battery savings — Android throttles Timer.periodic anyway, but
+    //     we also avoid unnecessary Supabase edge function invocations).
+    //   - Restart the periodic flush + do an immediate flush attempt when
+    //     the app is resumed (catches queued events that were missed while
+    //     backgrounded).
+    //   - Invalidate user-scoped providers on resume so data is fresh
+    //     (e.g. after the user backgrounded the app for an hour, their
+    //     appointments list should auto-complete past appointments, their
+    //     subscription status should re-fetch, etc.).
+    WidgetsBinding.instance.addObserver(this);
+
     // Ensure Flutter binding is initialized (required for async work in
     // StatefulWidget initState — main() no longer calls it since main()
     // must call runApp() synchronously).
@@ -121,9 +138,50 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _connectivitySub?.cancel();
     _sosQueueFlushTimer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+        // Stop the periodic flush to save battery while backgrounded.
+        // Android throttles Timer.periodic anyway, but we also avoid
+        // unnecessary Supabase edge function invocations.
+        _sosQueueFlushTimer?.cancel();
+        _sosQueueFlushTimer = null;
+        break;
+      case AppLifecycleState.resumed:
+        // Restart the periodic flush + do an immediate flush attempt
+        // (catches queued SOS/triage events that were missed while
+        // backgrounded).
+        _sosQueueFlushTimer ??= Timer.periodic(
+          const Duration(minutes: 5),
+          (_) {
+            EdgeFunctionService().flushPendingSosQueue().catchError((_) => 0);
+            EdgeFunctionService().flushPendingTriageQueue().catchError((_) => 0);
+          },
+        );
+        EdgeFunctionService().flushPendingSosQueue().catchError((_) => 0);
+        EdgeFunctionService().flushPendingTriageQueue().catchError((_) => 0);
+        // Refresh user-scoped providers so data is fresh after resume.
+        try {
+          widget.container.invalidate(userProfileProvider);
+          widget.container.invalidate(healthPassportProvider);
+          widget.container.invalidate(subscriptionProvider);
+        } catch (e) {
+          debugPrint('[Lifecycle] provider invalidation on resume failed: $e');
+        }
+        break;
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+        // No action needed.
+        break;
+    }
   }
 
   Future<void> _initializeServices() async {
@@ -174,6 +232,13 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
             debugPrint('[Connectivity] SOS queue flush failed: $e');
             return 0;
           });
+          // FIX: also flush the pending triage queue (was previously queued
+          // but never retried — the user was told "queued for later" but
+          // the request was silently dropped).
+          EdgeFunctionService().flushPendingTriageQueue().catchError((e) {
+            debugPrint('[Connectivity] Triage queue flush failed: $e');
+            return 0;
+          });
         }
       },
       onError: (e) {
@@ -187,6 +252,10 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
       (_) {
         EdgeFunctionService().flushPendingSosQueue().catchError((e) {
           debugPrint('[Timer] SOS queue flush failed: $e');
+          return 0;
+        });
+        EdgeFunctionService().flushPendingTriageQueue().catchError((e) {
+          debugPrint('[Timer] Triage queue flush failed: $e');
           return 0;
         });
       },
@@ -215,6 +284,15 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
         debugPrint('[Startup] Pending SOS queue flushed');
       } catch (e) {
         debugPrint('[Startup] SOS queue flush failed (non-fatal): $e');
+      }
+      // FIX: also flush pending triage requests that were queued while offline.
+      try {
+        final triageFlushed = await EdgeFunctionService().flushPendingTriageQueue();
+        if (triageFlushed > 0) {
+          debugPrint('[Startup] Pending triage queue flushed ($triageFlushed entries)');
+        }
+      } catch (e) {
+        debugPrint('[Startup] Triage queue flush failed (non-fatal): $e');
       }
     } catch (e) {
       debugPrint('[Startup] Supabase init failed (non-fatal): $e');
@@ -282,6 +360,14 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp> {
     final router = ref.watch(routerProvider);
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
+    // Watch the RevenueCat customerInfoStream so it stays alive for the
+    // entire app session. The stream invalidates subscriptionProvider +
+    // isProUserAsyncProvider whenever RevenueCat's SDK observes an
+    // entitlement change (purchase, webhook sync, restore, expiration).
+    // This is the fix for the "user has to restart the app to see their
+    // Pro plan applied" bug. Result is discarded — we only need the
+    // subscription to be alive.
+    ref.watch(revenueCatCustomerInfoProvider);
 
     return MaterialApp.router(
       title: 'VitalSeker',

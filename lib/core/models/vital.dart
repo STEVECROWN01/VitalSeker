@@ -124,8 +124,40 @@ class Vital {
     required this.createdAt,
   });
 
-  factory Vital.fromJson(Map<String, dynamic> json) => _$VitalFromJson(json);
-  Map<String, dynamic> toJson() => _$VitalToJson(this);
+  factory Vital.fromJson(Map<String, dynamic> json) {
+    // FIX (timezone bug): see comment in Appointment.fromJson. Convert
+    // UTC timestamps to local so display getters work correctly.
+    final v = _$VitalFromJson(json);
+    return Vital(
+      id: v.id,
+      userId: v.userId,
+      type: v.type,
+      value: v.value,
+      valueSecondary: v.valueSecondary,
+      recordedAt: v.recordedAt.toLocal(),
+      notes: v.notes,
+      source: v.source,
+      createdAt: v.createdAt.toLocal(),
+    );
+  }
+  Map<String, dynamic> toJson() {
+    // FIX (timezone bug): see comment in Appointment.toJson. Convert local
+    // DateTime to UTC before serializing so the server stores the correct
+    // absolute moment.
+    return {
+      'id': id,
+      'user_id': userId,
+      // Use the generated enum map to keep the serialization consistent
+      // with the auto-generated _$VitalToJson (which we're overriding).
+      'type': _$VitalTypeEnumMap[type],
+      'value': value,
+      'value_secondary': valueSecondary,
+      'recorded_at': recordedAt.toUtc().toIso8601String(),
+      'notes': notes,
+      'source': source,
+      'created_at': createdAt.toUtc().toIso8601String(),
+    };
+  }
 
   String get displayValue {
     if (type == VitalType.bloodPressure && valueSecondary != null) {

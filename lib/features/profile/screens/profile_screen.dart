@@ -14,6 +14,7 @@ import '../../../core/providers/medications_provider.dart';
 import '../../../core/providers/appointments_provider.dart';
 import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/insights_provider.dart';
+import '../../../core/services/edge_function_service.dart';
 import '../../../core/services/offline_cache_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_text_styles.dart';
@@ -68,6 +69,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           } catch (e) {
             debugPrint('Offline cache clear on signOut failed (non-fatal): $e');
           }
+        }
+
+        // CRITICAL: clear the pending SOS queue so user A's queued SOS
+        // events (with their lat/lng) don't persist on the device after
+        // sign-out. Even though flushPendingSosQueue filters by user_id,
+        // the queued events themselves are PHI and would accumulate
+        // indefinitely without ever being useful after sign-out.
+        try {
+          await EdgeFunctionService().clearPendingSosQueue();
+        } catch (e) {
+          debugPrint('SOS queue clear on signOut failed (non-fatal): $e');
         }
 
         // Invalidate ALL user-scoped providers so stale state doesn't leak

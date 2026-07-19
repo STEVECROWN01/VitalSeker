@@ -111,13 +111,14 @@ GoRouter createRouter(Ref ref) {
       if (isSplash) return null;
 
       // Not authenticated: allow login, register, and onboarding.
-      // FIX: the router was potentially blocking navigation from onboarding
-      // to login for unauthenticated users. Make sure login/register are
-      // always allowed for unauthenticated users.
+      // FIX: previously redirected ALL unauth users to /onboarding, which
+      // meant returning users who just signed out landed on the first-time
+      // carousel instead of the login screen. The splash screen handles
+      // routing first-time users to onboarding; here we send everyone else
+      // to login.
       if (!isAuth) {
         if (isLogin || isRegister || isOnboarding) return null;
-        // Redirect everything else to onboarding (first-time user flow)
-        return AppConfig.onboarding;
+        return AppConfig.login;
       }
 
       // Authenticated: redirect away from auth screens
@@ -260,6 +261,13 @@ GoRouter createRouter(Ref ref) {
             routes: [
               GoRoute(
                 path: 'qr',
+                // FIX: render on the root navigator so this screen renders
+                // ABOVE the SOS / MedicalId screens when they push it via
+                // context.push(AppConfig.qrDisplay). Without this, the pushed
+                // page is trapped underneath the still-visible root-navigator
+                // page (MedicalId, SOS) and the user sees a blank screen.
+                // Mirrors the `edit`/`medical-id`/`vitals/add` pattern.
+                parentNavigatorKey: _rootNavigatorKey,
                 pageBuilder: (context, state) => slideTransitionPage(
                     child: const QrDisplayScreen(), state: state),
               ),

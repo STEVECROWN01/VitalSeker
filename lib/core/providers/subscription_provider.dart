@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '../models/subscription.dart';
 import '../services/revenuecat_service.dart';
 import 'auth_provider.dart';
@@ -105,4 +106,47 @@ final isProUserProvider = Provider<bool>((ref) {
     data: (isPro) => isPro,
     orElse: () => false,
   );
+});
+
+/// Listens to RevenueCat's `customerInfoStream` and invalidates the
+/// subscription provider chain whenever the customer's entitlements change
+/// (purchase, webhook sync, restore, expiration, refund).
+///
+/// This is the **fix for the "user has to restart the app to see their Pro
+/// plan applied" bug**. Previously, after a successful purchase, the client
+/// tried to write to the `subscriptions` table directly — but migration 009
+/// hardened RLS so only the service_role (RevenueCat webhook) can write.
+/// The PostgrestException preempted the `ref.invalidate(...)` calls, so the
+/// cached `false` value of `isProUserAsyncProvider` persisted until the app
+/// was restarted.
+///
+/// With this listener, the moment RevenueCat's SDK observes the new
+/// entitlement (within seconds of `purchasePackage()` returning), the stream
+/// fires → both providers invalidate → `isProUserAsyncProvider` re-runs →
+/// falls through to `RevenueCatService().isProUser()` → returns `true` →
+/// every UI gate that watches `isProUserProvider` rebuilds.
+///
+/// **Usage**: this provider must be `ref.watch`-ed once at app startup (e.g.
+/// in `_VitalSekerAppState.build` or the splash screen) so the stream
+/// subscription is alive for the entire app session.
+final revenueCatCustomerInfoProvider = StreamProvider<CustomerInfo?>((ref) {
+  final rc = RevenueCatService();
+  if (!rc.isConfigured) {
+    // RevenueCat not configured (no real API key) — nothing to listen to.
+    // The debug-mode bypass in the subscription screens handles this case.
+    return const Stream.empty();
+  }
+  try {
+    return Purchases.customerInfoStream.map((info) {
+      debugPrint('[Subscription] customerInfoStream emitted — invalidating '
+          'subscription providers. Pro entitlements: '
+          '${info.entitlements.active.keys.join(', ')}');
+      ref.invalidate(subscriptionProvider);
+      ref.invalidate(isProUserAsyncProvider);
+      return info;
+    });
+  } catch (e) {
+    debugPrint('[Subscription] customerInfoStream subscription failed: $e');
+    return const Stream.empty();
+  }
 });

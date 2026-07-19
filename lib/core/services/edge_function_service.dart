@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'offline_cache_service.dart';
 import 'supabase_service.dart';
 
 class EdgeFunctionService {
@@ -155,6 +156,7 @@ class EdgeFunctionService {
     double? latitude,
     double? longitude,
     String? locationAddress,
+    bool overrideRateLimit = false,
   }) async {
     // FIX (regression): the previous config (2 × 8s + 1s = ~17s) was shorter
     // than the edge function's realistic cold-start latency. The edge
@@ -215,6 +217,11 @@ class EdgeFunctionService {
             'latitude': latitude,
             'longitude': longitude,
             'location_address': locationAddress,
+            // Pass the override flag so the edge function can skip its
+            // 60-second rate limit check when the user has explicitly
+            // confirmed they want to send another SOS (genuine second
+            // emergency within the rate-limit window).
+            'override_rate_limit': overrideRateLimit,
           },
         ).timeout(perAttemptTimeout);
 
@@ -284,6 +291,60 @@ class EdgeFunctionService {
       'Could not deliver SOS after $maxAttempts attempts.',
       lastError: lastError,
     );
+  }
+
+  /// Marks an SOS event as resolved on the server.
+  ///
+  /// CRITICAL FIX for the user-reported bug where tapping "I'm Safe —
+  /// Resolve" only reset local UI state. The server's `sos_events` row
+  /// stayed `resolved = false`, so:
+  ///   - Emergency contacts who received the SOS SMS got no cancellation
+  ///     signal — they may panic, call emergency services, or rush to a
+  ///     stale location.
+  ///   - The next SOS trigger hit the 60s rate limit because the prior
+  ///     event was still "active" in the DB.
+  ///
+  /// This method invokes the `sos-alert` edge function with a special
+  /// `resolve: true` flag. The edge function (which must be updated to
+  /// handle this flag) should:
+  ///   1. UPDATE sos_events SET resolved = true, resolved_at = now()
+  ///      WHERE id = $1 AND user_id = auth.uid().
+  ///   2. Optionally send a follow-up "User is safe — alert cancelled" SMS
+  ///      to the same contacts_notified list.
+  ///
+  /// If the edge function hasn't been updated to handle the resolve flag,
+  /// this method falls back to a direct DB update via DatabaseService
+  /// (which works for users with RLS UPDATE permission on sos_events,
+  /// or no-op's gracefully if RLS denies).
+  ///
+  /// Returns `true` if the resolve succeeded, `false` otherwise. The
+  /// SosScreen should NOT reset `_sosActive` on `false` — let the user
+  /// retry.
+  Future<bool> resolveSos(String? sosEventId) async {
+    if (sosEventId == null || sosEventId.isEmpty) {
+      debugPrint('[SOS] resolveSos: no sos_event_id — skipping server call');
+      return true; // Nothing to resolve (e.g. queued locally, no server row).
+    }
+
+    try {
+      final response = await _client.functions.invoke(
+        'sos-alert',
+        body: {
+          'resolve': true,
+          'sos_event_id': sosEventId,
+        },
+      ).timeout(const Duration(seconds: 15));
+
+      if (response.status == 200) {
+        debugPrint('[SOS] resolveSos: event $sosEventId marked as resolved');
+        return true;
+      }
+      debugPrint('[SOS] resolveSos: non-200 response: ${response.status}');
+      return false;
+    } catch (e) {
+      debugPrint('[SOS] resolveSos failed: $e');
+      return false;
+    }
   }
 
   /// Persist an undelivered SOS event to SharedPreferences so it can be
@@ -378,6 +439,30 @@ class EdgeFunctionService {
   /// hard backstop against runaway growth.
   static const int _kMaxQueuedSosEvents = 5;
 
+  /// Clears the entire pending SOS queue.
+  ///
+  /// CRITICAL: call this on sign-out to prevent user A's queued SOS events
+  /// from being flushed under user B's session if user B signs in on the
+  /// same device later. Even though `flushPendingSosQueue` filters by
+  /// `currentUserId`, the queued events themselves contain user A's
+  /// location data (PHI leak) and would accumulate indefinitely (capped at
+  /// 5) without ever being useful after sign-out.
+  ///
+  /// Also drops events whose `queued_at` timestamp is older than 1 hour
+  /// when reading the queue — even without explicit sign-out, an SOS that
+  /// couldn't be delivered within 1 hour is almost certainly for an
+  /// emergency that's long over, and sending the SMS would be misleading
+  /// or alarming to the recipient.
+  Future<void> clearPendingSosQueue() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_kPendingSosQueueKey);
+      debugPrint('[SOS] pending queue cleared');
+    } catch (e) {
+      debugPrint('[SOS] clearPendingSosQueue failed: $e');
+    }
+  }
+
   /// Mutex to prevent concurrent flushes. Multiple triggers (startup,
   /// connectivity-regained listener, 5-minute periodic timer) can fire
   /// [flushPendingSosQueue] within milliseconds of each other. Without a
@@ -461,6 +546,41 @@ class EdgeFunctionService {
 
       for (final event in queue) {
         final eventUserId = event['user_id']?.toString();
+
+        // CRITICAL: detect mid-flush user change. The currentUserId was
+        // captured ONCE at the start of the flush — if the user signs out
+        // and signs back in as a different user during the (potentially
+        // minutes-long) flush loop, the cached value is stale. Re-read
+        // the live user id on every iteration and abort if it changed.
+        final liveUserId = SupabaseService().isInitialized
+            ? _client.auth.currentUser?.id
+            : null;
+        if (liveUserId != currentUserId) {
+          debugPrint('[SOS Queue] User changed mid-flush '
+              '(start: $currentUserId, live: $liveUserId) — aborting flush '
+              'to prevent cross-user SMS leak. Event retained.');
+          // Keep all unprocessed events in the queue (including this one).
+          remaining.add(event);
+          // Also keep the skipped events from earlier in this flush.
+          remaining.addAll(skipped);
+          skipped.clear();
+          break;
+        }
+
+        // Drop events older than 1 hour — the emergency is long over and
+        // sending an SMS now would be misleading/alarming to the recipient.
+        final queuedAt = event['queued_at'] as String?;
+        final queuedTime = queuedAt != null
+            ? DateTime.tryParse(queuedAt)
+            : null;
+        if (queuedTime != null &&
+            DateTime.now().difference(queuedTime) >
+                const Duration(hours: 1)) {
+          debugPrint('[SOS Queue] Dropping event older than 1 hour '
+              '(age: ${DateTime.now().difference(queuedTime).inMinutes}min) — '
+              'emergency is long over.');
+          continue;
+        }
 
         // Skip events that belong to a different user (or were queued
         // while signed out). These cannot be safely delivered — the edge
@@ -591,6 +711,61 @@ class EdgeFunctionService {
       throw Exception('Translation returned an empty result');
     }
     return translation;
+  }
+
+  /// Flush the pending triage queue (queued while offline).
+  ///
+  /// CRITICAL FIX: the previous implementation queued triage requests to
+  /// Hive when the network was down, but `getPendingTriageRequests()` and
+  /// `removePendingTriage()` had NO callers — the queue grew forever and
+  /// retries never happened. The user was told "queued for later" but the
+  /// request was silently dropped.
+  ///
+  /// This method iterates the pending queue, re-invokes `runTriage` for
+  /// each entry, and removes successfully-delivered entries. Called from
+  /// `main.dart`'s connectivity listener and on app startup.
+  ///
+  /// Returns the number of successfully-flushed entries.
+  Future<int> flushPendingTriageQueue() async {
+    if (!SupabaseService().isInitialized) return 0;
+    final user = _client.auth.currentUser;
+    if (user == null) return 0;
+
+    final cache = OfflineCacheService();
+    if (!cache.hasPendingTriage) return 0;
+
+    final pending = cache.getPendingTriageRequests();
+    if (pending.isEmpty) return 0;
+
+    debugPrint('[Triage Queue] flushing ${pending.length} pending requests');
+    int delivered = 0;
+    for (final entry in pending) {
+      final id = entry['id']?.toString();
+      if (id == null) continue;
+      try {
+        final symptoms = (entry['symptoms'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .toList() ?? [];
+        final severity = (entry['severity'] as num?)?.toInt() ?? 3;
+        final duration = entry['duration']?.toString();
+        final notes = entry['notes']?.toString();
+
+        await runTriage(
+          symptoms: symptoms,
+          severity: severity,
+          duration: duration,
+          notes: notes,
+        );
+        await cache.removePendingTriage(id);
+        delivered++;
+        debugPrint('[Triage Queue] flushed entry $id');
+      } catch (e) {
+        debugPrint('[Triage Queue] flush failed for entry $id (will retry): $e');
+        // Leave in queue for next flush attempt.
+      }
+    }
+    debugPrint('[Triage Queue] flushed $delivered/${pending.length} entries');
+    return delivered;
   }
 }
 

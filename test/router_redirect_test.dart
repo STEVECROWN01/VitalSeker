@@ -26,9 +26,12 @@ String? applyRedirect({
   if (isSplash) return null;
 
   // Not authenticated: only allow login, register, onboarding.
+  // FIX: redirect to /login (not /onboarding) so returning users who just
+  // signed out land on the login screen. The splash screen handles routing
+  // first-time users to onboarding.
   if (!isAuth) {
     if (isLogin || isRegister || isOnboarding) return null;
-    return AppConfig.onboarding;
+    return AppConfig.login;
   }
 
   // Authenticated: redirect away from auth screens.
@@ -69,36 +72,38 @@ void main() {
       AppConfig.login: null,
       AppConfig.register: null,
       AppConfig.onboarding: null,
-      // Protected routes — redirect to onboarding.
-      AppConfig.dashboard: AppConfig.onboarding,
-      AppConfig.vitals: AppConfig.onboarding,
-      AppConfig.addVital: AppConfig.onboarding,
-      AppConfig.vitalsHistory: AppConfig.onboarding,
-      AppConfig.health: AppConfig.onboarding,
-      AppConfig.triage: AppConfig.onboarding,
-      AppConfig.triageResult: AppConfig.onboarding,
-      AppConfig.passport: AppConfig.onboarding,
-      AppConfig.qrDisplay: AppConfig.onboarding,
-      AppConfig.history: AppConfig.onboarding,
-      AppConfig.insights: AppConfig.onboarding,
-      AppConfig.family: AppConfig.onboarding,
-      AppConfig.exportScreen: AppConfig.onboarding,
-      AppConfig.sos: AppConfig.onboarding,
-      AppConfig.medications: AppConfig.onboarding,
-      AppConfig.addMedication: AppConfig.onboarding,
-      AppConfig.appointments: AppConfig.onboarding,
-      AppConfig.addAppointment: AppConfig.onboarding,
-      AppConfig.profile: AppConfig.onboarding,
-      AppConfig.editProfile: AppConfig.onboarding,
-      AppConfig.settings: AppConfig.onboarding,
-      AppConfig.notificationsSettings: AppConfig.onboarding,
-      AppConfig.helpSupport: AppConfig.onboarding,
-      AppConfig.privacyPolicy: AppConfig.onboarding,
-      AppConfig.termsOfService: AppConfig.onboarding,
-      AppConfig.medicalId: AppConfig.onboarding,
-      AppConfig.medicalRecords: AppConfig.onboarding,
-      AppConfig.subscription: AppConfig.onboarding,
-      AppConfig.about: AppConfig.onboarding,
+      // Protected routes — redirect to login (returning users).
+      // First-time users are routed to onboarding by the splash screen,
+      // not by the router redirect.
+      AppConfig.dashboard: AppConfig.login,
+      AppConfig.vitals: AppConfig.login,
+      AppConfig.addVital: AppConfig.login,
+      AppConfig.vitalsHistory: AppConfig.login,
+      AppConfig.health: AppConfig.login,
+      AppConfig.triage: AppConfig.login,
+      AppConfig.triageResult: AppConfig.login,
+      AppConfig.passport: AppConfig.login,
+      AppConfig.qrDisplay: AppConfig.login,
+      AppConfig.history: AppConfig.login,
+      AppConfig.insights: AppConfig.login,
+      AppConfig.family: AppConfig.login,
+      AppConfig.exportScreen: AppConfig.login,
+      AppConfig.sos: AppConfig.login,
+      AppConfig.medications: AppConfig.login,
+      AppConfig.addMedication: AppConfig.login,
+      AppConfig.appointments: AppConfig.login,
+      AppConfig.addAppointment: AppConfig.login,
+      AppConfig.profile: AppConfig.login,
+      AppConfig.editProfile: AppConfig.login,
+      AppConfig.settings: AppConfig.login,
+      AppConfig.notificationsSettings: AppConfig.login,
+      AppConfig.helpSupport: AppConfig.login,
+      AppConfig.privacyPolicy: AppConfig.login,
+      AppConfig.termsOfService: AppConfig.login,
+      AppConfig.medicalId: AppConfig.login,
+      AppConfig.medicalRecords: AppConfig.login,
+      AppConfig.subscription: AppConfig.login,
+      AppConfig.about: AppConfig.login,
     };
 
     for (final entry in cases.entries) {
@@ -199,16 +204,16 @@ void main() {
   group('router redirect — sign-in/out transitions', () {
     test('sign-in flow: unauthenticated /onboarding → authed /dashboard', () {
       // Start: unauthenticated, onboarding complete=false.
-      expect(applyRedirect(isAuth: false, onboardingDone: false, location: AppConfig.dashboard), AppConfig.onboarding);
+      expect(applyRedirect(isAuth: false, onboardingDone: false, location: AppConfig.dashboard), AppConfig.login);
       // User signs in but hasn't completed onboarding yet.
       expect(applyRedirect(isAuth: true, onboardingDone: false, location: AppConfig.dashboard), AppConfig.onboarding);
       // User completes onboarding.
       expect(applyRedirect(isAuth: true, onboardingDone: true, location: AppConfig.dashboard), isNull);
     });
 
-    test('sign-out flow: authed /dashboard → unauthenticated redirect to onboarding', () {
+    test('sign-out flow: authed /dashboard → unauthenticated redirect to login', () {
       expect(applyRedirect(isAuth: true, onboardingDone: true, location: AppConfig.dashboard), isNull);
-      expect(applyRedirect(isAuth: false, onboardingDone: true, location: AppConfig.dashboard), AppConfig.onboarding);
+      expect(applyRedirect(isAuth: false, onboardingDone: true, location: AppConfig.dashboard), AppConfig.login);
     });
   });
 
@@ -245,7 +250,7 @@ void main() {
         onboardingDone: container.read(isOnboardingCompletedProvider),
         location: AppConfig.dashboard,
       );
-      expect(redirect, AppConfig.onboarding);
+      expect(redirect, AppConfig.login);
     });
 
     test('full redirect call via container — authed + onboarding done + login', () {

@@ -267,11 +267,16 @@ class DatabaseService {
     return response.toList();
   }
 
-  Future<void> insertMedication(Map<String, dynamic> data) async {
+  Future<String> insertMedication(Map<String, dynamic> data) async {
     final payload = Map<String, dynamic>.from(data)..remove('id');
     payload['created_at'] = DateTime.now().toIso8601String();
     payload['updated_at'] = DateTime.now().toIso8601String();
-    await _client.from('medications').insert(payload);
+    final response = await _client
+        .from('medications')
+        .insert(payload)
+        .select('id')
+        .single();
+    return response['id'].toString();
   }
 
   Future<void> updateMedication(String medicationId, Map<String, dynamic> data) async {
@@ -293,11 +298,16 @@ class DatabaseService {
     return response.toList();
   }
 
-  Future<void> insertAppointment(Map<String, dynamic> data) async {
+  Future<String> insertAppointment(Map<String, dynamic> data) async {
     final payload = Map<String, dynamic>.from(data)..remove('id');
     payload['created_at'] = DateTime.now().toIso8601String();
     payload['updated_at'] = DateTime.now().toIso8601String();
-    await _client.from('appointments').insert(payload);
+    final response = await _client
+        .from('appointments')
+        .insert(payload)
+        .select('id')
+        .single();
+    return response['id'].toString();
   }
 
   Future<void> updateAppointment(String appointmentId, Map<String, dynamic> data) async {
