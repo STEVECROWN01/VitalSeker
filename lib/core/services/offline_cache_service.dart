@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:math';
+import 'dart:typed_data';
 import 'package:hive/hive.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Offline cache service using Hive.
 ///
@@ -62,10 +65,58 @@ class OfflineCacheService {
   /// Without encryption, a device thief or root-access attacker can read
   /// the user's full medical history from Hive's plain-text files. This is
   /// a compliance concern (GDPR Art. 32, HIPAA Security Rule).
+  /// Returns the per-install Hive encryption key, generating and persisting
+  /// it on first call.
+  ///
+  /// CRITICAL (audit BUG #7 / GDPR Art. 32 / HIPAA Security Rule): all
+  /// cached PHI (passport, symptom logs, profile, vitals) was previously
+  /// stored in plain-text Hive files. Anyone with physical access to the
+  /// device (or `adb backup` on a rooted device) could read the user's
+  /// full medical history.
+  ///
+  /// The key is a 32-byte random value generated once per install and
+  /// stored in the platform's secure keystore:
+  ///   - Android: AndroidKeyStore (hardware-backed on devices with TEE)
+  ///   - iOS: Keychain (hardware-backed on devices with Secure Enclave)
+  ///
+  /// The key never leaves the secure storage — Hive receives the raw bytes
+  /// and uses them to encrypt/decrypt on disk.
+  ///
+  /// MIGRATION: if a previous install had unencrypted boxes, opening them
+  /// with `encryptionKey` will throw HiveError. We catch this, delete the
+  /// old unencrypted box, and re-create it encrypted. The lost data is the
+  /// offline cache only — the server is the source of truth, so the next
+  /// online fetch repopulates the cache.
   Future<List<int>?> _getEncryptionKey() async {
-    // Placeholder — returns null (no encryption) until flutter_secure_storage
-    // is added to pubspec.yaml.
-    return null;
+    try {
+      const storage = FlutterSecureStorage(
+        aOptions: AndroidOptions(encryptedSharedPreferences: true),
+        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+      );
+      const keyKey = 'vitalseker_hive_key_v1';
+      String? stored = await storage.read(key: keyKey);
+      if (stored != null && stored.isNotEmpty) {
+        // Decode the base64-encoded key.
+        return base64Url.decode(stored);
+      }
+      // Generate a new 32-byte key, base64-encode it, persist it.
+      final random = Random.secure();
+      final bytes = Uint8List(32);
+      for (var i = 0; i < 32; i++) {
+        bytes[i] = random.nextInt(256);
+      }
+      final encoded = base64Url.encode(bytes);
+      await storage.write(key: keyKey, value: encoded);
+      debugPrint('[OfflineCache] generated and persisted new Hive encryption key');
+      return bytes;
+    } catch (e) {
+      debugPrint('[OfflineCache] encryption key setup FAILED — falling back '
+          'to unencrypted storage (PHI at risk): $e');
+      // Fail OPEN (unencrypted) rather than crashing the app — the user
+      // can still use the app, and the operator will see the warning in
+      // logs. A crash would be worse.
+      return null;
+    }
   }
 
   /// Open all Hive boxes. Call once at app startup (after Hive.initFlutter).
@@ -75,42 +126,58 @@ class OfflineCacheService {
       // corrupt box doesn't prevent the others from opening.
       final encKey = await _getEncryptionKey();
 
+      // Helper that opens a box with the encryption key. If the box
+      // previously existed as unencrypted (pre-migration), the open call
+      // throws — we catch it, delete the old box, and re-create encrypted.
+      // The lost data is the offline cache only; the server is the source
+      // of truth.
+      Future<Box?> openEncrypted(String name) async {
+        try {
+          return await Hive.openBox(name, encryptionKey: encKey);
+        } catch (e) {
+          debugPrint('[OfflineCache] box "$name" open with encryption failed '
+              '(likely pre-migration unencrypted box): $e — recreating');
+          try {
+            await Hive.deleteBox(name);
+            return await Hive.openBox(name, encryptionKey: encKey);
+          } catch (e2) {
+            debugPrint('[OfflineCache] box "$name" re-create failed: $e2');
+            return null;
+          }
+        }
+      }
+
       try {
-        _passport = await Hive.openBox(_passportBox,
-            encryptionKey: encKey);
+        _passport = await openEncrypted(_passportBox);
       } catch (e) {
         debugPrint('[OfflineCache] passport box failed: $e');
       }
 
       try {
-        _symptomLogs = await Hive.openBox(_symptomLogsBox,
-            encryptionKey: encKey);
+        _symptomLogs = await openEncrypted(_symptomLogsBox);
       } catch (e) {
         debugPrint('[OfflineCache] symptom logs box failed: $e');
       }
 
       try {
-        _profile = await Hive.openBox(_profileBox,
-            encryptionKey: encKey);
+        _profile = await openEncrypted(_profileBox);
       } catch (e) {
         debugPrint('[OfflineCache] profile box failed: $e');
       }
 
       try {
-        _pendingTriage = await Hive.openBox(_pendingTriageBox,
-            encryptionKey: encKey);
+        _pendingTriage = await openEncrypted(_pendingTriageBox);
       } catch (e) {
         debugPrint('[OfflineCache] pending triage box failed: $e');
       }
 
       try {
-        _vitals = await Hive.openBox(_vitalsBox,
-            encryptionKey: encKey);
+        _vitals = await openEncrypted(_vitalsBox);
       } catch (e) {
         debugPrint('[OfflineCache] vitals box failed: $e');
       }
 
-      debugPrint('[OfflineCache] Initialized — boxes open');
+      debugPrint('[OfflineCache] Initialized — boxes open (encrypted: ${encKey != null})');
     } catch (e) {
       debugPrint('[OfflineCache] Initialization failed: $e');
     }

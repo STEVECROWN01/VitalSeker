@@ -26,7 +26,7 @@
 #     Settings → API → JWT Settings → "Rotate service_role key"
 #   The old key was committed in plaintext in DEPLOYMENT.md and must be
 #   considered compromised. After rotating, copy the NEW service_role key —
-#   you'll paste it below when the script prompts for SUPABASE_SERVICE_KEY.
+#   you'll paste it below when the script prompts for SUPABASE_SERVICE_ROLE_KEY.
 #
 # USAGE:
 #   SUPABASE_ACCESS_TOKEN=xxxxxx bash setup.sh
@@ -101,8 +101,8 @@ echo
 yellow "→ You should have already rotated the service_role key in the dashboard."
 yellow "  (Settings → API → JWT Settings → Rotate service_role key)"
 echo
-read -r -p "Paste the NEW service_role key (will be set as SUPABASE_SERVICE_KEY on edge functions): " SUPABASE_SERVICE_KEY
-if [[ -z "${SUPABASE_SERVICE_KEY}" ]]; then
+read -r -p "Paste the NEW service_role key (will be set as SUPABASE_SERVICE_ROLE_KEY on edge functions): " SUPABASE_SERVICE_ROLE_KEY
+if [[ -z "${SUPABASE_SERVICE_ROLE_KEY}" ]]; then
   red "ERROR: No service key provided. Aborting."
   exit 1
 fi
@@ -112,7 +112,7 @@ echo
 yellow "→ Setting edge function secrets..."
 ${SUPABASE_BIN} secrets set CRON_SECRET="${CRON_SECRET}"
 ${SUPABASE_BIN} secrets set QR_ENCRYPTION_KEY="${QR_ENCRYPTION_KEY}"
-${SUPABASE_BIN} secrets set SUPABASE_SERVICE_KEY="${SUPABASE_SERVICE_KEY}"
+${SUPABASE_BIN} secrets set SUPABASE_SERVICE_ROLE_KEY="${SUPABASE_SERVICE_ROLE_KEY}"
 ${SUPABASE_BIN} secrets set SUPABASE_URL="${SUPABASE_URL}"
 green "  All secrets set. (Existing ANTHROPIC_API_KEY + TWILIO_* secrets are preserved.)"
 
@@ -196,8 +196,8 @@ printf "  %-25s %s\n" "Project ref:"           "${PROJECT_REF}"
 printf "  %-25s %s\n" "Supabase URL:"          "${SUPABASE_URL}"
 printf "  %-25s %s\n" "CRON_SECRET:"           "${CRON_SECRET}"
 printf "  %-25s %s\n" "QR_ENCRYPTION_KEY:"     "${QR_ENCRYPTION_KEY}"
-printf "  %-25s %s\n" "SUPABASE_SERVICE_KEY:"  "(set — not shown again)"
+printf "  %-25s %s\n" "SUPABASE_SERVICE_ROLE_KEY:"  "(set — not shown again)"
 echo
-yellow "⚠️  Rotate the SUPABASE_SERVICE_KEY again if this terminal log is shared."
+yellow "⚠️  Rotate the SUPABASE_SERVICE_ROLE_KEY again if this terminal log is shared."
 echo
 green "Done. See DEPLOYMENT.md for any manual fallback steps."

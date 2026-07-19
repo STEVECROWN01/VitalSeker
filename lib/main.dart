@@ -10,12 +10,14 @@ import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:app_links/app_links.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/services/edge_function_service.dart';
 import 'core/services/offline_cache_service.dart';
 import 'core/services/supabase_service.dart';
 import 'core/config/supabase_config.dart';
+import 'core/config/app_config.dart';
 import 'core/providers/auth_provider.dart';
 import 'core/providers/subscription_provider.dart';
 import 'core/router/app_router.dart';
@@ -103,6 +105,13 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
   /// finished initializing).
   Timer? _sosQueueFlushTimer;
 
+  /// Subscription to incoming deep links (`vitalseker://...` and
+  /// `https://passport.vitalseker.app/...` URLs declared as intent filters
+  /// in AndroidManifest.xml / Info.plist). Routes the user to the
+  /// appropriate screen when the app is opened via a deep link (e.g. the
+  /// password-reset email link).
+  StreamSubscription<Uri>? _deepLinkSub;
+
   @override
   void initState() {
     super.initState();
@@ -141,6 +150,7 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
     WidgetsBinding.instance.removeObserver(this);
     _connectivitySub?.cancel();
     _sosQueueFlushTimer?.cancel();
+    _deepLinkSub?.cancel();
     super.dispose();
   }
 
@@ -352,7 +362,65 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
     if (mounted) {
       setState(() {});
     }
+
+    // Wire up the deep-link handler — must happen AFTER Supabase init so
+    // the auth state is ready when a recovery link is processed.
+    _setupDeepLinkHandler();
+
     debugPrint('[Startup] All background services initialized');
+  }
+
+  /// Subscribe to incoming deep links and route them through the GoRouter.
+  ///
+  /// Supported schemes/hosts (declared as intent filters in
+  /// AndroidManifest.xml and associated domains in Info.plist):
+  ///   - vitalseker://reset-password  → ResetPasswordScreen
+  ///   - https://passport.vitalseker.app/v/{token}  → QrDisplayScreen (TODO)
+  ///
+  /// The handler also processes the initial link if the app was cold-started
+  /// via a deep link (app_links returns it via `getInitialLink`).
+  void _setupDeepLinkHandler() {
+    try {
+      final appLinks = AppLinks();
+      // Process the initial link (cold start).
+      appLinks.getInitialLink().then((uri) {
+        if (uri != null) _handleDeepLink(uri);
+      }).catchError((e) {
+        debugPrint('[DeepLink] getInitialLink error: $e');
+      });
+      // Subscribe to link stream (warm start).
+      _deepLinkSub = appLinks.uriLinkStream.listen(
+        (uri) => _handleDeepLink(uri),
+        onError: (e) {
+          debugPrint('[DeepLink] stream error: $e');
+        },
+      );
+    } catch (e) {
+      debugPrint('[DeepLink] handler setup failed (non-fatal): $e');
+    }
+  }
+
+  void _handleDeepLink(Uri uri) {
+    debugPrint('[DeepLink] received: $uri');
+    final router = ref.read(routerProvider);
+    // vitalseker://reset-password
+    if (uri.scheme == 'vitalseker' && uri.host == 'reset-password') {
+      router.go(AppConfig.resetPassword);
+      return;
+    }
+    // https://passport.vitalseker.app/v/{token}  → QR display (TODO: requires
+    // QrDisplayScreen to accept a token parameter and fetch the passport
+    // server-side rather than via the current user's health_passport).
+    // For now, route to the dashboard — the deep link is logged for the
+    // operator to investigate.
+    if (uri.scheme == 'https' &&
+        (uri.host == 'passport.vitalseker.app' || uri.host == 'vitalseker.app')) {
+      debugPrint('[DeepLink] passport link — routing to dashboard (QR viewer '
+          'for arbitrary tokens is not yet implemented): $uri');
+      router.go(AppConfig.dashboard);
+      return;
+    }
+    debugPrint('[DeepLink] unhandled URI: $uri');
   }
 
   @override

@@ -229,11 +229,22 @@ class AuthService {
   }
 
   // Password Reset
+  //
+  // FIX (audit BUG #4): pass `redirectTo: 'vitalseker://reset-password'` so
+  // the password-reset email link opens the app directly (via the deep-link
+  // intent filter declared in AndroidManifest.xml) instead of opening a
+  // browser tab to Supabase's default Site URL. The corresponding Dart-side
+  // deep-link handler routes the user to the new ResetPasswordScreen.
   Future<void> resetPassword(String email) async {
-    await _client.auth.resetPasswordForEmail(email);
+    await _client.auth.resetPasswordForEmail(
+      email,
+      redirectTo: 'vitalseker://reset-password',
+    );
   }
 
-  // Update Password
+  // Update Password — called from the ResetPasswordScreen after the user
+  // clicks the email link and the deep-link handler routes them to the
+  // new-password form.
   Future<void> updatePassword(String newPassword) async {
     await _client.auth.updateUser(
       UserAttributes(password: newPassword),

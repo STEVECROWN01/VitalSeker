@@ -10,6 +10,7 @@ import '../../features/splash/screens/splash_screen.dart';
 import '../../features/onboarding/screens/onboarding_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
+import '../../features/auth/screens/reset_password_screen.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/health/screens/health_screen.dart';
 import '../../features/triage/screens/triage_screen.dart';
@@ -106,9 +107,16 @@ GoRouter createRouter(Ref ref) {
       final isOnboarding = state.matchedLocation == AppConfig.onboarding;
       final isLogin = state.matchedLocation == AppConfig.login;
       final isRegister = state.matchedLocation == AppConfig.register;
+      final isResetPassword = state.matchedLocation == AppConfig.resetPassword;
 
       // Allow splash to load (it handles its own navigation)
       if (isSplash) return null;
+
+      // The reset-password route is reachable via deep link when the user
+      // clicks the email link. The Supabase SDK establishes a recovery
+      // session (which counts as "authenticated") but we must NOT redirect
+      // them away to the dashboard — they need to set a new password first.
+      if (isResetPassword) return null;
 
       // Not authenticated: allow login, register, and onboarding.
       // FIX: previously redirected ALL unauth users to /onboarding, which
@@ -160,6 +168,14 @@ GoRouter createRouter(Ref ref) {
       GoRoute(
         path: AppConfig.register,
         builder: (context, state) => const RegisterScreen(),
+      ),
+      GoRoute(
+        // Reset password screen — shown when the user clicks the email link
+        // (deep-link `vitalseker://reset-password`). The Supabase SDK has
+        // already established a recovery session by the time this route
+        // builds.
+        path: AppConfig.resetPassword,
+        builder: (context, state) => const ResetPasswordScreen(),
       ),
 
       // ── Main app shell (bottom-nav scaffold) ───────────────────────────

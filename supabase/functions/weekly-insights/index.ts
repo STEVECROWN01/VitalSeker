@@ -250,10 +250,16 @@ Respond ONLY with valid JSON:
       else if (avgSeverity <= 6) scoreChange = 0
       else scoreChange = -5
 
-      // Store the insight
+      // Store the insight.
+      // FIX: use UPSERT with onConflict='user_id,week_start' instead of
+      // plain INSERT. Migration 009 added the UNIQUE constraint on
+      // (user_id, week_start) for this purpose. The previous INSERT would
+      // throw "duplicate key value violates unique_constraint" if the cron
+      // ran twice for the same week (manual trigger, retry, clock skew),
+      // causing every subsequent user in the loop to also fail.
       const { error: insertError } = await supabaseAdmin
         .from('weekly_insights')
-        .insert({
+        .upsert({
           user_id: sub.user_id,
           week_start: weekStart.toISOString().split('T')[0],
           week_end: weekEnd.toISOString().split('T')[0],
@@ -261,7 +267,7 @@ Respond ONLY with valid JSON:
           trend_analysis: trendAnalysis,
           recommendations,
           vital_score_change: scoreChange,
-        })
+        }, { onConflict: 'user_id,week_start' })
 
       if (insertError) {
         console.error('Failed to insert insight for user:', sub.user_id, insertError)

@@ -74,6 +74,52 @@ serve(async (req: Request) => {
     }
 
     const body = await req.json().catch(() => ({}))
+
+    // ── Resolve mode ────────────────────────────────────────────────────────
+    // If the request body has `resolve: true`, this is a "mark as resolved"
+    // call (user tapped "I'm Safe — Resolve"). Update the sos_events row
+    // and return early — no SMS dispatch, no rate-limit check.
+    if (body?.resolve === true) {
+      const sosEventId = typeof body?.sos_event_id === 'string' ? body.sos_event_id : ''
+      if (!sosEventId) {
+        return new Response(JSON.stringify({
+          error: 'sos_event_id required when resolve=true',
+        }), { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
+      }
+      // Update the sos_events row. RLS allows the owner to UPDATE their own
+      // rows (migration 011 added the policy). Set resolved=true and
+      // resolved_at=now().
+      const { error: resolveErr } = await supabaseClient
+        .from('sos_events')
+        .update({
+          resolved: true,
+          resolved_at: new Date().toISOString(),
+        })
+        .eq('id', sosEventId)
+        .eq('user_id', user.id)  // belt-and-suspenders: scope by user too
+      if (resolveErr) {
+        console.error('SOS resolve failed:', resolveErr)
+        return new Response(JSON.stringify({
+          error: 'Failed to resolve SOS event',
+        }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
+      }
+      // Optionally send an "all-clear" SMS to the contacts who were
+      // notified. For now, skip — Twilio cost, and the user can call their
+      // contacts directly. The webhook-hook for cancellation SMS can be
+      // added in a future iteration.
+      return new Response(JSON.stringify({
+        resolved: true,
+        sos_event_id: sosEventId,
+        message: 'SOS alert marked as resolved.',
+      }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
+    }
+
+    // ── Override rate limit flag ────────────────────────────────────────────
+    // If `override_rate_limit: true`, the user explicitly confirmed they
+    // want to send another SOS within the 60s rate-limit window (genuine
+    // second emergency). Skip the rate-limit check below.
+    const overrideRateLimit = body?.override_rate_limit === true
+
     const latitude = sanitizeCoordinate(body?.latitude, 'lat')
     const longitude = sanitizeCoordinate(body?.longitude, 'lng')
     const location_address = typeof body?.location_address === 'string'
@@ -91,32 +137,40 @@ serve(async (req: Request) => {
     //
     // The check is: is there an sos_events row for this user created in
     // the last 60 seconds? If yes, this request is rate-limited.
-    const oneMinuteAgo = new Date(Date.now() - SOS_RATE_LIMIT_SECONDS * 1000).toISOString()
-    const { data: recentSos, error: rlError } = await supabaseClient
-      .from('sos_events')
-      .select('id, created_at')
-      .eq('user_id', user.id)
-      .gte('created_at', oneMinuteAgo)
-      .order('created_at', { ascending: false })
-      .limit(1)
-    if (rlError) {
-      console.error('Rate limit check failed:', rlError)
-      // Fail safe — don't block SOS on infra error, but log it.
-    } else if (recentSos && recentSos.length > 0) {
-      // Compute the actual retry-after based on the most recent event.
-      // Audit M-1 fix: return the END of the rate-limit window, not the start.
-      const recentTime = new Date(recentSos[0].created_at).getTime()
-      const retryAfterMs = Math.max(0, (recentTime + SOS_RATE_LIMIT_SECONDS * 1000) - Date.now())
-      const retryAfterSeconds = Math.ceil(retryAfterMs / 1000)
-      const rateLimitedUntil = new Date(recentTime + SOS_RATE_LIMIT_SECONDS * 1000).toISOString()
-      return new Response(JSON.stringify({
-        error: `Rate limit: please wait ${retryAfterSeconds}s before sending another SOS`,
-        rate_limited_until: rateLimitedUntil,
-        retry_after_seconds: retryAfterSeconds,
-      }), {
-        status: 429,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Retry-After': String(Math.max(1, retryAfterSeconds)) },
-      })
+    //
+    // FIX: skip this check when override_rate_limit is true. The user
+    // explicitly confirmed this is a new emergency (not a double-tap), so
+    // blocking them would be dangerous.
+    if (!overrideRateLimit) {
+      const oneMinuteAgo = new Date(Date.now() - SOS_RATE_LIMIT_SECONDS * 1000).toISOString()
+      const { data: recentSos, error: rlError } = await supabaseClient
+        .from('sos_events')
+        .select('id, created_at')
+        .eq('user_id', user.id)
+        .gte('created_at', oneMinuteAgo)
+        .order('created_at', { ascending: false })
+        .limit(1)
+      if (rlError) {
+        console.error('Rate limit check failed:', rlError)
+        // Fail safe — don't block SOS on infra error, but log it.
+      } else if (recentSos && recentSos.length > 0) {
+        // Compute the actual retry-after based on the most recent event.
+        // Audit M-1 fix: return the END of the rate-limit window, not the start.
+        const recentTime = new Date(recentSos[0].created_at).getTime()
+        const retryAfterMs = Math.max(0, (recentTime + SOS_RATE_LIMIT_SECONDS * 1000) - Date.now())
+        const retryAfterSeconds = Math.ceil(retryAfterMs / 1000)
+        const rateLimitedUntil = new Date(recentTime + SOS_RATE_LIMIT_SECONDS * 1000).toISOString()
+        return new Response(JSON.stringify({
+          error: `Rate limit: please wait ${retryAfterSeconds}s before sending another SOS`,
+          rate_limited_until: rateLimitedUntil,
+          retry_after_seconds: retryAfterSeconds,
+        }), {
+          status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Retry-After': String(Math.max(1, retryAfterSeconds)) },
+        })
+      }
+    } else {
+      console.log('SOS override_rate_limit=true — skipping rate-limit check for user', user.id)
     }
 
     // Fetch user profile with emergency contacts

@@ -39,9 +39,13 @@ dependencies:
   
   # Routing
   go_router: ^14.2.0
+  app_links: ^6.1.1
   
   # Environment
   flutter_dotenv: ^5.2.0
+  
+  # Secure storage (Hive encryption key)
+  flutter_secure_storage: ^9.2.2
   
   # UI & Animations
   flutter_animate: ^4.5.0

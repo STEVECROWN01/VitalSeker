@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { verifyProEntitlement, createAdminClient } from '../_shared/pro_check.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -40,6 +41,16 @@ serve(async (req: Request) => {
     const { data: { user } } = await supabaseClient.auth.getUser()
     if (!user) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
+    }
+
+    // Server-side Pro entitlement check.
+    const supabaseAdmin = createAdminClient()
+    const proCheck = await verifyProEntitlement(supabaseAdmin, user.id)
+    if (!proCheck.ok) {
+      return new Response(JSON.stringify({
+        error: 'pro_required',
+        reason: proCheck.reason ?? 'no_active_subscription',
+      }), { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
     }
 
     const body = await req.json().catch(() => ({}))

@@ -78,7 +78,7 @@ supabase secrets set TWILIO_PHONE_NUMBER=your_twilio_phone_number
 
 # Service role key — required by the weekly-insights cron job.
 # This is the ONLY secret with admin privileges; rotate immediately if leaked.
-supabase secrets set SUPABASE_SERVICE_KEY=your_service_role_jwt
+supabase secrets set SUPABASE_SERVICE_ROLE_KEY=your_service_role_jwt
 
 # Cron secret — required header (x-cron-secret) for the weekly-insights
 # function. Generate a strong random string:
@@ -108,11 +108,102 @@ POSTHOG_API_KEY=phc_your_posthog_api_key
 POSTHOG_HOST=https://us.i.posthog.com
 
 # RevenueCat (in-app purchases)
-REVENUECAT_API_KEY=appl_your_revenuecat_key
+REVENUECAT_API_KEY=appl_your_revenuecat_key  # use appl_ for iOS, goog_ for Android
 ```
 
 All of these are optional in development — the app runs in no-op mode
 without them. They MUST be set for production deployment.
+
+### Step 5b: Configure the RevenueCat webhook (PRODUCTION REQUIRED)
+
+The RevenueCat webhook is the AUTHORITATIVE writer for the `subscriptions`
+table — without it, subscription state is never persisted to the DB and
+server-side Pro verification will fail.
+
+1. Deploy the webhook:
+   ```bash
+   supabase functions deploy revenuecat-webhook --no-verify-jwt
+   ```
+
+2. Generate a strong shared secret and set it as a Supabase secret:
+   ```bash
+   # Generate a 32-byte random secret
+   SECRET="Bearer $(openssl rand -hex 32)"
+   supabase secrets set REVENUECAT_WEBHOOK_AUTHORIZATION="$SECRET"
+   ```
+
+3. Set the RevenueCat secret API key (used by Pro-gated edge functions to
+   verify entitlement server-side):
+   ```bash
+   supabase secrets set REVENUECAT_SECRET_API_KEY=sk_your_revenuecat_secret_key
+   ```
+
+4. In the RevenueCat dashboard:
+   - Project Settings → Integrations → Webhooks
+   - URL: `https://<your-supabase-project>.functions.supabase.co/revenuecat-webhook`
+   - Authorization header: the exact value of `REVENUECAT_WEBHOOK_AUTHORIZATION`
+     (including the `Bearer ` prefix)
+
+5. Test by clicking "Send test ping" in RevenueCat — you should see a 200
+   response in the Supabase function logs.
+
+### Step 5c: Configure Apple Sign-In revocation (iOS App Store requirement)
+
+If your app supports Sign in with Apple AND account deletion (it does),
+Apple requires you to revoke the user's Apple ID token on account deletion.
+Set these Supabase secrets:
+
+```bash
+supabase secrets set APPLE_SIGN_IN_TEAM_ID=your_10_char_team_id
+supabase secrets set APPLE_SIGN_IN_KEY_ID=your_key_id
+supabase secrets set APPLE_SIGN_IN_CLIENT_ID=com.vitalseker.app
+supabase secrets set APPLE_SIGN_IN_PRIVATE_KEY="$(cat AuthKey_XXXXXXXXXX.p8)"
+```
+
+Get these from the Apple Developer portal:
+- Team ID: Membership → Team ID
+- Key ID: Certificates, Identifiers & Profiles → Keys → your Sign in with
+  Apple key
+- Client ID (Service ID): Identifiers → Services IDs → your app's Service ID
+- Private key: the .p8 file you downloaded when you created the key
+
+Without these, the delete-account edge function logs a warning and skips
+revocation — App Store reviewers WILL reject your submission.
+
+### Step 5d: Apply the latest SQL migration
+
+Apply `supabase/migrations/012_server_side_hardening.sql` to your database.
+This migration:
+- Drops the avatars public-read storage policy (PHI leak — anon users
+  could enumerate and download every user's avatar)
+- Adds `updated_at` columns + triggers to `medical_records` and
+  `symptom_logs` (every update call was throwing PGRST204 without these)
+- Fixes the `vitals_spo2_range` CHECK constraint case mismatch (was a
+  no-op — out-of-range SpO2 values were silently accepted)
+- Adds the `updated_at` trigger to `family_profiles`
+- Ensures `sos_events.resolved_at` exists (used by the new resolve flow)
+
+```bash
+supabase db push
+# OR
+psql $DATABASE_URL -f supabase/migrations/012_server_side_hardening.sql
+```
+
+### Step 5e: Redeploy all edge functions
+
+The Pro-gated edge functions now import the shared `_shared/pro_check.ts`
+helper. Redeploy them all:
+
+```bash
+supabase functions deploy translate
+supabase functions deploy ai-chat
+supabase functions deploy vitalseker-triage
+supabase functions deploy export-pdf
+supabase functions deploy sos-alert
+supabase functions deploy weekly-insights
+supabase functions deploy delete-account
+supabase functions deploy revenuecat-webhook --no-verify-jwt
+```
 
 ### Step 6: Configure CRON for Weekly Insights
 In the Supabase Dashboard → Database → Cron Jobs, add a schedule that invokes
