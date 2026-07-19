@@ -32,6 +32,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   final _confirmController = TextEditingController();
   bool _isUpdating = false;
   bool _obscurePassword = true;
+  bool _obscureConfirm = true;
 
   @override
   void dispose() {
@@ -54,7 +55,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
       if (mounted) {
         AppSnackBar.success(
           context,
-          'Password updated. Please sign in with your new password.',
+          AppLocalizations.of(context)!.passwordUpdatedSignIn,
         );
         // Clear the navigation stack and go to login.
         context.go(AppConfig.login);
@@ -63,9 +64,12 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
       if (mounted) {
         AppSnackBar.errorFromException(
           context,
-          'Could not update your password. The reset link may have expired — please request a new one.',
+          AppLocalizations.of(context)!.passwordUpdateFailed,
           e,
         );
+        // Navigate to login so the user can request a fresh link
+        // instead of being stranded on this screen.
+        context.go(AppConfig.login);
       }
     } finally {
       if (mounted) setState(() => _isUpdating = false);
@@ -99,13 +103,13 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Set a new password',
+                    l10n.resetPasswordTitle,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Your reset link was verified. Enter a new password below.',
+                    l10n.resetPasswordSubtitle,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -124,12 +128,12 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                           () => _obscurePassword = !_obscurePassword,
                         ),
                       ),
-                      helperText: 'Minimum 8 characters.',
+                      helperText: l10n.resetPasswordHelper,
                     ),
                     validator: (value) {
                       final v = value ?? '';
                       if (v.length < 8) {
-                        return 'Password must be at least 8 characters.';
+                        return l10n.passwordTooShort;
                       }
                       return null;
                     },
@@ -137,14 +141,22 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _confirmController,
-                    obscureText: _obscurePassword,
+                    obscureText: _obscureConfirm,
                     decoration: InputDecoration(
                       labelText: l10n.confirmNewPassword,
                       prefixIcon: const Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: Icon(_obscureConfirm
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined),
+                        onPressed: () => setState(
+                          () => _obscureConfirm = !_obscureConfirm,
+                        ),
+                      ),
                     ),
                     validator: (value) {
                       if (value != _passwordController.text) {
-                        return 'Passwords do not match.';
+                        return l10n.passwordsDoNotMatchError;
                       }
                       return null;
                     },

@@ -356,36 +356,62 @@ class DatabaseService {
   ///
   /// The migration 005_avatars_bucket.sql bucket policy enforces that each
   /// user can only write to a path prefixed with their own user id.
+  ///
+  /// CRITICAL FIX: the avatars bucket is private (migration 010 set
+  /// `public = false`), so `getPublicUrl` returns a URL that 400/403s on
+  /// fetch. Use `createSignedUrl` instead — the URL expires after 1 hour
+  /// but is refreshed on each profile load.
   Future<String> uploadAvatar({
     required String userId,
     required List<int> bytes,
     required String contentType,
   }) async {
-    // FIX (audit M-6): use a content-type-appropriate extension and add a
-    // cache-busting query parameter so CachedNetworkImage doesn't serve
-    // the old avatar after upload.
-    final ext = contentType == 'image/png' ? 'png' : 'jpg';
-    final path = '$userId/avatar.$ext';
+    // Always save as JPEG — image_picker already re-encodes with
+    // imageQuality: 85 (JPEG), so the source bytes ARE JPEG even if the
+    // original was PNG. Using a fixed extension simplifies deleteAvatar
+    // (no need to remember the extension).
+    final path = '$userId/avatar.jpg';
     await _client.storage.from('avatars').uploadBinary(
           path,
           Uint8List.fromList(bytes),
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
+          fileOptions: FileOptions(contentType: 'image/jpeg', upsert: true),
         );
-    final baseUrl = _client.storage.from('avatars').getPublicUrl(path);
-    // Append a cache-busting timestamp so the URL changes on each upload,
-    // forcing CachedNetworkImage to fetch the new image instead of serving
-    // the cached old one.
-    return '$baseUrl?v=${DateTime.now().millisecondsSinceEpoch}';
+    // Create a signed URL (1-hour expiry) instead of a public URL — the
+    // bucket is private so public URLs return 400/403.
+    final signedUrlResponse = await _client.storage
+        .from('avatars')
+        .createSignedUrl(path, 3600);
+    final signedUrl = signedUrlResponse;
+    // Append a cache-busting timestamp so CachedNetworkImage fetches the
+    // new image instead of serving the cached old one.
+    final separator = signedUrl.contains('?') ? '&' : '?';
+    return '$signedUrl${separator}v=${DateTime.now().millisecondsSinceEpoch}';
   }
 
   /// Remove the avatar file for the given user. Best-effort — does not throw
   /// if the file does not exist.
   Future<void> deleteAvatar(String userId) async {
+    // Always .jpg now (see uploadAvatar).
     final path = '$userId/avatar.jpg';
     try {
       await _client.storage.from('avatars').remove([path]);
     } catch (_) {
       // File may not exist; ignore.
+    }
+  }
+
+  /// Returns a fresh signed URL for the user's avatar (1-hour expiry).
+  /// Call this on profile load to refresh expired URLs.
+  /// Returns null if the avatar doesn't exist or the bucket is unreachable.
+  Future<String?> refreshAvatarUrl(String userId) async {
+    final path = '$userId/avatar.jpg';
+    try {
+      final signedUrl = await _client.storage
+          .from('avatars')
+          .createSignedUrl(path, 3600);
+      return signedUrl;
+    } catch (_) {
+      return null;
     }
   }
 

@@ -501,6 +501,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
     final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
+      barrierDismissible: false,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.overrideRateLimitTitle),
         content: const Text(
@@ -562,6 +563,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
     final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
+      barrierDismissible: false,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.imSafeResolve),
         content: Text(

@@ -171,7 +171,11 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     if (!isPro) {
       if (!mounted) return;
       AppSnackBar.error(context, l10n.exportProOnly);
-      context.go(AppConfig.subscription);
+      // FIX: use context.push (not context.go) so the user can tap back
+      // to return to the Export screen after subscribing. context.go
+      // replaces the entire stack — the user's export configuration
+      // (date range, section toggles) would be lost.
+      context.push(AppConfig.subscription);
       return;
     }
 

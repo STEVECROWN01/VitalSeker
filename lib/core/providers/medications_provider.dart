@@ -18,12 +18,15 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
   }
 
   /// Generate a stable notification ID for a medication + dose index.
-  /// Uses a hash of the medication ID + dose index, constrained to the
-  /// range [1000, 9999] to avoid collisions with other notification IDs
-  /// (1=medication global, 2=vitals, 3=health tips, 100+=appointments).
+  /// Uses the full 31-bit hash space (no modulo) so collisions are
+  /// negligible. The previous range [1000, 9999] (only 9000 buckets) had a
+  /// ~50% collision probability at ~28 medications × 4 dose times —
+  /// scheduling one med would silently overwrite another's notification,
+  /// and cancelling one would cancel the other's.
   int _notificationIdFor(String medicationId, int doseIndex) {
     final hash = '$medicationId:$doseIndex'.hashCode;
-    return 1000 + (hash.abs() % 9000);
+    // Mask to 31 bits to avoid platform issues with negative IDs.
+    return hash & 0x7FFFFFFF;
   }
 
   /// Schedule per-dose reminders for a medication.

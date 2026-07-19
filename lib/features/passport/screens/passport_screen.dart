@@ -45,7 +45,13 @@ class PassportScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.qr_code_2),
-            onPressed: () {
+            onPressed: () async {
+              // FIX: use the ASYNC Pro provider so paying users aren't
+              // briefly blocked during the loading window on cold start.
+              // The sync provider returns false while the async provider
+              // is still resolving.
+              final isPro = await ref.read(isProUserAsyncProvider.future);
+              if (!context.mounted) return;
               if (!isPro) {
                 context.push(AppConfig.proPlan);
               } else {
@@ -436,7 +442,10 @@ class PassportScreen extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: OutlinedButton.icon(
-            onPressed: () {
+            onPressed: () async {
+              // FIX: use the ASYNC Pro provider (see AppBar QR button above).
+              final isPro = await ref.read(isProUserAsyncProvider.future);
+              if (!context.mounted) return;
               if (!isPro) {
                 context.push(AppConfig.proPlan);
               } else {

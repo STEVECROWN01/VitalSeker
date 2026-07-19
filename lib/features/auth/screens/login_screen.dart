@@ -33,6 +33,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   DateTime? _firstFailedAt;
   DateTime? _lockedUntil;
 
+  @override
+  void initState() {
+    super.initState();
+    // FIX: the Sign-In button's enable/disable condition reads
+    // `_emailController.text.isEmpty || _passwordController.text.isEmpty`
+    // in build(). Without listeners, the button stays disabled after the
+    // user types until something else triggers a rebuild (e.g., toggling
+    // password visibility). Add listeners that call setState on every
+    // keystroke so the button updates in real time.
+    _emailController.addListener(_onTextChanged);
+    _passwordController.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    if (mounted) setState(() {});
+  }
+
   bool get _isLockedOut {
     if (_lockedUntil == null) return false;
     if (DateTime.now().isAfter(_lockedUntil!)) {
@@ -109,8 +126,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (mounted) context.go(AppConfig.dashboard);
     } catch (e) {
       // Track failed attempts for rate limiting.
+      final wasLockedOut = _failedAttempts >= 4; // _recordFailedAttempt will bump to 5
       _recordFailedAttempt();
-      _showError(AuthService.getFriendlyError(e));
+      // FIX: if _recordFailedAttempt just triggered a lockout, the
+      // lockout snackbar is already showing. Don't overwrite it with
+      // the per-attempt error — the lockout message is more actionable.
+      if (!wasLockedOut || _failedAttempts < 5) {
+        _showError(AuthService.getFriendlyError(e));
+      }
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }

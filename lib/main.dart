@@ -14,6 +14,7 @@ import 'package:app_links/app_links.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/services/edge_function_service.dart';
+import 'core/services/notification_service.dart';
 import 'core/services/offline_cache_service.dart';
 import 'core/services/supabase_service.dart';
 import 'core/config/supabase_config.dart';
@@ -27,6 +28,7 @@ import 'core/providers/user_profile_provider.dart';
 import 'core/providers/health_passport_provider.dart';
 import 'shared/theme/app_theme.dart';
 import 'shared/theme/app_colors.dart';
+import 'shared/widgets/app_snack_bar.dart';
 
 /// PRODUCTION main() — runApp() FIRST, then initialize ALL services
 /// (including Sentry) from a widget's initState().
@@ -358,6 +360,24 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
       debugPrint('[Startup] PostHog init failed (non-fatal): $e');
     }
 
+    // Initialize NotificationService at startup.
+    // CRITICAL: without this, the medications + appointments providers
+    // silently skip scheduling reminders because of their
+    // `if (!notif.isInitialized) return;` guards. The user enables
+    // reminders, sees the success snackbar, and NEVER receives a single
+    // notification. Initializing here ensures Android 13+ runtime
+    // permission is requested and channels are created before any
+    // scheduling call.
+    try {
+      await NotificationService().initialize().timeout(
+        const Duration(seconds: 5),
+        onTimeout: () => debugPrint('[Startup] NotificationService init timed out (non-fatal)'),
+      );
+      debugPrint('[Startup] NotificationService initialized');
+    } catch (e) {
+      debugPrint('[Startup] NotificationService init failed (non-fatal): $e');
+    }
+
     // Mark services as ready — triggers rebuild to show the real app.
     if (mounted) {
       setState(() {});
@@ -403,8 +423,14 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
   void _handleDeepLink(Uri uri) {
     debugPrint('[DeepLink] received: $uri');
     final router = ref.read(routerProvider);
-    // vitalseker://reset-password
+    // vitalseker://reset-password  → ResetPasswordScreen
     if (uri.scheme == 'vitalseker' && uri.host == 'reset-password') {
+      // CRITICAL FIX: feed the deep-link URI to the Supabase SDK so it
+      // can establish the recovery session. Without this call, the SDK
+      // never validates the recovery token from the email link —
+      // `authService.updatePassword()` would fail with "no session"
+      // because there's no authenticated session to update.
+      _establishRecoverySession(uri);
       router.go(AppConfig.resetPassword);
       return;
     }
@@ -421,6 +447,36 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
       return;
     }
     debugPrint('[DeepLink] unhandled URI: $uri');
+  }
+
+  /// Establishes a Supabase recovery session from a deep-link URI.
+  ///
+  /// Called when the user taps the password-reset email link. The URI
+  /// contains `access_token`, `refresh_token`, `type=password_recovery`,
+  /// etc. as query params. `getSessionFromUri` validates these and sets
+  /// the current session, so `authService.updatePassword()` (which
+  /// requires an authenticated session) will succeed.
+  ///
+  /// On failure (expired/invalid token), the user is routed to the login
+  /// screen with an error — they can request a fresh reset link there.
+  Future<void> _establishRecoverySession(Uri uri) async {
+    try {
+      // Convert the custom-scheme URI to the equivalent HTTPS URL that
+      // Supabase expects. Supabase sends the redirect as
+      // `vitalseker://reset-password?access_token=...&refresh_token=...&type=password_recovery`.
+      // `getSessionFromUri` accepts either the custom scheme OR an HTTPS URL.
+      await Supabase.instance.client.auth.getSessionFromUri(uri);
+      debugPrint('[DeepLink] recovery session established');
+    } catch (e) {
+      debugPrint('[DeepLink] getSessionFromUri failed: $e');
+      if (mounted) {
+        AppSnackBar.error(
+          context,
+          'The password reset link is invalid or expired. Please request a new one.',
+        );
+        ref.read(routerProvider).go(AppConfig.login);
+      }
+    }
   }
 
   @override

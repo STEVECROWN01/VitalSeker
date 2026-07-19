@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/providers/medications_provider.dart';
+import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
@@ -206,7 +207,19 @@ class MedicalIdScreen extends ConsumerWidget {
                 Card(
                   child: InkWell(
                     borderRadius: BorderRadius.circular(16),
-                    onTap: () => context.push(AppConfig.qrDisplay),
+                    // FIX: add Pro gate here too — the passport screen
+                    // gates QR generation, but the Medical ID screen was
+                    // bypassing it, letting free users reach the QR
+                    // display and trigger generateQr server-side.
+                    onTap: () async {
+                      final isPro = await ref.read(isProUserAsyncProvider.future);
+                      if (!context.mounted) return;
+                      if (!isPro) {
+                        context.push(AppConfig.proPlan);
+                      } else {
+                        context.push(AppConfig.qrDisplay);
+                      }
+                    },
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Column(
@@ -235,7 +248,16 @@ class MedicalIdScreen extends ConsumerWidget {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
-                    onPressed: () => context.push(AppConfig.qrDisplay),
+                    // FIX: Pro gate (see the QR card above).
+                    onPressed: () async {
+                      final isPro = await ref.read(isProUserAsyncProvider.future);
+                      if (!context.mounted) return;
+                      if (!isPro) {
+                        context.push(AppConfig.proPlan);
+                      } else {
+                        context.push(AppConfig.qrDisplay);
+                      }
+                    },
                     icon: const Icon(Icons.qr_code_2),
                     label: Text(
                       l10n.viewQrCode,

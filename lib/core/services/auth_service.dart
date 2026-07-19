@@ -219,11 +219,22 @@ class AuthService {
   }
 
   // Sign Out
+  //
+  // FIX: use GoogleSignIn().disconnect() (not signOut()) to revoke the
+  // OAuth grant server-side. Without disconnect, user A's Google account
+  // stays "connected" to the app — user B can sign in with the same
+  // Google account with one tap (no re-auth). disconnect() is async and
+  // may take a few seconds; we wrap in try/catch so a failure doesn't
+  // block the Supabase signOut that follows.
   Future<void> signOut() async {
     try {
-      await GoogleSignIn().signOut();
+      await GoogleSignIn().disconnect();
     } catch (_) {
-      // Ignore if Google Sign-In not configured
+      // Ignore if Google Sign-In not configured or already disconnected.
+      // Fall back to signOut() for safety.
+      try {
+        await GoogleSignIn().signOut();
+      } catch (_) {}
     }
     await _client.auth.signOut();
   }

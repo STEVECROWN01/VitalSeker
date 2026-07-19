@@ -18,12 +18,14 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
   }
 
   /// Generate a stable notification ID for an appointment.
-  /// Uses a hash of the appointment ID, constrained to [100, 999] to avoid
-  /// collisions with other notification IDs (1-4 = global reminders,
-  /// 1000-9999 = medications).
+  /// Uses the full 31-bit hash space (no modulo) so collisions are
+  /// negligible. The previous range [100, 999] (only 900 buckets) had a
+  /// ~50% collision probability at ~37 appointments — scheduling one appt
+  /// would silently overwrite another's notification.
   int _notificationIdFor(String appointmentId) {
     final hash = appointmentId.hashCode;
-    return 100 + (hash.abs() % 900);
+    // Mask to 31 bits to avoid platform issues with negative IDs.
+    return hash & 0x7FFFFFFF;
   }
 
   /// Schedule a reminder for an appointment (24h before).
@@ -112,9 +114,11 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     try {
       final db = ref.read(databaseServiceProvider);
       await db.updateAppointment(appointmentId, {'status': status.name});
-      // Cancel the reminder if the appointment is cancelled — no point
-      // reminding the user about an appointment they cancelled.
-      if (status == AppointmentStatus.cancelled) {
+      // Cancel the reminder if the appointment is cancelled OR completed —
+      // no point reminding the user about an appointment they cancelled or
+      // already attended.
+      if (status == AppointmentStatus.cancelled ||
+          status == AppointmentStatus.completed) {
         final appt = state.valueOrNull
             ?.where((a) => a.id == appointmentId)
             .firstOrNull;
@@ -142,7 +146,12 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
       }
       final db = ref.read(databaseServiceProvider);
       await db.updateAppointment(appointmentId, {
-        'date_time': newDateTime.toIso8601String(),
+        // CRITICAL FIX: convert to UTC before serializing. The model's
+        // toJson() does this, but rescheduleAppointment builds the payload
+        // by hand — bypassing the model. Without .toUtc(), toIso8601String()
+        // produces a naive string with no offset, which Supabase interprets
+        // as UTC, shifting the stored time by the user's UTC offset.
+        'date_time': newDateTime.toUtc().toIso8601String(),
         'status': AppointmentStatus.upcoming.name,
       });
       // Re-schedule the reminder with the new time.

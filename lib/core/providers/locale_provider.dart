@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/database_service.dart';
 import 'auth_provider.dart';
 import 'user_profile_provider.dart';
@@ -69,9 +70,13 @@ String localeToLanguageName(Locale locale) {
   return 'English (US)';
 }
 
+/// SharedPreferences key for the persisted locale language code.
+const _kLocalePrefsKey = 'preferred_language';
+
 /// Provider for the app's current locale. Changing this immediately
 /// re-translates the entire app via Flutter's localization system AND
-/// persists the choice to the users table so it survives app restarts.
+/// persists the choice to SharedPreferences + the users table so it
+/// survives app restarts.
 final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
   return LocaleNotifier(ref);
 });
@@ -80,6 +85,13 @@ class LocaleNotifier extends StateNotifier<Locale> {
   final Ref _ref;
 
   LocaleNotifier(this._ref) : super(const Locale('en')) {
+    // CRITICAL FIX: load from SharedPreferences IMMEDIATELY (synchronously
+    // in the constructor) so the locale is correct on the very first
+    // frame after a cold start. Without this, the app shows English for
+    // the first ~500ms until the async DB fetch completes, causing a
+    // visible "language flash" for non-English users.
+    _loadLocaleFromLocal();
+
     // FIX (audit H-2): listen to currentUserProvider instead of
     // authStateProvider to avoid firing on every token refresh.
     _ref.listen(currentUserProvider, (previous, next) {
@@ -87,20 +99,54 @@ class LocaleNotifier extends StateNotifier<Locale> {
         loadLocale();
       }
     });
+
+    // Also listen for userProfileProvider changes — on cold start the
+    // user ID may be available immediately (session restored) but the
+    // profile fetch is async. This catches the case where loadLocale()
+    // ran too early and read null.
+    _ref.listen(userProfileProvider, (previous, next) {
+      if (next.value != null && previous?.value == null) {
+        loadLocale();
+      }
+    });
   }
 
-  /// Load the user's saved language preference. Called on app start and
-  /// when the current user changes.
-  ///
-  /// FIX (audit H-3): use userProfileProvider instead of a direct DB call.
+  /// Load the locale from SharedPreferences (synchronous-ish, fast).
+  /// This is the fallback that works offline and for non-signed-in users.
+  Future<void> _loadLocaleFromLocal() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final langCode = prefs.getString(_kLocalePrefsKey);
+      if (langCode != null && langCode.isNotEmpty) {
+        for (final entry in languageLocales.entries) {
+          if (entry.value.languageCode == langCode) {
+            state = entry.value;
+            return;
+          }
+        }
+      }
+    } catch (_) {
+      // SharedPreferences may not be ready yet — the DB-backed loadLocale
+      // will run as a fallback.
+    }
+  }
+
+  /// Load the user's saved language preference from the DB. Called on
+  /// app start and when the current user changes.
   Future<void> loadLocale() async {
     final profile = _ref.read(userProfileProvider).valueOrNull;
     if (profile != null) {
       final langCode = profile.preferredLanguage;
-      if (langCode.isNotEmpty && langCode != 'en') {
+      if (langCode.isNotEmpty) {
         for (final entry in languageLocales.entries) {
           if (entry.value.languageCode == langCode) {
             state = entry.value;
+            // Also persist to SharedPreferences so the next cold start
+            // restores immediately without waiting for the DB fetch.
+            try {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString(_kLocalePrefsKey, langCode);
+            } catch (_) {}
             return;
           }
         }
@@ -121,13 +167,19 @@ class LocaleNotifier extends StateNotifier<Locale> {
     }
   }
 
-  /// Persist the locale to the users table so it survives app restarts.
-  /// Falls back silently if the user is not signed in or the DB write fails.
+  /// Persist the locale to SharedPreferences (always) AND the users table
+  /// (when signed in). Falls back silently on failure.
   Future<void> _persist(Locale locale) async {
+    // Always persist to SharedPreferences — works for signed-out users too.
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_kLocalePrefsKey, locale.languageCode);
+    } catch (_) {}
+
     final user = _ref.read(currentUserProvider);
     if (user == null) return;
     try {
-      final db = DatabaseService();
+      final db = _ref.read(databaseServiceProvider);
       await db.updateUserProfile(user.id, {
         'preferred_language': locale.languageCode,
       });

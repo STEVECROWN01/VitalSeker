@@ -567,6 +567,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changePassword => 'Change Password';
 
   @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get resetPasswordTitle => 'Set a new password';
+
+  @override
+  String get resetPasswordSubtitle => 'Your reset link was verified. Enter a new password below.';
+
+  @override
+  String get resetPasswordHelper => 'Minimum 8 characters.';
+
+  @override
+  String get passwordTooShort => 'Password must be at least 8 characters.';
+
+  @override
+  String get passwordsDoNotMatchError => 'Passwords do not match.';
+
+  @override
+  String get passwordUpdatedSignIn => 'Password updated. Please sign in with your new password.';
+
+  @override
+  String get passwordUpdateFailed => 'Could not update your password. The reset link may have expired — please request a new one.';
+
+  @override
   String get currentPassword => 'Current Password';
 
   @override
@@ -3829,6 +3853,30 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get changePassword => 'Change Password';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get resetPasswordTitle => 'Set a new password';
+
+  @override
+  String get resetPasswordSubtitle => 'Your reset link was verified. Enter a new password below.';
+
+  @override
+  String get resetPasswordHelper => 'Minimum 8 characters.';
+
+  @override
+  String get passwordTooShort => 'Password must be at least 8 characters.';
+
+  @override
+  String get passwordsDoNotMatchError => 'Passwords do not match.';
+
+  @override
+  String get passwordUpdatedSignIn => 'Password updated. Please sign in with your new password.';
+
+  @override
+  String get passwordUpdateFailed => 'Could not update your password. The reset link may have expired — please request a new one.';
 
   @override
   String get currentPassword => 'Current Password';

@@ -29,13 +29,19 @@ serve(async (req: Request) => {
   }
 
   // --- Auth gate: accept either CRON secret OR authenticated user JWT ---
+  // CRITICAL FIX: previously, ANY authenticated user could trigger the
+  // batch cron for ALL Pro users — a malicious user could rack up
+  // significant AI API costs by repeatedly tapping "Generate Now". Now
+  // the JWT path processes ONLY the calling user, while the cron-secret
+  // path processes all Pro users (intended for the weekly cron only).
   const cronSecret = Deno.env.get('CRON_SECRET')
   const providedSecret = req.headers.get('x-cron-secret')
-  
+
   // Check if this is a CRON call (has valid cron secret)
   const isCronCall = cronSecret && providedSecret && providedSecret === cronSecret
-  
-  // If not a CRON call, check for authenticated user
+
+  // If not a CRON call, check for authenticated user and scope to them only.
+  let callingUserId: string | null = null
   if (!isCronCall) {
     const authHeader = req.headers.get('Authorization')
     if (!authHeader) {
@@ -55,6 +61,7 @@ serve(async (req: Request) => {
         status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       })
     }
+    callingUserId = user.id
   }
 
   try {
@@ -86,11 +93,29 @@ serve(async (req: Request) => {
 
     // Deduplicate user_ids.
     const seenUserIds = new Set<string>()
-    const proUsers = proUsersRaw.filter((sub: { user_id: string }) => {
+    let proUsers = proUsersRaw.filter((sub: { user_id: string }) => {
       if (seenUserIds.has(sub.user_id)) return false
       seenUserIds.add(sub.user_id)
       return true
     })
+
+    // CRITICAL FIX: if this is a JWT-authenticated call (not the cron),
+    // process ONLY the calling user. This prevents a malicious user from
+    // triggering AI generation for ALL Pro users by calling the function
+    // directly.
+    if (callingUserId) {
+      proUsers = proUsers.filter((sub: { user_id: string }) => sub.user_id === callingUserId)
+      if (proUsers.length === 0) {
+        // The calling user is not a Pro subscriber — refuse.
+        return new Response(JSON.stringify({
+          error: 'pro_required',
+          message: 'Weekly insights are only available for Pro subscribers.',
+        }), {
+          status: 403,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        })
+      }
+    }
 
     // FIX (audit M-3 from backend): use start-of-day boundaries to avoid
     // off-by-one errors. The previous code used `now` as the end and

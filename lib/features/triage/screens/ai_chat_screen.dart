@@ -226,13 +226,21 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       }
 
       // Simulate streaming: add an empty message, then reveal it word by word
-      final streamingMessage = _ChatMessage(
-        content: '',
-        isUser: false,
-        timestamp: DateTime.now(),
-      );
+      // CRITICAL FIX: track the streaming message by INDEX, not by object
+      // identity. `_ChatMessage` does not override `==`, so `List.indexOf`
+      // uses identity — after the first iteration replaced the message with
+      // a new instance, `indexOf(streamingMessage)` returned -1 and the
+      // bubble was never updated again. The user saw only the first word
+      // of every reply.
+      final streamingTimestamp = DateTime.now();
+      int streamIdx;
       setState(() {
-        _messages.add(streamingMessage);
+        _messages.add(_ChatMessage(
+          content: '',
+          isUser: false,
+          timestamp: streamingTimestamp,
+        ));
+        streamIdx = _messages.length - 1;
         // FIX (audit 10.4): keep _isSending = true until streaming completes.
         // The previous code set it false here, allowing the user to send
         // another message mid-stream.
@@ -250,12 +258,11 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
         await Future.delayed(const Duration(milliseconds: 30));
         if (!mounted) break;
         setState(() {
-          final idx = _messages.indexOf(streamingMessage);
-          if (idx >= 0) {
-            _messages[idx] = _ChatMessage(
+          if (streamIdx < _messages.length) {
+            _messages[streamIdx] = _ChatMessage(
               content: currentText,
               isUser: false,
-              timestamp: streamingMessage.timestamp,
+              timestamp: streamingTimestamp,
             );
           }
         });

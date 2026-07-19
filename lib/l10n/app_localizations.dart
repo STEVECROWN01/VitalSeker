@@ -1249,6 +1249,54 @@ abstract class AppLocalizations {
   /// **'Change Password'**
   String get changePassword;
 
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @resetPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a new password'**
+  String get resetPasswordTitle;
+
+  /// No description provided for @resetPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reset link was verified. Enter a new password below.'**
+  String get resetPasswordSubtitle;
+
+  /// No description provided for @resetPasswordHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum 8 characters.'**
+  String get resetPasswordHelper;
+
+  /// No description provided for @passwordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters.'**
+  String get passwordTooShort;
+
+  /// No description provided for @passwordsDoNotMatchError.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match.'**
+  String get passwordsDoNotMatchError;
+
+  /// No description provided for @passwordUpdatedSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated. Please sign in with your new password.'**
+  String get passwordUpdatedSignIn;
+
+  /// No description provided for @passwordUpdateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not update your password. The reset link may have expired — please request a new one.'**
+  String get passwordUpdateFailed;
+
   /// No description provided for @currentPassword.
   ///
   /// In en, this message translates to:
