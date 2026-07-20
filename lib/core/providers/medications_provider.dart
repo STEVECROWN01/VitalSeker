@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/medication.dart';
 import '../providers/auth_provider.dart';
 import '../services/notification_service.dart';
+import '../services/offline_cache_service.dart';
 import 'user_profile_provider.dart';
 
 final medicationsProvider = AsyncNotifierProvider<MedicationsNotifier, List<Medication>>(MedicationsNotifier.new);
@@ -136,6 +137,19 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
       }
       ref.invalidateSelf();
     } catch (e) {
+      // FIX: if the insert fails (likely offline), queue it for later
+      // submission instead of losing the data.
+      try {
+        await OfflineCacheService().queuePendingWrite(
+          table: 'medications',
+          payload: medication.toJson(),
+        );
+        debugPrint('[Medications] insert failed — queued for offline sync: $e');
+        ref.invalidateSelf();
+        return;
+      } catch (queueErr) {
+        debugPrint('[Medications] failed to queue offline write: $queueErr');
+      }
       rethrow;
     }
   }

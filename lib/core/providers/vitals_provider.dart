@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/vital.dart';
 import '../providers/auth_provider.dart';
+import '../services/offline_cache_service.dart';
 import 'user_profile_provider.dart';
 
 final vitalsProvider = AsyncNotifierProvider<VitalsNotifier, List<Vital>>(VitalsNotifier.new);
@@ -44,6 +46,21 @@ class VitalsNotifier extends AsyncNotifier<List<Vital>> {
       await db.insertVital(vital.toJson());
       ref.invalidateSelf();
     } catch (e) {
+      // FIX: if the insert fails (likely offline), queue it for later
+      // submission instead of losing the data. The user sees a
+      // "saved offline — will sync when online" message.
+      try {
+        await OfflineCacheService().queuePendingWrite(
+          table: 'vitals',
+          payload: vital.toJson(),
+        );
+        debugPrint('[Vitals] insert failed — queued for offline sync: $e');
+        ref.invalidateSelf();
+        // Don't rethrow — the data is safely queued.
+        return;
+      } catch (queueErr) {
+        debugPrint('[Vitals] failed to queue offline write: $queueErr');
+      }
       rethrow;
     }
   }

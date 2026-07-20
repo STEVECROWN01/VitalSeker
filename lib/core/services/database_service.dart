@@ -415,6 +415,50 @@ class DatabaseService {
     }
   }
 
+  // ==================== AI CHAT MESSAGES ====================
+  /// Load the most recent N AI chat messages for the user, ordered
+  /// oldest-first (so they can be appended to the message list directly).
+  Future<List<Map<String, dynamic>>> getChatMessages(
+    String userId, {
+    int limit = 50,
+  }) async {
+    final clampedLimit = limit.clamp(1, 500);
+    final response = await _client
+        .from('ai_chat_messages')
+        .select('id, role, content, created_at')
+        .eq('user_id', userId)
+        .order('created_at', ascending: false)
+        .limit(clampedLimit);
+    // Reverse to oldest-first for display.
+    return response.reversed.toList();
+  }
+
+  /// Insert a chat message. Returns the inserted row's id.
+  Future<String> insertChatMessage({
+    required String userId,
+    required String role, // 'user' or 'assistant'
+    required String content,
+  }) async {
+    final response = await _client
+        .from('ai_chat_messages')
+        .insert({
+          'user_id': userId,
+          'role': role,
+          'content': content,
+        })
+        .select('id')
+        .single();
+    return response['id'].toString();
+  }
+
+  /// Delete all chat messages for the user (clear history).
+  Future<void> clearChatMessages(String userId) async {
+    await _client
+        .from('ai_chat_messages')
+        .delete()
+        .eq('user_id', userId);
+  }
+
   // ==================== SUPPORT TICKETS ====================
   /// Insert a new support ticket. RLS enforces user_id = auth.uid().
   /// Returns the created ticket row.

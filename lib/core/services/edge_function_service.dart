@@ -226,6 +226,15 @@ class EdgeFunctionService {
         ).timeout(perAttemptTimeout);
 
         if (response.status == 200) {
+          // CRITICAL FIX: on a successful send, clear any same-user
+          // pending SOS events from the local queue. The previous code
+          // left the safety-net enqueue from a failed attempt in the
+          // queue — when the flush ran later (connectivity change,
+          // 5-min timer, app resume), the stale event was delivered to
+          // the edge function, which passed the rate-limit check (if
+          // >60s had passed) and sent a DUPLICATE SMS to all emergency
+          // contacts.
+          await _clearPendingSosForUser();
           return response.data as Map<String, dynamic>;
         }
 
@@ -460,6 +469,36 @@ class EdgeFunctionService {
       debugPrint('[SOS] pending queue cleared');
     } catch (e) {
       debugPrint('[SOS] clearPendingSosQueue failed: $e');
+    }
+  }
+
+  /// Clears pending SOS events for the CURRENT user only (preserves
+  /// events queued by other users on the same shared device).
+  /// Called after a successful send to prevent the duplicate-SMS bug
+  /// where a failed-then-retried SOS leaves a stale event in the queue
+  /// that gets flushed later.
+  Future<void> _clearPendingSosForUser() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_kPendingSosQueueKey);
+      if (raw == null || raw.isEmpty) return;
+      final queue = jsonDecode(raw) as List<dynamic>;
+      final currentUserId = SupabaseService().isInitialized
+          ? _client.auth.currentUser?.id
+          : null;
+      // Keep events that DON'T match the current user (other users'
+      // events on a shared device).
+      final remaining = queue.where((e) {
+        final eventUserId = (e as Map<String, dynamic>)['user_id']?.toString();
+        return eventUserId != currentUserId;
+      }).toList();
+      await prefs.setString(_kPendingSosQueueKey, jsonEncode(remaining));
+      if (remaining.length < queue.length) {
+        debugPrint('[SOS] cleared ${queue.length - remaining.length} pending '
+            'event(s) for current user after successful send');
+      }
+    } catch (e) {
+      debugPrint('[SOS] _clearPendingSosForUser failed (non-fatal): $e');
     }
   }
 
@@ -765,6 +804,46 @@ class EdgeFunctionService {
       }
     }
     debugPrint('[Triage Queue] flushed $delivered/${pending.length} entries');
+    return delivered;
+  }
+
+  /// Flush the pending writes queue (vitals/meds/appointments that were
+  /// queued while offline).
+  ///
+  /// CRITICAL FIX: without this, adding a vital/med/appointment while
+  /// offline throws and the data is LOST. The target market (rural
+  /// emerging markets) has flaky networks — losing a vital reading is
+  /// a real safety concern.
+  ///
+  /// Returns the number of successfully-flushed entries.
+  Future<int> flushPendingWrites() async {
+    if (!SupabaseService().isInitialized) return 0;
+    final user = _client.auth.currentUser;
+    if (user == null) return 0;
+
+    final cache = OfflineCacheService();
+    final pending = cache.getPendingWrites();
+    if (pending.isEmpty) return 0;
+
+    debugPrint('[Writes Queue] flushing ${pending.length} pending writes');
+    int delivered = 0;
+    for (final entry in pending) {
+      final id = entry['id']?.toString();
+      final table = entry['table']?.toString();
+      final payload = entry['payload'] as Map<String, dynamic>?;
+      if (id == null || table == null || payload == null) continue;
+      try {
+        // Re-attempt the insert. RLS scopes to the current user.
+        await _client.from(table).insert(payload);
+        await cache.removePendingWrite(id);
+        delivered++;
+        debugPrint('[Writes Queue] flushed $table entry $id');
+      } catch (e) {
+        debugPrint('[Writes Queue] flush failed for $table entry $id (will retry): $e');
+        // Leave in queue for next flush attempt.
+      }
+    }
+    debugPrint('[Writes Queue] flushed $delivered/${pending.length} entries');
     return delivered;
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/appointment.dart';
 import '../providers/auth_provider.dart';
 import '../services/notification_service.dart';
+import '../services/offline_cache_service.dart';
 import 'user_profile_provider.dart';
 
 final appointmentsProvider = AsyncNotifierProvider<AppointmentsNotifier, List<Appointment>>(AppointmentsNotifier.new);
@@ -106,6 +107,19 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
       }
       ref.invalidateSelf();
     } catch (e) {
+      // FIX: if the insert fails (likely offline), queue it for later
+      // submission instead of losing the data.
+      try {
+        await OfflineCacheService().queuePendingWrite(
+          table: 'appointments',
+          payload: appointment.toJson(),
+        );
+        debugPrint('[Appointments] insert failed — queued for offline sync: $e');
+        ref.invalidateSelf();
+        return;
+      } catch (queueErr) {
+        debugPrint('[Appointments] failed to queue offline write: $queueErr');
+      }
       rethrow;
     }
   }

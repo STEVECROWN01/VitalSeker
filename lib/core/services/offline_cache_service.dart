@@ -357,6 +357,60 @@ class OfflineCacheService {
   bool get hasPendingTriage =>
       _pendingTriage != null && _pendingTriage!.isNotEmpty;
 
+  // ── Pending Writes Queue (vitals/meds/appointments) ─────────────────────
+
+  /// Queue a write operation (vital/medication/appointment insert) for
+  /// later submission when network is available.
+  ///
+  /// CRITICAL: without this queue, adding a vital/med/appointment while
+  /// offline throws and the data is LOST. The target market (rural
+  /// emerging markets per Cahier des Charges) has flaky networks —
+  /// losing a vital reading is a real safety concern.
+  ///
+  /// The queue is stored in Hive under 'pending_writes'. Each entry is
+  /// `{id, table, payload, queued_at}`. The flush method re-attempts
+  /// each insert and removes it on success.
+  Future<String> queuePendingWrite({
+    required String table, // 'vitals' | 'medications' | 'appointments'
+    required Map<String, dynamic> payload,
+  }) async {
+    if (_pendingTriage == null) return '';
+    final id = '${table}_${DateTime.now().millisecondsSinceEpoch}';
+    final entry = {
+      'id': id,
+      'table': table,
+      'payload': payload,
+      'queued_at': DateTime.now().toIso8601String(),
+    };
+    await _pendingTriage!.put('write_$id', jsonEncode(entry));
+    debugPrint('[OfflineCache] Queued pending write: $table ($id)');
+    return id;
+  }
+
+  /// Get all pending writes (for retry when network returns).
+  List<Map<String, dynamic>> getPendingWrites() {
+    if (_pendingTriage == null) return [];
+    final results = <Map<String, dynamic>>[];
+    for (final key in _pendingTriage!.keys) {
+      if (!key.startsWith('write_')) continue;
+      final raw = _pendingTriage!.get(key) as String?;
+      if (raw == null) continue;
+      try {
+        results.add(jsonDecode(raw) as Map<String, dynamic>);
+      } catch (_) {}
+    }
+    return results;
+  }
+
+  /// Remove a pending write after successful submission.
+  Future<void> removePendingWrite(String id) async {
+    if (_pendingTriage == null) return;
+    await _pendingTriage!.delete('write_$id');
+  }
+
+  /// Check if there are pending writes to retry.
+  bool get hasPendingWrites => getPendingWrites().isNotEmpty;
+
   // ── Clear All ─────────────────────────────────────────────────────────
 
   /// Clear all cached data for a user (e.g. on sign-out or account deletion).

@@ -224,7 +224,11 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
           fileOptions: FileOptions(contentType: allowedMime),
         );
 
-        return 'medical-records://$fileName';
+        // FIX: store the STORAGE PATH (not a fake 'medical-records://' URL)
+        // so we can create a signed URL later for viewing. The previous
+        // code stored 'medical-records://$fileName' which no Uri/launchUrl
+        // could resolve — the file was uploaded but never viewable.
+        return fileName;
       } catch (e) {
         debugPrint('File upload error: $e');
         if (mounted) {
@@ -603,6 +607,48 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
     });
   }
 
+  /// Opens the attachment file in the system viewer via a signed URL.
+  ///
+  /// FIX: the previous code stored 'medical-records://{path}' which no
+  /// Uri/launchUrl could resolve. Now we store the raw storage path and
+  /// create a signed URL here (5-minute expiry) for viewing.
+  Future<void> _viewAttachment(String? attachmentUrl) async {
+    if (attachmentUrl == null || attachmentUrl.isEmpty) {
+      if (mounted) {
+        AppSnackBar.error(context, 'No attachment to view.');
+      }
+      return;
+    }
+    // Handle both old 'medical-records://path' URLs (strip the prefix)
+    // and new raw storage paths.
+    String path;
+    if (attachmentUrl.startsWith('medical-records://')) {
+      path = attachmentUrl.substring('medical-records://'.length);
+    } else {
+      path = attachmentUrl;
+    }
+    try {
+      final signedUrl = await Supabase.instance.client.storage
+          .from('medical-records')
+          .createSignedUrl(path, 300); // 5-minute expiry
+      if (signedUrl.isEmpty) {
+        if (mounted) AppSnackBar.error(context, 'Could not generate a view URL.');
+        return;
+      }
+      final uri = Uri.parse(signedUrl);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (mounted) AppSnackBar.error(context, 'Could not open the file.');
+      }
+    } catch (e) {
+      debugPrint('View attachment error: $e');
+      if (mounted) {
+        AppSnackBar.error(context, 'Could not view the attachment. It may have been deleted.');
+      }
+    }
+  }
+
   Future<void> _deleteRecord(Map<String, dynamic> record) async {
     final l10n = AppLocalizations.of(context)!;
     final title = record['title'] as String? ?? 'this record';
@@ -624,6 +670,28 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
     if (confirmed != true) return;
 
     try {
+      // FIX: delete the Storage file BEFORE deleting the DB row. The
+      // previous code only deleted the DB row, leaving the file orphaned
+      // in Storage forever (up to 10 MB per file — PHI leak + quota
+      // exhaustion). Best-effort: if the Storage delete fails, we still
+      // delete the DB row so the user isn't stuck.
+      final attachmentUrl = record['attachment_url'] as String?;
+      if (attachmentUrl != null && attachmentUrl.isNotEmpty) {
+        String path;
+        if (attachmentUrl.startsWith('medical-records://')) {
+          path = attachmentUrl.substring('medical-records://'.length);
+        } else {
+          path = attachmentUrl;
+        }
+        try {
+          await Supabase.instance.client.storage
+              .from('medical-records')
+              .remove([path]);
+        } catch (e) {
+          debugPrint('Storage file delete failed (non-fatal): $e');
+        }
+      }
+
       final db = ref.read(databaseServiceProvider);
       await db.deleteMedicalRecord(record['id'] as String);
       _loadRecords();
@@ -855,7 +923,11 @@ class _MedicalRecordsScreenState extends ConsumerState<MedicalRecordsScreen> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       if (record['attachment_url'] != null)
-                                        Icon(Icons.attach_file, size: 18, color: AppColors.textSecondary(isDark)),
+                                        IconButton(
+                                          icon: Icon(Icons.attach_file, size: 18, color: AppColors.primary(isDark)),
+                                          onPressed: () => _viewAttachment(record['attachment_url'] as String),
+                                          tooltip: 'View attachment',
+                                        ),
                                       IconButton(
                                         icon: const Icon(Icons.more_vert, size: 18),
                                         onPressed: () => _showRecordMenu(record),

@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/models/user_profile.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/providers/auth_provider.dart';
 import '../../../core/services/edge_function_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
@@ -130,6 +131,63 @@ class _SosScreenState extends ConsumerState<SosScreen>
         _confirmAndTriggerSos();
       }
     });
+
+    // CRITICAL FIX: restore active SOS state if the user reopens the app
+    // with an unresolved SOS event from a previous session. Without this,
+    // the user sees the idle SOS button and has no way to resolve the
+    // prior alert — their emergency contacts receive no cancellation
+    // signal, and the 60s rate limit blocks new SOS triggers.
+    _restoreActiveSosState();
+  }
+
+  /// Queries the most recent unresolved SOS event for the current user.
+  /// If found and < 1 hour old, restores the active SOS UI so the user
+  /// can resolve it.
+  Future<void> _restoreActiveSosState() async {
+    try {
+      final user = ref.read(currentUserProvider);
+      if (user == null) return;
+      final db = ref.read(databaseServiceProvider);
+      final events = await db.getSosEvents(user.id);
+      if (events.isEmpty) return;
+      // The query returns events ordered by created_at DESC, so the first
+      // is the most recent.
+      final latest = events.first;
+      // Only restore if the event is unresolved AND less than 1 hour old.
+      // Events older than 1 hour are almost certainly for emergencies
+      // that are long over — showing the active UI would be confusing.
+      if (latest.resolved) return;
+      final age = DateTime.now().difference(latest.createdAt);
+      if (age > const Duration(hours: 1)) return;
+
+      if (!mounted) return;
+      // Restore the active state.
+      final locationText = (latest.latitude != null && latest.longitude != null)
+          ? '${latest.latitude!.toStringAsFixed(4)}, ${latest.longitude!.toStringAsFixed(4)}'
+          : null;
+      setState(() {
+        _sosActive = true;
+        _sosResult = {
+          'sos_event_id': latest.id,
+          'sms_sent': latest.smsSent,
+          'contacts_notified': latest.contactsNotified
+              .map((c) => {'name': c.name, 'phone': c.phone, 'status': c.status})
+              .toList(),
+          'queued_locally': false,
+          'message': latest.smsSent
+              ? 'Emergency alert sent to ${latest.contactsNotified.where((c) => c.status == 'sent').length} contact(s)'
+              : 'SOS event recorded. SMS not sent - check emergency contacts setup.',
+        };
+        _locationText = locationText;
+        _sosMessage = latest.smsSent
+            ? null
+            : 'SOS event recorded. SMS not sent - check emergency contacts setup.';
+      });
+      debugPrint('[SOS] restored active state for unresolved event ${latest.id} '
+          '(age: ${age.inMinutes}min)');
+    } catch (e) {
+      debugPrint('[SOS] _restoreActiveSosState failed (non-fatal): $e');
+    }
   }
 
   @override

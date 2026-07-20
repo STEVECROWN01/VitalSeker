@@ -279,6 +279,25 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         });
       }
 
+      // FIX: preserve any ADDITIONAL emergency contacts the user already
+      // had (e.g. seeded via onboarding or a future multi-contact UI).
+      // The previous code OVERWROTE the entire array with just the one
+      // contact from this form — silently dropping all others. Now we
+      // merge: replace only the first contact (index 0) if the form has
+      // one, and keep any existing contacts at index 1+.
+      final existingProfile = ref.read(userProfileProvider).valueOrNull;
+      final existingContacts = existingProfile?.emergencyContacts ?? [];
+      if (existingContacts.length > 1) {
+        // Keep contacts at index 1 and beyond.
+        for (var i = 1; i < existingContacts.length; i++) {
+          emergencyContacts.add({
+            'name': existingContacts[i].name,
+            'phone': existingContacts[i].phone,
+            'relationship': existingContacts[i].relationship,
+          });
+        }
+      }
+
       final updateData = <String, dynamic>{
         'full_name': _nameController.text.trim(),
         // Send date as YYYY-MM-DD (DATE column type) instead of full ISO
@@ -295,11 +314,17 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
       // Save height/weight measurements. Explicitly allow null so the user
       // can clear the value by deleting the field contents.
+      // FIX: the validator allows height up to 300 and weight up to 1000,
+      // but the save logic here used `< 300` and `< 500` — so values
+      // 300-499 (height) and 500-1000 (weight) passed validation but were
+      // silently not saved. The user saw "Profile updated successfully"
+      // but the field was empty on reload. Now we trust the validator
+      // (which already ran at line 265) and save any parseable value.
       final heightText = _heightController.text.trim();
       final weightText = _weightController.text.trim();
       if (heightText.isNotEmpty) {
         final height = double.tryParse(heightText);
-        if (height != null && height > 0 && height < 300) {
+        if (height != null) {
           updateData['height_cm'] = height;
         }
       } else {
@@ -307,7 +332,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       }
       if (weightText.isNotEmpty) {
         final weight = double.tryParse(weightText);
-        if (weight != null && weight > 0 && weight < 500) {
+        if (weight != null) {
           updateData['weight_kg'] = weight;
         }
       } else {

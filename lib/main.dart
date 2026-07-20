@@ -176,10 +176,12 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
           (_) {
             EdgeFunctionService().flushPendingSosQueue().catchError((_) => 0);
             EdgeFunctionService().flushPendingTriageQueue().catchError((_) => 0);
+            EdgeFunctionService().flushPendingWrites().catchError((_) => 0);
           },
         );
         EdgeFunctionService().flushPendingSosQueue().catchError((_) => 0);
         EdgeFunctionService().flushPendingTriageQueue().catchError((_) => 0);
+            EdgeFunctionService().flushPendingWrites().catchError((_) => 0);
         // Refresh user-scoped providers so data is fresh after resume.
         try {
           widget.container.invalidate(userProfileProvider);
@@ -251,6 +253,12 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
             debugPrint('[Connectivity] Triage queue flush failed: $e');
             return 0;
           });
+          // FIX: also flush pending vitals/meds/appointments writes that
+          // were queued while offline.
+          EdgeFunctionService().flushPendingWrites().catchError((e) {
+            debugPrint('[Connectivity] Writes queue flush failed: $e');
+            return 0;
+          });
         }
       },
       onError: (e) {
@@ -305,6 +313,15 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
         }
       } catch (e) {
         debugPrint('[Startup] Triage queue flush failed (non-fatal): $e');
+      }
+      // FIX: also flush pending vitals/meds/appointments writes.
+      try {
+        final writesFlushed = await EdgeFunctionService().flushPendingWrites();
+        if (writesFlushed > 0) {
+          debugPrint('[Startup] Pending writes queue flushed ($writesFlushed entries)');
+        }
+      } catch (e) {
+        debugPrint('[Startup] Writes queue flush failed (non-fatal): $e');
       }
     } catch (e) {
       debugPrint('[Startup] Supabase init failed (non-fatal): $e');

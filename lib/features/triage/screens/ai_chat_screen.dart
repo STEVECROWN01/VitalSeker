@@ -69,13 +69,73 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
     super.initState();
     _initSpeech();
     _initConnectivity();
-    // Add Seker's greeting message
+    // Load persisted chat history from the DB. If the user has prior
+    // messages, we load those instead of the greeting. If this is a new
+    // conversation (no history), we add the greeting.
+    _loadChatHistory();
+  }
+
+  /// Load the most recent 50 chat messages from the DB. Called on screen
+  /// init so the user sees their conversation history instead of a blank
+  /// screen every time they open Seker.
+  Future<void> _loadChatHistory() async {
+    try {
+      final user = ref.read(currentUserProvider);
+      if (user == null) {
+        _addGreetingIfEmpty();
+        return;
+      }
+      final db = ref.read(databaseServiceProvider);
+      final rows = await db.getChatMessages(user.id, limit: 50);
+      if (!mounted) return;
+      if (rows.isEmpty) {
+        _addGreetingIfEmpty();
+        return;
+      }
+      setState(() {
+        for (final row in rows) {
+          _messages.add(_ChatMessage(
+            content: row['content'] as String,
+            isUser: row['role'] == 'user',
+            timestamp: DateTime.parse(row['created_at'] as String).toLocal(),
+          ));
+        }
+      });
+      _scrollToBottom();
+    } catch (e) {
+      debugPrint('[AI Chat] failed to load history: $e');
+      _addGreetingIfEmpty();
+    }
+  }
+
+  void _addGreetingIfEmpty() {
+    if (_messages.isNotEmpty) return;
     final l10n = AppLocalizations.of(context)!;
     _messages.add(_ChatMessage(
       content: l10n.sekerGreeting,
       isUser: false,
       timestamp: DateTime.now(),
     ));
+    if (mounted) setState(() {});
+  }
+
+  /// Persist a chat message to the DB (best-effort, fire-and-forget).
+  /// Called after each user message is added to the UI and after each
+  /// AI reply completes. Failures are logged but not shown to the user
+  /// — the message still displays for this session.
+  Future<void> _persistMessage(String content, {required bool isUser}) async {
+    try {
+      final user = ref.read(currentUserProvider);
+      if (user == null) return;
+      final db = ref.read(databaseServiceProvider);
+      await db.insertChatMessage(
+        userId: user.id,
+        role: isUser ? 'user' : 'assistant',
+        content: content,
+      );
+    } catch (e) {
+      debugPrint('[AI Chat] failed to persist message: $e');
+    }
   }
 
   Future<void> _initConnectivity() async {
@@ -163,6 +223,11 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       _isSending = true;
     });
     _scrollToBottom();
+
+    // Persist the user message to the DB so it survives screen close
+    // and app restart. Best-effort — if the insert fails (offline, RLS
+    // error), the message still shows in the UI for this session.
+    _persistMessage(text, isUser: true);
 
     try {
       // Build the request body. FIX (audit H-6): include file attachment info
@@ -270,6 +335,11 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
       }
       // FIX (audit 10.4): now set _isSending = false after streaming is done.
       if (mounted) setState(() => _isSending = false);
+
+      // Persist Seker's reply to the DB so the conversation survives
+      // screen close and app restart. The reply text is `reply` (the
+      // full text, not the streaming partial).
+      _persistMessage(reply, isUser: false);
     } catch (e) {
       setState(() {
         _messages.add(_ChatMessage(
