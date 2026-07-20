@@ -4069,6 +4069,12 @@ abstract class AppLocalizations {
   /// **'AI Triage is a Pro feature. Subscribe to get AI-powered symptom analysis.'**
   String get triageProOnly;
 
+  /// No description provided for @doseMarkedTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose marked as taken.'**
+  String get doseMarkedTaken;
+
   /// No description provided for @monthlyTriageLimit.
   ///
   /// In en, this message translates to:

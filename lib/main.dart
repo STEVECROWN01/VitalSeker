@@ -26,6 +26,7 @@ import 'core/providers/theme_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/user_profile_provider.dart';
 import 'core/providers/health_passport_provider.dart';
+import 'core/providers/appointments_provider.dart';
 import 'shared/theme/app_theme.dart';
 import 'shared/theme/app_colors.dart';
 import 'shared/widgets/app_snack_bar.dart';
@@ -187,6 +188,10 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
           widget.container.invalidate(userProfileProvider);
           widget.container.invalidate(healthPassportProvider);
           widget.container.invalidate(subscriptionProvider);
+          // FIX: also invalidate appointmentsProvider so auto-complete
+          // runs on resume (marks past 'upcoming' appointments as
+          // 'completed').
+          widget.container.invalidate(appointmentsProvider);
         } catch (e) {
           debugPrint('[Lifecycle] provider invalidation on resume failed: $e');
         }

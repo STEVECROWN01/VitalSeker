@@ -430,8 +430,14 @@ class _SosScreenState extends ConsumerState<SosScreen>
       // failure snackbar.
       Position? position;
       try {
+        // FIX: increased from 10s to 15s. The inner chain is 7s
+        // (high-accuracy) + 5s (low-accuracy fallback) = 12s worst case.
+        // The previous 10s outer timeout fired BEFORE the low-accuracy
+        // fallback could complete — in exactly the cold-start indoor
+        // scenario where high-accuracy can't get a fix but cell-tower
+        // low-accuracy would, the SOS was sent without location.
         position = await _getCurrentLocation(silent: true).timeout(
-          const Duration(seconds: 10),
+          const Duration(seconds: 15),
           onTimeout: () => null,
         );
       } catch (e) {
@@ -658,9 +664,25 @@ class _SosScreenState extends ConsumerState<SosScreen>
     try {
       // Capture the sos_event_id from the result before clearing it.
       final sosEventId = _sosResult?['sos_event_id']?.toString();
-      await EdgeFunctionService().resolveSos(sosEventId);
+      // FIX: check the return value. resolveSos catches internally and
+      // returns false on failure — it never throws. The previous code
+      // ignored the return value, so the user got no feedback when the
+      // server-side resolve failed.
+      final resolved = await EdgeFunctionService().resolveSos(sosEventId);
+      if (!resolved && mounted) {
+        AppSnackBar.info(
+          context,
+          'Could not notify your contacts that you\'re safe. Please call them directly.',
+        );
+      }
     } catch (e) {
-      debugPrint('[SOS] resolveSos failed (non-fatal — resetting UI anyway): $e');
+      debugPrint('[SOS] resolveSos threw (non-fatal): $e');
+      if (mounted) {
+        AppSnackBar.info(
+          context,
+          'Could not notify your contacts that you\'re safe. Please call them directly.',
+        );
+      }
     }
 
     _countdownTimer?.cancel();
@@ -1477,11 +1499,16 @@ class _SosScreenState extends ConsumerState<SosScreen>
                         // Show a "cloud upload" / "offline bolt" icon when
                         // the SOS was queued locally — distinct from both
                         // the success check and the error X.
+                        // FIX: when sms_sent is false (no contacts notified),
+                        // show a warning icon instead of a green check —
+                        // the user shouldn't think contacts were alerted.
                         sendFailed
                             ? Icons.error_outline
                             : (queuedLocally
                                 ? Icons.cloud_upload_outlined
-                                : Icons.check_circle),
+                                : (smsSent
+                                    ? Icons.check_circle
+                                    : Icons.warning_amber_rounded)),
                         color: Colors.white,
                         size: 60,
                       ),
@@ -1489,7 +1516,9 @@ class _SosScreenState extends ConsumerState<SosScreen>
                       Text(
                         sendFailed
                             ? l10n.sosFailed
-                            : (queuedLocally ? l10n.sosQueuedLabel : l10n.sosActive),
+                            : (queuedLocally
+                                ? l10n.sosQueuedLabel
+                                : (smsSent ? l10n.sosActive : 'SOS RECORDED')),
                         style: const TextStyle(
                           fontFamily: 'ClashDisplay',
                           fontSize: 20,
@@ -1608,7 +1637,20 @@ class _SosScreenState extends ConsumerState<SosScreen>
                     if (!_sosRateLimited) const SizedBox(width: 12),
                     Expanded(
                       child: OutlinedButton.icon(
-                        onPressed: _resolveSos,
+                        // FIX: Dismiss now also clears the locally-queued
+                        // SOS event. Previously, if the SOS failed and was
+                        // enqueued as a safety net, tapping Dismiss left
+                        // the queued event in SharedPreferences — it would
+                        // be flushed later, sending an SMS to emergency
+                        // contacts for a false alarm.
+                        onPressed: () async {
+                          try {
+                            await EdgeFunctionService().clearPendingSosQueue();
+                          } catch (e) {
+                            debugPrint('[SOS] clearPendingSosQueue on dismiss failed: $e');
+                          }
+                          _resolveSos();
+                        },
                         icon: const Icon(Icons.close),
                         label: Text(l10n.dismiss),
                         style: OutlinedButton.styleFrom(

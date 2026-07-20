@@ -460,7 +460,12 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                               ),
                             ),
                           )
-                        : ListView.builder(
+                        : RefreshIndicator(
+                            onRefresh: () async {
+                              ref.invalidate(medicationsProvider);
+                              await ref.read(medicationsProvider.future);
+                            },
+                            child: ListView.builder(
                             padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
                             itemCount: filtered.length,
                             itemBuilder: (context, index) {
@@ -469,10 +474,25 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                                 medication: medication,
                                 isDark: isDark,
                                 onMenuTap: () => _showCardMenu(medication),
+                                onMarkTaken: () async {
+                                  try {
+                                    await ref.read(medicationsProvider.notifier)
+                                        .markDoseTaken(medication);
+                                    if (mounted) {
+                                      AppSnackBar.success(context, l10n.doseMarkedTaken);
+                                    }
+                                  } catch (e) {
+                                    if (mounted) {
+                                      AppSnackBar.errorFromException(
+                                        context, 'Could not mark dose. Please try again.', e);
+                                    }
+                                  }
+                                },
                                 l10n: l10n,
                               );
                             },
                           ),
+                        ),
               ),
               // Medical disclaimer (per Cahier des Charges §7)
               const Padding(
@@ -539,12 +559,14 @@ class _MedicationCard extends StatelessWidget {
   final Medication medication;
   final bool isDark;
   final VoidCallback onMenuTap;
+  final VoidCallback onMarkTaken;
   final AppLocalizations l10n;
 
   const _MedicationCard({
     required this.medication,
     required this.isDark,
     required this.onMenuTap,
+    required this.onMarkTaken,
     required this.l10n,
   });
 
@@ -638,6 +660,36 @@ class _MedicationCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(width: 4),
+                // FIX: "Mark as Taken" button — increments adherence.
+                // Only show for active medications.
+                if (medication.status == MedicationStatus.active)
+                  GestureDetector(
+                    onTap: onMarkTaken,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: AppColors.success(isDark).withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: AppColors.success(isDark).withValues(alpha: 0.3)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.check_circle_outline, size: 14, color: AppColors.success(isDark)),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Taken',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.success(isDark),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 const SizedBox(width: 4),
                 GestureDetector(
                   onTap: onMenuTap,

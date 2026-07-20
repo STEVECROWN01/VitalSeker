@@ -407,15 +407,27 @@ serve(async (req: Request) => {
       })
     }
 
-    const { messages, language } = body as {
+    const { messages, language, attachment } = body as {
       messages?: Array<{ role: string; content: string }>;
       language?: string;
+      attachment?: { name: string; url: string };
     }
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return new Response(JSON.stringify({ error: 'messages array is required' }), {
         status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       })
+    }
+
+    // FIX: if the user attached a file, append a note to the last user
+    // message so the AI knows about it. The previous code completely
+    // ignored the attachment field — the user thought they shared a
+    // prescription, but the AI never saw it.
+    if (attachment && attachment.name) {
+      const lastUserMsgIdx = messages.length - 1;
+      if (messages[lastUserMsgIdx] && messages[lastUserMsgIdx].role === 'user') {
+        messages[lastUserMsgIdx].content += `\n\n[Attached file: ${attachment.name}]`;
+      }
     }
 
     // Fetch user profile data

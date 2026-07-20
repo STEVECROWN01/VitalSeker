@@ -43,13 +43,16 @@ class InsightsScreen extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final insightsAsync = ref.watch(weeklyInsightsProvider);
     final passportAsync = ref.watch(healthPassportProvider);
-    // Whether the signed-in user is on a Pro plan. Used to differentiate the
-    // "no insights yet" empty state from the "upgrade to Pro" upsell.
-    final isProUser = ref.watch(isProUserProvider);
+    // FIX: use the ASYNC Pro provider so paying users don't briefly see
+    // the upgrade screen while the sync provider returns false during
+    // loading. The sync provider (isProUserProvider) returns false until
+    // isProUserAsyncProvider resolves — a paying user opening Insights
+    // on cold start would flash the "Upgrade to Pro" empty state.
+    final isProAsync = ref.watch(isProUserAsyncProvider);
 
     final vitalScore = passportAsync.maybeWhen(
-      data: (p) => p?.vitalScore ?? 0,
-      orElse: () => 0,
+      data: (p) => p?.vitalScore,
+      orElse: () => null,
     );
 
     return Scaffold(
@@ -61,6 +64,12 @@ class InsightsScreen extends ConsumerWidget {
           isDark: isDark,
         ),
         data: (insights) {
+          // FIX: handle the async Pro check — show a spinner while loading
+          // so paying users don't flash the upgrade screen.
+          return isProAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (_, __) => const Center(child: CircularProgressIndicator()),
+            data: (isProUser) {
           if (insights.isEmpty) {
             // Branch the empty-state on Pro status:
             //  - Pro user with no insights generated yet → "No insights yet"
@@ -168,6 +177,8 @@ class InsightsScreen extends ConsumerWidget {
                 ),
               ),
             ],
+          );
+            },
           );
         },
       ),

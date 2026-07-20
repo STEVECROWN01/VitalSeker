@@ -26,8 +26,15 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     // FIX (audit M-8): auto-complete past appointments on screen load.
     // This marks any 'upcoming' appointments whose dateTime has passed as
     // 'completed', keeping the DB status in sync with reality.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(appointmentsProvider.notifier).autoCompletePastAppointments();
+    // FIX: await the provider's future BEFORE running auto-complete, so
+    // state.valueOrNull is not null (which caused the method to silently
+    // no-op on first load — the post-frame callback fired before the
+    // network fetch completed).
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref.read(appointmentsProvider.future);
+      if (mounted) {
+        ref.read(appointmentsProvider.notifier).autoCompletePastAppointments();
+      }
     });
   }
 

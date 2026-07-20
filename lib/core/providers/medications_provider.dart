@@ -40,11 +40,31 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
     if (!medication.remindersEnabled) return;
     if (medication.status != MedicationStatus.active) return;
     if (medication.times.isEmpty) return;
+    // FIX: don't schedule reminders if the medication's start date is
+    // in the future. The previous code scheduled daily reminders
+    // immediately even for future-dated prescriptions — the user would
+    // get reminders weeks before they're supposed to start taking the med.
+    final now = DateTime.now();
+    if (medication.startDate.isAfter(now)) {
+      debugPrint('[Medications] skipping reminders for "${medication.name}" — '
+          'start date ${medication.startDate} is in the future');
+      return;
+    }
+    // FIX: deduplicate dose times so the user doesn't get multiple
+    // notifications at the same time (e.g. times: [08:00, 08:00, 20:00]
+    // would schedule two 8am notifications). We track seen times and
+    // skip duplicates.
+    final seenTimes = <String>{};
     try {
       final notif = NotificationService();
       if (!notif.isInitialized) return;
       for (var i = 0; i < medication.times.length; i++) {
         final time = medication.times[i];
+        if (seenTimes.contains(time)) {
+          debugPrint('[Medications] skipping duplicate dose time $time for "${medication.name}"');
+          continue;
+        }
+        seenTimes.add(time);
         final parts = time.split(':');
         if (parts.length != 2) continue;
         final hour = int.tryParse(parts[0]);
@@ -255,6 +275,27 @@ class MedicationsNotifier extends AsyncNotifier<List<Medication>> {
       await db.deleteMedication(medicationId);
       ref.invalidateSelf();
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Mark a dose as taken — increments adherence_count and total_doses.
+  ///
+  /// FIX: the adherence progress bar on the medications screen always
+  /// showed 0% because nothing ever incremented these counters. Now the
+  /// card's "Mark as taken" button calls this method.
+  Future<void> markDoseTaken(Medication medication) async {
+    try {
+      final db = ref.read(databaseServiceProvider);
+      await db.updateMedication(medication.id, {
+        'adherence_count': medication.adherenceCount + 1,
+        'total_doses': medication.totalDoses + 1,
+        'updated_at': DateTime.now().toUtc().toIso8601String(),
+      });
+      ref.invalidateSelf();
+    } catch (e) {
+      // If offline, we don't queue this (it's not a simple insert — it's
+      // an increment). Just rethrow so the UI can show an error.
       rethrow;
     }
   }

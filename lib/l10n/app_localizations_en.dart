@@ -2184,6 +2184,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'AI Triage is a Pro feature. Subscribe to get AI-powered symptom analysis.';
 
   @override
+  String get doseMarkedTaken => 'Dose marked as taken.';
+
+  @override
   String get monthlyTriageLimit => '3 triages per month (Free plan)';
 
   @override
@@ -5474,6 +5477,9 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   @override
   String get triageProOnly =>
       'AI Triage is a Pro feature. Subscribe to get AI-powered symptom analysis.';
+
+  @override
+  String get doseMarkedTaken => 'Dose marked as taken.';
 
   @override
   String get monthlyTriageLimit => '3 triages per month (Free plan)';

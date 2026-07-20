@@ -969,6 +969,7 @@
   "exportProOnly": "PDF Export is a Pro feature. Upgrade to generate reports.",
   "triageLimitReached": "You have reached your free monthly triage limit (3). Upgrade to Pro for unlimited triages.",
   "triageProOnly": "AI Triage is a Pro feature. Subscribe to get AI-powered symptom analysis.",
+  "doseMarkedTaken": "Dose marked as taken.",
   "monthlyTriageLimit": "3 triages per month (Free plan)",
   "viewQrCode": "View QR Code",
   "shareMedicalId": "Share Medical ID",
