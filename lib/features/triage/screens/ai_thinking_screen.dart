@@ -105,7 +105,15 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
     final bgColor = AppColors.background(isDark);
     final primaryColor = AppColors.primary(isDark);
 
-    return Stack(
+    // FIX: wrap in PopScope(canPop: false) so the back gesture/button
+    // doesn't dismiss the overlay mid-request. The previous code had no
+    // guard — if the user hit back while runTriage was in flight, the
+    // overlay was popped but the parent was still awaiting. When the
+    // future resolved, navigator.pop() popped the PARENT screen, and
+    // context.push(triageResult) either crashed or was silently lost.
+    return PopScope(
+      canPop: false,
+      child: Stack(
       children: [
         // 1) Blur the screen behind the overlay + opaque dim layer so the
         //    background is no longer visible/bleeding through.
@@ -160,6 +168,7 @@ class _AiThinkingScreenState extends State<AiThinkingScreen>
         ),
         ),
       ],
+      ),
     );
   }
 

@@ -402,9 +402,20 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen> {
   }
 
   Future<void> _stopRecording() async {
-    await _speech.stop();
-    setState(() {
+    // FIX: guard against setState-after-dispose. The speech onStatus
+    // callback fires 'notListening' when _speech.stop() is called in
+    // dispose() — by then the widget is mid-dispose and setState would
+    // throw. The _isRecording flag also needs to be reset before the
+    // stop() call so the callback doesn't re-enter _stopRecording.
+    if (!mounted) {
       _isRecording = false;
+      _partialTranscription = '';
+      return;
+    }
+    _isRecording = false;
+    await _speech.stop();
+    if (!mounted) return;
+    setState(() {
       if (_partialTranscription.isNotEmpty) {
         _textController.text = _partialTranscription;
       }

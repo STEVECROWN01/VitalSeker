@@ -273,8 +273,11 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
+                  // FIX: don't leak raw exception text to the user.
+                  // Show a friendly message instead; the raw error is
+                  // logged via debugPrint above.
                   Text(
-                    '$e',
+                    l10n.somethingWentWrong,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 13,

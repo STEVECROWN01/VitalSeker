@@ -968,6 +968,7 @@
   "familyProfilesProOnly": "Family Profiles is a Pro feature. Upgrade to add family members.",
   "exportProOnly": "PDF Export is a Pro feature. Upgrade to generate reports.",
   "triageLimitReached": "You have reached your free monthly triage limit (3). Upgrade to Pro for unlimited triages.",
+  "triageProOnly": "AI Triage is a Pro feature. Subscribe to get AI-powered symptom analysis.",
   "monthlyTriageLimit": "3 triages per month (Free plan)",
   "viewQrCode": "View QR Code",
   "shareMedicalId": "Share Medical ID",

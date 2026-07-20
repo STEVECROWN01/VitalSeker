@@ -158,34 +158,26 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
     setState(() => _isProcessing = true);
 
     try {
-    // ── Free-tier 3 triages/month limit (per Cahier des Charges Section 3):
-    // "GRATUIT — 3 triages/mois". Pro users have unlimited triages.
+    // ── Pro gate ────────────────────────────────────────────────────────
+    // FIX: the previous code allowed non-Pro users to run triage (with a
+    // 3/month limit), but the edge function returns 403 for non-Pro users
+    // BEFORE inserting a symptom_log row. So the quota never incremented,
+    // the user filled the entire 5-step form, watched the AI animation,
+    // then got a generic "triage failed" error — with no indication that
+    // the feature is Pro-only. Worse, the failed request was queued for
+    // offline retry, which would keep failing 403 forever.
     //
-    // FIX (audit H-32): the previous code read symptomLogsProvider with
-    // ref.read(...).valueOrNull which returned null while the provider was
-    // still loading — monthCount fell back to 0, and a user could rapidly
-    // run 4 triages before the provider resolved, bypassing the limit. We
-    // now await the provider's future so we always have the real count.
+    // Now: check Pro status BEFORE showing the AI thinking overlay. If
+    // not Pro, route to the subscription screen with a clear message.
+    // The 3/month free-tier logic is removed — it was unenforceable
+    // server-side and contradicted the edge function's hard Pro gate.
     final isPro = await ref.read(isProUserAsyncProvider.future);
     if (!isPro) {
-      try {
-        final symptomLogs = await ref.read(symptomLogsProvider.future);
-        final now = DateTime.now();
-        final monthStart = DateTime(now.year, now.month, 1);
-        final monthCount = symptomLogs.where((log) {
-          return log.loggedAt.isAfter(monthStart) ||
-              log.loggedAt.isAtSameMomentAs(monthStart);
-        }).length;
-        if (monthCount >= 3) {
-          if (!mounted) return;
-          setState(() => _isProcessing = false);
-          AppSnackBar.error(context, l10n.triageLimitReached);
-          context.push(AppConfig.subscription);
-          return;
-        }
-      } catch (e) {
-        debugPrint('Failed to load symptom logs for triage limit check: $e');
-      }
+      if (!mounted) return;
+      setState(() => _isProcessing = false);
+      AppSnackBar.error(context, l10n.triageProOnly);
+      context.push(AppConfig.proPlan);
+      return;
     }
 
     // Capture the NavigatorState BEFORE the await so we can pop the overlay
@@ -240,21 +232,36 @@ class _TriageScreenState extends ConsumerState<TriageScreen> {
 
       if (!mounted) return;
 
-      // ── Offline queue (per Cahier des Charges Section 2.3: "Mode Hors-Ligne")
-      // If the network is down, queue the triage request for later submission.
-      final notes = _notesController.text.trim().isEmpty ? null : _notesController.text.trim();
+      // Check if this is a 403 (Pro required) — don't queue for retry
+      // since it will keep failing. The Pro gate check above should
+      // prevent this, but defense-in-depth.
+      final errorStr = e.toString();
+      final isProRequired = errorStr.contains('403') ||
+          errorStr.toLowerCase().contains('pro_required');
 
-      // Queue the request for retry when network returns
-      await OfflineCacheService().queueTriageRequest(
-        symptoms: _selectedSymptoms.toList(),
-        severity: _severity,
-        duration: _duration,
-        notes: notes,
-      );
+      if (!isProRequired) {
+        // ── Offline queue (per Cahier des Charges Section 2.3: "Mode Hors-Ligne")
+        // Only queue if this is a network error, NOT a 403 Pro-gate rejection
+        // (which would keep failing forever).
+        final comprehensiveNotes = <String>[
+          if (_notesController.text.trim().isNotEmpty) _notesController.text.trim(),
+          if (_ageController.text.isNotEmpty) 'Age: ${_ageController.text}',
+          if (_biologicalSex != null) 'Biological sex: $_biologicalSex',
+          if (_conditionsController.text.trim().isNotEmpty) 'Chronic conditions: ${_conditionsController.text.trim()}',
+          if (_medicationsController.text.trim().isNotEmpty) 'Current medications: ${_medicationsController.text.trim()}',
+        ].join('. ');
+
+        await OfflineCacheService().queueTriageRequest(
+          symptoms: _selectedSymptoms.toList(),
+          severity: _severity,
+          duration: _duration,
+          notes: comprehensiveNotes.isEmpty ? null : comprehensiveNotes,
+        );
+      }
 
       AppSnackBar.error(
         context,
-        l10n.triageFailed,
+        isProRequired ? l10n.triageProOnly : l10n.triageFailed,
       );
     } finally {
       if (mounted) setState(() => _isProcessing = false);

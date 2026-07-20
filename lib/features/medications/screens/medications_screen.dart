@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show FilteringTextInputFormatter;
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -72,7 +73,12 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
               children: [
                 TextField(
                   controller: dosageController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  // FIX: add input formatter + validation matching the add
+                  // screen. Previously accepted "abc", -5, 0, 99999999.
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                  ],
                   decoration: InputDecoration(
                     labelText: l10n.dosage,
                     prefixIcon: const Icon(Icons.science_outlined),
@@ -133,6 +139,12 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                   : () async {
                       if (dosageController.text.trim().isEmpty) {
                         AppSnackBar.error(context, l10n.fieldRequired);
+                        return;
+                      }
+                      // FIX: validate dosage is a positive number <= 10000.
+                      final doseVal = double.tryParse(dosageController.text.trim());
+                      if (doseVal == null || doseVal <= 0 || doseVal > 10000) {
+                        AppSnackBar.error(context, l10n.enterValidNumber);
                         return;
                       }
                       setDialogState(() => isSaving = true);

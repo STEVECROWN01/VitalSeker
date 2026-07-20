@@ -4063,6 +4063,12 @@ abstract class AppLocalizations {
   /// **'You have reached your free monthly triage limit (3). Upgrade to Pro for unlimited triages.'**
   String get triageLimitReached;
 
+  /// No description provided for @triageProOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Triage is a Pro feature. Subscribe to get AI-powered symptom analysis.'**
+  String get triageProOnly;
+
   /// No description provided for @monthlyTriageLimit.
   ///
   /// In en, this message translates to:

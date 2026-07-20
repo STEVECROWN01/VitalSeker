@@ -67,9 +67,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     // stays warm so a future surface (e.g. paywall) can read it instantly.
     ref.watch(subscriptionProvider);
 
-    final vitalScore = passportAsync.maybeWhen(
-      data: (p) => p?.vitalScore ?? 0,
-      orElse: () => 0,
+    // FIX: use nullable vitalScore so we can distinguish "loading/no passport"
+    // from "score is actually 0". The previous code used `?? 0` which made
+    // every cold start briefly flash "0/100 — CRITICAL" in a 56pt gradient
+    // banner — alarming for healthy users. Now we pass null while loading
+    // and the hero card shows a loading state instead of a false "CRITICAL".
+    final vitalScore = passportAsync.maybeWhen<int?>(
+      data: (p) => p?.vitalScore,
+      orElse: () => null,
     );
     final firstName = profileAsync.maybeWhen(
       data: (p) {
@@ -454,14 +459,15 @@ class _SectionHeader extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════════════════
 
 class _HealthScoreHeroCard extends StatelessWidget {
-  final int score;
+  final int? score; // null while loading or when no passport exists
   const _HealthScoreHeroCard({required this.score});
 
   String _conditionLabel(AppLocalizations l10n) {
-    if (score >= 80) return l10n.goodCondition;
-    if (score >= 60) return l10n.fairCondition;
-    if (score >= 40) return l10n.needsAttention;
-    if (score >= 20) return l10n.poorCondition;
+    if (score == null) return '—';
+    if (score! >= 80) return l10n.goodCondition;
+    if (score! >= 60) return l10n.fairCondition;
+    if (score! >= 40) return l10n.needsAttention;
+    if (score! >= 20) return l10n.poorCondition;
     return l10n.critical;
   }
 
@@ -540,7 +546,7 @@ class _HealthScoreHeroCard extends StatelessWidget {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         Text(
-                          '$score',
+                          score == null ? '—' : '$score',
                           style: const TextStyle(
                             fontFamily: 'ClashDisplay',
                             fontSize: 56,

@@ -70,8 +70,9 @@ class _VitalsScreenState extends ConsumerState<VitalsScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
+                // FIX: don't leak raw exception text.
                 Text(
-                  '$e',
+                  l10n.somethingWentWrong,
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 13,

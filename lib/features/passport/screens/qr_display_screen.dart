@@ -477,9 +477,42 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                 ),
                 const SizedBox(height: 28),
                 // ── 5. DOWNLOAD + SHARE pill buttons (52px tall) ──
-                // NOTE: each button uses its OWN loading flag so a Share tap
-                // doesn't make the Download button appear active (and vice
-                // versa). Both buttons are also disabled while either is busy.
+                // FIX: if the QR is expired, show a "Generate New QR"
+                // button instead of Download/Share. The previous code
+                // let the user download/share an expired QR — recipients
+                // scanning it would get an error, but the sender had no
+                // indication the share was worthless.
+                if (expiryLabel == l10n.expired) ...[
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: AppColors.warning(isDark).withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: AppColors.warning(isDark)),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.warning_amber_rounded, color: AppColors.warning(isDark), size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            'This QR code has expired. Generate a new one to share your passport.',
+                            style: TextStyle(fontSize: 12, color: AppColors.textPrimary(isDark)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _PillActionButton(
+                    label: l10n.generateQrCode,
+                    icon: Icons.refresh,
+                    isDark: isDark,
+                    isLoading: _isGenerating,
+                    primary: true,
+                    onPressed: _generateQr,
+                  ),
+                ] else ...[
                 _PillActionButton(
                   label: l10n.download,
                   icon: Icons.download_outlined,
@@ -497,6 +530,7 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
                   primary: false,
                   onPressed: _isDownloading ? null : _shareToken,
                 ),
+                ],
               ] else ...[
                 Icon(Icons.qr_code_2,
                     size: 80, color: AppColors.textTertiary(isDark)),

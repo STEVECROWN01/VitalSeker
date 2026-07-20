@@ -125,6 +125,12 @@ class _AddVitalScreenState extends ConsumerState<AddVitalScreen> {
           picked.hour,
           picked.minute,
         );
+        // FIX: clamp to now so the user can't create a future-dated
+        // vital. A future vital would become the "latest" reading,
+        // pollute trend math, and show a confusing "Just now" timestamp.
+        if (_selectedDateTime.isAfter(DateTime.now())) {
+          _selectedDateTime = DateTime.now();
+        }
       });
     }
   }

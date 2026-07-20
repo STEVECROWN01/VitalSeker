@@ -72,11 +72,22 @@ class InsightsScreen extends ConsumerWidget {
                 onGenerate: () async {
                   try {
                     await EdgeFunctionService().generateWeeklyInsights();
-                  } catch (_) {
-                    // The edge function is admin/CRON-triggered and may not be
-                    // invokable directly from the client — that's OK, we still
-                    // refresh the local provider so any newly-persisted rows
-                    // surface.
+                    if (context.mounted) {
+                      AppSnackBar.success(context, 'Insights generated successfully.');
+                    }
+                  } catch (e) {
+                    // FIX: show the error to the user instead of swallowing
+                    // it silently. The previous code caught with `catch (_)`
+                    // and showed a "Refreshing AI insights" snackbar — the
+                    // user thought it succeeded even when the edge function
+                    // failed.
+                    debugPrint('[Insights] generateWeeklyInsights failed: $e');
+                    if (context.mounted) {
+                      AppSnackBar.error(
+                        context,
+                        'Could not generate insights. Please try again later.',
+                      );
+                    }
                   }
                   if (context.mounted) {
                     ref.invalidate(weeklyInsightsProvider);

@@ -2180,6 +2180,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'You have reached your free monthly triage limit (3). Upgrade to Pro for unlimited triages.';
 
   @override
+  String get triageProOnly =>
+      'AI Triage is a Pro feature. Subscribe to get AI-powered symptom analysis.';
+
+  @override
   String get monthlyTriageLimit => '3 triages per month (Free plan)';
 
   @override
@@ -5466,6 +5470,10 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   @override
   String get triageLimitReached =>
       'You have reached your free monthly triage limit (3). Upgrade to Pro for unlimited triages.';
+
+  @override
+  String get triageProOnly =>
+      'AI Triage is a Pro feature. Subscribe to get AI-powered symptom analysis.';
 
   @override
   String get monthlyTriageLimit => '3 triages per month (Free plan)';

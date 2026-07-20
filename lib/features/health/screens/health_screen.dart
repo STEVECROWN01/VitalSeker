@@ -24,7 +24,11 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final vitalScore = ref.watch(vitalScoreProvider) ?? 0;
+    final vitalScore = ref.watch(vitalScoreProvider);
+    // FIX: vitalScoreProvider returns null while loading or when no passport
+    // exists. The previous code used `?? 0` which defeated the nullable
+    // purpose — every cold start briefly showed "0 / Critical" in a red
+    // ring, alarming healthy users. Now we handle null explicitly.
     final profileAsync = ref.watch(userProfileProvider);
     final symptomLogsAsync = ref.watch(symptomLogsProvider);
     final l10n = AppLocalizations.of(context)!;
@@ -82,14 +86,23 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        VitalScoreRing(
-                          score: vitalScore,
-                          size: 140,
-                          showLabel: true,
-                        ),
+                        // FIX: show a loading placeholder while vitalScore
+                        // is null instead of flashing "0 / Critical".
+                        vitalScore == null
+                          ? const SizedBox(
+                              width: 140, height: 140,
+                              child: Center(child: CircularProgressIndicator(color: Colors.white)),
+                            )
+                          : VitalScoreRing(
+                              score: vitalScore,
+                              size: 140,
+                              showLabel: true,
+                            ),
                         const SizedBox(height: 16),
                         Text(
-                          _scoreDescription(vitalScore, l10n),
+                          vitalScore == null
+                            ? ''
+                            : _scoreDescription(vitalScore, l10n),
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 13,
@@ -335,7 +348,7 @@ class _HealthScreenState extends ConsumerState<HealthScreen> {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  ..._buildRecommendedActions(isDark, vitalScore, l10n),
+                  ..._buildRecommendedActions(isDark, vitalScore ?? 50, l10n),
                 ],
               ),
             ),

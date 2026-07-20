@@ -65,8 +65,28 @@ class PassportScreen extends ConsumerWidget {
       body: passportAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
-          child: Text('Error: $e',
-              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimary(isDark))),
+          // FIX: replace raw exception text with a friendly message +
+          // retry button. The previous code showed "Error: <exception>"
+          // with no way to retry — the user had to leave and re-enter
+          // the screen.
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.cloud_off, size: 48, color: AppColors.textSecondary(isDark)),
+              const SizedBox(height: 16),
+              Text(
+                l10n.somethingWentWrong,
+                style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimary(isDark)),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                onPressed: () => ref.invalidate(healthPassportProvider),
+                icon: const Icon(Icons.refresh),
+                label: Text(l10n.tryAgain),
+              ),
+            ],
+          ),
         ),
         data: (passport) {
           if (passport == null) {
