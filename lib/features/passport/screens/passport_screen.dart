@@ -62,7 +62,12 @@ class PassportScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: passportAsync.when(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(healthPassportProvider);
+          await ref.read(healthPassportProvider.future);
+        },
+        child: passportAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
           // FIX: replace raw exception text with a friendly message +
@@ -518,6 +523,7 @@ class PassportScreen extends ConsumerWidget {
             ),
           );
         },
+        ),
       ),
     );
   }

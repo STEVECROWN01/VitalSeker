@@ -257,6 +257,15 @@ class DatabaseService {
     await _client.from('vitals').delete().eq('id', vitalId);
   }
 
+  /// Update an existing vital record. Allows the user to fix a typo
+  /// without deleting and re-adding (which would lose the original
+  /// recorded_at timestamp and notes).
+  Future<void> updateVital(String vitalId, Map<String, dynamic> data) async {
+    final payload = Map<String, dynamic>.from(data)..remove('id');
+    payload['updated_at'] = DateTime.now().toUtc().toIso8601String();
+    await _client.from('vitals').update(payload).eq('id', vitalId);
+  }
+
   // ==================== MEDICATIONS ====================
   Future<List<Map<String, dynamic>>> getMedications(String userId) async {
     final response = await _client
@@ -289,12 +298,18 @@ class DatabaseService {
   }
 
   // ==================== APPOINTMENTS ====================
-  Future<List<Map<String, dynamic>>> getAppointments(String userId) async {
+  /// Get appointments for a user, ordered by date_time ascending.
+  /// FIX: added a default limit of 100 to prevent loading the entire
+  /// table for power users with years of history. Compare with
+  /// getSymptomLogs (limit=50) and getVitals (limit=500).
+  Future<List<Map<String, dynamic>>> getAppointments(String userId, {int limit = 100}) async {
+    final clampedLimit = limit.clamp(1, 500);
     final response = await _client
         .from('appointments')
         .select()
         .eq('user_id', userId)
-        .order('date_time', ascending: true);
+        .order('date_time', ascending: true)
+        .limit(clampedLimit);
     return response.toList();
   }
 

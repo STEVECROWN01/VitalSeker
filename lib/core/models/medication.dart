@@ -142,8 +142,19 @@ class Medication {
   double get adherencePercentage => totalDoses == 0 ? 0 : (adherenceCount / totalDoses * 100);
 
   String get nextDoseTime {
+    // FIX: check status, startDate, and endDate before computing the
+    // next dose time. Previously, discontinued/completed meds and
+    // future-dated prescriptions still showed a "next dose" time.
+    if (status != MedicationStatus.active) return '—';
     if (times.isEmpty) return 'No schedule';
     final now = DateTime.now();
+    // If the medication hasn't started yet, show the first dose on the
+    // start date instead of today's next time.
+    if (now.isBefore(startDate)) {
+      return '${startDate.day}/${startDate.month} ${times.first}';
+    }
+    // If the medication has ended, show '—'.
+    if (endDate != null && now.isAfter(endDate!)) return '—';
     final currentTime = '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
     for (final time in times) {
       if (time.compareTo(currentTime) > 0) return time;

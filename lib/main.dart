@@ -547,8 +547,17 @@ class _VitalSekerAppState extends ConsumerState<VitalSekerApp>
                   systemNavigationBarIconBrightness: Brightness.dark,
                 ),
           child: MediaQuery(
+            // FIX: clamp text scaling instead of disabling it entirely.
+            // The previous code used TextScaler.noScaling which completely
+            // disabled the OS-level font-size accessibility setting —
+            // WCAG 1.4.4 violation. Now we clamp to a maximum of 1.3x
+            // so large-text users get SOME scaling without breaking
+            // layouts.
             data: MediaQuery.of(context).copyWith(
-              textScaler: TextScaler.noScaling,
+              textScaler: MediaQuery.textScalerOf(context).clamp(
+                minScaleFactor: 0.8,
+                maxScaleFactor: 1.3,
+              ),
             ),
             child: child ?? const SizedBox.shrink(),
           ),

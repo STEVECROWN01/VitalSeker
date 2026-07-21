@@ -746,17 +746,19 @@ class _DataRow extends ConsumerWidget {
     required this.isDark,
   });
 
-  Future<void> _deleteVital(BuildContext context, WidgetRef ref) async {
+  Future<bool> _deleteVital(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
     try {
       await ref.read(vitalsProvider.notifier).deleteVital(vital.id);
       if (context.mounted) {
         AppSnackBar.success(context, l10n.vitalDeleted);
       }
+      return true;
     } catch (e) {
       if (context.mounted) {
         AppSnackBar.errorFromException(context, l10n.failedToDeleteVital, e);
       }
+      return false;
     }
   }
 
@@ -772,9 +774,14 @@ class _DataRow extends ConsumerWidget {
         color: AppColors.urgencyEmergency,
         child: const Icon(Icons.delete_outline, color: Colors.white, size: 22),
       ),
+      // FIX: move the delete call INTO confirmDismiss so the row only
+      // disappears if the delete actually succeeds. Previously, the
+      // Dismissible removed the row visually BEFORE the network call,
+      // and if the delete failed, the row was gone from the UI but
+      // still in the DB — reappearing only on next refresh.
       confirmDismiss: (direction) async {
         // Confirm before deleting — prevents accidental data loss.
-        return await showDialog<bool>(
+        final confirmed = await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text(l10n.deleteVitalTitle),
@@ -795,8 +802,10 @@ class _DataRow extends ConsumerWidget {
             ],
           ),
         );
+        if (confirmed != true) return false;
+        // Perform the actual delete — only dismiss if it succeeds.
+        return _deleteVital(context, ref);
       },
-      onDismissed: (direction) => _deleteVital(context, ref),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Row(

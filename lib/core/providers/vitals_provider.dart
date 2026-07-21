@@ -75,6 +75,20 @@ class VitalsNotifier extends AsyncNotifier<List<Vital>> {
     }
   }
 
+  /// Update an existing vital record. Allows the user to fix a typo
+  /// without deleting and re-adding (which loses recorded_at + notes).
+  /// Pass the full updated Vital object — the provider handles the
+  /// payload construction.
+  Future<void> updateVital(Vital vital) async {
+    try {
+      final db = ref.read(databaseServiceProvider);
+      await db.updateVital(vital.id, vital.toJson());
+      ref.invalidateSelf();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   List<Vital> getVitalsByType(VitalType type) {
     return state.valueOrNull?.where((v) => v.type == type).toList() ?? [];
   }

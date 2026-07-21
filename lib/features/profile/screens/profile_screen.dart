@@ -133,7 +133,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           ),
         ],
       ),
-      body: profileAsync.when(
+      // FIX: add RefreshIndicator for pull-to-refresh.
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(userProfileProvider);
+          await ref.read(userProfileProvider.future);
+        },
+        child: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) {
           debugPrint('Profile load error: $e');
@@ -462,6 +468,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ),
           );
         },
+        ),
       ),
     );
   }
