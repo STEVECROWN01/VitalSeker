@@ -6096,6 +6096,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Primary Care Physician'**
   String get primaryCarePhysician;
+
+  /// No description provided for @dateColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateColumn;
+
+  /// No description provided for @timeColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get timeColumn;
 }
 
 class _AppLocalizationsDelegate

@@ -90,7 +90,20 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.background(isDark),
-      body: CustomScrollView(
+      // FIX: add RefreshIndicator for pull-to-refresh. The dashboard's
+      // error state tells users to "pull down to retry" but there was
+      // no RefreshIndicator wrapping the scroll view.
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(userProfileProvider);
+          ref.invalidate(healthPassportProvider);
+          ref.invalidate(symptomLogsProvider);
+          await Future.wait([
+            ref.read(userProfileProvider.future),
+            ref.read(healthPassportProvider.future),
+          ]);
+        },
+        child: CustomScrollView(
         slivers: [
           // ── 1. Compact ~72px app bar (white/translucent) ──
           SliverAppBar(
@@ -272,6 +285,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             ),
           ),
         ],
+        ),
       ),
     );
   }

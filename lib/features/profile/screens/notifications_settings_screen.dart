@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vitalseker/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/user_profile.dart';
@@ -122,7 +123,25 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
     _vitalsLoggingReminders ??= prefs?.vitalsLoggingReminders ?? true;
     _healthTips ??= prefs?.healthTips ?? true;
     _weeklyReport ??= prefs?.weeklyReport ?? true;
+    // FIX: restore the persisted notification sound from SharedPreferences
+    // so the radio button shows the correct selection on re-open. The
+    // previous code always showed 'Default' because _selectedSound was
+    // initialized to 'notification' and never updated from storage.
+    _loadPersistedSound();
     if (mounted) setState(() {});
+  }
+
+  /// Load the persisted notification sound from SharedPreferences.
+  /// The sound is stored under key 'notif_sound_vitalseker_reminders'
+  /// by NotificationService.setCustomSound().
+  Future<void> _loadPersistedSound() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final saved = prefs.getString('notif_sound_vitalseker_reminders');
+      if (saved != null && saved.isNotEmpty) {
+        _selectedSound = saved;
+      }
+    } catch (_) {}
   }
 
   /// Parse a schedule string like "Daily at 9:00 AM" into hour and minute.

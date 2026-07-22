@@ -1512,4 +1512,8 @@
   "enterValidNumber": "Enter a valid number",
   "doseMustBePositive": "Dose must be greater than 0",
   "doseTooHigh": "Dose seems too high — please check"
+},
+  "dateColumn": "Date"
+},
+  "timeColumn": "Time"
 }

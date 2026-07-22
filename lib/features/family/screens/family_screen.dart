@@ -399,7 +399,13 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
     return Scaffold(
       backgroundColor: AppColors.background(isDark),
       // No FAB — the design uses a dashed "Add Family Member" card in-flow.
-      body: SafeArea(
+      // FIX: add RefreshIndicator for pull-to-refresh.
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(familyProfilesProvider);
+          await ref.read(familyProfilesProvider.future);
+        },
+        child: SafeArea(
         child: Column(
           children: [
             // ── Top app bar ──
@@ -515,6 +521,7 @@ class _FamilyScreenState extends ConsumerState<FamilyScreen> {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

@@ -722,6 +722,14 @@ class _SosScreenState extends ConsumerState<SosScreen>
     final uri = Uri(scheme: 'sms', path: phoneNumber);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
+    } else {
+      // FIX: show an error snackbar if the SMS app can't be launched
+      // (e.g. on a tablet without SMS capability). The previous code
+      // silently did nothing — the user tapped and nothing happened.
+      if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
+        AppSnackBar.error(context, 'Could not open SMS app.');
+      }
     }
   }
 

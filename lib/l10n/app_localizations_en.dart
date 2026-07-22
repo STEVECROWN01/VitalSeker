@@ -6236,6 +6236,12 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get deleteVitalTitle => 'Delete Reading';
 
   @override
+  String get dateColumn => 'Date';
+
+  @override
+  String get timeColumn => 'Time';
+
+  @override
   String deleteVitalConfirm(String value) {
     return 'Delete this reading: $value?';
   }

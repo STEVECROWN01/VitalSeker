@@ -84,7 +84,10 @@ class DatabaseService {
   // ==================== SYMPTOM LOGS ====================
   /// FIX (audit M-7): clamp limit to [1, 500] and offset to >= 0 to prevent
   /// .range(0, -1) (which is undefined behavior) and unbounded queries.
-  Future<List<SymptomLog>> getSymptomLogs(String userId, {int limit = 50, int offset = 0}) async {
+  /// FIX: increased default limit from 50 to 200 so the History screen
+  /// shows more records without pagination. The previous 50-row default
+  /// meant power users couldn't access older records at all.
+  Future<List<SymptomLog>> getSymptomLogs(String userId, {int limit = 200, int offset = 0}) async {
     final clampedLimit = limit.clamp(1, 500);
     final clampedOffset = offset < 0 ? 0 : offset;
     final response = await _client

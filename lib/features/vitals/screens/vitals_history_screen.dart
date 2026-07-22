@@ -637,7 +637,7 @@ class _VitalsDataTable extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    'Date',
+                    l10n.dateColumn,
                     style: TextStyle(
                       fontFamily: 'DMSans',
                       fontSize: 11,
@@ -650,7 +650,7 @@ class _VitalsDataTable extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    'Time',
+                    l10n.timeColumn,
                     style: TextStyle(
                       fontFamily: 'DMSans',
                       fontSize: 11,

@@ -57,7 +57,13 @@ class InsightsScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: AppColors.background(isDark),
-      body: insightsAsync.when(
+      // FIX: add RefreshIndicator for pull-to-refresh.
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(weeklyInsightsProvider);
+          await ref.read(weeklyInsightsProvider.future);
+        },
+        child: insightsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => _ErrorState(
           onRetry: () => ref.invalidate(weeklyInsightsProvider),
@@ -181,6 +187,7 @@ class InsightsScreen extends ConsumerWidget {
             },
           );
         },
+        ),
       ),
     );
   }
