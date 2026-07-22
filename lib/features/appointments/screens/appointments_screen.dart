@@ -149,6 +149,85 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
     }
   }
 
+  void _showEditDialog(Appointment appointment) {
+    final l10n = AppLocalizations.of(context)!;
+    final doctorController = TextEditingController(text: appointment.doctorName);
+    final locationController = TextEditingController(text: appointment.location ?? '');
+    final notesController = TextEditingController(text: appointment.notes ?? '');
+    bool isSaving = false;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: Text('Edit Appointment', style: const TextStyle(fontFamily: 'ClashDisplay')),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: doctorController,
+                  decoration: const InputDecoration(labelText: 'Doctor Name'),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: locationController,
+                  decoration: const InputDecoration(labelText: 'Location (optional)'),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: notesController,
+                  decoration: const InputDecoration(labelText: 'Notes'),
+                  maxLines: 3,
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: isSaving ? null : () => Navigator.pop(ctx),
+              child: Text(l10n.cancel),
+            ),
+            ElevatedButton(
+              onPressed: isSaving ? null : () async {
+                if (doctorController.text.trim().isEmpty) {
+                  AppSnackBar.error(context, l10n.fieldRequired);
+                  return;
+                }
+                setDialogState(() => isSaving = true);
+                try {
+                  await ref.read(appointmentsProvider.notifier).updateAppointmentDetails(
+                    appointmentId: appointment.id,
+                    doctorName: doctorController.text.trim(),
+                    specialty: appointment.specialty,
+                    location: locationController.text.trim().isEmpty ? null : locationController.text.trim(),
+                    notes: notesController.text.trim().isEmpty ? null : notesController.text.trim(),
+                  );
+                  if (mounted) {
+                    Navigator.pop(ctx);
+                    AppSnackBar.success(context, 'Appointment updated.');
+                  }
+                } catch (e) {
+                  if (mounted) {
+                    AppSnackBar.errorFromException(context, 'Could not update appointment.', e);
+                  }
+                  setDialogState(() => isSaving = false);
+                }
+              },
+              child: isSaving
+                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                  : Text(l10n.save),
+            ),
+          ],
+        ),
+      ),
+    ).then((_) {
+      doctorController.dispose();
+      locationController.dispose();
+      notesController.dispose();
+    });
+  }
+
   void _showCardActions(Appointment appointment) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -184,6 +263,17 @@ class _AppointmentsScreenState extends ConsumerState<AppointmentsScreen> {
             ),
             const Divider(),
             if (appointment.status == AppointmentStatus.upcoming) ...[
+              // FIX: add an Edit option so the user can fix typos in
+              // doctor name, specialty, location, or notes without
+              // deleting and re-adding the appointment.
+              ListTile(
+                leading: Icon(Icons.edit_outlined, color: AppColors.primary(isDark)),
+                title: Text(l10n.edit, style: const TextStyle(fontFamily: 'Inter')),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _showEditDialog(appointment);
+                },
+              ),
               ListTile(
                 leading: Icon(Icons.check_circle_outline, color: isDark ? AppColors.darkSuccess : AppColors.lightSuccess),
                 title: Text(l10n.markComplete, style: const TextStyle(fontFamily: 'Inter')),

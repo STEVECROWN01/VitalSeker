@@ -96,18 +96,25 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
                   onChanged: (v) => setDialogState(() => unit = v ?? unit),
                 ),
                 const SizedBox(height: 12),
-                DropdownButtonFormField<MedicationFrequency>(
-                  dropdownColor: AppColors.surface(isDark),
-                  style: TextStyle(color: AppColors.textPrimary(isDark)),
-                  value: frequency,
-                  decoration: InputDecoration(labelText: l10n.frequency),
-                  items: MedicationFrequency.values
-                      .map((f) => DropdownMenuItem(
-                            value: f,
-                            child: Text(_frequencyLabel(f, l10n)),
-                          ))
-                      .toList(),
-                  onChanged: (v) => setDialogState(() => frequency = v ?? frequency),
+                // FIX: frequency is NOT editable in the edit dialog because
+                // changing it without also editing dose times creates a
+                // mismatch (e.g. "Twice daily" with only 1 dose time). The
+                // user must delete and re-add to change frequency.
+                // Show the current frequency as read-only info instead.
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Row(
+                    children: [
+                      Text(
+                        '${l10n.frequency}: ',
+                        style: TextStyle(fontSize: 14, color: AppColors.textSecondary(isDark)),
+                      ),
+                      Text(
+                        _frequencyLabel(frequency, l10n),
+                        style: TextStyle(fontSize: 14, color: AppColors.textPrimary(isDark), fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 12),
                 SwitchListTile(

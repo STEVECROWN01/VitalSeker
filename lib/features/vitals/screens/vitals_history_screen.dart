@@ -64,7 +64,13 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.vitalsHistoryTitle)),
-      body: Column(
+      // FIX: add RefreshIndicator for pull-to-refresh.
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(vitalsProvider);
+          await ref.read(vitalsProvider.future);
+        },
+        child: Column(
         children: [
           // Vital Type Dropdown
           Padding(
@@ -215,6 +221,7 @@ class _VitalsHistoryScreenState extends ConsumerState<VitalsHistoryScreen> {
                   ),
           ),
         ],
+      ),
       ),
     );
   }
@@ -709,7 +716,8 @@ class _VitalsDataTable extends StatelessWidget {
                     TextButton.icon(
                       onPressed: onShowMore,
                       icon: const Icon(Icons.expand_more, size: 18),
-                      label: const Text('Show more'),
+                      // FIX: use l10n.showMore instead of hardcoded 'Show more'.
+                      label: Text(l10n.showMore),
                     ),
                   ],
                 ),

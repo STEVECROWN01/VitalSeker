@@ -194,6 +194,47 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     }
   }
 
+  /// Update editable fields of an existing appointment: doctor name,
+  /// specialty, location, notes. Re-schedules the reminder if needed.
+  /// FIX: the previous code had no edit feature — doctor name, specialty,
+  /// location, and notes were immutable after creation. The user had to
+  /// delete and re-add to fix a typo.
+  Future<void> updateAppointmentDetails({
+    required String appointmentId,
+    required String doctorName,
+    String? specialty,
+    String? location,
+    String? notes,
+    bool? reminderEnabled,
+  }) async {
+    try {
+      final db = ref.read(databaseServiceProvider);
+      await db.updateAppointment(appointmentId, {
+        'doctor_name': doctorName,
+        'specialty': specialty,
+        'location': location,
+        'notes': notes,
+        if (reminderEnabled != null) 'reminder_enabled': reminderEnabled,
+      });
+      // Re-schedule reminder if the reminder toggle changed.
+      if (reminderEnabled != null) {
+        final appt = state.valueOrNull
+            ?.where((a) => a.id == appointmentId)
+            .firstOrNull;
+        if (appt != null) {
+          if (reminderEnabled) {
+            await _scheduleReminder(appt);
+          } else {
+            await _cancelReminder(appt);
+          }
+        }
+      }
+      ref.invalidateSelf();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> deleteAppointment(String appointmentId) async {
     try {
       // Cancel the reminder BEFORE deleting — once deleted we can't look up
