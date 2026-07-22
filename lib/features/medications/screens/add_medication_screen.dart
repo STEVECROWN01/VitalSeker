@@ -76,7 +76,16 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
       firstDate: DateTime(2020),
       lastDate: DateTime(2030),
     );
-    if (picked != null) setState(() => _startDate = picked);
+    if (picked != null) {
+      setState(() {
+        _startDate = picked;
+        // FIX: if the existing end date is before the new start date,
+        // bump it forward so we don't end up with end < start.
+        if (_endDate != null && _endDate!.isBefore(picked)) {
+          _endDate = picked.add(const Duration(days: 30));
+        }
+      });
+    }
   }
 
   Future<void> _selectEndDate() async {
@@ -102,6 +111,12 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
   Future<void> _saveMedication() async {
     if (!_formKey.currentState!.validate()) return;
     final l10n = AppLocalizations.of(context)!;
+
+    // FIX: final cross-validation — end date cannot be before start date.
+    if (_hasEndDate && _endDate != null && _endDate!.isBefore(_startDate)) {
+      AppSnackBar.error(context, 'End date cannot be before start date.');
+      return;
+    }
 
     setState(() => _isSaving = true);
     try {

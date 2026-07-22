@@ -98,7 +98,7 @@ class PassportScreen extends ConsumerWidget {
             return _buildNoPassport(context, isDark);
           }
           final profile = profileAsync.valueOrNull;
-          final name = profile?.fullName ?? 'User';
+          final name = profile?.fullName ?? l10n.userFallback;
           final dob = profile?.dateOfBirth;
           final heightCm = profile?.heightCm;
           final weightKg = profile?.weightKg;
@@ -458,6 +458,18 @@ class PassportScreen extends ConsumerWidget {
                             : null,
                       ),
                     ),
+                  ),
+                ],
+                if (passport.emergencyContacts.isEmpty) ...[
+                  const SizedBox(height: 8),
+                  _EmptyStateCard(
+                    icon: Icons.contact_phone_outlined,
+                    iconColor: AppColors.urgencyEmergency,
+                    title: l10n.emergencyContacts,
+                    message: 'No emergency contacts added yet. Add one in Edit Profile so first responders can reach someone in an emergency.',
+                    ctaLabel: l10n.edit,
+                    onCtaTap: () => context.push(AppConfig.editProfile),
+                    isDark: isDark,
                   ),
                 ],
                 const SizedBox(height: 16),

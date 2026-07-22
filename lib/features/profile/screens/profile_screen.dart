@@ -146,7 +146,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           return Center(child: Text(l10n.somethingWentWrong));
         },
         data: (profile) {
-          final name = profile?.fullName ?? 'User';
+          final name = profile?.fullName ?? l10n.userFallback;
           final email = profile?.email ?? '';
           final initials = (name.isNotEmpty ? name : 'U')
               .trim()
