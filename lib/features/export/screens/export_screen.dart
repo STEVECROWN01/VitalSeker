@@ -13,6 +13,8 @@ import '../../../core/providers/health_passport_provider.dart';
 import '../../../core/providers/subscription_provider.dart';
 import '../../../core/providers/symptom_log_provider.dart';
 import '../../../core/providers/user_profile_provider.dart';
+import '../../../core/providers/vitals_provider.dart';
+import '../../../core/providers/appointments_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../../shared/widgets/medical_disclaimer_banner.dart';
@@ -46,11 +48,17 @@ class ExportScreen extends ConsumerStatefulWidget {
 }
 
 class _ExportScreenState extends ConsumerState<ExportScreen> {
-  // ── Section toggles (4 sections per design) ──
+  // ── Section toggles (6 sections) ──
   bool _includePatientOverview = true;
   bool _includeSymptomsLog = true;
   bool _includeMedications = true;
   bool _includeAiSummary = true;
+  // FIX: added vitals + appointments sections (were missing — the PDF
+  // export only included 4 sections: patient overview, symptoms, meds,
+  // AI summary. A doctor receiving the PDF had no access to the patient's
+  // vital signs trend or appointment history).
+  bool _includeVitals = true;
+  bool _includeAppointments = true;
 
   // ── Date range ──
   // Index into _dateRangeOptions.
@@ -124,6 +132,40 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
       debugPrint('Failed to load symptom logs for export: $e');
     }
 
+    // FIX: load vitals + appointments for the new export sections.
+    List<Map<String, dynamic>> vitalsHistory = [];
+    List<Map<String, dynamic>> appointmentsHistory = [];
+    try {
+      final vitals = await ref.read(vitalsProvider.future);
+      vitalsHistory = vitals
+          .where((v) => rangeStart == null || v.recordedAt.isAfter(rangeStart))
+          .map((v) => {
+                'date': v.recordedAt.toIso8601String(),
+                'type': v.type.displayName,
+                'value': v.displayWithUnit,
+                'notes': v.notes,
+              })
+          .toList();
+    } catch (e) {
+      debugPrint('Failed to load vitals for export: $e');
+    }
+    try {
+      final appts = await ref.read(appointmentsProvider.future);
+      appointmentsHistory = appts
+          .where((a) => rangeStart == null || a.dateTime.isAfter(rangeStart))
+          .map((a) => {
+                'date': a.dateTime.toIso8601String(),
+                'doctor': a.doctorName,
+                'specialty': a.specialty ?? '',
+                'location': a.location ?? '',
+                'status': a.status.name,
+                'notes': a.notes ?? '',
+              })
+          .toList();
+    } catch (e) {
+      debugPrint('Failed to load appointments for export: $e');
+    }
+
     if (!mounted) return;
     setState(() {
       _previewData = {
@@ -145,6 +187,8 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
               }
             : null,
         'symptom_history': symptomHistory,
+        'vitals_history': vitalsHistory,
+        'appointments_history': appointmentsHistory,
         'range_start': rangeStart?.toIso8601String(),
       };
     });
@@ -332,6 +376,34 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                       'for this patient. Refer to the symptom log and any '
                       'provided documents for clinical assessment.';
               blocks.add(pw.Paragraph(text: aiText));
+            }
+
+            // FIX: added Vitals History section.
+            if (_includeVitals &&
+                (_previewData['vitals_history'] as List?)?.isNotEmpty == true) {
+              blocks.add(pw.Header(level: 0, text: 'Vital Signs History'));
+              for (final v in (_previewData['vitals_history'] as List)) {
+                blocks.add(pw.Paragraph(
+                  text: '${v['date'] ?? 'N/A'} — ${v['type'] ?? 'N/A'}: '
+                      '${v['value'] ?? 'N/A'}'
+                      '${v['notes'] != null ? ' (${v['notes']})' : ''}',
+                ));
+              }
+            }
+
+            // FIX: added Appointments History section.
+            if (_includeAppointments &&
+                (_previewData['appointments_history'] as List?)?.isNotEmpty == true) {
+              blocks.add(pw.Header(level: 0, text: 'Appointments History'));
+              for (final a in (_previewData['appointments_history'] as List)) {
+                blocks.add(pw.Paragraph(
+                  text: '${a['date'] ?? 'N/A'} — ${a['doctor'] ?? 'N/A'}'
+                      '${a['specialty'] != null && a['specialty'].isNotEmpty ? ' (${a['specialty']})' : ''}'
+                      '${a['location'] != null && a['location'].isNotEmpty ? ' @ ${a['location']}' : ''}'
+                      ' — ${a['status'] ?? 'N/A'}'
+                      '${a['notes'] != null && a['notes'].isNotEmpty ? ' (${a['notes']})' : ''}',
+                ));
+              }
             }
 
             blocks.add(pw.Divider());

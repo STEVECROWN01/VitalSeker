@@ -25,7 +25,7 @@ class SosScreen extends ConsumerStatefulWidget {
 }
 
 class _SosScreenState extends ConsumerState<SosScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _isSending = false;
   bool _sosActive = false;
   String? _sosMessage;
@@ -84,6 +84,10 @@ class _SosScreenState extends ConsumerState<SosScreen>
   @override
   void initState() {
     super.initState();
+    // FIX: register as a lifecycle observer so we can pause the countdown
+    // timer when the app is backgrounded (battery savings) and resume it
+    // when the app returns to the foreground.
+    WidgetsBinding.instance.addObserver(this);
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
@@ -192,6 +196,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _pulseController.dispose();
     for (final c in _rippleControllers) {
       c.dispose();
@@ -199,6 +204,20 @@ class _SosScreenState extends ConsumerState<SosScreen>
     _holdController.dispose();
     _countdownTimer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // FIX: pause the countdown timer when the app is backgrounded to save
+    // battery. The timer fires setState every second — on backgrounded
+    // apps this is throttled by the OS but still wastes some CPU. On
+    // resume, the timer stays cancelled (the SOS send completes async
+    // regardless — the timer is purely cosmetic).
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      _countdownTimer?.cancel();
+      _countdownTimer = null;
+    }
   }
 
   void _startHold() {
