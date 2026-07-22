@@ -6269,4 +6269,28 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       'an issue with the localizations generation tool. Please file an issue '
       'on GitHub with a reproducible sample app and the gen-l10n configuration '
       'that was used.');
+
+
+  String get soundChanged;
+
+
+  String notificationSoundSetTo(String name);
+
+
+  String soundSetTo(String name);
+
+
+  String reminderScheduled(String schedule);
+
+
+  String get appointmentRemindersEnabled;
+
+
+  String get reminderCancelled;
+
+
+  String get notificationSound;
+
+
+  String get tapToPreviewSound;
 }

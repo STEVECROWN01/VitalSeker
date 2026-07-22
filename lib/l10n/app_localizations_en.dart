@@ -6245,4 +6245,36 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String deleteVitalConfirm(String value) {
     return 'Delete this reading: $value?';
   }
+
+
+  @override
+  String get soundChanged => 'Sound Changed';
+
+
+  @override
+  String notificationSoundSetTo(String name) => 'Notification sound set to $name';
+
+
+  @override
+  String soundSetTo(String name) => 'Sound set to $name. Check your notification.';
+
+
+  @override
+  String reminderScheduled(String schedule) => 'Reminder scheduled: $schedule';
+
+
+  @override
+  String get appointmentRemindersEnabled => 'Appointment reminders enabled';
+
+
+  @override
+  String get reminderCancelled => 'Reminder cancelled';
+
+
+  @override
+  String get notificationSound => 'Notification Sound';
+
+
+  @override
+  String get tapToPreviewSound => 'Tap to preview a sound. Tap the row to select it for all notifications.';
 }

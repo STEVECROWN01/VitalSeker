@@ -103,13 +103,13 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
     // Fire a test notification so the user can hear the sound in a
     // real notification context.
     await _notificationService.showNotification(
-      title: 'Sound Changed',
-      body: 'Notification sound set to $displayName',
+      title: l10n.soundChanged,
+      body: l10n.notificationSoundSetTo(displayName),
       sound: rawName,
     );
 
     if (mounted) {
-      AppSnackBar.success(context, 'Sound set to $displayName. Check your notification.');
+      AppSnackBar.success(context, l10n.soundSetTo(displayName));
     }
   }
 
@@ -186,7 +186,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
             await _notificationService.scheduleTriageReminder(
               hour: sched.hour, minute: sched.minute,
             );
-            if (mounted) AppSnackBar.success(context, 'Triage reminder scheduled: ${_triageSchedule}');
+            if (mounted) AppSnackBar.success(context, l10n.reminderScheduled(_triageSchedule));
             break;
           case 'medication':
             // Default to 4-hourly if "Per prescription schedule", otherwise parse
@@ -194,27 +194,27 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
             await _notificationService.scheduleMedicationReminder(
               hour: sched.hour, minute: sched.minute,
             );
-            if (mounted) AppSnackBar.success(context, 'Medication reminder scheduled: ${_medicationSchedule}');
+            if (mounted) AppSnackBar.success(context, l10n.reminderScheduled(_medicationSchedule));
             break;
           case 'appointment':
             // Appointment reminders are scheduled per-appointment when the
             // user creates an appointment (via scheduleAppointmentReminder).
             // Toggling this ON just enables the preference; no daily schedule.
-            if (mounted) AppSnackBar.success(context, 'Appointment reminders enabled');
+            if (mounted) AppSnackBar.success(context, l10n.appointmentRemindersEnabled);
             break;
           case 'vitals':
             final sched = _parseSchedule(_vitalsSchedule);
             await _notificationService.scheduleVitalsReminder(
               hour: sched.hour, minute: sched.minute,
             );
-            if (mounted) AppSnackBar.success(context, 'Vitals reminder scheduled: ${_vitalsSchedule}');
+            if (mounted) AppSnackBar.success(context, l10n.reminderScheduled(_vitalsSchedule));
             break;
           case 'tips':
             final sched = _parseSchedule(_healthTipsSchedule);
             await _notificationService.scheduleHealthTipsReminder(
               hour: sched.hour, minute: sched.minute,
             );
-            if (mounted) AppSnackBar.success(context, 'Health tips scheduled: ${_healthTipsSchedule}');
+            if (mounted) AppSnackBar.success(context, l10n.reminderScheduled(_healthTipsSchedule));
             break;
           case 'weekly':
             // Parse weekday + time from _weeklyReportSchedule
@@ -226,7 +226,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
             await _notificationService.scheduleWeeklyReportReminder(
               weekday: weekday, hour: sched.hour, minute: sched.minute,
             );
-            if (mounted) AppSnackBar.success(context, 'Weekly report scheduled: ${_weeklyReportSchedule}');
+            if (mounted) AppSnackBar.success(context, l10n.reminderScheduled(_weeklyReportSchedule));
             break;
         }
       } else {
@@ -238,7 +238,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
         if (id != null) {
           await _notificationService.cancelNotification(id);
         }
-        if (mounted) AppSnackBar.info(context, 'Reminder cancelled');
+        if (mounted) AppSnackBar.info(context, l10n.reminderCancelled);
       }
     } catch (e) {
       debugPrint('Notification scheduling error: $e');
@@ -459,7 +459,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
             const SizedBox(height: 20),
 
             // ── Sound selector (10 sounds with play/stop preview) ──
-            _SectionLabel(label: 'Notification Sound'),
+            _SectionLabel(label: l10n.notificationSound),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
@@ -487,7 +487,7 @@ class _NotificationsSettingsScreenState extends ConsumerState<NotificationsSetti
             ),
             const SizedBox(height: 12),
             Text(
-              'Tap ▶ to preview a sound (tap again to stop). Tap the row to select it for all notifications.',
+              l10n.tapToPreviewSound,
               style: TextStyle(fontSize: 11, color: AppColors.textSecondary(isDark)),
             ),
           ],

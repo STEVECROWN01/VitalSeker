@@ -1516,4 +1516,35 @@
   "dateColumn": "Date"
 },
   "timeColumn": "Time"
+,
+  "soundChanged": "Sound Changed"
+,
+  "notificationSoundSetTo": "Notification sound set to {name}",
+  "@notificationSoundSetTo": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+    },
+,
+  "soundSetTo": "Sound set to {name}. Check your notification.",
+  "@soundSetTo": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+    },
+,
+  "reminderScheduled": "Reminder scheduled: {schedule}",
+  "@reminderScheduled": {
+    "placeholders": {
+      "schedule": { "type": "String" }
+    }
+    },
+,
+  "appointmentRemindersEnabled": "Appointment reminders enabled"
+,
+  "reminderCancelled": "Reminder cancelled"
+,
+  "notificationSound": "Notification Sound"
+,
+  "tapToPreviewSound": "Tap to preview a sound (tap again to stop). Tap the row to select it for all notifications."
 }
