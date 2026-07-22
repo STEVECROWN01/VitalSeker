@@ -240,15 +240,8 @@ class _QrDisplayScreenState extends ConsumerState<QrDisplayScreen> {
         context: context,
         builder: (ctx) => AlertDialog(
           title: Text(l10n.shareMedicalPassport),
-          content: const Text(
-            'This QR code grants access to your medical information '
-            '(blood type, allergies, chronic conditions, medications, '
-            'emergency contacts). Anyone who receives it can scan it '
-            'and view your health data.\n\n'
-            'Only share it with people you trust — doctors, nurses, or '
-            'emergency contacts. Do not post it on social media.\n\n'
-            'The QR code expires in 24 hours.',
-          ),
+          // FIX: use the existing l10n key instead of hardcoded English.
+          content: Text(l10n.shareMedicalPassportMessage),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),

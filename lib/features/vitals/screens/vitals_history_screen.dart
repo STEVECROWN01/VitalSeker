@@ -318,6 +318,11 @@ class _VitalChart extends StatelessWidget {
         painter: _LineChartPainter(
           vitals: vitals,
           color: vitalType.color,
+          // FIX: pass a lighter shade of the vital color for the
+          // diastolic line so BP shows both systolic and diastolic.
+          secondaryColor: vitalType == VitalType.bloodPressure
+              ? vitalType.color.withValues(alpha: 0.6)
+              : null,
           isDark: isDark,
           emptyText: emptyText,
           singleReadingText: singleReadingText,
@@ -333,6 +338,9 @@ class _LineChartPainter extends CustomPainter {
   final bool isDark;
   final String emptyText;
   final String singleReadingText;
+  // FIX: optional secondary color for BP diastolic line. When non-null,
+  // the painter also plots valueSecondary as a second line.
+  final Color? secondaryColor;
 
   _LineChartPainter({
     required this.vitals,
@@ -340,6 +348,7 @@ class _LineChartPainter extends CustomPainter {
     required this.isDark,
     required this.emptyText,
     required this.singleReadingText,
+    this.secondaryColor,
   });
 
   @override
@@ -363,8 +372,18 @@ class _LineChartPainter extends CustomPainter {
     }
 
     final values = vitals.map((v) => v.value).toList();
-    final minVal = values.reduce(math.min);
-    final maxVal = values.reduce(math.max);
+    // FIX: include diastolic values in the min/max computation so both
+    // lines fit in the chart area.
+    final hasSecondary = secondaryColor != null &&
+        vitals.any((v) => v.valueSecondary != null);
+    final allValues = [...values];
+    if (hasSecondary) {
+      for (final v in vitals) {
+        if (v.valueSecondary != null) allValues.add(v.valueSecondary!);
+      }
+    }
+    final minVal = allValues.reduce(math.min);
+    final maxVal = allValues.reduce(math.max);
     final range = maxVal - minVal;
     final padding = range == 0 ? 1.0 : range * 0.15;
     final effectiveMin = minVal - padding;
@@ -438,6 +457,43 @@ class _LineChartPainter extends CustomPainter {
       canvas.drawCircle(point, 4, dotPaint);
       canvas.drawCircle(point, 4, dotBorderPaint);
     }
+
+    // FIX: draw the diastolic (secondary) line for BP vitals.
+    if (hasSecondary && secondaryColor != null) {
+      final secondaryPoints = <Offset>[];
+      for (int i = 0; i < vitals.length; i++) {
+        if (vitals[i].valueSecondary == null) continue;
+        final x = leftPadding + (i / (vitals.length - 1)) * chartWidth;
+        final normalizedValue =
+            (vitals[i].valueSecondary! - effectiveMin) / effectiveRange;
+        final y = chartHeight - (normalizedValue * chartHeight);
+        secondaryPoints.add(Offset(x, y));
+      }
+
+      if (secondaryPoints.length >= 2) {
+        // Dashed line for diastolic
+        final secondaryPaint = Paint()
+          ..color = secondaryColor!
+          ..strokeWidth = 2
+          ..style = PaintingStyle.stroke
+          ..strokeCap = StrokeCap.round;
+
+        for (int i = 1; i < secondaryPoints.length; i++) {
+          canvas.drawLine(
+            secondaryPoints[i - 1],
+            secondaryPoints[i],
+            secondaryPaint,
+          );
+        }
+
+        // Small dots for diastolic
+        final secondaryDotPaint = Paint()..color = secondaryColor!;
+        for (final point in secondaryPoints) {
+          canvas.drawCircle(point, 3, secondaryDotPaint);
+          canvas.drawCircle(point, 3, dotBorderPaint);
+        }
+      }
+    }
   }
 
   @override
@@ -448,6 +504,7 @@ class _LineChartPainter extends CustomPainter {
     // to avoid repainting when the provider rebuilds with identical data.
     if (oldDelegate.vitals.length != vitals.length) return true;
     if (oldDelegate.color != color) return true;
+    if (oldDelegate.secondaryColor != secondaryColor) return true;
     if (oldDelegate.isDark != isDark) return true;
     for (int i = 0; i < vitals.length; i++) {
       final old = oldDelegate.vitals[i];
