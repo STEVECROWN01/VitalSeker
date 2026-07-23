@@ -252,17 +252,11 @@ class TermsOfServiceScreen extends StatelessWidget {
             // app stores and standard for SaaS/health apps.
             _Section(
               number: '12',
-              title: 'Limitation of Liability',
+              title: l10n.tosSection12Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'To the maximum extent permitted by law, VitalSeker and its '
-                  'producer shall not be liable for any indirect, incidental, '
-                  'special, consequential, or punitive damages, including but not '
-                  'limited to loss of profits, data, or health outcomes, arising '
-                  'from your use of or inability to use the app. The AI triage '
-                  'feature is provided "as is" without any warranty of accuracy '
-                  'or fitness for a particular medical purpose.',
+                  l10n.tosSection12Body,
                   isDark: isDark,
                 ),
               ],
@@ -270,14 +264,11 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '13',
-              title: 'Indemnification',
+              title: l10n.tosSection13Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'You agree to indemnify and hold harmless VitalSeker, its '
-                  'producer, and affiliates from any claims, damages, or expenses '
-                  'arising from your misuse of the app, violation of these Terms, '
-                  'or infringement of any third-party rights.',
+                  l10n.tosSection13Body,
                   isDark: isDark,
                 ),
               ],
@@ -285,19 +276,11 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '14',
-              title: 'Dispute Resolution',
+              title: l10n.tosSection14Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'Any disputes arising from these Terms or your use of VitalSeker '
-                  'shall be resolved through binding arbitration in accordance with '
-                  'the rules of the International Chamber of Commerce. The arbitration '
-                  'shall take place in the jurisdiction of the producer. You waive '
-                  'your right to participate in a class action lawsuit or class-wide '
-                  'arbitration.\n\n'
-                  'Apple and Google are not responsible for any claims, losses, or '
-                  'damages arising from the app or these Terms, as required by '
-                  'App Store Review Guideline 3.2.',
+                  l10n.tosSection14Body,
                   isDark: isDark,
                 ),
               ],
@@ -305,17 +288,11 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '15',
-              title: 'Refund Policy',
+              title: l10n.tosSection15Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'Subscriptions are billed through Apple App Store or Google Play '
-                  'Store. Refunds are subject to the respective store\'s refund '
-                  'policy:\n\n'
-                  '• Apple: https://support.apple.com/billing\n'
-                  '• Google: https://support.google.com/googleplay/answer/2479637\n\n'
-                  'VitalSeker does not process refunds directly. Cancel your '
-                  'subscription at any time via your device\'s app store settings.',
+                  l10n.tosSection15Body,
                   isDark: isDark,
                 ),
               ],
@@ -323,13 +300,11 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '16',
-              title: 'Age Restrictions',
+              title: l10n.tosSection16Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'VitalSeker is intended for users 18 years or older (13+ with '
-                  'parental consent in the US, 16+ in the EU). By using the app, '
-                  'you confirm that you meet the age requirement in your jurisdiction.',
+                  l10n.tosSection16Body,
                   isDark: isDark,
                 ),
               ],
@@ -337,15 +312,11 @@ class TermsOfServiceScreen extends StatelessWidget {
 
             _Section(
               number: '17',
-              title: 'Third-Party Services',
+              title: l10n.tosSection17Title,
               isDark: isDark,
               children: [
                 _Para(
-                  'VitalSeker integrates with third-party services (Supabase, '
-                  'RevenueCat, Twilio, z.ai, DeepL, Sentry, PostHog, OneSignal, '
-                  'Google, Apple). Your use of these services is subject to their '
-                  'respective terms and privacy policies. VitalSeker is not '
-                  'responsible for the practices of these third parties.',
+                  l10n.tosSection17Body,
                   isDark: isDark,
                 ),
               ],

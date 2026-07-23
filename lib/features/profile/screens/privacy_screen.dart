@@ -94,76 +94,41 @@ class PrivacyScreen extends StatelessWidget {
 
             // FIX (audit M-15): add missing sections for legal compliance.
             // Third-Party Processors
-            _SectionHeading(title: '6. Third-Party Processors', isDark: isDark),
+            _SectionHeading(title: l10n.privacySection6Title, isDark: isDark),
             _PolicyText(
-              'We use the following third-party services to provide VitalSeker. Each '
-              'processor has signed a Data Processing Agreement and complies with GDPR:\n\n'
-              '• Supabase (database, auth, file storage) — EU/US data centers\n'
-              '• Sentry (crash monitoring) — anonymized error data only\n'
-              '• PostHog (analytics) — anonymized usage events\n'
-              '• OneSignal (push notifications) — device tokens only\n'
-              '• RevenueCat (subscription management) — purchase receipts\n'
-              '• Twilio (SMS for SOS alerts) — phone numbers and SMS content\n'
-              '• z.ai / GLM-4 (AI triage and chat) — symptom text and health context\n'
-              '• DeepL (translation) — text snippets for translation\n'
-              '• Google Sign-In / Apple Sign-In — OAuth tokens only\n\n'
-              'We do NOT share your health data with advertising networks, data brokers, '
-              'or insurance companies.',
+              l10n.privacySection6Body,
               isDark: isDark,
             ),
             const SizedBox(height: 16),
 
             // Data Retention
-            _SectionHeading(title: '7. Data Retention', isDark: isDark),
+            _SectionHeading(title: l10n.privacySection7Title, isDark: isDark),
             _PolicyText(
-              'We retain your data for the following periods:\n\n'
-              '• Health data (vitals, symptom logs, triage results): 24 months after '
-              'your last activity, then automatically deleted.\n'
-              '• Account data (profile, passport): retained until you delete your account.\n'
-              '• SOS event records: 12 months for audit and safety purposes.\n'
-              '• Support tickets: 6 months after resolution.\n'
-              '• Crash/analytics data: 90 days (anonymized).\n\n'
-              'You can request earlier deletion at any time via Settings > Delete Account. '
-              'Note: some data (e.g., financial records for RevenueCat) may be retained '
-              'longer for legal compliance.',
+              l10n.privacySection7Body,
               isDark: isDark,
             ),
             const SizedBox(height: 16),
 
             // Children's Privacy
-            _SectionHeading(title: "8. Children's Privacy", isDark: isDark),
+            _SectionHeading(title: l10n.privacySection8Title, isDark: isDark),
             _PolicyText(
-              'VitalSeker is not intended for use by children under 13 (under 16 in the EU). '
-              'We do not knowingly collect data from children. If you believe a child has '
-              'provided personal information, contact us immediately at privacy@vitalseker.com '
-              'and we will delete it.\n\nFor users aged 13-17 (or 16-17 in the EU), parental '
-              'consent is required. VitalSeker does not currently implement age verification — '
-              'this must be added before targeting users under 18.',
+              l10n.privacySection8Body,
               isDark: isDark,
             ),
             const SizedBox(height: 16),
 
             // Medical Disclaimer
-            _SectionHeading(title: '9. Medical Disclaimer', isDark: isDark),
+            _SectionHeading(title: l10n.privacySection9Title, isDark: isDark),
             _PolicyText(
-              'VitalSeker is a health companion app, NOT a medical device. It is not '
-              'certified by the FDA, EMA, or any other regulatory body. The AI triage '
-              'feature provides general guidance only — it does NOT constitute a medical '
-              'diagnosis. Always consult a qualified healthcare professional for diagnosis '
-              'and treatment.\n\nVitalSeker does not replace emergency services. In a '
-              'life-threatening emergency, call your local emergency number (112, 911, 15) '
-              'directly — do not rely solely on the app.',
+              l10n.privacySection9Body,
               isDark: isDark,
             ),
             const SizedBox(height: 16),
 
             // Changes to This Policy
-            _SectionHeading(title: '10. Changes to This Policy', isDark: isDark),
+            _SectionHeading(title: l10n.privacySection10Title, isDark: isDark),
             _PolicyText(
-              'We may update this Privacy Policy from time to time. When we do, we will '
-              'notify you through the app and update the "Last updated" date. If material '
-              'changes are made, we will require your renewed consent before continuing '
-              'to process your data under the new terms.',
+              l10n.privacySection10Body,
               isDark: isDark,
             ),
             const SizedBox(height: 16),

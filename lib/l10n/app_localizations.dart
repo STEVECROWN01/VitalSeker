@@ -6321,4 +6321,48 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   String get security24Months;
 
   String get securityDescription;
+
+  String get privacySection6Title;
+
+  String get privacySection6Body;
+
+  String get privacySection7Title;
+
+  String get privacySection7Body;
+
+  String get privacySection8Title;
+
+  String get privacySection8Body;
+
+  String get privacySection9Title;
+
+  String get privacySection9Body;
+
+  String get privacySection10Title;
+
+  String get privacySection10Body;
+
+  String get tosSection12Title;
+
+  String get tosSection12Body;
+
+  String get tosSection13Title;
+
+  String get tosSection13Body;
+
+  String get tosSection14Title;
+
+  String get tosSection14Body;
+
+  String get tosSection15Title;
+
+  String get tosSection15Body;
+
+  String get tosSection16Title;
+
+  String get tosSection16Body;
+
+  String get tosSection17Title;
+
+  String get tosSection17Body;
 }

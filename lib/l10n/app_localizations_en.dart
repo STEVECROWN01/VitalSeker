@@ -6319,4 +6319,70 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get securityDescription => 'Your health data is encrypted at rest and in transit. Only you can access your data through Row Level Security policies.';
+
+  @override
+  String get privacySection6Title => '6. Third-Party Processors';
+
+  @override
+  String get privacySection6Body => 'We use the following third-party services to provide VitalSeker. Each processor has signed a Data Processing Agreement and complies with GDPR:\n\n• Supabase (database, auth, file storage) — EU/US data centers\n• Sentry (crash monitoring) — anonymized error data only\n• PostHog (analytics) — anonymized usage events\n• OneSignal (push notifications) — device tokens only\n• RevenueCat (subscription management) — purchase receipts\n• Twilio (SMS for SOS alerts) — phone numbers and SMS content\n• z.ai / GLM-4 (AI triage and chat) — symptom text and health context\n• DeepL (translation) — text snippets for translation\n• Google Sign-In / Apple Sign-In — OAuth tokens only\n\nWe do NOT share your health data with advertising networks, data brokers, or insurance companies.';
+
+  @override
+  String get privacySection7Title => '7. Data Retention';
+
+  @override
+  String get privacySection7Body => 'We retain your data for the following periods:\n\n• Health data (vitals, symptom logs, triage results): 24 months after your last activity, then automatically deleted.\n• Account data (profile, passport): retained until you delete your account.\n• SOS event records: 12 months for audit and safety purposes.\n• Support tickets: 6 months after resolution.\n• Crash/analytics data: 90 days (anonymized).\n\nYou can request earlier deletion at any time via Settings > Delete Account. Note: some data (e.g., financial records for RevenueCat) may be retained longer for legal compliance.';
+
+  @override
+  String get privacySection8Title => '8. Children\'s Privacy';
+
+  @override
+  String get privacySection8Body => 'VitalSeker is not intended for use by children under 13 (under 16 in the EU). We do not knowingly collect data from children. If you believe a child has provided personal information, contact us immediately at privacy@vitalseker.com and we will delete it.\n\nFor users aged 13-17 (or 16-17 in the EU), parental consent is required. VitalSeker does not currently implement age verification — this must be added before targeting users under 18.';
+
+  @override
+  String get privacySection9Title => '9. Medical Disclaimer';
+
+  @override
+  String get privacySection9Body => 'VitalSeker is a health companion app, NOT a medical device. It is not certified by the FDA, EMA, or any other regulatory body. The AI triage feature provides general guidance only — it does NOT constitute a medical diagnosis. Always consult a qualified healthcare professional for diagnosis and treatment.\n\nVitalSeker does not replace emergency services. In a life-threatening emergency, call your local emergency number (112, 911, 15) directly — do not rely solely on the app.';
+
+  @override
+  String get privacySection10Title => '10. Changes to This Policy';
+
+  @override
+  String get privacySection10Body => 'We may update this Privacy Policy from time to time. When we do, we will notify you through the app and update the "Last updated" date. If material changes are made, we will require your renewed consent before continuing to process your data under the new terms.';
+
+  @override
+  String get tosSection12Title => 'Limitation of Liability';
+
+  @override
+  String get tosSection12Body => 'To the maximum extent permitted by law, VitalSeker and its producer shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or health outcomes, arising from your use of or inability to use the app. The AI triage feature is provided "as is" without any warranty of accuracy or fitness for a particular medical purpose.';
+
+  @override
+  String get tosSection13Title => 'Indemnification';
+
+  @override
+  String get tosSection13Body => 'You agree to indemnify and hold harmless VitalSeker, its producer, and affiliates from any claims, damages, or expenses arising from your misuse of the app, violation of these Terms, or infringement of any third-party rights.';
+
+  @override
+  String get tosSection14Title => 'Dispute Resolution';
+
+  @override
+  String get tosSection14Body => 'Any disputes arising from these Terms or your use of VitalSeker shall be resolved through binding arbitration in accordance with the rules of the International Chamber of Commerce. The arbitration shall take place in the jurisdiction of the producer. You waive your right to participate in a class action lawsuit or class-wide arbitration.\n\nApple and Google are not responsible for any claims, losses, or damages arising from the app or these Terms, as required by App Store Review Guideline 3.2.';
+
+  @override
+  String get tosSection15Title => 'Refund Policy';
+
+  @override
+  String get tosSection15Body => 'Subscriptions are billed through Apple App Store or Google Play Store. Refunds are subject to the respective store\'s refund policy:\n\n• Apple: https://support.apple.com/billing\n• Google: https://support.google.com/googleplay/answer/2479637\n\nVitalSeker does not process refunds directly. Cancel your subscription at any time via your device\'s app store settings.';
+
+  @override
+  String get tosSection16Title => 'Age Restrictions';
+
+  @override
+  String get tosSection16Body => 'VitalSeker is intended for users 18 years or older (13+ with parental consent in the US, 16+ in the EU). By using the app, you confirm that you meet the age requirement in your jurisdiction.';
+
+  @override
+  String get tosSection17Title => 'Third-Party Services';
+
+  @override
+  String get tosSection17Body => 'VitalSeker integrates with third-party services (Supabase, RevenueCat, Twilio, z.ai, DeepL, Sentry, PostHog, OneSignal, Google, Apple). Your use of these services is subject to their respective terms and privacy policies. VitalSeker is not responsible for the practices of these third parties.';
 }
