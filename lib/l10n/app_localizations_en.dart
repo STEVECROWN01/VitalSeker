@@ -6289,4 +6289,34 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get downloadPdf => 'Download PDF';
+
+  @override
+  String get securityAes256 => 'AES-256 Encryption';
+
+  @override
+  String get securityActive => 'Active';
+
+  @override
+  String get securityLocalStorage => 'Local Storage';
+
+  @override
+  String get securityHiveEncrypted => 'Hive (encrypted)';
+
+  @override
+  String get securityCloudStorage => 'Cloud Storage';
+
+  @override
+  String get securitySupabaseRls => 'Supabase (RLS)';
+
+  @override
+  String get securityJwtAuth => 'JWT Auth';
+
+  @override
+  String get securityDataRetention => 'Data Retention';
+
+  @override
+  String get security24Months => '24 months';
+
+  @override
+  String get securityDescription => 'Your health data is encrypted at rest and in transit. Only you can access your data through Row Level Security policies.';
 }

@@ -517,7 +517,11 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                 Column(
                   children: [
                     // Mic button
-                    GestureDetector(
+                    // FIX: add semantic label for screen readers.
+                    Semantics(
+                      label: _isRecording ? 'Stop recording' : 'Start voice input',
+                      button: true,
+                      child: GestureDetector(
                       onTap: _isRecording ? _stopRecording : _startRecording,
                       child: Container(
                         width: 44,
@@ -535,9 +539,13 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                         ),
                       ),
                     ),
+                    ),
                     const SizedBox(height: 8),
                     // File upload button
-                    GestureDetector(
+                    Semantics(
+                      label: 'Upload file',
+                      button: true,
+                      child: GestureDetector(
                       onTap: _pickFile,
                       child: Container(
                         width: 44,
@@ -553,9 +561,13 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                         ),
                       ),
                     ),
+                    ),
                     const SizedBox(height: 8),
                     // Camera scan button (OCR)
-                    GestureDetector(
+                    Semantics(
+                      label: 'Scan document with camera',
+                      button: true,
+                      child: GestureDetector(
                       onTap: _scanDocument,
                       child: Container(
                         width: 44,
@@ -570,6 +582,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                           size: 20,
                         ),
                       ),
+                    ),
                     ),
                   ],
                 ),

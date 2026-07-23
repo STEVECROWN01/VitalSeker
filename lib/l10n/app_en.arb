@@ -1550,5 +1550,15 @@
   "fileLoadedTapTranslate": "File loaded. Tap Translate to proceed.",
   "scanningDocument": "Scanning document...",
   "listeningHint": "Listening...",
-  "downloadPdf": "Download PDF"
+  "downloadPdf": "Download PDF",
+  "securityAes256": "AES-256 Encryption",
+  "securityActive": "Active",
+  "securityLocalStorage": "Local Storage",
+  "securityHiveEncrypted": "Hive (encrypted)",
+  "securityCloudStorage": "Cloud Storage",
+  "securitySupabaseRls": "Supabase (RLS)",
+  "securityJwtAuth": "JWT Auth",
+  "securityDataRetention": "Data Retention",
+  "security24Months": "24 months",
+  "securityDescription": "Your health data is encrypted at rest and in transit. Only you can access your data through Row Level Security policies."
 }

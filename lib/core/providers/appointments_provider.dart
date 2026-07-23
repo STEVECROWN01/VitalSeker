@@ -251,21 +251,9 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     }
   }
 
-  List<Appointment> get upcomingAppointments =>
-      state.valueOrNull?.where((a) => a.isUpcoming).toList() ?? [];
-
-  /// FIX (audit M-7): pastAppointments previously included cancelled-future
-  /// appointments (because a cancelled appointment has `status != 'upcoming'`,
-  /// so `isUpcoming` returns false, landing it in the past list). We now
-  /// filter to only include appointments whose dateTime has actually passed,
-  /// OR whose status is 'completed' or 'cancelled' with a past dateTime.
-  List<Appointment> get pastAppointments =>
-      state.valueOrNull?.where((a) {
-        // An appointment belongs in "past" if its time has passed, regardless
-        // of status. A cancelled future appointment stays in upcoming (so the
-        // user can see it was cancelled and reschedule if needed).
-        return !a.isUpcoming && a.dateTime.isBefore(DateTime.now());
-      }).toList() ?? [];
+  // FIX: removed dead code — upcomingAppointments, pastAppointments getters
+  // and upcomingAppointmentsProvider were never referenced anywhere in
+  // the codebase. The appointments screen filters by status directly.
 
   /// FIX (audit M-8): auto-complete appointments whose dateTime has passed
   /// but whose status is still 'upcoming'. This keeps the DB status in sync
@@ -296,9 +284,3 @@ class AppointmentsNotifier extends AsyncNotifier<List<Appointment>> {
     }
   }
 }
-
-final upcomingAppointmentsProvider = Provider<List<Appointment>>((ref) {
-  return ref.watch(appointmentsProvider).valueOrNull
-      ?.where((a) => a.isUpcoming)
-      .toList() ?? [];
-});

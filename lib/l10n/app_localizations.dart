@@ -6301,4 +6301,24 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   String get listeningHint;
 
   String get downloadPdf;
+
+  String get securityAes256;
+
+  String get securityActive;
+
+  String get securityLocalStorage;
+
+  String get securityHiveEncrypted;
+
+  String get securityCloudStorage;
+
+  String get securitySupabaseRls;
+
+  String get securityJwtAuth;
+
+  String get securityDataRetention;
+
+  String get security24Months;
+
+  String get securityDescription;
 }
