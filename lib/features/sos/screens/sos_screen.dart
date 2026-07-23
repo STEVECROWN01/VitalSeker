@@ -1764,7 +1764,12 @@ class _QuickDialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    // FIX: add semantic label for screen readers so visually impaired
+    // users know what each quick dial button does.
+    return Semantics(
+      label: '$label — $subtitle',
+      button: true,
+      child: Material(
       color: color.withValues(alpha: isDark ? 0.12 : 0.06),
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
@@ -1797,6 +1802,7 @@ class _QuickDialButton extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

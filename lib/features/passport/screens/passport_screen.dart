@@ -184,7 +184,11 @@ class PassportScreen extends ConsumerWidget {
                           const SizedBox(width: 6),
                           GestureDetector(
                             onTap: () => context.push(AppConfig.editProfile),
-                            child: Container(
+                            // FIX: add semantic label for screen readers.
+                            child: Semantics(
+                              label: l10n.edit,
+                              button: true,
+                              child: Container(
                               width: 28,
                               height: 28,
                               decoration: BoxDecoration(
@@ -193,6 +197,7 @@ class PassportScreen extends ConsumerWidget {
                               ),
                               child: const Icon(Icons.edit,
                                   size: 14, color: Colors.white),
+                            ),
                             ),
                           ),
                         ],
