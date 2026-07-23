@@ -1546,5 +1546,9 @@
 ,
   "notificationSound": "Notification Sound"
 ,
-  "tapToPreviewSound": "Tap to preview a sound (tap again to stop). Tap the row to select it for all notifications."
+  "tapToPreviewSound": "Tap to preview a sound (tap again to stop). Tap the row to select it for all notifications.",
+  "fileLoadedTapTranslate": "File loaded. Tap Translate to proceed.",
+  "scanningDocument": "Scanning document...",
+  "listeningHint": "Listening...",
+  "downloadPdf": "Download PDF"
 }

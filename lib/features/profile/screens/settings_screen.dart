@@ -32,7 +32,9 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-  String _selectedLanguage = 'English (US)';
+  // FIX: removed unused _selectedLanguage field — it was assigned in
+  // _showLanguageSheet but never read (the subtitle uses
+  // localeToLanguageName(ref.watch(localeProvider)) instead).
 
   Future<void> _signOut() async {
     final l10n = AppLocalizations.of(context)!;
@@ -465,10 +467,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           : null,
                       onTap: () {
                         // Actually call localeProvider so the locale changes
-                        // immediately and persists to the DB (was previously
-                        // a no-op that only updated a local field).
+                        // immediately and persists to the DB.
                         ref.read(localeProvider.notifier).setLocaleByLanguageName(lang);
-                        setState(() => _selectedLanguage = lang);
                         Navigator.pop(ctx);
                       },
                     );

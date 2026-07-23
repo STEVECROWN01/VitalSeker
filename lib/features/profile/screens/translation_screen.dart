@@ -146,7 +146,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
     if (!_speechAvailable) {
       await _initSpeech();
       if (!_speechAvailable) {
-        AppSnackBar.error(context, 'Speech recognition not available. Please type instead.');
+        AppSnackBar.error(context, l10n.speechNotAvailable);
         return;
       }
     }
@@ -180,7 +180,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
       );
       setState(() => _isRecording = true);
     } catch (e) {
-      AppSnackBar.error(context, 'Could not start recording. Check microphone permissions.');
+      AppSnackBar.error(context, l10n.couldNotStartRecording);
     }
   }
 
@@ -199,13 +199,13 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
       final file = File(result.files.single.path!);
       final content = await file.readAsString();
       if (content.length > _maxChars) {
-        AppSnackBar.error(context, 'File too long (max $_maxChars characters).');
+        AppSnackBar.error(context, l10n.translationTooLong);
         return;
       }
       setState(() {
         _textController.text = content.substring(0, _maxChars);
       });
-      AppSnackBar.success(context, 'File loaded. Tap Translate to proceed.');
+      AppSnackBar.success(context, l10n.fileLoadedTapTranslate);
     } catch (e) {
       AppSnackBar.error(context, 'Could not read file: $e');
     }
@@ -217,7 +217,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
       final picked = await picker.pickImage(source: ImageSource.camera, imageQuality: 90);
       if (picked == null) return;
 
-      AppSnackBar.info(context, 'Scanning document...');
+      AppSnackBar.info(context, l10n.scanningDocument);
 
       // FIX (audit H-24): the previous code used only the Latin script
       // recognizer, so a prescription in Arabic, Chinese, Japanese, Korean,
@@ -391,7 +391,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
       );
 
       if (mounted) {
-        AppSnackBar.success(context, 'Translation PDF ready!');
+        AppSnackBar.success(context, l10n.translationPdfReady);
       }
     } catch (e) {
       if (mounted) {
@@ -500,7 +500,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                       labelText: l10n.medicalTermOrPhrase,
-                      hintText: _isRecording ? 'Listening...' : l10n.medicalTermHint,
+                      hintText: _isRecording ? l10n.listeningHint : l10n.medicalTermHint,
                       alignLabelWithHint: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -681,7 +681,7 @@ class _TranslationScreenState extends ConsumerState<TranslationScreen> {
                         onPressed: () => _downloadPdf(isDark),
                         icon: Icon(Icons.picture_as_pdf, size: 18, color: AppColors.primary(isDark)),
                         label: Text(
-                          'Download PDF',
+                          l10n.downloadPdf,
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 13,

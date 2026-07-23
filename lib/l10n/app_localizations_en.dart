@@ -6277,4 +6277,16 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get tapToPreviewSound => 'Tap to preview a sound. Tap the row to select it for all notifications.';
+
+  @override
+  String get fileLoadedTapTranslate => 'File loaded. Tap Translate to proceed.';
+
+  @override
+  String get scanningDocument => 'Scanning document...';
+
+  @override
+  String get listeningHint => 'Listening...';
+
+  @override
+  String get downloadPdf => 'Download PDF';
 }

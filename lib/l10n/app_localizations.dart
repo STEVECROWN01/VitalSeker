@@ -6293,4 +6293,12 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
 
 
   String get tapToPreviewSound;
+
+  String get fileLoadedTapTranslate;
+
+  String get scanningDocument;
+
+  String get listeningHint;
+
+  String get downloadPdf;
 }
